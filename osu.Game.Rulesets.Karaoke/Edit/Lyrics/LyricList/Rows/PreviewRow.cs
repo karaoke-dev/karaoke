@@ -3,10 +3,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
@@ -35,6 +38,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
             {
                 CreateLyricInfo(lyric),
                 CreateContent(lyric)
+            };
+
+        protected override bool HighlightBackgroundWhenSelected(ICaretPosition caretPosition)
+        {
+            if (caretPosition?.Lyric != Lyric)
+                return false;
+
+            // should not show the background in the assign language mode.
+            if (caretPosition is ClickingCaretPosition)
+                return false;
+
+            return true;
+        }
+
+        protected override Func<LyricEditorMode, Color4> GetBackgroundColour(BackgroundStyle style, LyricEditorColourProvider colourProvider) =>
+            style switch
+            {
+                BackgroundStyle.Idle => colourProvider.Background5,
+                BackgroundStyle.Hover => colourProvider.Background4,
+                BackgroundStyle.Focus => colourProvider.Background3,
+                _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
             };
 
         protected abstract Drawable CreateLyricInfo(Lyric lyric);

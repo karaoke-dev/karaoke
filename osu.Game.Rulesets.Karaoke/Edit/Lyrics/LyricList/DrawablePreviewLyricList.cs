@@ -5,13 +5,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
@@ -56,25 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 RelativeSizeAxes = Axes.X,
                 Height = 75,
                 Padding = new MarginPadding { Left = DrawableLyricListItem.HANDLER_WIDTH },
-                Child = new Container
-                {
-                    Masking = true,
-                    CornerRadius = 5,
-                    RelativeSizeAxes = Axes.Both,
-                    Children = new Drawable[]
-                    {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0.5f,
-                            Colour = Color4.Black
-                        },
-                        new CreateNewLyricPreviewRow
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        }
-                    }
-                }
+                Child = new CreateNewLyricPreviewRow()
             };
         }
 

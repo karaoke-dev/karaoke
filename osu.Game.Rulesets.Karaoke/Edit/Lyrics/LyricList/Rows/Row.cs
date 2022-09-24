@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -10,9 +12,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
@@ -20,16 +24,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
     {
         public const int SELECT_AREA_WIDTH = 48;
 
-        private readonly Lyric lyric;
+        [Resolved, AllowNull]
+        private LyricEditorColourProvider colourProvider { get; set; }
+
+        [Resolved, AllowNull]
+        private ILyricEditorState state { get; set; }
+
+        private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
+        private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+
+        protected readonly Lyric Lyric;
+
+        private readonly Box background;
 
         protected Row(Lyric lyric)
         {
-            this.lyric = lyric;
-        }
+            Lyric = lyric;
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
+
             var columnDimensions = new List<Dimension>
             {
                 new(GridSizeMode.AutoSize),
@@ -44,17 +58,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
             };
             columns.AddRange(GetDrawables(lyric));
 
-            InternalChild = new GridContainer
+            InternalChild = new Container
             {
-                RelativeSizeAxes = Axes.X,
+                Masking = true,
+                CornerRadius = 5,
                 AutoSizeAxes = Axes.Y,
-                ColumnDimensions = columnDimensions.ToArray(),
-                RowDimensions = new[] { rowDimensions },
-                Content = new[]
+                RelativeSizeAxes = Axes.X,
+                Children = new Drawable[]
                 {
-                    columns.ToArray()
+                    background = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0.9f
+                    },
+                    new GridContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        ColumnDimensions = columnDimensions.ToArray(),
+                        RowDimensions = new[] { rowDimensions },
+                        Content = new[]
+                        {
+                            columns.ToArray()
+                        }
+                    }
                 }
             };
+
+            bindableHoverCaretPosition.BindValueChanged(_ =>
+            {
+                updateBackgroundColour();
+            });
+
+            bindableCaretPosition.BindValueChanged(e =>
+            {
+                updateBackgroundColour();
+            });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricCaretState lyricCaretState)
+        {
+            bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+
+            updateBackgroundColour();
         }
 
         protected abstract IEnumerable<Dimension> GetColumnDimensions();
@@ -62,6 +110,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         protected abstract Dimension GetRowDimensions();
 
         protected abstract IEnumerable<Drawable> GetDrawables(Lyric lyric);
+
+        protected abstract bool HighlightBackgroundWhenSelected(ICaretPosition? caretPosition);
+
+        protected abstract Func<LyricEditorMode, Color4> GetBackgroundColour(BackgroundStyle style, LyricEditorColourProvider colourProvider);
+
+        private void updateBackgroundColour()
+        {
+            var mode = state.Mode;
+            var backgroundStyle = getBackgroundStyle();
+            var colour = GetBackgroundColour(backgroundStyle, colourProvider).Invoke(mode);
+
+            background.Colour = colour;
+
+            BackgroundStyle getBackgroundStyle()
+            {
+                if (HighlightBackgroundWhenSelected(bindableCaretPosition.Value))
+                    return BackgroundStyle.Hover;
+
+                if (HighlightBackgroundWhenSelected(bindableHoverCaretPosition.Value))
+                    return BackgroundStyle.Focus;
+
+                return BackgroundStyle.Idle;
+            }
+        }
+
+        protected enum BackgroundStyle
+        {
+            Idle,
+            Hover,
+            Focus
+        }
 
         public class SelectArea : CompositeDrawable
         {
