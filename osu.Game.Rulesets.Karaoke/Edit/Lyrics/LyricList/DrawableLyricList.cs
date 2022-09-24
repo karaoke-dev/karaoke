@@ -6,8 +6,11 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -44,6 +47,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 
         protected sealed override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
             => CreateLyricListItem(item);
+
+        protected sealed override Drawable CreateBottomDrawable()
+        {
+            return new Container
+            {
+                // todo: should based on the row's height.
+                RelativeSizeAxes = Axes.X,
+                Height = 75,
+                Padding = new MarginPadding { Left = DrawableLyricListItem.HANDLER_WIDTH },
+                Child = GetCreateNewLyricRow(),
+            };
+        }
+
+        protected abstract Row GetCreateNewLyricRow();
 
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState)
