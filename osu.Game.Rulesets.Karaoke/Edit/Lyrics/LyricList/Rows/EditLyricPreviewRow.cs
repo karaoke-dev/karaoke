@@ -28,8 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         public EditLyricPreviewRow(Lyric lyric)
             : base(lyric)
         {
-            AutoSizeAxes = Axes.Y;
-
             bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
         }
 
