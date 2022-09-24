@@ -5,6 +5,7 @@
 
 using J2N.Collections.Generic;
 using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
