@@ -6,8 +6,8 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             });
         }
 
-        protected sealed override Drawable CreateContent() => CreateRowContent();
+        protected override Drawable CreateContent() => CreateEditRow(Model);
 
         protected LyricEditorMode EditorMode => bindableMode.Value;
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
         {
         }
 
-        protected abstract CompositeDrawable CreateRowContent();
+        protected abstract Row CreateEditRow(Lyric lyric);
 
         // todo: might be removed because will not have extend area after.
         public virtual float ExtendHeight => 0;
