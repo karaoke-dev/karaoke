@@ -24,6 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         {
         }
 
+        protected override Dimension GetRowDimensions() => new(GridSizeMode.Absolute, DEFAULT_HEIGHT);
+
         protected override Drawable CreateLyricInfo(Lyric lyric)
         {
             return new Container

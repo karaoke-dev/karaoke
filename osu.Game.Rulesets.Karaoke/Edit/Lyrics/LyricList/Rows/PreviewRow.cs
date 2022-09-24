@@ -15,8 +15,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
     public abstract class PreviewRow : Row
     {
+        protected const int DEFAULT_HEIGHT = 75;
+
         private const int info_part_spacing = 210;
-        private const int min_height = 75;
+        private const int min_height = DEFAULT_HEIGHT;
         private const int max_height = 120;
 
         protected PreviewRow(Lyric lyric)
