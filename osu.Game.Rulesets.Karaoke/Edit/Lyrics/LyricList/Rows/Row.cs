@@ -20,18 +20,22 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
-    public abstract class Row : CompositeDrawable
+    [Cached(typeof(IEditLyricRowState))]
+    public abstract class Row : CompositeDrawable, IEditLyricRowState
     {
         public const int SELECT_AREA_WIDTH = 48;
 
         [Resolved, AllowNull]
         private LyricEditorColourProvider colourProvider { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricEditorState state { get; set; }
-
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<int> bindableLyricPropertyWritableVersion;
         private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+
+        public event Action<LyricEditorMode>? WritableVersionChanged;
+
+        public event Action<LyricEditorMode>? DisallowEditEffectTriggered;
 
         protected readonly Lyric Lyric;
 
@@ -40,6 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         protected Row(Lyric lyric)
         {
             Lyric = lyric;
+            bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
@@ -85,6 +90,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
                 }
             };
 
+            bindableMode.BindValueChanged(x =>
+            {
+                WritableVersionChanged?.Invoke(bindableMode.Value);
+            });
+
+            bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
+            {
+                WritableVersionChanged?.Invoke(bindableMode.Value);
+            });
+
             bindableHoverCaretPosition.BindValueChanged(_ =>
             {
                 updateBackgroundColour();
@@ -96,9 +111,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
             });
         }
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
+        public void TriggerDisallowEditEffect()
         {
+            DisallowEditEffectTriggered?.Invoke(bindableMode.Value);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
+        {
+            bindableMode.BindTo(state.BindableMode);
+
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
@@ -117,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         private void updateBackgroundColour()
         {
-            var mode = state.Mode;
+            var mode = bindableMode.Value;
             var backgroundStyle = getBackgroundStyle();
             var colour = GetBackgroundColour(backgroundStyle, colourProvider).Invoke(mode);
 
@@ -125,13 +147,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
             BackgroundStyle getBackgroundStyle()
             {
-                if (HighlightBackgroundWhenSelected(bindableCaretPosition.Value))
+                if (highlightBackground(bindableCaretPosition.Value))
                     return BackgroundStyle.Hover;
 
-                if (HighlightBackgroundWhenSelected(bindableHoverCaretPosition.Value))
+                if (highlightBackground(bindableHoverCaretPosition.Value))
                     return BackgroundStyle.Focus;
 
                 return BackgroundStyle.Idle;
+            }
+
+            bool highlightBackground(ICaretPosition? caretPosition)
+            {
+                if (caretPosition?.Lyric != Lyric)
+                    return false;
+
+                return HighlightBackgroundWhenSelected(caretPosition);
             }
         }
 

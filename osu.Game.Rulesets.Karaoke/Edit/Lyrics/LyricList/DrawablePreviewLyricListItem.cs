@@ -99,18 +99,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             return content?.Children.OfType<EditRowExtend>().FirstOrDefault();
         }
 
-        protected override CompositeDrawable CreateRowContent()
+        protected override Drawable CreateContent()
         {
             return content = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Children = new Drawable[]
+                Children = new[]
                 {
-                    new EditLyricPreviewRow(Model)
+                    base.CreateContent()
                 }
             };
         }
+
+        protected override Row CreateEditRow(Lyric lyric)
+            => new EditLyricPreviewRow(lyric);
 
         public override float ExtendHeight => getExtend()?.ContentHeight ?? 0;
 

@@ -3,8 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
@@ -42,21 +40,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             return bindableAutoFocusToEditLyricSkipRows.Value;
         }
 
+        protected override Row GetCreateNewLyricRow()
+            => new CreateNewLyricPreviewRow();
+
         protected override DrawableLyricListItem CreateLyricListItem(Lyric item)
             => new DrawablePreviewLyricListItem(item);
 
         protected override Vector2 Spacing => new(0, 2);
-
-        protected override Drawable CreateBottomDrawable()
-        {
-            return new Container
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 75,
-                Padding = new MarginPadding { Left = DrawableLyricListItem.HANDLER_WIDTH },
-                Child = new CreateNewLyricPreviewRow()
-            };
-        }
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
