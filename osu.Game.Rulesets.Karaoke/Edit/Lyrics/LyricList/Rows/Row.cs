@@ -148,10 +148,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
             BackgroundStyle getBackgroundStyle()
             {
                 if (highlightBackground(bindableCaretPosition.Value))
-                    return BackgroundStyle.Hover;
+                    return BackgroundStyle.Focus;
 
                 if (highlightBackground(bindableHoverCaretPosition.Value))
-                    return BackgroundStyle.Focus;
+                    return BackgroundStyle.Hover;
 
                 return BackgroundStyle.Idle;
             }
