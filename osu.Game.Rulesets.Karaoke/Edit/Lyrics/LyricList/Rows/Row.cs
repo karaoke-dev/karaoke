@@ -28,11 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             var columnDimensions = new List<Dimension>
             {
                 new(GridSizeMode.AutoSize),
@@ -58,6 +54,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
                     columns.ToArray()
                 }
             };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
         }
 
         protected abstract IEnumerable<Dimension> GetColumnDimensions();
