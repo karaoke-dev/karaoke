@@ -188,6 +188,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
+        private LyricEditorLayout getSupportedLayout(LyricEditorMode mode) =>
+            mode switch
+            {
+                LyricEditorMode.View => LyricEditorLayout.Preview,
+                LyricEditorMode.Texting => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
+                LyricEditorMode.EditNote => LyricEditorLayout.Detail,
+                LyricEditorMode.Singer => LyricEditorLayout.Preview,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
