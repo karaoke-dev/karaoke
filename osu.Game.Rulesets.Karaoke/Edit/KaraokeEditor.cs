@@ -113,7 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"), new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
+                            new LyricEditorPreferLayoutMenu(lyricEditorConfigManager, "Layout"),
+                            new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
+                            new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
                         }
                     },
                     new("Config")

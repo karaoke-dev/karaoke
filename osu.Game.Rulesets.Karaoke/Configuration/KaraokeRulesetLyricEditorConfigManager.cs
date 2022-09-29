@@ -3,6 +3,7 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -16,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // General
+            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.Preview);
             SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, 28f);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
@@ -50,6 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
     public enum KaraokeRulesetLyricEditorSetting
     {
         // General
+        LyricEditorPreferLayout,
         LyricEditorFontSize,
         AutoFocusToEditLyric,
         AutoFocusToEditLyricSkipRows,
