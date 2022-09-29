@@ -8,8 +8,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     [Flags]
     public enum LyricEditorLayout
     {
-        Preview,
+        Preview = 1,
 
-        Detail,
+        Detail = 1 << 1,
     }
 }
