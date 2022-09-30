@@ -14,6 +14,7 @@ using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -25,6 +26,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -248,12 +250,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 case LyricEditorLayout.Detail:
-                    editArea.Children = new[]
+                    editArea.Children = new Drawable[]
                     {
+                        new LyricComposer
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Size = new Vector2(1, 0.6f),
+                        },
                         new DetailLyricList
                         {
-                            RelativeSizeAxes = Axes.Both
-                        }
+                            RelativePositionAxes = Axes.Y,
+                            Position = new Vector2(0, 0.6f),
+                            Size = new Vector2(1, 0.4f),
+                            RelativeSizeAxes = Axes.Both,
+                        },
                     };
                     break;
 
