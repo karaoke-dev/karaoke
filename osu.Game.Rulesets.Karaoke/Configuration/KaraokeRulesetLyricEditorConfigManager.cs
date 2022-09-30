@@ -23,6 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
 
+            // Composer
+            SetDefault(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, true);
+            SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
+
             // Create time-tag.
             SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
             SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
@@ -57,6 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         AutoFocusToEditLyric,
         AutoFocusToEditLyricSkipRows,
         ClickToLockLyricState,
+
+        // Composer
+        ShowPropertyPanelInComposer,
+        ShowInvalidInfoInComposer,
 
         // Create time-tag.
         CreateTimeTagEditMode,
