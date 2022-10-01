@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -31,8 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             { PanelDirection.Right, new List<PanelType>() },
         };
 
-        private readonly Container mainEditArea;
+        [Resolved, AllowNull]
+        private LyricEditorColourProvider colourProvider { get; set; }
+
         private readonly Box background;
+        private readonly Container mainEditArea;
+        private readonly Container lyricEditor;
 
         public LyricComposer()
         {
@@ -49,15 +54,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        new SpecialActionToolbar
+                        lyricEditor = new Container
                         {
-                            Name = "Toolbar",
-                            Anchor = Anchor.BottomCentre,
-                            Origin = Anchor.BottomCentre,
+                            RelativeSizeAxes = Axes.Both,
+                            Children = new[]
+                            {
+                                new SpecialActionToolbar
+                                {
+                                    Name = "Toolbar",
+                                    Anchor = Anchor.BottomCentre,
+                                    Origin = Anchor.BottomCentre,
+                                }
+                            }
                         }
                     }
                 },
             };
+
+            bindableMode.BindValueChanged(x =>
+            {
+                Schedule(() =>
+                {
+                    background.Colour = colourProvider.Background1(x.NewValue);
+                });
+            }, true);
 
             initializePanel();
 
@@ -91,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 panelStatus.Add(panelType, new Bindable<bool>(true));
                 panelInstance.Add(panelType, instance);
 
-                AddInternal(instance);
+                mainEditArea.Add(instance);
             }
 
             static Panel getInstance(PanelType panelType) =>
@@ -111,16 +131,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state, LyricEditorColourProvider colourProvider)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state)
         {
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);
 
             bindableMode.BindTo(state.BindableMode);
-            bindableMode.BindValueChanged(x =>
-            {
-                background.Colour = colourProvider.Background1(state.Mode);
-            }, true);
         }
 
         protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
@@ -205,7 +221,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 }
             }
 
-            mainEditArea.Padding = padding;
+            lyricEditor.Padding = padding;
 
             float getWidth(Panel panel)
                 => panel.State.Value == Visibility.Visible ? panel.Width : 0;
