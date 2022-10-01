@@ -29,8 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             {
                 // Only draggable in edit mode.
                 ShowDragHandle.Value = e.NewValue == LyricEditorMode.Texting;
-
-                OnModeChanged();
             }, true);
 
             DragActive.BindValueChanged(e =>
@@ -40,18 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             });
         }
 
-        protected override Drawable CreateContent() => CreateEditRow(Model);
-
-        protected LyricEditorMode EditorMode => bindableMode.Value;
-
-        protected virtual void OnModeChanged()
-        {
-        }
+        protected sealed override Drawable CreateContent() => CreateEditRow(Model);
 
         protected abstract Row CreateEditRow(Lyric lyric);
-
-        // todo: might be removed because will not have extend area after.
-        public virtual float ExtendHeight => 0;
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
