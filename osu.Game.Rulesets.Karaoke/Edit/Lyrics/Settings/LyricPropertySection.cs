@@ -8,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -18,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class LyricPropertySection : LyricEditorSection
     {
-        private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+        private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
         private readonly IBindable<int> bindablePropertyWritableVersion = new Bindable<int>();
 
         public override bool PropagateNonPositionalInputSubTree => base.PropagateNonPositionalInputSubTree && !Disabled;
@@ -32,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         {
             base.LoadComplete();
 
-            bindableCaretPosition.BindValueChanged(x =>
+            bindableFocusedLyric.BindValueChanged(x =>
             {
-                var lyric = x.NewValue?.Lyric;
+                var lyric = x.NewValue;
 
                 IsRebinding = true;
 
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         private void updateDisableStatus()
         {
-            var lyric = bindableCaretPosition.Value?.Lyric;
+            var lyric = bindableFocusedLyric.Value;
             var propertyLocked = lyric != null ? IsWriteLyricPropertyLocked(lyric) : null;
             Disabled = propertyLocked != null;
 
@@ -110,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState)
         {
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+            bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
         }
 
         protected abstract void OnLyricChanged(Lyric? lyric);
