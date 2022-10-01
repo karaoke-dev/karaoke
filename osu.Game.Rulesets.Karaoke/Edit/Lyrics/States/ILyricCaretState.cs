@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
+        IBindable<Lyric?> BindableFocusedLyric { get; }
+
         IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm { get; }
 
         bool MoveCaret(MovingCaretAction action);

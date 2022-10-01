@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
 
-        private Lyric? getSelectedLyric() => lyricCaretState.BindableCaretPosition.Value?.Lyric;
+        private Lyric? getSelectedLyric() => lyricCaretState.BindableFocusedLyric.Value;
 
         [Resolved, AllowNull]
         private ITextingModeState textingModeState { get; set; }

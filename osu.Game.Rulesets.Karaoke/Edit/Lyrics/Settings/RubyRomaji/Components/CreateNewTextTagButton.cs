@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
 
         public Popover GetPopover()
         {
-            var lyric = lyricCaretState.BindableCaretPosition.Value?.Lyric;
+            var lyric = lyricCaretState.BindableFocusedLyric.Value;
             return new CreateNewPopover(lyric)
             {
                 LabelledTextBoxLabel = LabelledTextBoxLabel,
