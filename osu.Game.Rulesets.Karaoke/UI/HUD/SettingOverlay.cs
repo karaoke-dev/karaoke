@@ -48,7 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     Name = "Background",
                     RelativeSizeAxes = Axes.Both,
                     Colour = colourProvider.Background4,
-                    Alpha = 1,
                 },
                 new Container
                 {
