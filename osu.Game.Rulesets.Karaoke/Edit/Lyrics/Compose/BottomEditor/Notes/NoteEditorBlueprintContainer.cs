@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 {
     internal class EditNoteBlueprintContainer : ExtendBlueprintContainer<Note>
     {

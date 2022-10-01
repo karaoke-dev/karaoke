@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.RecordingTimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags
 {
     public class CentreMarker : CompositeDrawable
     {

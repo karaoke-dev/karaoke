@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 {
     [Cached]
     public class NoteEditor : Container

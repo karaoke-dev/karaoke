@@ -7,11 +7,11 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.RecordingTimeTags;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
