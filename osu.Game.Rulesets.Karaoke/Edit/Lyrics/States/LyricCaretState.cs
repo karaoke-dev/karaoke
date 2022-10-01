@@ -22,11 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         public IBindable<ICaretPosition?> BindableHoverCaretPosition => bindableHoverCaretPosition;
         public IBindable<ICaretPosition?> BindableCaretPosition => bindableCaretPosition;
+        public IBindable<Lyric?> BindableFocusedLyric => bindableFocusedLyric;
 
         public IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm => bindableCaretPositionAlgorithm;
 
         private readonly Bindable<ICaretPosition?> bindableHoverCaretPosition = new();
         private readonly Bindable<ICaretPosition?> bindableCaretPosition = new();
+        private readonly Bindable<Lyric?> bindableFocusedLyric = new();
         private readonly Bindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new();
 
         private ICaretPositionAlgorithm? algorithm => bindableCaretPositionAlgorithm.Value;
@@ -93,6 +95,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableRecordingMovingCaretMode.BindValueChanged(_ =>
             {
                 refreshAlgorithmAndCaretPosition();
+            });
+
+            bindableCaretPosition.BindValueChanged(e =>
+            {
+                bindableFocusedLyric.Value = e.NewValue?.Lyric;
             });
 
             refreshAlgorithmAndCaretPosition();
