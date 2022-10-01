@@ -10,6 +10,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             {
                 var oldLyric = e.OldValue?.Lyric;
                 var newLyric = e.NewValue?.Lyric;
-                if (newLyric == null)
+                if (newLyric == null || !ValueChangedEventUtils.LyricChanged(e))
                     return;
 
                 if (!ScrollToPosition(e.NewValue!))
