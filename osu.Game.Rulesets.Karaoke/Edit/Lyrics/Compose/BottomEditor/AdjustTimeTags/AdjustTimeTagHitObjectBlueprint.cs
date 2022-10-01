@@ -18,6 +18,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -84,10 +85,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorClock clock, AdjustTimeTagScrollContainer timeline, OsuColour colours)
+        private void load(EditorClock clock, AdjustTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState, OsuColour colours)
         {
             // todo : should be able to let user able to select show from ruby or main text.
-            timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(timeline.HitObject, Item);
+            timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(lyricCaretState.BindableFocusedLyric.Value!, Item);
 
             timeTagPiece.Clock = clock;
             timeTagPiece.Colour = colours.BlueLight;

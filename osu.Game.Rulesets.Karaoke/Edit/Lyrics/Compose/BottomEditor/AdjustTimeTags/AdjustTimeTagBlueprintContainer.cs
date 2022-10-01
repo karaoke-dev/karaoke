@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -40,19 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-        [UsedImplicitly]
-        private readonly BindableList<TimeTag> timeTags;
-
-        protected readonly Lyric Lyric;
-
-        public AdjustTimeTagBlueprintContainer(Lyric lyric)
-        {
-            Lyric = lyric;
-            timeTags = lyric.TimeTagsBindable.GetBoundCopy();
-        }
-
         [BackgroundDependencyLoader]
-        private void load(ITimeTagModeState timeTagModeState)
+        private void load(BindableList<TimeTag> timeTags)
         {
             // Add time-tag into blueprint container
             RegisterBindable(timeTags);

@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -28,12 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 {
     public class RecordingTimeTagPart : TimelinePart
     {
-        private readonly Lyric lyric;
+        private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 
-        public RecordingTimeTagPart(Lyric lyric)
+        public RecordingTimeTagPart()
         {
-            this.lyric = lyric;
-
             RelativeSizeAxes = Axes.Both;
         }
 
@@ -41,17 +38,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
         {
             base.LoadBeatmap(beatmap);
 
-            foreach (var timeTag in lyric.TimeTags)
+            bindableFocusedLyric.BindValueChanged(e =>
             {
-                Add(new RecordingTimeTagVisualization(lyric, timeTag));
-            }
+                Clear();
 
-            Add(new CurrentRecordingTimeTagVisualization(lyric));
+                var lyric = e.NewValue;
+                if (lyric == null)
+                    return;
+
+                foreach (var timeTag in lyric.TimeTags)
+                {
+                    Add(new RecordingTimeTagVisualization(lyric, timeTag));
+                }
+
+                Add(new CurrentRecordingTimeTagVisualization(lyric));
+            });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricCaretState lyricCaretState)
+        {
+            bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
         }
 
         private class CurrentRecordingTimeTagVisualization : CompositeDrawable
         {
-            private IBindable<ICaretPosition> position;
+            private IBindable<ICaretPosition?> position = null!;
 
             private readonly Lyric lyric;
 
@@ -112,10 +124,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
         {
-            [Resolved]
+            [Resolved, AllowNull]
             private ILyricCaretState lyricCaretState { get; set; }
 
-            [Resolved]
+            [Resolved, AllowNull]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
             private readonly Bindable<double?> bindableTime;

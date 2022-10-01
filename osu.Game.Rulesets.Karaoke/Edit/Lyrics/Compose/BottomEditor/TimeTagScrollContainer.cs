@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
@@ -14,6 +13,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -22,8 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 {
     public abstract class TimeTagScrollContainer : BindableScrollContainer
     {
+        private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
+
         private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
-        private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
+
+        [Cached]
+        private readonly BindableList<TimeTag> timeTagsBindable = new();
 
         private readonly IBindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
@@ -36,20 +40,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 
         protected double EndTime { get; private set; }
 
-        protected Track Track { get; private set; }
+        protected Track Track { get; private set; } = null!;
 
-        public readonly Lyric HitObject;
-
-        protected TimeTagScrollContainer(Lyric lyric)
+        protected TimeTagScrollContainer()
         {
-            HitObject = lyric;
             RelativeSizeAxes = Axes.X;
 
             timeTagsVersion.BindValueChanged(_ => updateTimeRange());
             timeTagsBindable.BindCollectionChanged((_, _) => updateTimeRange());
 
-            timeTagsVersion.BindTo(lyric.TimeTagsVersion);
-            timeTagsBindable.BindTo(lyric.TimeTagsBindable);
+            bindableFocusedLyric.BindValueChanged(e =>
+            {
+                timeTagsVersion.UnbindBindings();
+                timeTagsBindable.UnbindBindings();
+
+                var lyric = e.NewValue;
+                if (lyric == null)
+                    return;
+
+                timeTagsVersion.BindTo(lyric.TimeTagsVersion);
+                timeTagsBindable.BindTo(lyric.TimeTagsBindable);
+
+                OnLyricChanged(lyric);
+            });
 
             updateTimeRange();
         }
@@ -71,13 +84,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             }
         }
 
-        private WaveformGraph waveform;
+        protected abstract void OnLyricChanged(Lyric newLyric);
 
-        private TimelineTickDisplay ticks;
+        private WaveformGraph waveform = null!;
+
+        private TimelineTickDisplay ticks = null!;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, IBindable<WorkingBeatmap> beatmap)
+        private void load(ILyricCaretState lyricCaretState, OsuColour colours, IBindable<WorkingBeatmap> beatmap)
         {
+            bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+
             this.beatmap.BindTo(beatmap);
 
             Container container;
@@ -129,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             if (time != null)
                 return time.Value;
 
-            var timeTags = HitObject.TimeTags;
+            var timeTags = bindableFocusedLyric.Value?.TimeTags ?? new List<TimeTag>();
             int index = timeTags.IndexOf(timeTag);
 
             const float preempt_time = 200;
