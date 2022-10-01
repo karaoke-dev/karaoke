@@ -84,32 +84,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 return false;
 
             // do not scroll if position is too large and not able to move to target position.
-            float itemHeight = newItem.Height + newItem.ExtendHeight;
             float contentHeight = ScrollContainer.ScrollContent.Height;
             float containerHeight = ScrollContainer.DrawHeight;
-            if (contentHeight - scrollPosition + itemHeight < containerHeight - spacing)
+            if (contentHeight - scrollPosition < containerHeight - spacing)
                 return false;
 
-            ScrollContainer.ScrollTo(scrollPosition - spacing + getOffsetPosition(newItem, oldItem));
+            ScrollContainer.ScrollTo(scrollPosition - spacing);
             return true;
 
             DrawableLyricListItem? getListItem(Lyric? lyric)
                 => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricListItem;
-
-            float getOffsetPosition(DrawableLyricListItem newItem, DrawableLyricListItem? oldItem)
-            {
-                if (oldItem == null)
-                    return 0;
-
-                float newItemPosition = ScrollContainer.GetChildPosInContent(newItem);
-                float oldItemPosition = ScrollContainer.GetChildPosInContent(oldItem);
-                if (oldItemPosition > scrollPosition)
-                    return 0;
-
-                // if previous lyric is in front of current lyric row, due to extend in previous row has been removed.
-                // it will cause offset from previous row extend.
-                return -newItem.ExtendHeight;
-            }
         }
     }
 }
