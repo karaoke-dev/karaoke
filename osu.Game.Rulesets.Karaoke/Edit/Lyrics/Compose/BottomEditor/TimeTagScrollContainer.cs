@@ -61,7 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
                 timeTagsVersion.BindTo(lyric.TimeTagsVersion);
                 timeTagsBindable.BindTo(lyric.TimeTagsBindable);
 
-                OnLyricChanged(lyric);
+                Schedule(() =>
+                {
+                    OnLyricChanged(lyric);
+                });
             });
 
             updateTimeRange();
