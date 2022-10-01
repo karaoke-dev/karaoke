@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableLyrics.BindCollectionChanged((a, b) =>
             {
                 // should reset caret position if not in the list.
-                var caretLyric = BindableCaretPosition.Value?.Lyric;
+                var caretLyric = BindableFocusedLyric.Value;
 
                 // should adjust hover lyric if lyric has been deleted.
                 if (caretLyric != null && !bindableLyrics.Contains(caretLyric))
