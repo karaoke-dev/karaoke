@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,6 +10,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -19,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
     public abstract class DrawableLyricList : OrderRearrangeableListContainer<Lyric>
     {
-        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
+        private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
 
         protected DrawableLyricList()
         {
@@ -28,10 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             {
                 var oldLyric = e.OldValue?.Lyric;
                 var newLyric = e.NewValue?.Lyric;
-                if (newLyric == null)
+                if (newLyric == null || !ValueChangedEventUtils.LyricChanged(e))
                     return;
 
-                if (!ScrollToPosition(bindableCaretPosition.Value))
+                if (!ScrollToPosition(e.NewValue!))
                     return;
 
                 int skippingRows = SkipRows();
@@ -68,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         }
 
-        private bool moveItemToTargetPosition(Lyric newLyric, Lyric oldLyric, int skippingRows)
+        private bool moveItemToTargetPosition(Lyric newLyric, Lyric? oldLyric, int skippingRows)
         {
             var oldItem = getListItem(oldLyric);
             var newItem = getListItem(newLyric);
@@ -94,10 +93,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             ScrollContainer.ScrollTo(scrollPosition - spacing + getOffsetPosition(newItem, oldItem));
             return true;
 
-            DrawableLyricListItem getListItem(Lyric lyric)
+            DrawableLyricListItem? getListItem(Lyric? lyric)
                 => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricListItem;
 
-            float getOffsetPosition(DrawableLyricListItem newItem, DrawableLyricListItem oldItem)
+            float getOffsetPosition(DrawableLyricListItem newItem, DrawableLyricListItem? oldItem)
             {
                 if (oldItem == null)
                     return 0;

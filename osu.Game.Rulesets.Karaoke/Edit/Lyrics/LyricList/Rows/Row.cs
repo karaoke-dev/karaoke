@@ -14,6 +14,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
@@ -100,14 +101,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
                 WritableVersionChanged?.Invoke(bindableMode.Value);
             });
 
-            bindableHoverCaretPosition.BindValueChanged(_ =>
+            bindableHoverCaretPosition.BindValueChanged(e =>
             {
-                updateBackgroundColour();
+                if (ValueChangedEventUtils.LyricChanged(e))
+                    updateBackgroundColour();
             });
 
             bindableCaretPosition.BindValueChanged(e =>
             {
-                updateBackgroundColour();
+                if (ValueChangedEventUtils.LyricChanged(e))
+                    updateBackgroundColour();
             });
         }
 
