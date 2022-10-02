@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Components
 {
     public abstract class TimeTagEditorScrollContainer : EditorScrollContainer
     {

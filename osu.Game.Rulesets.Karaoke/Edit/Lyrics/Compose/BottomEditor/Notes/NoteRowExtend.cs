@@ -7,13 +7,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 {
-    public class TimeTagRowExtend : EditRowExtend
+    public class NoteRowExtend : EditRowExtend
     {
-        public override float ContentHeight => 100;
+        public override float ContentHeight => 180;
 
-        public TimeTagRowExtend(Lyric lyric)
+        public NoteRowExtend(Lyric lyric)
             : base(lyric)
         {
         }
@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Extends.TimeTags
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new TimeTagEditor(lyric)
+            return new NoteEditor(lyric)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = 100,
+                Height = 150,
             };
         }
     }
