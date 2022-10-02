@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
     [Cached]
     public class TimeTagEditor : TimeTagScrollContainer, IPositionSnapProvider
