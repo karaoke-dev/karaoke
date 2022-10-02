@@ -9,11 +9,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class TimeTagRowExtend : EditRowExtend
+    public class AdjustTimeTagRowExtend : EditRowExtend
     {
         public override float ContentHeight => 100;
 
-        public TimeTagRowExtend(Lyric lyric)
+        public AdjustTimeTagRowExtend(Lyric lyric)
             : base(lyric)
         {
         }
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new TimeTagEditor(lyric)
+            return new AdjustTimeTagScrollContainer(lyric)
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 100,

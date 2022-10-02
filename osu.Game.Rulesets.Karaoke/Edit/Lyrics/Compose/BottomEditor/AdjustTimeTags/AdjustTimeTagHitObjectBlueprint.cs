@@ -25,7 +25,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
+    public class AdjustTimeTagHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         private readonly TimeTagWithNoTimePiece timeTagWithNoTimePiece;
         private readonly OsuSpriteText timeTagText;
 
-        public TimeTagEditorHitObjectBlueprint(TimeTag item)
+        public AdjustTimeTagHitObjectBlueprint(TimeTag item)
             : base(item)
         {
             startTime = item.TimeBindable.GetBoundCopy();
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorClock clock, TimeTagEditor timeline, OsuColour colours)
+        private void load(EditorClock clock, AdjustTimeTagScrollContainer timeline, OsuColour colours)
         {
             // todo : should be able to let user able to select show from ruby or main text.
             timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(timeline.HitObject, Item);

@@ -20,7 +20,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
     [Cached]
-    public class TimeTagEditor : TimeTagScrollContainer, IPositionSnapProvider
+    public class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPositionSnapProvider
     {
         private const float timeline_height = 38;
 
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         private CurrentTimeMarker currentTimeMarker;
 
-        public TimeTagEditor(Lyric lyric)
+        public AdjustTimeTagScrollContainer(Lyric lyric)
             : base(lyric)
         {
             Padding = new MarginPadding { Top = 10 };
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             content.Height = timeline_height;
             content.AddRange(new Drawable[]
             {
-                new TimeTagEditorBlueprintContainer(HitObject),
+                new AdjustTimeTagBlueprintContainer(HitObject),
                 currentTimeMarker = new CurrentTimeMarker(),
             });
         }
