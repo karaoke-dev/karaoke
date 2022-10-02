@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         };
 
         protected override Drawable CreateTimeLinePart(Singer singer)
-            => new SingerLyricEditor(singer);
+            => new SingerLyricTimeline(singer);
 
         private void changeZoom(float change) => scrollingInfoProvider.BindableZoom.Value += change;
     }

@@ -11,17 +11,16 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
     [Cached]
-    public class TimeTagEditor : TimeTagEditorScrollContainer, IPositionSnapProvider
+    public class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPositionSnapProvider
     {
         private const float timeline_height = 38;
 
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
 
         private CurrentTimeMarker currentTimeMarker;
 
-        public TimeTagEditor(Lyric lyric)
+        public AdjustTimeTagScrollContainer(Lyric lyric)
             : base(lyric)
         {
             Padding = new MarginPadding { Top = 10 };
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
             content.Height = timeline_height;
             content.AddRange(new Drawable[]
             {
-                new TimeTagEditorBlueprintContainer(HitObject),
+                new AdjustTimeTagBlueprintContainer(HitObject),
                 currentTimeMarker = new CurrentTimeMarker(),
             });
         }

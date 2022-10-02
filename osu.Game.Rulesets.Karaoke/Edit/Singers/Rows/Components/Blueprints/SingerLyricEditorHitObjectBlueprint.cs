@@ -72,12 +72,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
         }
 
         [BackgroundDependencyLoader]
-        private void load(SingerLyricEditor editor)
+        private void load(SingerLyricTimeline timeline)
         {
             singersBindable.BindCollectionChanged((_, _) =>
             {
                 // Check is lyric contains this singer, or default singer
-                isSingerMatched = lyricInCurrentSinger(Item, editor.Singer);
+                isSingerMatched = lyricInCurrentSinger(Item, timeline.Singer);
 
                 if (isSingerMatched)
                 {

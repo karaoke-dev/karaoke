@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new RecordingTimeTagEditor(lyric)
+            return new RecordingTimeTagScrollContainer(lyric)
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 60,

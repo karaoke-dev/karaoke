@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             private float selectionEnd;
 
             [Resolved]
-            private SingerLyricEditor editor { get; set; }
+            private SingerLyricTimeline timeline { get; set; }
 
             public SingerLyricDragBox(Action<RectangleF> performSelect)
                 : base(performSelect)
@@ -142,11 +142,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             public override bool HandleDrag(MouseButtonEvent e)
             {
-                selectionStart ??= e.MouseDownPosition.X / editor.CurrentZoom;
+                selectionStart ??= e.MouseDownPosition.X / timeline.CurrentZoom;
 
                 // only calculate end when a transition is not in progress to avoid bouncing.
-                if (Precision.AlmostEquals(editor.CurrentZoom, editor.Zoom))
-                    selectionEnd = e.MousePosition.X / editor.CurrentZoom;
+                if (Precision.AlmostEquals(timeline.CurrentZoom, timeline.Zoom))
+                    selectionEnd = e.MousePosition.X / timeline.CurrentZoom;
 
                 updateDragBoxPosition();
                 return true;
@@ -157,8 +157,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 if (selectionStart == null)
                     return;
 
-                float rescaledStart = selectionStart.Value * editor.CurrentZoom;
-                float rescaledEnd = selectionEnd * editor.CurrentZoom;
+                float rescaledStart = selectionStart.Value * timeline.CurrentZoom;
+                float rescaledEnd = selectionEnd * timeline.CurrentZoom;
 
                 Box.X = Math.Min(rescaledStart, rescaledEnd);
                 Box.Width = Math.Abs(rescaledStart - rescaledEnd);

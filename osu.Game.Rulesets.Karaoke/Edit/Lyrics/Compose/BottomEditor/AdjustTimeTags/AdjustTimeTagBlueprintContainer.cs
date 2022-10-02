@@ -27,12 +27,12 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
+    public class AdjustTimeTagBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
         [Resolved(CanBeNull = true)]
-        private TimeTagEditor timeline { get; set; }
+        private AdjustTimeTagScrollContainer timeline { get; set; }
 
         [Resolved]
         private EditorClock editorClock { get; set; }
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
 
         protected readonly Lyric Lyric;
 
-        public TimeTagEditorBlueprintContainer(Lyric lyric)
+        public AdjustTimeTagBlueprintContainer(Lyric lyric)
         {
             Lyric = lyric;
             timeTags = lyric.TimeTagsBindable.GetBoundCopy();
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
             if (result.Time == null)
                 return false;
 
-            var timeTagBlueprints = blueprints.OfType<TimeTagEditorHitObjectBlueprint>().ToArray();
+            var timeTagBlueprints = blueprints.OfType<AdjustTimeTagHitObjectBlueprint>().ToArray();
             var firstDragBlueprint = timeTagBlueprints.FirstOrDefault();
             if (firstDragBlueprint == null)
                 return false;
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
             => new TimeTagEditorSelectionHandler();
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-            => new TimeTagEditorHitObjectBlueprint(item);
+            => new AdjustTimeTagHitObjectBlueprint(item);
 
         protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new TimelineDragBox(performSelect);
 
@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
             private float selectionEnd;
 
             [Resolved]
-            private TimeTagEditor timeline { get; set; }
+            private AdjustTimeTagScrollContainer timeline { get; set; }
 
             public TimelineDragBox(Action<RectangleF> performSelect)
                 : base(performSelect)
