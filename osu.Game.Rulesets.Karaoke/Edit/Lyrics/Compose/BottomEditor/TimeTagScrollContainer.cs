@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 {
-    public abstract class TimeTagEditorScrollContainer : BindableScrollContainer
+    public abstract class TimeTagScrollContainer : BindableScrollContainer
     {
         private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
         private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 
         public readonly Lyric HitObject;
 
-        protected TimeTagEditorScrollContainer(Lyric lyric)
+        protected TimeTagScrollContainer(Lyric lyric)
         {
             HitObject = lyric;
             RelativeSizeAxes = Axes.X;

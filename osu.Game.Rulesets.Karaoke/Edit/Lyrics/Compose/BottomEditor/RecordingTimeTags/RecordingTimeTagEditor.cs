@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags
 {
     [Cached]
-    public class RecordingTimeTagEditor : TimeTagEditorScrollContainer
+    public class RecordingTimeTagEditor : TimeTagScrollContainer
     {
         public const float TIMELINE_HEIGHT = 20;
 

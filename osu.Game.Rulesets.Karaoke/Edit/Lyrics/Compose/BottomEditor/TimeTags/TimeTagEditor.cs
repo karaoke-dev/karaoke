@@ -20,7 +20,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.TimeTags
 {
     [Cached]
-    public class TimeTagEditor : TimeTagEditorScrollContainer, IPositionSnapProvider
+    public class TimeTagEditor : TimeTagScrollContainer, IPositionSnapProvider
     {
         private const float timeline_height = 38;
 
