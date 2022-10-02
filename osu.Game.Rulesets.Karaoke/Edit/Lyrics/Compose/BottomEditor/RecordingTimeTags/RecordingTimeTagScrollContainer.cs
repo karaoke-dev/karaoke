@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags
 {
     [Cached]
-    public class RecordingTimeTagEditor : TimeTagScrollContainer
+    public class RecordingTimeTagScrollContainer : TimeTagScrollContainer
     {
         public const float TIMELINE_HEIGHT = 20;
 
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         private OsuSpriteText trackTimer;
 
-        public RecordingTimeTagEditor(Lyric lyric)
+        public RecordingTimeTagScrollContainer(Lyric lyric)
             : base(lyric)
         {
             // We don't want the centre marker to scroll

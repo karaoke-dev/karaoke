@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
                 Anchor = Anchor.BottomLeft;
                 RelativePositionAxes = Axes.X;
-                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT / 2);
+                Size = new Vector2(RecordingTimeTagScrollContainer.TIMELINE_HEIGHT / 2);
 
                 InternalChild = drawableTextIndex = new DrawableTextIndex
                 {
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, RecordingTimeTagEditor timeline, ILyricCaretState lyricCaretState)
+            private void load(OsuColour colours, RecordingTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState)
             {
                 position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
                 position.BindValueChanged(e =>
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
                 Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.CentreLeft, Anchor.CentreRight);
 
                 RelativePositionAxes = Axes.X;
-                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
+                Size = new Vector2(RecordingTimeTagScrollContainer.TIMELINE_HEIGHT);
 
                 bindableTime = timeTag.TimeBindable.GetBoundCopy();
                 InternalChildren = new Drawable[]
@@ -159,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
             }
 
             [BackgroundDependencyLoader]
-            private void load(EditorClock clock, OsuColour colours, RecordingTimeTagEditor timeline)
+            private void load(EditorClock clock, OsuColour colours, RecordingTimeTagScrollContainer timeline)
             {
                 textIndexPiece.Clock = clock;
                 textIndexPiece.Colour = colours.GetTimeTagColour(timeTag);
