@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             => new DrawableSingerInfo(singer);
 
         protected override Drawable CreateTimeLinePart(Singer singer)
-            => new SingerLyricEditor(singer);
+            => new SingerLyricTimeline(singer);
 
         internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu, IHasPopover
         {
