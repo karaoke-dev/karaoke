@@ -17,7 +17,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 {
     [Cached]
-    public class SingerLyricEditor : EditorScrollContainer
+    public class SingerLyricEditor : BindableScrollContainer
     {
         private const float timeline_height = 38;
 

@@ -11,12 +11,12 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
 {
-    public abstract class EditorScrollContainer : ZoomableScrollContainer
+    public abstract class BindableScrollContainer : ZoomableScrollContainer
     {
         protected readonly BindableFloat BindableZoom = new();
         protected readonly BindableFloat BindableCurrent = new();
 
-        protected EditorScrollContainer()
+        protected BindableScrollContainer()
         {
             ZoomDuration = 200;
             ZoomEasing = Easing.OutQuint;
