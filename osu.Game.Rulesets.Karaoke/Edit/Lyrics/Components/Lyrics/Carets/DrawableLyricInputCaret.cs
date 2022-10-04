@@ -13,7 +13,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osuTK;
 using osuTK.Graphics;
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditLyricRowState editLyricRowState)
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
         {
             InternalChild = drawableCaret = new Box
             {
@@ -65,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                     {
                         if (lyricTextChangeHandler.IsSelectionsLocked())
                         {
-                            editLyricRowState.TriggerDisallowEditEffect();
+                            editableLyricState.TriggerDisallowEditEffect();
                             return;
                         }
 
@@ -81,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                     {
                         if (lyricTextChangeHandler.IsSelectionsLocked())
                         {
-                            editLyricRowState.TriggerDisallowEditEffect();
+                            editableLyricState.TriggerDisallowEditEffect();
                             return;
                         }
 
