@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new SingleLyricEditor(lyric)
+            return new EditableLyric(lyric)
             {
                 Margin = new MarginPadding { Left = 10 },
                 RelativeSizeAxes = Axes.X,

@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
-    public class SingleLyricEditor : CompositeDrawable, IHasTooltip
+    public class EditableLyric : CompositeDrawable, IHasTooltip
     {
         [Cached]
         private readonly EditorKaraokeSpriteText karaokeSpriteText;
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         private readonly Lyric lyric;
         private LocalisableString? lockReason;
 
-        public SingleLyricEditor(Lyric lyric)
+        public EditableLyric(Lyric lyric)
         {
             this.lyric = lyric;
 
