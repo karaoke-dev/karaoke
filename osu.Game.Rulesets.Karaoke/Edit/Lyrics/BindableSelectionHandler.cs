@@ -7,9 +7,9 @@ using System.Linq;
 using osu.Framework.Graphics;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public abstract class ExtendSelectionHandler<T> : SelectionHandler<T>
+    public abstract class BindableSelectionHandler<T> : SelectionHandler<T>
     {
         protected override void OnSelectionChanged()
         {

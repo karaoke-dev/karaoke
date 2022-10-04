@@ -9,9 +9,9 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public abstract class ExtendBlueprintContainer<T> : BlueprintContainer<T> where T : class
+    public abstract class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
         protected void RegisterBindable<TItem>(BindableList<TItem> bindable) where TItem : T
         {
