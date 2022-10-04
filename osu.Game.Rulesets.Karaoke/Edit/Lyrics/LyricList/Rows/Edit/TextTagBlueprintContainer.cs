@@ -11,7 +11,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -21,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
 {
-    public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
+    public abstract class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -42,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
 
-        protected abstract class TextTagSelectionHandler : ExtendSelectionHandler<T>
+        protected abstract class TextTagSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private EditorKaraokeSpriteText karaokeSpriteText { get; set; }

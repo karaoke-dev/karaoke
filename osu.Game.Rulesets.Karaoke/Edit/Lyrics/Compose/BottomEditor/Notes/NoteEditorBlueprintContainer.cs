@@ -7,14 +7,13 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 {
-    internal class EditNoteBlueprintContainer : ExtendBlueprintContainer<Note>
+    internal class EditNoteBlueprintContainer : BindableBlueprintContainer<Note>
     {
         protected override SelectionBlueprint<Note> CreateBlueprintFor(Note hitObject)
             => new NoteEditorHitObjectBlueprint(hitObject);
@@ -28,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
             RegisterBindable(notes);
         }
 
-        protected class NoteEditorSelectionHandler : ExtendSelectionHandler<Note>
+        protected class NoteEditorSelectionHandler : BindableSelectionHandler
         {
             [BackgroundDependencyLoader]
             private void load(IEditNoteModeState editNoteModeState)

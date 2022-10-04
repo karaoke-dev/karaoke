@@ -19,7 +19,6 @@ using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -28,7 +27,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class AdjustTimeTagBlueprintContainer : ExtendBlueprintContainer<TimeTag>
+    public class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
     {
         [Resolved(CanBeNull = true)]
         private AdjustTimeTagScrollContainer timeline { get; set; }
@@ -119,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             return true;
         }
 
-        protected class TimeTagEditorSelectionHandler : ExtendSelectionHandler<TimeTag>
+        protected class TimeTagEditorSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
