@@ -8,27 +8,21 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 {
-    public abstract class EditRowExtend : VisibilityContainer
+    public abstract class BaseBottomEditor : CompositeDrawable
     {
         private const int info_part_spacing = 210;
-        private const float transition_duration = 600;
 
         public abstract float ContentHeight { get; }
-
-        private readonly Lyric lyric;
-
-        protected EditRowExtend(Lyric lyric)
-        {
-            this.lyric = lyric;
-        }
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
         {
+            Height = ContentHeight;
+            RelativeSizeAxes = Axes.X;
+
             InternalChildren = new Drawable[]
             {
                 new Box
@@ -50,13 +44,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
                     {
                         new[]
                         {
-                            CreateInfo(lyric),
+                            CreateInfo(),
                             new Container
                             {
                                 Masking = true,
                                 RelativeSizeAxes = Axes.X,
                                 AutoSizeAxes = Axes.Y,
-                                Child = CreateContent(lyric),
+                                Child = CreateContent(),
                             }
                         }
                     }
@@ -64,21 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             };
         }
 
-        protected abstract Drawable CreateInfo(Lyric lyric);
+        protected abstract Drawable CreateInfo();
 
-        protected abstract Drawable CreateContent(Lyric lyric);
-
-        protected override void PopIn()
-        {
-            this.ResizeHeightTo(ContentHeight, transition_duration, Easing.OutQuint);
-            this.FadeIn(transition_duration, Easing.OutQuint);
-        }
-
-        protected override void PopOut()
-        {
-            this.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
-            this.FadeOut(transition_duration);
-        }
+        protected abstract Drawable CreateContent();
 
         protected override bool OnDragStart(DragStartEvent e)
         {

@@ -29,8 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         private CurrentTimeMarker currentTimeMarker;
 
-        public AdjustTimeTagScrollContainer(Lyric lyric)
-            : base(lyric)
+        public AdjustTimeTagScrollContainer()
         {
             Padding = new MarginPadding { Top = 10 };
         }
@@ -60,17 +59,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             content.Height = timeline_height;
             content.AddRange(new Drawable[]
             {
-                new AdjustTimeTagBlueprintContainer(HitObject),
+                new AdjustTimeTagBlueprintContainer(),
                 currentTimeMarker = new CurrentTimeMarker(),
             });
         }
 
-        protected override void LoadComplete()
+        protected override void OnLyricChanged(Lyric newLyric)
         {
-            base.LoadComplete();
-
             const float preempt_time = 200;
-            float position = getPositionFromTime(HitObject.LyricStartTime - preempt_time);
+            float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
         }
 

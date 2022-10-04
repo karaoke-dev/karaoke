@@ -5,28 +5,23 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 {
-    public class NoteRowExtend : EditRowExtend
+    public class NoteBottomEditor : BaseBottomEditor
     {
         public override float ContentHeight => 180;
 
-        public NoteRowExtend(Lyric lyric)
-            : base(lyric)
-        {
-        }
-
-        protected override Drawable CreateInfo(Lyric lyric)
+        protected override Drawable CreateInfo()
         {
             // todo : waiting for implementation.
             return new Container();
         }
 
-        protected override Drawable CreateContent(Lyric lyric)
+        protected override Drawable CreateContent()
         {
-            return new NoteEditor(lyric)
+            return new NoteEditor
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 150,

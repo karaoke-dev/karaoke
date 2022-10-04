@@ -19,8 +19,8 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 {
@@ -51,13 +51,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
         [Resolved]
         private IEditNoteModeState editNoteModeState { get; set; }
 
-        private readonly Lyric lyric;
+        [Resolved]
+        private Playfield playfield { get; set; }
 
-        public NoteEditorHitObjectBlueprint(Lyric lyric, Note note)
+        protected ScrollingHitObjectContainer HitObjectContainer => ((EditorNotePlayfield)playfield).HitObjectContainer;
+
+        public NoteEditorHitObjectBlueprint(Note note)
             : base(note)
         {
-            this.lyric = lyric;
-
             RelativeSizeAxes = Axes.None;
             AddInternal(new EditBodyPiece
             {
@@ -79,29 +80,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
             var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
             Anchor = Origin = anchor;
 
-            Position = Parent.ToLocalSpace(screenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
+            Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
             Y += notePositionInfo.Calculator.YPositionAt(Item.Tone);
 
-            Width = lengthAtTime(Item.StartTime, Item.EndTime);
+            Width = HitObjectContainer.LengthAtTime(Item.StartTime, Item.EndTime);
             Height = notePositionInfo.Calculator.ColumnHeight;
-        }
-
-        private Vector2 screenSpacePositionAtTime(double time)
-        {
-            float localPosition = positionAtTime(time, lyric.LyricStartTime);
-            localPosition += axisInverted ? scrollLength : 0;
-            return Parent.ToScreenSpace(new Vector2(localPosition, Parent.DrawHeight / 2));
-        }
-
-        private float positionAtTime(double time, double currentTime)
-        {
-            float scrollPosition = scrollingInfo.Algorithm.PositionAt(time, currentTime, timeRange.Value, scrollLength);
-            return axisInverted ? -scrollPosition : scrollPosition;
-        }
-
-        private float lengthAtTime(double startTime, double endTime)
-        {
-            return scrollingInfo.Algorithm.GetLength(startTime, endTime, timeRange.Value, scrollLength);
         }
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]

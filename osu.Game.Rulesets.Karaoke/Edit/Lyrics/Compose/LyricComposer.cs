@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,17 +13,21 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Layout;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 {
     public class LyricComposer : CompositeDrawable
     {
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly Bindable<PanelLayout> bindablePanelLayout = new();
+        private readonly Bindable<BottomEditorType?> bindableBottomEditorType = new();
+
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
         private readonly IDictionary<PanelType, Bindable<bool>> panelStatus = new Dictionary<PanelType, Bindable<bool>>();
-
         private readonly IDictionary<PanelType, Panel> panelInstance = new Dictionary<PanelType, Panel>();
 
         private readonly IDictionary<PanelDirection, List<PanelType>> panelDirections = new Dictionary<PanelDirection, List<PanelType>>
@@ -31,33 +36,86 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             { PanelDirection.Right, new List<PanelType>() },
         };
 
+        [Resolved, AllowNull]
+        private LyricEditorColourProvider colourProvider { get; set; }
+
         private readonly Container mainEditArea;
-        private readonly Box background;
+        private readonly Container lyricEditor;
+
+        private readonly Container bottomEditArea;
+        private readonly Container<BaseBottomEditor> bottomEditorContainer;
 
         public LyricComposer()
         {
+            Box mainEditorBackground;
+            Box bottomEditorBackground;
+
             InternalChildren = new Drawable[]
             {
-                background = new Box
-                {
-                    Name = "Background",
-                    RelativeSizeAxes = Axes.Both,
-                },
                 mainEditArea = new Container
                 {
                     Name = "Edit area and action buttons",
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        new SpecialActionToolbar
+                        mainEditorBackground = new Box
                         {
-                            Name = "Toolbar",
-                            Anchor = Anchor.BottomCentre,
-                            Origin = Anchor.BottomCentre,
+                            Name = "Background",
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        lyricEditor = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Children = new[]
+                            {
+                                new SpecialActionToolbar
+                                {
+                                    Name = "Toolbar",
+                                    Anchor = Anchor.BottomCentre,
+                                    Origin = Anchor.BottomCentre,
+                                }
+                            }
+                        }
+                    }
+                },
+                bottomEditArea = new Container
+                {
+                    Name = "Edit area and action buttons",
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomCentre,
+                    Children = new Drawable[]
+                    {
+                        bottomEditorBackground = new Box
+                        {
+                            Name = "Background",
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        bottomEditorContainer = new Container<BaseBottomEditor>
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
                         }
                     }
                 },
             };
+
+            bindableMode.BindValueChanged(x =>
+            {
+                toggleChangeBottomEditor();
+
+                Schedule(() =>
+                {
+                    mainEditorBackground.Colour = colourProvider.Background1(x.NewValue);
+                    bottomEditorBackground.Colour = colourProvider.Background5(x.NewValue);
+                });
+            }, true);
+
+            bindableTimeTagEditMode.BindValueChanged(_ =>
+            {
+                toggleChangeBottomEditor();
+            });
 
             initializePanel();
 
@@ -65,6 +123,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             {
                 assignPanelPosition(e.NewValue);
             }, true);
+
+            bindableBottomEditorType.BindValueChanged(e =>
+            {
+                assignBottomEditor(e.NewValue);
+            });
 
             foreach (var (type, bindable) in panelStatus)
             {
@@ -82,6 +145,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             }
         }
 
+        [BackgroundDependencyLoader(true)]
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state, ITimeTagModeState timeTagModeState)
+        {
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);
+
+            bindableMode.BindTo(state.BindableMode);
+
+            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
+        }
+
+        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
+        {
+            if (invalidation.HasFlagFast(Invalidation.DrawSize) && source == InvalidationSource.Parent)
+                calculatePanelPosition();
+
+            return base.OnInvalidate(invalidation, source);
+        }
+
+        #region Panel
+
         private void initializePanel()
         {
             foreach (var panelType in EnumUtils.GetValues<PanelType>())
@@ -91,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 panelStatus.Add(panelType, new Bindable<bool>(true));
                 panelInstance.Add(panelType, instance);
 
-                AddInternal(instance);
+                mainEditArea.Add(instance);
             }
 
             static Panel getInstance(PanelType panelType) =>
@@ -107,28 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         {
             panelInstance[panel].State.Value = show ? Visibility.Visible : Visibility.Hidden;
 
-            calculateEditAreaSize();
-        }
-
-        [BackgroundDependencyLoader(true)]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state, LyricEditorColourProvider colourProvider)
-        {
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);
-
-            bindableMode.BindTo(state.BindableMode);
-            bindableMode.BindValueChanged(x =>
-            {
-                background.Colour = colourProvider.Background1(state.Mode);
-            }, true);
-        }
-
-        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
-        {
-            if (invalidation.HasFlagFast(Invalidation.DrawSize) && source == InvalidationSource.Parent)
-                calculatePanelPosition();
-
-            return base.OnInvalidate(invalidation, source);
+            calculateLyricEditorSize();
         }
 
         private void calculatePanelPosition()
@@ -167,7 +230,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             }
 
             closeOtherPanelsInTheSameDirection(PanelType.Property);
-            calculateEditAreaSize();
+            calculateLyricEditorSize();
         }
 
         private void closeOtherPanelsInTheSameDirection(PanelType exceptPanel)
@@ -181,7 +244,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             }
         }
 
-        private void calculateEditAreaSize()
+        private void calculateLyricEditorSize()
         {
             var padding = new MarginPadding();
 
@@ -205,11 +268,56 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 }
             }
 
-            mainEditArea.Padding = padding;
+            lyricEditor.Padding = padding;
 
             float getWidth(Panel panel)
                 => panel.State.Value == Visibility.Visible ? panel.Width : 0;
         }
+
+        #endregion
+
+        #region Bottom editor
+
+        private void toggleChangeBottomEditor()
+        {
+            bindableBottomEditorType.Value = getBottomEditorType(bindableMode.Value, bindableTimeTagEditMode.Value);
+
+            static BottomEditorType? getBottomEditorType(LyricEditorMode mode, TimeTagEditMode timeTagEditMode) =>
+                mode switch
+                {
+                    LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
+                    LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
+                    LyricEditorMode.EditNote => BottomEditorType.Note,
+                    _ => null
+                };
+        }
+
+        private void assignBottomEditor(BottomEditorType? bottomEditorType)
+        {
+            bottomEditorContainer.Clear();
+
+            var bottomEditor = createBottomEditor(bottomEditorType);
+            if (bottomEditor != null)
+                bottomEditorContainer.Add(bottomEditor);
+
+            calculateBottomEditAreaSize(bottomEditor);
+
+            static BaseBottomEditor? createBottomEditor(BottomEditorType? bottomEditorType) =>
+                bottomEditorType switch
+                {
+                    BottomEditorType.RecordingTimeTag => new RecordingTimeTagBottomEditor(),
+                    BottomEditorType.AdjustTimeTags => new AdjustTimeTagBottomEditor(),
+                    BottomEditorType.Note => new NoteBottomEditor(),
+                    _ => null
+                };
+        }
+
+        private void calculateBottomEditAreaSize(BaseBottomEditor? bottomEditor)
+        {
+            float bottomEditorHeight = bottomEditor?.ContentHeight ?? 0;
+        }
+
+        #endregion
 
         private enum PanelType
         {
@@ -223,6 +331,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             LeftAndRight,
 
             LeftOnly,
+        }
+
+        private enum BottomEditorType
+        {
+            RecordingTimeTag,
+
+            AdjustTimeTags,
+
+            Note,
         }
     }
 }

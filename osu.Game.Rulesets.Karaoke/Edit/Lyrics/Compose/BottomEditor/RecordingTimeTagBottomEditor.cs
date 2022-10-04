@@ -5,28 +5,23 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 {
-    public class RecordingTimeTagRowExtend : EditRowExtend
+    public class RecordingTimeTagBottomEditor : BaseBottomEditor
     {
         public override float ContentHeight => 60;
 
-        public RecordingTimeTagRowExtend(Lyric lyric)
-            : base(lyric)
-        {
-        }
-
-        protected override Drawable CreateInfo(Lyric lyric)
+        protected override Drawable CreateInfo()
         {
             // todo : waiting for implementation.
             return new Container();
         }
 
-        protected override Drawable CreateContent(Lyric lyric)
+        protected override Drawable CreateContent()
         {
-            return new RecordingTimeTagScrollContainer(lyric)
+            return new RecordingTimeTagScrollContainer
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 60,

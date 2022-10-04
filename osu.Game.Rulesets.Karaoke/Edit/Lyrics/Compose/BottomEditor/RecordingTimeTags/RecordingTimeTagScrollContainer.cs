@@ -51,8 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         private OsuSpriteText trackTimer;
 
-        public RecordingTimeTagScrollContainer(Lyric lyric)
-            : base(lyric)
+        public RecordingTimeTagScrollContainer()
         {
             // We don't want the centre marker to scroll
             AddInternal(centreMarker = new CentreMarker());
@@ -97,8 +96,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
             content.AddRange(new[]
             {
                 centreMarker.CreateProxy(),
-                new RecordingTimeTagPart(HitObject),
+                new RecordingTimeTagPart(),
             });
+        }
+
+        protected override void OnLyricChanged(Lyric newLyric)
+        {
         }
 
         protected override void Update()
