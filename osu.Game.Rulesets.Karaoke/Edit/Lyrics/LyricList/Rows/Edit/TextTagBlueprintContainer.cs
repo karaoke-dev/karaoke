@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
 
-        protected abstract class TextTagSelectionHandler : BindableSelectionHandler<T>
+        protected abstract class TextTagSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private EditorKaraokeSpriteText karaokeSpriteText { get; set; }

@@ -6,6 +6,7 @@
 using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -73,6 +74,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             // check any selected items that is not in current blueprint container.
             return SelectedItems.Any(x => !items.Contains(x));
+        }
+
+        public abstract class BindableSelectionHandler : SelectionHandler<T>
+        {
+            protected override void OnSelectionChanged()
+            {
+                base.OnSelectionChanged();
+
+                updateVisibility();
+            }
+
+            /// <summary>
+            /// Updates whether this <see cref="SelectionHandler{T}"/> is visible.
+            /// </summary>
+            private void updateVisibility()
+            {
+                bool visible = containsSelectionInCurrentBlueprintContainer();
+                SelectionBox.FadeTo(visible ? 1f : 0.0f);
+            }
+
+            private bool containsSelectionInCurrentBlueprintContainer()
+            {
+                var items = SelectedBlueprints.Select(x => x.Item);
+
+                // check any selected items that is in current blueprint container.
+                return SelectedItems.Any(x => items.Contains(x));
+            }
         }
     }
 }

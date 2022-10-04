@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             return true;
         }
 
-        protected class TimeTagEditorSelectionHandler : BindableSelectionHandler<TimeTag>
+        protected class TimeTagEditorSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }

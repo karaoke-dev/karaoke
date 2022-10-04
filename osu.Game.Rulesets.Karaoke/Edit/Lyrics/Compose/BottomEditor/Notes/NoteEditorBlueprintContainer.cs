@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
             RegisterBindable(notes);
         }
 
-        protected class NoteEditorSelectionHandler : BindableSelectionHandler<Note>
+        protected class NoteEditorSelectionHandler : BindableSelectionHandler
         {
             [BackgroundDependencyLoader]
             private void load(IEditNoteModeState editNoteModeState)
