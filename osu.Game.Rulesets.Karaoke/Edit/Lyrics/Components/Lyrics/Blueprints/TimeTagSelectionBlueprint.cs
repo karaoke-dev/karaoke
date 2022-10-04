@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
 {
     public class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     {

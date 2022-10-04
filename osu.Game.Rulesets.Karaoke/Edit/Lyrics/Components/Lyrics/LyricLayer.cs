@@ -7,7 +7,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class LyricLayer : BaseLayer
     {

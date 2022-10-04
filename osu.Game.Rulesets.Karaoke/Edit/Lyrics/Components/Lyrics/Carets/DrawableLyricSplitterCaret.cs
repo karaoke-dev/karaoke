@@ -12,7 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Carets
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
     public class DrawableLyricSplitterCaret : DrawableLyricTextCaret
     {

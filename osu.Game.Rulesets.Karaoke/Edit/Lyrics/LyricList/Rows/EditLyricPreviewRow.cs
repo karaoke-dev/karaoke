@@ -4,7 +4,7 @@
 #nullable disable
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info;
 using osu.Game.Rulesets.Karaoke.Objects;
 

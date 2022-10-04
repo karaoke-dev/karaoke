@@ -9,11 +9,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class SingleLyricEditor : CompositeDrawable, IHasTooltip
     {

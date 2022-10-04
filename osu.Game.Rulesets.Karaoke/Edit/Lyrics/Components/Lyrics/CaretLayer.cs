@@ -12,12 +12,12 @@ using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Carets;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class CaretLayer : BaseLayer
     {

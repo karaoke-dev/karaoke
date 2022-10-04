@@ -5,10 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class TimeTagLayer : BaseLayer
     {

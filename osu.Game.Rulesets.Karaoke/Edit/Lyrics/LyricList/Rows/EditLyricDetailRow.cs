@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.Badge;
 using osu.Game.Rulesets.Karaoke.Objects;
 

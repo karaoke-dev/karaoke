@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.Edit

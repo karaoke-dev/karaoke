@@ -8,9 +8,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
 {
-    public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<RomajiTag>
+    public class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Blueprints
         [UsedImplicitly]
         private readonly BindableNumber<int> endIndex;
 
-        public RomajiTagSelectionBlueprint(RomajiTag item)
+        public RubyTagSelectionBlueprint(RubyTag item)
             : base(item)
         {
             text = item.TextBindable.GetBoundCopy();
