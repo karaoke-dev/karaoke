@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
 {
     public abstract class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
     {

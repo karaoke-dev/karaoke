@@ -39,41 +39,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         [Resolved, AllowNull]
         private LyricEditorColourProvider colourProvider { get; set; }
 
-        private readonly Container mainEditArea;
-        private readonly Container lyricEditor;
+        private readonly Container centerEditArea;
+        private readonly Container mainEditorArea;
 
         private readonly Container bottomEditArea;
         private readonly Container<BaseBottomEditor> bottomEditorContainer;
 
         public LyricComposer()
         {
-            Box mainEditorBackground;
+            Box centerEditorBackground;
             Box bottomEditorBackground;
 
             InternalChildren = new Drawable[]
             {
-                mainEditArea = new Container
+                centerEditArea = new Container
                 {
                     Name = "Edit area and action buttons",
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        mainEditorBackground = new Box
+                        centerEditorBackground = new Box
                         {
                             Name = "Background",
                             RelativeSizeAxes = Axes.Both,
                         },
-                        lyricEditor = new Container
+                        mainEditorArea = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Children = new[]
+                            Children = new Drawable[]
                             {
+                                new LyricEditor(),
                                 new SpecialActionToolbar
                                 {
                                     Name = "Toolbar",
                                     Anchor = Anchor.BottomCentre,
                                     Origin = Anchor.BottomCentre,
-                                }
+                                },
                             }
                         }
                     }
@@ -107,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
                 Schedule(() =>
                 {
-                    mainEditorBackground.Colour = colourProvider.Background1(x.NewValue);
+                    centerEditorBackground.Colour = colourProvider.Background1(x.NewValue);
                     bottomEditorBackground.Colour = colourProvider.Background5(x.NewValue);
                 });
             }, true);
@@ -175,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 panelStatus.Add(panelType, new Bindable<bool>(true));
                 panelInstance.Add(panelType, instance);
 
-                mainEditArea.Add(instance);
+                centerEditArea.Add(instance);
             }
 
             static Panel getInstance(PanelType panelType) =>
@@ -268,7 +269,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 }
             }
 
-            lyricEditor.Padding = padding;
+            mainEditorArea.Padding = padding;
 
             float getWidth(Panel panel)
                 => panel.State.Value == Visibility.Visible ? panel.Width : 0;

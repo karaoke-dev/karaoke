@@ -4,7 +4,7 @@
 #nullable disable
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new SingleLyricEditor(lyric)
+            return new EditableLyric(lyric)
             {
                 Margin = new MarginPadding { Left = 10 },
                 RelativeSizeAxes = Axes.X,

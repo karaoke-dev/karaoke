@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.Badge;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            return new SingleLyricEditor(lyric)
+            return new EditableLyric(lyric)
             {
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft,

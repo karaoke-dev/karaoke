@@ -21,8 +21,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
-    [Cached(typeof(IEditLyricRowState))]
-    public abstract class Row : CompositeDrawable, IEditLyricRowState
+    public abstract class Row : CompositeDrawable
     {
         public const int SELECT_AREA_WIDTH = 48;
 
@@ -30,13 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         private LyricEditorColourProvider colourProvider { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<int> bindableLyricPropertyWritableVersion;
         private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
-
-        public event Action<LyricEditorMode>? WritableVersionChanged;
-
-        public event Action<LyricEditorMode>? DisallowEditEffectTriggered;
 
         protected readonly Lyric Lyric;
 
@@ -45,7 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         protected Row(Lyric lyric)
         {
             Lyric = lyric;
-            bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
@@ -91,16 +84,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
                 }
             };
 
-            bindableMode.BindValueChanged(x =>
-            {
-                WritableVersionChanged?.Invoke(bindableMode.Value);
-            });
-
-            bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
-            {
-                WritableVersionChanged?.Invoke(bindableMode.Value);
-            });
-
             bindableHoverCaretPosition.BindValueChanged(e =>
             {
                 if (ValueChangedEventUtils.LyricChanged(e))
@@ -114,16 +97,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
             });
         }
 
-        public void TriggerDisallowEditEffect()
-        {
-            DisallowEditEffectTriggered?.Invoke(bindableMode.Value);
-        }
-
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
+        private void load(ILyricCaretState lyricCaretState)
         {
-            bindableMode.BindTo(state.BindableMode);
-
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
