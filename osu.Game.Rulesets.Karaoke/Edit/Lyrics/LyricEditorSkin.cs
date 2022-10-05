@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             get => LyricConfig.MainTextFont.Size;
             set
             {
-                float textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
+                float textSize = Math.Clamp(value, MIN_FONT_SIZE, MAX_FONT_SIZE);
                 float changePercentage = textSize / FontSize;
 
                 LyricConfig.MainTextFont

@@ -13,7 +13,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -24,6 +26,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -67,11 +70,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly BindableBeatDivisor beatDivisor = new();
 
         private readonly Bindable<LyricEditorMode> bindableMode = new();
+        private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.Preview);
+        private readonly Bindable<LyricEditorLayout> bindableCurrentLayout = new();
 
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
         private readonly GridContainer gridContainer;
-        private readonly LyricList lyricList;
+        private readonly Container editArea;
         private readonly Container leftSideSettings;
         private readonly Container rightSideSettings;
 
@@ -103,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
-                        lyricList = new LyricList
+                        editArea = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
@@ -120,8 +125,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // should control grid container spacing and place some component.
                 initializeSettingsArea();
 
+                reCalculateLayout();
+
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
+            }, true);
+
+            bindablePreferLayout.BindValueChanged(e =>
+            {
+                reCalculateLayout();
+            });
+
+            bindableCurrentLayout.BindValueChanged(e =>
+            {
+                switchLayout(e.NewValue);
             }, true);
         }
 
@@ -188,6 +205,73 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
+        private void reCalculateLayout()
+        {
+            var supportedLayout = getSupportedLayout(Mode);
+            var preferLayout = bindablePreferLayout.Value;
+
+            bindableCurrentLayout.Value = GetSuitableLayout(supportedLayout, preferLayout);
+
+            static LyricEditorLayout getSupportedLayout(LyricEditorMode mode) =>
+                mode switch
+                {
+                    LyricEditorMode.View => LyricEditorLayout.Preview,
+                    LyricEditorMode.Texting => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                    LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                    LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                    LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                    LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                    LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
+                    LyricEditorMode.EditNote => LyricEditorLayout.Detail,
+                    LyricEditorMode.Singer => LyricEditorLayout.Preview,
+                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                };
+        }
+
+        internal static LyricEditorLayout GetSuitableLayout(LyricEditorLayout supportedLayout, LyricEditorLayout preferLayout)
+        {
+            var union = supportedLayout & preferLayout;
+            return union != 0 ? union : supportedLayout;
+        }
+
+        private void switchLayout(LyricEditorLayout layout)
+        {
+            // todo: have animation to switch the layout.
+            switch (layout)
+            {
+                case LyricEditorLayout.Preview:
+                    editArea.Children = new[]
+                    {
+                        new PreviewLyricList
+                        {
+                            RelativeSizeAxes = Axes.Both
+                        }
+                    };
+                    break;
+
+                case LyricEditorLayout.Detail:
+                    editArea.Children = new Drawable[]
+                    {
+                        new LyricComposer
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Size = new Vector2(1, 0.6f),
+                        },
+                        new DetailLyricList
+                        {
+                            RelativePositionAxes = Axes.Y,
+                            Position = new Vector2(0, 0.6f),
+                            Size = new Vector2(1, 0.4f),
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                    };
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(layout), layout, null);
+            }
+        }
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -198,10 +282,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load(EditorBeatmap beatmap, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             // set-up divisor.
             beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, bindablePreferLayout);
         }
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
