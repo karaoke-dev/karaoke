@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
         private readonly Container indexRangeBackground;
 
         [Resolved]
-        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
+        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
         protected TextTagSelectionBlueprint(T item)
             : base(item)

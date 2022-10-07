@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         protected abstract class TextTagSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
-            private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
+            private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
             private float deltaScaleSize;
 

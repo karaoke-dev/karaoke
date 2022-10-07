@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     public class EditableLyric : CompositeDrawable, IEditableLyricState, IHasTooltip
     {
         [Cached]
-        private readonly EditorKaraokeSpriteText karaokeSpriteText;
+        private readonly InteractableKaraokeSpriteText karaokeSpriteText;
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<int> bindableLyricPropertyWritableVersion;
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             Padding = new MarginPadding { Bottom = 10 };
             InternalChildren = new Drawable[]
             {
-                new LyricLayer(lyric, karaokeSpriteText = new EditorKaraokeSpriteText(lyric)),
+                new LyricLayer(lyric, karaokeSpriteText = new InteractableKaraokeSpriteText(lyric)),
                 new TimeTagLayer(lyric),
                 new CaretLayer(lyric),
                 new BlueprintLayer(lyric),

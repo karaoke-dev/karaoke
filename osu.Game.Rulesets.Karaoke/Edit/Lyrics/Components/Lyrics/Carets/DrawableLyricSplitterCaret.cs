@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         private OsuColour colours { get; set; }
 
         [Resolved]
-        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
+        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
         public DrawableLyricSplitterCaret(bool preview)
             : base(preview)

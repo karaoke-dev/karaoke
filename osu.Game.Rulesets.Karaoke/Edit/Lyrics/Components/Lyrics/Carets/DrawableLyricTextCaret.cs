@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
     public abstract class DrawableLyricTextCaret : DrawableCaret<TextCaretPosition>
     {
         [Resolved]
-        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
+        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
         protected DrawableLyricTextCaret(bool preview)
             : base(preview)
