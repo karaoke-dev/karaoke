@@ -84,6 +84,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
                 }
             };
 
+            bindableMode.BindValueChanged(_ =>
+            {
+                updateBackgroundColour();
+            });
+
             bindableHoverCaretPosition.BindValueChanged(e =>
             {
                 if (ValueChangedEventUtils.LyricChanged(e))
@@ -98,8 +103,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
+        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
         {
+            bindableMode.BindTo(state.BindableMode);
+
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
