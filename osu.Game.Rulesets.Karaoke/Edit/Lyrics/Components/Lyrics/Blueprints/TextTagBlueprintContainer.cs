@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
 {
     public abstract class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
     {
