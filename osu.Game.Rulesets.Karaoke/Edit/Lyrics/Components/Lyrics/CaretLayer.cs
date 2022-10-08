@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     public class CaretLayer : BaseLayer
     {
         [Resolved, AllowNull]
-        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
+        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }

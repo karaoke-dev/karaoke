@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState, EditorKaraokeSpriteText karaokeSpriteText)
+        private void load(ILyricCaretState lyricCaretState, InteractableKaraokeSpriteText karaokeSpriteText)
         {
             caretPosition = Preview ? lyricCaretState.BindableHoverCaretPosition.GetBoundCopy() : lyricCaretState.BindableCaretPosition.GetBoundCopy();
             caretPosition.BindValueChanged(e =>

@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
-    public class EditorKaraokeSpriteText : DrawableKaraokeSpriteText<EditorKaraokeSpriteText.EditorLyricSpriteText>
+    public class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
     {
         private const int time_tag_spacing = 8;
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         public Action SizeChanged;
 
-        public EditorKaraokeSpriteText(Lyric lyric)
+        public InteractableKaraokeSpriteText(Lyric lyric)
             : base(lyric)
         {
             HitObject = lyric;
