@@ -6,6 +6,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -40,10 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 GroupId = 2,
             };
             var actual = (DefaultMappingRole)JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings())!;
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.ElementType, actual.ElementType);
-            Assert.AreEqual(expected.ElementId, actual.ElementId);
-            Assert.AreEqual(expected.GroupId, actual.GroupId);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
     }
 }

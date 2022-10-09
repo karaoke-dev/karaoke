@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -37,9 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 SingerIds = new[] { 1, 2 }
             };
             var actual = (GroupBySingerIds)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
-            Assert.AreEqual(expected.ID, actual.ID);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.SingerIds, actual.SingerIds);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
         [Test]
@@ -69,9 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 SingerNumber = 2,
             };
             var actual = (GroupBySingerNumber)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
-            Assert.AreEqual(expected.ID, actual.ID);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.SingerNumber, actual.SingerNumber);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
         [Test]
@@ -101,9 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 LyricIds = new[] { 1, 2 }
             };
             var actual = (GroupByLyricIds)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
-            Assert.AreEqual(expected.ID, actual.ID);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.LyricIds, actual.LyricIds);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
     }
 }

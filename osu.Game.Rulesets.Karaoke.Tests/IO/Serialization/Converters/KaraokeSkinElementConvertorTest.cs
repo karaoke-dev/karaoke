@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -40,8 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = LyricConfig.CreateDefault();
             var actual = (LyricConfig)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.SmartHorizon, actual.SmartHorizon);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
         [Test]
@@ -75,8 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 VerticalMargin = 20,
             };
             var actual = (LyricLayout)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Alignment, actual.Alignment);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
         [Test]
@@ -98,10 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = LyricStyle.CreateDefault();
             var actual = (LyricStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.ID, actual.ID);
-            Assert.AreEqual(expected.LeftLyricTextShaders.Count, actual.LeftLyricTextShaders.Count);
-            Assert.AreEqual(expected.RightLyricTextShaders.Count, actual.RightLyricTextShaders.Count);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
         [Test]
@@ -121,9 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = NoteStyle.CreateDefault();
             var actual = (NoteStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.ID, actual.ID);
-            Assert.AreEqual(expected.BlinkColor, actual.BlinkColor);
+            ObjectAssert.ArePropertyEqual(expected, actual);
         }
     }
 }
