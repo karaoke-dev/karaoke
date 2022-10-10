@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Game.Input.Bindings;
 
@@ -15,28 +18,44 @@ namespace osu.Game.Rulesets.Karaoke
             : base(ruleset, 2, SimultaneousBindingMode.Unique)
         {
         }
+
+        protected override IEnumerable<Drawable> KeyBindingInputQueue
+        {
+            get
+            {
+                var queue = base.KeyBindingInputQueue;
+                return queue.OrderBy(x => x is IHasIKeyBindingHandlerOrder keyBindingHandlerOrder
+                    ? keyBindingHandlerOrder.KeyBindingHandlerOrder
+                    : int.MaxValue);
+            }
+        }
+    }
+
+    public interface IHasIKeyBindingHandlerOrder
+    {
+        int KeyBindingHandlerOrder { get; }
     }
 
     public enum KaraokeEditAction
     {
         // moving
         [Description("Up")]
-        Up,
+        MoveUp,
 
         [Description("Down")]
-        Down,
+        MoveDown,
 
         [Description("Left")]
-        Left,
+        MoveLeft,
 
         [Description("Right")]
-        Right,
+        MoveRight,
 
         [Description("First")]
-        First,
+        MoveToFirst,
 
         [Description("Last")]
-        Last,
+        MoveToLast,
 
         // Switch edit mode.
         [Description("Previous edit mode")]
@@ -60,10 +79,10 @@ namespace osu.Game.Rulesets.Karaoke
 
         // Edit time-tag.
         [Description("Create new")]
-        Create,
+        CreateTimeTag,
 
         [Description("Remove")]
-        Remove,
+        RemoveTimeTag,
 
         [Description("Shift the time-tag left.")]
         ShiftTheTimeTagLeft,

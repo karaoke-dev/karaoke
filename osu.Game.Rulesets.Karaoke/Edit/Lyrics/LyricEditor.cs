@@ -341,12 +341,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
             e.Action switch
             {
-                KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
-                KaraokeEditAction.Down => lyricCaretState.MoveCaret(MovingCaretAction.Down),
-                KaraokeEditAction.Left => lyricCaretState.MoveCaret(MovingCaretAction.Left),
-                KaraokeEditAction.Right => lyricCaretState.MoveCaret(MovingCaretAction.Right),
-                KaraokeEditAction.First => lyricCaretState.MoveCaret(MovingCaretAction.First),
-                KaraokeEditAction.Last => lyricCaretState.MoveCaret(MovingCaretAction.Last),
+                KaraokeEditAction.MoveUp => lyricCaretState.MoveCaret(MovingCaretAction.Up),
+                KaraokeEditAction.MoveDown => lyricCaretState.MoveCaret(MovingCaretAction.Down),
+                KaraokeEditAction.MoveLeft => lyricCaretState.MoveCaret(MovingCaretAction.Left),
+                KaraokeEditAction.MoveRight => lyricCaretState.MoveCaret(MovingCaretAction.Right),
+                KaraokeEditAction.MoveToFirst => lyricCaretState.MoveCaret(MovingCaretAction.First),
+                KaraokeEditAction.MoveToLast => lyricCaretState.MoveCaret(MovingCaretAction.Last),
                 _ => false
             };
 

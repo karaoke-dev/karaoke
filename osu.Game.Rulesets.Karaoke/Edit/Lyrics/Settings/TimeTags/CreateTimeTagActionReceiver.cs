@@ -41,11 +41,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
 
             switch (action)
             {
-                case KaraokeEditAction.Create:
+                case KaraokeEditAction.CreateTimeTag:
                     lyricTimeTagsChangeHandler.AddByPosition(index);
                     return true;
 
-                case KaraokeEditAction.Remove:
+                case KaraokeEditAction.RemoveTimeTag:
                     lyricTimeTagsChangeHandler.RemoveByPosition(index);
                     return true;
 
@@ -58,12 +58,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
         {
             switch (action)
             {
-                case KaraokeEditAction.Create:
+                case KaraokeEditAction.CreateTimeTag:
                     var index = timeTagCaretPosition.TimeTag.Index;
                     lyricTimeTagsChangeHandler.AddByPosition(index);
                     return true;
 
-                case KaraokeEditAction.Remove:
+                case KaraokeEditAction.RemoveTimeTag:
                     var timeTag = timeTagCaretPosition.TimeTag;
                     bool movable = lyricCaretState.MoveCaret(MovingCaretAction.Left);
                     lyricTimeTagsChangeHandler.Remove(timeTag);
