@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -10,9 +11,14 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
@@ -21,6 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     {
         [Cached]
         private readonly InteractableKaraokeSpriteText karaokeSpriteText;
+
+        [Resolved, AllowNull]
+        private ILyricCaretState lyricCaretState { get; set; }
 
         protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<int> bindableLyricPropertyWritableVersion;
@@ -63,7 +72,70 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         private void load(EditorClock clock, ILyricEditorState state)
         {
             BindableMode.BindTo(state.BindableMode);
+
             karaokeSpriteText.Clock = clock;
+        }
+
+        protected override bool OnMouseMove(MouseMoveEvent e)
+        {
+            if (!lyricCaretState.CaretEnabled)
+                return false;
+
+            float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+
+            switch (lyricCaretState.BindableCaretPositionAlgorithm.Value)
+            {
+                case CuttingCaretPositionAlgorithm:
+                    int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(lyric, cuttingLyricStringIndex));
+                    break;
+
+                case TypingCaretPositionAlgorithm:
+                    int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(lyric, typingStringIndex));
+                    break;
+
+                case NavigateCaretPositionAlgorithm:
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric));
+                    break;
+
+                case TimeTagIndexCaretPositionAlgorithm:
+                    var textIndex = karaokeSpriteText.GetHoverIndex(position);
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex));
+                    break;
+
+                case TimeTagCaretPositionAlgorithm:
+                    var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+                    break;
+            }
+
+            return base.OnMouseMove(e);
+        }
+
+        protected override void OnHoverLost(HoverLostEvent e)
+        {
+            if (!lyricCaretState.CaretEnabled)
+                return;
+
+            // lost hover caret and time-tag caret
+            lyricCaretState.ClearHoverCaretPosition();
+            base.OnHoverLost(e);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (!lyricCaretState.CaretEnabled)
+                return false;
+
+            // place hover caret to target position.
+            var position = lyricCaretState.BindableHoverCaretPosition.Value;
+            if (position == null)
+                return false;
+
+            lyricCaretState.MoveCaretToTargetPosition(position);
+
+            return true;
         }
 
         private void triggerWritableVersionChanged()
