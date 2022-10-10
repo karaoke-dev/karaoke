@@ -3,11 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using osu.Framework.Graphics;
+using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
@@ -16,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
     {
-        private readonly ISkin skin = new DefaultKaraokeSkin(null);
+        private ISkin skin = new TestingSkin(null);
         private LayoutToolTip toolTip = null!;
 
         [SetUp]
@@ -61,6 +65,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 callBack.Invoke(singer);
                 toolTip.SetContent(singer);
             });
+        }
+
+        /// <summary>
+        /// todo: it's a tricky way to create ruleset's own skin class.
+        /// should use generic skin like <see cref="LegacySkin"/> eventually.
+        /// </summary>
+        public class TestingSkin : KaraokeSkin
+        {
+            internal static readonly Guid DEFAULT_SKIN = new("FEC5A291-5709-11EC-9F10-0800200C9A66");
+
+            public static SkinInfo CreateInfo() => new()
+            {
+                ID = DEFAULT_SKIN,
+                Name = "karaoke! (default skin)",
+                Creator = "team karaoke!",
+                Protected = true,
+                InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo()
+            };
+
+            public TestingSkin(IStorageResourceProvider? resources)
+                : this(CreateInfo(), resources)
+            {
+            }
+
+            [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
+            public TestingSkin(SkinInfo skin, IStorageResourceProvider? resources)
+                : base(skin, resources)
+            {
+                DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
+                DefaultElement[ElementType.LyricStyle] = LyricStyle.CreateDefault();
+                DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
+            }
         }
     }
 }

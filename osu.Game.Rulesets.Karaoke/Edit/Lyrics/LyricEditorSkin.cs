@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Name = "karaoke! (default editor skin)",
             Creator = "team karaoke!",
             Protected = true,
-            InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo(),
+            InstantiationInfo = typeof(LyricEditorSkin).GetInvariantInstantiationInfo(),
         };
 
         public LyricEditorSkin(IStorageResourceProvider? resources)
