@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Game.Input.Bindings;
 
@@ -15,6 +18,22 @@ namespace osu.Game.Rulesets.Karaoke
             : base(ruleset, 2, SimultaneousBindingMode.Unique)
         {
         }
+
+        protected override IEnumerable<Drawable> KeyBindingInputQueue
+        {
+            get
+            {
+                var queue = base.KeyBindingInputQueue;
+                return queue.OrderBy(x => x is IHasIKeyBindingHandlerOrder keyBindingHandlerOrder
+                    ? keyBindingHandlerOrder.KeyBindingHandlerOrder
+                    : int.MaxValue);
+            }
+        }
+    }
+
+    public interface IHasIKeyBindingHandlerOrder
+    {
+        int KeyBindingHandlerOrder { get; }
     }
 
     public enum KaraokeEditAction
