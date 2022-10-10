@@ -99,9 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private void refreshAlgorithmAndCaretPosition()
         {
             // refresh algorithm
-            var mode = bindableModeAndSubMode.Value.Mode;
-            var subMode = bindableModeAndSubMode.Value.SubMode;
-            bindableCaretPositionAlgorithm.Value = getAlgorithmByMode(mode, subMode);
+            bindableCaretPositionAlgorithm.Value = getAlgorithmByMode(bindableModeAndSubMode.Value);
 
             // refresh caret position
             var lyric = bindableCaretPosition.Value?.Lyric;
@@ -123,9 +121,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             }
         }
 
-        private ICaretPositionAlgorithm? getAlgorithmByMode(LyricEditorMode mode, Enum? subMode)
+        private ICaretPositionAlgorithm? getAlgorithmByMode(ModeWithSubMode modeWithSubMode)
         {
             var lyrics = bindableLyrics.ToArray();
+            var mode = modeWithSubMode.Mode;
+            var subMode = modeWithSubMode.SubMode;
+
             return mode switch
             {
                 LyricEditorMode.View => null,

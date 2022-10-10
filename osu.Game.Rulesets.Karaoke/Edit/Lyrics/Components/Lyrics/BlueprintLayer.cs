@@ -41,20 +41,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             ClearInternal();
 
             // create preview and real caret
-            var mode = bindableModeAndSubMode.Value.Mode;
-            var subMode = bindableModeAndSubMode.Value.SubMode;
-            var blueprintContainer = createBlueprintContainer(mode, subMode, Lyric);
+            var modeWithSubMode = bindableModeAndSubMode.Value;
+            var blueprintContainer = createBlueprintContainer(modeWithSubMode, Lyric);
             if (blueprintContainer == null)
                 return;
 
             AddInternal(blueprintContainer);
 
-            static Drawable? createBlueprintContainer(LyricEditorMode mode, Enum? subMode, Lyric lyric) =>
-                mode switch
+            static Drawable? createBlueprintContainer(ModeWithSubMode modeWithSubMode, Lyric lyric) =>
+                modeWithSubMode.Mode switch
                 {
                     LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
                     LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                    LyricEditorMode.EditTimeTag => subMode is TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
+                    LyricEditorMode.EditTimeTag => modeWithSubMode.SubMode is TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                     _ => null
                 };
         }

@@ -277,15 +277,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
         private void toggleChangeBottomEditor()
         {
-            var mode = bindableModeAndSubMode.Value.Mode;
-            var subMode = bindableModeAndSubMode.Value.SubMode;
-            bindableBottomEditorType.Value = getBottomEditorType(mode, subMode);
+            var modeWithSubMode = bindableModeAndSubMode.Value;
+            bindableBottomEditorType.Value = getBottomEditorType(modeWithSubMode);
 
-            static BottomEditorType? getBottomEditorType(LyricEditorMode mode, Enum? subMode) =>
-                mode switch
+            static BottomEditorType? getBottomEditorType(ModeWithSubMode modeWithSubMode) =>
+                modeWithSubMode.Mode switch
                 {
-                    LyricEditorMode.EditTimeTag when subMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
-                    LyricEditorMode.EditTimeTag when subMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
+                    LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
+                    LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
                     LyricEditorMode.EditNote => BottomEditorType.Note,
                     _ => null
                 };
