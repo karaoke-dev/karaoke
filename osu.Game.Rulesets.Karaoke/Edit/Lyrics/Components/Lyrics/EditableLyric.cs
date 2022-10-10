@@ -2,10 +2,15 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
@@ -13,6 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     [Cached(typeof(IEditableLyricState))]
     public class EditableLyric : InteractableLyric, IEditableLyricState
     {
+        [Resolved, AllowNull]
+        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
+        [Resolved, AllowNull]
+        private ILyricCaretState lyricCaretState { get; set; }
+
         public EditableLyric(Lyric lyric)
             : base(lyric)
         {
@@ -33,6 +44,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         public void TriggerDisallowEditEffect()
         {
             InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
+        }
+
+        protected override bool OnDoubleClick(DoubleClickEvent e)
+        {
+            var mode = BindableMode.Value;
+            var position = lyricCaretState.BindableCaretPosition.Value;
+
+            switch (position)
+            {
+                case TextCaretPosition textCaretPosition:
+                    if (mode == LyricEditorMode.Texting)
+                        lyricsChangeHandler.Split(textCaretPosition.Index);
+                    return true;
+
+                default:
+                    return false;
+            }
         }
     }
 }
