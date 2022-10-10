@@ -70,10 +70,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly BindableBeatDivisor beatDivisor = new();
 
         private readonly Bindable<LyricEditorMode> bindableMode = new();
+        private readonly Bindable<ModeWithSubMode> bindableModeAndSubMode = new();
         private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.Preview);
         private readonly Bindable<LyricEditorLayout> bindableCurrentLayout = new();
 
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
+
+        public IBindable<ModeWithSubMode> BindableModeAndSubMode => bindableModeAndSubMode;
 
         private readonly GridContainer gridContainer;
         private readonly Container editArea;
@@ -122,6 +125,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableMode.BindValueChanged(e =>
             {
+                updateTheSubMode();
+
                 // should control grid container spacing and place some component.
                 initializeSettingsArea();
 
@@ -130,6 +135,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
+
+            initialSubModeChanged<TextingEditMode>(); // texting.
+            initialSubModeChanged<LanguageEditMode>(); // language
+            initialSubModeChanged<TextTagEditMode>(); // ruby and romaji.
+            initialSubModeChanged<TimeTagEditMode>(); //time-tag
+            initialSubModeChanged<NoteEditMode>(); // note
 
             bindablePreferLayout.BindValueChanged(e =>
             {
@@ -140,6 +151,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 switchLayout(e.NewValue);
             }, true);
+        }
+
+        private void initialSubModeChanged<TSubModeEnum>() where TSubModeEnum : Enum
+        {
+            var editModeStates = InternalChildren.OfType<IHasEditModeState<TSubModeEnum>>();
+
+            foreach (var editModeState in editModeStates)
+            {
+                editModeState.BindableEditMode.BindValueChanged(e =>
+                {
+                    updateTheSubMode();
+                });
+            }
+        }
+
+        private void updateTheSubMode()
+        {
+            bindableModeAndSubMode.Value = new ModeWithSubMode
+            {
+                Mode = bindableMode.Value,
+                SubMode = getTheSubMode(bindableMode.Value),
+                Default = false,
+            };
+
+            Enum getTheSubMode(LyricEditorMode mode) =>
+                mode switch
+                {
+                    LyricEditorMode.View => null,
+                    LyricEditorMode.Texting => textingModeState.BindableEditMode.Value,
+                    LyricEditorMode.Reference => null,
+                    LyricEditorMode.Language => languageModeState.BindableEditMode.Value,
+                    LyricEditorMode.EditRuby => editRubyModeState.BindableEditMode.Value,
+                    LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditMode.Value,
+                    LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditMode.Value,
+                    LyricEditorMode.EditNote => editNoteModeState.BindableEditMode.Value,
+                    LyricEditorMode.Singer => null,
+                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                };
         }
 
         private void initializeSettingsArea()
