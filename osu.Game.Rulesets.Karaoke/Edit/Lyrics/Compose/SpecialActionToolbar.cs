@@ -13,6 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 {
     public class SpecialActionToolbar : CompositeDrawable
     {
+        public const int HEIGHT = 26;
+        public const int ICON_SPACING = 2;
+        public const int ICON_SIZE = HEIGHT - ICON_SPACING * 2;
+
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
         private readonly Box background;

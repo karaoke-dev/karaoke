@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
     {
         public void SetIcon(Drawable icon)
         {
-            Size = new Vector2(26);
+            Size = new Vector2(SpecialActionToolbar.HEIGHT);
             IconContainer.Icon = icon;
             IconContainer.Show();
         }
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Size = new Vector2(22),
+                    Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
                     Alpha = 0,
                 },
             };
