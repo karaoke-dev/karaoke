@@ -21,22 +21,22 @@ namespace osu.Game.Rulesets.Karaoke
     {
         // moving
         [Description("Up")]
-        Up,
+        MoveUp,
 
         [Description("Down")]
-        Down,
+        MoveDown,
 
         [Description("Left")]
-        Left,
+        MoveLeft,
 
         [Description("Right")]
-        Right,
+        MoveRight,
 
         [Description("First")]
-        First,
+        MoveToFirst,
 
         [Description("Last")]
-        Last,
+        MoveToLast,
 
         // Switch edit mode.
         [Description("Previous edit mode")]
