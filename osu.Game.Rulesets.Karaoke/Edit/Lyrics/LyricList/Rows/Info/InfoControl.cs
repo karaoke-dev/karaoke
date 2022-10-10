@@ -20,6 +20,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.Badge;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
@@ -35,8 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
         private readonly OsuSpriteText timeRange;
         private readonly Container subInfoContainer;
 
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
+        private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
 
         [Resolved]
         private IDialogOverlay? dialogOverlay { get; set; }
@@ -138,32 +138,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
 
             timeRange.Text = LyricUtils.LyricTimeFormattedString(lyric);
 
-            bindableMode.BindValueChanged(e =>
+            bindableModeAndSubMode.BindValueChanged(e =>
             {
-                Schedule(updateColour);
-                initializeBadge();
-            }, true);
+                initializeBadge(e.NewValue.Mode, e.NewValue.SubMode);
 
-            bindableTimeTagEditMode.BindValueChanged(_ =>
-            {
-                initializeBadge();
-            });
+                if (ValueChangedEventUtils.EditModeChanged(e) || !IsLoaded)
+                    Schedule(() => updateColour(e.NewValue.Mode));
+            }, true);
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
+        private void load(ILyricEditorState state)
         {
-            bindableMode.BindTo(state.BindableMode);
-            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
+            bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
         }
 
-        private void updateColour()
+        private void updateColour(LyricEditorMode mode)
         {
-            background.Colour = colourProvider.Background2(bindableMode.Value);
-            headerBackground.Colour = colourProvider.Background5(bindableMode.Value);
+            background.Colour = colourProvider.Background2(mode);
+            headerBackground.Colour = colourProvider.Background5(mode);
         }
 
-        private void initializeBadge()
+        private void initializeBadge(LyricEditorMode mode, Enum? subMode)
         {
             subInfoContainer.Clear();
             var subInfo = createSubInfo();
@@ -177,8 +173,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
 
             Drawable? createSubInfo()
             {
-                var mode = bindableMode.Value;
-
                 switch (mode)
                 {
                     case LyricEditorMode.View:
@@ -196,7 +190,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
                         return new LanguageInfo(Lyric);
 
                     case LyricEditorMode.EditTimeTag:
-                        return createTimeTagModeSubInfo();
+                        if (subMode is not TimeTagEditMode timeTagEditMode)
+                            throw new NullReferenceException();
+
+                        return createTimeTagModeSubInfo(timeTagEditMode, Lyric);
 
                     case LyricEditorMode.EditNote:
                         return null;
@@ -208,21 +205,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
                         throw new ArgumentOutOfRangeException(nameof(mode));
                 }
 
-                Drawable createTimeTagModeSubInfo()
+                static Drawable createTimeTagModeSubInfo(TimeTagEditMode editMode, Lyric lyric)
                 {
-                    var timeTagEditMode = bindableTimeTagEditMode.Value;
-
-                    switch (timeTagEditMode)
+                    switch (editMode)
                     {
                         case TimeTagEditMode.Create:
-                            return new LanguageInfo(Lyric);
+                            return new LanguageInfo(lyric);
 
                         case TimeTagEditMode.Recording:
                         case TimeTagEditMode.Adjust:
-                            return new TimeTagInfo(Lyric);
+                            return new TimeTagInfo(lyric);
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(timeTagEditMode));
+                            throw new ArgumentOutOfRangeException(nameof(subMode));
                     }
                 }
             }
@@ -232,7 +227,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info
         {
             get
             {
-                if (bindableMode.Value != LyricEditorMode.Texting)
+                var editMode = bindableModeAndSubMode.Value.Mode;
+                if (editMode != LyricEditorMode.Texting)
                     return Array.Empty<MenuItem>();
 
                 // should select lyric if trying to interact with context menu.

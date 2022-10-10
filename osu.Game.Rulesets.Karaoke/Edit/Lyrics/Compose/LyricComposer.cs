@@ -15,6 +15,7 @@ using osu.Framework.Layout;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
@@ -24,8 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         private readonly Bindable<PanelLayout> bindablePanelLayout = new();
         private readonly Bindable<BottomEditorType?> bindableBottomEditorType = new();
 
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
+        private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
 
         private readonly IDictionary<PanelType, Bindable<bool>> panelStatus = new Dictionary<PanelType, Bindable<bool>>();
         private readonly IDictionary<PanelType, Panel> panelInstance = new Dictionary<PanelType, Panel>();
@@ -102,21 +102,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 },
             };
 
-            bindableMode.BindValueChanged(x =>
+            bindableModeAndSubMode.BindValueChanged(e =>
             {
                 toggleChangeBottomEditor();
 
                 Schedule(() =>
                 {
-                    centerEditorBackground.Colour = colourProvider.Background1(x.NewValue);
-                    bottomEditorBackground.Colour = colourProvider.Background5(x.NewValue);
+                    if (!ValueChangedEventUtils.EditModeChanged(e) && IsLoaded)
+                        return;
+
+                    centerEditorBackground.Colour = colourProvider.Background1(e.NewValue.Mode);
+                    bottomEditorBackground.Colour = colourProvider.Background5(e.NewValue.Mode);
                 });
             }, true);
-
-            bindableTimeTagEditMode.BindValueChanged(_ =>
-            {
-                toggleChangeBottomEditor();
-            });
 
             initializePanel();
 
@@ -152,9 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);
 
-            bindableMode.BindTo(state.BindableMode);
-
-            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
+            bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
         }
 
         protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
@@ -281,13 +277,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
         private void toggleChangeBottomEditor()
         {
-            bindableBottomEditorType.Value = getBottomEditorType(bindableMode.Value, bindableTimeTagEditMode.Value);
+            var modeWithSubMode = bindableModeAndSubMode.Value;
+            bindableBottomEditorType.Value = getBottomEditorType(modeWithSubMode);
 
-            static BottomEditorType? getBottomEditorType(LyricEditorMode mode, TimeTagEditMode timeTagEditMode) =>
-                mode switch
+            static BottomEditorType? getBottomEditorType(ModeWithSubMode modeWithSubMode) =>
+                modeWithSubMode.Mode switch
                 {
-                    LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
-                    LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
+                    LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
+                    LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
                     LyricEditorMode.EditNote => BottomEditorType.Note,
                     _ => null
                 };

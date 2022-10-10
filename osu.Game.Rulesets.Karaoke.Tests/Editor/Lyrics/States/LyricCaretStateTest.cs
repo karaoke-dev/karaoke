@@ -341,12 +341,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         {
             private readonly Bindable<LyricEditorMode> bindableMode = new();
 
+            private readonly Bindable<ModeWithSubMode> bindableModeWitSubMode = new();
+
             public IBindable<LyricEditorMode> BindableMode => bindableMode;
+
+            public IBindable<ModeWithSubMode> BindableModeAndSubMode => bindableModeWitSubMode;
 
             public LyricEditorMode Mode => bindableMode.Value;
 
             public void SwitchMode(LyricEditorMode mode)
-                => bindableMode.Value = mode;
+            {
+                bindableMode.Value = mode;
+                bindableModeWitSubMode.Value = bindableModeWitSubMode.Value with
+                {
+                    Mode = mode,
+                    SubMode = getTheSubMode(mode)
+                };
+            }
+
+            private static Enum? getTheSubMode(LyricEditorMode mode) =>
+                mode switch
+                {
+                    LyricEditorMode.View => null,
+                    LyricEditorMode.Texting => TextingEditMode.Typing,
+                    LyricEditorMode.Reference => null,
+                    LyricEditorMode.Language => LanguageEditMode.Generate,
+                    LyricEditorMode.EditRuby => TextTagEditMode.Generate,
+                    LyricEditorMode.EditRomaji => TextTagEditMode.Generate,
+                    LyricEditorMode.EditTimeTag => TimeTagEditMode.Create,
+                    LyricEditorMode.EditNote => NoteEditMode.Generate,
+                    LyricEditorMode.Singer => null,
+                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                };
 
             public void NavigateToFix(LyricEditorMode mode)
                 => throw new NotImplementedException();
