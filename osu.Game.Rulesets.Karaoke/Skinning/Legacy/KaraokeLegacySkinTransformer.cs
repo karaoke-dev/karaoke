@@ -3,16 +3,9 @@
 
 using System;
 using System.ComponentModel;
-using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Rendering;
-using osu.Framework.Graphics.Rendering.Dummy;
-using osu.Framework.Graphics.Textures;
-using osu.Framework.IO.Stores;
 using osu.Game.Beatmaps;
-using osu.Game.Database;
-using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -102,26 +95,5 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             {
             }
         }
-
-#nullable disable
-
-        private class InternalSkinStorageResourceProvider : IStorageResourceProvider
-        {
-            public InternalSkinStorageResourceProvider(string skinName)
-            {
-                var store = new KaraokeRuleset().CreateResourceStore();
-                Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
-            }
-
-            public IRenderer Renderer => new DummyRenderer();
-
-            public AudioManager AudioManager => null;
-            public IResourceStore<byte[]> Files { get; }
-            public IResourceStore<byte[]> Resources { get; }
-            public RealmAccess RealmAccess => null;
-            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
-        }
-
-#nullable enable
     }
 }
