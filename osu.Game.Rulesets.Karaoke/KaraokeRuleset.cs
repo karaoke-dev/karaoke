@@ -31,7 +31,9 @@ using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Scoring;
+using osu.Game.Rulesets.Karaoke.Skinning.Argon;
 using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+using osu.Game.Rulesets.Karaoke.Skinning.Triangles;
 using osu.Game.Rulesets.Karaoke.Statistics;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
@@ -193,8 +195,22 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override ISkin CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
         {
-            // always return the legacy skin for now until have skin for karaoke.
-            return new KaraokeLegacySkinTransformer(skin, beatmap);
+            switch (skin)
+            {
+                case TrianglesSkin:
+                    return new KaraokeTrianglesSkinTransformer(skin, beatmap);
+
+                case ArgonSkin:
+                    return new KaraokeArgonSkinTransformer(skin, beatmap);
+
+                case DefaultLegacySkin:
+                    return new KaraokeClassicSkinTransformer(skin, beatmap);
+
+                case LegacySkin:
+                    return new KaraokeLegacySkinTransformer(skin, beatmap);
+            }
+
+            return null;
         }
 
         public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();

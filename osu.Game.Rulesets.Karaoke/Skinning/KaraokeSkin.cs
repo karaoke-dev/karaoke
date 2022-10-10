@@ -10,13 +10,12 @@ using Newtonsoft.Json;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.IO.Serialization;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.Audio;
 using osu.Game.Extensions;
 using osu.Game.IO;
-using osu.Game.IO.Serialization;
+using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -27,8 +26,7 @@ using osu.Game.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     /// <summary>
-    /// It's the skin for karaoke ruleset.
-    /// todo: should inherit ruleset skin if have.
+    ///  It's the skin that designed for reading the resource file and parse into the understandable format.
     /// </summary>
     public class KaraokeSkin : Skin
     {
@@ -59,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
-                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor(), new ShaderConvertor(), new Vector2Converter(), new ColourConvertor());
+                    var globalSetting = SkinJsonSerializableExtensions.CreateSkinElementGlobalSettings();
                     var deserializedContent = JsonConvert.DeserializeObject<DefaultSkinFormat>(jsonContent, globalSetting);
 
                     if (deserializedContent == null)
@@ -74,14 +72,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Logger.Error(ex, "Failed to load skin element.");
                 }
             });
-        }
-
-        protected JsonSerializerSettings CreateJsonSerializerSettings(params JsonConverter[] converters)
-        {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.AddRange(converters);
-            return globalSetting;
         }
 
         protected string? GetElementStringContentFromSkinInfo(SkinInfo skinInfo, string filename)

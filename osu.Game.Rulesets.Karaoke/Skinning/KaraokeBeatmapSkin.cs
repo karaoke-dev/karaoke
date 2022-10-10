@@ -7,10 +7,10 @@ using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
-using osu.Framework.IO.Serialization;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -21,7 +21,7 @@ using osu.Game.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     /// <summary>
-    /// It's the skin for karaoke beatmap.
+    /// It's the skin that designed for reading the resource file and parse into the understandable format form beatmap skin.
     /// </summary>
     public class KaraokeBeatmapSkin : KaraokeSkin
     {
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             SkinInfo.PerformRead(s =>
             {
-                var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor(), new ShaderConvertor(), new Vector2Converter(), new ColourConvertor());
+                var globalSetting = SkinJsonSerializableExtensions.CreateSkinElementGlobalSettings();
 
                 // we may want to move this to some kind of async operation in the future.
                 foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
-                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinGroupConvertor());
+                    var globalSetting = SkinJsonSerializableExtensions.CreateSkinGroupGlobalSettings();
                     var deserializedContent = JsonConvert.DeserializeObject<IGroup[]>(jsonContent, globalSetting);
 
                     if (deserializedContent == null)
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
-                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinMappingRoleConvertor());
+                    var globalSetting = SkinJsonSerializableExtensions.CreateSkinMappingGlobalSettings();
                     var deserializedContent = JsonConvert.DeserializeObject<IMappingRole[]>(jsonContent, globalSetting);
 
                     if (deserializedContent == null)

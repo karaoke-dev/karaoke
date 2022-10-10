@@ -3,16 +3,9 @@
 
 using System;
 using System.ComponentModel;
-using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Rendering;
-using osu.Framework.Graphics.Rendering.Dummy;
-using osu.Framework.Graphics.Textures;
-using osu.Framework.IO.Stores;
 using osu.Game.Beatmaps;
-using osu.Game.Database;
-using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -22,14 +15,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
         private readonly Lazy<bool> isLegacySkin;
-        private readonly KaraokeBeatmapSkin defaultKaraokeSkin;
+        private readonly KaraokeBeatmapSkin karaokeSkin;
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
         {
             // we should get config by default karaoke skin.
             // if has resource or texture, then try to get from legacy skin.
-            defaultKaraokeSkin = new KaraokeBeatmapSkin(new SkinInfo(), new InternalSkinStorageResourceProvider("Default"));
+            karaokeSkin = new KaraokeBeatmapSkin(new SkinInfo(), new InternalSkinStorageResourceProvider("Default"));
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
         }
 
@@ -89,10 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         }
 
         public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
-        {
-            var config = defaultKaraokeSkin.GetConfig<TLookup, TValue>(lookup);
-            return config ?? base.GetConfig<TLookup, TValue>(lookup);
-        }
+            => karaokeSkin.GetConfig<TLookup, TValue>(lookup);
 
         // it's a temp class for just getting SkinnableTarget.MainHUDComponents
         private class TempLegacySkin : LegacySkin
@@ -102,26 +92,5 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             {
             }
         }
-
-#nullable disable
-
-        private class InternalSkinStorageResourceProvider : IStorageResourceProvider
-        {
-            public InternalSkinStorageResourceProvider(string skinName)
-            {
-                var store = new KaraokeRuleset().CreateResourceStore();
-                Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
-            }
-
-            public IRenderer Renderer => new DummyRenderer();
-
-            public AudioManager AudioManager => null;
-            public IResourceStore<byte[]> Files { get; }
-            public IResourceStore<byte[]> Resources { get; }
-            public RealmAccess RealmAccess => null;
-            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
-        }
-
-#nullable enable
     }
 }
