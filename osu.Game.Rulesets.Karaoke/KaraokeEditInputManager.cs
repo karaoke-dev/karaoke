@@ -60,10 +60,10 @@ namespace osu.Game.Rulesets.Karaoke
 
         // Edit time-tag.
         [Description("Create new")]
-        Create,
+        CreateTimeTag,
 
         [Description("Remove")]
-        Remove,
+        RemoveTimeTag,
 
         [Description("Shift the time-tag left.")]
         ShiftTheTimeTagLeft,
