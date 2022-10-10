@@ -15,14 +15,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
         private readonly Lazy<bool> isLegacySkin;
-        private readonly KaraokeBeatmapSkin defaultKaraokeSkin;
+        private readonly KaraokeBeatmapSkin karaokeSkin;
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
         {
             // we should get config by default karaoke skin.
             // if has resource or texture, then try to get from legacy skin.
-            defaultKaraokeSkin = new KaraokeBeatmapSkin(new SkinInfo(), new InternalSkinStorageResourceProvider("Default"));
+            karaokeSkin = new KaraokeBeatmapSkin(new SkinInfo(), new InternalSkinStorageResourceProvider("Default"));
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
         }
 
@@ -82,10 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         }
 
         public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
-        {
-            var config = defaultKaraokeSkin.GetConfig<TLookup, TValue>(lookup);
-            return config ?? base.GetConfig<TLookup, TValue>(lookup);
-        }
+            => karaokeSkin.GetConfig<TLookup, TValue>(lookup);
 
         // it's a temp class for just getting SkinnableTarget.MainHUDComponents
         private class TempLegacySkin : LegacySkin
