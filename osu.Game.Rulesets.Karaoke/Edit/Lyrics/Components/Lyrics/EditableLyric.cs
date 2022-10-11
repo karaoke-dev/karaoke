@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             switch (position)
             {
-                case TextCaretPosition textCaretPosition:
+                case TypingCaretPosition textCaretPosition:
                     if (mode == LyricEditorMode.Texting)
                         lyricsChangeHandler.Split(textCaretPosition.Index);
                     return true;

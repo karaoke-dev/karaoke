@@ -8,19 +8,19 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public class TypingCaretPositionAlgorithm : CaretPositionAlgorithm<TextCaretPosition>
+    public class TypingCaretPositionAlgorithm : CaretPositionAlgorithm<TypingCaretPosition>
     {
         public TypingCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public override bool PositionMovable(TextCaretPosition position)
+        public override bool PositionMovable(TypingCaretPosition position)
         {
             return indexInTextRange(position.Index, position.Lyric);
         }
 
-        public override TextCaretPosition? MoveUp(TextCaretPosition currentPosition)
+        public override TypingCaretPosition? MoveUp(TypingCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPreviousMatch(currentPosition.Lyric, lyricMovable);
             if (lyric == null)
@@ -28,10 +28,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
 
-            return new TextCaretPosition(lyric, index);
+            return new TypingCaretPosition(lyric, index);
         }
 
-        public override TextCaretPosition? MoveDown(TextCaretPosition currentPosition)
+        public override TypingCaretPosition? MoveDown(TypingCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNextMatch(currentPosition.Lyric, lyricMovable);
             if (lyric == null)
@@ -39,52 +39,52 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
 
-            return new TextCaretPosition(lyric, index);
+            return new TypingCaretPosition(lyric, index);
         }
 
-        public override TextCaretPosition? MoveLeft(TextCaretPosition currentPosition)
+        public override TypingCaretPosition? MoveLeft(TypingCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             int previousIndex = currentPosition.Index - 1;
 
             if (!indexInTextRange(previousIndex, lyric))
-                return MoveUp(new TextCaretPosition(currentPosition.Lyric, int.MaxValue));
+                return MoveUp(new TypingCaretPosition(currentPosition.Lyric, int.MaxValue));
 
-            return new TextCaretPosition(currentPosition.Lyric, previousIndex);
+            return new TypingCaretPosition(currentPosition.Lyric, previousIndex);
         }
 
-        public override TextCaretPosition? MoveRight(TextCaretPosition currentPosition)
+        public override TypingCaretPosition? MoveRight(TypingCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             int nextIndex = currentPosition.Index + 1;
 
             if (!indexInTextRange(nextIndex, lyric))
-                return MoveDown(new TextCaretPosition(currentPosition.Lyric, int.MinValue));
+                return MoveDown(new TypingCaretPosition(currentPosition.Lyric, int.MinValue));
 
-            return new TextCaretPosition(currentPosition.Lyric, nextIndex);
+            return new TypingCaretPosition(currentPosition.Lyric, nextIndex);
         }
 
-        public override TextCaretPosition? MoveToFirst()
+        public override TypingCaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault(lyricMovable);
             if (lyric == null)
                 return null;
 
-            return new TextCaretPosition(lyric, GetMinIndex(lyric.Text));
+            return new TypingCaretPosition(lyric, GetMinIndex(lyric.Text));
         }
 
-        public override TextCaretPosition? MoveToLast()
+        public override TypingCaretPosition? MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault(lyricMovable);
             if (lyric == null)
                 return null;
 
-            return new TextCaretPosition(lyric, GetMaxIndex(lyric.Text));
+            return new TypingCaretPosition(lyric, GetMaxIndex(lyric.Text));
         }
 
-        public override TextCaretPosition MoveToTarget(Lyric lyric) => new(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+        public override TypingCaretPosition MoveToTarget(Lyric lyric) => new(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
         private bool lyricMovable(Lyric lyric)
         {

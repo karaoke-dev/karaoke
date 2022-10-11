@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public abstract class DrawableLyricTextCaret : DrawableCaret<TextCaretPosition>
+    public abstract class DrawableLyricTextCaret : DrawableCaret<TypingCaretPosition>
     {
         [Resolved]
         private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         {
         }
 
-        protected Vector2 GetPosition(TextCaretPosition caret)
+        protected Vector2 GetPosition(TypingCaretPosition caret)
         {
             float textHeight = karaokeSpriteText.LineBaseHeight;
             bool end = caret.Index == caret.Lyric.Text.Length;

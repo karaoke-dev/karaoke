@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             splitIcon.Colour = colours.Yellow;
         }
 
-        protected override void Apply(TextCaretPosition caret)
+        protected override void Apply(TypingCaretPosition caret)
         {
             Position = GetPosition(caret);
             Height = karaokeSpriteText.LineBaseHeight;

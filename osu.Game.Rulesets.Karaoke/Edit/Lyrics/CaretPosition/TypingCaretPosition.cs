@@ -5,9 +5,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
-    public class TextCaretPosition : ICaretPosition
+    public class TypingCaretPosition : ICaretPosition
     {
-        public TextCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
+        public TypingCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             Index = index;

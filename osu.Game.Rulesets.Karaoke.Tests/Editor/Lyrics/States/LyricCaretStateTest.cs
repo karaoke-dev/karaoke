@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             movingCaret(MovingCaretAction.First);
 
             // get the action
-            assertCaretPosition(Assert.IsInstanceOf<TextCaretPosition>);
+            assertCaretPosition(Assert.IsInstanceOf<TypingCaretPosition>);
             assertHoverCaretPosition(Assert.IsNull);
         }
 
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             movingCaretByLyric(targetLyric);
 
             // get the action
-            assertCaretPosition(Assert.IsInstanceOf<TextCaretPosition>);
+            assertCaretPosition(Assert.IsInstanceOf<TypingCaretPosition>);
             assertHoverCaretPosition(Assert.IsNull);
         }
 
