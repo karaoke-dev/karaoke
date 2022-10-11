@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
     [TestFixture]
-    public class CuttingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<CuttingCaretPositionAlgorithm, TypingCaretPosition>
+    public class CuttingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<CuttingCaretPositionAlgorithm, CuttingCaretPosition>
     {
         [TestCase(nameof(singleLyric), 0, 1, true)]
         [TestCase(nameof(singleLyric), 0, 3, true)]
@@ -127,22 +127,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToTarget(lyrics, lyric, expected);
         }
 
-        protected override void AssertEqual(TypingCaretPosition expected, TypingCaretPosition actual)
+        protected override void AssertEqual(CuttingCaretPosition expected, CuttingCaretPosition actual)
         {
             Assert.AreEqual(expected.Lyric, actual.Lyric);
             Assert.AreEqual(expected.Index, actual.Index);
         }
 
-        private static TypingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
+        private static CuttingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
         {
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
             if (lyric == null)
                 throw new ArgumentNullException();
 
-            return new TypingCaretPosition(lyric, index);
+            return new CuttingCaretPosition(lyric, index);
         }
 
-        private static TypingCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
+        private static CuttingCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
         {
             if (lyricIndex == null || index == null)
                 return null;

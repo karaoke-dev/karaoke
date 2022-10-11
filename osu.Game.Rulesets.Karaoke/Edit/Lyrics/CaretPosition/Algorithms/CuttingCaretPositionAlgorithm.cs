@@ -5,12 +5,14 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public class CuttingCaretPositionAlgorithm : TypingCaretPositionAlgorithm
+    public class CuttingCaretPositionAlgorithm : TextCaretPositionAlgorithm<CuttingCaretPosition>
     {
         public CuttingCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
+
+        protected override CuttingCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
 
         protected override int GetMinIndex(string text) => 1;
 
