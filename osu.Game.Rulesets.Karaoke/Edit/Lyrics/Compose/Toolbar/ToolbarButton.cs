@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osuTK;
@@ -76,6 +77,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
                     Alpha = 0,
                 },
             };
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (Enabled.Value)
+                ToggleClickEffect();
+
+            return base.OnClick(e);
         }
     }
 }
