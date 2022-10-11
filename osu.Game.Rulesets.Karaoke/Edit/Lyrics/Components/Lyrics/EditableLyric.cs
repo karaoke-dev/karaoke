@@ -48,14 +48,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected override bool OnDoubleClick(DoubleClickEvent e)
         {
-            var mode = BindableMode.Value;
             var position = lyricCaretState.BindableCaretPosition.Value;
 
             switch (position)
             {
-                case TextCaretPosition textCaretPosition:
-                    if (mode == LyricEditorMode.Texting)
-                        lyricsChangeHandler.Split(textCaretPosition.Index);
+                case CuttingCaretPosition cuttingCaretPosition:
+                    lyricsChangeHandler.Split(cuttingCaretPosition.Index);
                     return true;
 
                 default:

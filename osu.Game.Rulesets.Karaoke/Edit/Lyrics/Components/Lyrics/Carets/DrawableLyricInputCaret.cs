@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricInputCaret : DrawableLyricTextCaret
+    public class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         private Box drawableCaret;
         private InputCaretTextBox inputCaretTextBox;
 
-        private TextCaretPosition caretPosition;
+        private TypingCaretPosition caretPosition;
 
         public DrawableLyricInputCaret(bool preview)
             : base(preview)
@@ -106,14 +106,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                 // calculate new caret position.
                 var lyric = caretPosition.Lyric;
                 int index = caretPosition.Index + offset;
-                caretPosition = new TextCaretPosition(lyric, index);
+                caretPosition = new TypingCaretPosition(lyric, index);
                 lyricCaretState.MoveCaretToTargetPosition(caretPosition);
             }
         }
 
         public override void Hide() => this.FadeOut(200);
 
-        protected override void Apply(TextCaretPosition caret)
+        protected override void Apply(TypingCaretPosition caret)
         {
             caretPosition = caret;
 
