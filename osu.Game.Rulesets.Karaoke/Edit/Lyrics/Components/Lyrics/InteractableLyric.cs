@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -83,28 +82,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
 
-            switch (lyricCaretState.BindableCaretPositionAlgorithm.Value)
+            switch (lyricCaretState.BindableCaretPosition.Value)
             {
-                case CuttingCaretPositionAlgorithm:
+                case CuttingCaretPosition:
                     int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
                     lyricCaretState.MoveHoverCaretToTargetPosition(new CuttingCaretPosition(lyric, cuttingLyricStringIndex));
                     break;
 
-                case TypingCaretPositionAlgorithm:
+                case TypingCaretPosition:
                     int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
                     lyricCaretState.MoveHoverCaretToTargetPosition(new TypingCaretPosition(lyric, typingStringIndex));
                     break;
 
-                case NavigateCaretPositionAlgorithm:
+                case NavigateCaretPosition:
                     lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric));
                     break;
 
-                case TimeTagIndexCaretPositionAlgorithm:
+                case TimeTagIndexCaretPosition:
                     var textIndex = karaokeSpriteText.GetHoverIndex(position);
                     lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex));
                     break;
 
-                case TimeTagCaretPositionAlgorithm:
+                case TimeTagCaretPosition:
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
                     lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
                     break;
