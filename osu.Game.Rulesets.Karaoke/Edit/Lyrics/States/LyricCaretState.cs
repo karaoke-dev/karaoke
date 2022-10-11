@@ -185,12 +185,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool MoveCaret(MovingCaretAction action)
         {
-            if (algorithm == null)
+            var position = GetCaretPositionByAction(action);
+            if (position == null)
                 return false;
+
+            MoveCaretToTargetPosition(position);
+            return true;
+        }
+
+        public ICaretPosition? GetCaretPositionByAction(MovingCaretAction action)
+        {
+            if (algorithm == null)
+                return null;
 
             var currentPosition = bindableCaretPosition.Value;
 
-            var position = action switch
+            return action switch
             {
                 MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveUp),
                 MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveDown),
@@ -200,12 +210,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 MovingCaretAction.Last => algorithm.MoveToLast(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
             };
-
-            if (position == null)
-                return false;
-
-            MoveCaretToTargetPosition(position);
-            return true;
 
             static ICaretPosition? moveIfNotNull(ICaretPosition? caretPosition, Func<ICaretPosition, ICaretPosition?> action)
                 => caretPosition != null ? action.Invoke(caretPosition) : caretPosition;

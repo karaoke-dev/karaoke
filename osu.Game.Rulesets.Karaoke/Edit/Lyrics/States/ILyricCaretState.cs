@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         bool MoveCaret(MovingCaretAction action);
 
+        ICaretPosition? GetCaretPositionByAction(MovingCaretAction action);
+
         void MoveCaretToTargetPosition(Lyric lyric);
 
         void MoveCaretToTargetPosition(ICaretPosition position);
