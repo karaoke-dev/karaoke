@@ -6,7 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -15,13 +15,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class CaretLayer : BaseLayer
     {
-        private readonly IBindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm?>();
+        private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
 
         public CaretLayer(Lyric lyric)
             : base(lyric)
         {
-            bindableCaretPositionAlgorithm.BindValueChanged(e =>
+            bindableCaretPosition.BindValueChanged(e =>
             {
+                if (e.OldValue?.GetType() == e.NewValue?.GetType())
+                    return;
+
                 // initial default caret.
                 initializeCaret();
             }, true);
@@ -37,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             void addCaret(bool isPreview)
             {
-                var caret = createCaret(bindableCaretPositionAlgorithm.Value, isPreview);
+                var caret = createCaret(bindableCaretPosition.Value, isPreview);
                 if (caret == null)
                     return;
 
@@ -46,17 +49,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 AddInternal(caret);
             }
 
-            static DrawableCaret? createCaret(ICaretPositionAlgorithm? caretPositionAlgorithm, bool isPreview) =>
+            static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, bool isPreview) =>
                 caretPositionAlgorithm switch
                 {
                     // cutting lyric
-                    CuttingCaretPositionAlgorithm => new DrawableLyricSplitterCaret(isPreview),
+                    CuttingCaretPosition => new DrawableLyricSplitterCaret(isPreview),
                     // typing
-                    TypingCaretPositionAlgorithm => new DrawableLyricInputCaret(isPreview),
+                    TypingCaretPosition => new DrawableLyricInputCaret(isPreview),
                     // creat time-tag
-                    TimeTagIndexCaretPositionAlgorithm => new DrawableTimeTagEditCaret(isPreview),
+                    TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(isPreview),
                     // record time-tag
-                    TimeTagCaretPositionAlgorithm => new DrawableTimeTagRecordCaret(isPreview),
+                    TimeTagCaretPosition => new DrawableTimeTagRecordCaret(isPreview),
                     _ => null
                 };
         }
@@ -64,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState)
         {
-            bindableCaretPositionAlgorithm.BindTo(lyricCaretState.BindableCaretPositionAlgorithm);
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         }
 
         public override void UpdateDisableEditState(bool editable)
