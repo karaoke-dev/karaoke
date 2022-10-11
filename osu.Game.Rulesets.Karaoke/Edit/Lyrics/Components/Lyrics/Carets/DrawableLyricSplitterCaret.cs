@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricSplitterCaret : DrawableLyricTextCaret
+    public class DrawableLyricSplitterCaret : DrawableLyricTextCaret<CuttingCaretPosition>
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             splitIcon.Colour = colours.Yellow;
         }
 
-        protected override void Apply(TypingCaretPosition caret)
+        protected override void Apply(CuttingCaretPosition caret)
         {
             Position = GetPosition(caret);
             Height = karaokeSpriteText.LineBaseHeight;

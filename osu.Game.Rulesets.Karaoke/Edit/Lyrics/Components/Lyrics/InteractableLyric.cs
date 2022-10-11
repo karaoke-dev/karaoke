@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             {
                 case CuttingCaretPositionAlgorithm:
                     int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TypingCaretPosition(lyric, cuttingLyricStringIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new CuttingCaretPosition(lyric, cuttingLyricStringIndex));
                     break;
 
                 case TypingCaretPositionAlgorithm:
