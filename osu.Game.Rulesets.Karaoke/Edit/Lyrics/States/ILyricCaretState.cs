@@ -3,7 +3,6 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
@@ -15,8 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
         IBindable<Lyric?> BindableFocusedLyric { get; }
-
-        IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm { get; }
 
         bool MoveCaret(MovingCaretAction action);
 
