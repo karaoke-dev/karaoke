@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osuTK;
 
@@ -26,6 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
         private TextureStore textures { get; set; }
 
         [Resolved]
+        private OsuColour colours { get; set; }
+
+        [Resolved]
         private ReadableKeyCombinationProvider keyCombinationProvider { get; set; }
 
         public void SetIcon(string texture) =>
@@ -39,6 +43,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
             {
                 Icon = iconUsage
             });
+
+        protected void ToggleClickEffect()
+        {
+            if (Enabled.Value)
+            {
+                IconContainer.FadeOut(100).Then().FadeIn();
+            }
+            else
+            {
+                IconContainer.FadeColour(colours.Red, 100).Then().FadeColour(Colour4.White);
+            }
+        }
+
+        protected void SetState(bool enabled)
+        {
+            IconContainer.Icon.Alpha = enabled ? 1f : 0.5f;
+            Enabled.Value = enabled;
+        }
 
         protected ConstrainedIconContainer IconContainer;
 
