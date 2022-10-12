@@ -16,15 +16,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
     {
         private IBindable<ICaretPosition> caretPosition;
 
-        protected DrawableCaret(bool preview)
-            : base(preview)
+        protected DrawableCaret(DrawableCaretType type)
+            : base(type)
         {
         }
 
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState, InteractableKaraokeSpriteText karaokeSpriteText)
         {
-            caretPosition = Preview ? lyricCaretState.BindableHoverCaretPosition.GetBoundCopy() : lyricCaretState.BindableCaretPosition.GetBoundCopy();
+            caretPosition = Type == DrawableCaretType.HoverCaret ? lyricCaretState.BindableHoverCaretPosition.GetBoundCopy() : lyricCaretState.BindableCaretPosition.GetBoundCopy();
             caretPosition.BindValueChanged(e =>
             {
                 var position = e.NewValue;
@@ -42,10 +42,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             });
         }
 
-        protected static float GetAlpha(bool isHover)
-        {
-            return isHover ? 0.5f : 1;
-        }
+        protected static float GetAlpha(DrawableCaretType type) =>
+            type switch
+            {
+                DrawableCaretType.Caret => 1,
+                DrawableCaretType.HoverCaret => 0.5f,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
 
         public override void Apply(ICaretPosition caret)
         {
@@ -60,11 +63,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 
     public abstract class DrawableCaret : CompositeDrawable
     {
-        protected readonly bool Preview;
+        protected readonly DrawableCaretType Type;
 
-        protected DrawableCaret(bool preview)
+        protected DrawableCaret(DrawableCaretType type)
         {
-            Preview = preview;
+            Type = type;
         }
 
         public abstract void Apply(ICaretPosition caret);

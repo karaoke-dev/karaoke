@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 
         private readonly DrawableTextIndex drawableTextIndex;
 
-        public DrawableTimeTagEditCaret(bool preview)
-            : base(preview)
+        public DrawableTimeTagEditCaret(DrawableCaretType type)
+            : base(type)
         {
             AutoSizeAxes = Axes.Both;
 
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             {
                 Name = "Text index",
                 Size = new Vector2(triangle_width),
-                Alpha = GetAlpha(preview),
+                Alpha = GetAlpha(type),
             };
         }
 

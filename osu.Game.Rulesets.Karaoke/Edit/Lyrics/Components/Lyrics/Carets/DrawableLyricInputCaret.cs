@@ -35,8 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 
         private TypingCaretPosition caretPosition;
 
-        public DrawableLyricInputCaret(bool preview)
-            : base(preview)
+        public DrawableLyricInputCaret(DrawableCaretType type)
+            : base(type)
         {
             Width = caret_width;
         }
@@ -48,10 +48,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.White,
-                Alpha = GetAlpha(Preview)
+                Alpha = GetAlpha(Type)
             };
 
-            if (!Preview)
+            if (Type == DrawableCaretType.Caret)
             {
                 AddInternal(inputCaretTextBox = new InputCaretTextBox
                 {

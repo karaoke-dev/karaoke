@@ -34,13 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         {
             ClearInternal();
 
-            // create preview and real caret
-            addCaret(false);
-            addCaret(true);
+            // create caret and hover caret.
+            addCaret(DrawableCaretType.Caret);
+            addCaret(DrawableCaretType.HoverCaret);
 
-            void addCaret(bool isPreview)
+            void addCaret(DrawableCaretType type)
             {
-                var caret = createCaret(bindableCaretPosition.Value, isPreview);
+                var caret = createCaret(bindableCaretPosition.Value, type);
                 if (caret == null)
                     return;
 
@@ -49,17 +49,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 AddInternal(caret);
             }
 
-            static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, bool isPreview) =>
+            static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, DrawableCaretType type) =>
                 caretPositionAlgorithm switch
                 {
                     // cutting lyric
-                    CuttingCaretPosition => new DrawableLyricSplitterCaret(isPreview),
+                    CuttingCaretPosition => new DrawableLyricSplitterCaret(type),
                     // typing
-                    TypingCaretPosition => new DrawableLyricInputCaret(isPreview),
+                    TypingCaretPosition => new DrawableLyricInputCaret(type),
                     // creat time-tag
-                    TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(isPreview),
+                    TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(type),
                     // record time-tag
-                    TimeTagCaretPosition => new DrawableTimeTagRecordCaret(isPreview),
+                    TimeTagCaretPosition => new DrawableTimeTagRecordCaret(type),
                     _ => null
                 };
         }

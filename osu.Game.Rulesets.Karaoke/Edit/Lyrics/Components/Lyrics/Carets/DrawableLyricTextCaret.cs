@@ -15,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         [Resolved]
         private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        protected DrawableLyricTextCaret(bool preview)
-            : base(preview)
+        protected DrawableLyricTextCaret(DrawableCaretType type)
+            : base(type)
         {
         }
 
