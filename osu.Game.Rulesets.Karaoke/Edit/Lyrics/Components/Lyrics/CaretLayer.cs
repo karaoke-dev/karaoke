@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     public class CaretLayer : BaseLayer
     {
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+        private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
 
         public CaretLayer(Lyric lyric)
             : base(lyric)
@@ -26,28 +27,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     return;
 
                 // initial default caret.
-                initializeCaret();
+                initializeCaret(DrawableCaretType.Caret);
+            }, true);
+
+            bindableHoverCaretPosition.BindValueChanged(e =>
+            {
+                if (e.OldValue?.GetType() == e.NewValue?.GetType())
+                    return;
+
+                // initial default caret.
+                initializeCaret(DrawableCaretType.HoverCaret);
             }, true);
         }
 
-        private void initializeCaret()
+        private void initializeCaret(DrawableCaretType type)
         {
-            ClearInternal();
+            var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+            if (oldCaret != null)
+                RemoveInternal(oldCaret, true);
 
-            // create caret and hover caret.
-            addCaret(DrawableCaretType.Caret);
-            addCaret(DrawableCaretType.HoverCaret);
+            var caret = createCaret(bindableCaretPosition.Value, type);
+            if (caret == null)
+                return;
 
-            void addCaret(DrawableCaretType type)
-            {
-                var caret = createCaret(bindableCaretPosition.Value, type);
-                if (caret == null)
-                    return;
+            caret.Hide();
 
-                caret.Hide();
-
-                AddInternal(caret);
-            }
+            AddInternal(caret);
 
             static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, DrawableCaretType type) =>
                 caretPositionAlgorithm switch
@@ -68,6 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         private void load(ILyricCaretState lyricCaretState)
         {
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+            bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
         }
 
         public override void UpdateDisableEditState(bool editable)

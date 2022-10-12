@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 
     public abstract class DrawableCaret : CompositeDrawable
     {
-        protected readonly DrawableCaretType Type;
+        public readonly DrawableCaretType Type;
 
         protected DrawableCaret(DrawableCaretType type)
         {
