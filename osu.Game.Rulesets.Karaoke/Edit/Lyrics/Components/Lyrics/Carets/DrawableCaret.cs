@@ -4,42 +4,16 @@
 #nullable disable
 
 using System;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
     public abstract class DrawableCaret<TCaret> : DrawableCaret where TCaret : class, ICaretPosition
     {
-        private IBindable<ICaretPosition> caretPosition;
-
         protected DrawableCaret(DrawableCaretType type)
             : base(type)
         {
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState, InteractableKaraokeSpriteText karaokeSpriteText)
-        {
-            caretPosition = Type == DrawableCaretType.HoverCaret ? lyricCaretState.BindableHoverCaretPosition.GetBoundCopy() : lyricCaretState.BindableCaretPosition.GetBoundCopy();
-            caretPosition.BindValueChanged(e =>
-            {
-                var position = e.NewValue;
-                if (position == null)
-                    return;
-
-                if (position.Lyric != karaokeSpriteText.HitObject)
-                {
-                    Hide();
-                    return;
-                }
-
-                Show();
-                Apply(position);
-            });
         }
 
         protected static float GetAlpha(DrawableCaretType type) =>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -23,24 +24,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         {
             bindableCaretPosition.BindValueChanged(e =>
             {
-                if (e.OldValue?.GetType() == e.NewValue?.GetType())
-                    return;
+                if (e.OldValue?.GetType() != e.NewValue?.GetType())
+                    updateDrawableCaret(DrawableCaretType.Caret);
 
-                // initial default caret.
-                initializeCaret(DrawableCaretType.Caret);
+                applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
             }, true);
 
             bindableHoverCaretPosition.BindValueChanged(e =>
             {
-                if (e.OldValue?.GetType() == e.NewValue?.GetType())
-                    return;
+                if (e.OldValue?.GetType() != e.NewValue?.GetType())
+                    updateDrawableCaret(DrawableCaretType.HoverCaret);
 
-                // initial default caret.
-                initializeCaret(DrawableCaretType.HoverCaret);
+                applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
             }, true);
         }
 
-        private void initializeCaret(DrawableCaretType type)
+        private void updateDrawableCaret(DrawableCaretType type)
         {
             var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
             if (oldCaret != null)
@@ -67,6 +66,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     TimeTagCaretPosition => new DrawableTimeTagRecordCaret(type),
                     _ => null
                 };
+        }
+
+        private void applyTheCaretPosition(ICaretPosition? position, DrawableCaretType type)
+        {
+            if (position == null)
+                return;
+
+            var caret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+            if (caret == null)
+                throw new NullReferenceException();
+
+            if (position.Lyric != Lyric)
+            {
+                caret.Hide();
+                return;
+            }
+
+            caret.Show();
+            caret.Apply(position);
         }
 
         [BackgroundDependencyLoader]
