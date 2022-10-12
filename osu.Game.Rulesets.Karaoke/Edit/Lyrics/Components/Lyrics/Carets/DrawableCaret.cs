@@ -38,12 +38,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                 }
 
                 Show();
-
-                if (position is not TCaret tCaret)
-                    throw new InvalidCastException();
-
-                Apply(tCaret);
+                Apply(position);
             });
+        }
+
+        public override void Apply(ICaretPosition caret)
+        {
+            if (caret is not TCaret tCaret)
+                throw new InvalidCastException();
+
+            Apply(tCaret);
         }
 
         protected abstract void Apply(TCaret caret);
@@ -57,6 +61,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         {
             Preview = preview;
         }
+
+        public abstract void Apply(ICaretPosition caret);
 
         public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
     }
