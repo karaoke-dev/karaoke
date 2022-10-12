@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
     public abstract class MoveCaretPositionButton : KeyActionButton
     {
