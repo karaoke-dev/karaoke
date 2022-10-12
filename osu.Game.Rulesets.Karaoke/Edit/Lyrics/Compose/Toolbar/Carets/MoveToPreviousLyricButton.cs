@@ -4,7 +4,7 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
     public class MoveToPreviousLyricButton : MoveCaretPositionButton
     {

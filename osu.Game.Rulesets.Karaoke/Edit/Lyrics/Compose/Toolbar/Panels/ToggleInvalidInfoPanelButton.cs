@@ -4,7 +4,7 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Panels
 {
     public class ToggleInvalidInfoPanelButton : LyricEditorConfigButton
     {

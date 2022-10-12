@@ -9,11 +9,11 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using TagLib;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class CreateTimeTagButton : KeyActionButton
+    public class RemoveTimeTagButton : KeyActionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.CreateTimeTag;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.RemoveTimeTag;
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -21,9 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
         [Resolved, AllowNull]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-        public CreateTimeTagButton()
+        public RemoveTimeTagButton()
         {
-            SetIcon(FontAwesome.Solid.Tag);
+            SetIcon(FontAwesome.Solid.Eraser);
 
             Action = () =>
             {
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
                     throw new UnsupportedFormatException();
 
                 var index = timeTagIndexCaretPosition.Index;
-                lyricTimeTagsChangeHandler.AddByPosition(index);
+                lyricTimeTagsChangeHandler.RemoveByPosition(index);
             };
         }
     }
