@@ -42,6 +42,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             });
         }
 
+        protected static float GetAlpha(bool isHover)
+        {
+            return isHover ? 0.5f : 1;
+        }
+
         public override void Apply(ICaretPosition caret)
         {
             if (caret is not TCaret tCaret)

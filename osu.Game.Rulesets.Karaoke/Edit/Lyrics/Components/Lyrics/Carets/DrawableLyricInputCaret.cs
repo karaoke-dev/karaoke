@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.White,
-                Alpha = Preview ? 0.5f : 1,
+                Alpha = GetAlpha(Preview)
             };
 
             if (!Preview)

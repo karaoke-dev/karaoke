@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                 {
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
-                    Alpha = preview ? 0.5f : 1,
+                    Alpha = GetAlpha(preview),
                     Children = new Drawable[]
                     {
                         new Triangle
