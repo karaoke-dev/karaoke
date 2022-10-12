@@ -2,35 +2,25 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
 {
-    public abstract class LyricEditorConfigButton : ToolbarButton
+    /// <summary>
+    /// Button that able to change the boolean config in the <see cref="KaraokeRulesetLyricEditorConfigManager"/>
+    /// </summary>
+    public abstract class LyricEditorConfigButton : ToggleButton
     {
-        private readonly Bindable<bool> bindableConfig = new();
-
         protected LyricEditorConfigButton()
         {
             SetIcon(Icon);
-
-            bindableConfig.BindValueChanged(x =>
-            {
-                IconContainer.Alpha = x.NewValue ? 1 : 0.5f;
-            }, true);
-
-            Action = () =>
-            {
-                bindableConfig.Value = !bindableConfig.Value;
-            };
         }
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
-            lyricEditorConfigManager.BindWith(Setting, bindableConfig);
+            lyricEditorConfigManager.BindWith(Setting, Active);
         }
 
         protected abstract KaraokeRulesetLyricEditorSetting Setting { get; }
