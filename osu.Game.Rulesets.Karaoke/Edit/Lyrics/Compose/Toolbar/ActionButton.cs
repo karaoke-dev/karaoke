@@ -9,6 +9,9 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
 {
+    /// <summary>
+    /// Button with click effect.
+    /// </summary>
     public abstract class ActionButton : ToolbarButton
     {
         [Resolved, AllowNull]

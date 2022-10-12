@@ -6,6 +6,9 @@ using osu.Framework.Input.Events;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
 {
+    /// <summary>
+    /// Button that able to receive the <see cref="KaraokeEditAction"/> event.
+    /// </summary>
     public abstract class KeyActionButton : ActionButton, IKeyBindingHandler<KaraokeEditAction>, IHasIKeyBindingHandlerOrder
     {
         protected abstract KaraokeEditAction EditAction { get; }

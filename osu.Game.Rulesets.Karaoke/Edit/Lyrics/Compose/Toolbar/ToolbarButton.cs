@@ -12,6 +12,9 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
 {
+    /// <summary>
+    /// Base toolbar button.
+    /// </summary>
     public abstract class ToolbarButton : OsuClickableContainer
     {
         public void SetIcon(Drawable icon)

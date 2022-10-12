@@ -7,6 +7,9 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar
 {
+    /// <summary>
+    /// Button that able to change the boolean config in the <see cref="KaraokeRulesetLyricEditorConfigManager"/>
+    /// </summary>
     public abstract class LyricEditorConfigButton : ToggleButton
     {
         protected LyricEditorConfigButton()
