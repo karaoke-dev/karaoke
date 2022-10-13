@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public abstract class DrawableCaret<TCaret> : DrawableCaret where TCaret : class, ICaretPosition
+    public abstract class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
     {
         protected DrawableCaret(DrawableCaretType type)
             : base(type)

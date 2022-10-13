@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public abstract class DrawableLyricTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : class, ITextCaretPosition
+    public abstract class DrawableLyricTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
     {
         [Resolved]
         private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
