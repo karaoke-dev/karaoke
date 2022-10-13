@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -75,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             var caret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
             if (caret == null)
-                throw new NullReferenceException();
+                return;
 
             if (position.Lyric != Lyric)
             {
