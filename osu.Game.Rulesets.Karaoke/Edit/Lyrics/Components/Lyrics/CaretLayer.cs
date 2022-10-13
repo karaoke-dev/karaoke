@@ -16,58 +16,81 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
     public class CaretLayer : BaseLayer
     {
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+        private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
 
         public CaretLayer(Lyric lyric)
             : base(lyric)
         {
             bindableCaretPosition.BindValueChanged(e =>
             {
-                if (e.OldValue?.GetType() == e.NewValue?.GetType())
-                    return;
+                if (e.OldValue?.GetType() != e.NewValue?.GetType())
+                    updateDrawableCaret(DrawableCaretType.Caret);
 
-                // initial default caret.
-                initializeCaret();
+                applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
+            }, true);
+
+            bindableHoverCaretPosition.BindValueChanged(e =>
+            {
+                if (e.OldValue?.GetType() != e.NewValue?.GetType())
+                    updateDrawableCaret(DrawableCaretType.HoverCaret);
+
+                applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
             }, true);
         }
 
-        private void initializeCaret()
+        private void updateDrawableCaret(DrawableCaretType type)
         {
-            ClearInternal();
+            var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+            if (oldCaret != null)
+                RemoveInternal(oldCaret, true);
 
-            // create preview and real caret
-            addCaret(false);
-            addCaret(true);
+            var caret = createCaret(bindableCaretPosition.Value, type);
+            if (caret == null)
+                return;
 
-            void addCaret(bool isPreview)
-            {
-                var caret = createCaret(bindableCaretPosition.Value, isPreview);
-                if (caret == null)
-                    return;
+            caret.Hide();
 
-                caret.Hide();
+            AddInternal(caret);
 
-                AddInternal(caret);
-            }
-
-            static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, bool isPreview) =>
+            static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, DrawableCaretType type) =>
                 caretPositionAlgorithm switch
                 {
                     // cutting lyric
-                    CuttingCaretPosition => new DrawableLyricSplitterCaret(isPreview),
+                    CuttingCaretPosition => new DrawableLyricSplitterCaret(type),
                     // typing
-                    TypingCaretPosition => new DrawableLyricInputCaret(isPreview),
+                    TypingCaretPosition => new DrawableLyricInputCaret(type),
                     // creat time-tag
-                    TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(isPreview),
+                    TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(type),
                     // record time-tag
-                    TimeTagCaretPosition => new DrawableTimeTagRecordCaret(isPreview),
+                    TimeTagCaretPosition => new DrawableTimeTagRecordCaret(type),
                     _ => null
                 };
+        }
+
+        private void applyTheCaretPosition(ICaretPosition? position, DrawableCaretType type)
+        {
+            if (position == null)
+                return;
+
+            var caret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+            if (caret == null)
+                return;
+
+            if (position.Lyric != Lyric)
+            {
+                caret.Hide();
+                return;
+            }
+
+            caret.Show();
+            caret.ApplyCaretPosition(position);
         }
 
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState)
         {
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+            bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
         }
 
         public override void UpdateDisableEditState(bool editable)

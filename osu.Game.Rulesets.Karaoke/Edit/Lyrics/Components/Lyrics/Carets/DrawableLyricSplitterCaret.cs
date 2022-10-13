@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -25,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         [Resolved]
         private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        public DrawableLyricSplitterCaret(bool preview)
-            : base(preview)
+        public DrawableLyricSplitterCaret(DrawableCaretType type)
+            : base(type)
         {
             Width = 10;
             Origin = Anchor.TopCentre;
@@ -41,13 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                     X = 7,
                     Y = -5,
                     Size = new Vector2(10),
-                    Alpha = preview ? 1 : 0
                 },
                 splitter = new Container
                 {
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
-                    Alpha = preview ? 0.5f : 1,
+                    Alpha = GetAlpha(type),
                     Children = new Drawable[]
                     {
                         new Triangle
@@ -68,6 +68,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                     }
                 }
             };
+
+            switch (type)
+            {
+                case DrawableCaretType.Caret:
+                    splitIcon.Hide();
+                    break;
+
+                case DrawableCaretType.HoverCaret:
+                    splitIcon.Show();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         [BackgroundDependencyLoader]

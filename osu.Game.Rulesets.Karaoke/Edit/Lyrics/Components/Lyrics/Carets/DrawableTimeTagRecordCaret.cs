@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
@@ -25,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 
         private readonly DrawableTextIndex drawableTextIndex;
 
-        public DrawableTimeTagRecordCaret(bool preview)
-            : base(preview)
+        public DrawableTimeTagRecordCaret(DrawableCaretType type)
+            : base(type)
         {
             AutoSizeAxes = Axes.Both;
 
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             {
                 Name = "Text index",
                 Size = new Vector2(triangle_width),
-                Alpha = preview ? 0.5f : 1
+                Alpha = GetAlpha(type),
             };
         }
 
@@ -42,11 +43,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         {
             var timeTag = caret.TimeTag;
             var textIndex = timeTag.Index;
-            this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
+            this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), getMoveToDuration(Type), Easing.OutCubic);
             Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
             drawableTextIndex.State = textIndex.State;
             drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+
+            static double getMoveToDuration(DrawableCaretType type) =>
+                type switch
+                {
+                    DrawableCaretType.Caret => 100,
+                    DrawableCaretType.HoverCaret => 0,
+                    _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+                };
         }
 
         public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
