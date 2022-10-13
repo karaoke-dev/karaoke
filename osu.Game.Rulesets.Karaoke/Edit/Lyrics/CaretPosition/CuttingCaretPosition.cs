@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
-    public class CuttingCaretPosition : ITextCaretPosition
+    public struct CuttingCaretPosition : ITextCaretPosition
     {
         public CuttingCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
         {
