@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Edit.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
@@ -28,9 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 
             bindableCaretPosition.BindValueChanged(e =>
             {
-                if (!ValueChangedEventUtils.LyricChanged(e))
-                    return;
-
                 bool movable = lyricCaretState.GetCaretPositionByAction(AcceptAction) != null;
                 SetState(movable);
             });
