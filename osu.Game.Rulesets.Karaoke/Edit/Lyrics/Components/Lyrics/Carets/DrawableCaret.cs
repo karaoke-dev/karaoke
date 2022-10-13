@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
-        public override void Apply(ICaretPosition caret)
+        public override void ApplyCaretPosition(ICaretPosition caret)
         {
             if (caret is not TCaret tCaret)
                 throw new InvalidCastException();
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             Type = type;
         }
 
-        public abstract void Apply(ICaretPosition caret);
+        public abstract void ApplyCaretPosition(ICaretPosition caret);
 
         public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
     }

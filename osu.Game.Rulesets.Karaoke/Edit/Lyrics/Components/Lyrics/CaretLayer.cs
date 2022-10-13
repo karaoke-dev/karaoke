@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
 
             caret.Show();
-            caret.Apply(position);
+            caret.ApplyCaretPosition(position);
         }
 
         [BackgroundDependencyLoader]
