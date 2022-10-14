@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public class TimeTagCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagCaretPosition>
+    public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTagCaretPosition>
     {
         public MovingTimeTagCaretMode Mode { get; set; }
 

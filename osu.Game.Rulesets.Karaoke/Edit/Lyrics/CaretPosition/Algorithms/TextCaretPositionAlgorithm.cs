@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public abstract class TextCaretPositionAlgorithm<TCaretPosition> : CaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
+    public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
     {
         protected TextCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)

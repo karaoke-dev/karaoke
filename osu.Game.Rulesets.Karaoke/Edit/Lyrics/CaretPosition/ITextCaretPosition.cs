@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 
-public interface ITextCaretPosition : ICaretPosition
+public interface ITextCaretPosition : IIndexCaretPosition
 {
     public int Index { get; }
 }
