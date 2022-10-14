@@ -16,17 +16,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Lyrics = lyrics;
         }
 
-        public abstract bool PositionMovable(TCaretPosition position);
+        protected abstract bool PositionMovable(TCaretPosition position);
 
-        public abstract TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition);
+        protected abstract TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition? MoveToNextLyric(TCaretPosition currentPosition);
+        protected abstract TCaretPosition? MoveToNextLyric(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition? MoveToFirstLyric();
+        protected abstract TCaretPosition? MoveToFirstLyric();
 
-        public abstract TCaretPosition? MoveToLastLyric();
+        protected abstract TCaretPosition? MoveToLastLyric();
 
-        public abstract TCaretPosition? MoveToTargetLyric(Lyric lyric);
+        protected abstract TCaretPosition? MoveToTargetLyric(Lyric lyric);
 
         public bool PositionMovable(ICaretPosition position)
         {

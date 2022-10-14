@@ -15,12 +15,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public override bool PositionMovable(TCaretPosition position)
+        protected override bool PositionMovable(TCaretPosition position)
         {
             return indexInTextRange(position.Index, position.Lyric);
         }
 
-        public override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
+        protected override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPreviousMatch(currentPosition.Lyric, lyricMovable);
             if (lyric == null)
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, index);
         }
 
-        public override TCaretPosition? MoveToNextLyric(TCaretPosition currentPosition)
+        protected override TCaretPosition? MoveToNextLyric(TCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNextMatch(currentPosition.Lyric, lyricMovable);
             if (lyric == null)
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, index);
         }
 
-        public override TCaretPosition? MoveToFirstLyric()
+        protected override TCaretPosition? MoveToFirstLyric()
         {
             var lyric = Lyrics.FirstOrDefault(lyricMovable);
             if (lyric == null)
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, GetMinIndex(lyric.Text));
         }
 
-        public override TCaretPosition? MoveToLastLyric()
+        protected override TCaretPosition? MoveToLastLyric()
         {
             var lyric = Lyrics.LastOrDefault(lyricMovable);
             if (lyric == null)
@@ -60,9 +60,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, GetMaxIndex(lyric.Text));
         }
 
-        public override TCaretPosition? MoveToTargetLyric(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+        protected override TCaretPosition? MoveToTargetLyric(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
-        public override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
+        protected override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, previousIndex);
         }
 
-        public override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
+        protected override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;

@@ -14,9 +14,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public abstract TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition);
+        protected abstract TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition);
+        protected abstract TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition);
 
         public ICaretPosition? MoveToPreviousIndex(ICaretPosition currentPosition)
         {

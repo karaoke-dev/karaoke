@@ -14,12 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public override bool PositionMovable(NavigateCaretPosition position)
+        protected override bool PositionMovable(NavigateCaretPosition position)
         {
             return true;
         }
 
-        public override NavigateCaretPosition? MoveToPreviousLyric(NavigateCaretPosition currentPosition)
+        protected override NavigateCaretPosition? MoveToPreviousLyric(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition? MoveToNextLyric(NavigateCaretPosition currentPosition)
+        protected override NavigateCaretPosition? MoveToNextLyric(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition? MoveToFirstLyric()
+        protected override NavigateCaretPosition? MoveToFirstLyric()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition? MoveToLastLyric()
+        protected override NavigateCaretPosition? MoveToLastLyric()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)
@@ -55,6 +55,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
+        protected override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
     }
 }
