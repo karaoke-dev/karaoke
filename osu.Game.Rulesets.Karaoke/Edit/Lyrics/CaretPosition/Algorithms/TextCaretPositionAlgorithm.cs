@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, index);
         }
 
-        public override TCaretPosition? MoveLeft(TCaretPosition currentPosition)
+        public override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(currentPosition.Lyric, previousIndex);
         }
 
-        public override TCaretPosition? MoveRight(TCaretPosition currentPosition)
+        public override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;

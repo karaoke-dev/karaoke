@@ -14,24 +14,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public abstract TCaretPosition? MoveLeft(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition? MoveRight(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition);
 
-        public ICaretPosition? MoveLeft(ICaretPosition currentPosition)
+        public ICaretPosition? MoveToPreviousIndex(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveLeft(tCaretPosition);
+            return MoveToPreviousIndex(tCaretPosition);
         }
 
-        public ICaretPosition? MoveRight(ICaretPosition currentPosition)
+        public ICaretPosition? MoveToNextIndex(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveRight(tCaretPosition);
+            return MoveToNextIndex(tCaretPosition);
         }
     }
 }

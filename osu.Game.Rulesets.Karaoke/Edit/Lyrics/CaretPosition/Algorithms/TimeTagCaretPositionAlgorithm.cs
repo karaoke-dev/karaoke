@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return timeTagToPosition(downTimeTag);
         }
 
-        public override TimeTagCaretPosition? MoveLeft(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return timeTagToPosition(previousTimeTag);
         }
 
-        public override TimeTagCaretPosition? MoveRight(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition? MoveToNextIndex(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);

@@ -54,14 +54,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public override TimeTagIndexCaretPosition? MoveLeft(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveToPreviousIndex(TimeTagIndexCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var index = TextIndexUtils.GetPreviousIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
-                return MoveLeft(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
+                return MoveToPreviousIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
                 return MoveToPreviousLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, index.State)));
@@ -69,14 +69,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
         }
 
-        public override TimeTagIndexCaretPosition? MoveRight(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveToNextIndex(TimeTagIndexCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var index = TextIndexUtils.GetNextIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
-                return MoveRight(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
+                return MoveToNextIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
                 return MoveToNextLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue, index.State)));
