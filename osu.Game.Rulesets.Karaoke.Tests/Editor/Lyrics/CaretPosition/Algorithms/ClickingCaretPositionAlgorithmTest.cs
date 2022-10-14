@@ -28,94 +28,66 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), 0, null)]
         [TestCase(nameof(twoLyricsWithText), 1, null)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, null)]
-        public void TestMoveUp(string sourceName, int lyricIndex, int? expectedLyricIndex)
+        public void TestMoveToPreviousLyric(string sourceName, int lyricIndex, int? expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
 
             // Check is movable
-            TestMoveUp(lyrics, caret, expected);
+            TestMoveToPreviousLyric(lyrics, caret, expected);
         }
 
         [TestCase(nameof(singleLyric), 0, null)] // should always not movable.
         [TestCase(nameof(singleLyricWithNoText), 0, null)]
         [TestCase(nameof(twoLyricsWithText), 0, null)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, null)]
-        public void TestMoveDown(string sourceName, int lyricIndex, int? expectedLyricIndex)
+        public void TestMoveToNextLyric(string sourceName, int lyricIndex, int? expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
 
             // Check is movable
-            TestMoveDown(lyrics, caret, expected);
-        }
-
-        [TestCase(nameof(singleLyric), 0, null)] // should always not movable.
-        [TestCase(nameof(singleLyricWithNoText), 0, null)]
-        [TestCase(nameof(twoLyricsWithText), 0, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, null)]
-        public void TestMoveLeft(string sourceName, int lyricIndex, int? expectedLyricIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
-
-            // Check is movable
-            TestMoveLeft(lyrics, caret, expected);
-        }
-
-        [TestCase(nameof(singleLyric), 0, null)] // should always not movable.
-        [TestCase(nameof(singleLyricWithNoText), 0, null)]
-        [TestCase(nameof(twoLyricsWithText), 0, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, null)]
-        public void TestMoveRight(string sourceName, int lyricIndex, int? expectedLyricIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
-
-            // Check is movable
-            TestMoveRight(lyrics, caret, expected);
+            TestMoveToNextLyric(lyrics, caret, expected);
         }
 
         [TestCase(nameof(singleLyric), null)] // should always not movable.
         [TestCase(nameof(singleLyricWithNoText), null)]
         [TestCase(nameof(twoLyricsWithText), null)]
         [TestCase(nameof(threeLyricsWithSpacing), null)]
-        public void TestMoveToFirst(string sourceName, int? expectedLyricIndex)
+        public void TestMoveToFirstLyric(string sourceName, int? expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
 
             // Check first position
-            TestMoveToFirst(lyrics, expected);
+            TestMoveToFirstLyric(lyrics, expected);
         }
 
         [TestCase(nameof(singleLyric), null)] // should always not movable.
         [TestCase(nameof(singleLyricWithNoText), null)]
         [TestCase(nameof(twoLyricsWithText), null)]
         [TestCase(nameof(threeLyricsWithSpacing), null)]
-        public void TestMoveToLast(string sourceName, int? expectedLyricIndex)
+        public void TestMoveToLastLyric(string sourceName, int? expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
 
             // Check last position
-            TestMoveToLast(lyrics, expected);
+            TestMoveToLastLyric(lyrics, expected);
         }
 
         [TestCase(nameof(singleLyric), 0)]
         [TestCase(nameof(singleLyricWithNoText), 0)]
-        public void TestMoveToTarget(string sourceName, int expectedLyricIndex)
+        public void TestMoveToTargetLyric(string sourceName, int expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[expectedLyricIndex];
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
 
             // Check move to target position.
-            TestMoveToTarget(lyrics, lyric, expected);
+            TestMoveToTargetLyric(lyrics, lyric, expected);
         }
 
         protected override void AssertEqual(ClickingCaretPosition expected, ClickingCaretPosition actual)

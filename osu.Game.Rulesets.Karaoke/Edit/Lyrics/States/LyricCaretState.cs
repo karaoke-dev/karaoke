@@ -112,9 +112,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                     return null;
 
                 if (lyric == null)
-                    return algorithm.MoveToFirst();
+                    return algorithm.MoveToFirstLyric();
 
-                return algorithm.MoveToTarget(lyric);
+                return algorithm.MoveToTargetLyric(lyric);
             }
         }
 
@@ -202,12 +202,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             return action switch
             {
-                MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveUp),
-                MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveDown),
-                MovingCaretAction.Left => moveIfNotNull(currentPosition, algorithm.MoveLeft),
-                MovingCaretAction.Right => moveIfNotNull(currentPosition, algorithm.MoveRight),
-                MovingCaretAction.First => algorithm.MoveToFirst(),
-                MovingCaretAction.Last => algorithm.MoveToLast(),
+                MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveToPreviousLyric),
+                MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveToNextLyric),
+                MovingCaretAction.Left => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToPreviousIndex) : null,
+                MovingCaretAction.Right => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToNextIndex) : null,
+                MovingCaretAction.First => algorithm.MoveToFirstLyric(),
+                MovingCaretAction.Last => algorithm.MoveToLastLyric(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
             };
 
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var caretPosition = algorithm?.MoveToTarget(lyric);
+            var caretPosition = algorithm?.MoveToTargetLyric(lyric);
             if (caretPosition == null)
                 return;
 
