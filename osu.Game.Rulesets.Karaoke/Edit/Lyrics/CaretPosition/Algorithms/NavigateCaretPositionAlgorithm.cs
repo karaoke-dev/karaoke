@@ -37,16 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition? MoveLeft(NavigateCaretPosition currentPosition)
-        {
-            return null;
-        }
-
-        public override NavigateCaretPosition? MoveRight(NavigateCaretPosition currentPosition)
-        {
-            return null;
-        }
-
         public override NavigateCaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();

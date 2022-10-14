@@ -204,8 +204,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             {
                 MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveUp),
                 MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveDown),
-                MovingCaretAction.Left => moveIfNotNull(currentPosition, algorithm.MoveLeft),
-                MovingCaretAction.Right => moveIfNotNull(currentPosition, algorithm.MoveRight),
+                MovingCaretAction.Left => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveLeft) : null,
+                MovingCaretAction.Right => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveRight) : null,
                 MovingCaretAction.First => algorithm.MoveToFirst(),
                 MovingCaretAction.Last => algorithm.MoveToLast(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))

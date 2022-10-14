@@ -5,6 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
     public interface IIndexCaretPositionAlgorithm : ICaretPositionAlgorithm
     {
+        public ICaretPosition? MoveLeft(ICaretPosition currentPosition);
 
+        public ICaretPosition? MoveRight(ICaretPosition currentPosition);
     }
 }

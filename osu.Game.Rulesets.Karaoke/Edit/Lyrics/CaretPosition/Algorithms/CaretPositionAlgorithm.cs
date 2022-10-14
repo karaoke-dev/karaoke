@@ -22,10 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public abstract TCaretPosition? MoveDown(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition? MoveLeft(TCaretPosition currentPosition);
-
-        public abstract TCaretPosition? MoveRight(TCaretPosition currentPosition);
-
         public abstract TCaretPosition? MoveToFirst();
 
         public abstract TCaretPosition? MoveToLast();
@@ -54,22 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 throw new InvalidCastException(nameof(currentPosition));
 
             return MoveDown(tCaretPosition);
-        }
-
-        public ICaretPosition? MoveLeft(ICaretPosition currentPosition)
-        {
-            if (currentPosition is not TCaretPosition tCaretPosition)
-                throw new InvalidCastException(nameof(currentPosition));
-
-            return MoveLeft(tCaretPosition);
-        }
-
-        public ICaretPosition? MoveRight(ICaretPosition currentPosition)
-        {
-            if (currentPosition is not TCaretPosition tCaretPosition)
-                throw new InvalidCastException(nameof(currentPosition));
-
-            return MoveRight(tCaretPosition);
         }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToFirst()

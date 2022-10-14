@@ -13,10 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public ICaretPosition? MoveDown(ICaretPosition currentPosition);
 
-        public ICaretPosition? MoveLeft(ICaretPosition currentPosition);
-
-        public ICaretPosition? MoveRight(ICaretPosition currentPosition);
-
         public ICaretPosition? MoveToFirst();
 
         public ICaretPosition? MoveToLast();
