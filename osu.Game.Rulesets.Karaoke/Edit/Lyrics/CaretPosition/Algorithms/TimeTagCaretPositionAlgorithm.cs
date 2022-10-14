@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (upTimeTag == null)
                 return null;
 
-            return timeTagToPosition(upTimeTag);
+            return new TimeTagCaretPosition(previousLyric, upTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToNextLyric(TimeTagCaretPosition currentPosition)
@@ -71,27 +71,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (downTimeTag == null)
                 return null;
 
-            return timeTagToPosition(downTimeTag);
+            return new TimeTagCaretPosition(nextLyric, downTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToFirstLyric()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var firstTimeTag = timeTags.FirstOrDefault(timeTagMovable);
+            var firstLyric = Lyrics.FirstOrDefault(x => x.TimeTags.Any(timeTagMovable));
+            if (firstLyric == null)
+                return null;
+
+            var firstTimeTag = firstLyric.TimeTags.FirstOrDefault(timeTagMovable);
             if (firstTimeTag == null)
                 return null;
 
-            return timeTagToPosition(firstTimeTag);
+            return new TimeTagCaretPosition(firstLyric, firstTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToLastLyric()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var lastTimeTag = timeTags.LastOrDefault(timeTagMovable);
+            var lastLyric = Lyrics.LastOrDefault(x => x.TimeTags.Any(timeTagMovable));
+            if (lastLyric == null)
+                return null;
+
+            var lastTimeTag = lastLyric.TimeTags.LastOrDefault(timeTagMovable);
             if (lastTimeTag == null)
                 return null;
 
-            return timeTagToPosition(lastTimeTag);
+            return new TimeTagCaretPosition(lastLyric, lastTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToTargetLyric(Lyric lyric)
@@ -104,22 +110,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var lyric = currentPosition.Lyric;
+            var timeTags = lyric.TimeTags;
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             if (previousTimeTag == null)
                 return null;
 
-            return timeTagToPosition(previousTimeTag);
+            return new TimeTagCaretPosition(lyric, previousTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToNextIndex(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var lyric = currentPosition.Lyric;
+            var timeTags = lyric.TimeTags;
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             if (nextTimeTag == null)
                 return null;
 
-            return timeTagToPosition(nextTimeTag);
+            return new TimeTagCaretPosition(lyric, nextTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToFirstIndex(Lyric lyric)
@@ -146,20 +154,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveToPreviousIndex(caret);
 
             return caret;
-        }
-
-        private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)
-        {
-            var lyric = timeTagInLyric(timeTag);
-            if (lyric == null)
-                return null;
-
-            return new TimeTagCaretPosition(lyric, timeTag);
-        }
-
-        private Lyric? timeTagInLyric(TimeTag timeTag)
-        {
-            return Lyrics.FirstOrDefault(x => x.TimeTags.Contains(timeTag));
         }
 
         private bool timeTagMovable(TimeTag timeTag)
