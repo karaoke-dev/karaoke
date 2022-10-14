@@ -52,34 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveDown(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), 0, null)]
-        [TestCase(nameof(singleLyricWithNoText), 0, null)]
-        [TestCase(nameof(twoLyricsWithText), 0, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, null)]
-        public void TestMoveLeft(string sourceName, int lyricIndex, int? expectedLyricIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
-
-            // Check is movable
-            TestMoveLeft(lyrics, caret, expected);
-        }
-
-        [TestCase(nameof(singleLyric), 0, null)]
-        [TestCase(nameof(singleLyricWithNoText), 0, null)]
-        [TestCase(nameof(twoLyricsWithText), 0, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, null)]
-        public void TestMoveRight(string sourceName, int lyricIndex, int? expectedLyricIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex);
-
-            // Check is movable
-            TestMoveRight(lyrics, caret, expected);
-        }
-
         [TestCase(nameof(singleLyric), 0)]
         [TestCase(nameof(singleLyricWithNoText), 0)]
         [TestCase(nameof(twoLyricsWithText), 0)]

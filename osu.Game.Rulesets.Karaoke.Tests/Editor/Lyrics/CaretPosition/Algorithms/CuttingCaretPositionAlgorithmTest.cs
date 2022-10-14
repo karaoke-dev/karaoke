@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
     [TestFixture]
-    public class CuttingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<CuttingCaretPositionAlgorithm, CuttingCaretPosition>
+    public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithmTest<CuttingCaretPositionAlgorithm, CuttingCaretPosition>
     {
         [TestCase(nameof(singleLyric), 0, 1, true)]
         [TestCase(nameof(singleLyric), 0, 3, true)]

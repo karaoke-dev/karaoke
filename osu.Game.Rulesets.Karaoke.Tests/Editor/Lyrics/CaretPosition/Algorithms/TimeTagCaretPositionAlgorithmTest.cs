@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
     [TestFixture]
-    public class TimeTagCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<TimeTagCaretPositionAlgorithm, TimeTagCaretPosition>
+    public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithmTest<TimeTagCaretPositionAlgorithm, TimeTagCaretPosition>
     {
         private const int not_exist_tag = -1;
 
