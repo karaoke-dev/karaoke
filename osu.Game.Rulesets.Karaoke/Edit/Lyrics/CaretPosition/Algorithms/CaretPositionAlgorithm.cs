@@ -35,8 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (position is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(position));
 
-            Validate(tCaretPosition);
-
             return PositionMovable(tCaretPosition);
         }
 
