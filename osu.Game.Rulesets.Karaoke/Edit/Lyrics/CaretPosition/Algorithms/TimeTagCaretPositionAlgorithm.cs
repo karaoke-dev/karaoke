@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -16,6 +17,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public TimeTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
+        }
+
+        protected override void Validate(TimeTagCaretPosition input)
+        {
+            var timeTag = input.TimeTag;
+            var lyric = input.Lyric;
+
+            Debug.Assert(lyric.TimeTags.Contains(timeTag));
         }
 
         protected override bool PositionMovable(TimeTagCaretPosition position)

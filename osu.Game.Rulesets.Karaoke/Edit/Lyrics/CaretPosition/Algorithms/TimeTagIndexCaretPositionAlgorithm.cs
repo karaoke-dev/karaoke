@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -17,6 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public TimeTagIndexCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
+        }
+
+        protected override void Validate(TimeTagIndexCaretPosition input)
+        {
+            bool outOfRange = TextIndexUtils.OutOfRange(input.Index, input.Lyric.Text);
+
+            Debug.Assert(!outOfRange);
         }
 
         protected override bool PositionMovable(TimeTagIndexCaretPosition position)

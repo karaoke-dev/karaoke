@@ -14,6 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
+        protected override void Validate(NavigateCaretPosition input)
+        {
+            // there's no checking rules in this algorithm.
+        }
+
         protected override bool PositionMovable(NavigateCaretPosition position)
         {
             return true;

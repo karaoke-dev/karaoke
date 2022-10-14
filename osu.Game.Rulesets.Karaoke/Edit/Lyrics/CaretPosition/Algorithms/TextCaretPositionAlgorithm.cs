@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -13,6 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         protected TextCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
+        }
+
+        protected override void Validate(TCaretPosition input)
+        {
+            Debug.Assert(indexInTextRange(input.Index, input.Lyric));
         }
 
         protected override bool PositionMovable(TCaretPosition position)
