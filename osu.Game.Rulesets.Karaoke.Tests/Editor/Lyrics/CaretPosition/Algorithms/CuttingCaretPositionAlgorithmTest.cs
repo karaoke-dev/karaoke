@@ -90,7 +90,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         }
 
         [TestCase(nameof(singleLyric), 0)]
-        [TestCase(nameof(singleLyricWithNoText), 0)]
         public void TestMoveToTargetLyric(string sourceName, int expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -108,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), 0, 1, null, null)]
         [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 1, 0, 3)]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, 3, 2, 2)]
+        [TestCase(nameof(threeLyricsWithSpacing), 2, 2, 2, 1)]
         public void TestMoveToPreviousIndex(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);

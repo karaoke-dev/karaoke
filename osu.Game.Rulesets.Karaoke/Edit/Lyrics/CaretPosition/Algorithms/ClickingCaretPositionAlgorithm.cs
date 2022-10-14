@@ -12,31 +12,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public override bool PositionMovable(ClickingCaretPosition position)
+        protected override void Validate(ClickingCaretPosition input)
+        {
+            // there's no checking rules in this algorithm.
+        }
+
+        protected override bool PositionMovable(ClickingCaretPosition position)
         {
             return true;
         }
 
-        public override ClickingCaretPosition? MoveToPreviousLyric(ClickingCaretPosition currentPosition)
+        protected override ClickingCaretPosition? MoveToPreviousLyric(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToNextLyric(ClickingCaretPosition currentPosition)
+        protected override ClickingCaretPosition? MoveToNextLyric(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToFirstLyric()
+        protected override ClickingCaretPosition? MoveToFirstLyric()
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToLastLyric()
+        protected override ClickingCaretPosition? MoveToLastLyric()
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
+        protected override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
     }
 }

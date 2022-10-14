@@ -110,7 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,end]")]
-        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, "[0,start]")]
         public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);

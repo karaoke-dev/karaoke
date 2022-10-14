@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveToPreviousIndex(caret);
+            var actual = algorithm.MoveToPreviousIndex(caret) as TCaret?;
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveToNextIndex(caret);
+            var actual = algorithm.MoveToNextIndex(caret) as TCaret?;
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }

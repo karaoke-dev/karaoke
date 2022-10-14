@@ -7,16 +7,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
     public interface ICaretPositionAlgorithm
     {
-        public bool PositionMovable(ICaretPosition position);
+        bool PositionMovable(ICaretPosition position);
 
-        public ICaretPosition? MoveToPreviousLyric(ICaretPosition currentPosition);
+        ICaretPosition? MoveToPreviousLyric(ICaretPosition currentPosition);
 
-        public ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition);
+        ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition);
 
-        public ICaretPosition? MoveToFirstLyric();
+        ICaretPosition? MoveToFirstLyric();
 
-        public ICaretPosition? MoveToLastLyric();
+        ICaretPosition? MoveToLastLyric();
 
-        public ICaretPosition? MoveToTargetLyric(Lyric lyric);
+        ICaretPosition? MoveToTargetLyric(Lyric lyric);
     }
 }
