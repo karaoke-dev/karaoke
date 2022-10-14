@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
     public class ClickingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<ClickingCaretPositionAlgorithm, ClickingCaretPosition>
     {
+        #region Lyric
+
         [TestCase(nameof(singleLyric), 0, true)]
         [TestCase(nameof(singleLyricWithNoText), 0, true)]
         public void TestPositionMovable(string sourceName, int lyricIndex, bool movable)
@@ -89,6 +91,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             // Check move to target position.
             TestMoveToTargetLyric(lyrics, lyric, expected);
         }
+
+        #endregion
 
         protected override void AssertEqual(ClickingCaretPosition expected, ClickingCaretPosition actual)
         {

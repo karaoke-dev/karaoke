@@ -42,30 +42,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, index);
         }
 
-        public override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
-        {
-            // get previous caret and make a check is need to change line.
-            var lyric = currentPosition.Lyric;
-            int previousIndex = currentPosition.Index - 1;
-
-            if (!indexInTextRange(previousIndex, lyric))
-                return MoveToPreviousLyric(CreateCaretPosition(currentPosition.Lyric, int.MaxValue));
-
-            return CreateCaretPosition(currentPosition.Lyric, previousIndex);
-        }
-
-        public override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
-        {
-            // get next caret and make a check is need to change line.
-            var lyric = currentPosition.Lyric;
-            int nextIndex = currentPosition.Index + 1;
-
-            if (!indexInTextRange(nextIndex, lyric))
-                return MoveToNextLyric(CreateCaretPosition(currentPosition.Lyric, int.MinValue));
-
-            return CreateCaretPosition(currentPosition.Lyric, nextIndex);
-        }
-
         public override TCaretPosition? MoveToFirstLyric()
         {
             var lyric = Lyrics.FirstOrDefault(lyricMovable);
@@ -85,6 +61,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         }
 
         public override TCaretPosition? MoveToTargetLyric(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+
+        public override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
+        {
+            // get previous caret and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
+            int previousIndex = currentPosition.Index - 1;
+
+            if (!indexInTextRange(previousIndex, lyric))
+                return MoveToPreviousLyric(CreateCaretPosition(lyric, int.MaxValue));
+
+            return CreateCaretPosition(lyric, previousIndex);
+        }
+
+        public override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
+        {
+            // get next caret and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
+            int nextIndex = currentPosition.Index + 1;
+
+            if (!indexInTextRange(nextIndex, lyric))
+                return MoveToNextLyric(CreateCaretPosition(lyric, int.MinValue));
+
+            return CreateCaretPosition(lyric, nextIndex);
+        }
 
         private bool lyricMovable(Lyric lyric)
         {

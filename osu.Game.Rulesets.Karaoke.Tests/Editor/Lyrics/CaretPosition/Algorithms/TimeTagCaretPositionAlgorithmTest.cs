@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
     {
         private const int not_exist_tag = -1;
 
+        #region Lyric
+
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, true)]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, true)]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, false)]
@@ -72,40 +74,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             // Check is movable
             TestMoveToNextLyric(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
-        }
-
-        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, null, null)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 0, 0, 4)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, 0, 0, 3)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 0, 0, 4)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 0, 0, 4)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, 0, 0, 3)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 0, 0, 4)]
-        public void TestMoveToPreviousIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
-
-            // Check is movable
-            TestMoveToPreviousIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
-        }
-
-        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, null, null)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 4, 1, 0)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, 4, 1, 0)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 4, 1, 3)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 4, 2, 0)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, 4, 2, 0)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 4, 2, 3)]
-        public void TestMoveToNextIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
-        {
-            var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
-
-            // Check is movable
-            TestMoveToNextIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
         }
 
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0)]
@@ -166,6 +134,46 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             // Check move to target position.
             TestMoveToTargetLyric(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
         }
+
+        #endregion
+
+        #region Lyric index
+
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, null, null)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 0, 0, 4)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, 0, 0, 3)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 0, 0, 4)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 0, 0, 4)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, 0, 0, 3)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 0, 0, 4)]
+        public void TestMoveToPreviousIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
+
+            // Check is movable
+            TestMoveToPreviousIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
+        }
+
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, null, null)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 4, 1, 0)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, 4, 1, 0)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 4, 1, 3)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 4, 2, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, 4, 2, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 4, 2, 3)]
+        public void TestMoveToNextIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
+
+            // Check is movable
+            TestMoveToNextIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
+        }
+
+        #endregion
 
         protected override void AssertEqual(TimeTagCaretPosition expected, TimeTagCaretPosition actual)
         {

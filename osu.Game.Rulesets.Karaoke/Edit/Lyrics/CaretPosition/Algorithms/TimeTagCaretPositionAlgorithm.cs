@@ -75,26 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return timeTagToPosition(downTimeTag);
         }
 
-        public override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
-        {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
-            if (previousTimeTag == null)
-                return null;
-
-            return timeTagToPosition(previousTimeTag);
-        }
-
-        public override TimeTagCaretPosition? MoveToNextIndex(TimeTagCaretPosition currentPosition)
-        {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
-            if (nextTimeTag == null)
-                return null;
-
-            return timeTagToPosition(nextTimeTag);
-        }
-
         public override TimeTagCaretPosition? MoveToFirstLyric()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
@@ -121,6 +101,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             // should not move to lyric if contains no time-tag.
             return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag, CaretGenerateType.TargetLyric);
+        }
+
+        public override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
+        {
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
+            if (previousTimeTag == null)
+                return null;
+
+            return timeTagToPosition(previousTimeTag);
+        }
+
+        public override TimeTagCaretPosition? MoveToNextIndex(TimeTagCaretPosition currentPosition)
+        {
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
+            if (nextTimeTag == null)
+                return null;
+
+            return timeTagToPosition(nextTimeTag);
         }
 
         private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)

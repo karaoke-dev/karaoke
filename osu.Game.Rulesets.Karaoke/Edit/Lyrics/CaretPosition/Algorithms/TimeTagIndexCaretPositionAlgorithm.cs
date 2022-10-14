@@ -54,36 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public override TimeTagIndexCaretPosition? MoveToPreviousIndex(TimeTagIndexCaretPosition currentPosition)
-        {
-            // get previous caret and make a check is need to change line.
-            var lyric = currentPosition.Lyric;
-            var index = TextIndexUtils.GetPreviousIndex(currentPosition.Index);
-
-            if (!textIndexMovable(index))
-                return MoveToPreviousIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
-
-            if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToPreviousLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, index.State)));
-
-            return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
-        }
-
-        public override TimeTagIndexCaretPosition? MoveToNextIndex(TimeTagIndexCaretPosition currentPosition)
-        {
-            // get next caret and make a check is need to change line.
-            var lyric = currentPosition.Lyric;
-            var index = TextIndexUtils.GetNextIndex(currentPosition.Index);
-
-            if (!textIndexMovable(index))
-                return MoveToNextIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
-
-            if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToNextLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue, index.State)));
-
-            return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
-        }
-
         public override TimeTagIndexCaretPosition? MoveToFirstLyric()
         {
             var lyric = Lyrics.FirstOrDefault(l => !string.IsNullOrEmpty(l.Text));
@@ -109,6 +79,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             var index = new TextIndex(0, suitableState(TextIndex.IndexState.Start));
             return new TimeTagIndexCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
+        }
+
+        public override TimeTagIndexCaretPosition? MoveToPreviousIndex(TimeTagIndexCaretPosition currentPosition)
+        {
+            // get previous caret and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
+            var index = TextIndexUtils.GetPreviousIndex(currentPosition.Index);
+
+            if (!textIndexMovable(index))
+                return MoveToPreviousIndex(new TimeTagIndexCaretPosition(lyric, index));
+
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
+                return MoveToPreviousLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MaxValue, index.State)));
+
+            return new TimeTagIndexCaretPosition(lyric, index);
+        }
+
+        public override TimeTagIndexCaretPosition? MoveToNextIndex(TimeTagIndexCaretPosition currentPosition)
+        {
+            // get next caret and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
+            var index = TextIndexUtils.GetNextIndex(currentPosition.Index);
+
+            if (!textIndexMovable(index))
+                return MoveToNextIndex(new TimeTagIndexCaretPosition(lyric, index));
+
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
+                return MoveToNextLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MinValue, index.State)));
+
+            return new TimeTagIndexCaretPosition(lyric, index);
         }
 
         private bool textIndexMovable(TextIndex textIndex)
