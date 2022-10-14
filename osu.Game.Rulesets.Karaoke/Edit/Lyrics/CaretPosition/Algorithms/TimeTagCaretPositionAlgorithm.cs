@@ -40,12 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             var currentTimeTag = currentPosition.TimeTag;
 
-            // need to check is lyric in time-tag is valid.
-            var currentLyric = timeTagInLyric(currentTimeTag);
-            if (currentLyric != currentPosition.Lyric)
-                throw new ArgumentException(nameof(currentPosition.Lyric));
-
-            // get previous movable lyric.
+            var currentLyric = currentPosition.Lyric;
             var previousLyric = Lyrics.GetPreviousMatch(currentLyric, l => l.TimeTags.Any(timeTagMovable));
             if (previousLyric == null)
                 return null;
@@ -64,12 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             var currentTimeTag = currentPosition.TimeTag;
 
-            // need to check is lyric in time-tag is valid.
-            var currentLyric = timeTagInLyric(currentTimeTag);
-            if (currentLyric != currentPosition.Lyric)
-                throw new ArgumentException(nameof(currentPosition.Lyric));
-
-            // get next movable lyric.
+            var currentLyric = currentPosition.Lyric;
             var nextLyric = Lyrics.GetNextMatch(currentLyric, l => l.TimeTags.Any(timeTagMovable));
             if (nextLyric == null)
                 return null;
