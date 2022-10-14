@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Lyrics = lyrics;
         }
 
+        protected abstract void Validate(TCaretPosition input);
+
         protected abstract bool PositionMovable(TCaretPosition position);
 
         protected abstract TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition);
@@ -33,6 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (position is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(position));
 
+            Validate(tCaretPosition);
+
             return PositionMovable(tCaretPosition);
         }
 
@@ -41,7 +45,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveToPreviousLyric(tCaretPosition);
+            Validate(tCaretPosition);
+
+            var movedCaretPosition = MoveToPreviousLyric(tCaretPosition);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
         }
 
         public ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition)
@@ -49,16 +59,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveToNextLyric(tCaretPosition);
+            Validate(tCaretPosition);
+
+            var movedCaretPosition = MoveToNextLyric(tCaretPosition);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
         }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToFirstLyric()
-            => MoveToFirstLyric();
+        {
+            var movedCaretPosition = MoveToFirstLyric();
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
+        }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToLastLyric()
-            => MoveToLastLyric();
+        {
+            var movedCaretPosition = MoveToLastLyric();
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
+        }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToTargetLyric(Lyric lyric)
-            => MoveToTargetLyric(lyric);
+        {
+            var movedCaretPosition = MoveToTargetLyric(lyric);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
+        }
     }
 }

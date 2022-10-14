@@ -23,7 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveToPreviousIndex(tCaretPosition);
+            Validate(tCaretPosition);
+
+            var movedCaretPosition = MoveToPreviousIndex(tCaretPosition);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
         }
 
         public ICaretPosition? MoveToNextIndex(ICaretPosition currentPosition)
@@ -31,7 +37,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
 
-            return MoveToNextIndex(tCaretPosition);
+            Validate(tCaretPosition);
+
+            var movedCaretPosition = MoveToNextIndex(tCaretPosition);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
         }
     }
 }
