@@ -88,12 +88,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             var index = TextIndexUtils.GetPreviousIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
-                return MoveToPreviousIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
+                return MoveToPreviousIndex(new TimeTagIndexCaretPosition(lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToPreviousLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, index.State)));
+                return MoveToPreviousLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MaxValue, index.State)));
 
-            return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
+            return new TimeTagIndexCaretPosition(lyric, index);
         }
 
         public override TimeTagIndexCaretPosition? MoveToNextIndex(TimeTagIndexCaretPosition currentPosition)
@@ -103,12 +103,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             var index = TextIndexUtils.GetNextIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
-                return MoveToNextIndex(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
+                return MoveToNextIndex(new TimeTagIndexCaretPosition(lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToNextLyric(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue, index.State)));
+                return MoveToNextLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MinValue, index.State)));
 
-            return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
+            return new TimeTagIndexCaretPosition(lyric, index);
         }
 
         private bool textIndexMovable(TextIndex textIndex)

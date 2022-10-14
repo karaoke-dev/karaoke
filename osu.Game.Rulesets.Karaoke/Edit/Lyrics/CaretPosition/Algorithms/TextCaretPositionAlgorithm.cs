@@ -69,9 +69,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             int previousIndex = currentPosition.Index - 1;
 
             if (!indexInTextRange(previousIndex, lyric))
-                return MoveToPreviousLyric(CreateCaretPosition(currentPosition.Lyric, int.MaxValue));
+                return MoveToPreviousLyric(CreateCaretPosition(lyric, int.MaxValue));
 
-            return CreateCaretPosition(currentPosition.Lyric, previousIndex);
+            return CreateCaretPosition(lyric, previousIndex);
         }
 
         public override TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition)
@@ -81,9 +81,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             int nextIndex = currentPosition.Index + 1;
 
             if (!indexInTextRange(nextIndex, lyric))
-                return MoveToNextLyric(CreateCaretPosition(currentPosition.Lyric, int.MinValue));
+                return MoveToNextLyric(CreateCaretPosition(lyric, int.MinValue));
 
-            return CreateCaretPosition(currentPosition.Lyric, nextIndex);
+            return CreateCaretPosition(lyric, nextIndex);
         }
 
         private bool lyricMovable(Lyric lyric)
