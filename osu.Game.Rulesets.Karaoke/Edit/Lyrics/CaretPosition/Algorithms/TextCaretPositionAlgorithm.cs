@@ -92,6 +92,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, nextIndex);
         }
 
+        protected override TCaretPosition? MoveToFirstIndex(Lyric lyric)
+        {
+            int index = GetMinIndex(lyric.Text);
+
+            return CreateCaretPosition(lyric, index);
+        }
+
+        protected override TCaretPosition? MoveToLastIndex(Lyric lyric)
+        {
+            int index = GetMaxIndex(lyric.Text);
+
+            return CreateCaretPosition(lyric, index);
+        }
+
         private bool lyricMovable(Lyric lyric)
         {
             int minIndex = GetMinIndex(lyric.Text);
