@@ -17,26 +17,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return true;
         }
 
-        public override ClickingCaretPosition? MoveUp(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveToPreviousLyric(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveDown(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveToNextLyric(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToFirst()
+        public override ClickingCaretPosition? MoveToFirstLyric()
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToLast()
+        public override ClickingCaretPosition? MoveToLastLyric()
         {
             return null;
         }
 
-        public override ClickingCaretPosition? MoveToTarget(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
+        public override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
     }
 }

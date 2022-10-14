@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             Assert.AreEqual(expected, actual);
         }
 
-        protected void TestMoveUp(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        protected void TestMoveToPreviousLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             if (algorithm == null)
@@ -32,12 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveUp(caret);
+            var actual = algorithm.MoveToPreviousLyric(caret);
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
-        protected void TestMoveDown(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        protected void TestMoveToNextLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             if (algorithm == null)
@@ -45,12 +45,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveDown(caret);
+            var actual = algorithm.MoveToNextLyric(caret);
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
-        protected void TestMoveToFirst(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        protected void TestMoveToFirstLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             if (algorithm == null)
@@ -58,12 +58,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveToFirst();
+            var actual = algorithm.MoveToFirstLyric();
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
-        protected void TestMoveToLast(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        protected void TestMoveToLastLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             if (algorithm == null)
@@ -71,12 +71,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveToLast();
+            var actual = algorithm.MoveToLastLyric();
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
-        protected void TestMoveToTarget(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        protected void TestMoveToTargetLyric(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             if (algorithm == null)
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            var actual = algorithm.MoveToTarget(lyric);
+            var actual = algorithm.MoveToTargetLyric(lyric);
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.TargetLyric, actual);
         }

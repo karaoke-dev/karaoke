@@ -34,14 +34,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 3, 1, 0)]
-        public void TestMoveUp(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToPreviousLyric(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex, index);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveUp(lyrics, caret, expected);
+            TestMoveToPreviousLyric(lyrics, caret, expected);
         }
 
         [TestCase(nameof(singleLyric), 0, 0, null, null)] // cannot move down if at bottom index.
@@ -49,14 +49,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), 0, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 4, 1, 0)]
-        public void TestMoveDown(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToNextLyric(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex, index);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveDown(lyrics, caret, expected);
+            TestMoveToNextLyric(lyrics, caret, expected);
         }
 
         [TestCase(nameof(singleLyric), 0, 0, null, null)]
@@ -93,38 +93,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), 0, 0)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
-        public void TestMoveToFirst(string sourceName, int? expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToFirstLyric(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check first position
-            TestMoveToFirst(lyrics, expected);
+            TestMoveToFirstLyric(lyrics, expected);
         }
 
         [TestCase(nameof(singleLyric), 0, 4)]
         [TestCase(nameof(singleLyricWithNoText), 0, 0)]
         [TestCase(nameof(twoLyricsWithText), 1, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 3)]
-        public void TestMoveToLast(string sourceName, int? expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToLastLyric(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check last position
-            TestMoveToLast(lyrics, expected);
+            TestMoveToLastLyric(lyrics, expected);
         }
 
         [TestCase(nameof(singleLyric), 0, 0)]
         [TestCase(nameof(singleLyricWithNoText), 0, 0)]
-        public void TestMoveToTarget(string sourceName, int expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToTargetLyric(string sourceName, int expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[expectedLyricIndex];
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check move to target position.
-            TestMoveToTarget(lyrics, lyric, expected);
+            TestMoveToTargetLyric(lyrics, lyric, expected);
         }
 
         protected override void AssertEqual(TypingCaretPosition expected, TypingCaretPosition actual)

@@ -9,14 +9,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
     {
         public bool PositionMovable(ICaretPosition position);
 
-        public ICaretPosition? MoveUp(ICaretPosition currentPosition);
+        public ICaretPosition? MoveToPreviousLyric(ICaretPosition currentPosition);
 
-        public ICaretPosition? MoveDown(ICaretPosition currentPosition);
+        public ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition);
 
-        public ICaretPosition? MoveToFirst();
+        public ICaretPosition? MoveToFirstLyric();
 
-        public ICaretPosition? MoveToLast();
+        public ICaretPosition? MoveToLastLyric();
 
-        public ICaretPosition? MoveToTarget(Lyric lyric);
+        public ICaretPosition? MoveToTargetLyric(Lyric lyric);
     }
 }

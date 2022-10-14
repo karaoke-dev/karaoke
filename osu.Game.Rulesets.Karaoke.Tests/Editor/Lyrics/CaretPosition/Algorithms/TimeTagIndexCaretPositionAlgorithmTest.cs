@@ -44,14 +44,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[2,end]", 0, "[2,end]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, "[2,end]", 0, "[2,start]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, "[2,end]", 0, "[2,end]")]
-        public void TestMoveUp(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToPreviousLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex, textTag);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
 
             // Check is movable
-            TestMoveUp(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
+            TestMoveToPreviousLyric(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
         }
 
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", null, null)] // cannot move down if at bottom index.
@@ -65,14 +65,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,start]", 2, "[2,start]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,start]", 2, "[2,end]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[3,end]", 2, "[2,end]")]
-        public void TestMoveDown(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToNextLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createCaretPosition(lyrics, lyricIndex, textTag);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
 
             // Check is movable
-            TestMoveDown(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
+            TestMoveToNextLyric(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
         }
 
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", null, null)]
@@ -127,13 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, null, null)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, "[0,start]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[0,start]")]
-        public void TestMoveToFirst(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToFirstLyric(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
 
             // Check first position
-            TestMoveToFirst(lyrics, expected, algorithms => algorithms.Mode = mode);
+            TestMoveToFirstLyric(lyrics, expected, algorithms => algorithms.Mode = mode);
         }
 
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[3,end]")]
@@ -142,27 +142,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, null, null)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, "[2,end]")]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[2,end]")]
-        public void TestMoveToLast(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToLastLyric(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
 
             // Check last position
-            TestMoveToLast(lyrics, expected, algorithms => algorithms.Mode = mode);
+            TestMoveToLastLyric(lyrics, expected, algorithms => algorithms.Mode = mode);
         }
 
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,end]")]
         [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, "[0,start]")]
-        public void TestMoveToTarget(string sourceName, MovingTimeTagCaretMode mode, int expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[expectedLyricIndex];
             var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
 
             // Check move to target position.
-            TestMoveToTarget(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
+            TestMoveToTargetLyric(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
         }
 
         protected override void AssertEqual(TimeTagIndexCaretPosition expected, TimeTagIndexCaretPosition actual)
