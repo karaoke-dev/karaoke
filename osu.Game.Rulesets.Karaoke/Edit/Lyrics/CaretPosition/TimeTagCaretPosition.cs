@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
-    public class TimeTagCaretPosition : ICaretPosition
+    public struct TimeTagCaretPosition : ICaretPosition
     {
         public TimeTagCaretPosition(Lyric lyric, TimeTag timeTag, CaretGenerateType generateType = CaretGenerateType.Action)
         {

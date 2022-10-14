@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public abstract class TextCaretPositionAlgorithm<TCaretPosition> : CaretPositionAlgorithm<TCaretPosition> where TCaretPosition : class, ITextCaretPosition
+    public abstract class TextCaretPositionAlgorithm<TCaretPosition> : CaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
     {
         protected TextCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, GetMaxIndex(lyric.Text));
         }
 
-        public override TCaretPosition MoveToTarget(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+        public override TCaretPosition? MoveToTarget(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
         private bool lyricMovable(Lyric lyric)
         {

@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
-    public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where TAlgorithm : CaretPositionAlgorithm<TCaret> where TCaret : class, ICaretPosition
+    public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where TAlgorithm : CaretPositionAlgorithm<TCaret> where TCaret : struct, ICaretPosition
     {
         protected void TestPositionMovable(Lyric[] lyrics, TCaret caret, bool expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             }
             else
             {
-                AssertEqual(expected, actual);
+                AssertEqual(expected.Value, actual.Value);
             }
         }
 
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             if (actual == null)
                 return;
 
-            Assert.AreEqual(expected, actual.GenerateType);
+            Assert.AreEqual(expected, actual.Value.GenerateType);
         }
 
         protected abstract void AssertEqual(TCaret expected, TCaret actual);

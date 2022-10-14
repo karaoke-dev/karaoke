@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         private Box drawableCaret;
         private InputCaretTextBox inputCaretTextBox;
 
-        private TypingCaretPosition caretPosition;
+        private TypingCaretPosition? caretPosition;
 
         public DrawableLyricInputCaret(DrawableCaretType type)
             : base(type)
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
-                        int index = caretPosition.Index;
+                        int index = caretPosition.Value.Index;
                         lyricTextChangeHandler.InsertText(index, text);
 
                         moveCaret(text.Length);
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
-                        int index = caretPosition.Index;
+                        int index = caretPosition.Value.Index;
                         if (index == 0)
                             return;
 
@@ -104,8 +104,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                     throw new ArgumentNullException(nameof(caretPosition));
 
                 // calculate new caret position.
-                var lyric = caretPosition.Lyric;
-                int index = caretPosition.Index + offset;
+                var lyric = caretPosition.Value.Lyric;
+                int index = caretPosition.Value.Index + offset;
                 caretPosition = new TypingCaretPosition(lyric, index);
                 lyricCaretState.MoveCaretToTargetPosition(caretPosition);
             }
