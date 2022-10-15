@@ -120,8 +120,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 {
                     TimeTagEditMode.Create => new Drawable[]
                     {
-                        new MoveLeftButton(),
-                        new MoveRightButton(),
+                        new MoveToFirstIndexButton(),
+                        new MoveToPreviousIndexButton(),
+                        new MoveToNextIndexButton(),
+                        new MoveToLastIndexButton(),
                         new CreateTimeTagButton(),
                         new RemoveTimeTagButton(),
                     },

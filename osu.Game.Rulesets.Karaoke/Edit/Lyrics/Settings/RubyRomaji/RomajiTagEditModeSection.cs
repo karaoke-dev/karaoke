@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                                 Text = "Up or down",
                                 AdjustableActions = new List<KaraokeEditAction>
                                 {
-                                    KaraokeEditAction.MoveUp,
-                                    KaraokeEditAction.MoveDown
+                                    KaraokeEditAction.MoveToPreviousLyric,
+                                    KaraokeEditAction.MoveToNextLyric
                                 }
                             }
                         },

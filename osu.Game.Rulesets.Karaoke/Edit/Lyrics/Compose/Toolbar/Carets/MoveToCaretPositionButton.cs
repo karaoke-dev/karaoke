@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
-    public abstract class MoveCaretPositionButton : KeyActionButton
+    public abstract class MoveToCaretPositionButton : KeyActionButton
     {
         protected abstract MovingCaretAction AcceptAction { get; }
 
@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
 
-        protected MoveCaretPositionButton()
+        protected MoveToCaretPositionButton()
         {
             Action = () =>
             {

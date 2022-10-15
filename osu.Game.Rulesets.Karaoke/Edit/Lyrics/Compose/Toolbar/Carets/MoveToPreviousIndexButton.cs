@@ -6,15 +6,15 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
-    public class MoveLeftButton : MoveCaretPositionButton
+    public class MoveToPreviousIndexButton : MoveToCaretPositionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveLeft;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToPreviousIndex;
 
         protected override MovingCaretAction AcceptAction => MovingCaretAction.PreviousIndex;
 
-        public MoveLeftButton()
+        public MoveToPreviousIndexButton()
         {
-            SetIcon(FontAwesome.Solid.ArrowLeft);
+            SetIcon(FontAwesome.Solid.AngleLeft);
         }
     }
 }

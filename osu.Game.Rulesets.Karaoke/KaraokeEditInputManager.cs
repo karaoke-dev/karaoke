@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
     {
         public KaraokeEditInputManager(RulesetInfo ruleset)
-            : base(ruleset, 2, SimultaneousBindingMode.Unique)
+            : base(ruleset, 2, SimultaneousBindingMode.Unique, KeyCombinationMatchingMode.Modifiers)
         {
         }
 
@@ -40,22 +40,28 @@ namespace osu.Game.Rulesets.Karaoke
     {
         // moving
         [Description("Up")]
-        MoveUp,
+        MoveToPreviousLyric,
 
         [Description("Down")]
-        MoveDown,
+        MoveToNextLyric,
+
+        [Description("First Lyric")]
+        MoveToFirstLyric,
+
+        [Description("Last Lyric")]
+        MoveToLastLyric,
 
         [Description("Left")]
-        MoveLeft,
+        MoveToPreviousIndex,
 
         [Description("Right")]
-        MoveRight,
+        MoveToNextIndex,
 
-        [Description("First")]
-        MoveToFirst,
+        [Description("First index")]
+        MoveToFirstIndex,
 
-        [Description("Last")]
-        MoveToLast,
+        [Description("Last index")]
+        MoveToLastIndex,
 
         // Switch edit mode.
         [Description("Previous edit mode")]

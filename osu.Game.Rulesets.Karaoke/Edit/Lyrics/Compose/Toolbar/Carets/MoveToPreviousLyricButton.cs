@@ -6,9 +6,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
-    public class MoveToPreviousLyricButton : MoveCaretPositionButton
+    public class MoveToPreviousLyricButton : MoveToCaretPositionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveUp;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToPreviousLyric;
 
         protected override MovingCaretAction AcceptAction => MovingCaretAction.PreviousLyric;
 

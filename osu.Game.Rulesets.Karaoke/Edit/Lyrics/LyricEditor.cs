@@ -341,12 +341,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
             e.Action switch
             {
-                KaraokeEditAction.MoveUp => lyricCaretState.MoveCaret(MovingCaretAction.PreviousLyric),
-                KaraokeEditAction.MoveDown => lyricCaretState.MoveCaret(MovingCaretAction.NextLyric),
-                KaraokeEditAction.MoveLeft => lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex),
-                KaraokeEditAction.MoveRight => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
-                KaraokeEditAction.MoveToFirst => lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric),
-                KaraokeEditAction.MoveToLast => lyricCaretState.MoveCaret(MovingCaretAction.LastLyric),
+                KaraokeEditAction.MoveToPreviousLyric => lyricCaretState.MoveCaret(MovingCaretAction.PreviousLyric),
+                KaraokeEditAction.MoveToNextLyric => lyricCaretState.MoveCaret(MovingCaretAction.NextLyric),
+                KaraokeEditAction.MoveToFirstLyric => lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric),
+                KaraokeEditAction.MoveToLastLyric => lyricCaretState.MoveCaret(MovingCaretAction.LastLyric),
+                KaraokeEditAction.MoveToPreviousIndex => lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex),
+                KaraokeEditAction.MoveToNextIndex => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
+                KaraokeEditAction.MoveToFirstIndex => lyricCaretState.MoveCaret(MovingCaretAction.FirstIndex),
+                KaraokeEditAction.MoveToLastIndex => lyricCaretState.MoveCaret(MovingCaretAction.LastIndex),
                 _ => false
             };
 
