@@ -106,6 +106,8 @@ namespace osu.Game.Rulesets.Karaoke
                     new KeyBinding(InputKey.PageDown, KaraokeEditAction.MoveToLastLyric),
                     new KeyBinding(InputKey.Left, KaraokeEditAction.MoveToPreviousIndex),
                     new KeyBinding(InputKey.Right, KaraokeEditAction.MoveToNextIndex),
+                    new KeyBinding(new[] { InputKey.Alt, InputKey.Left }, KaraokeEditAction.MoveToFirstIndex),
+                    new KeyBinding(new[] { InputKey.Alt, InputKey.Right }, KaraokeEditAction.MoveToLastIndex),
 
                     new KeyBinding(new[] { InputKey.Alt, InputKey.BracketLeft }, KaraokeEditAction.PreviousEditMode),
                     new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),
