@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
     {
         public KaraokeEditInputManager(RulesetInfo ruleset)
-            : base(ruleset, 2, SimultaneousBindingMode.Unique)
+            : base(ruleset, 2, SimultaneousBindingMode.Unique, KeyCombinationMatchingMode.Modifiers)
         {
         }
 
