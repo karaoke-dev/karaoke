@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             int previousIndex = currentPosition.Index - 1;
 
             if (!indexInTextRange(previousIndex, lyric))
-                return MoveToPreviousLyric(CreateCaretPosition(lyric, int.MaxValue));
+                return null;
 
             return CreateCaretPosition(lyric, previousIndex);
         }
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             int nextIndex = currentPosition.Index + 1;
 
             if (!indexInTextRange(nextIndex, lyric))
-                return MoveToNextLyric(CreateCaretPosition(lyric, int.MinValue));
+                return null;
 
             return CreateCaretPosition(lyric, nextIndex);
         }

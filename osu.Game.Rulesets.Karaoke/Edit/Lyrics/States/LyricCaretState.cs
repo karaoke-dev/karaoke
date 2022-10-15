@@ -208,14 +208,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 MovingCaretAction.NextLyric => algorithm.MoveToNextLyric(currentPosition),
                 MovingCaretAction.FirstLyric => algorithm.MoveToFirstLyric(),
                 MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
-                MovingCaretAction.PreviousIndex => moveIndexCaret(algorithm, currentPosition, (a, i) => a.MoveToPreviousIndex(i)),
-                MovingCaretAction.NextIndex => moveIndexCaret(algorithm, currentPosition, (a, i) => a.MoveToNextIndex(i)),
-                MovingCaretAction.FirstIndex => moveIndexCaret(algorithm, currentPosition, (a, i) => a.MoveToFirstIndex(i.Lyric)),
-                MovingCaretAction.LastIndex => moveIndexCaret(algorithm, currentPosition, (a, i) => a.MoveToLastIndex(i.Lyric)),
+                MovingCaretAction.PreviousIndex => performMoveToPreviousIndex(algorithm, currentPosition),
+                MovingCaretAction.NextIndex => performMoveToNextIndex(algorithm, currentPosition),
+                MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, currentPosition),
+                MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, currentPosition),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
             };
 
-            static ICaretPosition? moveIndexCaret(ICaretPositionAlgorithm algorithm, ICaretPosition? caretPosition, Func<IIndexCaretPositionAlgorithm, IIndexCaretPosition, IIndexCaretPosition?> action)
+            static ICaretPosition? performMoveToPreviousIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
+                performMoveCaret(algorithm, caretPosition,
+                    (a, c) => a.MoveToPreviousIndex(c),
+                    (a, c) => a.MoveToPreviousLyric(c),
+                    (a, c) => a.MoveToLastIndex(c.Lyric));
+
+            static ICaretPosition? performMoveToNextIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
+                performMoveCaret(algorithm, caretPosition,
+                    (a, c) => a.MoveToNextIndex(c),
+                    (a, c) => a.MoveToNextLyric(c),
+                    (a, c) => a.MoveToFirstIndex(c.Lyric));
+
+            static ICaretPosition? performMoveToFirstIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
+                performMoveCaret(algorithm, caretPosition,
+                    (a, c) => a.MoveToFirstIndex(c.Lyric),
+                    (a, c) => a.MoveToPreviousLyric(c),
+                    (a, c) => a.MoveToFirstIndex(c.Lyric));
+
+            static ICaretPosition? performMoveToLastIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
+                performMoveCaret(algorithm, caretPosition,
+                    (a, c) => a.MoveToLastIndex(c.Lyric),
+                    (a, c) => a.MoveToNextLyric(c),
+                    (a, c) => a.MoveToLastIndex(c.Lyric));
+
+            static ICaretPosition? performMoveCaret(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition,
+                                                    Func<IIndexCaretPositionAlgorithm, IIndexCaretPosition, ICaretPosition?> action,
+                                                    Func<IIndexCaretPositionAlgorithm, ICaretPosition, ICaretPosition?> switchLyricAction,
+                                                    Func<IIndexCaretPositionAlgorithm, ICaretPosition, ICaretPosition?> getNewCaretAction)
             {
                 if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
                     return null;
@@ -223,7 +250,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 if (caretPosition is not IIndexCaretPosition indexCaretPosition)
                     throw new InvalidOperationException();
 
-                return action.Invoke(indexCaretPositionAlgorithm, indexCaretPosition);
+                // will have three cases in here:
+                // 1. got duplicated value (means it's not valid to move left and right)
+                // 2. got the same value (means it's not valid to move left and right)
+                // 3. got unique value(OK to return the value)
+                var movedCaretPosition = action(indexCaretPositionAlgorithm, indexCaretPosition);
+                if (movedCaretPosition != null && movedCaretPosition != caretPosition)
+                    return movedCaretPosition;
+
+                // if the caret is not valid to go, then trying to find the valid caret position in the different lyric.
+                var newLyricCaretPosition = switchLyricAction(indexCaretPositionAlgorithm, caretPosition);
+                return newLyricCaretPosition == null ? null : getNewCaretAction(indexCaretPositionAlgorithm, newLyricCaretPosition);
             }
         }
 

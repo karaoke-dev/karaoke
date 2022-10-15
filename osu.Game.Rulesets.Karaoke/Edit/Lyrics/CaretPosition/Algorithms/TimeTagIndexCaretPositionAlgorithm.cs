@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveToPreviousIndex(new TimeTagIndexCaretPosition(lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToPreviousLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MaxValue, index.State)));
+                return null;
 
             return new TimeTagIndexCaretPosition(lyric, index);
         }
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveToNextIndex(new TimeTagIndexCaretPosition(lyric, index));
 
             if (TextIndexUtils.OutOfRange(index, lyric.Text))
-                return MoveToNextLyric(new TimeTagIndexCaretPosition(lyric, new TextIndex(int.MinValue, index.State)));
+                return null;
 
             return new TimeTagIndexCaretPosition(lyric, index);
         }
