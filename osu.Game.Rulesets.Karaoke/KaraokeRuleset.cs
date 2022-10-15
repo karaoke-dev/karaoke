@@ -100,12 +100,12 @@ namespace osu.Game.Rulesets.Karaoke
                 EDIT_INPUT_VARIANT => new[]
                 {
                     // moving
-                    new KeyBinding(InputKey.Up, KaraokeEditAction.MoveUp),
-                    new KeyBinding(InputKey.Down, KaraokeEditAction.MoveDown),
-                    new KeyBinding(InputKey.Left, KaraokeEditAction.MoveLeft),
-                    new KeyBinding(InputKey.Right, KaraokeEditAction.MoveRight),
-                    new KeyBinding(InputKey.PageUp, KaraokeEditAction.MoveToFirst),
-                    new KeyBinding(InputKey.PageDown, KaraokeEditAction.MoveToLast),
+                    new KeyBinding(InputKey.Up, KaraokeEditAction.MoveToPreviousLyric),
+                    new KeyBinding(InputKey.Down, KaraokeEditAction.MoveToNextLyric),
+                    new KeyBinding(InputKey.Left, KaraokeEditAction.MoveToPreviousIndex),
+                    new KeyBinding(InputKey.Right, KaraokeEditAction.MoveToNextIndex),
+                    new KeyBinding(InputKey.PageUp, KaraokeEditAction.MoveToFirstLyric),
+                    new KeyBinding(InputKey.PageDown, KaraokeEditAction.MoveToLastLyric),
 
                     new KeyBinding(new[] { InputKey.Alt, InputKey.BracketLeft }, KaraokeEditAction.PreviousEditMode),
                     new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),

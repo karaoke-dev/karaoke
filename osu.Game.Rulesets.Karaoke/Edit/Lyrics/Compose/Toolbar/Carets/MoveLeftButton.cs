@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 {
     public class MoveLeftButton : MoveCaretPositionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveLeft;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToPreviousIndex;
 
         protected override MovingCaretAction AcceptAction => MovingCaretAction.PreviousIndex;
 
