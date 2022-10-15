@@ -19,13 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             return new Container();
         }
 
-        protected override Drawable CreateContent()
-        {
-            return new AdjustTimeTagScrollContainer
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 100,
-            };
-        }
+        protected override Drawable CreateContent() => new AdjustTimeTagScrollContainer();
     }
 }
