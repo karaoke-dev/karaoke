@@ -204,8 +204,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             {
                 MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveToPreviousLyric),
                 MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveToNextLyric),
-                MovingCaretAction.Left => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToPreviousIndex) : null,
-                MovingCaretAction.Right => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToNextIndex) : null,
+                MovingCaretAction.Left => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToPreviousIndex) : null,
+                MovingCaretAction.Right => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToNextIndex) : null,
                 MovingCaretAction.First => algorithm.MoveToFirstLyric(),
                 MovingCaretAction.Last => algorithm.MoveToLastLyric(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
@@ -213,6 +213,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             static ICaretPosition? moveIfNotNull(ICaretPosition? caretPosition, Func<ICaretPosition, ICaretPosition?> action)
                 => caretPosition != null ? action.Invoke(caretPosition) : caretPosition;
+
+            static ICaretPosition? moveIndexCaretIfNotNull(ICaretPosition? caretPosition, Func<IIndexCaretPosition, IIndexCaretPosition?> action)
+                => (caretPosition != null && caretPosition is IIndexCaretPosition indexCaretPosition) ? action.Invoke(indexCaretPosition) : caretPosition;
         }
 
         public void MoveCaretToTargetPosition(Lyric lyric)
