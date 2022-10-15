@@ -8,6 +8,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.EnumExtensions;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -39,6 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         [Resolved, AllowNull]
         private LyricEditorColourProvider colourProvider { get; set; }
 
+        private readonly GridContainer gridContainer;
+
         private readonly Container centerEditArea;
         private readonly Container mainEditorArea;
 
@@ -49,14 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             Box centerEditorBackground;
             Box bottomEditorBackground;
 
-            InternalChild = new GridContainer
+            InternalChild = gridContainer = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                RowDimensions = new[]
-                {
-                    new Dimension(),
-                    new Dimension(GridSizeMode.AutoSize)
-                },
                 Content = new[]
                 {
                     new Drawable[]
@@ -94,10 +92,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                         new Container
                         {
                             Name = "Edit area and action buttons",
-                            RelativeSizeAxes = Axes.X,
-                            AutoSizeAxes = Axes.Y,
-                            Anchor = Anchor.BottomCentre,
-                            Origin = Anchor.BottomCentre,
+                            RelativeSizeAxes = Axes.Both,
+                            Masking = true,
                             Children = new Drawable[]
                             {
                                 bottomEditorBackground = new Box
@@ -107,8 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                                 },
                                 bottomEditorContainer = new Container<BaseBottomEditor>
                                 {
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
+                                    RelativeSizeAxes = Axes.Both,
                                 }
                             }
                         },
@@ -126,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                         return;
 
                     centerEditorBackground.Colour = colourProvider.Background1(e.NewValue.Mode);
-                    bottomEditorBackground.Colour = colourProvider.Background5(e.NewValue.Mode);
+                    bottomEditorBackground.Colour = colourProvider.Background4(e.NewValue.Mode);
                 });
             }, true);
 
@@ -140,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             bindableBottomEditorType.BindValueChanged(e =>
             {
                 assignBottomEditor(e.NewValue);
-            });
+            }, true);
 
             foreach (var (type, bindable) in panelStatus)
             {
@@ -306,11 +301,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
         private void assignBottomEditor(BottomEditorType? bottomEditorType)
         {
-            bottomEditorContainer.Clear();
+            const double remove_old_editor_time = 200;
+            const double new_animation_time = 200;
 
-            var bottomEditor = createBottomEditor(bottomEditorType);
-            if (bottomEditor != null)
-                bottomEditorContainer.Add(bottomEditor);
+            bool hasOldButtonEditor = bottomEditorContainer.Children.Any();
+            var newButtonEditor = createBottomEditor(bottomEditorType).With(x =>
+            {
+                if (x == null)
+                    return;
+
+                x.RelativePositionAxes = Axes.Y;
+                x.Y = -1;
+                x.Alpha = 0;
+            });
+
+            if (hasOldButtonEditor)
+            {
+                bottomEditorContainer.Children.ForEach(editor =>
+                {
+                    editor.MoveToY(-1, remove_old_editor_time).FadeOut(remove_old_editor_time).Then().OnComplete(x =>
+                    {
+                        x.Expire();
+
+                        updateBottomEditAreaSize(newButtonEditor);
+                    });
+                });
+            }
+            else
+            {
+                updateBottomEditAreaSize(newButtonEditor);
+            }
+
+            if (newButtonEditor == null)
+                return;
+
+            bottomEditorContainer.Add(newButtonEditor);
+            newButtonEditor.Delay(hasOldButtonEditor ? remove_old_editor_time : 0).FadeIn(0).MoveToY(0, new_animation_time);
 
             static BaseBottomEditor? createBottomEditor(BottomEditorType? bottomEditorType) =>
                 bottomEditorType switch
@@ -320,6 +346,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                     BottomEditorType.Note => new NoteBottomEditor(),
                     _ => null
                 };
+
+            void updateBottomEditAreaSize(BaseBottomEditor? bottomEditor)
+            {
+                float bottomEditorHeight = bottomEditor?.ContentHeight ?? 0;
+                gridContainer.RowDimensions = new[]
+                {
+                    new Dimension(),
+                    new Dimension(GridSizeMode.Absolute, bottomEditorHeight)
+                };
+            }
         }
 
         #endregion
