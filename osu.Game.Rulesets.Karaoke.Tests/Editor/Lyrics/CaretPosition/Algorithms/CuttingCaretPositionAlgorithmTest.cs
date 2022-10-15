@@ -132,6 +132,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToNextIndex(lyrics, caret, expected);
         }
 
+        [TestCase(nameof(singleLyric), 0, 0, 1)]
+        public void TestMoveToFirstIndex(string sourceName, int lyricIndex, int? expectedLyricIndex, int? expectedIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+
+            // Check is movable
+            TestMoveToFirstIndex(lyrics, lyric, expected);
+        }
+
+        [TestCase(nameof(singleLyric), 0, 0, 3)]
+        public void TestMoveToLastIndex(string sourceName, int lyricIndex, int? expectedLyricIndex, int? expectedIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+
+            // Check is movable
+            TestMoveToLastIndex(lyrics, lyric, expected);
+        }
+
         #endregion
 
         protected override void AssertEqual(CuttingCaretPosition expected, CuttingCaretPosition actual)
