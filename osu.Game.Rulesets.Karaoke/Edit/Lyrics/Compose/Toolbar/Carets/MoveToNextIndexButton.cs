@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
 
         public MoveToNextIndexButton()
         {
-            SetIcon(FontAwesome.Solid.ArrowRight);
+            SetIcon(FontAwesome.Solid.AngleRight);
         }
     }
 }
