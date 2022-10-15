@@ -9,12 +9,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         NextLyric,
 
+        FirstLyric,
+
+        LastLyric,
+
         PreviousIndex,
 
         NextIndex,
 
-        FirstLyric,
+        FirstIndex,
 
-        LastLyric,
+        LastIndex,
     }
 }
