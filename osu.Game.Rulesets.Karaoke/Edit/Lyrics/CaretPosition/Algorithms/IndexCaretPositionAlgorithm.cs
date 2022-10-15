@@ -18,6 +18,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected abstract TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition);
 
+        protected abstract TCaretPosition? MoveToFirstIndex(Lyric lyric);
+
+        protected abstract TCaretPosition? MoveToLastIndex(Lyric lyric);
+
         public IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
@@ -40,6 +44,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToNextIndex(tCaretPosition);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
+        }
+
+        IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToFirstIndex(Lyric lyric)
+        {
+            var movedCaretPosition = MoveToFirstIndex(lyric);
+            if (movedCaretPosition != null)
+                Validate(movedCaretPosition.Value);
+
+            return movedCaretPosition;
+        }
+
+        IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToLastIndex(Lyric lyric)
+        {
+            var movedCaretPosition = MoveToLastIndex(lyric);
             if (movedCaretPosition != null)
                 Validate(movedCaretPosition.Value);
 

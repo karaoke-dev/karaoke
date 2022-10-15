@@ -119,6 +119,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, index);
         }
 
+        protected override TimeTagIndexCaretPosition? MoveToFirstIndex(Lyric lyric)
+        {
+            var index = new TextIndex(0);
+
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
+                return null;
+
+            var caret = new TimeTagIndexCaretPosition(lyric, index);
+            if (!textIndexMovable(index))
+                return MoveToNextIndex(caret);
+
+            return caret;
+        }
+
+        protected override TimeTagIndexCaretPosition? MoveToLastIndex(Lyric lyric)
+        {
+            var index = new TextIndex(lyric.Text.Length - 1, TextIndex.IndexState.End);
+
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
+                return null;
+
+            var caret = new TimeTagIndexCaretPosition(lyric, index);
+            if (!textIndexMovable(index))
+                return MoveToPreviousIndex(caret);
+
+            return caret;
+        }
+
         private bool textIndexMovable(TextIndex textIndex)
             => suitableState(textIndex) == textIndex.State;
 

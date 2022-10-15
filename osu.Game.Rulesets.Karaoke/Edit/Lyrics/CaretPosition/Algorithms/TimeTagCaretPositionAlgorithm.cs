@@ -122,6 +122,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return timeTagToPosition(nextTimeTag);
         }
 
+        protected override TimeTagCaretPosition? MoveToFirstIndex(Lyric lyric)
+        {
+            var firstTimeTag = lyric.TimeTags.FirstOrDefault();
+            if (firstTimeTag == null)
+                return null;
+
+            var caret = new TimeTagCaretPosition(lyric, firstTimeTag);
+            if (!timeTagMovable(firstTimeTag))
+                return MoveToNextIndex(caret);
+
+            return caret;
+        }
+
+        protected override TimeTagCaretPosition? MoveToLastIndex(Lyric lyric)
+        {
+            var lastTimeTag = lyric.TimeTags.LastOrDefault();
+            if (lastTimeTag == null)
+                return null;
+
+            var caret = new TimeTagCaretPosition(lyric, lastTimeTag);
+            if (!timeTagMovable(lastTimeTag))
+                return MoveToPreviousIndex(caret);
+
+            return caret;
+        }
+
         private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)
         {
             var lyric = timeTagInLyric(timeTag);
