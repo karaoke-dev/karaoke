@@ -45,17 +45,17 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Down")]
         MoveToNextLyric,
 
-        [Description("Left")]
-        MoveToPreviousIndex,
-
-        [Description("Right")]
-        MoveToNextIndex,
-
         [Description("First")]
         MoveToFirstLyric,
 
         [Description("Last")]
         MoveToLastLyric,
+
+        [Description("Left")]
+        MoveToPreviousIndex,
+
+        [Description("Right")]
+        MoveToNextIndex,
 
         // Switch edit mode.
         [Description("Previous edit mode")]

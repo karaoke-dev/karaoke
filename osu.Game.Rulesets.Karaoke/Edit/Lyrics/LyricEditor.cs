@@ -343,10 +343,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 KaraokeEditAction.MoveToPreviousLyric => lyricCaretState.MoveCaret(MovingCaretAction.PreviousLyric),
                 KaraokeEditAction.MoveToNextLyric => lyricCaretState.MoveCaret(MovingCaretAction.NextLyric),
-                KaraokeEditAction.MoveToPreviousIndex => lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex),
-                KaraokeEditAction.MoveToNextIndex => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
                 KaraokeEditAction.MoveToFirstLyric => lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric),
                 KaraokeEditAction.MoveToLastLyric => lyricCaretState.MoveCaret(MovingCaretAction.LastLyric),
+                KaraokeEditAction.MoveToPreviousIndex => lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex),
+                KaraokeEditAction.MoveToNextIndex => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
                 _ => false
             };
 
