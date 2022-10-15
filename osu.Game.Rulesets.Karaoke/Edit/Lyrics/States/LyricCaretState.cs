@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -255,7 +256,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 // 2. got the same value (means it's not valid to move left and right)
                 // 3. got unique value(OK to return the value)
                 var movedCaretPosition = action(indexCaretPositionAlgorithm, indexCaretPosition);
-                if (movedCaretPosition != null && movedCaretPosition != caretPosition)
+                if (movedCaretPosition != null && !EqualityComparer<ICaretPosition>.Default.Equals(movedCaretPosition, caretPosition))
                     return movedCaretPosition;
 
                 // if the caret is not valid to go, then trying to find the valid caret position in the different lyric.
