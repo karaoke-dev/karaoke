@@ -32,25 +32,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
                 },
                 new GridContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
+                    RelativeSizeAxes = Axes.Both,
                     ColumnDimensions = new[]
                     {
                         new Dimension(GridSizeMode.Absolute, info_part_spacing),
                         new Dimension()
                     },
-                    RowDimensions = new[] { new Dimension(GridSizeMode.Relative) },
                     Content = new[]
                     {
                         new[]
                         {
-                            CreateInfo(),
+                            CreateInfo().With(x =>
+                            {
+                                x.RelativeSizeAxes = Axes.Both;
+                            }),
                             new Container
                             {
                                 Masking = true,
-                                RelativeSizeAxes = Axes.X,
-                                AutoSizeAxes = Axes.Y,
-                                Child = CreateContent(),
+                                RelativeSizeAxes = Axes.Both,
+                                Child = CreateContent().With(x =>
+                                {
+                                    x.RelativeSizeAxes = Axes.Both;
+                                }),
                             }
                         }
                     }

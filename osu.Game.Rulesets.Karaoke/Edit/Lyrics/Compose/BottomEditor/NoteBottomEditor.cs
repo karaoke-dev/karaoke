@@ -19,13 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             return new Container();
         }
 
-        protected override Drawable CreateContent()
-        {
-            return new NoteEditor
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 150,
-            };
-        }
+        protected override Drawable CreateContent() => new NoteEditor();
     }
 }

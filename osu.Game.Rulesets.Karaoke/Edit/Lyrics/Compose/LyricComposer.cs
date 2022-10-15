@@ -8,6 +8,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.EnumExtensions;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -39,10 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         [Resolved, AllowNull]
         private LyricEditorColourProvider colourProvider { get; set; }
 
+        private readonly GridContainer gridContainer;
+
         private readonly Container centerEditArea;
         private readonly Container mainEditorArea;
 
-        private readonly Container bottomEditArea;
         private readonly Container<BaseBottomEditor> bottomEditorContainer;
 
         public LyricComposer()
@@ -50,56 +52,63 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             Box centerEditorBackground;
             Box bottomEditorBackground;
 
-            InternalChildren = new Drawable[]
+            InternalChild = gridContainer = new GridContainer
             {
-                centerEditArea = new Container
+                RelativeSizeAxes = Axes.Both,
+                Content = new[]
                 {
-                    Name = "Edit area and action buttons",
-                    RelativeSizeAxes = Axes.Both,
-                    Children = new Drawable[]
+                    new Drawable[]
                     {
-                        centerEditorBackground = new Box
+                        centerEditArea = new Container
                         {
-                            Name = "Background",
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                        mainEditorArea = new Container
-                        {
+                            Name = "Edit area and action buttons",
                             RelativeSizeAxes = Axes.Both,
                             Children = new Drawable[]
                             {
-                                new LyricEditor(),
-                                new SpecialActionToolbar
+                                centerEditorBackground = new Box
                                 {
-                                    Name = "Toolbar",
-                                    Anchor = Anchor.BottomCentre,
-                                    Origin = Anchor.BottomCentre,
+                                    Name = "Background",
+                                    RelativeSizeAxes = Axes.Both,
                                 },
+                                mainEditorArea = new Container
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Children = new Drawable[]
+                                    {
+                                        new LyricEditor(),
+                                        new SpecialActionToolbar
+                                        {
+                                            Name = "Toolbar",
+                                            Anchor = Anchor.BottomCentre,
+                                            Origin = Anchor.BottomCentre,
+                                        },
+                                    }
+                                }
                             }
-                        }
-                    }
-                },
-                bottomEditArea = new Container
-                {
-                    Name = "Edit area and action buttons",
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
-                    Children = new Drawable[]
-                    {
-                        bottomEditorBackground = new Box
-                        {
-                            Name = "Background",
-                            RelativeSizeAxes = Axes.Both,
                         },
-                        bottomEditorContainer = new Container<BaseBottomEditor>
+                    },
+                    new Drawable[]
+                    {
+                        new Container
                         {
-                            RelativeSizeAxes = Axes.X,
-                            AutoSizeAxes = Axes.Y,
-                        }
+                            Name = "Edit area and action buttons",
+                            RelativeSizeAxes = Axes.Both,
+                            Masking = true,
+                            Children = new Drawable[]
+                            {
+                                bottomEditorBackground = new Box
+                                {
+                                    Name = "Background",
+                                    RelativeSizeAxes = Axes.Both,
+                                },
+                                bottomEditorContainer = new Container<BaseBottomEditor>
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                }
+                            }
+                        },
                     }
-                },
+                }
             };
 
             bindableModeAndSubMode.BindValueChanged(e =>
@@ -112,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                         return;
 
                     centerEditorBackground.Colour = colourProvider.Background1(e.NewValue.Mode);
-                    bottomEditorBackground.Colour = colourProvider.Background5(e.NewValue.Mode);
+                    bottomEditorBackground.Colour = colourProvider.Background4(e.NewValue.Mode);
                 });
             }, true);
 
@@ -126,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             bindableBottomEditorType.BindValueChanged(e =>
             {
                 assignBottomEditor(e.NewValue);
-            });
+            }, true);
 
             foreach (var (type, bindable) in panelStatus)
             {
@@ -292,13 +301,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
         private void assignBottomEditor(BottomEditorType? bottomEditorType)
         {
-            bottomEditorContainer.Clear();
+            const double remove_old_editor_time = 200;
+            const double new_animation_time = 200;
 
-            var bottomEditor = createBottomEditor(bottomEditorType);
-            if (bottomEditor != null)
-                bottomEditorContainer.Add(bottomEditor);
+            bool hasOldButtonEditor = bottomEditorContainer.Children.Any();
+            var newButtonEditor = createBottomEditor(bottomEditorType).With(x =>
+            {
+                if (x == null)
+                    return;
 
-            calculateBottomEditAreaSize(bottomEditor);
+                x.RelativePositionAxes = Axes.Y;
+                x.Y = -1;
+                x.Alpha = 0;
+            });
+
+            if (hasOldButtonEditor)
+            {
+                bottomEditorContainer.Children.ForEach(editor =>
+                {
+                    editor.MoveToY(-1, remove_old_editor_time).FadeOut(remove_old_editor_time).Then().OnComplete(x =>
+                    {
+                        x.Expire();
+
+                        updateBottomEditAreaSize(newButtonEditor);
+                    });
+                });
+            }
+            else
+            {
+                updateBottomEditAreaSize(newButtonEditor);
+            }
+
+            if (newButtonEditor == null)
+                return;
+
+            bottomEditorContainer.Add(newButtonEditor);
+            newButtonEditor.Delay(hasOldButtonEditor ? remove_old_editor_time : 0).FadeIn(0).MoveToY(0, new_animation_time);
 
             static BaseBottomEditor? createBottomEditor(BottomEditorType? bottomEditorType) =>
                 bottomEditorType switch
@@ -308,11 +346,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                     BottomEditorType.Note => new NoteBottomEditor(),
                     _ => null
                 };
-        }
 
-        private void calculateBottomEditAreaSize(BaseBottomEditor? bottomEditor)
-        {
-            float bottomEditorHeight = bottomEditor?.ContentHeight ?? 0;
+            void updateBottomEditAreaSize(BaseBottomEditor? bottomEditor)
+            {
+                float bottomEditorHeight = bottomEditor?.ContentHeight ?? 0;
+                gridContainer.RowDimensions = new[]
+                {
+                    new Dimension(),
+                    new Dimension(GridSizeMode.Absolute, bottomEditorHeight)
+                };
+            }
         }
 
         #endregion
