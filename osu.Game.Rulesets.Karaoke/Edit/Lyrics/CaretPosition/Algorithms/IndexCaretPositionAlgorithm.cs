@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected abstract TCaretPosition? MoveToNextIndex(TCaretPosition currentPosition);
 
-        public ICaretPosition? MoveToPreviousIndex(ICaretPosition currentPosition)
+        public IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return movedCaretPosition;
         }
 
-        public ICaretPosition? MoveToNextIndex(ICaretPosition currentPosition)
+        public IIndexCaretPosition? MoveToNextIndex(IIndexCaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
