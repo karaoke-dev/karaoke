@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 {
     public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret>
-        where TAlgorithm : IndexCaretPositionAlgorithm<TCaret> where TCaret : struct, IIndexCaretPosition
+        where TAlgorithm : IIndexCaretPositionAlgorithm where TCaret : struct, IIndexCaretPosition
     {
         protected void TestMoveToPreviousIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         {
@@ -33,6 +33,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             invokeAlgorithm?.Invoke(algorithm);
 
             var actual = algorithm.MoveToNextIndex(caret) as TCaret?;
+            AssertEqual(expected, actual);
+            CheckCaretGenerateType(CaretGenerateType.Action, actual);
+        }
+
+        protected void TestMoveToFirstIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        {
+            var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
+            if (algorithm == null)
+                throw new ArgumentNullException();
+
+            invokeAlgorithm?.Invoke(algorithm);
+
+            var actual = algorithm.MoveToFirstIndex(lyric) as TCaret?;
+            AssertEqual(expected, actual);
+            CheckCaretGenerateType(CaretGenerateType.Action, actual);
+        }
+
+        protected void TestMoveToLastIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        {
+            var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
+            if (algorithm == null)
+                throw new ArgumentNullException();
+
+            invokeAlgorithm?.Invoke(algorithm);
+
+            var actual = algorithm.MoveToLastIndex(lyric) as TCaret?;
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
