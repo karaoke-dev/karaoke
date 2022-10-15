@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                     lyricTimeTagsChangeHandler.SetTimeTagTime(currentTimeTag, currentTime);
 
                     if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
-                        lyricCaretState.MoveCaret(MovingCaretAction.Right);
+                        lyricCaretState.MoveCaret(MovingCaretAction.NextIndex);
 
                     return true;
 

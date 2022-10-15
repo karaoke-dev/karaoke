@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets
     {
         protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveDown;
 
-        protected override MovingCaretAction AcceptAction => MovingCaretAction.Down;
+        protected override MovingCaretAction AcceptAction => MovingCaretAction.NextLyric;
 
         public MoveToNextLyricButton()
         {

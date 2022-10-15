@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         public void MovingCaretWithViewMode()
         {
             changeMode(LyricEditorMode.View);
-            movingCaret(MovingCaretAction.First);
+            movingCaret(MovingCaretAction.FirstLyric);
 
             // get the action
             assertCaretPosition(Assert.IsNull);
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         public void MovingCaretWithEditMode()
         {
             changeMode(LyricEditorMode.Texting);
-            movingCaret(MovingCaretAction.First);
+            movingCaret(MovingCaretAction.FirstLyric);
 
             // get the action
             assertCaretPosition(Assert.IsInstanceOf<TypingCaretPosition>);
