@@ -131,12 +131,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,end]", 0, "[1,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,end]", 0, "[1,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,end]", 0, "[0,end]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, "[0,start]", 0, "[3,end]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, "[0,start]", 0, "[3,start]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, "[0,start]", 0, "[3,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[0,start]", 0, "[3,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, "[0,start]", 0, "[3,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, "[0,start]", 0, "[3,end]")]
         public void TestMoveToPreviousIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -154,12 +148,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,end]", 0, "[2,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,end]", 0, "[2,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,end]", 0, "[2,end]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, "[3,end]", 1, "[0,start]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,end]", 1, "[0,start]")]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]", 1, "[0,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[3,end]", 2, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,end]", 2, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]", 2, "[0,end]")]
         public void TestMoveToNextIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int? expectedLyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
