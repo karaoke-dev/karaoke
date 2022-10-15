@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 if (caretLyric != null && !bindableLyrics.Contains(caretLyric))
                 {
                     // if delete the current lyric, most of cases should move up.
-                    MoveCaret(MovingCaretAction.Up);
+                    MoveCaret(MovingCaretAction.PreviousLyric);
                 }
 
                 refreshAlgorithmAndCaretPosition();
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             refreshAlgorithmAndCaretPosition();
 
             // should move the caret to first.
-            MoveCaret(MovingCaretAction.First);
+            MoveCaret(MovingCaretAction.FirstLyric);
         }
 
         private void refreshAlgorithmAndCaretPosition()
@@ -202,12 +202,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             return action switch
             {
-                MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveToPreviousLyric),
-                MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveToNextLyric),
-                MovingCaretAction.Left => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToPreviousIndex) : null,
-                MovingCaretAction.Right => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToNextIndex) : null,
-                MovingCaretAction.First => algorithm.MoveToFirstLyric(),
-                MovingCaretAction.Last => algorithm.MoveToLastLyric(),
+                MovingCaretAction.PreviousLyric => moveIfNotNull(currentPosition, algorithm.MoveToPreviousLyric),
+                MovingCaretAction.NextLyric => moveIfNotNull(currentPosition, algorithm.MoveToNextLyric),
+                MovingCaretAction.PreviousIndex => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToPreviousIndex) : null,
+                MovingCaretAction.NextIndex => algorithm is IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm ? moveIndexCaretIfNotNull(currentPosition, indexCaretPositionAlgorithm.MoveToNextIndex) : null,
+                MovingCaretAction.FirstLyric => algorithm.MoveToFirstLyric(),
+                MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
             };
 

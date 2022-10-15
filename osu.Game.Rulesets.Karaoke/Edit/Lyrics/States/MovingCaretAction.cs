@@ -5,16 +5,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public enum MovingCaretAction
     {
-        Up,
+        PreviousLyric,
 
-        Down,
+        NextLyric,
 
-        Left,
+        PreviousIndex,
 
-        Right,
+        NextIndex,
 
-        First,
+        FirstLyric,
 
-        Last,
+        LastLyric,
     }
 }
