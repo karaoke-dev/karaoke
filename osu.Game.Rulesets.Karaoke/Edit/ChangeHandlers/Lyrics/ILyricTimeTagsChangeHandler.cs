@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void ClearTimeTagTime(TimeTag timeTag);
 
+        void ClearAllTimeTagTime();
+
         void AddByPosition(TextIndex index);
 
         void RemoveByPosition(TextIndex index);

@@ -8,12 +8,13 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class CreateTimeTagButton : KeyActionButton
+    public class SetTimeTagTimeButton : KeyActionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.CreateTimeTag;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.SetTime;
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -21,17 +22,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
         [Resolved, AllowNull]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-        public CreateTimeTagButton()
+        [Resolved, AllowNull]
+        private EditorClock editorClock { get; set; }
+
+        public SetTimeTagTimeButton()
         {
-            SetIcon(FontAwesome.Solid.Tag);
+            SetIcon(FontAwesome.Solid.Stopwatch);
 
             Action = () =>
             {
-                if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+                if (lyricCaretState.BindableCaretPosition.Value is not TimeTagCaretPosition timeTagCaretPosition)
                     throw new InvalidOperationException();
 
-                var index = timeTagIndexCaretPosition.Index;
-                lyricTimeTagsChangeHandler.AddByPosition(index);
+                var timeTag = timeTagCaretPosition.TimeTag;
+                double currentTime = editorClock.CurrentTime;
+                lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, currentTime);
             };
         }
     }

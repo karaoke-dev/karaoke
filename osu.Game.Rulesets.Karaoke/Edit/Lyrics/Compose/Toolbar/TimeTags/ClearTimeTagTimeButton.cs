@@ -11,9 +11,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class CreateTimeTagButton : KeyActionButton
+    public class ClearTimeTagTimeButton : KeyActionButton
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.CreateTimeTag;
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.ClearTime;
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -21,17 +21,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
         [Resolved, AllowNull]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-        public CreateTimeTagButton()
+        public ClearTimeTagTimeButton()
         {
-            SetIcon(FontAwesome.Solid.Tag);
+            SetIcon(FontAwesome.Solid.Eraser);
 
             Action = () =>
             {
-                if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+                if (lyricCaretState.BindableCaretPosition.Value is not TimeTagCaretPosition timeTagCaretPosition)
                     throw new InvalidOperationException();
 
-                var index = timeTagIndexCaretPosition.Index;
-                lyricTimeTagsChangeHandler.AddByPosition(index);
+                var timeTag = timeTagCaretPosition.TimeTag;
+                lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
             };
         }
     }

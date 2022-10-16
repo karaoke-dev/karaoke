@@ -58,6 +58,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestClearAllTimeTagTime()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex()), // without time.
+                    new TimeTag(new TextIndex(), 1000),
+                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 3000),
+                }
+            });
+
+            TriggerHandlerChanged(c => c.ClearAllTimeTagTime());
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.IsTrue(h.TimeTags.All(x => x.Time == null));
+            });
+        }
+
+        [Test]
         public void TestAdd()
         {
             PrepareHitObject(new Lyric
