@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.Edit
         public void TestLockMessage()
         {
             var lyric = new Lyric();
-            Assert.IsNull(EditableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View));
+            Assert.IsNull(InteractableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View));
         }
     }
 }

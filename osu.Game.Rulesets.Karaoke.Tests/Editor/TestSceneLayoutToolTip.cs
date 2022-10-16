@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
     {
-        private ISkin skin = new TestingSkin(null);
+        private readonly ISkin skin = new TestingSkin(null);
         private LayoutToolTip toolTip = null!;
 
         [SetUp]
