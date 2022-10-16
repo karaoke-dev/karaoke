@@ -39,7 +39,9 @@ Or you can compile it yourself: `release build` then copy `Packed/osu.Game.Rules
 
 This repo is covered under the [GPL V3](LICENSE) license.
 If you plan on using this repo for commercial purposes, please contact us at (support@karaoke.dev) to get permission first.
-Using this repo to create `PIRATED` karaoke songs/beatmaps is absolutely forbidden.
+
+Using this repo to create, use or using the beatmap format to distribution any `PIRATED`, `unauthorized` karaoke songs/beatmaps is absolutely forbidden.
+This repo is trying to make song author(or people has copyright) ability to distribution their songs with karaoke format without any restriction, not for copycat to make thing with copyright issue.
 
 ## Thanks to
 
