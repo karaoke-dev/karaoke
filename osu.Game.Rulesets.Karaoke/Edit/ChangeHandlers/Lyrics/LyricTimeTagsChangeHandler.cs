@@ -41,6 +41,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
+        public void ClearAllTimeTagTime()
+        {
+            PerformOnSelection(lyric =>
+            {
+                foreach (var timeTag in lyric.TimeTags)
+                {
+                    timeTag.Time = null;
+                }
+            });
+        }
+
         public void Add(TimeTag timeTag)
         {
             CheckExactlySelectedOneHitObject();
