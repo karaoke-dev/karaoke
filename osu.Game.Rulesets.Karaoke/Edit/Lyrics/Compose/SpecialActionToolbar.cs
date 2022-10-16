@@ -135,6 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                         new MoveToLastIndexButton(),
                         new SetTimeTagTimeButton(),
                         new ClearTimeTagTimeButton(),
+                        new ClearAllTimeTagTimeButton(),
                     },
                     TimeTagEditMode.Adjust => Array.Empty<Drawable>(),
                     _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null)
