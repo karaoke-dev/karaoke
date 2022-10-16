@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
-            LyricsProvider lyricsProvider = new LyricsProvider();
+            var lyricsProvider = new LyricsProvider();
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
 
             Children = new Drawable[]

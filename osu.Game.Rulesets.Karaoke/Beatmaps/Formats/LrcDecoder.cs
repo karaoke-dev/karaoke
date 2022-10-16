@@ -11,7 +11,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
-using TextIndex = osu.Framework.Graphics.Sprites.TextIndex;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -56,15 +55,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 output.HitObjects.Add(lyric);
             }
 
-            static TimeTag convertTimeTag(KeyValuePair<LrcParser.Model.TextIndex, int?> timeTag)
+            static TimeTag convertTimeTag(KeyValuePair<TextIndex, int?> timeTag)
                 => new(convertTextIndex(timeTag.Key), timeTag.Value);
 
-            static TextIndex convertTextIndex(LrcParser.Model.TextIndex textIndex)
+            static Framework.Graphics.Sprites.TextIndex convertTextIndex(TextIndex textIndex)
             {
                 int index = textIndex.Index;
-                var state = textIndex.State == IndexState.Start ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+                var state = textIndex.State == IndexState.Start ? Framework.Graphics.Sprites.TextIndex.IndexState.Start : Framework.Graphics.Sprites.TextIndex.IndexState.End;
 
-                return new TextIndex(index, state);
+                return new Framework.Graphics.Sprites.TextIndex(index, state);
             }
 
             static RubyTag convertRubyTag(LrcParser.Model.RubyTag rubyTag)
@@ -78,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
             {
                 int startIndex = rubyTag.StartIndex;
-                return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<LrcParser.Model.TextIndex, int?>(new LrcParser.Model.TextIndex(startIndex), x.Value))).ToArray();
+                return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<TextIndex, int?>(new TextIndex(startIndex), x.Value))).ToArray();
             }
         }
     }

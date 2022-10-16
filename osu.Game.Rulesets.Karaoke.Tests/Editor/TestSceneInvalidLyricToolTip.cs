@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Graphics;
@@ -284,7 +285,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             public IEnumerable<Issue> Run(BeatmapVerifierContext context)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public CheckMetadata Metadata { get; } = null!;

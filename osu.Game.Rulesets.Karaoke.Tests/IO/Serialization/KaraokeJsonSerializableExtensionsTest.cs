@@ -16,7 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization
         {
             var lyric = new Lyric();
 
-            const string expected = @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singers"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
+            const string expected =
+                @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singers"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
 
             string actual = JsonConvert.SerializeObject(lyric, createSettings());
             Assert.AreEqual(expected, actual);
@@ -25,10 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization
         [Test]
         public void TestDeserializeLyric()
         {
-            const string json = @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singers"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
+            const string json =
+                @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singers"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
 
-            Lyric expected = new Lyric();
-            Lyric actual = JsonConvert.DeserializeObject<Lyric>(json, createSettings())!;
+            var expected = new Lyric();
+            var actual = JsonConvert.DeserializeObject<Lyric>(json, createSettings())!;
             ObjectAssert.ArePropertyEqual(expected, actual);
         }
 
@@ -37,7 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization
         {
             var note = new Note();
 
-            const string expected = @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""samples"":[],""auxiliary_samples"":[]}";
+            const string expected =
+                @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""samples"":[],""auxiliary_samples"":[]}";
 
             string actual = JsonConvert.SerializeObject(note, createSettings());
             Assert.AreEqual(expected, actual);
@@ -46,10 +49,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization
         [Test]
         public void TestDeserializeNote()
         {
-            const string json = @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""samples"":[],""auxiliary_samples"":[]}";
+            const string json =
+                @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""sample_control_point"":{""sample_bank_bindable"":""normal"",""sample_volume_bindable"":100,""sample_bank"":""normal"",""sample_volume"":100},""difficulty_control_point"":{""slider_velocity_bindable"":1.0,""slider_velocity"":1.0},""samples"":[],""auxiliary_samples"":[]}";
 
-            Note expected = new Note();
-            Note actual = JsonConvert.DeserializeObject<Note>(json, createSettings())!;
+            var expected = new Note();
+            var actual = JsonConvert.DeserializeObject<Note>(json, createSettings())!;
             ObjectAssert.ArePropertyEqual(expected, actual);
         }
 

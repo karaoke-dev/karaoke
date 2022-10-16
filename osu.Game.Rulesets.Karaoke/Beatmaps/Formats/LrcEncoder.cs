@@ -9,7 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
-using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
+using RubyTag = LrcParser.Model.RubyTag;
 using TextIndex = osu.Framework.Graphics.Sprites.TextIndex;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
@@ -49,8 +49,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return new LrcParser.Model.TextIndex(index, state);
             }
 
-            static List<LrcParser.Model.RubyTag> convertRubyTag(IEnumerable<RubyTag> rubyTags)
-                => rubyTags.Select(x => new LrcParser.Model.RubyTag
+            static List<RubyTag> convertRubyTag(IEnumerable<Objects.RubyTag> rubyTags)
+                => rubyTags.Select(x => new RubyTag
                 {
                     Text = x.Text,
                     StartIndex = x.StartIndex,

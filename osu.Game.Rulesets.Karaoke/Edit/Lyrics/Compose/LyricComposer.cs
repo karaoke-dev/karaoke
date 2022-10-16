@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
             foreach (var (direction, panelTypes) in panelDirections)
             {
-                foreach (Panel instance in panelTypes.Select(panelType => panelInstance[panelType]))
+                foreach (var instance in panelTypes.Select(panelType => panelInstance[panelType]))
                 {
                     instance.Direction = direction;
                 }
@@ -336,7 +336,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 return;
 
             bottomEditorContainer.Add(newButtonEditor);
-            newButtonEditor.Delay(hasOldButtonEditor ? remove_old_editor_time : 0).FadeIn(0).MoveToY(0, new_animation_time);
+            newButtonEditor.Delay(hasOldButtonEditor ? remove_old_editor_time : 0).FadeIn().MoveToY(0, new_animation_time);
 
             static BaseBottomEditor? createBottomEditor(BottomEditorType? bottomEditorType) =>
                 bottomEditorType switch
