@@ -127,7 +127,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                         new CreateTimeTagButton(),
                         new RemoveTimeTagButton(),
                     },
-                    TimeTagEditMode.Recording => Array.Empty<Drawable>(),
+                    TimeTagEditMode.Recording => new Drawable[]
+                    {
+                        new MoveToFirstIndexButton(),
+                        new MoveToPreviousIndexButton(),
+                        new MoveToNextIndexButton(),
+                        new MoveToLastIndexButton(),
+                        new SetTimeTagTimeButton(),
+                        new ClearTimeTagTimeButton(),
+                    },
                     TimeTagEditMode.Adjust => Array.Empty<Drawable>(),
                     _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null)
                 };
