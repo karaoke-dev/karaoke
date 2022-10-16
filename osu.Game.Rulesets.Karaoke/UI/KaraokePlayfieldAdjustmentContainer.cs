@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private KaraokeLocalFontStore localFontStore;
 
         [BackgroundDependencyLoader]
-        private void load( FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager manager)
+        private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager manager)
         {
             // get all font usage which wants to import.
             var targetImportFonts = new[]
