@@ -47,7 +47,7 @@ This repo is trying to make song author(or people has copyright) ability to dist
 
 - [osu!](https://github.com/ppy/osu) and it's [framework](https://github.com/ppy/osu-framework) for karaoke!
 
-- [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html) and [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html), an open-source software used to create lyrics with time tags.
+- [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html), [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html) and [Aegisub](https://github.com/Aegisub/Aegisub), an open-source software used to create lyrics with time tags.
 Parts of the lyrics editor in this ruleset were inspired by them.
 
 - [ニコカラメーカー](http://shinta0806be.ldblog.jp/tag/%E3%83%8B%E3%82%B3%E3%82%AB%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC), a software to convert `.lrc` files into karaoke video with beautiful text effects.
