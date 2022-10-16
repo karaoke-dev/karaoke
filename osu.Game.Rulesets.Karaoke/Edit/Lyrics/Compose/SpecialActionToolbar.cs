@@ -21,8 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
     public class SpecialActionToolbar : CompositeDrawable
     {
         public const int HEIGHT = 26;
-        public const int ICON_SPACING = 2;
-        public const int ICON_SIZE = HEIGHT - ICON_SPACING * 2;
+        public const int PADDING = 2;
+        public const int ICON_SIZE = HEIGHT - PADDING * 2;
+
+        public const int SPACING = 5;
 
         private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
 
@@ -44,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 {
                     AutoSizeAxes = Axes.Both,
                     Padding = new MarginPadding(5),
-                    Spacing = new Vector2(5),
+                    Spacing = new Vector2(SPACING),
                     Children = new Drawable[]
                     {
                         new TogglePropertyPanelButton(),
