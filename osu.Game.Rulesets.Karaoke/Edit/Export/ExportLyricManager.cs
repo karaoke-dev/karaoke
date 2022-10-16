@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             public override void ExportModelTo(BeatmapSetInfo model, Stream outputStream)
             {
                 // base.ExportModelTo(model, outputStream);
-                using (ZipArchive zipArchive = ZipArchive.Create())
+                using (var zipArchive = ZipArchive.Create())
                 {
                     foreach (INamedFileUsage file in model.Files)
                     {

@@ -23,7 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var lyric = new Lyric();
 
-            const string expected = "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
+            const string expected =
+                "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
             string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
             Assert.AreEqual(expected, actual);
         }
@@ -31,7 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestDeserializeWithNoConfig()
         {
-            const string json = "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
+            const string json =
+                "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
 
             var expected = new Lyric();
             var actual = JsonConvert.DeserializeObject<Lyric>(json, CreateSettings())!;
@@ -63,7 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             const string reference_lyric_json =
                 "{\"$id\":\"1\",\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
-            const string expected = $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"reference_lyric\":{reference_lyric_json},\"reference_lyric_config\":{{\"$type\":\"SyncLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
+            const string expected =
+                $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"reference_lyric\":{reference_lyric_json},\"reference_lyric_config\":{{\"$type\":\"SyncLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
             string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
             Assert.AreEqual(expected, actual);
         }
@@ -79,7 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             const string reference_lyric_json =
                 "{\"$id\":\"1\",\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"samples\":[],\"auxiliary_samples\":[]}";
-            const string expected = $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{{}},\"reference_lyric\":{reference_lyric_json},\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
+            const string expected =
+                $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{{}},\"reference_lyric\":{reference_lyric_json},\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
             string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
             Assert.AreEqual(expected, actual);
         }

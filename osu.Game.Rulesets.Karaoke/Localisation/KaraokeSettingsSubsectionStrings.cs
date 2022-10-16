@@ -35,7 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         /// <summary>
         /// "Will not showing the cursor while gameplay if not select this option."
         /// </summary>
-        public static LocalisableString ShowCursorWhilePlayingTooltip => new TranslatableString(getKey(@"show_cursor_while_playing_tooltip"), @"Will not showing the cursor while gameplay if not select this option.");
+        public static LocalisableString ShowCursorWhilePlayingTooltip =>
+            new TranslatableString(getKey(@"show_cursor_while_playing_tooltip"), @"Will not showing the cursor while gameplay if not select this option.");
 
         /// <summary>
         /// "Translate"

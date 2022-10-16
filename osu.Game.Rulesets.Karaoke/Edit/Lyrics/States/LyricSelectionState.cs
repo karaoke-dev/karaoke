@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             bindableDisableSelectingLyric.Clear();
 
-            foreach ((var lyric, LocalisableString reason) in disableLyrics)
+            foreach ((var lyric, var reason) in disableLyrics)
                 bindableDisableSelectingLyric.Add(lyric, reason);
         }
     }

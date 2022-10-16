@@ -59,7 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override void Complete()
         {
             // Check is need to go to generate ruby/romaji step or just skip.
-            if (lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags) || lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags))
+            if (lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags)
+                || lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags))
             {
                 ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }

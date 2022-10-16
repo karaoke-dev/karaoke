@@ -144,7 +144,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
             {
                 CreateTimeTagEditMode.Create => new DescriptionFormat
                 {
-                    Text = $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
+                    Text =
+                        $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
                     Keys = new Dictionary<string, InputKey>
                     {
                         { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },

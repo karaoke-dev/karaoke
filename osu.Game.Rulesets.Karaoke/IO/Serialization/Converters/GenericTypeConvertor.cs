@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
 
-                TTypeName? elementType = value.ToObject<TTypeName>();
+                var elementType = value.ToObject<TTypeName>();
                 if (elementType == null)
                     throw new InvalidCastException(nameof(elementType));
 

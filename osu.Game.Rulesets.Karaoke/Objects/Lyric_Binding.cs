@@ -247,7 +247,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             }
         }
 
-        private void bindListValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableList<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
+        private void bindListValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableList<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction,
+                                            bool triggerChangeOnBind = true)
         {
             if (e.OldValue != null)
             {
@@ -274,7 +275,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             }
         }
 
-        private void bindDictionaryValueChange<TKey, TValue>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableDictionary<TKey, TValue>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
+        private void bindDictionaryValueChange<TKey, TValue>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableDictionary<TKey, TValue>> getProperty,
+                                                             Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
             where TKey : notnull
         {
             if (e.OldValue != null)

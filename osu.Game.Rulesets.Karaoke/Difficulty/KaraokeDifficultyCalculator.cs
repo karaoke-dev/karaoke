@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
             // todo : might have a sort.
             // LegacySortHelper<HitObject>.Sort(sortedObjects, Comparer<HitObject>.Create((a, b) => (int)Math.Round(a.StartTime) - (int)Math.Round(b.StartTime)));
 
-            List<DifficultyHitObject> objects = new List<DifficultyHitObject>();
+            var objects = new List<DifficultyHitObject>();
 
             for (int i = 1; i < sortedObjects.Length; i++)
                 objects.Add(new KaraokeDifficultyHitObject(sortedObjects[i], sortedObjects[i - 1], clockRate, objects, objects.Count));

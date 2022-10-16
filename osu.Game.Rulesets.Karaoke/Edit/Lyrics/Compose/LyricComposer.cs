@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
             foreach (var (direction, panelTypes) in panelDirections)
             {
-                foreach (Panel instance in panelTypes.Select(panelType => panelInstance[panelType]))
+                foreach (var instance in panelTypes.Select(panelType => panelInstance[panelType]))
                 {
                     instance.Direction = direction;
                 }

@@ -31,4 +31,3 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         AutoGenerateNotes,
     }
 }
-

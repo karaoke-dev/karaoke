@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown
                     {
                         var keys = descriptionTextFlowContainer.Description.Keys;
                         string key = linkInline.Url;
-                        if (keys == null || !keys.TryGetValue(key, out InputKey inputKey))
+                        if (keys == null || !keys.TryGetValue(key, out var inputKey))
                             throw new ArgumentNullException(nameof(keys));
 
                         AddDrawable(new InputKeyText(inputKey));
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown
                     {
                         var editModes = descriptionTextFlowContainer.Description.EditModes;
                         string key = linkInline.Url;
-                        if (editModes == null || !editModes.TryGetValue(key, out SwitchMode mode))
+                        if (editModes == null || !editModes.TryGetValue(key, out var mode))
                             throw new ArgumentNullException(nameof(editModes));
 
                         AddDrawable(new SwitchMoteText(mode));
