@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Panels;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.Playback;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.View;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osuTK;
@@ -100,7 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             new MoveToNextLyricButton(),
         };
 
-        private static IEnumerable<Drawable> createAdjustLyricSizeItem() => Array.Empty<Drawable>();
+        private static IEnumerable<Drawable> createAdjustLyricSizeItem() => new Drawable[]
+        {
+            new AdjustFontSizeButton(),
+        };
 
         private static IEnumerable<Drawable> createItemForEditMode(ModeWithSubMode modeWithSubMode)
         {
