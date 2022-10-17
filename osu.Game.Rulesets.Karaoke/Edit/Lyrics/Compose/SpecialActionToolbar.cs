@@ -75,6 +75,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         {
             buttonContainer.Clear();
 
+            buttonContainer.AddRange(createAdjustLyricSizeItem());
+
+            buttonContainer.Add(new Separator());
+
             buttonContainer.AddRange(createPanelItems());
 
             buttonContainer.Add(new Separator());
@@ -83,11 +87,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
             buttonContainer.Add(new Separator());
 
-            buttonContainer.AddRange(createAdjustLyricSizeItem());
-
             var modeWithSubMode = bindableModeAndSubMode.Value;
             buttonContainer.AddRange(createItemForEditMode(modeWithSubMode));
         }
+
+        private static IEnumerable<Drawable> createAdjustLyricSizeItem() => new Drawable[]
+        {
+            new AdjustFontSizeButton(),
+        };
 
         private static IEnumerable<Drawable> createPanelItems() => new Drawable[]
         {
@@ -99,11 +106,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         {
             new MoveToPreviousLyricButton(),
             new MoveToNextLyricButton(),
-        };
-
-        private static IEnumerable<Drawable> createAdjustLyricSizeItem() => new Drawable[]
-        {
-            new AdjustFontSizeButton(),
         };
 
         private static IEnumerable<Drawable> createItemForEditMode(ModeWithSubMode modeWithSubMode)
