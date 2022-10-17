@@ -27,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Composer
             SetDefault(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
+            SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
             // Create time-tag.
             SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
@@ -66,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Composer
         ShowPropertyPanelInComposer,
         ShowInvalidInfoInComposer,
+        FontSizeInComposer,
 
         // Create time-tag.
         CreateTimeTagEditMode,
