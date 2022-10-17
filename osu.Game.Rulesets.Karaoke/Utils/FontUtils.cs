@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class FontUtils
     {
+        public const float DEFAULT_FONT_SIZE = 28;
+
         /// <summary>
         /// For selecting size
         /// </summary>
