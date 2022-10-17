@@ -79,22 +79,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             currentTimeMarker.MoveToX(position);
         }
 
-        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
-        {
-            const float preempt_time = 1000;
-            double zoomMillionSecond = editorClock.TrackLength / CurrentZoom;
-            double position = getTimeFromPosition(new Vector2(value));
-
-            // should prevent dragging or moving is out of time-tag range.
-            if (position < StartTime - preempt_time)
-                value = getPositionFromTime(StartTime - preempt_time);
-
-            if (position > EndTime - zoomMillionSecond + preempt_time)
-                value = getPositionFromTime(EndTime - zoomMillionSecond + preempt_time);
-
-            base.OnUserScroll(value, animated, distanceDecay);
-        }
-
         public SnapResult FindSnappedPosition(Vector2 screenSpacePosition) =>
             new(screenSpacePosition, null);
 
