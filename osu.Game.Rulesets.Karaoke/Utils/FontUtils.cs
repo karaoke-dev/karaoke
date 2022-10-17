@@ -8,6 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     public static class FontUtils
     {
         public const float DEFAULT_FONT_SIZE = 28;
+        public const float DEFAULT_FONT_SIZE_IN_COMPOSER = 36;
 
         /// <summary>
         /// For selecting size
@@ -34,6 +35,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static float[] DefaultPreviewFontSize()
             => new float[] { 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48 };
+
+        /// <summary>
+        /// For selecting preview size in editor.
+        /// </summary>
+        /// <returns></returns>
+        public static float[] ComposerFontSize()
+            => new float[] { 20, 24, 28, 32, 36, 40, 48, 64, 72 };
 
         public static string GetText(float fontSize)
             => $"{fontSize} px";
