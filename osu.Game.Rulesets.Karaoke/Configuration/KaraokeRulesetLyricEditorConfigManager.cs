@@ -7,6 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // General
             SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.Preview);
-            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, 28f);
+            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, FontUtils.DEFAULT_FONT_SIZE);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
@@ -26,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Composer
             SetDefault(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
+            SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
             // Create time-tag.
             SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
@@ -65,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Composer
         ShowPropertyPanelInComposer,
         ShowInvalidInfoInComposer,
+        FontSizeInComposer,
 
         // Create time-tag.
         CreateTimeTagEditMode,
