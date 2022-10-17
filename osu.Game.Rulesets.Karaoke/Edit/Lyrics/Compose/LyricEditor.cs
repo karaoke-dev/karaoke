@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -15,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
     public class LyricEditor : CompositeDrawable
     {
         private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
+        private readonly IBindable<float> bindableFontSize = new Bindable<float>();
 
         private readonly LyricEditorSkin skin;
         private readonly SkinProvidingContainer skinProvidingContainer;
@@ -43,12 +45,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                     Origin = Anchor.CentreLeft,
                 });
             });
+
+            bindableFontSize.BindValueChanged(e =>
+            {
+                skin.FontSize = e.NewValue;
+            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
+        private void load(ILyricCaretState lyricCaretState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
         }
     }
 }
