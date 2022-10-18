@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
+        [Resolved]
+        private IEditorChangeHandler? changeHandler { get; set; }
+
         protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
 
         protected HitObjectChangeHandler()
@@ -51,11 +54,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
             try
             {
-                beatmap.PerformOnSelection(h =>
+                if (changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive)
                 {
-                    if (h is T tHitObject)
-                        action.Invoke(tHitObject);
-                });
+                    // should trigger the UpdateState() in the editor beatmap only if there's no active state.
+                    beatmap.PerformOnSelection(h =>
+                    {
+                        if (h is T tHitObject)
+                            action(tHitObject);
+                    });
+                }
+                else
+                {
+                    // Just update the object property if already in the changing state.
+                    // e.g. dragging.
+                    beatmap.SelectedHitObjects.ForEach(h =>
+                    {
+                        if (h is T tHitObject)
+                            action(tHitObject);
+                    });
+                }
             }
             finally
             {
