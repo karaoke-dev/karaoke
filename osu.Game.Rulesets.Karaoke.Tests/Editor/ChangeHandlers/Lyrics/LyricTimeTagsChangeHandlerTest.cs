@@ -37,6 +37,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestShiftingTimeTagTime()
+        {
+            var timeTag = new TimeTag(new TextIndex());
+            var timeTagWithTime = new TimeTag(new TextIndex(), 1000);
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    timeTag,
+                    timeTagWithTime
+                }
+            });
+
+            TriggerHandlerChanged(c => c.ShiftingTimeTagTime(new[] { timeTag, timeTagWithTime }, 2000));
+
+            AssertSelectedHitObject(_ =>
+            {
+                Assert.AreEqual(null, timeTag.Time);
+                Assert.AreEqual(3000, timeTagWithTime.Time);
+            });
+        }
+
+        [Test]
         public void TestClearTimeTagTime()
         {
             var timeTag = new TimeTag(new TextIndex(), 1000);

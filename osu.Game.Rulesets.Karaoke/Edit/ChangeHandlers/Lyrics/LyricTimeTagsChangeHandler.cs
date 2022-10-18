@@ -27,6 +27,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
+        public void ShiftingTimeTagTime(IEnumerable<TimeTag> timeTags, double offset)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                foreach (var timeTag in timeTags)
+                {
+                    bool containsInLyric = lyric.TimeTags.Contains(timeTag);
+                    if (!containsInLyric)
+                        throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
+
+                    timeTag.Time += offset;
+                }
+            });
+        }
+
         public void ClearTimeTagTime(TimeTag timeTag)
         {
             CheckExactlySelectedOneHitObject();
