@@ -56,38 +56,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             if (result.Time == null)
                 return false;
 
-            var timeTagBlueprints = blueprints.OfType<AdjustTimeTagHitObjectBlueprint>().ToArray();
-            var firstDragBlueprint = timeTagBlueprints.FirstOrDefault();
-            if (firstDragBlueprint == null)
+            var timeTags = blueprints.OfType<AdjustTimeTagHitObjectBlueprint>().Select(x => x.Item).ToArray();
+            var firstTimeTag = timeTags.FirstOrDefault();
+            if (firstTimeTag == null)
                 return false;
 
-            double offset = result.Time.Value - timeline.GetPreviewTime(firstDragBlueprint.Item);
+            double offset = result.Time.Value - timeline.GetPreviewTime(firstTimeTag);
             if (offset == 0)
                 return false;
 
-            // todo : should not save separately.
-            foreach (var blueprint in timeTagBlueprints)
-            {
-                var timeTag = blueprint.Item;
-                timeTag.Time = timeline.GetPreviewTime(timeTag) + offset;
-            }
+            lyricTimeTagsChangeHandler.ShiftingTimeTagTime(timeTags, offset);
 
             return true;
-        }
-
-        /// <summary>
-        /// Commit time-tag time.
-        /// </summary>
-        protected override void DragOperationCompleted()
-        {
-            var processedTimeTags = SelectionBlueprints.Where(x => x.State == SelectionState.Selected).Select(x => x.Item);
-
-            // todo : should change together.
-            foreach (var timeTag in processedTimeTags)
-            {
-                if (timeTag.Time.HasValue)
-                    lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, timeTag.Time.Value);
-            }
         }
 
         protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()

@@ -75,6 +75,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
                     });
                 }
             }
+            catch
+            {
+                // We should make sure that editor beatmap will end the change if still changing.
+                // will goes to here if have exception in the change handler.
+                if (beatmap.TransactionActive)
+                    beatmap.EndChange();
+
+                throw;
+            }
             finally
             {
                 changingCache.Validate();
