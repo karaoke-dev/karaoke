@@ -34,9 +34,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 },
             };
             var editorBeatmap = new EditorBeatmap(beatmap);
+            var editorChangeHandler = new MockEditorChangeHandler(editorBeatmap);
             Dependencies.Cache(editorBeatmap);
-            Dependencies.CacheAs<IEditorChangeHandler>(new MockEditorChangeHandler());
-            editorBeatmap.TransactionEnded += () =>
+            Dependencies.CacheAs<IEditorChangeHandler>(editorChangeHandler);
+            editorChangeHandler.TransactionEnded += () =>
             {
                 transactionCount++;
             };
@@ -118,6 +119,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
         private class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
         {
             public event Action? OnStateChange;
+
+            public MockEditorChangeHandler(EditorBeatmap editorBeatmap)
+            {
+                editorBeatmap.TransactionBegan += BeginChange;
+                editorBeatmap.TransactionEnded += EndChange;
+                editorBeatmap.SaveStateTriggered += SaveState;
+            }
 
             protected override void UpdateState()
             {
