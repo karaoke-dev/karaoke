@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
             try
             {
+                // todo: follow-up the discussion in the https://github.com/karaoke-dev/karaoke/pull/1669 after support the change handler for customized ruleset.
                 if (changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive)
                 {
                     // should trigger the UpdateState() in the editor beatmap only if there's no active state.
