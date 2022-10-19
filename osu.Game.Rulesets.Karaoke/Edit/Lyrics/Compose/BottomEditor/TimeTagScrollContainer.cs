@@ -149,7 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             if (time != null)
                 return time.Value;
 
-            var timeTags = bindableFocusedLyric.Value?.TimeTags ?? new List<TimeTag>();
+            var timeTags = timeTagsBindable.ToArray();
             int index = timeTags.IndexOf(timeTag);
 
             const float preempt_time = 200;
