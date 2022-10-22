@@ -46,6 +46,8 @@
   <ItemGroup>
     <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.dll"/>
     <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.Resources.dll"/>
+    <InputAssemblies Include="$(OutputPath)**/osu.Game.Rulesets.Karaoke.Resources.resources.dll"
+                     Exclude="$(OutputPath)Dlls/osu.Game.Rulesets.Karaoke.Resources.resources.dll"/>
     <InputAssemblies Include="$(OutputPath)LanguageDetection.dll"/>
     <InputAssemblies Include="$(OutputPath)LrcParser.dll"/>
     <InputAssemblies Include="$(OutputPath)Octokit.dll"/>
@@ -64,7 +66,7 @@
   </ItemGroup>
 
   <Target Name="CopyCustomContent" Condition=" '$(Configuration)'=='Release' " AfterTargets="AfterBuild">
-    <Copy SourceFiles="@(InputAssemblies)" DestinationFolder="$(OutDir)/DLLs" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(InputAssemblies)" DestinationFiles="$(OutDir)/Dlls/%(RecursiveDir)%(Filename)%(Extension)"/>
   </Target>
   
 </Project>
