@@ -66,9 +66,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         protected override void OnLyricChanged(Lyric newLyric)
         {
-            const float preempt_time = 200;
-            float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
-            ScrollTo(position, false);
+            // add the little bit delay to make sure that content width is not zero.
+            this.FadeOut(1).OnComplete(x =>
+            {
+                const float preempt_time = 200;
+                float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
+                ScrollTo(position, false);
+
+                this.FadeIn(100);
+            });
         }
 
         protected override void UpdateAfterChildren()
@@ -77,22 +83,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
             float position = getPositionFromTime(editorClock.CurrentTime);
             currentTimeMarker.MoveToX(position);
-        }
-
-        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
-        {
-            const float preempt_time = 1000;
-            double zoomMillionSecond = editorClock.TrackLength / CurrentZoom;
-            double position = getTimeFromPosition(new Vector2(value));
-
-            // should prevent dragging or moving is out of time-tag range.
-            if (position < StartTime - preempt_time)
-                value = getPositionFromTime(StartTime - preempt_time);
-
-            if (position > EndTime - zoomMillionSecond + preempt_time)
-                value = getPositionFromTime(EndTime - zoomMillionSecond + preempt_time);
-
-            base.OnUserScroll(value, animated, distanceDecay);
         }
 
         public SnapResult FindSnappedPosition(Vector2 screenSpacePosition) =>

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
@@ -35,10 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
         protected readonly IBindable<float> WaveformOpacity = new BindableFloat();
         protected readonly IBindable<bool> ShowTick = new BindableBool();
         protected readonly IBindable<float> TickOpacity = new BindableFloat();
-
-        protected double StartTime { get; private set; }
-
-        protected double EndTime { get; private set; }
 
         protected Track Track { get; private set; } = null!;
 
@@ -75,19 +70,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             var fistTimeTag = timeTagsBindable.FirstOrDefault();
             var lastTimeTag = timeTagsBindable.LastOrDefault();
 
-            if (fistTimeTag != null && lastTimeTag != null)
-            {
-                StartTime = GetPreviewTime(fistTimeTag) - 500;
-                EndTime = GetPreviewTime(lastTimeTag) + 500;
-            }
-            else
-            {
-                StartTime = 0;
-                EndTime = 0;
-            }
+            double startTime = fistTimeTag != null ? GetPreviewTime(fistTimeTag) : 0;
+            double endTime = lastTimeTag != null ? GetPreviewTime(lastTimeTag) : 0;
+
+            OnTimeRangeChanged(startTime, endTime);
         }
 
         protected abstract void OnLyricChanged(Lyric newLyric);
+
+        protected virtual void OnTimeRangeChanged(double startTime, double endTime) { }
 
         private WaveformGraph waveform = null!;
 
@@ -149,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             if (time != null)
                 return time.Value;
 
-            var timeTags = bindableFocusedLyric.Value?.TimeTags ?? new List<TimeTag>();
+            var timeTags = timeTagsBindable.ToArray();
             int index = timeTags.IndexOf(timeTag);
 
             const float preempt_time = 200;
