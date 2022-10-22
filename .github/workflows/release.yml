@@ -33,15 +33,14 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
     - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.dll
-        asset_name: osu.Game.Rulesets.Karaoke.dll
-        asset_content_type: application/vnd.microsoft.portable-executable
+        token: ${{ secrets.RELEASE_TOKEN }}
+        files: |
+          osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.dll
+        draft: true
+        body: |
+          Thank you for showing interest in this ruleset. This is a tagged release (${{ env.CURRENT_TAG }}).
     - name: Generate changelog
       run: |
         sudo npm install github-release-notes -g
