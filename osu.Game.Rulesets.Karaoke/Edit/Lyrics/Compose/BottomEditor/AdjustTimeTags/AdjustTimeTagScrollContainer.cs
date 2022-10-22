@@ -66,9 +66,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         protected override void OnLyricChanged(Lyric newLyric)
         {
-            const float preempt_time = 200;
-            float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
-            ScrollTo(position, false);
+            // add the little bit delay to make sure that content width is not zero.
+            this.FadeOut(1).OnComplete(x =>
+            {
+                const float preempt_time = 200;
+                float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
+                ScrollTo(position, false);
+
+                this.FadeIn(100);
+            });
         }
 
         protected override void UpdateAfterChildren()
