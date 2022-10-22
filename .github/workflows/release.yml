@@ -42,7 +42,7 @@ jobs:
         token: ${{ secrets.RELEASE_TOKEN }}
         files: |
           osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.dll
-          osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.zip
+          osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/osu.Game.Rulesets.Karaoke.zip
         draft: true
         body: |
           Thank you for showing interest in this ruleset. This is a tagged release (${{ env.CURRENT_TAG }}).
