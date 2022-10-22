@@ -42,5 +42,25 @@
   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.dll"/>
+    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.Resources.dll"/>
+    <InputAssemblies Include="$(OutputPath)LanguageDetection.dll"/>
+    <InputAssemblies Include="$(OutputPath)LrcParser.dll"/>
+    <InputAssemblies Include="$(OutputPath)Octokit.dll"/>
+    <InputAssemblies Include="$(OutputPath)osu.Framework.KaraokeFont.dll"/>
+    <InputAssemblies Include="$(OutputPath)osu.Framework.Microphone.dll"/>
+    <InputAssemblies Include="$(OutputPath)NWaves.dll"/>
+    <InputAssemblies Include="$(OutputPath)NicoKaraParser.dll"/>
+    <InputAssemblies Include="$(OutputPath)SixLabors.Fonts.dll"/>
+    <InputAssemblies Include="$(OutputPath)SixLabors.ImageSharp.Drawing.dll"/>
+    <InputAssemblies Include="$(OutputPath)WanaKanaSharp.dll"/>
+    <InputAssemblies Include="$(OutputPath)Zipangu.dll"/>
+  </ItemGroup>
+
+  <Target Name="CopyCustomContent" Condition=" '$(Configuration)'=='Release' " AfterTargets="AfterBuild">
+    <Copy SourceFiles="@(InputAssemblies)" DestinationFolder="$(OutDir)/DLLs" SkipUnchangedFiles="true" />
+  </Target>
   
 </Project>

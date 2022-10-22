@@ -33,14 +33,16 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
     - name: Zip the dlls
-      run: zip -r ./osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/osu.Game.Rulesets.Karaoke.zip . -x "./osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/DLLs/*"
+      run: |
+        cd osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/DLLs
+        zip -r ../osu.Game.Rulesets.Karaoke.zip ./
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.RELEASE_TOKEN }}
         files: |
           osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.dll
-          osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/Packed/osu.Game.Rulesets.Karaoke.zip
+          osu.Game.Rulesets.Karaoke/bin/Release/netstandard2.1/osu.Game.Rulesets.Karaoke.zip
         draft: true
         body: |
           Thank you for showing interest in this ruleset. This is a tagged release (${{ env.CURRENT_TAG }}).
