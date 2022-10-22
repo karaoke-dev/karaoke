@@ -319,7 +319,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             {
                 bottomEditorContainer.Children.ForEach(editor =>
                 {
-                    editor.MoveToY(-1, remove_old_editor_time).FadeOut(remove_old_editor_time).Then().OnComplete(x =>
+                    editor.MoveToY(-1, remove_old_editor_time).FadeOut(remove_old_editor_time).OnComplete(x =>
                     {
                         x.Expire();
 
