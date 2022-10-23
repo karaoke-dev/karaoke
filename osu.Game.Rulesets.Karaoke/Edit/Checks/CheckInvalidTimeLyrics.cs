@@ -12,9 +12,9 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckInvalidTimeLyrics : ICheck
+    public class CheckInvalidTimeLyrics : ICheck, IHasCheckConfig<LyricCheckerConfig>
     {
-        private readonly LyricCheckerConfig config;
+        public LyricCheckerConfig Config { get; set; } = new LyricCheckerConfig().CreateDefaultConfig();
 
         public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid time issue.");
 
@@ -23,11 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateInvalidLyricTime(this),
             new IssueTemplateInvalidTimeTag(this),
         };
-
-        public CheckInvalidTimeLyrics(LyricCheckerConfig config)
-        {
-            this.config = config;
-        }
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
@@ -71,8 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 result.Add(TimeTagInvalid.OutOfRange, outOfRangeTags);
 
             // Check overlapping.
-            var groupCheck = config.TimeTagTimeGroupCheck;
-            var selfCheck = config.TimeTagTimeSelfCheck;
+            var groupCheck = Config.TimeTagTimeGroupCheck;
+            var selfCheck = Config.TimeTagTimeSelfCheck;
             var overlappingTimeTags = TimeTagsUtils.FindOverlapping(lyric.TimeTags, groupCheck, selfCheck).ToArray();
             if (overlappingTimeTags.Length > 0)
                 result.Add(TimeTagInvalid.Overlapping, overlappingTimeTags);
