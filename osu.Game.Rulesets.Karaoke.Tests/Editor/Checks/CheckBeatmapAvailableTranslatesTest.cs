@@ -12,12 +12,12 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTranslate;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapAvailableTranslates;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckLyricTranslateTest : BaseCheckTest<CheckLyricTranslate>
+    public class CheckBeatmapAvailableTranslatesTest : BaseCheckTest<CheckBeatmapAvailableTranslates>
     {
         [Test]
         public void TestNoLyricAndNoLanguage()

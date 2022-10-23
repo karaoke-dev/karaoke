@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckLyricTranslate : ICheck
+    public class CheckBeatmapAvailableTranslates : ICheck
     {
         public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid translations.");
 
