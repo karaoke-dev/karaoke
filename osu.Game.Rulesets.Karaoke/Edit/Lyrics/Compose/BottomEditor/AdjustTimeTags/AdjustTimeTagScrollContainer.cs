@@ -86,16 +86,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             currentTimeMarker.MoveToX(position);
         }
 
-        public double TimeAtPosition(float x)
-        {
-            return x / Content.DrawWidth * editorClock.TrackLength;
-        }
-
-        public float PositionAtTime(double time)
-        {
-            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
-        }
-
         public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
         {
             double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
