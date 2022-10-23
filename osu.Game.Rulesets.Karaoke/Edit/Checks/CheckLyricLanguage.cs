@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckLyricLanguage : CheckHitObjectProperty<Lyric>
     {
-        protected override string Description => "Lyrics with invalid language.";
+        protected override string Description => "Lyric with invalid language.";
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
