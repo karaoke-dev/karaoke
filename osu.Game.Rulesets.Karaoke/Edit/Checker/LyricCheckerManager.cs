@@ -94,6 +94,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
             {
                 checks = new List<ICheck>
                 {
+                    new CheckLyricText(),
+                    new CheckLyricLanguage(),
                     new CheckLyricSinger(),
                     new CheckInvalidRubyRomajiLyrics
                     {

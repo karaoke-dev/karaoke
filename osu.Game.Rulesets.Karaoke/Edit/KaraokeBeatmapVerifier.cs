@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private readonly List<ICheck> checks = new()
         {
+            new CheckLyricText(),
+            new CheckLyricLanguage(),
             new CheckLyricSinger(),
             new CheckInvalidRubyRomajiLyrics(),
             new CheckInvalidTimeLyrics(),
