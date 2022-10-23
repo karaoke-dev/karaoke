@@ -14,26 +14,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public abstract class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
-        protected void RegisterBindable<TItem>(BindableList<TItem> bindable) where TItem : T
+        private readonly BindableList<T> bindableList = new();
+
+        protected BindableBlueprintContainer()
         {
-            // Add time-tag into blueprint container
-            bindable.BindCollectionChanged((_, args) =>
+            bindableList.BindCollectionChanged((_, args) =>
             {
                 switch (args.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        foreach (var obj in args.NewItems.OfType<TItem>())
+                        foreach (var obj in args.NewItems.OfType<T>())
                             AddBlueprintFor(obj);
 
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
-                        foreach (var obj in args.OldItems.OfType<TItem>())
+                        foreach (var obj in args.OldItems.OfType<T>())
                             RemoveBlueprintFor(obj);
 
                         break;
                 }
-            }, true);
+            });
+        }
+
+        protected void RegisterBindable(BindableList<T> bindable)
+        {
+            bindableList.UnbindBindings();
+            bindableList.BindTo(bindable);
         }
 
         protected override bool OnDragStart(DragStartEvent e)
@@ -60,12 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        /// <summary>
-        /// This function will de-select all selection in relative blueprint container
-        /// </summary>
-        protected virtual void DeselectAll()
+        protected override void SelectAll()
         {
-            SelectedItems.Clear();
+            SelectedItems.AddRange(bindableList);
         }
 
         private bool containsSelectionFromOtherBlueprintContainer()

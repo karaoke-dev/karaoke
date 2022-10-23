@@ -55,6 +55,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
         }
 
+        protected override void SelectAll()
+        {
+            SelectedItems.AddRange(bindableLyrics);
+        }
+
         protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
             => blueprints.OrderBy(b => b.Item.LyricStartTime);
 
