@@ -4,7 +4,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -39,8 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 
         [Resolved, AllowNull]
         private EditorClock editorClock { get; set; }
-
-        protected Track Track { get; private set; } = null!;
 
         protected TimeTagScrollContainer()
         {
@@ -121,7 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             this.beatmap.BindValueChanged(b =>
             {
                 waveform.Waveform = b.NewValue.Waveform;
-                Track = b.NewValue.Track;
             }, true);
 
             ShowWaveformGraph.BindValueChanged(e => updateWaveformOpacity());
