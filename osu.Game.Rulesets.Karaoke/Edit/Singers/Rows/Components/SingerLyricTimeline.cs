@@ -83,11 +83,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             if (firstLyric == null)
                 return;
 
-            float position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
+            float position = PositionAtTime(firstLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
         }
 
-        private float getPositionFromTime(double time)
-            => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
+        public double TimeAtPosition(float x)
+        {
+            return x / Content.DrawWidth * editorClock.TrackLength;
+        }
+
+        public float PositionAtTime(double time)
+        {
+            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
+        }
     }
 }
