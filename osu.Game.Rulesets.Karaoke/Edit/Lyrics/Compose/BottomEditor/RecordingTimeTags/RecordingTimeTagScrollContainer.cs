@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         private void seekTrackToCurrent()
         {
-            double target = Current / Content.DrawWidth * editorClock.TrackLength;
+            double target = TimeAtPosition(Current);
             editorClock.Seek(Math.Min(editorClock.TrackLength, target));
         }
 
@@ -159,7 +159,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
             if (handlingDragInput)
                 editorClock.Stop();
 
-            ScrollTo((float)(editorClock.CurrentTime / editorClock.TrackLength) * Content.DrawWidth, false);
+            float position = PositionAtTime(editorClock.CurrentTime);
+            ScrollTo(position, false);
         }
 
         protected override bool OnMouseDown(MouseDownEvent e)
