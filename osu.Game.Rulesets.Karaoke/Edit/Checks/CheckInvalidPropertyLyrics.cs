@@ -16,7 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
             new IssueTemplateNotFillLanguage(this),
-            new IssueTemplateNoText(this),
             new IssueTemplateNoSinger(this),
         };
 
@@ -29,9 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
                 // todo : check lyric layout.
 
-                if (string.IsNullOrWhiteSpace(lyric.Text))
-                    yield return new IssueTemplateNoText(this).Create(lyric);
-
                 if (!lyric.Singers.Any())
                     yield return new IssueTemplateNoSinger(this).Create(lyric);
 
@@ -43,17 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             public IssueTemplateNotFillLanguage(ICheck check)
                 : base(check, IssueType.Problem, "Lyric must have assign language.")
-            {
-            }
-
-            public Issue Create(Lyric lyric)
-                => new(lyric, this);
-        }
-
-        public class IssueTemplateNoText : IssueTemplate
-        {
-            public IssueTemplateNoText(ICheck check)
-                : base(check, IssueType.Problem, "Lyric must have text.")
             {
             }
 

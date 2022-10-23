@@ -45,32 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         {
         }
 
-        [TestCase("karaoke")]
-        [TestCase("k")] // not limit min size for now.
-        [TestCase("カラオケ")] // not limit language.
-        public void TestCheckText(string text)
-        {
-            var lyric = new Lyric
-            {
-                Text = text
-            };
-
-            AssertOk(lyric);
-        }
-
-        [TestCase(" ")] // but should not be empty or white space.
-        [TestCase("")]
-        [TestCase(null)]
-        public void TestCheckInvalidText(string text)
-        {
-            var lyric = new Lyric
-            {
-                Text = text
-            };
-
-            AssertNotOk<IssueTemplateNoText>(lyric);
-        }
-
         [TestCase(new[] { 1, 2, 3 })]
         [TestCase(new[] { 1 })]
         [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
