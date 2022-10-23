@@ -95,8 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 checks = new List<ICheck>
                 {
                     new CheckInvalidPropertyLyrics(),
-                    new CheckInvalidRubyRomajiLyrics(config),
-                    new CheckInvalidTimeLyrics(config),
+                    new CheckInvalidRubyRomajiLyrics
+                    {
+                        Config = config
+                    },
+                    new CheckInvalidTimeLyrics
+                    {
+                        Config = config
+                    },
                 };
             }
 
