@@ -105,6 +105,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                     {
                         Config = config
                     },
+                    new CheckInvalidPropertyNotes(),
+                    new CheckBeatmapAvailableTranslates(),
                 };
             }
 
