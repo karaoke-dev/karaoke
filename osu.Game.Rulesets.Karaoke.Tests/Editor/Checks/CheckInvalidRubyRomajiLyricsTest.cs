@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
@@ -19,17 +18,8 @@ using osu.Game.Tests.Beatmaps;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckInvalidRubyRomajiLyricsTest
+    public class CheckInvalidRubyRomajiLyricsTest : HitObjectCheckTest<Lyric, CheckInvalidRubyRomajiLyrics>
     {
-        private CheckInvalidRubyRomajiLyrics check = null!;
-
-        [SetUp]
-        public void Setup()
-        {
-            var config = new LyricCheckerConfig().CreateDefaultConfig();
-            check = new CheckInvalidRubyRomajiLyrics(config);
-        }
-
         [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, new RubyTagInvalid[] { })]
         [TestCase("カラオケ", new[] { "[0,4]:からおけ" }, new RubyTagInvalid[] { })]
         [TestCase("カラオケ", new[] { "[-1,1]:か" }, new[] { RubyTagInvalid.OutOfRange })]
@@ -70,6 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             Assert.AreEqual(expected, actual);
         }
 
+        // todo: should be removed after refactor.
         private IEnumerable<Issue> run(HitObject lyric)
         {
             var beatmap = new Beatmap
@@ -80,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 }
             };
             var context = new BeatmapVerifierContext(beatmap, new TestWorkingBeatmap(beatmap));
-            return check.Run(context);
+            return Run(context);
         }
     }
 }

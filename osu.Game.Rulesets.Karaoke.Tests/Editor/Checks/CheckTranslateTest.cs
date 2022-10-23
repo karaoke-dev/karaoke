@@ -12,29 +12,20 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckTranslate;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckTranslateTest
+    public class CheckTranslateTest : BaseCheckTest<CheckTranslate>
     {
-        private CheckTranslate check = null!;
-
-        [SetUp]
-        public void Setup()
-        {
-            check = new CheckTranslate();
-        }
-
         [Test]
         public void TestNoLyricAndNoLanguage()
         {
             // test no lyric and no default language. (should not show alert)
             var beatmap = createTestingBeatmap(null, null);
-            var result = check.Run(getContext(beatmap));
 
-            int actual = result.Count();
-            Assert.AreEqual(0, actual);
+            AssertOk(getContext(beatmap));
         }
 
         [Test]
@@ -43,10 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             // test no lyric and have language. (should not show alert)
             var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
             var beatmap = createTestingBeatmap(translateLanguages, null);
-            var result = check.Run(getContext(beatmap));
 
-            int actual = result.Count();
-            Assert.AreEqual(0, actual);
+            AssertOk(getContext(beatmap));
         }
 
         [Test]
@@ -55,10 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             // test have lyric and no language. (should not show alert)
             var lyrics = new[] { new Lyric() };
             var beatmap = createTestingBeatmap(null, lyrics);
-            var result = check.Run(getContext(beatmap));
 
-            int actual = result.Count();
-            Assert.AreEqual(0, actual);
+            AssertOk(getContext(beatmap));
         }
 
         [Test]
@@ -71,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(),
                 createLyric(),
             });
-            Assert.AreEqual(1, check.Run(getContext(beatmap)).Count());
+            AssertNotOk<IssueTemplateMissingTranslate>(getContext(beatmap));
 
             // no lyric with translate string. (should have issue)
             var beatmap2 = createTestingBeatmap(translateLanguages, new[]
@@ -79,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(),
             });
-            Assert.AreEqual(1, check.Run(getContext(beatmap2)).Count());
+            AssertNotOk<IssueTemplateMissingTranslate>(getContext(beatmap2));
 
             // no lyric with translate string. (should have issue)
             var beatmap3 = createTestingBeatmap(translateLanguages, new[]
@@ -87,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(new CultureInfo("Ja-jp"), string.Empty),
             });
-            Assert.AreEqual(1, check.Run(getContext(beatmap3)).Count());
+            AssertNotOk<IssueTemplateMissingTranslate>(getContext(beatmap3));
 
             // some lyric with translate string. (should have issue)
             var beatmap4 = createTestingBeatmap(translateLanguages, new[]
@@ -95,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp")),
             });
-            Assert.AreEqual(1, check.Run(getContext(beatmap4)).Count());
+            AssertNotOk<IssueTemplateMissingPartialTranslate>(getContext(beatmap4));
 
             // every lyric with translate string. (should not have issue)
             var beatmap5 = createTestingBeatmap(translateLanguages, new[]
@@ -103,14 +90,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp"), "translate2"),
             });
-            Assert.AreEqual(0, check.Run(getContext(beatmap5)).Count());
+            AssertOk(getContext(beatmap5));
 
             // lyric translate not listed. (should have issue)
             var beatmap6 = createTestingBeatmap(null, new[]
             {
                 createLyric(new CultureInfo("en-US"), "translate1"),
             });
-            Assert.AreEqual(1, check.Run(getContext(beatmap6)).Count());
+            AssertNotOk<IssueTemplateContainsNotListedLanguage>(getContext(beatmap6));
 
             static Lyric createLyric(CultureInfo? cultureInfo = null, string translate = null!)
             {

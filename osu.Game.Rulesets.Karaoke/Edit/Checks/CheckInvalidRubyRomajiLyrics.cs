@@ -12,9 +12,9 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckInvalidRubyRomajiLyrics : ICheck
+    public class CheckInvalidRubyRomajiLyrics : ICheck, IHasCheckConfig<LyricCheckerConfig>
     {
-        private readonly LyricCheckerConfig config;
+        public LyricCheckerConfig Config { get; set; } = new LyricCheckerConfig().CreateDefaultConfig();
 
         public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid ruby/romaji.");
 
@@ -23,11 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateInvalidRuby(this),
             new IssueTemplateInvalidRomaji(this),
         };
-
-        public CheckInvalidRubyRomajiLyrics(LyricCheckerConfig config)
-        {
-            this.config = config;
-        }
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
@@ -53,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 result.Add(RubyTagInvalid.OutOfRange, outOfRangeTags);
 
             // Checking overlapping.
-            var sorting = config.RomajiPositionSorting;
+            var sorting = Config.RomajiPositionSorting;
             var overlappingTags = TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
             if (overlappingTags.Length > 0)
                 result.Add(RubyTagInvalid.Overlapping, overlappingTags);
@@ -76,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 result.Add(RomajiTagInvalid.OutOfRange, outOfRangeTags);
 
             // Checking overlapping.
-            var sorting = config.RomajiPositionSorting;
+            var sorting = Config.RomajiPositionSorting;
             var overlappingTags = TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
             if (overlappingTags.Length > 0)
                 result.Add(RomajiTagInvalid.Overlapping, overlappingTags);
