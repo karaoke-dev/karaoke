@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,29 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
     [TestFixture]
     public class CheckInvalidPropertyLyricsTest : HitObjectCheckTest<Lyric, CheckInvalidPropertyLyrics>
     {
-        [TestCase("Ja-jp")]
-        [TestCase("")] // should not have issue if CultureInfo accept it.
-        public void TestCheckLanguage(string language)
-        {
-            var lyric = new Lyric
-            {
-                Language = new CultureInfo(language),
-            };
-
-            AssertOk(lyric);
-        }
-
-        [TestCase(null)]
-        public void TestCheckInvalidLanguage(string? language)
-        {
-            var lyric = new Lyric
-            {
-                Language = language != null ? new CultureInfo(language) : null,
-            };
-
-            AssertNotOk<IssueTemplateNotFillLanguage>(lyric);
-        }
-
         [Ignore("Not implement.")]
         [TestCase(0, true)]
         [TestCase(1, false)]
