@@ -1,35 +1,18 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Tests.Beatmaps;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckInvalidPropertyNotes;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckInvalidPropertyNotesTest
+    public class CheckInvalidPropertyNotesTest : HitObjectCheckTest<Note, CheckInvalidPropertyNotes>
     {
-        private CheckInvalidPropertyNotes check = null!;
-
-        [SetUp]
-        public void Setup()
-        {
-            check = new CheckInvalidPropertyNotes();
-        }
-
-        [TestCase(0, false)]
-        [TestCase(1, true)]
-        [TestCase(null, true)]
-        public void TestCheckReferenceLyric(int? lyricIndex, bool expected)
+        [TestCase(0)]
+        public void TestCheckReferenceLyric(int? lyricIndex)
         {
             var lyric = new Lyric();
             var notInBeatmapLyric = new Lyric();
@@ -43,22 +26,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 _ => note.ReferenceLyric
             };
 
-            bool actual = run(lyric, note).Select(x => x.Template).OfType<IssueTemplateInvalidReferenceLyric>().Any();
-            Assert.AreEqual(expected, actual);
+            AssertOk(lyric);
         }
 
-        private IEnumerable<Issue> run(HitObject lyric, HitObject note)
+        [TestCase(1)] // should have error if id is not exist.
+        [TestCase(null)]
+        public void TestCheckInvalidReferenceLyric(int? lyricIndex)
         {
-            var beatmap = new Beatmap
+            var lyric = new Lyric();
+            var notInBeatmapLyric = new Lyric();
+
+            var note = new Note();
+
+            note.ReferenceLyric = lyricIndex switch
             {
-                HitObjects = new List<HitObject>
-                {
-                    lyric,
-                    note
-                }
+                0 => lyric,
+                1 => notInBeatmapLyric,
+                _ => note.ReferenceLyric
             };
-            var context = new BeatmapVerifierContext(beatmap, new TestWorkingBeatmap(beatmap));
-            return check.Run(context);
+
+            AssertNotOk<IssueTemplateInvalidReferenceLyric>(lyric);
         }
     }
 }

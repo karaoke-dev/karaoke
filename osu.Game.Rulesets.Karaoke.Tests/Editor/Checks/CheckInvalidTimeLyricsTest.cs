@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
@@ -19,17 +18,8 @@ using osu.Game.Tests.Beatmaps;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckInvalidTimeLyricsTest
+    public class CheckInvalidTimeLyricsTest : HitObjectCheckTest<Lyric, CheckInvalidTimeLyrics>
     {
-        private CheckInvalidTimeLyrics check = null!;
-
-        [SetUp]
-        public void Setup()
-        {
-            var config = new LyricCheckerConfig().CreateDefaultConfig();
-            check = new CheckInvalidTimeLyrics(config);
-        }
-
         [TestCase("[1000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" }, new TimeInvalid[] { })]
         [TestCase("[3000,1000]:カラオケ", new string[] { }, new[] { TimeInvalid.Overlapping })]
         [TestCase("[2000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" }, new[] { TimeInvalid.StartTimeInvalid })]
@@ -91,6 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             Assert.AreEqual(expected, actual);
         }
 
+        // todo: should be removed after refactor.
         private IEnumerable<Issue> run(HitObject lyric)
         {
             var beatmap = new Beatmap
@@ -101,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 }
             };
             var context = new BeatmapVerifierContext(beatmap, new TestWorkingBeatmap(beatmap));
-            return check.Run(context);
+            return Run(context);
         }
     }
 }

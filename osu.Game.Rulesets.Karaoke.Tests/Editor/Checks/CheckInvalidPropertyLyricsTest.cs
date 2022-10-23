@@ -1,44 +1,38 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using NUnit.Framework;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Tests.Beatmaps;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckInvalidPropertyLyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckInvalidPropertyLyricsTest
+    public class CheckInvalidPropertyLyricsTest : HitObjectCheckTest<Lyric, CheckInvalidPropertyLyrics>
     {
-        private CheckInvalidPropertyLyrics check = null!;
-
-        [SetUp]
-        public void Setup()
+        [TestCase("Ja-jp")]
+        [TestCase("")] // should not have issue if CultureInfo accept it.
+        public void TestCheckLanguage(string language)
         {
-            check = new CheckInvalidPropertyLyrics();
+            var lyric = new Lyric
+            {
+                Language = new CultureInfo(language),
+            };
+
+            AssertOk(lyric);
         }
 
-        [TestCase("Ja-jp", false)]
-        [TestCase("", false)] // should not have issue if CultureInfo accept it.
-        [TestCase(null, true)]
-        public void TestCheckLanguage(string? language, bool expected)
+        [TestCase(null)]
+        public void TestCheckInvalidLanguage(string? language)
         {
             var lyric = new Lyric
             {
                 Language = language != null ? new CultureInfo(language) : null,
             };
 
-            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNotFillLanguage>().Any();
-            Assert.AreEqual(expected, actual);
+            AssertNotOk<IssueTemplateNotFillLanguage>(lyric);
         }
 
         [Ignore("Not implement.")]
@@ -51,54 +45,59 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         {
         }
 
-        [TestCase("karaoke", false)]
-        [TestCase("k", false)] // not limit min size for now.
-        [TestCase("カラオケ", false)] // not limit language.
-        [TestCase(" ", true)] // but should not be empty or white space.
-        [TestCase("", true)]
-        [TestCase(null, true)]
-        public void TestCheckText(string text, bool expected)
+        [TestCase("karaoke")]
+        [TestCase("k")] // not limit min size for now.
+        [TestCase("カラオケ")] // not limit language.
+        public void TestCheckText(string text)
         {
             var lyric = new Lyric
             {
                 Text = text
             };
 
-            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoText>().Any();
-            Assert.AreEqual(expected, actual);
+            AssertOk(lyric);
         }
 
-        [TestCase(new[] { 1, 2, 3 }, false)]
-        [TestCase(new[] { 1 }, false)]
-        [TestCase(new[] { 100 }, false)] // although singer is not exist, but should not check in this test case.
-        [TestCase(new int[] { }, true)]
-        public void TestCheckNoSinger(int[] singers, bool expected)
+        [TestCase(" ")] // but should not be empty or white space.
+        [TestCase("")]
+        [TestCase(null)]
+        public void TestCheckInvalidText(string text)
+        {
+            var lyric = new Lyric
+            {
+                Text = text
+            };
+
+            AssertNotOk<IssueTemplateNoText>(lyric);
+        }
+
+        [TestCase(new[] { 1, 2, 3 })]
+        [TestCase(new[] { 1 })]
+        [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
+        public void TestCheckSinger(int[] singers)
         {
             var lyric = new Lyric
             {
                 Singers = singers
             };
 
-            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoSinger>().Any();
-            Assert.AreEqual(expected, actual);
+            AssertOk(lyric);
+        }
+
+        [TestCase(new int[] { })]
+        public void TestCheckInvalidSinger(int[] singers)
+        {
+            var lyric = new Lyric
+            {
+                Singers = singers
+            };
+
+            AssertNotOk<IssueTemplateNoSinger>(lyric);
         }
 
         [Ignore("Not implement.")]
         public void TestCheckSingerInBeatmap(int[] singers, bool hasIssue)
         {
-        }
-
-        private IEnumerable<Issue> run(HitObject lyric)
-        {
-            var beatmap = new Beatmap
-            {
-                HitObjects = new List<HitObject>
-                {
-                    lyric
-                }
-            };
-            var context = new BeatmapVerifierContext(beatmap, new TestWorkingBeatmap(beatmap));
-            return check.Run(context);
         }
     }
 }
