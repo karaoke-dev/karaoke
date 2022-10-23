@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -13,7 +12,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -103,15 +101,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
             return new SnapResult(screenSpacePosition, beatSnapProvider.SnapTime(time));
         }
-
-        public float GetBeatSnapDistanceAt(HitObject referenceObject) => throw new NotImplementedException();
-
-        public float DurationToDistance(HitObject referenceObject, double duration) => throw new NotImplementedException();
-
-        public double DistanceToDuration(HitObject referenceObject, float distance) => throw new NotImplementedException();
-
-        public double GetSnappedDurationFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
-
-        public float GetSnappedDistanceFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
     }
 }
