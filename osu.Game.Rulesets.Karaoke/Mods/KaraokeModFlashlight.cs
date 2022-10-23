@@ -113,9 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 flashlightProperties.Invalidate();
             }
 
-            protected override void OnComboChange(ValueChangedEvent<int> e)
+            protected override void UpdateFlashlightSize(float size)
             {
-                this.TransformTo(nameof(FlashlightSize), new Vector2(DrawWidth, GetSizeFor(e.NewValue)), FLASHLIGHT_FADE_DURATION);
+                this.TransformTo(nameof(FlashlightSize), new Vector2(DrawWidth, size), FLASHLIGHT_FADE_DURATION);
             }
 
             protected override string FragmentShader => "RectangularFlashlight";
