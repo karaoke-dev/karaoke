@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckInvalidRubyRomajiLyrics(),
             new CheckInvalidTimeLyrics(),
             new CheckInvalidPropertyNotes(),
-            new CheckTranslate(),
+            new CheckLyricTranslate(),
         };
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
