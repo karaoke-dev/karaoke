@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             public float GetLength(double startTime, double endTime, double timeRange, float scrollLength)
                 => scrollLength;
 
-            public float PositionAt(double time, double currentTime, double timeRange, float scrollLength)
+            public float PositionAt(double time, double currentTime, double timeRange, float scrollLength, double? originTime = null)
                 => (float)((time - START_TIME) / timeRange) * scrollLength;
 
             public double TimeAt(float position, double currentTime, double timeRange, float scrollLength)

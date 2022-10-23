@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -13,7 +12,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -26,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         [Resolved]
         private EditorClock editorClock { get; set; }
+
+        [Resolved]
+        private IBeatSnapProvider beatSnapProvider { get; set; }
 
         private CurrentTimeMarker currentTimeMarker;
 
@@ -70,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             this.FadeOut(1).OnComplete(x =>
             {
                 const float preempt_time = 200;
-                float position = getPositionFromTime(newLyric.LyricStartTime - preempt_time);
+                float position = PositionAtTime(newLyric.LyricStartTime - preempt_time);
                 ScrollTo(position, false);
 
                 this.FadeIn(100);
@@ -81,30 +82,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         {
             base.UpdateAfterChildren();
 
-            float position = getPositionFromTime(editorClock.CurrentTime);
+            float position = PositionAtTime(editorClock.CurrentTime);
             currentTimeMarker.MoveToX(position);
         }
 
-        public SnapResult FindSnappedPosition(Vector2 screenSpacePosition) =>
-            new(screenSpacePosition, null);
+        public double TimeAtPosition(float x)
+        {
+            return x / Content.DrawWidth * editorClock.TrackLength;
+        }
 
-        public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All) =>
-            new(screenSpacePosition, getTimeFromPosition(Content.ToLocalSpace(screenSpacePosition)));
+        public float PositionAtTime(double time)
+        {
+            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
+        }
 
-        private double getTimeFromPosition(Vector2 localPosition) =>
-            localPosition.X / Content.DrawWidth * editorClock.TrackLength;
-
-        private float getPositionFromTime(double time)
-            => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
-
-        public float GetBeatSnapDistanceAt(HitObject referenceObject) => throw new NotImplementedException();
-
-        public float DurationToDistance(HitObject referenceObject, double duration) => throw new NotImplementedException();
-
-        public double DistanceToDuration(HitObject referenceObject, float distance) => throw new NotImplementedException();
-
-        public double GetSnappedDurationFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
-
-        public float GetSnappedDistanceFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
+        public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
+        {
+            double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
+            return new SnapResult(screenSpacePosition, beatSnapProvider.SnapTime(time));
+        }
     }
 }

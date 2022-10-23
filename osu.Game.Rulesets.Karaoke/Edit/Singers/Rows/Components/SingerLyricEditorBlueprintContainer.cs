@@ -10,11 +10,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
-using osu.Framework.Utils;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
@@ -57,6 +55,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
         }
 
+        protected override void SelectAll()
+        {
+            SelectedItems.AddRange(bindableLyrics);
+        }
+
         protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
             => blueprints.OrderBy(b => b.Item.LyricStartTime);
 
@@ -69,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
             => new LyricTimelineHitObjectBlueprint(item);
 
-        protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new SingerLyricDragBox(performSelect);
+        protected override DragBox CreateDragBox() => new SingerLyricDragBox();
 
         protected class SingerLyricSelectionHandler : SelectionHandler<Lyric>
         {
@@ -120,19 +123,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
         private class SingerLyricDragBox : DragBox
         {
-            // the following values hold the start and end X positions of the drag box in the timeline's local space,
-            // but with zoom un-applied in order to be able to compensate for positional changes
-            // while the timeline is being zoomed in/out.
-            private float? selectionStart;
-            private float selectionEnd;
+            public double MinTime { get; private set; }
+
+            public double MaxTime { get; private set; }
+
+            private double? startTime;
 
             [Resolved]
             private SingerLyricTimeline timeline { get; set; }
-
-            public SingerLyricDragBox(Action<RectangleF> performSelect)
-                : base(performSelect)
-            {
-            }
 
             protected override Drawable CreateBox() => new Box
             {
@@ -140,42 +138,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 Alpha = 0.3f
             };
 
-            public override bool HandleDrag(MouseButtonEvent e)
+            public override void HandleDrag(MouseButtonEvent e)
             {
-                selectionStart ??= e.MouseDownPosition.X / timeline.CurrentZoom;
+                startTime ??= timeline.TimeAtPosition(e.MouseDownPosition.X);
+                double endTime = timeline.TimeAtPosition(e.MousePosition.X);
 
-                // only calculate end when a transition is not in progress to avoid bouncing.
-                if (Precision.AlmostEquals(timeline.CurrentZoom, timeline.Zoom))
-                    selectionEnd = e.MousePosition.X / timeline.CurrentZoom;
+                MinTime = Math.Min(startTime.Value, endTime);
+                MaxTime = Math.Max(startTime.Value, endTime);
 
-                updateDragBoxPosition();
-                return true;
-            }
-
-            private void updateDragBoxPosition()
-            {
-                if (selectionStart == null)
-                    return;
-
-                float rescaledStart = selectionStart.Value * timeline.CurrentZoom;
-                float rescaledEnd = selectionEnd * timeline.CurrentZoom;
-
-                Box.X = Math.Min(rescaledStart, rescaledEnd);
-                Box.Width = Math.Abs(rescaledStart - rescaledEnd);
-
-                var boxScreenRect = Box.ScreenSpaceDrawQuad.AABBFloat;
-
-                // we don't care about where the hitobjects are vertically. in cases like stacking display, they may be outside the box without this adjustment.
-                boxScreenRect.Y -= boxScreenRect.Height;
-                boxScreenRect.Height *= 2;
-
-                PerformSelection?.Invoke(boxScreenRect);
+                Box.X = timeline.PositionAtTime(MinTime);
+                Box.Width = timeline.PositionAtTime(MaxTime) - Box.X;
             }
 
             public override void Hide()
             {
                 base.Hide();
-                selectionStart = null;
+                startTime = null;
             }
         }
 

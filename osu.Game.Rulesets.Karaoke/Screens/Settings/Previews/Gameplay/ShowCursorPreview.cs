@@ -16,14 +16,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
     public class ShowCursorPreview : SettingsSubsectionPreview
     {
         private readonly Bindable<bool> bindableShowCursor = new();
-        private readonly MenuCursor.Cursor cursor;
+        private readonly MenuCursorContainer.Cursor cursor;
 
         public ShowCursorPreview()
         {
             Size = new Vector2(0.3f);
             Children = new Drawable[]
             {
-                cursor = new MenuCursor.Cursor
+                cursor = new MenuCursorContainer.Cursor
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
