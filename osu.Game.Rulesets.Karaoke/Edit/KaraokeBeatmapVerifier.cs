@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             new CheckLyricText(),
             new CheckLyricLanguage(),
+            new CheckLyricRubyTag(),
+            new CheckLyricRomajiTag(),
             new CheckLyricSinger(),
             new CheckLyricTranslate(),
             new CheckInvalidRubyRomajiLyrics(),
