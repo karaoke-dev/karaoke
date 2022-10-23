@@ -25,9 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         [Resolved]
         private EditorClock editorClock { get; set; }
 
-        [Resolved]
-        private IBeatSnapProvider beatSnapProvider { get; set; }
-
         private CurrentTimeMarker currentTimeMarker;
 
         public AdjustTimeTagScrollContainer()
@@ -86,20 +83,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             currentTimeMarker.MoveToX(position);
         }
 
-        public double TimeAtPosition(float x)
-        {
-            return x / Content.DrawWidth * editorClock.TrackLength;
-        }
-
-        public float PositionAtTime(double time)
-        {
-            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
-        }
-
         public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
         {
             double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
-            return new SnapResult(screenSpacePosition, beatSnapProvider.SnapTime(time));
+            return new SnapResult(screenSpacePosition, time);
         }
     }
 }

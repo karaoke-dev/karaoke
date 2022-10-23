@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
@@ -14,10 +15,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public abstract class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
-        private readonly BindableList<T> bindableList = new();
+        private BindableList<T> bindableList;
 
-        protected BindableBlueprintContainer()
+        protected void RegisterBindable(BindableList<T> bindable)
         {
+            if (bindableList != null)
+                throw new Exception();
+
+            bindableList = bindable;
+
+            // Add time-tag into blueprint container
             bindableList.BindCollectionChanged((_, args) =>
             {
                 switch (args.Action)
@@ -34,13 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                         break;
                 }
-            });
-        }
-
-        protected void RegisterBindable(BindableList<T> bindable)
-        {
-            bindableList.UnbindBindings();
-            bindableList.BindTo(bindable);
+            }, true);
         }
 
         protected override bool OnDragStart(DragStartEvent e)

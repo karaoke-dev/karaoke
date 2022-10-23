@@ -145,16 +145,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
         private void seekTrackToCurrent()
         {
-            if (!Track.IsLoaded)
-                return;
-
-            double target = Current / Content.DrawWidth * Track.Length;
-            editorClock.Seek(Math.Min(Track.Length, target));
+            double target = TimeAtPosition(Current);
+            editorClock.Seek(Math.Min(editorClock.TrackLength, target));
         }
 
         private void scrollToTrackTime()
         {
-            if (!Track.IsLoaded || Track.Length == 0)
+            if (editorClock.TrackLength == 0)
                 return;
 
             // covers the case where the user starts playback after a drag is in progress.
@@ -162,7 +159,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
             if (handlingDragInput)
                 editorClock.Stop();
 
-            ScrollTo((float)(editorClock.CurrentTime / editorClock.TrackLength) * Content.DrawWidth, false);
+            float position = PositionAtTime(editorClock.CurrentTime);
+            ScrollTo(position, false);
         }
 
         protected override bool OnMouseDown(MouseDownEvent e)

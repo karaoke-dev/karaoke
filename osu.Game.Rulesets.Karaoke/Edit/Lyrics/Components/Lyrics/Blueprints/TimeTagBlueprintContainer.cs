@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Blueprints
         }
 
         [BackgroundDependencyLoader]
-        private void load(ITimeTagModeState timeTagModeState)
+        private void load()
         {
             // Add time tag into blueprint container
             RegisterBindable(timeTags);

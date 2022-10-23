@@ -1,9 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
@@ -35,7 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
         protected readonly IBindable<bool> ShowTick = new BindableBool();
         protected readonly IBindable<float> TickOpacity = new BindableFloat();
 
-        protected Track Track { get; private set; } = null!;
+        [Resolved, AllowNull]
+        private EditorClock editorClock { get; set; }
 
         protected TimeTagScrollContainer()
         {
@@ -116,7 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
             this.beatmap.BindValueChanged(b =>
             {
                 waveform.Waveform = b.NewValue.Waveform;
-                Track = b.NewValue.Track;
             }, true);
 
             ShowWaveformGraph.BindValueChanged(e => updateWaveformOpacity());
@@ -161,6 +162,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor
 
             // will goes in here if all time-tag are no time.
             return index * preempt_time;
+        }
+
+        public double TimeAtPosition(float x)
+        {
+            return x / Content.DrawWidth * editorClock.TrackLength;
+        }
+
+        public float PositionAtTime(double time)
+        {
+            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
         }
     }
 }
