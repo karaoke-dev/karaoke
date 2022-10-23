@@ -16,10 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckLyricText(),
             new CheckLyricLanguage(),
             new CheckLyricSinger(),
+            new CheckLyricTranslate(),
             new CheckInvalidRubyRomajiLyrics(),
             new CheckInvalidTimeLyrics(),
             new CheckInvalidPropertyNotes(),
-            new CheckLyricTranslate(),
+            new CheckBeatmapAvailableTranslates(),
         };
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
