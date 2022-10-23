@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckInvalidPropertyLyrics : ICheck
+    public class CheckLyricSinger : ICheck
     {
         public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid property.");
 
@@ -22,12 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             foreach (var lyric in context.Beatmap.HitObjects.OfType<Lyric>())
             {
-                // todo : check lyric layout.
-
                 if (!lyric.Singers.Any())
                     yield return new IssueTemplateNoSinger(this).Create(lyric);
-
-                // todo : check is singer in singer list.
             }
         }
 

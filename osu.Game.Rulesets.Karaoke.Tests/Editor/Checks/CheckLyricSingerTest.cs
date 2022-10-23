@@ -4,23 +4,13 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckInvalidPropertyLyrics;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricSinger;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckInvalidPropertyLyricsTest : HitObjectCheckTest<Lyric, CheckInvalidPropertyLyrics>
+    public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
-        [Ignore("Not implement.")]
-        [TestCase(0, true)]
-        [TestCase(1, false)]
-        [TestCase(-1, false)]
-        [TestCase(-2, false)] // in here, not check is layout actually exist.
-        [TestCase(null, true)]
-        public void TestCheckLayout(int? layout, bool hasIssue)
-        {
-        }
-
         [TestCase(new[] { 1, 2, 3 })]
         [TestCase(new[] { 1 })]
         [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
@@ -43,11 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             };
 
             AssertNotOk<IssueTemplateNoSinger>(lyric);
-        }
-
-        [Ignore("Not implement.")]
-        public void TestCheckSingerInBeatmap(int[] singers, bool hasIssue)
-        {
         }
     }
 }
