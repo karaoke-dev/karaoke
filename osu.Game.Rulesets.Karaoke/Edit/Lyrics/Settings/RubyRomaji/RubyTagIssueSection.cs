@@ -3,17 +3,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricRubyTag;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
@@ -37,34 +35,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
             bindableReports.BindCollectionChanged((_, _) =>
             {
                 var issues = bindableReports.Values.SelectMany(x => x);
-                table.Issues = issues.OfType<RubyTagIssue>();
+
+                // todo: use better way to get the invalid message.
+                table.Issues = issues.Where(x => x.Template is IssueTemplateLyricRubyOutOfRange);
             }, true);
         }
 
-        private class RubyTagIssueTable : TextTagIssueTable<RubyTagInvalid, RubyTag>
+        private class RubyTagIssueTable : TextTagIssueTable<RubyTag>
         {
-            protected override IEnumerable<Tuple<RubyTag, RubyTagInvalid>> GetInvalidByIssue(Issue issue)
-            {
-                if (issue is not RubyTagIssue rubyTagIssue)
-                    yield break;
-
-                foreach (var (invalidReason, rubyTags) in rubyTagIssue.InvalidRubyTags)
-                {
-                    foreach (var rubyTag in rubyTags)
-                    {
-                        yield return new Tuple<RubyTag, RubyTagInvalid>(rubyTag, invalidReason);
-                    }
-                }
-            }
-
-            protected override string GetInvalidMessage(RubyTagInvalid invalid) =>
-                invalid switch
-                {
-                    RubyTagInvalid.OutOfRange => "This ruby is not in the lyric.",
-                    RubyTagInvalid.Overlapping => "This ruby overlapping to other ruby.",
-                    RubyTagInvalid.EmptyText => "This ruby is empty.",
-                    _ => throw new ArgumentOutOfRangeException(nameof(invalid))
-                };
         }
     }
 }
