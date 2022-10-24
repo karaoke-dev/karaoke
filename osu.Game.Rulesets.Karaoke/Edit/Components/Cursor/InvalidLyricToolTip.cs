@@ -67,16 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         timeTagIssue.InvalidTimeTags.ForEach(x => createTimeTagInvalidMessage(x.Key, x.Value));
                         break;
 
-                    // Print ruby invalid message
-                    case RubyTagIssue rubyTagIssue:
-                        rubyTagIssue.InvalidRubyTags.ForEach(x => createRubyInvalidMessage(x.Key, x.Value));
-                        break;
-
-                    // Print romaji invalid message
-                    case RomajiTagIssue romajiTagIssue:
-                        romajiTagIssue.InvalidRomajiTags.ForEach(x => createRomajiInvalidMessage(x.Key, x.Value));
-                        break;
-
                     // print normal message
                     case Issue:
                         invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
@@ -134,52 +124,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 }
 
                 displayInvalidTag(timeTags, tag => invalidMessage.AddHighlightText(TextIndexUtils.PositionFormattedString(tag.Index)));
-            }
-
-            void createRubyInvalidMessage(RubyTagInvalid invalid, RubyTag[] rubyTags)
-            {
-                switch (invalid)
-                {
-                    case RubyTagInvalid.OutOfRange:
-                        invalidMessage.AddAlertParagraph("Ruby tag(s) is out of lyric text size at position ");
-                        break;
-
-                    case RubyTagInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Ruby tag(s) is overlapping to others at position ");
-                        break;
-
-                    case RubyTagInvalid.EmptyText:
-                        invalidMessage.AddAlertParagraph("Ruby tag(s) has no text at position ");
-                        break;
-
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(invalid));
-                }
-
-                displayInvalidTag(rubyTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));
-            }
-
-            void createRomajiInvalidMessage(RomajiTagInvalid invalid, RomajiTag[] romajiTags)
-            {
-                switch (invalid)
-                {
-                    case RomajiTagInvalid.OutOfRange:
-                        invalidMessage.AddAlertParagraph("Romaji tag(s) is out of lyric text size at position ");
-                        break;
-
-                    case RomajiTagInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Romaji tag(s) is overlapping to others at position ");
-                        break;
-
-                    case RomajiTagInvalid.EmptyText:
-                        invalidMessage.AddAlertParagraph("Romaji tag(s) has no text at position ");
-                        break;
-
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(invalid));
-                }
-
-                displayInvalidTag(romajiTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));
             }
 
             void displayInvalidTag<T>(T[] tags, Action<T> action)
