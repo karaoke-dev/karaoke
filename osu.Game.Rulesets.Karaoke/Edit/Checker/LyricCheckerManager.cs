@@ -96,12 +96,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 {
                     new CheckLyricText(),
                     new CheckLyricLanguage(),
-                    new CheckLyricTranslate(),
+                    new CheckLyricRubyTag(),
+                    new CheckLyricRomajiTag(),
                     new CheckLyricSinger(),
-                    new CheckInvalidRubyRomajiLyrics
-                    {
-                        Config = config
-                    },
+                    new CheckLyricTranslate(),
                     new CheckInvalidTimeLyrics
                     {
                         Config = config
