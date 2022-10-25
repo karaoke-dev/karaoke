@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
                 Content = value.Select(createContent).ToArray().ToRectangular();
                 BackgroundFlow.Children = value.Select(x =>
                 {
-                    (var lyric, TTextTag textTag) = getInvalidByIssue(x);
+                    (var lyric, TTextTag textTag) = GetInvalidByIssue(x);
                     return new TextTagRowBackground(lyric, textTag);
                 }).ToArray();
             }
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
 
         private Drawable[] createContent(Issue issue)
         {
-            (var lyric, TTextTag textTag) = getInvalidByIssue(issue);
+            (var lyric, TTextTag textTag) = GetInvalidByIssue(issue);
 
             return new Drawable[]
             {
@@ -89,13 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
             };
         }
 
-        private Tuple<Lyric, TTextTag> getInvalidByIssue(Issue issue)
-        {
-            var lyric = issue.HitObjects.OfType<Lyric>().Single();
-            var textTag = issue.Arguments.OfType<TTextTag>().Single();
-
-            return new Tuple<Lyric, TTextTag>(lyric, textTag);
-        }
+        protected abstract Tuple<Lyric, TTextTag> GetInvalidByIssue(Issue issue);
 
         private class TextTagRowBackground : RowBackground
         {
