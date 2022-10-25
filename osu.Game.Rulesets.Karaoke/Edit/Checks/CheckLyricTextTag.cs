@@ -52,8 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 : base(check, type, unformattedMessage)
             {
             }
-
-            public Issue Create(Lyric lyric, TTextTag textTag) => new(lyric, this, textTag);
         }
     }
 }

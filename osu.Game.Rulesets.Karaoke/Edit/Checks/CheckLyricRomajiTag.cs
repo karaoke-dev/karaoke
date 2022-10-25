@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -33,7 +34,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         protected override Issue GetEmptyTextIssue(Lyric lyric, RomajiTag textTag)
             => new IssueTemplateLyricRomajiEmptyText(this).Create(lyric, textTag);
 
-        public class IssueTemplateLyricRomajiOutOfRange : TextTagIssueTemplate
+        public abstract class RubyTagIssueTemplate : TextTagIssueTemplate
+        {
+            protected RubyTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+                : base(check, type, unformattedMessage)
+            {
+            }
+
+            public Issue Create(Lyric lyric, RomajiTag textTag) => new RomajiTagIssue(lyric, this, textTag);
+        }
+
+        public class IssueTemplateLyricRomajiOutOfRange : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRomajiOutOfRange(ICheck check)
                 : base(check, IssueType.Problem, "Romaji tag index is out of range.")
@@ -41,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricRomajiOverlapping : TextTagIssueTemplate
+        public class IssueTemplateLyricRomajiOverlapping : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRomajiOverlapping(ICheck check)
                 : base(check, IssueType.Problem, "Romaji tag index is overlapping to another romaji.")
@@ -49,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricRomajiEmptyText : TextTagIssueTemplate
+        public class IssueTemplateLyricRomajiEmptyText : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRomajiEmptyText(ICheck check)
                 : base(check, IssueType.Problem, "Romaji tag has no text.")
