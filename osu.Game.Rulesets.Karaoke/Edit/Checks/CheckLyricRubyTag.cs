@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -33,7 +34,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         protected override Issue GetEmptyTextIssue(Lyric lyric, RubyTag textTag)
             => new IssueTemplateLyricRubyEmptyText(this).Create(lyric, textTag);
 
-        public class IssueTemplateLyricRubyOutOfRange : TextTagIssueTemplate
+        public abstract class RubyTagIssueTemplate : TextTagIssueTemplate
+        {
+            protected RubyTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+                : base(check, type, unformattedMessage)
+            {
+            }
+
+            public Issue Create(Lyric lyric, RubyTag textTag) => new RubyTagIssue(lyric, this, textTag, textTag);
+        }
+
+        public class IssueTemplateLyricRubyOutOfRange : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRubyOutOfRange(ICheck check)
                 : base(check, IssueType.Problem, "Ruby tag index is out of range.")
@@ -41,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricRubyOverlapping : TextTagIssueTemplate
+        public class IssueTemplateLyricRubyOverlapping : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRubyOverlapping(ICheck check)
                 : base(check, IssueType.Problem, "Ruby tag index is overlapping to another ruby.")
@@ -49,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricRubyEmptyText : TextTagIssueTemplate
+        public class IssueTemplateLyricRubyEmptyText : RubyTagIssueTemplate
         {
             public IssueTemplateLyricRubyEmptyText(ICheck check)
                 : base(check, IssueType.Problem, "Ruby tag has no text.")
