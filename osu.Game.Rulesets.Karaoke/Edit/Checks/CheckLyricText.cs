@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateNoText(this),
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (string.IsNullOrWhiteSpace(lyric.Text))
                 yield return new IssueTemplateNoText(this).Create(lyric);

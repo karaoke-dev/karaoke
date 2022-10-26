@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateNoSinger(this),
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (!lyric.Singers.Any())
                 yield return new IssueTemplateNoSinger(this).Create(lyric);

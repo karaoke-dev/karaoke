@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateLyricEndTimeInvalid(this)
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (LyricUtils.CheckIsTimeOverlapping(lyric))
                 yield return new IssueTemplateLyricTimeOverlapping(this).Create(lyric);

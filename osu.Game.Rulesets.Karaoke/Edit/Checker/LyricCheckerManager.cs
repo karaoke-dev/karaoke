@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                     new CheckLyricRomajiTag(),
                     new CheckLyricSinger(),
                     new CheckLyricTranslate(),
-                    new CheckInvalidPropertyNotes(),
+                    new CheckNoteReferenceLyric(),
                     new CheckBeatmapAvailableTranslates(),
                 };
             }

@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckLyricRomajiTag(),
             new CheckLyricSinger(),
             new CheckLyricTranslate(),
-            new CheckInvalidPropertyNotes(),
+            new CheckNoteReferenceLyric(),
             new CheckBeatmapAvailableTranslates(),
         };
 

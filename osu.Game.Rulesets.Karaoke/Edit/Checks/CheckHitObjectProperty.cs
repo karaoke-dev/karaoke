@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
@@ -18,8 +19,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public abstract IEnumerable<IssueTemplate> PossibleTemplates { get; }
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
-            => context.Beatmap.HitObjects.OfType<THitObject>().Select(Check).SelectMany(x => x);
+        {
+            var hitObjects = context.Beatmap.HitObjects;
 
-        public abstract IEnumerable<Issue> Check(THitObject hitObject);
+            var issueWithSingleChecks = hitObjects.OfType<THitObject>().Select(Check).SelectMany(x => x);
+            var issueWithAllHitObject = CheckAllHitObject(hitObjects);
+
+            return issueWithSingleChecks.Concat(issueWithAllHitObject);
+        }
+
+        protected abstract IEnumerable<Issue> Check(THitObject hitObject);
+
+        protected virtual IEnumerable<Issue> CheckAllHitObject(IReadOnlyList<HitObject> hitObjects)
+        {
+            yield break;
+        }
     }
 }

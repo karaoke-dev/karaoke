@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateNotFillLanguage(this),
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (lyric.Language == null)
                 yield return new IssueTemplateNotFillLanguage(this).Create(lyric);
