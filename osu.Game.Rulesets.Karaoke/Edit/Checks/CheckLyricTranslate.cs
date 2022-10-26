@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateLyricEmptyTranslate(this),
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             var translates = lyric.Translates;
 

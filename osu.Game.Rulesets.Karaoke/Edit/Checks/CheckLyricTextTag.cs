@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public abstract class CheckLyricTextTag<TTextTag> : CheckHitObjectProperty<Lyric> where TTextTag : ITextTag
     {
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             string text = lyric.Text;
             var textTags = GetTextTag(lyric);

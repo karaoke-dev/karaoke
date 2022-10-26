@@ -20,6 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
             => context.Beatmap.HitObjects.OfType<THitObject>().Select(Check).SelectMany(x => x);
 
-        public abstract IEnumerable<Issue> Check(THitObject hitObject);
+        protected abstract IEnumerable<Issue> Check(THitObject hitObject);
     }
 }

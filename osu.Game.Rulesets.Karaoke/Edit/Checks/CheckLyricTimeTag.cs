@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateLyricTimeTagEmptyTime(this),
         };
 
-        public override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (!lyric.TimeTags.Any())
             {
