@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
