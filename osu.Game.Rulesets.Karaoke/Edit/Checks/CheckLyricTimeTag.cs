@@ -16,6 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
+            new IssueTemplateLyricEmptyTimeTag(this),
+            new IssueTemplateLyricMissingFirstTimeTag(this),
+            new IssueTemplateLyricMissingLastTimeTag(this),
             new IssueTemplateLyricTimeTagOutOfRange(this),
             new IssueTemplateLyricTimeTagOverlapping(this),
             new IssueTemplateLyricTimeTagEmptyTime(this),
@@ -23,6 +26,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<Issue> Check(Lyric lyric)
         {
+            if (!lyric.TimeTags.Any())
+            {
+                yield return new IssueTemplateLyricEmptyTimeTag(this).Create(lyric);
+
+                yield break;
+            }
+
+            if (!TimeTagsUtils.HasStartTimeTagInLyric(lyric.TimeTags, lyric.Text))
+                yield return new IssueTemplateLyricMissingFirstTimeTag(this).Create(lyric);
+
+            if (!TimeTagsUtils.HasEndTimeTagInLyric(lyric.TimeTags, lyric.Text))
+                yield return new IssueTemplateLyricMissingLastTimeTag(this).Create(lyric);
+
             // todo: maybe config?
             const GroupCheck group_check = GroupCheck.Asc;
             const SelfCheck self_check = SelfCheck.BasedOnStart;
@@ -45,6 +61,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
                 yield return new IssueTemplateLyricTimeTagEmptyTime(this).Create(lyric, textTag);
             }
+        }
+
+        public class IssueTemplateLyricEmptyTimeTag : IssueTemplate
+        {
+            public IssueTemplateLyricEmptyTimeTag(ICheck check)
+                : base(check, IssueType.Problem, "This lyric has no time-tag.")
+            {
+            }
+
+            public Issue Create(Lyric lyric) => new(lyric, this);
+        }
+
+        public class IssueTemplateLyricMissingFirstTimeTag : IssueTemplate
+        {
+            public IssueTemplateLyricMissingFirstTimeTag(ICheck check)
+                : base(check, IssueType.Problem, "Missing first time-tag in the lyric.")
+            {
+            }
+
+            public Issue Create(Lyric lyric) => new(lyric, this);
+        }
+
+        public class IssueTemplateLyricMissingLastTimeTag : IssueTemplate
+        {
+            public IssueTemplateLyricMissingLastTimeTag(ICheck check)
+                : base(check, IssueType.Problem, "Missing last time-tag in the lyric.")
+            {
+            }
+
+            public Issue Create(Lyric lyric) => new(lyric, this);
         }
 
         public abstract class TimeTagIssueTemplate : IssueTemplate
