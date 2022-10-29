@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateLyricSelfReference : IssueTemplate
         {
             public IssueTemplateLyricSelfReference(ICheck check)
-                : base(check, IssueType.Error, "Lyric should not reference to self.")
+                : base(check, IssueType.Error, "Lyric should not reference to itself.")
             {
             }
 
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateLyricNullReferenceLyricConfig : IssueTemplate
         {
             public IssueTemplateLyricNullReferenceLyricConfig(ICheck check)
-                : base(check, IssueType.Error, "Reference lyric should have the config also.")
+                : base(check, IssueType.Error, "Must have config if reference to another lyric.")
             {
             }
 
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric : IssueTemplate
         {
             public IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(ICheck check)
-                : base(check, IssueType.Error, "Should not have the reference lyric config if contains no reference lyric.")
+                : base(check, IssueType.Error, "Should not have the reference lyric config if reference to another lyric.")
             {
             }
 
