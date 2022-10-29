@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase("translate")]
         [TestCase("k")] // not limit min size for now.
         [TestCase("翻譯")] // not limit language.
-        public void TestCheckText(string text)
+        public void TestCheck(string text)
         {
             var lyric = new Lyric
             {
@@ -28,11 +28,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             AssertOk(lyric);
         }
 
+        [TestCase(null)]
+        [TestCase("")]
         [TestCase(" ")] // but should not be empty or white space.
         [TestCase("　")] // but should not be empty or white space.
-        [TestCase("")]
-        [TestCase(null)]
-        public void TestCheckInvalidText(string text)
+        public void TestCheckTranslationNoText(string text)
         {
             var lyric = new Lyric
             {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 }
             };
 
-            AssertNotOk<IssueTemplateLyricEmptyTranslate>(lyric);
+            AssertNotOk<IssueTemplateLyricTranslationNoText>(lyric);
         }
     }
 }

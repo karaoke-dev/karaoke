@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
-            new IssueTemplateLyricEmptyTranslate(this),
+            new IssueTemplateLyricTranslationNoText(this),
         };
 
         protected override IEnumerable<Issue> Check(Lyric lyric)
@@ -24,14 +24,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             foreach ((var language, string translate) in translates)
             {
                 if (string.IsNullOrWhiteSpace(translate))
-                    yield return new IssueTemplateLyricEmptyTranslate(this).Create(lyric, language);
+                    yield return new IssueTemplateLyricTranslationNoText(this).Create(lyric, language);
             }
         }
 
-        public class IssueTemplateLyricEmptyTranslate : IssueTemplate
+        public class IssueTemplateLyricTranslationNoText : IssueTemplate
         {
-            public IssueTemplateLyricEmptyTranslate(ICheck check)
-                : base(check, IssueType.Problem, "Seems some translation string is empty.")
+            public IssueTemplateLyricTranslationNoText(ICheck check)
+                : base(check, IssueType.Problem, "Translation in the lyric should not by empty or white-space only.")
             {
             }
 
