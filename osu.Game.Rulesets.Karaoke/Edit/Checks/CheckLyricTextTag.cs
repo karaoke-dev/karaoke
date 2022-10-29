@@ -46,9 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         protected abstract Issue GetEmptyTextIssue(Lyric lyric, TTextTag textTag);
 
-        public abstract class TextTagIssueTemplate : IssueTemplate
+        public abstract class IssueTemplateLyricTextTag : IssueTemplate
         {
-            protected TextTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+            protected IssueTemplateLyricTextTag(ICheck check, IssueType type, string unformattedMessage)
                 : base(check, type, unformattedMessage)
             {
             }
