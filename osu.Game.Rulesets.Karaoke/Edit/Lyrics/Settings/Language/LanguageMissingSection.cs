@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
             bindableReports.BindCollectionChanged((_, _) =>
             {
                 var issues = bindableReports.Values.SelectMany(x => x);
-                table.Issues = issues.Where(x => x.Template is CheckLyricLanguage.IssueTemplateNotFillLanguage);
+                table.Issues = issues.Where(x => x.Template is CheckLyricLanguage.IssueTemplateLyricNotFillLanguage);
             }, true);
         }
 

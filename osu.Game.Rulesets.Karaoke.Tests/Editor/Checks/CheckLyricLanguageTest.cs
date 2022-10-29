@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
     {
         [TestCase("Ja-jp")]
         [TestCase("")] // should not have issue if CultureInfo accept it.
-        public void TestCheckLanguage(string language)
+        public void TestCheck(string language)
         {
             var lyric = new Lyric
             {
@@ -24,14 +24,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase(null)]
-        public void TestCheckInvalidLanguage(string? language)
+        public void TestCheckNotFillLanguage(string? language)
         {
             var lyric = new Lyric
             {
                 Language = language != null ? new CultureInfo(language) : null,
             };
 
-            AssertNotOk<IssueTemplateNotFillLanguage>(lyric);
+            AssertNotOk<IssueTemplateLyricNotFillLanguage>(lyric);
         }
     }
 }
