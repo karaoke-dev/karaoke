@@ -34,9 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         protected override Issue GetEmptyTextIssue(Lyric lyric, RomajiTag textTag)
             => new IssueTemplateLyricRomajiEmptyText(this).Create(lyric, textTag);
 
-        public abstract class RubyTagIssueTemplate : TextTagIssueTemplate
+        public abstract class IssueTemplateLyricRomaji : IssueTemplateLyricTextTag
         {
-            protected RubyTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+            protected IssueTemplateLyricRomaji(ICheck check, IssueType type, string unformattedMessage)
                 : base(check, type, unformattedMessage)
             {
             }
@@ -44,26 +44,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             public Issue Create(Lyric lyric, RomajiTag textTag) => new RomajiTagIssue(lyric, this, textTag);
         }
 
-        public class IssueTemplateLyricRomajiOutOfRange : RubyTagIssueTemplate
+        public class IssueTemplateLyricRomajiOutOfRange : IssueTemplateLyricRomaji
         {
             public IssueTemplateLyricRomajiOutOfRange(ICheck check)
-                : base(check, IssueType.Problem, "Romaji tag index is out of range.")
+                : base(check, IssueType.Error, "Romaji tag index is out of range.")
             {
             }
         }
 
-        public class IssueTemplateLyricRomajiOverlapping : RubyTagIssueTemplate
+        public class IssueTemplateLyricRomajiOverlapping : IssueTemplateLyricRomaji
         {
             public IssueTemplateLyricRomajiOverlapping(ICheck check)
-                : base(check, IssueType.Problem, "Romaji tag index is overlapping to another romaji.")
+                : base(check, IssueType.Problem, "Romaji tag index is overlapping to another romaji tag.")
             {
             }
         }
 
-        public class IssueTemplateLyricRomajiEmptyText : RubyTagIssueTemplate
+        public class IssueTemplateLyricRomajiEmptyText : IssueTemplateLyricRomaji
         {
             public IssueTemplateLyricRomajiEmptyText(ICheck check)
-                : base(check, IssueType.Problem, "Romaji tag has no text.")
+                : base(check, IssueType.Problem, "Romaji tag's text should not be empty or white-space only.")
             {
             }
         }
