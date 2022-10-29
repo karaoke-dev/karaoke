@@ -102,6 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                     new CheckLyricSinger(),
                     new CheckLyricTranslate(),
                     new CheckNoteReferenceLyric(),
+                    new CheckNoteText(),
                     new CheckBeatmapAvailableTranslates(),
                 };
             }
