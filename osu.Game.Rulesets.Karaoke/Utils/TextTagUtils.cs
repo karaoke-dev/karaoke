@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static bool EmptyText<T>(T textTag) where T : ITextTag
         {
-            return string.IsNullOrEmpty(textTag.Text);
+            return string.IsNullOrWhiteSpace(textTag.Text);
         }
 
         /// <summary>

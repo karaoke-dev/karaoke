@@ -13,18 +13,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
-            new IssueTemplateNotFillLanguage(this),
+            new IssueTemplateLyricNotFillLanguage(this),
         };
 
         protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (lyric.Language == null)
-                yield return new IssueTemplateNotFillLanguage(this).Create(lyric);
+                yield return new IssueTemplateLyricNotFillLanguage(this).Create(lyric);
         }
 
-        public class IssueTemplateNotFillLanguage : IssueTemplate
+        public class IssueTemplateLyricNotFillLanguage : IssueTemplate
         {
-            public IssueTemplateNotFillLanguage(ICheck check)
+            public IssueTemplateLyricNotFillLanguage(ICheck check)
                 : base(check, IssueType.Problem, "Lyric must have assign language.")
             {
             }

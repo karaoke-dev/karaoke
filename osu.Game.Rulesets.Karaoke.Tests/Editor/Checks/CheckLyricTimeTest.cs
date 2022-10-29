@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase("[3000,1000]:カラオケ", new string[] { })]
-        public void TestCheckLyricTimeOverlapping(string lyricText, string[] timeTags)
+        public void TestCheckTimeOverlapping(string lyricText, string[] timeTags)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase("[2000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" })]
-        public void TestCheckLyricStartTimeInvalid(string lyricText, string[] timeTags)
+        public void TestCheckStartTimeInvalid(string lyricText, string[] timeTags)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase("[1000,2000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" })]
-        public void TestCheckLyricEndTimeInvalid(string lyricText, string[] timeTags)
+        public void TestCheckEndTimeInvalid(string lyricText, string[] timeTags)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);

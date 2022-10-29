@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
             new IssueTemplateNoteNoText(this),
-            new IssueTemplateNoteEmptyRubyText(this),
+            new IssueTemplateNoteNoRubyText(this),
         };
 
         protected override IEnumerable<Issue> Check(Note note)
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 yield return new IssueTemplateNoteNoText(this).Create(note);
 
             if (note.RubyText != null && string.IsNullOrWhiteSpace(note.RubyText))
-                yield return new IssueTemplateNoteEmptyRubyText(this).Create(note);
+                yield return new IssueTemplateNoteNoRubyText(this).Create(note);
         }
 
         public class IssueTemplateNoteNoText : IssueTemplate
@@ -37,9 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateNoteEmptyRubyText : IssueTemplate
+        public class IssueTemplateNoteNoRubyText : IssueTemplate
         {
-            public IssueTemplateNoteEmptyRubyText(ICheck check)
+            public IssueTemplateNoteNoRubyText(ICheck check)
                 : base(check, IssueType.Error, "Note's ruby text should be null or has the value.")
             {
             }

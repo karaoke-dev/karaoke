@@ -93,9 +93,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             public Issue Create(Lyric lyric) => new(lyric, this);
         }
 
-        public abstract class TimeTagIssueTemplate : IssueTemplate
+        public abstract class IssueTemplateLyricTimeTag : IssueTemplate
         {
-            protected TimeTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+            protected IssueTemplateLyricTimeTag(ICheck check, IssueType type, string unformattedMessage)
                 : base(check, type, unformattedMessage)
             {
             }
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             public Issue Create(Lyric lyric, TimeTag timeTag) => new TimeTagIssue(lyric, this, timeTag, timeTag);
         }
 
-        public class IssueTemplateLyricTimeTagOutOfRange : TimeTagIssueTemplate
+        public class IssueTemplateLyricTimeTagOutOfRange : IssueTemplateLyricTimeTag
         {
             public IssueTemplateLyricTimeTagOutOfRange(ICheck check)
                 : base(check, IssueType.Problem, "Time-tag index is out of range.")
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricTimeTagOverlapping : TimeTagIssueTemplate
+        public class IssueTemplateLyricTimeTagOverlapping : IssueTemplateLyricTimeTag
         {
             public IssueTemplateLyricTimeTagOverlapping(ICheck check)
                 : base(check, IssueType.Problem, "Time-tag index is overlapping to another time-tag.")
@@ -119,7 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        public class IssueTemplateLyricTimeTagEmptyTime : TimeTagIssueTemplate
+        public class IssueTemplateLyricTimeTagEmptyTime : IssueTemplateLyricTimeTag
         {
             public IssueTemplateLyricTimeTagEmptyTime(ICheck check)
                 : base(check, IssueType.Problem, "Time-tag has no time.")

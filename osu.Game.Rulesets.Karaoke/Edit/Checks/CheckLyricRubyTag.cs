@@ -34,9 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         protected override Issue GetEmptyTextIssue(Lyric lyric, RubyTag textTag)
             => new IssueTemplateLyricRubyEmptyText(this).Create(lyric, textTag);
 
-        public abstract class RubyTagIssueTemplate : TextTagIssueTemplate
+        public abstract class IssueTemplateLyricRuby : IssueTemplateLyricTextTag
         {
-            protected RubyTagIssueTemplate(ICheck check, IssueType type, string unformattedMessage)
+            protected IssueTemplateLyricRuby(ICheck check, IssueType type, string unformattedMessage)
                 : base(check, type, unformattedMessage)
             {
             }
@@ -44,26 +44,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             public Issue Create(Lyric lyric, RubyTag textTag) => new RubyTagIssue(lyric, this, textTag, textTag);
         }
 
-        public class IssueTemplateLyricRubyOutOfRange : RubyTagIssueTemplate
+        public class IssueTemplateLyricRubyOutOfRange : IssueTemplateLyricRuby
         {
             public IssueTemplateLyricRubyOutOfRange(ICheck check)
-                : base(check, IssueType.Problem, "Ruby tag index is out of range.")
+                : base(check, IssueType.Error, "Ruby tag index is out of range.")
             {
             }
         }
 
-        public class IssueTemplateLyricRubyOverlapping : RubyTagIssueTemplate
+        public class IssueTemplateLyricRubyOverlapping : IssueTemplateLyricRuby
         {
             public IssueTemplateLyricRubyOverlapping(ICheck check)
-                : base(check, IssueType.Problem, "Ruby tag index is overlapping to another ruby.")
+                : base(check, IssueType.Problem, "Ruby tag index is overlapping to another ruby tag.")
             {
             }
         }
 
-        public class IssueTemplateLyricRubyEmptyText : RubyTagIssueTemplate
+        public class IssueTemplateLyricRubyEmptyText : IssueTemplateLyricRuby
         {
             public IssueTemplateLyricRubyEmptyText(ICheck check)
-                : base(check, IssueType.Problem, "Ruby tag has no text.")
+                : base(check, IssueType.Problem, "Ruby tag's text should not be empty or white-space only.")
             {
             }
         }

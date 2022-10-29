@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 
         [TestCase("カラオケ", new[] { "[-1,1]:か" })]
         [TestCase("カラオケ", new[] { "[4,5]:け" })]
-        public void TestCheckOutOfRange(string text, string[] rubies)
+        public void TestCheckRubyOutOfRange(string text, string[] rubies)
         {
             var lyric = new Lyric
             {
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[0,1]:ら" })]
         [TestCase("カラオケ", new[] { "[0,3]:か", "[1,2]:ら" })]
-        public void TestCheckOverlapping(string text, string[] rubies)
+        public void TestCheckRubyOverlapping(string text, string[] rubies)
         {
             var lyric = new Lyric
             {
@@ -51,7 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase("カラオケ", new[] { "[0,3]:" })]
-        public void TestCheckEmptyText(string text, string[] rubies)
+        [TestCase("カラオケ", new[] { "[0,3]: " })]
+        [TestCase("カラオケ", new[] { "[0,3]:　" })]
+        public void TestCheckRubyEmptyText(string text, string[] rubies)
         {
             var lyric = new Lyric
             {

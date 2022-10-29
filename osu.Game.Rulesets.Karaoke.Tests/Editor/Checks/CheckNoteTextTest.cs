@@ -23,10 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             AssertOk(new HitObject[] { note });
         }
 
+        [TestCase(null)]
+        [TestCase("")]
         [TestCase(" ")] // but should not be empty or white space.
         [TestCase("　")] // but should not be empty or white space.
-        [TestCase("")]
-        [TestCase(null)]
         public void TestCheckNoText(string text)
         {
             var note = new Note
@@ -37,10 +37,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             AssertNotOk<IssueTemplateNoteNoText>(note);
         }
 
+        [TestCase("")]
         [TestCase(" ")] // but should not be empty or white space.
         [TestCase("　")] // but should not be empty or white space.
-        [TestCase("")]
-        public void TestCheckEmptyRubyText(string? rubyText)
+        public void TestCheckNoRubyText(string? rubyText)
         {
             var note = new Note
             {
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RubyText = rubyText
             };
 
-            AssertNotOk<IssueTemplateNoteEmptyRubyText>(note);
+            AssertNotOk<IssueTemplateNoteNoRubyText>(note);
         }
     }
 }

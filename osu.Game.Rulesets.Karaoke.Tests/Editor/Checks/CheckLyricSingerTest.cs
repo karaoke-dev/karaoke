@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase(new[] { 1, 2, 3 })]
         [TestCase(new[] { 1 })]
         [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
-        public void TestCheckSinger(int[] singers)
+        public void TestCheck(int[] singers)
         {
             var lyric = new Lyric
             {
@@ -25,14 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         [TestCase(new int[] { })]
-        public void TestCheckInvalidSinger(int[] singers)
+        public void TestCheckNoSinger(int[] singers)
         {
             var lyric = new Lyric
             {
                 Singers = singers
             };
 
-            AssertNotOk<IssueTemplateNoSinger>(lyric);
+            AssertNotOk<IssueTemplateLyricNoSinger>(lyric);
         }
     }
 }
