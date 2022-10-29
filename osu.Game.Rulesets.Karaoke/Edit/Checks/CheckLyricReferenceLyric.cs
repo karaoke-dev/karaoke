@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckLyricReferenceLyric : CheckHitObjectProperty<Lyric>
+    public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, Lyric>
     {
         protected override string Description => "Lyric with invalid reference lyric.";
 
@@ -21,29 +20,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this)
         };
 
-        protected override IEnumerable<Issue> Check(Lyric lyric)
+        protected override IEnumerable<Issue> CheckReferenceProperty(Lyric lyric, IEnumerable<Lyric> allAvailableReferencedHitObjects)
         {
-            yield break;
-        }
+            if (lyric.ReferenceLyric == lyric)
+                yield return new IssueTemplateLyricSelfReference(this).Create(lyric);
 
-        protected override IEnumerable<Issue> CheckAllHitObject(IReadOnlyList<HitObject> hitObjects)
-        {
-            var lyrics = hitObjects.OfType<Lyric>().ToArray();
+            if (lyric.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(lyric.ReferenceLyric))
+                yield return new IssueTemplateLyricInvalidReferenceLyric(this).Create(lyric);
 
-            foreach (var lyric in lyrics)
-            {
-                if (lyric.ReferenceLyric == lyric)
-                    yield return new IssueTemplateLyricSelfReference(this).Create(lyric);
+            if (lyric.ReferenceLyric != null && lyric.ReferenceLyricConfig == null)
+                yield return new IssueTemplateLyricNullReferenceLyricConfig(this).Create(lyric);
 
-                if (lyric.ReferenceLyric != null && !lyrics.Contains(lyric.ReferenceLyric))
-                    yield return new IssueTemplateLyricInvalidReferenceLyric(this).Create(lyric);
-
-                if (lyric.ReferenceLyric != null && lyric.ReferenceLyricConfig == null)
-                    yield return new IssueTemplateLyricNullReferenceLyricConfig(this).Create(lyric);
-
-                if (lyric.ReferenceLyric == null && lyric.ReferenceLyricConfig != null)
-                    yield return new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this).Create(lyric);
-            }
+            if (lyric.ReferenceLyric == null && lyric.ReferenceLyricConfig != null)
+                yield return new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this).Create(lyric);
         }
 
         public class IssueTemplateLyricSelfReference : IssueTemplate
