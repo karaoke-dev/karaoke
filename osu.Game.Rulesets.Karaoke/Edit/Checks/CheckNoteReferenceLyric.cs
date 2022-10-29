@@ -18,7 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateNullReferenceLyric(this),
             new IssueTemplateInvalidReferenceLyric(this),
             new IssueTemplateReferenceLyricHasLessThanTwoTimeTag(this),
-            new IssueTemplateReferenceLyricHasLessThanTwoTimeTag(this),
             new IssueTemplateMissingStartReferenceTimeTag(this),
             new IssueTemplateStartReferenceTimeTagMissingTime(this),
             new IssueTemplateMissingEndReferenceTimeTag(this),

@@ -20,6 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         public void Setup()
         {
             check = new TCheck();
+
+            // check template in the list should not be duplicated.
+            var possibleTemplates = check.PossibleTemplates;
+            Assert.AreEqual(possibleTemplates.Count(), possibleTemplates.Select(x => x.GetType()).Distinct().Count());
         }
 
         protected void SetConfig<TConfig>(TConfig config) where TConfig : IHasConfig<TConfig>, new()
@@ -41,6 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 
             Assert.That(issues, Has.Count.EqualTo(1));
             Assert.AreEqual(typeof(TIssueTemplate), issues.Single().Template.GetType());
+
+            // should make sure that have issue template in the list.
+            Assert.IsTrue(check.PossibleTemplates.OfType<TIssueTemplate>().Single() != null);
         }
 
         protected IEnumerable<Issue> Run(BeatmapVerifierContext context)

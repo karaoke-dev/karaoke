@@ -23,6 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             new IssueTemplateMissingTranslate(this),
             new IssueTemplateMissingPartialTranslate(this),
+            new IssueTemplateContainsNotListedLanguage(this)
         };
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
