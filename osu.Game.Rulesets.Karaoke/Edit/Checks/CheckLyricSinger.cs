@@ -14,18 +14,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
-            new IssueTemplateNoSinger(this),
+            new IssueTemplateLyricNoSinger(this),
         };
 
         protected override IEnumerable<Issue> Check(Lyric lyric)
         {
             if (!lyric.Singers.Any())
-                yield return new IssueTemplateNoSinger(this).Create(lyric);
+                yield return new IssueTemplateLyricNoSinger(this).Create(lyric);
         }
 
-        public class IssueTemplateNoSinger : IssueTemplate
+        public class IssueTemplateLyricNoSinger : IssueTemplate
         {
-            public IssueTemplateNoSinger(ICheck check)
+            public IssueTemplateLyricNoSinger(ICheck check)
                 : base(check, IssueType.Problem, "Lyric must have at least one singer.")
             {
             }
