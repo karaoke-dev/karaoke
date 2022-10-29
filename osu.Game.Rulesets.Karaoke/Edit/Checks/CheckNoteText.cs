@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
             new IssueTemplateNoteNoText(this),
+            new IssueTemplateNoteEmptyRubyText(this),
         };
 
         protected override IEnumerable<Issue> Check(Note note)

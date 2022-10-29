@@ -16,6 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
             new IssueTemplateLyricSelfReference(this),
+            new IssueTemplateLyricInvalidReferenceLyric(this),
+            new IssueTemplateLyricNullReferenceLyricConfig(this),
+            new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this)
         };
 
         protected override IEnumerable<Issue> Check(Lyric lyric)
