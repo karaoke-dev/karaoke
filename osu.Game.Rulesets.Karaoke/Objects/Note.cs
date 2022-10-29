@@ -155,6 +155,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => ReferenceTimeTagIndexBindable.Value = value;
         }
 
+        public TimeTag? StartReferenceTimeTag => ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex);
+
+        public TimeTag? EndReferenceTimeTag => ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex + 1);
+
         public Note()
         {
             ReferenceLyricBindable.ValueChanged += e =>
@@ -176,15 +180,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
             void syncStartTimeAndDurationFromTimeTag()
             {
-                var currentTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex);
-                var nextTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex + 1);
+                var startTimeTag = StartReferenceTimeTag;
+                var endTimeTag = EndReferenceTimeTag;
 
-                double startTime = currentTimeTag?.Time ?? 0;
-                double endTime = nextTimeTag?.Time ?? 0;
+                double startTime = startTimeTag?.Time ?? 0;
+                double endTime = endTimeTag?.Time ?? 0;
                 double duration = endTime - startTime;
 
-                StartTimeBindable.Value = currentTimeTag == null ? 0 : startTime + StartTimeOffset;
-                DurationBindable.Value = nextTimeTag == null ? 0 : Math.Max(duration - StartTimeOffset + EndTimeOffset, 0);
+                StartTimeBindable.Value = startTimeTag == null ? 0 : startTime + StartTimeOffset;
+                DurationBindable.Value = endTimeTag == null ? 0 : Math.Max(duration - StartTimeOffset + EndTimeOffset, 0);
             }
         }
 
