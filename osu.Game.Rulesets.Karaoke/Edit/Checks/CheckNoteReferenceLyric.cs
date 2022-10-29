@@ -14,30 +14,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
-            new IssueTemplateNullReferenceLyric(this),
-            new IssueTemplateInvalidReferenceLyric(this),
-            new IssueTemplateReferenceLyricHasLessThanTwoTimeTag(this),
-            new IssueTemplateMissingStartReferenceTimeTag(this),
-            new IssueTemplateStartReferenceTimeTagMissingTime(this),
-            new IssueTemplateMissingEndReferenceTimeTag(this),
-            new IssueTemplateEndReferenceTimeTagMissingTime(this),
+            new IssueTemplateNoteNullReferenceLyric(this),
+            new IssueTemplateNoteInvalidReferenceLyric(this),
+            new IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(this),
+            new IssueTemplateNoteMissingStartReferenceTimeTag(this),
+            new IssueTemplateNoteStartReferenceTimeTagMissingTime(this),
+            new IssueTemplateNoteMissingEndReferenceTimeTag(this),
+            new IssueTemplateNoteEndReferenceTimeTagMissingTime(this),
         };
 
         protected override IEnumerable<Issue> CheckReferenceProperty(Note note, IEnumerable<Lyric> allAvailableReferencedHitObjects)
         {
             if (note.ReferenceLyric == null)
             {
-                yield return new IssueTemplateNullReferenceLyric(this).Create(note);
+                yield return new IssueTemplateNoteNullReferenceLyric(this).Create(note);
 
                 yield break;
             }
 
             if (note.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(note.ReferenceLyric))
-                yield return new IssueTemplateInvalidReferenceLyric(this).Create(note);
+                yield return new IssueTemplateNoteInvalidReferenceLyric(this).Create(note);
 
             if (note.ReferenceLyric?.TimeTags.Count < 2)
             {
-                yield return new IssueTemplateReferenceLyricHasLessThanTwoTimeTag(this).Create(note);
+                yield return new IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(this).Create(note);
 
                 yield break;
             }
@@ -46,22 +46,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             var endTimeTag = note.EndReferenceTimeTag;
 
             if (startTimeTag == null)
-                yield return new IssueTemplateMissingStartReferenceTimeTag(this).Create(note);
+                yield return new IssueTemplateNoteMissingStartReferenceTimeTag(this).Create(note);
 
             if (startTimeTag != null && startTimeTag.Time == null)
-                yield return new IssueTemplateStartReferenceTimeTagMissingTime(this).Create(note);
+                yield return new IssueTemplateNoteStartReferenceTimeTagMissingTime(this).Create(note);
 
             if (endTimeTag == null)
-                yield return new IssueTemplateMissingEndReferenceTimeTag(this).Create(note);
+                yield return new IssueTemplateNoteMissingEndReferenceTimeTag(this).Create(note);
 
             if (endTimeTag != null && endTimeTag.Time == null)
-                yield return new IssueTemplateEndReferenceTimeTagMissingTime(this).Create(note);
+                yield return new IssueTemplateNoteEndReferenceTimeTagMissingTime(this).Create(note);
         }
 
-        public class IssueTemplateNullReferenceLyric : IssueTemplate
+        public class IssueTemplateNoteNullReferenceLyric : IssueTemplate
         {
-            public IssueTemplateNullReferenceLyric(ICheck check)
-                : base(check, IssueType.Problem, "Note must have its parent lyric.")
+            public IssueTemplateNoteNullReferenceLyric(ICheck check)
+                : base(check, IssueType.Error, "Note must have its parent lyric.")
             {
             }
 
@@ -69,10 +69,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateInvalidReferenceLyric : IssueTemplate
+        public class IssueTemplateNoteInvalidReferenceLyric : IssueTemplate
         {
-            public IssueTemplateInvalidReferenceLyric(ICheck check)
-                : base(check, IssueType.Problem, "Note's reference lyric must in the beatmap.")
+            public IssueTemplateNoteInvalidReferenceLyric(ICheck check)
+                : base(check, IssueType.Error, "Note's reference lyric must in the beatmap.")
             {
             }
 
@@ -80,9 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateReferenceLyricHasLessThanTwoTimeTag : IssueTemplate
+        public class IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag : IssueTemplate
         {
-            public IssueTemplateReferenceLyricHasLessThanTwoTimeTag(ICheck check)
+            public IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(ICheck check)
                 : base(check, IssueType.Problem, "Note's reference lyric must have at least two time-tags.")
             {
             }
@@ -91,9 +91,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateMissingStartReferenceTimeTag : IssueTemplate
+        public class IssueTemplateNoteMissingStartReferenceTimeTag : IssueTemplate
         {
-            public IssueTemplateMissingStartReferenceTimeTag(ICheck check)
+            public IssueTemplateNoteMissingStartReferenceTimeTag(ICheck check)
                 : base(check, IssueType.Problem, "Note's start reference time-tag is missing.")
             {
             }
@@ -102,9 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateStartReferenceTimeTagMissingTime : IssueTemplate
+        public class IssueTemplateNoteStartReferenceTimeTagMissingTime : IssueTemplate
         {
-            public IssueTemplateStartReferenceTimeTagMissingTime(ICheck check)
+            public IssueTemplateNoteStartReferenceTimeTagMissingTime(ICheck check)
                 : base(check, IssueType.Problem, "Note's start reference time-tag is found but missing time.")
             {
             }
@@ -113,9 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateMissingEndReferenceTimeTag : IssueTemplate
+        public class IssueTemplateNoteMissingEndReferenceTimeTag : IssueTemplate
         {
-            public IssueTemplateMissingEndReferenceTimeTag(ICheck check)
+            public IssueTemplateNoteMissingEndReferenceTimeTag(ICheck check)
                 : base(check, IssueType.Problem, "Note's end reference time-tag is missing.")
             {
             }
@@ -124,9 +124,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new(note, this);
         }
 
-        public class IssueTemplateEndReferenceTimeTagMissingTime : IssueTemplate
+        public class IssueTemplateNoteEndReferenceTimeTagMissingTime : IssueTemplate
         {
-            public IssueTemplateEndReferenceTimeTagMissingTime(ICheck check)
+            public IssueTemplateNoteEndReferenceTimeTagMissingTime(ICheck check)
                 : base(check, IssueType.Problem, "Note's end reference time-tag is found but missing time.")
             {
             }
