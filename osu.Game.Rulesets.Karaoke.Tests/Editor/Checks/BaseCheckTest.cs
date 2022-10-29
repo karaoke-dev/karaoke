@@ -20,6 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         public void Setup()
         {
             check = new TCheck();
+
+            // check template in the list should not be duplicated.
+            var possibleTemplates = check.PossibleTemplates;
+            Assert.AreEqual(possibleTemplates.Count(), possibleTemplates.Select(x => x.GetType()).Distinct().Count());
         }
 
         protected void SetConfig<TConfig>(TConfig config) where TConfig : IHasConfig<TConfig>, new()
