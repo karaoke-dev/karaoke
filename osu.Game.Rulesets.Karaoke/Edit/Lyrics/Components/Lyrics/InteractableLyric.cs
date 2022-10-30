@@ -114,12 +114,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
+            base.OnHoverLost(e);
+
             if (!lyricCaretState.CaretEnabled)
                 return;
 
             // lost hover caret and time-tag caret
             lyricCaretState.ClearHoverCaretPosition();
-            base.OnHoverLost(e);
         }
 
         protected override bool OnClick(ClickEvent e)
