@@ -311,9 +311,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool ConfirmHoverCaretPosition()
         {
-            if (!CaretEnabled)
-                return false;
-
             // place hover caret to target position.
             var position = BindableHoverCaretPosition.Value;
             if (position == null)
