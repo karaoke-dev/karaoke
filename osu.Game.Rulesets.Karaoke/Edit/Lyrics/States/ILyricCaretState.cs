@@ -27,8 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         void ClearHoverCaretPosition();
 
-        bool CaretPositionMovable(ICaretPosition position);
-
         void SyncSelectedHitObjectWithCaret();
 
         bool CaretEnabled { get; }

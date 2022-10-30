@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -282,7 +283,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            bool movable = CaretPositionMovable(position);
+            bool movable = caretPositionMovable(position);
 
             // stop moving the caret if forbidden by algorithm calculation.
             if (!movable)
@@ -299,7 +300,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            if (!CaretPositionMovable(position))
+            if (!caretPositionMovable(position))
                 return;
 
             bindableHoverCaretPosition.Value = position;
@@ -310,7 +311,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableHoverCaretPosition.Value = null;
         }
 
-        public bool CaretPositionMovable(ICaretPosition position)
+        private bool caretPositionMovable(ICaretPosition position)
             => algorithm?.PositionMovable(position) ?? false;
 
         public void SyncSelectedHitObjectWithCaret()
