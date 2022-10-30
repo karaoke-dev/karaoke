@@ -124,17 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
-            if (!lyricCaretState.CaretEnabled)
-                return false;
-
-            // place hover caret to target position.
-            var position = lyricCaretState.BindableHoverCaretPosition.Value;
-            if (position == null)
-                return false;
-
-            lyricCaretState.MoveCaretToTargetPosition(position);
-
-            return true;
+            return lyricCaretState.ConfirmHoverCaretPosition();
         }
 
         private void triggerWritableVersionChanged()

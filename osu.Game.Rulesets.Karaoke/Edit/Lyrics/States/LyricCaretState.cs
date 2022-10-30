@@ -306,6 +306,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableHoverCaretPosition.Value = position;
         }
 
+        public bool ConfirmHoverCaretPosition()
+        {
+            if (!CaretEnabled)
+                return false;
+
+            // place hover caret to target position.
+            var position = BindableHoverCaretPosition.Value;
+            if (position == null)
+                return false;
+
+            MoveCaretToTargetPosition(position);
+
+            return true;
+        }
+
         public void ClearHoverCaretPosition()
         {
             bindableHoverCaretPosition.Value = null;

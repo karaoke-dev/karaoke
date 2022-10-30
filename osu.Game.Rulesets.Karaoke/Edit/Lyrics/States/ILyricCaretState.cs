@@ -25,6 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         void MoveHoverCaretToTargetPosition(ICaretPosition position);
 
+        bool ConfirmHoverCaretPosition();
+
         void ClearHoverCaretPosition();
 
         void SyncSelectedHitObjectWithCaret();
