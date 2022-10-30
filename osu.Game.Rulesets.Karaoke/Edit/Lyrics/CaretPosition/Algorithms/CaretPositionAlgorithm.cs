@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
@@ -46,8 +47,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToPreviousLyric(tCaretPosition);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
+            if (movedCaretPosition == null)
+                return movedCaretPosition;
+
+            Validate(movedCaretPosition.Value);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
 
             return movedCaretPosition;
         }
@@ -60,8 +64,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToNextLyric(tCaretPosition);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
+            if (movedCaretPosition == null)
+                return movedCaretPosition;
+
+            Validate(movedCaretPosition.Value);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
 
             return movedCaretPosition;
         }
@@ -69,8 +76,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         ICaretPosition? ICaretPositionAlgorithm.MoveToFirstLyric()
         {
             var movedCaretPosition = MoveToFirstLyric();
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
+            if (movedCaretPosition == null)
+                return movedCaretPosition;
+
+            Validate(movedCaretPosition.Value);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
 
             return movedCaretPosition;
         }
@@ -78,8 +88,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         ICaretPosition? ICaretPositionAlgorithm.MoveToLastLyric()
         {
             var movedCaretPosition = MoveToLastLyric();
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
+            if (movedCaretPosition == null)
+                return movedCaretPosition;
+
+            Validate(movedCaretPosition.Value);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
 
             return movedCaretPosition;
         }
@@ -87,8 +100,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         ICaretPosition? ICaretPositionAlgorithm.MoveToTargetLyric(Lyric lyric)
         {
             var movedCaretPosition = MoveToTargetLyric(lyric);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
+
+            if (movedCaretPosition == null)
+                return movedCaretPosition;
+
+            Validate(movedCaretPosition.Value);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.TargetLyric);
 
             return movedCaretPosition;
         }
