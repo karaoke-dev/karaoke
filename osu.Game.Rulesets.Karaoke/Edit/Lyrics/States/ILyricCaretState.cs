@@ -19,15 +19,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         ICaretPosition? GetCaretPositionByAction(MovingCaretAction action);
 
-        void MoveCaretToTargetPosition(Lyric lyric);
+        bool MoveCaretToTargetPosition(Lyric lyric);
 
-        void MoveCaretToTargetPosition(ICaretPosition position);
+        bool MoveCaretToTargetPosition(ICaretPosition position);
 
-        void MoveHoverCaretToTargetPosition(ICaretPosition position);
+        bool MoveHoverCaretToTargetPosition(ICaretPosition position);
 
         bool ConfirmHoverCaretPosition();
 
-        void ClearHoverCaretPosition();
+        bool ClearHoverCaretPosition();
 
         void SyncSelectedHitObjectWithCaret();
 
