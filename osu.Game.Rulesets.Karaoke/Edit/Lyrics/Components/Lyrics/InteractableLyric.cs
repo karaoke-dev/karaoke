@@ -86,26 +86,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             {
                 case CuttingCaretPosition:
                     int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new CuttingCaretPosition(lyric, cuttingLyricStringIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new CuttingCaretPosition(lyric, cuttingLyricStringIndex, CaretGenerateType.TargetLyric));
                     break;
 
                 case TypingCaretPosition:
                     int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TypingCaretPosition(lyric, typingStringIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TypingCaretPosition(lyric, typingStringIndex, CaretGenerateType.TargetLyric));
                     break;
 
                 case NavigateCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric, CaretGenerateType.TargetLyric));
                     break;
 
                 case TimeTagIndexCaretPosition:
                     var textIndex = karaokeSpriteText.GetHoverIndex(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex, CaretGenerateType.TargetLyric));
                     break;
 
                 case TimeTagCaretPosition:
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric));
                     break;
             }
 

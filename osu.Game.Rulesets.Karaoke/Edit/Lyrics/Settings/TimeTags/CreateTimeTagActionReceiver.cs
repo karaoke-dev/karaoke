@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                         return false;
 
                     var newTimeTag = lyricTimeTagsChangeHandler.Shifting(timeTagCaretPosition.TimeTag, tuple.Item1, tuple.Item2);
-                    lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(timeTagCaretPosition.Lyric, newTimeTag));
+                    lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(timeTagCaretPosition.Lyric, newTimeTag, CaretGenerateType.TargetLyric));
                     return true;
             }
 

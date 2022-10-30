@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.RecordingTi
 
             protected override bool OnClick(ClickEvent e)
             {
-                lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+                lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric));
 
                 return base.OnClick(e);
             }
