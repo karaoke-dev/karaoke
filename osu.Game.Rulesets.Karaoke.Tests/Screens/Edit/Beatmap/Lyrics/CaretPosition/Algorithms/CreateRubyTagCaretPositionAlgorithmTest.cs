@@ -13,10 +13,4 @@ public class CreateRubyTagCaretPositionAlgorithmTest : BaseCharIndexCaretPositio
 {
     protected override CreateRubyTagCaretPosition CreateCaret(Lyric lyric, int index)
         => new(lyric, index);
-
-    protected override void AssertEqual(CreateRubyTagCaretPosition expected, CreateRubyTagCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.CharIndex, actual.CharIndex);
-    }
 }

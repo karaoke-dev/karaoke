@@ -94,11 +94,6 @@ public class NavigateCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest
 
     #endregion
 
-    protected override void AssertEqual(NavigateCaretPosition expected, NavigateCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-    }
-
     private static NavigateCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);

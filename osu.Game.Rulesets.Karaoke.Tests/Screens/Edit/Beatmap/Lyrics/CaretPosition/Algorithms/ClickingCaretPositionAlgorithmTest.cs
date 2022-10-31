@@ -94,11 +94,6 @@ public class ClickingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest
 
     #endregion
 
-    protected override void AssertEqual(ClickingCaretPosition expected, ClickingCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-    }
-
     private static ClickingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);

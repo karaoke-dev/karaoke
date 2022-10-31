@@ -13,10 +13,4 @@ public class TimeTagIndexCaretPositionTest : BaseCharIndexCaretPositionAlgorithm
 {
     protected override TimeTagIndexCaretPosition CreateCaret(Lyric lyric, int index)
         => new(lyric, index);
-
-    protected override void AssertEqual(TimeTagIndexCaretPosition expected, TimeTagIndexCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.CharIndex, actual.CharIndex);
-    }
 }
