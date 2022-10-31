@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.View);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric));
+            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
 
             // should not change the caret position if algorithm is null.
             assertCaretPosition(Assert.IsNull);
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.Singer);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric));
+            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
 
             // yes, should change the position if contains algorithm.
             assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
@@ -207,7 +207,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             var targetLyric = getLyricFromBeatmap(1);
 
             // should throw the exception if caret position type not match.
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric), false);
+            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric), false);
         }
 
         #endregion
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.View);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric));
+            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
 
             // should not change the caret position if algorithm is null.
             assertCaretPosition(Assert.IsNull);
@@ -234,7 +234,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
 
             var firstLyric = getLyricFromBeatmap(0);
             var targetLyric = getLyricFromBeatmap(1);
-            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric));
+            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
 
             // because switch to the singer lyric, so current caret position will at the first lyric.
             assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);

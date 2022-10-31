@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -190,8 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 return false;
 
-            MoveCaretToTargetPosition(position);
-            return true;
+            return MoveCaretToTargetPosition(position);
         }
 
         public ICaretPosition? GetCaretPositionByAction(MovingCaretAction action)
@@ -265,52 +265,68 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             }
         }
 
-        public void MoveCaretToTargetPosition(Lyric lyric)
+        public bool MoveCaretToTargetPosition(Lyric lyric)
         {
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
             var caretPosition = algorithm?.MoveToTargetLyric(lyric);
             if (caretPosition == null)
-                return;
+                return false;
 
-            MoveCaretToTargetPosition(caretPosition);
+            return MoveCaretToTargetPosition(caretPosition);
         }
 
-        public void MoveCaretToTargetPosition(ICaretPosition position)
+        public bool MoveCaretToTargetPosition(ICaretPosition position)
         {
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            bool movable = CaretPositionMovable(position);
+            bool movable = caretPositionMovable(position);
 
             // stop moving the caret if forbidden by algorithm calculation.
             if (!movable)
-                return;
+                return false;
 
             bindableHoverCaretPosition.Value = null;
             bindableCaretPosition.Value = position;
 
             postProcess();
+
+            return true;
         }
 
-        public void MoveHoverCaretToTargetPosition(ICaretPosition position)
+        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            if (!CaretPositionMovable(position))
-                return;
+            if (!caretPositionMovable(position))
+                return false;
 
             bindableHoverCaretPosition.Value = position;
+
+            return true;
         }
 
-        public void ClearHoverCaretPosition()
+        public bool ConfirmHoverCaretPosition()
+        {
+            // place hover caret to target position.
+            var position = BindableHoverCaretPosition.Value;
+            if (position == null)
+                return false;
+
+            return MoveCaretToTargetPosition(position);
+        }
+
+        public bool ClearHoverCaretPosition()
         {
             bindableHoverCaretPosition.Value = null;
+
+            return true;
         }
 
-        public bool CaretPositionMovable(ICaretPosition position)
+        private bool caretPositionMovable(ICaretPosition position)
             => algorithm?.PositionMovable(position) ?? false;
 
         public void SyncSelectedHitObjectWithCaret()
