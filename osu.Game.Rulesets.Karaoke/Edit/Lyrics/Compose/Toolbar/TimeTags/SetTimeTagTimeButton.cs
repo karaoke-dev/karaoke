@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Toolbar.TimeTags
 
             Action = () =>
             {
-                if (lyricCaretState.BindableCaretPosition.Value is not TimeTagCaretPosition timeTagCaretPosition)
+                if (lyricCaretState.CaretPosition is not TimeTagCaretPosition timeTagCaretPosition)
                     throw new InvalidOperationException();
 
                 var timeTag = timeTagCaretPosition.TimeTag;

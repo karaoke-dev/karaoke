@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
-            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
+            var caretPosition = lyricCaretState.CaretPosition;
             if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
                 throw new NotSupportedException(nameof(caretPosition));
 
