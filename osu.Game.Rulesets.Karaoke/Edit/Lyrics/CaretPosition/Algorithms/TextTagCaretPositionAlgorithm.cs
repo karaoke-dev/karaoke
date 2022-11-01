@@ -82,10 +82,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        protected abstract TTextTag GetTextTagByCaret(TCaretPosition position);
+        protected abstract TTextTag? GetTextTagByCaret(TCaretPosition position);
 
         protected abstract IList<TTextTag> GetTextTagsByLyric(Lyric lyric);
 
-        protected abstract TCaretPosition GenerateCaretPosition(Lyric lyric, TTextTag textTag, CaretGenerateType generateType);
+        protected abstract TCaretPosition GenerateCaretPosition(Lyric lyric, TTextTag? textTag, CaretGenerateType generateType);
     }
 }

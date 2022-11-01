@@ -13,13 +13,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        protected override RubyTag GetTextTagByCaret(RubyTagCaretPosition position)
+        protected override RubyTag? GetTextTagByCaret(RubyTagCaretPosition position)
             => position.RubyTag;
 
         protected override IList<RubyTag> GetTextTagsByLyric(Lyric lyric)
             => lyric.RubyTags;
 
-        protected override RubyTagCaretPosition GenerateCaretPosition(Lyric lyric, RubyTag textTag, CaretGenerateType generateType)
+        protected override RubyTagCaretPosition GenerateCaretPosition(Lyric lyric, RubyTag? textTag, CaretGenerateType generateType)
             => new(lyric, textTag, generateType);
     }
 }
