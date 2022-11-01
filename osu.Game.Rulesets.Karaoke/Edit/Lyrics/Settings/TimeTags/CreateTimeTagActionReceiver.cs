@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
             var action = e.Action;
-            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
+            var caretPosition = lyricCaretState.CaretPosition;
 
             return caretPosition switch
             {

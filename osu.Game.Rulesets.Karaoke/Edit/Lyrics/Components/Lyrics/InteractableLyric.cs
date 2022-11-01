@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
 
-            switch (lyricCaretState.BindableCaretPosition.Value)
+            switch (lyricCaretState.CaretPosition)
             {
                 case CuttingCaretPosition:
                     int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);

@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected override bool OnDoubleClick(DoubleClickEvent e)
         {
-            var position = lyricCaretState.BindableCaretPosition.Value;
+            var position = lyricCaretState.CaretPosition;
 
             switch (position)
             {
