@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
     public struct RubyTagCaretPosition : ITextTagCaretPosition
     {
-        public RubyTagCaretPosition(Lyric lyric, RubyTag rubyTag, CaretGenerateType generateType = CaretGenerateType.Action)
+        public RubyTagCaretPosition(Lyric lyric, RubyTag? rubyTag, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             RubyTag = rubyTag;
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 
         public Lyric Lyric { get; }
 
-        public RubyTag RubyTag { get; }
+        public RubyTag? RubyTag { get; }
 
         public CaretGenerateType GenerateType { get; }
     }

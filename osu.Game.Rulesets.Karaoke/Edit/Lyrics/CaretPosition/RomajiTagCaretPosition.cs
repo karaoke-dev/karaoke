@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
     public struct RomajiTagCaretPosition : ITextTagCaretPosition
     {
-        public RomajiTagCaretPosition(Lyric lyric, RomajiTag romajiTag, CaretGenerateType generateType = CaretGenerateType.Action)
+        public RomajiTagCaretPosition(Lyric lyric, RomajiTag? romajiTag, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             RomajiTag = romajiTag;
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 
         public Lyric Lyric { get; }
 
-        public RomajiTag RomajiTag { get; }
+        public RomajiTag? RomajiTag { get; }
 
         public CaretGenerateType GenerateType { get; }
     }

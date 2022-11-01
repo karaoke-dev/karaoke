@@ -131,8 +131,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.Texting => subMode is TextingEditMode textingEditMode ? getTextingmodeAlgorithm(textingEditMode) : throw new InvalidCastException(),
                 LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditRuby => new RubyTagCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditRomaji => new RomajiTagCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditTimeTag => subMode is TimeTagEditMode timeTagEditMode ? getTimeTagModeAlgorithm(timeTagEditMode) : throw new InvalidCastException(),
                 LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
@@ -266,9 +266,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool MoveCaretToTargetPosition(Lyric lyric)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
             var caretPosition = algorithm?.MoveToTargetLyric(lyric);
             if (caretPosition == null)
                 return false;
@@ -293,6 +290,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             postProcess();
 
             return true;
+        }
+
+        public bool MoveHoverCaretToTargetPosition(Lyric lyric)
+        {
+            var caretPosition = algorithm?.MoveToTargetLyric(lyric);
+            if (caretPosition == null)
+                return false;
+
+            return MoveHoverCaretToTargetPosition(caretPosition);
         }
 
         public bool MoveHoverCaretToTargetPosition(ICaretPosition position)

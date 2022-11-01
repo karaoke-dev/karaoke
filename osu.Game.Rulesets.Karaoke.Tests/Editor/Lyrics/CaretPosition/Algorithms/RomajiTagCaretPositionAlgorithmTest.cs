@@ -27,9 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestPositionMovable(lyrics, caret, movable);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, null, null)] // should always not movable.
-        [TestCase(nameof(twoLyricsWithText), 1, 0, null, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, 0, null, null)]
+        [TestCase(nameof(singleLyric), 0, 0, null, null)]
+        [TestCase(nameof(singleLyricWithNoRomaji), 0, 0, null, null)]
+        [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 1, null)]
         public void TestMoveToPreviousLyric(string sourceName, int lyricIndex, int romajiIndex, int? expectedLyricIndex, int? expectedRomajiIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -40,9 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToPreviousLyric(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, null, null)] // should always not movable.
-        [TestCase(nameof(twoLyricsWithText), 0, 0, null, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, 0, null, null)]
+        [TestCase(nameof(singleLyric), 0, 0, null, null)]
+        [TestCase(nameof(singleLyricWithNoRomaji), 0, 0, null, null)]
+        [TestCase(nameof(twoLyricsWithText), 0, 0, 1, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 1, null)]
         public void TestMoveToNextLyric(string sourceName, int lyricIndex, int romajiIndex, int? expectedLyricIndex, int? expectedRomajiIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -53,9 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToNextLyric(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), null, null)] // should always not movable.
-        [TestCase(nameof(twoLyricsWithText), null, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), null, null)]
+        [TestCase(nameof(singleLyric), 0, 0)]
+        [TestCase(nameof(singleLyricWithNoRomaji), 0, null)]
+        [TestCase(nameof(twoLyricsWithText), 0, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
         public void TestMoveToFirstLyric(string sourceName, int? expectedLyricIndex, int? expectedRomajiIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -65,9 +68,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToFirstLyric(lyrics, expected);
         }
 
-        [TestCase(nameof(singleLyric), null, null)] // should always not movable.
-        [TestCase(nameof(twoLyricsWithText), null, null)]
-        [TestCase(nameof(threeLyricsWithSpacing), null, null)]
+        [TestCase(nameof(singleLyric), 0, 0)]
+        [TestCase(nameof(singleLyricWithNoRomaji), 0, null)]
+        [TestCase(nameof(twoLyricsWithText), 1, 0)]
+        [TestCase(nameof(threeLyricsWithSpacing), 2, 0)]
         public void TestMoveToLastLyric(string sourceName, int? expectedLyricIndex, int? expectedRomajiIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -147,12 +151,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             Assert.AreEqual(expected.RomajiTag, actual.RomajiTag);
         }
 
-        private static RomajiTagCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int romajiTagIndex)
+        private static RomajiTagCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int? romajiTagIndex)
         {
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
-            var romajiTag = lyric?.RomajiTags.ElementAtOrDefault(romajiTagIndex);
+            var romajiTag = romajiTagIndex != null ? lyric?.RomajiTags.ElementAtOrDefault(romajiTagIndex.Value) : null;
 
-            if (lyric == null || romajiTag == null)
+            if (lyric == null)
                 throw new ArgumentNullException();
 
             return new RomajiTagCaretPosition(lyric, romajiTag);
@@ -160,10 +164,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         private static RomajiTagCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? romajiTagIndex)
         {
-            if (lyricIndex == null || romajiTagIndex == null)
+            if (lyricIndex == null)
                 return null;
 
-            return createCaretPosition(lyrics, lyricIndex.Value, romajiTagIndex.Value);
+            return createCaretPosition(lyrics, lyricIndex.Value, romajiTagIndex);
         }
 
         #region source

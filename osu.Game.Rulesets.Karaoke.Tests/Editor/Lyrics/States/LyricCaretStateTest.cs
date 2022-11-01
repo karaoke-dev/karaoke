@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.EditRuby);
 
             // get the action
-            assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
+            assertCaretPosition(Assert.IsInstanceOf<RubyTagCaretPosition>);
             assertHoverCaretPosition(Assert.IsNull);
         }
 

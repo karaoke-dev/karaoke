@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -23,9 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             var textTagInCaret = GetTextTagByCaret(input);
             var textTagsInLyric = GetTextTagsByLyric(input.Lyric);
 
-            Debug.Assert(textTagInCaret != null);
-            Debug.Assert(textTagsInLyric.Any());
-            Debug.Assert(textTagsInLyric.Contains(textTagInCaret));
+            Debug.Assert(textTagInCaret == null || textTagsInLyric.Contains(textTagInCaret));
         }
 
         protected sealed override bool PositionMovable(TCaretPosition position)
@@ -35,29 +34,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected sealed override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
         {
-            return null;
+            var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
+            if (lyric == null)
+                return null;
+
+            var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
+
+            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.Action);
         }
 
         protected sealed override TCaretPosition? MoveToNextLyric(TCaretPosition currentPosition)
         {
-            return null;
+            var lyric = Lyrics.GetNext(currentPosition.Lyric);
+            if (lyric == null)
+                return null;
+
+            var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
+
+            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.Action);
         }
 
         protected sealed override TCaretPosition? MoveToFirstLyric()
         {
-            return null;
+            var lyric = Lyrics.FirstOrDefault();
+            if (lyric == null)
+                return null;
+
+            var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
+
+            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.Action);
         }
 
         protected sealed override TCaretPosition? MoveToLastLyric()
         {
-            return null;
+            var lyric = Lyrics.LastOrDefault();
+            if (lyric == null)
+                return null;
+
+            var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
+
+            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.Action);
         }
 
         protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric)
         {
             var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
-            if (textTag == null)
-                return null;
 
             return GenerateCaretPosition(lyric, textTag, CaretGenerateType.TargetLyric);
         }
@@ -82,10 +103,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        protected abstract TTextTag GetTextTagByCaret(TCaretPosition position);
+        protected abstract TTextTag? GetTextTagByCaret(TCaretPosition position);
 
         protected abstract IList<TTextTag> GetTextTagsByLyric(Lyric lyric);
 
-        protected abstract TCaretPosition GenerateCaretPosition(Lyric lyric, TTextTag textTag, CaretGenerateType generateType);
+        protected abstract TCaretPosition GenerateCaretPosition(Lyric lyric, TTextTag? textTag, CaretGenerateType generateType);
     }
 }

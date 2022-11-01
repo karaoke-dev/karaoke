@@ -13,13 +13,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        protected override RomajiTag GetTextTagByCaret(RomajiTagCaretPosition position)
+        protected override RomajiTag? GetTextTagByCaret(RomajiTagCaretPosition position)
             => position.RomajiTag;
 
         protected override IList<RomajiTag> GetTextTagsByLyric(Lyric lyric)
             => lyric.RomajiTags;
 
-        protected override RomajiTagCaretPosition GenerateCaretPosition(Lyric lyric, RomajiTag textTag, CaretGenerateType generateType)
+        protected override RomajiTagCaretPosition GenerateCaretPosition(Lyric lyric, RomajiTag? textTag, CaretGenerateType generateType)
             => new(lyric, textTag, generateType);
     }
 }

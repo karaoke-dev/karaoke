@@ -95,7 +95,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     break;
 
                 case NavigateCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric, CaretGenerateType.TargetLyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
+                    break;
+
+                case RubyTagCaretPosition:
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
+                    break;
+
+                case RomajiTagCaretPosition:
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
                     break;
 
                 case TimeTagIndexCaretPosition:
