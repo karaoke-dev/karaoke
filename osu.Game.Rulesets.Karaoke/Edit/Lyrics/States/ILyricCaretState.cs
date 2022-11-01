@@ -9,6 +9,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public interface ILyricCaretState
     {
+        ICaretPosition? HoverCaretPosition => BindableHoverCaretPosition.Value;
+
+        ICaretPosition? CaretPosition => BindableCaretPosition.Value;
+
         IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
         IBindable<ICaretPosition?> BindableCaretPosition { get; }
