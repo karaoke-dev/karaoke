@@ -23,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         bool MoveCaretToTargetPosition(ICaretPosition position);
 
+        bool MoveHoverCaretToTargetPosition(Lyric lyric);
+
         bool MoveHoverCaretToTargetPosition(ICaretPosition position);
 
         bool ConfirmHoverCaretPosition();

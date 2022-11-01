@@ -266,9 +266,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool MoveCaretToTargetPosition(Lyric lyric)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
             var caretPosition = algorithm?.MoveToTargetLyric(lyric);
             if (caretPosition == null)
                 return false;
@@ -293,6 +290,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             postProcess();
 
             return true;
+        }
+
+        public bool MoveHoverCaretToTargetPosition(Lyric lyric)
+        {
+            var caretPosition = algorithm?.MoveToTargetLyric(lyric);
+            if (caretPosition == null)
+                return false;
+
+            return MoveHoverCaretToTargetPosition(caretPosition);
         }
 
         public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
