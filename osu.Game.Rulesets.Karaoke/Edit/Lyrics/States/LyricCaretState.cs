@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.EditRuby => new RubyTagCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRomaji => new RomajiTagCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditTimeTag => subMode is TimeTagEditMode timeTagEditMode ? getTimeTagModeAlgorithm(timeTagEditMode) : throw new InvalidCastException(),
-                LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditNote => new NoteCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(mode))
             };
