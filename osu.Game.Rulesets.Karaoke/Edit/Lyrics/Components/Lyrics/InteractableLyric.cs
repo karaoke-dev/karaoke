@@ -115,6 +115,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
                     lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric));
                     break;
+
+                case NoteCaretPosition:
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
+                    break;
             }
 
             return base.OnMouseMove(e);
