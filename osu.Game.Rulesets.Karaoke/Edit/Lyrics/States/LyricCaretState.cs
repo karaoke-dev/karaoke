@@ -190,7 +190,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 return false;
 
-            return MoveCaretToTargetPosition(position);
+            return moveCaretToTargetPosition(position);
         }
 
         public ICaretPosition? GetCaretPositionByAction(MovingCaretAction action)
@@ -270,10 +270,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (caretPosition == null)
                 return false;
 
-            return MoveCaretToTargetPosition(caretPosition);
+            return moveCaretToTargetPosition(caretPosition);
         }
 
-        public bool MoveCaretToTargetPosition(ICaretPosition position)
+        public bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        {
+            if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+                return false;
+
+            var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+            if (caretPosition == null)
+                return false;
+
+            return moveCaretToTargetPosition(caretPosition);
+        }
+
+        private bool moveCaretToTargetPosition(ICaretPosition position)
         {
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
@@ -295,10 +307,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (caretPosition == null)
                 return false;
 
-            return MoveHoverCaretToTargetPosition(caretPosition);
+            return moveHoverCaretToTargetPosition(caretPosition);
         }
 
-        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
+        public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        {
+            if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+                return false;
+
+            var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+            if (caretPosition == null)
+                return false;
+
+            return moveHoverCaretToTargetPosition(caretPosition);
+        }
+
+        private bool moveHoverCaretToTargetPosition(ICaretPosition position)
         {
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
@@ -318,7 +342,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 return false;
 
-            return MoveCaretToTargetPosition(position);
+            return moveCaretToTargetPosition(position);
         }
 
         public bool ClearHoverCaretPosition()
