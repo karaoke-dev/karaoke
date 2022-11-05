@@ -278,10 +278,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            bool movable = caretPositionMovable(position);
-
-            // stop moving the caret if forbidden by algorithm calculation.
-            if (!movable)
+            if (!caretPositionMovable(position))
                 return false;
 
             bindableHoverCaretPosition.Value = null;
