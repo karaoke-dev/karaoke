@@ -199,6 +199,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToLastIndex(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
         }
 
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0, 0)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, 0, 4)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, -1, null, null)] // will check the invalid case.
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 5, null, null)]
+        public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int timeTagIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var timeTag = lyric.TimeTags.ElementAtOrDefault(timeTagIndex);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
+
+            // Check move to target position.
+            TestMoveToTargetLyric(lyrics, lyric, timeTag, expected, algorithms => algorithms.Mode = mode);
+        }
+
         #endregion
 
         protected override void AssertEqual(TimeTagCaretPosition expected, TimeTagCaretPosition actual)
