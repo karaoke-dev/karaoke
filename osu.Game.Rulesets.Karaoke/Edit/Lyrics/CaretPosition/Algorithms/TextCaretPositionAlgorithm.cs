@@ -66,7 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return CreateCaretPosition(lyric, GetMaxIndex(lyric.Text));
         }
 
-        protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric) => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+        protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric)
+            => MoveToTargetLyric(lyric, GetMinIndex(lyric.Text));
 
         protected sealed override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
         {
@@ -104,6 +105,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             int index = GetMaxIndex(lyric.Text);
 
             return CreateCaretPosition(lyric, index);
+        }
+
+        protected override TCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+        {
+            if (index is not int value)
+                throw new InvalidCastException();
+
+            return CreateCaretPosition(lyric, value, CaretGenerateType.TargetLyric);
         }
 
         private bool lyricMovable(Lyric lyric)

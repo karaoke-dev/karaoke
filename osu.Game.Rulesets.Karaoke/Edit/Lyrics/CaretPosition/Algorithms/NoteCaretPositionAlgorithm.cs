@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -69,10 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         }
 
         protected override NoteCaretPosition? MoveToTargetLyric(Lyric lyric)
-        {
-            // todo: get the first note.
-            return new NoteCaretPosition(lyric, null, CaretGenerateType.TargetLyric);
-        }
+            => MoveToTargetLyric<Note?>(lyric, null);
 
         protected override NoteCaretPosition? MoveToPreviousIndex(NoteCaretPosition currentPosition)
         {
@@ -92,6 +90,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         protected override NoteCaretPosition? MoveToLastIndex(Lyric lyric)
         {
             return null;
+        }
+
+        protected override NoteCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+        {
+            if (index is null)
+                return new NoteCaretPosition(lyric, default, CaretGenerateType.TargetLyric);
+
+            if (index is not Note note)
+                throw new InvalidCastException();
+
+            return new NoteCaretPosition(lyric, note, CaretGenerateType.TargetLyric);
         }
     }
 }

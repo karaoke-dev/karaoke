@@ -89,11 +89,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         [TestCase(nameof(singleLyric), 0, 0)]
         [TestCase(nameof(singleLyricWithNoText), 0, 0)]
-        public void TestMoveToTargetLyric(string sourceName, int expectedLyricIndex, int? expectedIndex)
+        public void TestMoveToTargetLyric(string sourceName, int lyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var lyric = lyrics[expectedLyricIndex];
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var lyric = lyrics[lyricIndex];
+            var expected = createExpectedCaretPosition(lyrics, lyricIndex, expectedIndex);
 
             // Check move to target position.
             TestMoveToTargetLyric(lyrics, lyric, expected);
@@ -151,6 +151,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             // Check is movable
             TestMoveToLastIndex(lyrics, lyric, expected);
+        }
+
+        [TestCase(nameof(singleLyric), 0, 0, 0)]
+        [TestCase(nameof(singleLyric), 0, 4, 4)]
+        [TestCase(nameof(singleLyric), 0, -1, null)] // will check the invalid case.
+        [TestCase(nameof(singleLyric), 0, 5, null)]
+        public void TestMoveToTargetLyric(string sourceName, int lyricIndex, int textIndex, int? expectedTextIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var expected = createExpectedCaretPosition(lyrics, lyricIndex, expectedTextIndex);
+
+            // Check move to target position.
+            TestMoveToTargetLyric(lyrics, lyric, textIndex, expected);
         }
 
         #endregion

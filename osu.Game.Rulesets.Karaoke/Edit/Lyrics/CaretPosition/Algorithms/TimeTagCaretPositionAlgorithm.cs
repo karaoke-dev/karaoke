@@ -104,8 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             var targetTimeTag = lyric.TimeTags.FirstOrDefault(timeTagMovable);
 
-            // should not move to lyric if contains no time-tag.
-            return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag, CaretGenerateType.TargetLyric);
+            return MoveToTargetLyric(lyric, targetTimeTag);
         }
 
         protected override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
@@ -154,6 +153,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveToPreviousIndex(caret);
 
             return caret;
+        }
+
+        protected override TimeTagCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+        {
+            // should not move to lyric if contains no time-tag.
+            if (index is null)
+                return null;
+
+            if (index is not TimeTag timeTag)
+                throw new InvalidCastException();
+
+            return new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric);
         }
 
         private bool timeTagMovable(TimeTag timeTag)

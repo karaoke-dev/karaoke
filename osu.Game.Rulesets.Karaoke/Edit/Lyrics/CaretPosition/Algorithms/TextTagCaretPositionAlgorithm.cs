@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             var textTag = GetTextTagsByLyric(lyric).FirstOrDefault();
 
-            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.TargetLyric);
+            return MoveToTargetLyric(lyric, textTag);
         }
 
         protected sealed override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
@@ -101,6 +102,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         protected sealed override TCaretPosition? MoveToLastIndex(Lyric lyric)
         {
             return null;
+        }
+
+        protected override TCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+        {
+            if (index is null)
+                return GenerateCaretPosition(lyric, default, CaretGenerateType.TargetLyric);
+
+            if (index is not TTextTag textTag)
+                throw new InvalidCastException();
+
+            return GenerateCaretPosition(lyric, textTag, CaretGenerateType.TargetLyric);
         }
 
         protected abstract TTextTag? GetTextTagByCaret(TCaretPosition position);

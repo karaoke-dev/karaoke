@@ -110,11 +110,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]")]
         [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,end]")]
-        public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int expectedLyricIndex, string? expectedTextIndex)
+        public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string? expectedTextIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var lyric = lyrics[expectedLyricIndex];
-            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTextIndex);
+            var lyric = lyrics[lyricIndex];
+            var expected = createExpectedCaretPosition(lyrics, lyricIndex, expectedTextIndex);
 
             // Check move to target position.
             TestMoveToTargetLyric(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
@@ -188,6 +188,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             // Check is movable
             TestMoveToLastIndex(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
+        }
+
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[3,end]", "[3,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[-1,end]", null)] // will check the invalid case.
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[4,start]", null)]
+        public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textIndexText, string? expectedTextIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexText);
+            var expected = createExpectedCaretPosition(lyrics, lyricIndex, expectedTextIndex);
+
+            // Check move to target position.
+            TestMoveToTargetLyric(lyrics, lyric, textIndex, expected, algorithms => algorithms.Mode = mode);
         }
 
         #endregion

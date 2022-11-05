@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         protected override TimeTagIndexCaretPosition? MoveToTargetLyric(Lyric lyric)
         {
             var index = new TextIndex(0, suitableState(TextIndex.IndexState.Start));
-            return new TimeTagIndexCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
+            return MoveToTargetLyric(lyric, index);
         }
 
         protected override TimeTagIndexCaretPosition? MoveToPreviousIndex(TimeTagIndexCaretPosition currentPosition)
@@ -145,6 +145,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveToPreviousIndex(caret);
 
             return caret;
+        }
+
+        protected override TimeTagIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+        {
+            if (index is not TextIndex textIndex)
+                throw new InvalidCastException();
+
+            return new TimeTagIndexCaretPosition(lyric, textIndex, CaretGenerateType.TargetLyric);
         }
 
         private bool textIndexMovable(TextIndex textIndex)
