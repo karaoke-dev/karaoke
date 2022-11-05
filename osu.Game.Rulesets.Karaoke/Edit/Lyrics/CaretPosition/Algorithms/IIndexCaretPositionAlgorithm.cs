@@ -14,5 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         IIndexCaretPosition? MoveToFirstIndex(Lyric lyric);
 
         IIndexCaretPosition? MoveToLastIndex(Lyric lyric);
+
+        IIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index);
     }
 }
