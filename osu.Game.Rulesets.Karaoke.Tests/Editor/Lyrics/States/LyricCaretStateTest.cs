@@ -7,6 +7,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -149,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.View);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(targetLyric);
+            movingCaretByLyric(targetLyric, () => true);
 
             // get the action
             assertCaretPosition(Assert.IsNull);
@@ -162,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.Texting);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(targetLyric);
+            movingCaretByLyric(targetLyric, () => true);
 
             // get the action
             assertCaretPosition(Assert.IsInstanceOf<TypingCaretPosition>);
@@ -179,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.View);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
+            movingCaretByLyric(targetLyric, () => true);
 
             // should not change the caret position if algorithm is null.
             assertCaretPosition(Assert.IsNull);
@@ -192,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.Singer);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
+            movingCaretByLyric(targetLyric, () => true);
 
             // yes, should change the position if contains algorithm.
             assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
@@ -207,7 +208,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             var targetLyric = getLyricFromBeatmap(1);
 
             // should throw the exception if caret position type not match.
-            movingCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric), false);
+            movingCaretByLyric(targetLyric, new TextIndex(), () => false);
         }
 
         #endregion
@@ -220,7 +221,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             changeMode(LyricEditorMode.View);
 
             var targetLyric = getLyricFromBeatmap(1);
-            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
+            movingHoverCaretByLyric(targetLyric, () => true);
 
             // should not change the caret position if algorithm is null.
             assertCaretPosition(Assert.IsNull);
@@ -234,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
 
             var firstLyric = getLyricFromBeatmap(0);
             var targetLyric = getLyricFromBeatmap(1);
-            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric, CaretGenerateType.TargetLyric));
+            movingHoverCaretByLyric(targetLyric, () => true);
 
             // because switch to the singer lyric, so current caret position will at the first lyric.
             assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
@@ -253,7 +254,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             var targetLyric = getLyricFromBeatmap(1);
 
             // should throw the exception if caret position type not match.
-            movingHoverCaretByLyric(new NavigateCaretPosition(targetLyric), false);
+            movingHoverCaretByLyric(targetLyric, new TextIndex(), () => false);
         }
 
         #endregion
@@ -276,42 +277,66 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             });
         }
 
-        private void movingCaretByLyric(Lyric lyric)
+        private void movingCaretByLyric(Lyric lyric, Func<bool> expected)
         {
             AddStep("Moving caret by action", () =>
             {
-                lyricCaretState.MoveCaretToTargetPosition(lyric);
+                try
+                {
+                    lyricCaretState.MoveCaretToTargetPosition(lyric);
+                    Assert.IsTrue(expected());
+                }
+                catch
+                {
+                    Assert.IsFalse(expected());
+                }
             });
         }
 
-        private void movingCaretByLyric(ICaretPosition caretPosition, bool exceptSuccess = true)
+        private void movingCaretByLyric<TItem>(Lyric lyric, TItem? item, Func<bool> expected)
         {
             AddStep("Moving caret by caret position", () =>
             {
                 try
                 {
-                    lyricCaretState.MoveCaretToTargetPosition(caretPosition);
-                    Assert.IsTrue(exceptSuccess);
+                    lyricCaretState.MoveCaretToTargetPosition(lyric, item);
+                    Assert.IsTrue(expected());
                 }
                 catch
                 {
-                    Assert.IsFalse(exceptSuccess);
+                    Assert.IsFalse(expected());
                 }
             });
         }
 
-        private void movingHoverCaretByLyric(ICaretPosition caretPosition, bool exceptSuccess = true)
+        private void movingHoverCaretByLyric(Lyric lyric, Func<bool> expected)
+        {
+            AddStep("Moving hover caret by action", () =>
+            {
+                try
+                {
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
+                    Assert.IsTrue(expected());
+                }
+                catch
+                {
+                    Assert.IsFalse(expected());
+                }
+            });
+        }
+
+        private void movingHoverCaretByLyric<TItem>(Lyric lyric, TItem? item, Func<bool> expected)
         {
             AddStep("Moving hover caret by caret position", () =>
             {
                 try
                 {
-                    lyricCaretState.MoveHoverCaretToTargetPosition(caretPosition);
-                    Assert.IsTrue(exceptSuccess);
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, item);
+                    Assert.IsTrue(expected());
                 }
                 catch
                 {
-                    Assert.IsFalse(exceptSuccess);
+                    Assert.IsFalse(expected());
                 }
             });
         }
