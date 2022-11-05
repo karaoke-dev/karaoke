@@ -62,5 +62,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             AssertEqual(expected, actual);
             CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
+
+        protected void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex? index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        {
+            var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
+            if (algorithm == null)
+                throw new ArgumentNullException();
+
+            invokeAlgorithm?.Invoke(algorithm);
+
+            var actual = algorithm.MoveToTargetLyric(lyric, index) as TCaret?;
+            AssertEqual(expected, actual);
+            CheckCaretGenerateType(CaretGenerateType.TargetLyric, actual);
+        }
     }
 }
