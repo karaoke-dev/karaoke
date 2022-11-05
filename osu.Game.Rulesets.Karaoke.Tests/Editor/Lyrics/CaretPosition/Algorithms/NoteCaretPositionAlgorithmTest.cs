@@ -141,6 +141,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToLastIndex(lyrics, lyric, expected);
         }
 
+        [TestCase(nameof(singleLyric), 0, null, null)]
+        public void TestMoveToTarget(string sourceName, int expectedLyricIndex, int? expectedNoteIndex, int? noteIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[expectedLyricIndex];
+            var note = noteIndex != null ? new Note { ReferenceLyric = lyric } : null;
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, noteIndex);
+
+            // Check move to target position.
+            TestMoveToTargetLyric(lyrics, lyric, note, expected);
+        }
+
         #endregion
 
         protected override void AssertEqual(NoteCaretPosition expected, NoteCaretPosition actual)
