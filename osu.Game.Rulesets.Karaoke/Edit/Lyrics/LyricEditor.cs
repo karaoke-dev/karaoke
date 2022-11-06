@@ -168,17 +168,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }, true);
         }
 
-        private void initialSubModeChanged<TSubModeEnum>() where TSubModeEnum : Enum
+        private void initialSubModeChanged<TSubMode>() where TSubMode : Enum
         {
-            var editModeStates = InternalChildren.OfType<IHasEditModeState<TSubModeEnum>>();
+            var editModeState = getEditModeState<TSubMode>();
+            if (editModeState == null)
+                throw new NullReferenceException("Unknows sub mode.");
 
-            foreach (var editModeState in editModeStates)
+            editModeState.BindableEditMode.BindValueChanged(e =>
             {
-                editModeState.BindableEditMode.BindValueChanged(e =>
-                {
-                    updateTheSubMode();
-                });
-            }
+                updateTheSubMode();
+            });
         }
 
         private void updateTheSubMode()
