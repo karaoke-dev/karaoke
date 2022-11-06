@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         void SwitchMode(LyricEditorMode mode);
 
+        void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum;
+
         void NavigateToFix(LyricEditorMode mode);
     }
 

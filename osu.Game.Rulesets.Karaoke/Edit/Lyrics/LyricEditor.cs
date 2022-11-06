@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -431,6 +432,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void SwitchMode(LyricEditorMode mode)
             => bindableMode.Value = mode;
+
+        public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+        {
+            var editModeState = getEditModeState<TSubMode>();
+            if (editModeState == null)
+                throw new NullReferenceException("Unknows sub mode.");
+
+            editModeState.ChangeEditMode(subMode);
+        }
+
+        [CanBeNull]
+        private IHasEditModeState<TSubMode> getEditModeState<TSubMode>() where TSubMode : Enum
+            => InternalChildren.OfType<IHasEditModeState<TSubMode>>().FirstOrDefault();
 
         public virtual void NavigateToFix(LyricEditorMode mode)
         {
