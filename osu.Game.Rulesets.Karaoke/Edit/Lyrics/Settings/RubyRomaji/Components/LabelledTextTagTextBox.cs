@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
                         if (hover)
                         {
                             // trigger selected if hover on delete button.
-                            TriggerSelect();
+                            TriggerSelect(textTag);
                         }
                     }
                 }
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components
                     Selected = selected =>
                     {
                         if (selected)
-                            TriggerSelect();
+                            TriggerSelect(textTag);
                     },
                     Action = (indexType, action) =>
                     {

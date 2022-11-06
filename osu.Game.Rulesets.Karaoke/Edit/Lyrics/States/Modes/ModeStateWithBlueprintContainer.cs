@@ -81,6 +81,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 
         protected abstract IEnumerable<TObject> SelectableProperties(Lyric lyric);
 
+        public void Select(TObject item)
+        {
+            // not trigger again if already focus.
+            if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                return;
+
+            // trigger selected.
+            SelectedItems.Clear();
+            SelectedItems.Add(item);
+        }
+
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
         {

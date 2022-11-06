@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class LabelledObjectFieldTextBox<T> : LabelledTextBox where T : class
     {
-        protected readonly BindableList<T> SelectedItems = new();
+        protected readonly IBindableList<T> SelectedItems = new BindableList<T>();
 
         protected new ObjectFieldTextBox Component => (ObjectFieldTextBox)base.Component;
 
@@ -62,16 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             };
         }
 
-        protected void TriggerSelect()
-        {
-            // not trigger again if already focus.
-            if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
-                return;
-
-            // trigger selected.
-            SelectedItems.Clear();
-            SelectedItems.Add(item);
-        }
+        protected abstract void TriggerSelect(T item);
 
         protected abstract string GetFieldValue(T item);
 
@@ -87,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             Selected = selected =>
             {
                 if (selected)
-                    TriggerSelect();
+                    TriggerSelect(item);
             }
         };
 
