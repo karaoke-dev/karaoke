@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToPreviousIndex(caret) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToNextIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -34,7 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToNextIndex(caret) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToFirstIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -47,7 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToFirstIndex(lyric) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToLastIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -60,7 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToLastIndex(lyric) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex? index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -73,7 +69,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToTargetLyric(lyric, index) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.TargetLyric, actual);
         }
     }
 }
