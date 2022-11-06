@@ -3,18 +3,29 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
-    public class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState>
+    public class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState, RomajiTagEditMode>
     {
-        protected override EditModeSelectionItem CreateSelectionItem(TextTagEditMode editMode) =>
+        protected override Color4 GetColour(OsuColour colours, RomajiTagEditMode mode, bool active) =>
+            mode switch
+            {
+                RomajiTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
+                RomajiTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
+                RomajiTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+            };
+
+        protected override EditModeSelectionItem CreateSelectionItem(RomajiTagEditMode editMode) =>
             editMode switch
             {
-                TextTagEditMode.Generate => new EditModeSelectionItem("Generate", "Auto-generate romajies in the lyric."),
-                TextTagEditMode.Edit => new EditModeSelectionItem("Edit", new DescriptionFormat
+                RomajiTagEditMode.Generate => new EditModeSelectionItem("Generate", "Auto-generate romajies in the lyric."),
+                RomajiTagEditMode.Edit => new EditModeSelectionItem("Edit", new DescriptionFormat
                 {
                     Text = "Create / delete and edit lyric rubies in here.\n"
                            + $"Click [{DescriptionFormat.LINK_KEY_INPUT}](directions) to select the target lyric.\n"
@@ -48,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                         }
                     }
                 }),
-                TextTagEditMode.Verify => new EditModeSelectionItem("Verify", "Check invalid romajies in here."),
+                RomajiTagEditMode.Verify => new EditModeSelectionItem("Verify", "Check invalid romajies in here."),
                 _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
     }
