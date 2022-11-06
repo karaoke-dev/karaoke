@@ -187,10 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         public bool MoveCaret(MovingCaretAction action)
         {
             var position = GetCaretPositionByAction(action);
-            if (position == null)
-                return false;
-
-            return MoveCaretToTargetPosition(position);
+            return moveCaretToTargetPosition(position);
         }
 
         public ICaretPosition? GetCaretPositionByAction(MovingCaretAction action)
@@ -267,21 +264,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         public bool MoveCaretToTargetPosition(Lyric lyric)
         {
             var caretPosition = algorithm?.MoveToTargetLyric(lyric);
-            if (caretPosition == null)
-                return false;
-
-            return MoveCaretToTargetPosition(caretPosition);
+            return moveCaretToTargetPosition(caretPosition);
         }
 
-        public bool MoveCaretToTargetPosition(ICaretPosition position)
+        public bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        {
+            if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+                return false;
+
+            var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+            return moveCaretToTargetPosition(caretPosition);
+        }
+
+        private bool moveCaretToTargetPosition(ICaretPosition? position)
         {
             if (position == null)
-                throw new ArgumentNullException(nameof(position));
+                return false;
 
-            bool movable = caretPositionMovable(position);
-
-            // stop moving the caret if forbidden by algorithm calculation.
-            if (!movable)
+            if (!caretPositionMovable(position))
                 return false;
 
             bindableHoverCaretPosition.Value = null;
@@ -295,16 +295,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         public bool MoveHoverCaretToTargetPosition(Lyric lyric)
         {
             var caretPosition = algorithm?.MoveToTargetLyric(lyric);
-            if (caretPosition == null)
-                return false;
-
-            return MoveHoverCaretToTargetPosition(caretPosition);
+            return moveHoverCaretToTargetPosition(caretPosition);
         }
 
-        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
+        public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        {
+            if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+                return false;
+
+            var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+            return moveHoverCaretToTargetPosition(caretPosition);
+        }
+
+        private bool moveHoverCaretToTargetPosition(ICaretPosition? position)
         {
             if (position == null)
-                throw new ArgumentNullException(nameof(position));
+                return false;
 
             if (!caretPositionMovable(position))
                 return false;
@@ -318,10 +324,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         {
             // place hover caret to target position.
             var position = BindableHoverCaretPosition.Value;
-            if (position == null)
-                return false;
-
-            return MoveCaretToTargetPosition(position);
+            return moveCaretToTargetPosition(position);
         }
 
         public bool ClearHoverCaretPosition()

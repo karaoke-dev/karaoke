@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -200,15 +199,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                     Action = () =>
                     {
                         // navigate to current lyric.
-                        ICaretPosition caretPosition = timeTagModeState.EditMode switch
+                        switch (timeTagModeState.EditMode)
                         {
-                            TimeTagEditMode.Create => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
-                            TimeTagEditMode.Recording => new TimeTagCaretPosition(lyric, timeTag),
-                            TimeTagEditMode.Adjust => new NavigateCaretPosition(lyric),
-                            _ => throw new ArgumentOutOfRangeException(nameof(timeTagModeState.EditMode))
-                        };
+                            case TimeTagEditMode.Create:
+                                lyricCaretState.MoveCaretToTargetPosition(lyric, timeTag?.Index ?? new TextIndex());
+                                break;
 
-                        lyricCaretState.MoveCaretToTargetPosition(caretPosition);
+                            case TimeTagEditMode.Recording:
+                                lyricCaretState.MoveCaretToTargetPosition(lyric, timeTag);
+                                break;
+
+                            case TimeTagEditMode.Adjust:
+                                lyricCaretState.MoveCaretToTargetPosition(lyric);
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
 
                         // set current time-tag as selected.
                         selectedTimeTags.Clear();

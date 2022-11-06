@@ -106,8 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
                 // calculate new caret position.
                 var lyric = caretPosition.Value.Lyric;
                 int index = caretPosition.Value.Index + offset;
-                caretPosition = new TypingCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
-                lyricCaretState.MoveCaretToTargetPosition(caretPosition);
+                lyricCaretState.MoveCaretToTargetPosition(lyric, index);
             }
         }
 

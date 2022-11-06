@@ -86,12 +86,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             {
                 case CuttingCaretPosition:
                     int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new CuttingCaretPosition(lyric, cuttingLyricStringIndex, CaretGenerateType.TargetLyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, cuttingLyricStringIndex);
                     break;
 
                 case TypingCaretPosition:
                     int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TypingCaretPosition(lyric, typingStringIndex, CaretGenerateType.TargetLyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, typingStringIndex);
                     break;
 
                 case NavigateCaretPosition:
@@ -108,12 +108,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
                 case TimeTagIndexCaretPosition:
                     var textIndex = karaokeSpriteText.GetHoverIndex(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex, CaretGenerateType.TargetLyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, textIndex);
                     break;
 
                 case TimeTagCaretPosition:
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
                     break;
 
                 case NoteCaretPosition:
