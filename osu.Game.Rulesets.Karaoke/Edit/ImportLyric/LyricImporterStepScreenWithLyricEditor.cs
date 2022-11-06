@@ -72,8 +72,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
                 // for some mode, we need to switch to generate section.
                 languageModeState.ChangeEditMode(LanguageEditMode.Generate);
-                editRubyModeState.ChangeEditMode(TextTagEditMode.Generate);
-                editRomajiModeState.ChangeEditMode(TextTagEditMode.Generate);
+                editRubyModeState.ChangeEditMode(RubyTagEditMode.Generate);
+                editRomajiModeState.ChangeEditMode(RomajiTagEditMode.Generate);
             }
 
             protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
