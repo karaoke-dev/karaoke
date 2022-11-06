@@ -131,10 +131,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.Texting => subMode is TextingEditMode textingEditMode ? getTextingmodeAlgorithm(textingEditMode) : throw new InvalidCastException(),
                 LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.EditRuby => new RubyTagCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.EditRomaji => new RomajiTagCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditTimeTag => subMode is TimeTagEditMode timeTagEditMode ? getTimeTagModeAlgorithm(timeTagEditMode) : throw new InvalidCastException(),
-                LyricEditorMode.EditNote => new NoteCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(mode))
             };

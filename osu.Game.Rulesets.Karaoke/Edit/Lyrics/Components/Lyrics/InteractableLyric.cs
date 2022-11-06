@@ -98,14 +98,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
                     break;
 
-                case RubyTagCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
-                    break;
-
-                case RomajiTagCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
-                    break;
-
                 case TimeTagIndexCaretPosition:
                     var textIndex = karaokeSpriteText.GetHoverIndex(position);
                     lyricCaretState.MoveHoverCaretToTargetPosition(lyric, textIndex);
@@ -114,10 +106,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 case TimeTagCaretPosition:
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
                     lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
-                    break;
-
-                case NoteCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
                     break;
             }
 
