@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
-    public class RomajiTagSettings : TextTagSettings
+    public class RomajiTagSettings : TextTagSettings<RomajiTagEditMode>
     {
         [BackgroundDependencyLoader]
         private void load(IEditRomajiModeState romajiModeState)
@@ -24,17 +24,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected override IReadOnlyList<Drawable> CreateSections() => EditMode.Value switch
         {
-            TextTagEditMode.Generate => new Drawable[]
+            RomajiTagEditMode.Generate => new Drawable[]
             {
                 new RomajiTagEditModeSection(),
                 new RomajiTagAutoGenerateSection(),
             },
-            TextTagEditMode.Edit => new Drawable[]
+            RomajiTagEditMode.Edit => new Drawable[]
             {
                 new RomajiTagEditModeSection(),
                 new RomajiTagEditSection(),
             },
-            TextTagEditMode.Verify => new Drawable[]
+            RomajiTagEditMode.Verify => new Drawable[]
             {
                 new RomajiTagEditModeSection(),
                 new RomajiTagIssueSection(),

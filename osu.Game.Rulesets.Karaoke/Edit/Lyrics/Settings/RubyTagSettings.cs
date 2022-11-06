@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
-    public class RubyTagSettings : TextTagSettings
+    public class RubyTagSettings : TextTagSettings<RubyTagEditMode>
     {
         [BackgroundDependencyLoader]
         private void load(IEditRubyModeState editRubyModeState)
@@ -24,17 +24,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected override IReadOnlyList<Drawable> CreateSections() => EditMode.Value switch
         {
-            TextTagEditMode.Generate => new Drawable[]
+            RubyTagEditMode.Generate => new Drawable[]
             {
                 new RubyTagEditModeSection(),
                 new RubyTagAutoGenerateSection(),
             },
-            TextTagEditMode.Edit => new Drawable[]
+            RubyTagEditMode.Edit => new Drawable[]
             {
                 new RubyTagEditModeSection(),
                 new RubyTagEditSection(),
             },
-            TextTagEditMode.Verify => new Drawable[]
+            RubyTagEditMode.Verify => new Drawable[]
             {
                 new RubyTagEditModeSection(),
                 new RubyTagIssueSection(),
