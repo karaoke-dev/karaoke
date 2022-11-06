@@ -31,14 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected abstract TCaretPosition? MoveToTargetLyric(Lyric lyric);
 
-        public bool PositionMovable(ICaretPosition position)
-        {
-            if (position is not TCaretPosition tCaretPosition)
-                throw new InvalidCastException(nameof(position));
-
-            return PositionMovable(tCaretPosition);
-        }
-
         public ICaretPosition? MoveToPreviousLyric(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)

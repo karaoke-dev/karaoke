@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (movedCaretPosition == null)
                 return movedCaretPosition;
 
-            if (!PositionMovable(movedCaretPosition))
+            if (!PositionMovable(movedCaretPosition.Value))
                 return null;
 
             Validate(movedCaretPosition.Value);
