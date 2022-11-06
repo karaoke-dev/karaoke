@@ -65,11 +65,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
             [Resolved]
             private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
 
+            [Resolved]
+            private IEditRomajiModeState editRomajiModeState { get; set; }
+
             public LabelledRomajiTagTextBox(Lyric lyric, RomajiTag textTag)
                 : base(lyric, textTag)
             {
                 Debug.Assert(lyric.RomajiTags.Contains(textTag));
             }
+
+            protected override void TriggerSelect(RomajiTag item)
+                => editRomajiModeState.Select(item);
 
             protected override void ApplyValue(RomajiTag item, string value)
                 => romajiTagsChangeHandler.SetText(item, value);
@@ -81,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                 => romajiTagsChangeHandler.Remove(textTag);
 
             [BackgroundDependencyLoader]
-            private void load(IEditRomajiModeState editRomajiModeState)
+            private void load()
             {
                 SelectedItems.BindTo(editRomajiModeState.SelectedItems);
             }

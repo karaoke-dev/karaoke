@@ -108,10 +108,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
             [Resolved]
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 
+            [Resolved]
+            private IEditNoteModeState editNoteModeState { get; set; }
+
             public LabelledNoteTextTextBox(Note item)
                 : base(item)
             {
             }
+
+            protected override void TriggerSelect(Note item)
+                => editNoteModeState.Select(item);
 
             protected override string GetFieldValue(Note note)
                 => note.Text;
@@ -120,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 => notePropertyChangeHandler.ChangeText(value);
 
             [BackgroundDependencyLoader]
-            private void load(IEditNoteModeState editNoteModeState)
+            private void load()
             {
                 SelectedItems.BindTo(editNoteModeState.SelectedItems);
             }
@@ -131,10 +137,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
             [Resolved]
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 
+            [Resolved]
+            private IEditNoteModeState editNoteModeState { get; set; }
+
             public LabelledNoteRubyTextTextBox(Note item)
                 : base(item)
             {
             }
+
+            protected override void TriggerSelect(Note item)
+                => editNoteModeState.Select(item);
 
             protected override string GetFieldValue(Note note)
                 => note.RubyText;
@@ -143,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 => notePropertyChangeHandler.ChangeRubyText(value);
 
             [BackgroundDependencyLoader]
-            private void load(IEditNoteModeState editNoteModeState)
+            private void load()
             {
                 SelectedItems.BindTo(editNoteModeState.SelectedItems);
             }
