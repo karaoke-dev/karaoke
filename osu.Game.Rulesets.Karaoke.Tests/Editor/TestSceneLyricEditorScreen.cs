@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 var editModeSection = this.ChildrenOfType<EditModeSection<T>>().Single();
                 editModeSection.UpdateEditMode(editMode);
             });
-            AddWaitStep("wait for switch to new edit mode.", 1);
+            AddWaitStep("wait for switch to new edit mode.", 10);
         }
     }
 }
