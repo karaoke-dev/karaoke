@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -167,17 +168,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }, true);
         }
 
-        private void initialSubModeChanged<TSubModeEnum>() where TSubModeEnum : Enum
+        private void initialSubModeChanged<TSubMode>() where TSubMode : Enum
         {
-            var editModeStates = InternalChildren.OfType<IHasEditModeState<TSubModeEnum>>();
+            var editModeState = getEditModeState<TSubMode>();
+            if (editModeState == null)
+                throw new NullReferenceException("Unknows sub mode.");
 
-            foreach (var editModeState in editModeStates)
+            editModeState.BindableEditMode.BindValueChanged(e =>
             {
-                editModeState.BindableEditMode.BindValueChanged(e =>
-                {
-                    updateTheSubMode();
-                });
-            }
+                updateTheSubMode();
+            });
         }
 
         private void updateTheSubMode()
@@ -426,6 +426,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
         }
 
+        public LyricEditorMode Mode
+            => bindableMode.Value;
+
+        public void SwitchMode(LyricEditorMode mode)
+            => bindableMode.Value = mode;
+
+        public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+        {
+            var editModeState = getEditModeState<TSubMode>();
+            if (editModeState == null)
+                throw new NullReferenceException("Unknows sub mode.");
+
+            editModeState.ChangeEditMode(subMode);
+        }
+
+        [CanBeNull]
+        private IHasEditModeState<TSubMode> getEditModeState<TSubMode>() where TSubMode : Enum
+            => InternalChildren.OfType<IHasEditModeState<TSubMode>>().FirstOrDefault();
+
         public virtual void NavigateToFix(LyricEditorMode mode)
         {
             switch (mode)
@@ -440,12 +459,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
-
-        public LyricEditorMode Mode
-            => bindableMode.Value;
-
-        public void SwitchMode(LyricEditorMode mode)
-            => bindableMode.Value = mode;
 
         private class LocalScrollingInfo : IScrollingInfo
         {
