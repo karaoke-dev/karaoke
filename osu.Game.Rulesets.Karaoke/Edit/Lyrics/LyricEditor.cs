@@ -426,6 +426,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
         }
 
+        public LyricEditorMode Mode
+            => bindableMode.Value;
+
+        public void SwitchMode(LyricEditorMode mode)
+            => bindableMode.Value = mode;
+
         public virtual void NavigateToFix(LyricEditorMode mode)
         {
             switch (mode)
@@ -440,12 +446,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
-
-        public LyricEditorMode Mode
-            => bindableMode.Value;
-
-        public void SwitchMode(LyricEditorMode mode)
-            => bindableMode.Value = mode;
 
         private class LocalScrollingInfo : IScrollingInfo
         {
