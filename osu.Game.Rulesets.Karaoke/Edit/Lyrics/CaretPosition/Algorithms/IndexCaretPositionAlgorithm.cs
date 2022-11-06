@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
@@ -33,10 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToPreviousIndex(tCaretPosition);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         public IIndexCaretPosition? MoveToNextIndex(IIndexCaretPosition currentPosition)
@@ -47,44 +43,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToNextIndex(tCaretPosition);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToFirstIndex(Lyric lyric)
         {
             var movedCaretPosition = MoveToFirstIndex(lyric);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToLastIndex(Lyric lyric)
         {
             var movedCaretPosition = MoveToLastIndex(lyric);
-            if (movedCaretPosition != null)
-                Validate(movedCaretPosition.Value);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
         {
             var movedCaretPosition = MoveToTargetLyric(lyric, index);
-
-            if (movedCaretPosition == null)
-                return movedCaretPosition;
-
-            if (!PositionMovable(movedCaretPosition))
-                return null;
-
-            Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.TargetLyric);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
         }
     }
 }

@@ -31,14 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected abstract TCaretPosition? MoveToTargetLyric(Lyric lyric);
 
-        public bool PositionMovable(ICaretPosition position)
-        {
-            if (position is not TCaretPosition tCaretPosition)
-                throw new InvalidCastException(nameof(position));
-
-            return PositionMovable(tCaretPosition);
-        }
-
         public ICaretPosition? MoveToPreviousLyric(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
@@ -47,13 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToPreviousLyric(tCaretPosition);
-            if (movedCaretPosition == null)
-                return movedCaretPosition;
-
-            Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         public ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition)
@@ -64,48 +50,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Validate(tCaretPosition);
 
             var movedCaretPosition = MoveToNextLyric(tCaretPosition);
-            if (movedCaretPosition == null)
-                return movedCaretPosition;
-
-            Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToFirstLyric()
         {
             var movedCaretPosition = MoveToFirstLyric();
-            if (movedCaretPosition == null)
-                return movedCaretPosition;
-
-            Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToLastLyric()
         {
             var movedCaretPosition = MoveToLastLyric();
-            if (movedCaretPosition == null)
-                return movedCaretPosition;
-
-            Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.Action);
-
-            return movedCaretPosition;
+            return PostValidate(movedCaretPosition, CaretGenerateType.Action);
         }
 
         ICaretPosition? ICaretPositionAlgorithm.MoveToTargetLyric(Lyric lyric)
         {
             var movedCaretPosition = MoveToTargetLyric(lyric);
+            return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
+        }
 
+        protected TCaretPosition? PostValidate(TCaretPosition? movedCaretPosition, CaretGenerateType generateType)
+        {
             if (movedCaretPosition == null)
-                return movedCaretPosition;
+                return null;
+
+            if (!PositionMovable(movedCaretPosition.Value))
+                return null;
 
             Validate(movedCaretPosition.Value);
-            Debug.Assert(movedCaretPosition.Value.GenerateType == CaretGenerateType.TargetLyric);
+            Debug.Assert(movedCaretPosition.Value.GenerateType == generateType);
 
             return movedCaretPosition;
         }

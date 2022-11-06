@@ -20,7 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             invokeAlgorithm?.Invoke(algorithm);
 
-            bool actual = algorithm.PositionMovable(caret);
+            // because we made the position movable into the protected, so use another way to test it.
+            var method = algorithm.GetType().GetMethod("PositionMovable", BindingFlags.Instance | BindingFlags.NonPublic);
+            object? result = method?.Invoke(algorithm, new object[] { caret });
+            if (result is not bool actual)
+                throw new InvalidCastException();
+
             Assert.AreEqual(expected, actual);
         }
 

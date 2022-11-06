@@ -281,9 +281,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 return false;
 
-            if (!caretPositionMovable(position))
-                return false;
-
             bindableHoverCaretPosition.Value = null;
             bindableCaretPosition.Value = position;
 
@@ -312,9 +309,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 return false;
 
-            if (!caretPositionMovable(position))
-                return false;
-
             bindableHoverCaretPosition.Value = position;
 
             return true;
@@ -333,9 +327,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             return true;
         }
-
-        private bool caretPositionMovable(ICaretPosition position)
-            => algorithm?.PositionMovable(position) ?? false;
 
         public void SyncSelectedHitObjectWithCaret()
         {
