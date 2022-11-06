@@ -8,5 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
     public interface IHasBlueprintSelection<T> where T : class
     {
         BindableList<T> SelectedItems { get; }
+
+        void Select(T item);
     }
 }
