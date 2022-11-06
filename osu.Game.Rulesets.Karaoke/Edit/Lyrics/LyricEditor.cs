@@ -65,6 +65,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricEditorClipboard))]
         private readonly LyricEditorClipboard lyricEditorClipboard;
 
+        [Cached(typeof(IIssueNavigator))]
+        private readonly IssueNavigator issueNavigator;
+
         [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
@@ -102,6 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             // Separated feature.
             AddInternal(lyricEditorClipboard = new LyricEditorClipboard());
+            AddInternal(issueNavigator = new IssueNavigator());
 
             Add(gridContainer = new GridContainer
             {
