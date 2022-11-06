@@ -39,7 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToPreviousLyric(caret) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToNextLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -52,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToNextLyric(caret) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToFirstLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -65,7 +63,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToFirstLyric() as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToLastLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -78,7 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToLastLyric() as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.Action, actual);
         }
 
         protected void TestMoveToTargetLyric(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -91,7 +87,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
             var actual = algorithm.MoveToTargetLyric(lyric) as TCaret?;
             AssertEqual(expected, actual);
-            CheckCaretGenerateType(CaretGenerateType.TargetLyric, actual);
         }
 
         protected void AssertEqual(TCaret? expected, TCaret? actual)
@@ -105,14 +100,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             {
                 AssertEqual(expected.Value, actual.Value);
             }
-        }
-
-        protected void CheckCaretGenerateType(CaretGenerateType expected, TCaret? actual)
-        {
-            if (actual == null)
-                return;
-
-            Assert.AreEqual(expected, actual.Value.GenerateType);
         }
 
         protected abstract void AssertEqual(TCaret expected, TCaret actual);
