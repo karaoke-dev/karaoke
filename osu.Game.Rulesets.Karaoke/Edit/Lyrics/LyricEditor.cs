@@ -145,9 +145,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
 
-            initialSubModeChanged<TextingEditMode>(); // texting.
+            initialSubModeChanged<TextingEditMode>(); // texting
             initialSubModeChanged<LanguageEditMode>(); // language
-            initialSubModeChanged<TextTagEditMode>(); // ruby and romaji.
+            initialSubModeChanged<RubyTagEditMode>(); // ruby
+            initialSubModeChanged<RomajiTagEditMode>(); // romaji
             initialSubModeChanged<TimeTagEditMode>(); //time-tag
             initialSubModeChanged<NoteEditMode>(); // note
 

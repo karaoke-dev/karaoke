@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public enum TextTagEditMode
+    public enum RubyTagEditMode
     {
         Generate,
 

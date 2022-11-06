@@ -10,18 +10,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
     public class EditRomajiModeState : ModeStateWithBlueprintContainer<RomajiTag>, IEditRomajiModeState
     {
-        private readonly Bindable<TextTagEditMode> bindableEditMode = new();
+        private readonly Bindable<RomajiTagEditMode> bindableEditMode = new();
 
-        public IBindable<TextTagEditMode> BindableEditMode => bindableEditMode;
+        public IBindable<RomajiTagEditMode> BindableEditMode => bindableEditMode;
 
-        public void ChangeEditMode(TextTagEditMode mode)
+        public void ChangeEditMode(RomajiTagEditMode mode)
             => bindableEditMode.Value = mode;
 
         protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
 
         protected override bool SelectFirstProperty(Lyric lyric)
-            => BindableEditMode.Value == TextTagEditMode.Edit;
+            => BindableEditMode.Value == RomajiTagEditMode.Edit;
 
         protected override IEnumerable<RomajiTag> SelectableProperties(Lyric lyric)
             => lyric.RomajiTags;

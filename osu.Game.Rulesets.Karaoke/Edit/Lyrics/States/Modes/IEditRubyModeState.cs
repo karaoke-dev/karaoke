@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public interface IEditRubyModeState : IHasEditModeState<TextTagEditMode>, IHasBlueprintSelection<RubyTag>
+    public interface IEditRubyModeState : IHasEditModeState<RubyTagEditMode>, IHasBlueprintSelection<RubyTag>
     {
     }
 }

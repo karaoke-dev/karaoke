@@ -81,14 +81,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         public void TestEditRubyMode()
         {
             switchToMode(LyricEditorMode.EditRuby);
-            clickEditModeButtons<TextTagEditMode>();
+            clickEditModeButtons<RubyTagEditMode>();
         }
 
         [Test]
         public void TestEditRomajiMode()
         {
             switchToMode(LyricEditorMode.EditRomaji);
-            clickEditModeButtons<TextTagEditMode>();
+            clickEditModeButtons<RomajiTagEditMode>();
         }
 
         [Test]
