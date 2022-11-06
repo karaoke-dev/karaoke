@@ -399,6 +399,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
                 };
 
+            public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+            {
+                // there's no need to do anything.
+            }
+
             public void NavigateToFix(LyricEditorMode mode)
                 => throw new NotImplementedException();
         }
