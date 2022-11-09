@@ -13,16 +13,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private readonly List<ICheck> checks = new()
         {
-            new CheckLyricText(),
+            new CheckBeatmapAvailableTranslates(),
             new CheckLyricLanguage(),
             new CheckLyricReferenceLyric(),
-            new CheckLyricRubyTag(),
             new CheckLyricRomajiTag(),
+            new CheckLyricRubyTag(),
             new CheckLyricSinger(),
+            new CheckLyricText(),
+            new CheckLyricTime(),
+            new CheckLyricTimeTag(),
             new CheckLyricTranslate(),
             new CheckNoteReferenceLyric(),
             new CheckNoteText(),
-            new CheckBeatmapAvailableTranslates(),
         };
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
