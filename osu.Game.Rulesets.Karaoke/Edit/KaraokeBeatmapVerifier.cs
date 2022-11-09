@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeBeatmapVerifier : IBeatmapVerifier
     {
-        private readonly List<ICheck> checks = new()
+        protected readonly List<ICheck> Checks = new()
         {
             new CheckBeatmapAvailableTranslates(),
             new CheckLyricLanguage(),
@@ -27,6 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckNoteText(),
         };
 
-        public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context) => AvailableChecks(Checks).SelectMany(check => check.Run(context));
+
+        protected virtual IEnumerable<ICheck> AvailableChecks(List<ICheck> checks) => checks;
     }
 }
