@@ -65,6 +65,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricEditorClipboard))]
         private readonly LyricEditorClipboard lyricEditorClipboard;
 
+        [Cached(typeof(ILyricEditorVerifier))]
+        private readonly LyricEditorVerifier lyricEditorVerifier;
+
         [Cached(typeof(IIssueNavigator))]
         private readonly IssueNavigator issueNavigator;
 
@@ -105,6 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             // Separated feature.
             AddInternal(lyricEditorClipboard = new LyricEditorClipboard());
+            AddInternal(lyricEditorVerifier = new LyricEditorVerifier());
             AddInternal(issueNavigator = new IssueNavigator());
 
             Add(gridContainer = new GridContainer
