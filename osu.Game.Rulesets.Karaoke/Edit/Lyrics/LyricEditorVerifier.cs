@@ -157,36 +157,8 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
         return verifier.Run(context);
     }
 
-    private static LyricEditorMode getNavigateEditMode(ICheck check)
-    {
-        switch (check)
-        {
-            case CheckLyricText:
-                return LyricEditorMode.Texting;
-
-            case CheckLyricReferenceLyric:
-                return LyricEditorMode.Reference;
-
-            case CheckLyricLanguage:
-                return LyricEditorMode.Language;
-
-            case CheckLyricRubyTag:
-                return LyricEditorMode.EditRuby;
-
-            case CheckLyricRomajiTag:
-                return LyricEditorMode.EditRomaji;
-
-            case CheckLyricTimeTag:
-                return LyricEditorMode.EditTimeTag;
-
-            case CheckNoteReferenceLyric:
-            case CheckNoteText:
-                return LyricEditorMode.EditNote;
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
+    private LyricEditorMode getNavigateEditMode(ICheck check)
+        => verifier.GetNavigateEditMode(check);
 
     protected override void Dispose(bool isDisposing)
     {
@@ -209,6 +181,17 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
             { LyricEditorMode.EditTimeTag, new ICheck[] { new CheckLyricTimeTag() } },
             { LyricEditorMode.EditNote, new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText() } },
         };
+
+        public LyricEditorMode GetNavigateEditMode(ICheck check)
+        {
+            foreach (var (editorMode, checks) in editModeChecks)
+            {
+                if (checks.Contains(check))
+                    return editorMode;
+            }
+
+            throw new ArgumentOutOfRangeException();
+        }
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
