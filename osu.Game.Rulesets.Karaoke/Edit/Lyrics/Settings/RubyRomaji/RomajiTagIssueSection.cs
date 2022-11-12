@@ -5,43 +5,17 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricRomajiTag;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
-    public class RomajiTagIssueSection : LyricEditorSection
+    public class RomajiTagIssueSection : TextTagIssueSection
     {
-        protected override LocalisableString Title => "Invalid romaji-tag";
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
 
-        private BindableDictionary<Lyric, Issue[]> bindableReports;
-
-        private RomajiTagIssueTable table;
-
-        [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager)
-        {
-            Children = new[]
-            {
-                table = new RomajiTagIssueTable(),
-            };
-
-            bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((_, _) =>
-            {
-                var issues = bindableReports.Values.SelectMany(x => x);
-
-                // todo: use better way to get the invalid message.
-                table.Issues = issues.Where(x => x.Template is IssueTemplateLyricRomajiOutOfRange);
-            }, true);
-        }
+        protected override IssueTable CreateIssueTable() => new RomajiTagIssueTable();
 
         private class RomajiTagIssueTable : TextTagIssueTable<RomajiTag>
         {
