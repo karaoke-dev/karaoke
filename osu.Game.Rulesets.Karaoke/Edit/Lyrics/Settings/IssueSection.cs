@@ -51,6 +51,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             [Resolved, AllowNull]
             private IIssueNavigator issueNavigator { get; set; }
 
+            protected IssueTable()
+            {
+                Columns = CreateHeaders();
+            }
+
             public IEnumerable<Issue> Issues
             {
                 set
@@ -69,7 +74,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                         });
                     }
 
-                    Columns = CreateHeaders();
                     Content = value.Select(CreateContent).ToArray().ToRectangular();
                 }
             }
