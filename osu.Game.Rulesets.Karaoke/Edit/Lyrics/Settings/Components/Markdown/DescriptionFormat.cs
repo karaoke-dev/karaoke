@@ -18,6 +18,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown
         public IDictionary<string, InputKey> Keys { get; set; }
 
         public IDictionary<string, SwitchMode> EditModes { get; set; }
+
+        // todo: will be removed eventually.
+        public static implicit operator DescriptionFormat(string text)
+            => (LocalisableString)text;
+
+        public static implicit operator DescriptionFormat(LocalisableString text) => new()
+        {
+            Text = text
+        };
     }
 
     public struct SwitchMode
