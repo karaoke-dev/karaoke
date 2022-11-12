@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
                 _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
-        protected override Color4 GetColour(OsuColour colours, TextingEditMode mode, bool active)
+        protected override Color4 GetSelectionColour(OsuColour colours, TextingEditMode mode, bool active)
         {
             return mode switch
             {

@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
     public class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState, RubyTagEditMode>
     {
-        protected override Color4 GetColour(OsuColour colours, RubyTagEditMode mode, bool active) =>
+        protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditMode mode, bool active) =>
             mode switch
             {
                 RubyTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,

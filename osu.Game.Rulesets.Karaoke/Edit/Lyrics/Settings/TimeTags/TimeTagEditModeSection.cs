@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
-        protected override Color4 GetColour(OsuColour colours, TimeTagEditMode mode, bool active)
+        protected override Color4 GetSelectionColour(OsuColour colours, TimeTagEditMode mode, bool active)
         {
             return mode switch
             {

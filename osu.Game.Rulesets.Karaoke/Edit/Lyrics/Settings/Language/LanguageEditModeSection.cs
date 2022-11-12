@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
                 _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
-        protected override Color4 GetColour(OsuColour colours, LanguageEditMode mode, bool active) =>
+        protected override Color4 GetSelectionColour(OsuColour colours, LanguageEditMode mode, bool active) =>
             mode switch
             {
                 LanguageEditMode.Generate => active ? colours.Blue : colours.BlueDarker,

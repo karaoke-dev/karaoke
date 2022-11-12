@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
-        protected override Color4 GetColour(OsuColour colours, NoteEditMode mode, bool active) =>
+        protected override Color4 GetSelectionColour(OsuColour colours, NoteEditMode mode, bool active) =>
             mode switch
             {
                 NoteEditMode.Generate => active ? colours.Blue : colours.BlueDarker,

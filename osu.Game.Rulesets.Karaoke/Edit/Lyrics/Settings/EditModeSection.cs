@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             {
                 bool highLight = EqualityComparer<TEditMode>.Default.Equals(button.Mode, mode);
                 button.Alpha = highLight ? 0.8f : 0.4f;
-                button.BackgroundColour = GetColour(colours, button.Mode, highLight);
+                button.BackgroundColour = GetSelectionColour(colours, button.Mode, highLight);
 
                 if (!highLight)
                     continue;
@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract EditModeSelectionItem CreateSelectionItem(TEditMode editMode);
 
-        protected abstract Color4 GetColour(OsuColour colours, TEditMode mode, bool active);
+        protected abstract Color4 GetSelectionColour(OsuColour colours, TEditMode mode, bool active);
 
         private class EditModeButton : OsuButton
         {
