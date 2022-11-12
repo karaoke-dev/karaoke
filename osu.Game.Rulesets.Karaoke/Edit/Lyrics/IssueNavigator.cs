@@ -57,6 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return;
 
             lyricCaretState.MoveCaretToTargetPosition(lyric);
+            clock.Seek(lyric.LyricStartTime);
 
             // navigate to the target index in the lyric.
             object? lyricIndex = getNavigateLyricIndex(issue);
