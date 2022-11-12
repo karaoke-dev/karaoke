@@ -91,6 +91,7 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
             return;
 
         hitObjectIssues.Add(karaokeHitObject, new BindableList<Issue>());
+        hitObjectUpdated(obj);
 
         editModeCache.Invalidate();
     }
@@ -100,11 +101,8 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
         if (obj is not KaraokeHitObject karaokeHitObject)
             return;
 
-        var bindableIssues = hitObjectIssues[karaokeHitObject];
-
-        var issues = getIssueByHitObject(karaokeHitObject).ToArray();
-        bindableIssues.Clear();
-        bindableIssues.AddRange(issues);
+        hitObjectIssues[karaokeHitObject].Clear();
+        hitObjectIssues.Remove(karaokeHitObject);
 
         editModeCache.Invalidate();
     }
@@ -114,8 +112,11 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
         if (obj is not KaraokeHitObject karaokeHitObject)
             return;
 
-        hitObjectIssues[karaokeHitObject].Clear();
-        hitObjectIssues.Remove(karaokeHitObject);
+        var bindableIssues = hitObjectIssues[karaokeHitObject];
+
+        var issues = getIssueByHitObject(karaokeHitObject).ToArray();
+        bindableIssues.Clear();
+        bindableIssues.AddRange(issues);
 
         editModeCache.Invalidate();
     }
