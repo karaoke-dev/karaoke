@@ -28,9 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         [Resolved]
         private TEditModeState tEditModeState { get; set; }
 
-        protected override TEditMode DefaultMode() => tEditModeState.EditMode;
+        protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
 
-        internal override void UpdateEditMode(TEditMode mode)
+        internal sealed override void UpdateEditMode(TEditMode mode)
         {
             tEditModeState.ChangeEditMode(mode);
 
