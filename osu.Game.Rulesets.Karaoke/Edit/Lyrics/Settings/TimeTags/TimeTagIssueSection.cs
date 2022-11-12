@@ -1,83 +1,34 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit;
 using osuTK;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTimeTag;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
 {
-    public class TimeTagIssueSection : LyricEditorSection
+    public class TimeTagIssueSection : IssueSection
     {
-        protected override LocalisableString Title => "Invalid time-tag";
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
 
-        private BindableDictionary<Lyric, Issue[]> bindableReports;
+        protected override IssueTable CreateIssueTable() => new TimeTagIssueTable();
 
-        private TimeTagIssueTable table;
-
-        [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager)
+        private class TimeTagIssueTable : IssueTable
         {
-            Children = new[]
-            {
-                table = new TimeTagIssueTable(),
-            };
-
-            bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((_, _) =>
-            {
-                var issues = bindableReports.Values.SelectMany(x => x);
-
-                // todo: use better way to get the invalid message.
-                table.Issues = issues.Where(x => x.Template is IssueTemplateLyricEmptyTimeTag);
-            }, true);
-        }
-
-        public class TimeTagIssueTable : IssueTableContainer
-        {
-            [Resolved]
+            [Resolved, AllowNull]
             private OsuColour colours { get; set; }
-
-            public IEnumerable<Issue> Issues
-            {
-                set
-                {
-                    Content = null;
-                    BackgroundFlow.Clear();
-
-                    if (value == null)
-                        return;
-
-                    Content = value.Select(createContent).ToArray().ToRectangular();
-                    BackgroundFlow.Children = value.Select(x =>
-                    {
-                        (var lyric, TimeTag timeTag) = getInvalidByIssue(x);
-                        return new TimeTagRowBackground(lyric, timeTag);
-                    }).ToArray();
-                }
-            }
 
             protected override TableColumn[] CreateHeaders() => new[]
             {
@@ -87,9 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 new TableColumn("Message", Anchor.CentreLeft),
             };
 
-            private Drawable[] createContent(Issue issue)
+            protected override Drawable[] CreateContent(Issue issue)
             {
-                (var lyric, TimeTag timeTag) = getInvalidByIssue(issue);
+                (var lyric, TimeTag? timeTag) = getInvalidByIssue(issue);
 
                 // show the issue with the invalid time-tag.
                 if (timeTag != null)
@@ -157,80 +108,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 };
             }
 
-            private Tuple<Lyric, TimeTag> getInvalidByIssue(Issue issue)
+            private Tuple<Lyric, TimeTag?> getInvalidByIssue(Issue issue)
             {
                 var lyric = issue.HitObjects.OfType<Lyric>().Single();
 
                 if (issue is not TimeTagIssue timeTagIssue)
-                    return new Tuple<Lyric, TimeTag>(lyric, null);
+                    return new Tuple<Lyric, TimeTag?>(lyric, null);
 
                 var timeTag = timeTagIssue.TimeTag;
 
-                return new Tuple<Lyric, TimeTag>(lyric, timeTag);
-            }
-
-            public class TimeTagRowBackground : RowBackground
-            {
-                private readonly Lyric lyric;
-                private readonly TimeTag timeTag;
-
-                [Resolved]
-                private EditorClock clock { get; set; }
-
-                public TimeTagRowBackground(Lyric lyric, TimeTag timeTag)
-                {
-                    this.lyric = lyric;
-                    this.timeTag = timeTag;
-                }
-
-                private BindableList<TimeTag> selectedTimeTags;
-
-                [BackgroundDependencyLoader]
-                private void load(ILyricCaretState lyricCaretState, ITimeTagModeState timeTagModeState)
-                {
-                    // update selected state by bindable.
-                    selectedTimeTags = timeTagModeState.SelectedItems.GetBoundCopy();
-                    selectedTimeTags.BindCollectionChanged((_, _) =>
-                    {
-                        bool selected = selectedTimeTags.Contains(timeTag);
-                        UpdateState(selected);
-                    });
-
-                    Action = () =>
-                    {
-                        // navigate to current lyric.
-                        switch (timeTagModeState.EditMode)
-                        {
-                            case TimeTagEditMode.Create:
-                                lyricCaretState.MoveCaretToTargetPosition(lyric, timeTag?.Index ?? new TextIndex());
-                                break;
-
-                            case TimeTagEditMode.Recording:
-                                lyricCaretState.MoveCaretToTargetPosition(lyric, timeTag);
-                                break;
-
-                            case TimeTagEditMode.Adjust:
-                                lyricCaretState.MoveCaretToTargetPosition(lyric);
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-
-                        // set current time-tag as selected.
-                        selectedTimeTags.Clear();
-                        if (timeTag == null)
-                            return;
-
-                        // select time-tag is not null.
-                        selectedTimeTags.Add(timeTag);
-                        if (timeTag.Time == null)
-                            return;
-
-                        // seek to target time-tag time if time-tag has time.
-                        clock.Seek(timeTag.Time.Value);
-                    };
-                }
+                return new Tuple<Lyric, TimeTag?>(lyric, timeTag);
             }
         }
     }
