@@ -1,16 +1,16 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -20,11 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.FixedInfo
     public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>
     {
         // todo : might able to have auto-fix option by right-click
-        public MenuItem[] ContextMenuItems => null;
+        public MenuItem[] ContextMenuItems => Array.Empty<MenuItem>();
 
+        private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
         private readonly Lyric lyric;
-
-        private Issue[] report;
 
         public InvalidInfo(Lyric lyric)
         {
@@ -34,38 +33,64 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.FixedInfo
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, LyricCheckerManager lyricCheckerManager)
+        private void load(OsuColour colours, ILyricEditorVerifier verifier)
         {
-            lyricCheckerManager.BindableReports.BindCollectionChanged((_, args) =>
+            bindableIssues.BindTo(verifier.GetBindable(lyric));
+            bindableIssues.BindCollectionChanged((_, args) =>
             {
-                // Ignore remove case
-                if (args.NewItems == null)
-                    return;
+                TooltipContent = bindableIssues.ToArray();
 
-                var dict = args.NewItems.ToDictionary(k => k.Key, v => v.Value);
-                if (!dict.ContainsKey(lyric))
-                    return;
+                var issue = getDisplayIssue(bindableIssues);
 
-                report = dict[lyric];
-
-                switch (report.Length)
+                if (issue == null)
                 {
-                    case 0:
-                        Icon = FontAwesome.Solid.CheckCircle;
-                        Colour = colours.Green;
+                    Icon = FontAwesome.Solid.CheckCircle;
+                    Colour = colours.Green;
+                    return;
+                }
+
+                var displayIssueType = issue.Template.Type;
+                var targetColour = issue.Template.Colour;
+
+                switch (displayIssueType)
+                {
+                    case IssueType.Problem:
+                        Icon = FontAwesome.Solid.TimesCircle;
+                        Colour = targetColour;
+                        break;
+
+                    case IssueType.Warning:
+                        Icon = FontAwesome.Solid.ExclamationCircle;
+                        Colour = targetColour;
+                        break;
+
+                    case IssueType.Error: // it's caused by internal error.
+                        Icon = FontAwesome.Solid.ExclamationTriangle;
+                        Colour = targetColour;
+                        break;
+
+                    case IssueType.Negligible:
+                        Icon = FontAwesome.Solid.InfoCircle;
+                        Colour = targetColour;
                         break;
 
                     default:
-                        Icon = FontAwesome.Solid.TimesCircle;
-                        Colour = colours.Red;
-                        break;
+                        throw new ArgumentOutOfRangeException();
                 }
             }, true);
+        }
+
+        private static Issue? getDisplayIssue(IReadOnlyList<Issue> issues)
+        {
+            if (!issues.Any())
+                return null;
+
+            return issues.OrderByDescending(x => x.Template.Type).First();
         }
 
         public ITooltip<Issue[]> GetCustomTooltip()
             => new InvalidLyricToolTip();
 
-        public Issue[] TooltipContent => report;
+        public Issue[]? TooltipContent { get; private set; }
     }
 }
