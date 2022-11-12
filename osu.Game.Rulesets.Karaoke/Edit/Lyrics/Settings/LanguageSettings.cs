@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             LanguageEditMode.Verify => new Drawable[]
             {
                 new LanguageEditModeSection(),
-                new LanguageMissingSection(),
+                new LanguageIssueSection(),
             },
             _ => throw new ArgumentOutOfRangeException()
         };
