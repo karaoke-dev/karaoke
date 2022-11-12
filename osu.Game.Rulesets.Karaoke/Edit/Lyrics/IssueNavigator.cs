@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -34,6 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved, AllowNull]
         private IEditNoteModeState noteModeState { get; set; }
+
+        [Resolved, AllowNull]
+        private EditorClock clock { get; set; }
 
         public void Navigate(Issue issue)
         {
@@ -61,6 +65,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             var blueprintSelection = getBlueprintSelection(lyricIndex);
             blueprintSelection?.Select(lyricIndex);
+
+            if (lyricIndex is not TimeTag timeTag || timeTag.Time == null)
+                return;
+
+            // seek to target time-tag time if time-tag has time.
+            clock.Seek(timeTag.Time.Value);
         }
 
         private static LyricEditorMode? getNavigateEditMode(ICheck check)
