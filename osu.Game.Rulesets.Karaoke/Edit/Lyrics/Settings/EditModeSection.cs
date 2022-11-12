@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Localisation;
@@ -53,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }
 
-        private readonly EditModeButton[] buttons;
+        private readonly EditModeSelection[] selections;
         private readonly DescriptionTextFlowContainer description;
 
         protected EditModeSection()
@@ -72,11 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                     },
                     Content = new[]
                     {
-                        buttons = createSelections().Select(x => new EditModeButton(x.Key, x.Value)
-                        {
-                            Padding = new MarginPadding { Horizontal = 5 },
-                            Action = UpdateEditMode,
-                        }).ToArray(),
+                        selections = createSelections()
                     }
                 },
                 description = new DescriptionTextFlowContainer
@@ -94,10 +89,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             });
         }
 
-        private Dictionary<TEditMode, EditModeSelectionItem> createSelections()
-        {
-            return EnumUtils.GetValues<TEditMode>().ToDictionary(k => k, CreateSelectionItem);
-        }
+        private EditModeSelection[] createSelections()
+            => EnumUtils.GetValues<TEditMode>().Select(mode =>
+            {
+                var selection = GetSelectionInstance(mode);
+                selection.Text = GetSelectionText(mode);
+                selection.Padding = new MarginPadding { Horizontal = 5 };
+                selection.Action = UpdateEditMode;
+
+                return selection;
+            }).ToArray();
 
         internal virtual void UpdateEditMode(TEditMode mode)
         {
@@ -105,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
 
             // update button style.
-            foreach (var button in buttons)
+            foreach (var button in selections)
             {
                 bool highLight = EqualityComparer<TEditMode>.Default.Equals(button.Mode, mode);
                 button.Alpha = highLight ? 0.8f : 0.4f;
@@ -117,8 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                 Schedule(() =>
                 {
                     // update description text.
-                    var item = button.Item;
-                    description.Description = item.Description.Value;
+                    description.Description = GetSelectionDescription(mode);
                 });
             }
         }
@@ -127,66 +127,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract TEditMode DefaultMode();
 
-        protected abstract EditModeSelectionItem CreateSelectionItem(TEditMode editMode);
+        protected virtual EditModeSelection GetSelectionInstance(TEditMode mode) => new(mode);
+
+        protected abstract LocalisableString GetSelectionText(TEditMode mode);
 
         protected abstract Color4 GetSelectionColour(OsuColour colours, TEditMode mode, bool active);
 
-        private class EditModeButton : OsuButton
+        protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
+
+        protected class EditModeSelection : OsuButton
         {
             public new Action<TEditMode> Action;
 
             public TEditMode Mode { get; }
 
-            public EditModeSelectionItem Item { get; }
-
-            public EditModeButton(TEditMode mode, EditModeSelectionItem item)
+            public EditModeSelection(TEditMode mode)
             {
                 Mode = mode;
-                Item = item;
 
                 RelativeSizeAxes = Axes.X;
                 Content.CornerRadius = 15;
 
-                item.Text.BindValueChanged(e =>
-                {
-                    Text = e.NewValue;
-                }, true);
-
-                item.Alert.BindValueChanged(e =>
-                {
-                    // todo : show / hide alert.
-                }, true);
-
                 base.Action = () => Action?.Invoke(mode);
-            }
-        }
-
-        protected class EditModeSelectionItem
-        {
-            /// <summary>
-            /// The text which this <see cref="EditModeButton"/> displays.
-            /// </summary>
-            public readonly Bindable<LocalisableString> Text = new(string.Empty);
-
-            /// <summary>
-            /// The description which this <see cref="EditModeButton"/> displays.
-            /// </summary>
-            public readonly Bindable<DescriptionFormat> Description = new();
-
-            /// <summary>
-            /// The alert number which this <see cref="EditModeButton"/> displays.
-            /// </summary>
-            public readonly Bindable<int> Alert = new();
-
-            public EditModeSelectionItem(LocalisableString text, LocalisableString description)
-                : this(text, new DescriptionFormat { Text = description })
-            {
-            }
-
-            public EditModeSelectionItem(LocalisableString text, DescriptionFormat descriptionFormat)
-            {
-                Text.Value = text;
-                Description.Value = descriptionFormat;
             }
         }
     }
