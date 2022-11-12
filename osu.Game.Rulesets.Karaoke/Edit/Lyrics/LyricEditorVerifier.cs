@@ -42,7 +42,7 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
     };
 
     private readonly Cached editModeCache = new();
-    private readonly KaraokeHitObjectVerifier verifier = new();
+    private readonly LyricEditorBeatmapVerifier verifier = new();
 
     public IBindableList<Issue> GetBindable(KaraokeHitObject hitObject)
         => hitObjectIssues[hitObject];
@@ -196,9 +196,23 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
         beatmap.HitObjectUpdated -= hitObjectUpdated;
     }
 
-    private class KaraokeHitObjectVerifier : KaraokeBeatmapVerifier
+    private class LyricEditorBeatmapVerifier : IBeatmapVerifier
     {
-        protected override IEnumerable<ICheck> AvailableChecks(List<ICheck> checks)
-            => Checks.Where(x => x is CheckHitObjectProperty<Lyric> or CheckHitObjectProperty<Note>);
+        private readonly IDictionary<LyricEditorMode, ICheck[]> editModeChecks = new J2N.Collections.Generic.Dictionary<LyricEditorMode, ICheck[]>
+        {
+            { LyricEditorMode.Texting, new ICheck[] { new CheckLyricText() } },
+            { LyricEditorMode.Reference, new ICheck[] { new CheckLyricReferenceLyric() } },
+            { LyricEditorMode.Language, new ICheck[] { new CheckLyricLanguage() } },
+            { LyricEditorMode.EditRuby, new ICheck[] { new CheckLyricRubyTag() } },
+            { LyricEditorMode.EditRomaji, new ICheck[] { new CheckLyricRomajiTag() } },
+            { LyricEditorMode.EditTimeTag, new ICheck[] { new CheckLyricTimeTag() } },
+            { LyricEditorMode.EditNote, new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText() } },
+        };
+
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
+        {
+            var allChecks = editModeChecks.Values.SelectMany(x => x);
+            return allChecks.SelectMany(check => check.Run(context));
+        }
     }
 }
