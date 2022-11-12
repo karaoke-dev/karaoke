@@ -17,7 +17,6 @@ using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 
@@ -39,8 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private ImportLyricManager importManager;
 
         private LyricsProvider lyricsProvider;
-
-        private LyricCheckerManager lyricCheckerManager;
 
         private DependencyContainer dependencies;
 
@@ -111,9 +108,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             AddInternal(lyricsProvider = new LyricsProvider());
             dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-
-            AddInternal(lyricCheckerManager = new LyricCheckerManager());
-            dependencies.Cache(lyricCheckerManager);
 
             dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }

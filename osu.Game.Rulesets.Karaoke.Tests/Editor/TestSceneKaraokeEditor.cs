@@ -8,7 +8,6 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Screens.Edit;
@@ -26,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         protected override KaraokeEditor CreateScreen() => new();
 
         private DialogOverlay dialogOverlay = null!;
-        private LyricCheckerManager lyricCheckerManager = null!;
 
         public TestSceneKaraokeEditor()
         {
@@ -44,11 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                lyricCheckerManager = new LyricCheckerManager()
             });
 
             Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
-            Dependencies.Cache(lyricCheckerManager);
         }
     }
 }
