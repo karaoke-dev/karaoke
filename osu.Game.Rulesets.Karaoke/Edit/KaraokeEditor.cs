@@ -12,7 +12,6 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -53,9 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly ExportLyricManager exportLyricManager;
 
-        [Cached]
-        private readonly LyricCheckerManager lyricCheckerManager;
-
         [Cached(typeof(IBeatmapChangeHandler))]
         private readonly BeatmapChangeHandler beatmapChangeHandler;
 
@@ -75,7 +71,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(lyricsProvider = new LyricsProvider());
-            AddInternal(lyricCheckerManager = new LyricCheckerManager());
 
             AddInternal(beatmapChangeHandler = new BeatmapChangeHandler());
         }

@@ -12,7 +12,6 @@ using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -31,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         private DialogOverlay dialogOverlay = null!;
         private LyricsProvider lyricsProvider = null!;
-        private LyricCheckerManager lyricCheckManager = null!;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -41,12 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 Content,
                 dialogOverlay = new DialogOverlay(),
                 lyricsProvider = new LyricsProvider(),
-                lyricCheckManager = new LyricCheckerManager(),
             });
 
             Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-            Dependencies.Cache(lyricCheckManager);
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
             Dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }
