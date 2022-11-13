@@ -93,6 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             => EnumUtils.GetValues<TEditMode>().Select(mode =>
             {
                 var selection = GetSelectionInstance(mode);
+                selection.Mode = mode;
                 selection.Text = GetSelectionText(mode);
                 selection.Padding = new MarginPadding { Horizontal = 5 };
                 selection.Action = UpdateEditMode;
@@ -139,16 +140,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         {
             public new Action<TEditMode> Action;
 
-            public TEditMode Mode { get; }
+            public TEditMode Mode { get; set; }
 
-            public Selection(TEditMode mode)
+            public Selection()
             {
-                Mode = mode;
-
                 RelativeSizeAxes = Axes.X;
                 Content.CornerRadius = 15;
 
-                base.Action = () => Action?.Invoke(mode);
+                base.Action = () => Action?.Invoke(Mode);
             }
         }
     }
