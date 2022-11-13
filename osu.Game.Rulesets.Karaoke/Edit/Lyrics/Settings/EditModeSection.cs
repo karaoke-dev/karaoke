@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         private Selection[] createSelections()
             => EnumUtils.GetValues<TEditMode>().Select(mode =>
             {
-                var selection = GetSelectionInstance(mode);
+                var selection = CreateSelection(mode);
                 selection.Mode = mode;
                 selection.Text = GetSelectionText(mode);
                 selection.Padding = new MarginPadding { Horizontal = 5 };
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract TEditMode DefaultMode();
 
-        protected virtual Selection GetSelectionInstance(TEditMode mode) => new(mode);
+        protected abstract Selection CreateSelection(TEditMode mode);
 
         protected abstract LocalisableString GetSelectionText(TEditMode mode);
 
