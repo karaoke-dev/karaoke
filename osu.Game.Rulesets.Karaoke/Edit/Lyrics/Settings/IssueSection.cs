@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             bindableIssues.BindTo(verifier.GetIssueByEditMode(EditMode));
         }
 
-        protected class EmptyIssue : ClickableContainer
+        private class EmptyIssue : ClickableContainer
         {
             [BackgroundDependencyLoader]
             private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricEditorVerifier verifier, OsuColour colours)
