@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         protected IssueSection()
         {
             EmptyIssue emptyIssue;
+
+            IssueNavigator issueNavigator;
             IssueTable issueTable;
 
             Children = new Drawable[]
@@ -45,16 +47,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                     Padding = new MarginPadding(10),
                 },
 
-                // todo: add the issue amount display also.
+                issueNavigator = new IssueNavigator(),
                 issueTable = CreateIssueTable()
             };
 
             bindableIssues.BindCollectionChanged((_, _) =>
             {
                 bool hasIssue = bindableIssues.Any();
-                emptyIssue.Alpha = hasIssue ? 0 : 1;
-                issueTable.Alpha = hasIssue ? 1 : 0;
 
+                emptyIssue.Alpha = hasIssue ? 0 : 1;
+
+                issueNavigator.Alpha = hasIssue ? 1 : 0;
+                issueNavigator.Issues = bindableIssues;
+
+                issueTable.Alpha = hasIssue ? 1 : 0;
                 issueTable.Issues = bindableIssues.Take(100);
             }, true);
         }
