@@ -29,18 +29,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected IssueSection()
         {
+            EmptyIssue emptyIssue;
             IssueTable issueTable;
 
-            Children = new[]
+            Children = new Drawable[]
             {
+                emptyIssue = new EmptyIssue
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding(10),
+                },
+
                 // todo: add the issue amount display also.
                 issueTable = CreateIssueTable()
             };
 
             bindableIssues.BindCollectionChanged((_, _) =>
             {
+                bool hasIssue = bindableIssues.Any();
+                emptyIssue.Alpha = hasIssue ? 0 : 1;
+                issueTable.Alpha = hasIssue ? 1 : 0;
+
                 issueTable.Issues = bindableIssues.Take(100);
-            });
+            }, true);
         }
 
         protected abstract LyricEditorMode EditMode { get; }
