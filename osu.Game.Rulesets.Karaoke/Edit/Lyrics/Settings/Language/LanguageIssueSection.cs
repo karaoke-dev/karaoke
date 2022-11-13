@@ -1,9 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -23,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
 
         private class LanguageIssueTable : IssueTable
         {
-            [Resolved, AllowNull]
-            private OsuColour colours { get; set; }
-
             protected override TableColumn[] CreateHeaders() => new[]
             {
                 new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
@@ -43,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
                     {
                         Origin = Anchor.Centre,
                         Size = new Vector2(10),
-                        Colour = colours.Red,
+                        Colour = issue.Template.Colour,
                         Margin = new MarginPadding { Left = 10 },
                         Icon = FontAwesome.Solid.Globe,
                     },
