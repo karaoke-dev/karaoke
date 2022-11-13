@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }
 
-        private readonly EditModeSelection[] selections;
+        private readonly Selection[] selections;
         private readonly DescriptionTextFlowContainer description;
 
         protected EditModeSection()
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             });
         }
 
-        private EditModeSelection[] createSelections()
+        private Selection[] createSelections()
             => EnumUtils.GetValues<TEditMode>().Select(mode =>
             {
                 var selection = GetSelectionInstance(mode);
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract TEditMode DefaultMode();
 
-        protected virtual EditModeSelection GetSelectionInstance(TEditMode mode) => new(mode);
+        protected virtual Selection GetSelectionInstance(TEditMode mode) => new(mode);
 
         protected abstract LocalisableString GetSelectionText(TEditMode mode);
 
@@ -135,13 +135,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
 
-        protected class EditModeSelection : OsuButton
+        protected class Selection : OsuButton
         {
             public new Action<TEditMode> Action;
 
             public TEditMode Mode { get; }
 
-            public EditModeSelection(TEditMode mode)
+            public Selection(TEditMode mode)
             {
                 Mode = mode;
 
