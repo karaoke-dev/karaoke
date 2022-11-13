@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -12,6 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
     public class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState, RomajiTagEditMode>
     {
+        protected override LocalisableString GetSelectionText(RomajiTagEditMode mode) =>
+            mode switch
+            {
+                RomajiTagEditMode.Generate => "Generate",
+                RomajiTagEditMode.Edit => "Edit",
+                RomajiTagEditMode.Verify => "Verify",
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override Color4 GetSelectionColour(OsuColour colours, RomajiTagEditMode mode, bool active) =>
             mode switch
             {
@@ -21,11 +31,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 
-        protected override EditModeSelectionItem CreateSelectionItem(RomajiTagEditMode editMode) =>
-            editMode switch
+        protected override DescriptionFormat GetSelectionDescription(RomajiTagEditMode mode) =>
+            mode switch
             {
-                RomajiTagEditMode.Generate => new EditModeSelectionItem("Generate", "Auto-generate romajies in the lyric."),
-                RomajiTagEditMode.Edit => new EditModeSelectionItem("Edit", new DescriptionFormat
+                RomajiTagEditMode.Generate => "Auto-generate romajies in the lyric.",
+                RomajiTagEditMode.Edit => new DescriptionFormat
                 {
                     Text = "Create / delete and edit lyric rubies in here.\n"
                            + $"Click [{DescriptionFormat.LINK_KEY_INPUT}](directions) to select the target lyric.\n"
@@ -58,9 +68,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                             }
                         }
                     }
-                }),
-                RomajiTagEditMode.Verify => new EditModeSelectionItem("Verify", "Check invalid romajies in here."),
-                _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
+                },
+                RomajiTagEditMode.Verify => "Check invalid romajies in here.",
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
     }
 }

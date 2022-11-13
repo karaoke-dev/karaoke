@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
@@ -16,11 +17,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
 
-        protected override EditModeSelectionItem CreateSelectionItem(TimeTagEditMode editMode) =>
-            editMode switch
+        protected override LocalisableString GetSelectionText(TimeTagEditMode mode) =>
+            mode switch
             {
-                TimeTagEditMode.Create => new EditModeSelectionItem("Create", "Create the time-tag or adjust the position."),
-                TimeTagEditMode.Recording => new EditModeSelectionItem("Recording", new DescriptionFormat
+                TimeTagEditMode.Create => "Create",
+                TimeTagEditMode.Recording => "Recording",
+                TimeTagEditMode.Adjust => "Adjust",
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
+        protected override Color4 GetSelectionColour(OsuColour colours, TimeTagEditMode mode, bool active) =>
+            mode switch
+            {
+                TimeTagEditMode.Create => active ? colours.Blue : colours.BlueDarker,
+                TimeTagEditMode.Recording => active ? colours.Red : colours.RedDarker,
+                TimeTagEditMode.Adjust => active ? colours.Yellow : colours.YellowDarker,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+            };
+
+        protected override DescriptionFormat GetSelectionDescription(TimeTagEditMode mode) =>
+            mode switch
+            {
+                TimeTagEditMode.Create => "Create the time-tag or adjust the position.",
+                TimeTagEditMode.Recording => new DescriptionFormat
                 {
                     Text =
                         $"Press [{DescriptionFormat.LINK_KEY_INPUT}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_INPUT}](clear_time_tag_time) to clear the time-tag time.",
@@ -39,20 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                             }
                         }
                     }
-                }),
-                TimeTagEditMode.Adjust => new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely."),
-                _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
-            };
-
-        protected override Color4 GetSelectionColour(OsuColour colours, TimeTagEditMode mode, bool active)
-        {
-            return mode switch
-            {
-                TimeTagEditMode.Create => active ? colours.Blue : colours.BlueDarker,
-                TimeTagEditMode.Recording => active ? colours.Red : colours.RedDarker,
-                TimeTagEditMode.Adjust => active ? colours.Yellow : colours.YellowDarker,
+                },
+                TimeTagEditMode.Adjust => "Drag to adjust time-tag time precisely.",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
-        }
     }
 }
