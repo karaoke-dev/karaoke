@@ -16,6 +16,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
 
+        protected override Selection CreateSelection(NoteEditMode mode) =>
+            mode switch
+            {
+                NoteEditMode.Generate => new Selection(),
+                NoteEditMode.Edit => new Selection(),
+                NoteEditMode.Verify => new NoteVerifySelection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(NoteEditMode mode) =>
             mode switch
             {
@@ -31,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 NoteEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
                 NoteEditMode.Edit => active ? colours.Red : colours.RedDarker,
                 NoteEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         protected override DescriptionFormat GetSelectionDescription(NoteEditMode mode) =>
@@ -40,7 +49,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 NoteEditMode.Generate => "Using time-tag to create default notes.",
                 NoteEditMode.Edit => "Batch edit note property in here.",
                 NoteEditMode.Verify => "Check invalid notes in here.",
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
+
+        private class NoteVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
+        }
     }
 }

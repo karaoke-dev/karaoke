@@ -7,12 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Overlays.Toolbar;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -52,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }
 
-        private readonly EditModeSelection[] selections;
+        private readonly Selection[] selections;
         private readonly DescriptionTextFlowContainer description;
 
         protected EditModeSection()
@@ -89,10 +94,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             });
         }
 
-        private EditModeSelection[] createSelections()
+        private Selection[] createSelections()
             => EnumUtils.GetValues<TEditMode>().Select(mode =>
             {
-                var selection = GetSelectionInstance(mode);
+                var selection = CreateSelection(mode);
+                selection.Mode = mode;
                 selection.Text = GetSelectionText(mode);
                 selection.Padding = new MarginPadding { Horizontal = 5 };
                 selection.Action = UpdateEditMode;
@@ -127,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract TEditMode DefaultMode();
 
-        protected virtual EditModeSelection GetSelectionInstance(TEditMode mode) => new(mode);
+        protected abstract Selection CreateSelection(TEditMode mode);
 
         protected abstract LocalisableString GetSelectionText(TEditMode mode);
 
@@ -135,20 +141,105 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
 
-        protected class EditModeSelection : OsuButton
+        protected class Selection : OsuButton
         {
             public new Action<TEditMode> Action;
 
-            public TEditMode Mode { get; }
+            public TEditMode Mode { get; set; }
 
-            public EditModeSelection(TEditMode mode)
+            public Selection()
             {
-                Mode = mode;
-
                 RelativeSizeAxes = Axes.X;
                 Content.CornerRadius = 15;
 
-                base.Action = () => Action?.Invoke(mode);
+                base.Action = () => Action?.Invoke(Mode);
+            }
+        }
+
+        protected abstract class VerifySelection : Selection
+        {
+            private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
+
+            protected VerifySelection()
+            {
+                CountCircle countCircle;
+
+                AddInternal(countCircle = new CountCircle
+                {
+                    Anchor = Anchor.TopRight,
+                    Origin = Anchor.Centre,
+                    X = -5,
+                });
+
+                bindableIssues.BindCollectionChanged((_, _) =>
+                {
+                    int count = bindableIssues.Count;
+                    countCircle.Alpha = count == 0 ? 0 : 1;
+                    countCircle.Count = count;
+                });
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(ILyricEditorVerifier verifier)
+            {
+                bindableIssues.BindTo(verifier.GetIssueByEditMode(EditMode));
+            }
+
+            protected abstract LyricEditorMode EditMode { get; }
+        }
+
+        /// <summary>
+        /// Copied from <see cref="ToolbarNotificationButton"/>
+        /// </summary>
+        private class CountCircle : CompositeDrawable
+        {
+            private readonly OsuSpriteText countText;
+            private readonly Circle circle;
+
+            private int count;
+
+            public int Count
+            {
+                get => count;
+                set
+                {
+                    if (count == value)
+                        return;
+
+                    if (value != count)
+                    {
+                        circle.FlashColour(Color4.White, 600, Easing.OutQuint);
+                        this.ScaleTo(1.1f).Then().ScaleTo(1, 600, Easing.OutElastic);
+                    }
+
+                    count = value;
+                    countText.Text = value.ToString("#,0");
+                }
+            }
+
+            public CountCircle()
+            {
+                AutoSizeAxes = Axes.X;
+                Height = 20;
+
+                InternalChildren = new Drawable[]
+                {
+                    circle = new Circle
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Color4.Red
+                    },
+                    countText = new OsuSpriteText
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Y = -1,
+                        Font = OsuFont.GetFont(size: 18, weight: FontWeight.Bold),
+                        Padding = new MarginPadding(5),
+                        Colour = Color4.White,
+                        UseFullGlyphHeight = true,
+                    }
+                };
             }
         }
     }
