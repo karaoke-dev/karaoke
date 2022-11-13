@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                 RomajiTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
                 RomajiTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
                 RomajiTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         protected override DescriptionFormat GetSelectionDescription(RomajiTagEditMode mode) =>
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                     }
                 },
                 RomajiTagEditMode.Verify => "Check invalid romajies in here.",
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         private class RomajiTagVerifySelection : VerifySelection

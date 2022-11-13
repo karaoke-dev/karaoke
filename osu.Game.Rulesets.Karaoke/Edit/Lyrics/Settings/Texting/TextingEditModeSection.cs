@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             {
                 TextingEditMode.Typing => active ? colours.Blue : colours.BlueDarker,
                 TextingEditMode.Split => active ? colours.Yellow : colours.YellowDarker,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         protected override DescriptionFormat GetSelectionDescription(TextingEditMode mode) =>
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             {
                 TextingEditMode.Typing => "Edit the lyric text.",
                 TextingEditMode.Split => "Create/delete or split/combine the lyric.",
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
     }
 }

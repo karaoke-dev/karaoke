@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
             {
                 LanguageEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
                 LanguageEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         protected override DescriptionFormat GetSelectionDescription(LanguageEditMode mode) =>
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
             {
                 LanguageEditMode.Generate => "Auto-generate language with just a click.",
                 LanguageEditMode.Verify => "Check if have lyric with no language.",
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         private class LanguageVerifySelection : VerifySelection

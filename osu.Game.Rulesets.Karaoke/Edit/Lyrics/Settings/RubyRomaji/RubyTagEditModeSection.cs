@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                 RubyTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
                 RubyTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
                 RubyTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         protected override DescriptionFormat GetSelectionDescription(RubyTagEditMode mode) =>
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                     }
                 },
                 RubyTagEditMode.Verify => "Check invalid rubies in here",
-                _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
         private class RubyTagVerifySelection : VerifySelection
