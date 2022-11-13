@@ -13,6 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
     public class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState, RubyTagEditMode>
     {
+        protected override Selection CreateSelection(RubyTagEditMode mode) =>
+            mode switch
+            {
+                RubyTagEditMode.Generate => new Selection(),
+                RubyTagEditMode.Edit => new Selection(),
+                RubyTagEditMode.Verify => new RubyTagVerifySelection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(RubyTagEditMode mode) =>
             mode switch
             {
@@ -72,5 +81,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                 RubyTagEditMode.Verify => "Check invalid rubies in here",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+
+        private class RubyTagVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.EditRuby;
+        }
     }
 }

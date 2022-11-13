@@ -16,6 +16,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Red;
 
+        protected override Selection CreateSelection(TextingEditMode mode) =>
+            mode switch
+            {
+                TextingEditMode.Typing => new Selection(),
+                TextingEditMode.Split => new Selection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(TextingEditMode mode) =>
             mode switch
             {

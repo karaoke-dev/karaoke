@@ -16,6 +16,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Pink;
 
+        protected override Selection CreateSelection(LanguageEditMode mode) =>
+            mode switch
+            {
+                LanguageEditMode.Generate => new Selection(),
+                LanguageEditMode.Verify => new LanguageVerifySelection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(LanguageEditMode mode) =>
             mode switch
             {
@@ -39,5 +47,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
                 LanguageEditMode.Verify => "Check if have lyric with no language.",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+
+        private class LanguageVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.Language;
+        }
     }
 }

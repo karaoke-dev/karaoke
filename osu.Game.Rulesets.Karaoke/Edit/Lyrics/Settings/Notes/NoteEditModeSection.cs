@@ -16,6 +16,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
 
+        protected override Selection CreateSelection(NoteEditMode mode) =>
+            mode switch
+            {
+                NoteEditMode.Generate => new Selection(),
+                NoteEditMode.Edit => new Selection(),
+                NoteEditMode.Verify => new NoteVerifySelection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(NoteEditMode mode) =>
             mode switch
             {
@@ -42,5 +51,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
                 NoteEditMode.Verify => "Check invalid notes in here.",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+
+        private class NoteVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
+        }
     }
 }

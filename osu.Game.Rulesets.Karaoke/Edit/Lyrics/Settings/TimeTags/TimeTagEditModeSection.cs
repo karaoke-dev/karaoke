@@ -17,6 +17,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
 
+        protected override Selection CreateSelection(TimeTagEditMode mode) =>
+            mode switch
+            {
+                TimeTagEditMode.Create => new Selection(),
+                TimeTagEditMode.Recording => new Selection(),
+                TimeTagEditMode.Adjust => new TimeTagVerifySelection(),
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
         protected override LocalisableString GetSelectionText(TimeTagEditMode mode) =>
             mode switch
             {
@@ -62,5 +71,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 TimeTagEditMode.Adjust => "Drag to adjust time-tag time precisely.",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+
+        private class TimeTagVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
+        }
     }
 }
