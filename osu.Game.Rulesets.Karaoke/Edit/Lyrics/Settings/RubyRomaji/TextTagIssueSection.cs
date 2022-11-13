@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -22,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
     {
         protected abstract class TextTagIssueTable<TTextTag> : IssueTable where TTextTag : ITextTag
         {
-            [Resolved]
-            private OsuColour colours { get; set; }
-
             protected override TableColumn[] CreateHeaders() => new[]
             {
                 new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
@@ -43,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
                     {
                         Origin = Anchor.Centre,
                         Size = new Vector2(10),
-                        Colour = colours.Red,
+                        Colour = issue.Template.Colour,
                         Margin = new MarginPadding { Left = 10 },
                         Icon = FontAwesome.Solid.Tag,
                     },
