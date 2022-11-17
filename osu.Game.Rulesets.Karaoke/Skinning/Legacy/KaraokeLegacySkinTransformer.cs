@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 case GameplaySkinComponent<HitResult> resultComponent:
                     return getResult(resultComponent.Component);
 
-                case KaraokeSkinComponent karaokeComponent:
+                case KaraokeSkinComponentLookup karaokeComponent:
                     if (!isLegacySkin.Value)
                         return null;
 
