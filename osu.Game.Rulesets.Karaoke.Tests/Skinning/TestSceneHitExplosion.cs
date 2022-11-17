@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 CreatedDrawables.OfType<Container>().ForEach(c =>
                 {
                     var colour = runCount / 15 % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
-                    c.Add(new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion),
+                    c.Add(new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion),
                         _ => new DefaultHitExplosion(colour, runCount % 6 != 0)
                         {
                             Anchor = Anchor.Centre,

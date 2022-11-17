@@ -7,9 +7,9 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeSkinComponent : GameplaySkinComponent<KaraokeSkinComponents>
+    public class KaraokeSkinComponentLookup : GameplaySkinComponentLookup<KaraokeSkinComponents>
     {
-        public KaraokeSkinComponent(KaraokeSkinComponents component)
+        public KaraokeSkinComponentLookup(KaraokeSkinComponents component)
             : base(component)
         {
         }

@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             BackgroundLayer.AddRange(new Drawable[]
             {
-                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.StageBackground), _ => null)
+                new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.StageBackground), _ => null)
                 {
                     Depth = 2,
                     RelativeSizeAxes = Axes.Both
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         AutoSizeAxes = Axes.Both,
                         BypassAutoSizeAxes = Axes.Both
                     },
-                    judgementLine = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
+                    judgementLine = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
                     {
                         RelativeSizeAxes = Axes.Y,
                         Anchor = Anchor.Centre,
@@ -200,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (!result.IsHit)
                 return;
 
-            var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
+            var explosion = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion), _ =>
                 new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
             {
                 Y = notePositionInfo.Calculator.YPositionAt(note.HitObject)

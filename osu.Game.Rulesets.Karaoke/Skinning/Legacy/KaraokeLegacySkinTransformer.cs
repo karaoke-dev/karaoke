@@ -26,15 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
         }
 
-        public override Drawable? GetDrawableComponent(ISkinComponent component)
+        public override Drawable? GetDrawableComponent(ISkinComponentLookup lookup)
         {
-            switch (component)
+            switch (lookup)
             {
-                case SkinnableTargetComponent targetComponent:
-                    switch (targetComponent.Target)
+                case GlobalSkinComponentLookup targetComponent:
+                    switch (targetComponent.Lookup)
                     {
-                        case SkinnableTarget.MainHUDComponents:
-                            var components = base.GetDrawableComponent(component) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
+                        case GlobalSkinComponentLookup.LookupType.MainHUDComponents:
+                            var components = base.GetDrawableComponent(lookup) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
                             components?.Add(new SettingButtonsDisplay
                             {
                                 Anchor = Anchor.CentreRight,
@@ -43,13 +43,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                             return components;
 
                         default:
-                            return base.GetDrawableComponent(component);
+                            return base.GetDrawableComponent(lookup);
                     }
 
-                case GameplaySkinComponent<HitResult> resultComponent:
+                case GameplaySkinComponentLookup<HitResult> resultComponent:
                     return getResult(resultComponent.Component);
 
-                case KaraokeSkinComponent karaokeComponent:
+                case KaraokeSkinComponentLookup karaokeComponent:
                     if (!isLegacySkin.Value)
                         return null;
 
@@ -64,13 +64,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     };
 
                 default:
-                    return base.GetDrawableComponent(component);
+                    return base.GetDrawableComponent(lookup);
             }
 
             SkinnableTargetComponentsContainer? getTargetComponentsContainerFromOtherPlace() =>
                 Skin switch
                 {
-                    LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(component) as SkinnableTargetComponentsContainer,
+                    LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(lookup) as SkinnableTargetComponentsContainer,
                     _ => throw new InvalidCastException()
                 };
         }

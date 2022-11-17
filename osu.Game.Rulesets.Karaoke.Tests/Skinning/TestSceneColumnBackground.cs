@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                     {
                         RelativeSizeAxes = Axes.Both,
                         Height = 0.5f,
-                        Child = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(0))
+                        Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(0))
                         {
                             RelativeSizeAxes = Axes.Both
                         }
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                     {
                         RelativeSizeAxes = Axes.Both,
                         Height = 0.5f,
-                        Child = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(1))
+                        Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(1))
                         {
                             RelativeSizeAxes = Axes.Both
                         }

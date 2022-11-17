@@ -17,6 +17,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
@@ -216,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                 };
 
             private Colour4 getColourByIssueType(IssueType issueType) =>
-                new IssueTemplate(null, issueType, "").Colour;
+                new IssueTemplate(new EmptyCheck(), issueType, "").Colour;
 
             [BackgroundDependencyLoader]
             private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricEditorVerifier verifier)
@@ -366,6 +367,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             protected abstract TableColumn[] CreateHeaders();
 
             protected abstract Drawable[] CreateContent(Issue issue);
+        }
+
+        private class EmptyCheck : ICheck
+        {
+            public IEnumerable<Issue> Run(BeatmapVerifierContext context)
+            {
+                throw new NotImplementedException();
+            }
+
+            public CheckMetadata Metadata { get; } = null!;
+
+            public IEnumerable<IssueTemplate> PossibleTemplates { get; } = null!;
         }
     }
 }
