@@ -1,14 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checks;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
@@ -24,14 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             // check template in the list should not be duplicated.
             var possibleTemplates = check.PossibleTemplates;
             Assert.AreEqual(possibleTemplates.Count(), possibleTemplates.Select(x => x.GetType()).Distinct().Count());
-        }
-
-        protected void SetConfig<TConfig>(TConfig config) where TConfig : IHasConfig<TConfig>, new()
-        {
-            if (check is not IHasCheckConfig<TConfig> checkWithConfig)
-                throw new InvalidCastException();
-
-            checkWithConfig.Config = config;
         }
 
         protected void AssertOk(BeatmapVerifierContext context)
