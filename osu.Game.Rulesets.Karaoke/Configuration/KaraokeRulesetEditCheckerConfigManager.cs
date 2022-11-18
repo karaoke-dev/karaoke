@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -13,15 +13,18 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Lyric
-            SetDefault(KaraokeRulesetEditCheckerSetting.Lyric, CreateDefaultConfig<LyricCheckerConfig>());
+            SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, TextTagsUtils.Sorting.Asc);
+            SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
+            SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
+            SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeGroupCheck, GroupCheck.Asc);
         }
-
-        protected static T CreateDefaultConfig<T>() where T : IHasConfig<T>, new()
-            => new T().CreateDefaultConfig();
     }
 
     public enum KaraokeRulesetEditCheckerSetting
     {
-        Lyric
+        LyricRubyPositionSorting,
+        LyricRomajiPositionSorting,
+        LyricTimeTagTimeSelfCheck,
+        LyricTimeTagTimeGroupCheck
     }
 }
