@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricRomajiTag;
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
             };
 
-            AssertNotOk<IssueTemplateLyricRomajiOutOfRange>(lyric);
+            AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiOutOfRange>(lyric);
         }
 
         [TestCase("karaoke", new[] { "[0,2]:ka", "[1,3]:ra" })]
@@ -47,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
             };
 
-            AssertNotOk<IssueTemplateLyricRomajiOverlapping>(lyric);
+            AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiOverlapping>(lyric);
         }
 
         [TestCase("karaoke", new[] { "[0,3]:" })]
@@ -61,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
             };
 
-            AssertNotOk<IssueTemplateLyricRomajiEmptyText>(lyric);
+            AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiEmptyText>(lyric);
         }
     }
 }

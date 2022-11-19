@@ -5,6 +5,7 @@ using System.Globalization;
 using J2N.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTranslate;
 
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 }
             };
 
-            AssertNotOk<IssueTemplateLyricTranslationNoText>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricTranslationNoText>(lyric);
         }
     }
 }

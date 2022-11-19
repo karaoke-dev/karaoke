@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricRubyTag;
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
             };
 
-            AssertNotOk<IssueTemplateLyricRubyOutOfRange>(lyric);
+            AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyOutOfRange>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[0,1]:ら" })]
@@ -47,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
             };
 
-            AssertNotOk<IssueTemplateLyricRubyOverlapping>(lyric);
+            AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyOverlapping>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[0,3]:" })]
@@ -61,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
             };
 
-            AssertNotOk<IssueTemplateLyricRubyEmptyText>(lyric);
+            AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyEmptyText>(lyric);
         }
     }
 }

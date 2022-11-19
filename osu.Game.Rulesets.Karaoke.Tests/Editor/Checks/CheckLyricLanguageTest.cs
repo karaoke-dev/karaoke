@@ -4,6 +4,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricLanguage;
 
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 Language = language != null ? new CultureInfo(language) : null,
             };
 
-            AssertNotOk<IssueTemplateLyricNotFillLanguage>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricNotFillLanguage>(lyric);
         }
     }
 }

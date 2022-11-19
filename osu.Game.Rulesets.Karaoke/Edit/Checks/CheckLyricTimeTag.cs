@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric) => new(lyric, this);
+            public Issue Create(Lyric lyric) => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricMissingFirstTimeTag : IssueTemplate
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric) => new(lyric, this);
+            public Issue Create(Lyric lyric) => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricMissingLastTimeTag : IssueTemplate
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric) => new(lyric, this);
+            public Issue Create(Lyric lyric) => new LyricIssue(lyric, this);
         }
 
         public abstract class IssueTemplateLyricTimeTag : IssueTemplate
