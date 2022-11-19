@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 lyricEditorState.SwitchSubMode(targetSubMode);
 
             // navigate to the target lyric.
-            var lyric = getNavigateLyric(issue);
+            (var lyric, object? lyricIndex) = getNavigateLyricAndIndex(issue);
             if (lyric == null)
                 return;
 
@@ -60,7 +60,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             clock.Seek(lyric.LyricStartTime);
 
             // navigate to the target index in the lyric.
-            object? lyricIndex = getNavigateLyricIndex(issue);
             if (lyricIndex == null)
                 return;
 
@@ -111,26 +110,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return null;
         }
 
-        private static Lyric? getNavigateLyric(Issue issue)
-        {
-            var lyric = issue.HitObjects.OfType<Lyric>().FirstOrDefault();
-            if (lyric != null)
-                return lyric;
-
-            var note = issue.HitObjects.OfType<Note>().FirstOrDefault();
-            if (note != null)
-                return note.ReferenceLyric;
-
-            return null;
-        }
-
-        private static object? getNavigateLyricIndex(Issue issue) =>
+        private static Tuple<Lyric?, object?> getNavigateLyricAndIndex(Issue issue) =>
             issue switch
             {
-                LyricRubyTagIssue rubyTagIssue => rubyTagIssue.RubyTag,
-                LyricRomajiTagIssue romajiTagIssue => romajiTagIssue.RomajiTag,
-                LyricTimeTagIssue timeTagIssue => timeTagIssue.TimeTag,
-                _ => null
+                LyricRubyTagIssue rubyTagIssue => new Tuple<Lyric?, object?>(rubyTagIssue.Lyric, rubyTagIssue.RubyTag),
+                LyricRomajiTagIssue romajiTagIssue => new Tuple<Lyric?, object?>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag),
+                LyricTimeTagIssue timeTagIssue => new Tuple<Lyric?, object?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
+                LyricIssue lyricIssue => new Tuple<Lyric?, object?>(lyricIssue.Lyric, null),
+                NoteIssue noteIssue => new Tuple<Lyric?, object?>(noteIssue.Note.ReferenceLyric, null),
+                _ => new Tuple<Lyric?, object?>(null, null)
             };
 
         private IHasBlueprintSelection<TItem>? getBlueprintSelection<TItem>(TItem item) where TItem : class
