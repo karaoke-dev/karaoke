@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckNoteText;
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 Text = text
             };
 
-            AssertNotOk<IssueTemplateNoteNoText>(note);
+            AssertNotOk<NoteIssue, IssueTemplateNoteNoText>(note);
         }
 
         [TestCase("")]
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 RubyText = rubyText
             };
 
-            AssertNotOk<IssueTemplateNoteNoRubyText>(note);
+            AssertNotOk<NoteIssue, IssueTemplateNoteNoRubyText>(note);
         }
     }
 }

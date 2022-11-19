@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceLyric = null // reference should not be null.
             };
 
-            AssertNotOk<IssueTemplateNoteNullReferenceLyric>(note);
+            AssertNotOk<NoteIssue, IssueTemplateNoteNullReferenceLyric>(note);
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = 0,
             };
 
-            AssertNotOk<IssueTemplateNoteInvalidReferenceLyric>(note);
+            AssertNotOk<NoteIssue, IssueTemplateNoteInvalidReferenceLyric>(note);
         }
 
         [TestCase(0, new string[] { })]
@@ -79,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex,
             };
 
-            AssertNotOk<IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag>(new HitObject[] { lyric, note });
         }
 
         [TestCase(-1, new[] { "[0,start]:1000", "[3,end]:5000" })]
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex
             };
 
-            AssertNotOk<IssueTemplateNoteMissingStartReferenceTimeTag>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteMissingStartReferenceTimeTag>(new HitObject[] { lyric, note });
         }
 
         [TestCase(0, new[] { "[0,start]:", "[3,end]:5000" })]
@@ -116,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex
             };
 
-            AssertNotOk<IssueTemplateNoteStartReferenceTimeTagMissingTime>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteStartReferenceTimeTagMissingTime>(new HitObject[] { lyric, note });
         }
 
         [TestCase(1, new[] { "[0,start]:1000", "[3,end]:5000" })]
@@ -134,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex
             };
 
-            AssertNotOk<IssueTemplateNoteMissingEndReferenceTimeTag>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteMissingEndReferenceTimeTag>(new HitObject[] { lyric, note });
         }
 
         [TestCase(0, new[] { "[0,start]:1000", "[3,end]:" })]
@@ -153,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex
             };
 
-            AssertNotOk<IssueTemplateNoteEndReferenceTimeTagMissingTime>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteEndReferenceTimeTagMissingTime>(new HitObject[] { lyric, note });
         }
     }
 }
