@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -343,43 +341,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                     }
                 }
             }
-        }
-
-        protected abstract class IssueTable : LyricEditorTable
-        {
-            [Resolved, AllowNull]
-            private IIssueNavigator issueNavigator { get; set; }
-
-            protected IssueTable()
-            {
-                Columns = CreateHeaders();
-            }
-
-            public IEnumerable<Issue> Issues
-            {
-                set
-                {
-                    Content = null;
-                    BackgroundFlow.Clear();
-
-                    foreach (var issue in value)
-                    {
-                        BackgroundFlow.Add(new RowBackground(issue)
-                        {
-                            Action = () =>
-                            {
-                                issueNavigator.Navigate(issue);
-                            },
-                        });
-                    }
-
-                    Content = value.Select(CreateContent).ToArray().ToRectangular();
-                }
-            }
-
-            protected abstract TableColumn[] CreateHeaders();
-
-            protected abstract Drawable[] CreateContent(Issue issue);
         }
 
         private class EmptyCheck : ICheck

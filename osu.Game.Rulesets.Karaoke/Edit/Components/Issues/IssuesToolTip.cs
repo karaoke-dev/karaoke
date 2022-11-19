@@ -12,13 +12,13 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Issues
 {
-    public class InvalidLyricToolTip : BackgroundToolTip<Issue[]>
+    public class IssuesToolTip : BackgroundToolTip<Issue[]>
     {
         private readonly MessageContainer invalidMessage;
 
-        public InvalidLyricToolTip()
+        public IssuesToolTip()
         {
             Child = invalidMessage = new MessageContainer(s => s.Font = s.Font.With(size: 14))
             {

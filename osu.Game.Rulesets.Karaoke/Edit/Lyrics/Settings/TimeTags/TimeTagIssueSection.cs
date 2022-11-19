@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -10,7 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
@@ -42,12 +41,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 {
                     return new Drawable[]
                     {
-                        new DrawableTextIndex
+                        new IssueIcon
                         {
                             Origin = Anchor.Centre,
                             Size = new Vector2(10),
-                            Colour = issue.Template.Colour,
                             Margin = new MarginPadding { Left = 10 },
+                            Issue = issue,
                         },
                         new OsuSpriteText
                         {

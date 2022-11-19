@@ -11,7 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.FixedInfo
         }
 
         public ITooltip<Issue[]> GetCustomTooltip()
-            => new InvalidLyricToolTip();
+            => new IssuesToolTip();
 
         public Issue[]? TooltipContent { get; private set; }
     }

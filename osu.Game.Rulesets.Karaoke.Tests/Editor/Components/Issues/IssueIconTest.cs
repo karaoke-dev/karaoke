@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components.Checks;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components.Issues;
 
 public class IssueIconTest
 {
