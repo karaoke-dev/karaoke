@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric, RubyTag textTag) => new RubyTagIssue(lyric, this, textTag, textTag);
+            public Issue Create(Lyric lyric, RubyTag textTag) => new LyricRubyTagIssue(lyric, this, textTag, textTag);
         }
 
         public class IssueTemplateLyricRubyOutOfRange : IssueTemplateLyricRuby

@@ -127,9 +127,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private static object? getNavigateLyricIndex(Issue issue) =>
             issue switch
             {
-                RubyTagIssue rubyTagIssue => rubyTagIssue.RubyTag,
-                RomajiTagIssue romajiTagIssue => romajiTagIssue.RomajiTag,
-                TimeTagIssue timeTagIssue => timeTagIssue.TimeTag,
+                LyricRubyTagIssue rubyTagIssue => rubyTagIssue.RubyTag,
+                LyricRomajiTagIssue romajiTagIssue => romajiTagIssue.RomajiTag,
+                LyricTimeTagIssue timeTagIssue => timeTagIssue.TimeTag,
                 _ => null
             };
 

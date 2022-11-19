@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
 {
-    public class RubyTagIssue : Issue
+    public class LyricRubyTagIssue : Issue
     {
         public readonly RubyTag RubyTag;
 
-        public RubyTagIssue(HitObject lyric, IssueTemplate template, RubyTag rubyTag, params object[] args)
+        public LyricRubyTagIssue(HitObject lyric, IssueTemplate template, RubyTag rubyTag, params object[] args)
             : base(lyric, template, args)
         {
             RubyTag = rubyTag;

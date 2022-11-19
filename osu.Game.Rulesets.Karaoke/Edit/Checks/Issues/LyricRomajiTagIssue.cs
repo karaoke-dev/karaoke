@@ -7,14 +7,14 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
 {
-    public class TimeTagIssue : Issue
+    public class LyricRomajiTagIssue : Issue
     {
-        public readonly TimeTag TimeTag;
+        public readonly RomajiTag RomajiTag;
 
-        public TimeTagIssue(HitObject lyric, IssueTemplate template, TimeTag timeTag, params object[] args)
+        public LyricRomajiTagIssue(HitObject lyric, IssueTemplate template, RomajiTag romajiTag, params object[] args)
             : base(lyric, template, args)
         {
-            TimeTag = timeTag;
+            RomajiTag = romajiTag;
         }
     }
 }

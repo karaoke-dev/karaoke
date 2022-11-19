@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
             {
                 var lyric = issue.HitObjects.OfType<Lyric>().Single();
 
-                if (issue is not TimeTagIssue timeTagIssue)
+                if (issue is not LyricTimeTagIssue timeTagIssue)
                     return new Tuple<Lyric, TimeTag?>(lyric, null);
 
                 var timeTag = timeTagIssue.TimeTag;

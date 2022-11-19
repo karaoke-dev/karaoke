@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric, TimeTag timeTag) => new TimeTagIssue(lyric, this, timeTag, timeTag);
+            public Issue Create(Lyric lyric, TimeTag timeTag) => new LyricTimeTagIssue(lyric, this, timeTag, timeTag);
         }
 
         public class IssueTemplateLyricTimeTagOutOfRange : IssueTemplateLyricTimeTag
