@@ -7,20 +7,20 @@ using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components.Issues
 {
     [TestFixture]
-    public class TestSceneInvalidLyricToolTip : OsuTestScene
+    public class TestSceneIssuesToolTip : OsuTestScene
     {
-        private InvalidLyricToolTip toolTip = null!;
+        private IssuesToolTip toolTip = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = toolTip = new InvalidLyricToolTip
+            Child = toolTip = new IssuesToolTip
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre
