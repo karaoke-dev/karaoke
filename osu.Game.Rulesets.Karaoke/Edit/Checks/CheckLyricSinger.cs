@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
     }
 }

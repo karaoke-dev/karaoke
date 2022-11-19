@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
@@ -36,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric, CultureInfo language)
-                => new(lyric, this, language);
+                => new LyricIssue(lyric, this, language);
         }
     }
 }

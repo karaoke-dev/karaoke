@@ -23,14 +23,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             AssertOk(getContext(hitObjects));
         }
 
-        protected void AssertNotOk<TIssueTemplate>(HitObject hitObject)
+        protected void AssertNotOk<TIssue, TIssueTemplate>(HitObject hitObject)
+            where TIssue : Issue
+            where TIssueTemplate : IssueTemplate
         {
-            AssertNotOk<TIssueTemplate>(new[] { hitObject });
+            AssertNotOk<TIssue, TIssueTemplate>(new[] { hitObject });
         }
 
-        protected void AssertNotOk<TIssueTemplate>(IEnumerable<HitObject> hitObjects)
+        protected void AssertNotOk<TIssue, TIssueTemplate>(IEnumerable<HitObject> hitObjects)
+            where TIssue : Issue
+            where TIssueTemplate : IssueTemplate
         {
-            AssertNotOk<TIssueTemplate>(getContext(hitObjects));
+            AssertNotOk<TIssue, TIssueTemplate>(getContext(hitObjects));
         }
 
         private BeatmapVerifierContext getContext(IEnumerable<HitObject> hitObjects)

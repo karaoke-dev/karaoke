@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteNoRubyText : IssueTemplate
@@ -45,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
     }
 }

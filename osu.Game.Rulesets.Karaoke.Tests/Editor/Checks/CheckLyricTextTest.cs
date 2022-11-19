@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricText;
 
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 Text = text
             };
 
-            AssertNotOk<IssueTemplateLyricNoText>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricNoText>(lyric);
         }
     }
 }

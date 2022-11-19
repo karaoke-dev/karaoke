@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
@@ -66,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteInvalidReferenceLyric : IssueTemplate
@@ -77,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag : IssueTemplate
@@ -88,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteMissingStartReferenceTimeTag : IssueTemplate
@@ -99,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteStartReferenceTimeTagMissingTime : IssueTemplate
@@ -110,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteMissingEndReferenceTimeTag : IssueTemplate
@@ -121,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
 
         public class IssueTemplateNoteEndReferenceTimeTagMissingTime : IssueTemplate
@@ -132,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new(note, this);
+                => new NoteIssue(note, this);
         }
     }
 }

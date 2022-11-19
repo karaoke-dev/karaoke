@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Objects;
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 
             lyric.ReferenceLyric = lyric;
 
-            AssertNotOk<IssueTemplateLyricSelfReference>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricSelfReference>(lyric);
         }
 
         [Test]
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceLyricConfig = new ReferenceLyricConfig(),
             };
 
-            AssertNotOk<IssueTemplateLyricInvalidReferenceLyric>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricInvalidReferenceLyric>(lyric);
         }
 
         [Test]
@@ -60,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceLyric = referencedLyric,
             };
 
-            AssertNotOk<IssueTemplateLyricNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
+            AssertNotOk<LyricIssue, IssueTemplateLyricNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceLyricConfig = new ReferenceLyricConfig(),
             };
 
-            AssertNotOk<IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric>(lyric);
         }
     }
 }

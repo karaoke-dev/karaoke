@@ -3,18 +3,17 @@
 
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
 {
-    public class RubyTagIssue : Issue
+    public class LyricRomajiTagIssue : LyricIssue
     {
-        public readonly RubyTag RubyTag;
+        public readonly RomajiTag RomajiTag;
 
-        public RubyTagIssue(HitObject lyric, IssueTemplate template, RubyTag rubyTag, params object[] args)
+        public LyricRomajiTagIssue(Lyric lyric, IssueTemplate template, RomajiTag romajiTag, params object[] args)
             : base(lyric, template, args)
         {
-            RubyTag = rubyTag;
+            RomajiTag = romajiTag;
         }
     }
 }

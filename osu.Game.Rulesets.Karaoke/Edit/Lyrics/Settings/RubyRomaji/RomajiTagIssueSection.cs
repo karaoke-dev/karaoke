@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
         {
             protected override Tuple<Lyric, RomajiTag> GetInvalidByIssue(Issue issue)
             {
-                if (issue is not RomajiTagIssue romajiTagIssue)
+                if (issue is not LyricRomajiTagIssue romajiTagIssue)
                     throw new InvalidCastException();
 
                 var lyric = issue.HitObjects.OfType<Lyric>().Single();

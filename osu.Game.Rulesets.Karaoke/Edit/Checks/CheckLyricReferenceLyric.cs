@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
@@ -43,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricInvalidReferenceLyric : IssueTemplate
@@ -54,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricNullReferenceLyricConfig : IssueTemplate
@@ -65,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric : IssueTemplate
@@ -76,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
     }
 }

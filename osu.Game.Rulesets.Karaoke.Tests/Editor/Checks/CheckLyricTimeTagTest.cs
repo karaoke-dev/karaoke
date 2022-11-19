@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTimeTag;
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricEmptyTimeTag>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricEmptyTimeTag>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[3,end]:5000" })]
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricMissingFirstTimeTag>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricMissingFirstTimeTag>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:5000" })]
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricMissingLastTimeTag>(lyric);
+            AssertNotOk<LyricIssue, IssueTemplateLyricMissingLastTimeTag>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[-1,start]:0", "[0,start]:1000", "[3,end]:1000" })] // out-of range start time-tag time.
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricTimeTagOutOfRange>(lyric);
+            AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOutOfRange>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:5000", "[3,end]:1000" })]
@@ -83,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricTimeTagOverlapping>(lyric);
+            AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOverlapping>(lyric);
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:", "[3,end]:1000" })] // empty start time-tag time.
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            AssertNotOk<IssueTemplateLyricTimeTagEmptyTime>(lyric);
+            AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagEmptyTime>(lyric);
         }
     }
 }

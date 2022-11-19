@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric, RomajiTag textTag) => new RomajiTagIssue(lyric, this, textTag);
+            public Issue Create(Lyric lyric, RomajiTag textTag) => new LyricRomajiTagIssue(lyric, this, textTag);
         }
 
         public class IssueTemplateLyricRomajiOutOfRange : IssueTemplateLyricRomaji

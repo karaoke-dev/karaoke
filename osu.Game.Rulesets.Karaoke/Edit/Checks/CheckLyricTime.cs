@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricStartTimeInvalid : IssueTemplate
@@ -50,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
 
         public class IssueTemplateLyricEndTimeInvalid : IssueTemplate
@@ -61,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new(lyric, this);
+                => new LyricIssue(lyric, this);
         }
     }
 }

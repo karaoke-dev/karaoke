@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
 {
     /// <summary>
     /// In <see cref="NoteEditMode.Generate"/> mode, able to let user generate notes by <see cref="TimeTag"/>
-    /// But need to make sure that lyric should not have any <see cref="TimeTagIssue"/>
+    /// But need to make sure that lyric should not have any <see cref="LyricTimeTagIssue"/>
     /// If found any issue, will navigate to target lyric.
     /// </summary>
     public class NoteAutoGenerateSubsection : AutoGenerateSubsection
