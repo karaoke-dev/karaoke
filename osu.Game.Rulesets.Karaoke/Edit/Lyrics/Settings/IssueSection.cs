@@ -185,6 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                             Origin = Anchor.Centre,
                             Padding = new MarginPadding(10),
                             Direction = FillDirection.Horizontal,
+                            Spacing = new Vector2(5),
                             Children = createCategory()
                         },
                         reloadButton = new IconButton
