@@ -103,17 +103,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
                 };
             }
 
-            private Tuple<Lyric, TimeTag?> getInvalidByIssue(Issue issue)
-            {
-                var lyric = issue.HitObjects.OfType<Lyric>().Single();
-
-                if (issue is not LyricTimeTagIssue timeTagIssue)
-                    return new Tuple<Lyric, TimeTag?>(lyric, null);
-
-                var timeTag = timeTagIssue.TimeTag;
-
-                return new Tuple<Lyric, TimeTag?>(lyric, timeTag);
-            }
+            private Tuple<Lyric, TimeTag?> getInvalidByIssue(Issue issue) =>
+                issue switch
+                {
+                    LyricTimeTagIssue timeTagIssue => new Tuple<Lyric, TimeTag?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
+                    LyricIssue lyricIssue => new Tuple<Lyric, TimeTag?>(lyricIssue.Lyric, null),
+                    _ => throw new InvalidCastException()
+                };
         }
     }
 }
