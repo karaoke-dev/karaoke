@@ -1,15 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -35,13 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 
                 return new Drawable[]
                 {
-                    new SpriteIcon
+                    new IssueIcon
                     {
                         Origin = Anchor.Centre,
                         Size = new Vector2(10),
-                        Colour = issue.Template.Colour,
                         Margin = new MarginPadding { Left = 10 },
-                        Icon = FontAwesome.Solid.Tag,
+                        Issue = issue,
                     },
                     new OsuSpriteText
                     {
