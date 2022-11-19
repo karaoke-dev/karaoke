@@ -14,7 +14,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Screens.Edit;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 /// <summary>
 /// Just a copy of class <see cref="EditorTable"/>
