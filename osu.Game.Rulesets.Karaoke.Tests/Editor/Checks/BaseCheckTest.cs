@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             Assert.That(Run(context), Is.Empty);
         }
 
-        protected void AssertNotOk<TIssueTemplate>(BeatmapVerifierContext context)
+        protected void AssertNotOk<TIssueTemplate>(BeatmapVerifierContext context) where TIssueTemplate : IssueTemplate
         {
             var issues = Run(context).ToList();
 
