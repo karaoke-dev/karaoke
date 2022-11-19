@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
     public class DrawableSingerAvatar : CompositeDrawable
     {
-        private readonly IBindable<string> binsableAvatarFile = new Bindable<string>();
+        private readonly IBindable<string> bindableAvatarFile = new Bindable<string>();
 
         private readonly Sprite avatar;
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
         [BackgroundDependencyLoader]
         private void load(LargeTextureStore textures, IKaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider)
         {
-            binsableAvatarFile.BindValueChanged(_ =>
+            bindableAvatarFile.BindValueChanged(_ =>
             {
                 if (singer == null)
                     avatar.Texture = getDefaultAvatar();
@@ -61,8 +61,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                 if (singer is not Singer s)
                     return;
 
-                binsableAvatarFile.UnbindBindings();
-                binsableAvatarFile.BindTo(s.AvatarFileBindable);
+                bindableAvatarFile.UnbindBindings();
+                bindableAvatarFile.BindTo(s.AvatarFileBindable);
             }
         }
     }
