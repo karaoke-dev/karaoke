@@ -28,11 +28,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             Assert.That(Run(context), Is.Empty);
         }
 
-        protected void AssertNotOk<TIssueTemplate>(BeatmapVerifierContext context) where TIssueTemplate : IssueTemplate
+        protected void AssertNotOk<TIssueTemplate>(BeatmapVerifierContext context)
+            where TIssueTemplate : IssueTemplate
+        {
+            AssertNotOk<Issue, TIssueTemplate>(context);
+        }
+
+        protected void AssertNotOk<TIssue, TIssueTemplate>(BeatmapVerifierContext context)
+            where TIssue : Issue
+            where TIssueTemplate : IssueTemplate
         {
             var issues = Run(context).ToList();
 
             Assert.That(issues, Has.Count.EqualTo(1));
+            Assert.AreEqual(typeof(TIssue), issues.Single().GetType());
             Assert.AreEqual(typeof(TIssueTemplate), issues.Single().Template.GetType());
 
             // should make sure that have issue template in the list.
