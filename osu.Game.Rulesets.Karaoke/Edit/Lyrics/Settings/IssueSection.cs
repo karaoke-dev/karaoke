@@ -8,7 +8,9 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
@@ -157,6 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
         {
             private readonly Box background;
             private readonly FillFlowContainer<IssueCategory> categoryList;
+            private readonly Box blockBox;
             private readonly IconButton reloadButton;
 
             public IssueNavigator()
@@ -185,7 +188,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                             Origin = Anchor.Centre,
                             Padding = new MarginPadding(10),
                             Direction = FillDirection.Horizontal,
+                            Spacing = new Vector2(5),
                             Children = createCategory()
+                        },
+                        blockBox = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            RelativePositionAxes = Axes.Both,
+                            X = 0.5f,
+                            Size = new Vector2(0.5f, 1f),
                         },
                         reloadButton = new IconButton
                         {
@@ -222,7 +233,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
             [BackgroundDependencyLoader]
             private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricEditorVerifier verifier)
             {
-                background.Colour = colourProvider.Background5(state.Mode);
+                var colour = colourProvider.Background5(state.Mode);
+                background.Colour = colour;
+                blockBox.Colour = ColourInfo.GradientHorizontal(colour.Opacity(0), colour);
                 reloadButton.Action = verifier.Refresh;
             }
 
