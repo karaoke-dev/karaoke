@@ -73,13 +73,26 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
 
     private void recalculateIssues()
     {
-        hitObjectIssues.Clear();
+        var hitObjects = beatmap.HitObjects.OfType<KaraokeHitObject>().ToArray();
+        var listedHitObjects = hitObjectIssues.Keys.ToArray();
 
-        var hitObjects = beatmap.HitObjects.OfType<KaraokeHitObject>();
+        var newHitObjects = hitObjects.Except(listedHitObjects);
+        var removeHitObjects = listedHitObjects.Except(hitObjects);
+        var updateHitObjects = hitObjects.Intersect(listedHitObjects);
 
-        foreach (var hitObject in hitObjects)
+        foreach (var hitObject in newHitObjects)
         {
             hitObjectAdded(hitObject);
+        }
+
+        foreach (var hitObject in removeHitObjects)
+        {
+            hitObjectRemoved(hitObject);
+        }
+
+        foreach (var hitObject in updateHitObjects)
+        {
+            hitObjectUpdated(hitObject);
         }
 
         recalculateEditModeIssue();

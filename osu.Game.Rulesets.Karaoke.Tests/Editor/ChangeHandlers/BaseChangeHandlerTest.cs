@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
     /// Should inherit <see cref="OsuTestScene"/> because all change handler need the injecting to get the value.
     /// </summary>
     [HeadlessTest]
-    public abstract class BaseChangeHandlerTest<TChangeHandler> : OsuTestScene where TChangeHandler : Component, new()
+    public abstract class BaseChangeHandlerTest<TChangeHandler> : EditorClockTestScene where TChangeHandler : Component, new()
     {
         private TChangeHandler changeHandler = null!;
 
@@ -42,7 +42,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 transactionCount++;
             };
 
-            Child = changeHandler = new TChangeHandler();
+            Children = new Drawable[]
+            {
+                editorBeatmap,
+                changeHandler = new TChangeHandler()
+            };
         }
 
         protected void SetUpEditorBeatmap(Action<EditorBeatmap> action)
