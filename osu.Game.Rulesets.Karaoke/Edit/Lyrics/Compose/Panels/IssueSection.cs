@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -33,6 +34,7 @@ public class IssueSection : PanelSection
     {
         EmptyIssue emptyIssue;
 
+        IconButton reloadButton;
         IssueTable issueTable;
 
         Children = new Drawable[]
@@ -48,12 +50,28 @@ public class IssueSection : PanelSection
             issueTable = new SingleLyricIssueTable()
         };
 
+        AddInternal(reloadButton = new IconButton
+        {
+            Anchor = Anchor.TopRight,
+            Origin = Anchor.TopRight,
+            Icon = FontAwesome.Solid.Redo,
+            Scale = new Vector2(0.7f),
+            Action = () =>
+            {
+                if (Lyric == null)
+                    throw new ArgumentNullException(nameof(Lyric));
+
+                verifier.RefreshByHitObject(Lyric);
+            }
+        });
+
         bindableIssues.BindCollectionChanged((_, _) =>
         {
             bool hasIssue = bindableIssues.Any();
 
             emptyIssue.Alpha = hasIssue ? 0 : 1;
 
+            reloadButton.Alpha = hasIssue ? 1 : 0;
             issueTable.Alpha = hasIssue ? 1 : 0;
             issueTable.Issues = bindableIssues.Take(100);
         }, true);
