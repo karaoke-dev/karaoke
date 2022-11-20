@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 /// </summary>
 public abstract class LyricEditorTable : TableContainer
 {
-    private const float horizontal_inset = 20;
+    protected virtual float HorizontalInset => 0;
 
     protected const float ROW_HEIGHT = 25;
 
@@ -34,14 +34,14 @@ public abstract class LyricEditorTable : TableContainer
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;
 
-        Padding = new MarginPadding { Horizontal = horizontal_inset };
+        Padding = new MarginPadding { Horizontal = HorizontalInset };
         RowSize = new Dimension(GridSizeMode.Absolute, ROW_HEIGHT);
 
         AddInternal(BackgroundFlow = new FillFlowContainer<RowBackground>
         {
             RelativeSizeAxes = Axes.Both,
             Depth = 1f,
-            Padding = new MarginPadding { Horizontal = -horizontal_inset },
+            Padding = new MarginPadding { Horizontal = -HorizontalInset },
             Margin = new MarginPadding { Top = ROW_HEIGHT }
         });
     }
