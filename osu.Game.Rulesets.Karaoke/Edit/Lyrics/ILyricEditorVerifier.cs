@@ -14,4 +14,6 @@ public interface ILyricEditorVerifier
     IBindableList<Issue> GetIssueByEditMode(LyricEditorMode editorMode);
 
     void Refresh();
+
+    void RefreshByHitObject(KaraokeHitObject hitObject);
 }

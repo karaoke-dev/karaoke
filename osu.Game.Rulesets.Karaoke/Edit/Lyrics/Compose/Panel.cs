@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
         private readonly Box background;
+        private readonly FillFlowContainer fillFlowContainer;
 
         protected Panel()
         {
@@ -43,13 +44,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                 new OsuScrollContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = new FillFlowContainer
+                    Child = fillFlowContainer = new FillFlowContainer
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
                         Direction = FillDirection.Vertical,
                         Spacing = new Vector2(10),
-                        Children = CreateSections()
                     },
                 }
             };
@@ -113,6 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
             // todo: adjust the effect.
             this.MoveToX(0, transition_length, Easing.OutQuint);
             this.FadeTo(1, transition_length, Easing.OutQuint);
+
+            // should load the content after opened.
+            fillFlowContainer.Children = CreateSections();
         }
 
         protected override void PopOut()
@@ -122,7 +125,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
             float width = getHideXPosition();
             this.MoveToX(width, transition_length, Easing.OutQuint);
-            this.FadeTo(0, transition_length, Easing.OutQuint);
+            this.FadeTo(0, transition_length, Easing.OutQuint).OnComplete(_ =>
+            {
+                // should clear the content if close.
+                fillFlowContainer.Clear();
+            });
         }
 
         private float getHideXPosition() =>
