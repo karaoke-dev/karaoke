@@ -121,6 +121,19 @@ public class LyricEditorVerifierTest : EditorClockTestScene
         assertEditModeIssueAmount(LyricEditorMode.Language, 0);
     }
 
+    [Test]
+    public void TestRefreshByHitObject()
+    {
+        AddStep("Fix the language issue and refresh.", () =>
+        {
+            internalLyric.Language = new CultureInfo("ja-JP");
+            verifier.RefreshByHitObject(internalLyric);
+        });
+
+        assertHitObjectIssueAmount(internalLyric, 0);
+        assertEditModeIssueAmount(LyricEditorMode.Language, 0);
+    }
+
     #region Tool
 
     private static Lyric createLyricWithLanguageIssueOnly()
