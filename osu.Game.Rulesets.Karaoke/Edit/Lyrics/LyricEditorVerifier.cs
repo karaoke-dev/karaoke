@@ -54,7 +54,16 @@ public class LyricEditorVerifier : Component, ILyricEditorVerifier
         => recalculateIssues();
 
     public void RefreshByHitObject(KaraokeHitObject hitObject)
-        => hitObjectUpdated(hitObject);
+    {
+        if (hitObjectIssues.ContainsKey(hitObject))
+        {
+            hitObjectUpdated(hitObject);
+        }
+        else
+        {
+            hitObjectAdded(hitObject);
+        }
+    }
 
     protected override void LoadComplete()
     {
