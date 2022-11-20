@@ -13,15 +13,17 @@ public abstract class PanelSection : Section
 {
     private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 
+    protected Lyric? Lyric;
+
     protected override void LoadComplete()
     {
         base.LoadComplete();
 
         bindableFocusedLyric.BindValueChanged(x =>
         {
-            var lyric = x.NewValue;
+            Lyric = x.NewValue;
 
-            OnLyricChanged(lyric);
+            OnLyricChanged(Lyric);
         }, true);
     }
 
