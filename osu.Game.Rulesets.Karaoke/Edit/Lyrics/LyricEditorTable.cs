@@ -48,6 +48,16 @@ public abstract class LyricEditorTable : TableContainer
 
     protected override Drawable CreateHeader(int index, TableColumn column) => new HeaderText(column?.Header ?? default);
 
+    public new bool ShowHeaders
+    {
+        get => base.ShowHeaders;
+        set
+        {
+            base.ShowHeaders = value;
+            BackgroundFlow.Margin = new MarginPadding { Top = value ? ROW_HEIGHT : 0 };
+        }
+    }
+
     private class HeaderText : OsuSpriteText
     {
         public HeaderText(LocalisableString text)

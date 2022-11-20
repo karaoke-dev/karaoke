@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
@@ -9,6 +10,8 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Graphics.Containers;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 {
@@ -22,12 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
         protected virtual string PopInSampleName => "UI/overlay-pop-in";
         protected virtual string PopOutSampleName => "UI/overlay-pop-out";
 
-        protected override Container<Drawable> Content => content;
-
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
         private readonly Box background;
-        private readonly Container content;
 
         protected Panel()
         {
@@ -40,13 +40,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
                     Name = "Background",
                     RelativeSizeAxes = Axes.Both,
                 },
-                content = new Container
+                new OsuScrollContainer
                 {
-                    RelativeSizeAxes = Axes.Y,
-                    AutoSizeAxes = Axes.X,
+                    RelativeSizeAxes = Axes.Both,
+                    Child = new FillFlowContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Vertical,
+                        Spacing = new Vector2(10),
+                        Children = CreateSections()
+                    },
                 }
             };
         }
+
+        protected abstract IReadOnlyList<Drawable> CreateSections();
 
         [BackgroundDependencyLoader(true)]
         private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider, AudioManager audio)
