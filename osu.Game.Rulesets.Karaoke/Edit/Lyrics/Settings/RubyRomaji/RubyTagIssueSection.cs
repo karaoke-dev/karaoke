@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditRuby;
 
-        protected override IssueTable CreateIssueTable() => new RubyTagIssueTable();
+        protected override LyricsIssueTable CreateIssueTable() => new RubyTagIssueTable();
 
         private class RubyTagIssueTable : TextTagIssueTable<RubyTag>
         {

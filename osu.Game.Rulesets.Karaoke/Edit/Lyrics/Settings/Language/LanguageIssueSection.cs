@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.Language;
 
-        protected override IssueTable CreateIssueTable() => new LanguageIssueTable();
+        protected override LyricsIssueTable CreateIssueTable() => new LanguageIssueTable();
 
-        private class LanguageIssueTable : IssueTable
+        private class LanguageIssueTable : LyricsIssueTable
         {
             protected override TableColumn[] CreateHeaders() => new[]
             {
