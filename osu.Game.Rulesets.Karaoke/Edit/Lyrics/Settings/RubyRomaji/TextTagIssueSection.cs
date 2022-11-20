@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.RubyRomaji
 {
     public abstract class TextTagIssueSection : IssueSection
     {
-        protected abstract class TextTagIssueTable<TTextTag> : IssueTable where TTextTag : ITextTag
+        protected abstract class TextTagIssueTable<TTextTag> : LyricsIssueTable where TTextTag : ITextTag
         {
             protected override TableColumn[] CreateHeaders() => new[]
             {

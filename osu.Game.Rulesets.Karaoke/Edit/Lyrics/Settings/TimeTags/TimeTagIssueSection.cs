@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.TimeTags
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
 
-        protected override IssueTable CreateIssueTable() => new TimeTagIssueTable();
+        protected override LyricsIssueTable CreateIssueTable() => new TimeTagIssueTable();
 
-        private class TimeTagIssueTable : IssueTable
+        private class TimeTagIssueTable : LyricsIssueTable
         {
             protected override TableColumn[] CreateHeaders() => new[]
             {

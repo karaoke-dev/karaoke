@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Notes
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
 
-        protected override IssueTable CreateIssueTable() => new NoteIssueTable();
+        protected override LyricsIssueTable CreateIssueTable() => new NoteIssueTable();
 
-        private class NoteIssueTable : IssueTable
+        private class NoteIssueTable : LyricsIssueTable
         {
             protected override TableColumn[] CreateHeaders() => new[]
             {

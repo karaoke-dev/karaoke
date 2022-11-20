@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 
         protected abstract LyricEditorMode EditMode { get; }
 
-        protected abstract IssueTable CreateIssueTable();
+        protected abstract LyricsIssueTable CreateIssueTable();
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorVerifier verifier)
@@ -341,6 +341,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
                     }
                 }
             }
+        }
+
+        protected abstract class LyricsIssueTable : IssueTable
+        {
         }
 
         private class EmptyCheck : ICheck
