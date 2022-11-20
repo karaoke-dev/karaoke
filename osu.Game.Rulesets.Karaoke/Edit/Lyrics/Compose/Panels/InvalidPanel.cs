@@ -13,9 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.Panels
             Width = 200;
         }
 
-        protected override IReadOnlyList<Drawable> CreateSections()
-        {
-            return new Drawable[] { };
-        }
+        protected override IReadOnlyList<Drawable> CreateSections() =>
+            new Drawable[]
+            {
+                new IssueSection()
+            };
     }
 }
