@@ -26,7 +26,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class AdjustTimeTagHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
+    public class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         private readonly TimeTagWithNoTimePiece timeTagWithNoTimePiece;
         private readonly OsuSpriteText timeTagText;
 
-        public AdjustTimeTagHitObjectBlueprint(TimeTag item)
+        public AdjustTimeTagSelectionBlueprint(TimeTag item)
             : base(item)
         {
             startTime = item.TimeBindable.GetBoundCopy();

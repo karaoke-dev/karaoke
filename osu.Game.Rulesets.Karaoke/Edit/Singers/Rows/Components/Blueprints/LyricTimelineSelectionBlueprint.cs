@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 {
-    public class LyricTimelineHitObjectBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
+    public class LyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
     {
         private const float lyric_size = 20;
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 
         private readonly IBindableList<int> singersBindable;
 
-        public LyricTimelineHitObjectBlueprint(Lyric item)
+        public LyricTimelineSelectionBlueprint(Lyric item)
             : base(item)
         {
             singersBindable = Item.SingersBindable.GetBoundCopy();
