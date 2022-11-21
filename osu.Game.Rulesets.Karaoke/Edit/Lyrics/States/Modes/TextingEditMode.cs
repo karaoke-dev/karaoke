@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
     {
         Typing,
 
-        Split
+        Split,
+
+        Verify
     }
 }

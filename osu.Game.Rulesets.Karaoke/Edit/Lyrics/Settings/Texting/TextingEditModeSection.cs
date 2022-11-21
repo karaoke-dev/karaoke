@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             {
                 TextingEditMode.Typing => new Selection(),
                 TextingEditMode.Split => new Selection(),
+                TextingEditMode.Verify => new TextingVerifySelection(),
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
@@ -29,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             {
                 TextingEditMode.Typing => "Typing",
                 TextingEditMode.Split => "Split",
+                TextingEditMode.Verify => "Verify",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
@@ -36,7 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             mode switch
             {
                 TextingEditMode.Typing => active ? colours.Blue : colours.BlueDarker,
-                TextingEditMode.Split => active ? colours.Yellow : colours.YellowDarker,
+                TextingEditMode.Split => active ? colours.Red : colours.RedDarker,
+                TextingEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
@@ -45,7 +48,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
             {
                 TextingEditMode.Typing => "Edit the lyric text.",
                 TextingEditMode.Split => "Create/delete or split/combine the lyric.",
+                TextingEditMode.Verify => "Check if have lyric with no text.",
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
+
+        private class TextingVerifySelection : VerifySelection
+        {
+            protected override LyricEditorMode EditMode => LyricEditorMode.Texting;
+        }
     }
 }
