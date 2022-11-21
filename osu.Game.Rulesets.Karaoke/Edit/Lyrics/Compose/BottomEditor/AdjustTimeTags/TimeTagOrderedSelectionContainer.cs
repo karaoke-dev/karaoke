@@ -68,7 +68,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         protected override int Compare(Drawable x, Drawable y)
         {
-            // todo : have a better way to compare two object with nullable time.
+            var xObj = ((SelectionBlueprint<TimeTag>)x).Item;
+            var yObj = ((SelectionBlueprint<TimeTag>)y).Item;
+
+            double xTime = xObj.Time ?? 0;
+            double yTime = yObj.Time ?? 0;
+
+            // Put earlier blueprints towards the end of the list, so they handle input first
+            int result = yTime.CompareTo(xTime);
+            if (result != 0) return result;
+
             return CompareReverseChildID(x, y);
         }
     }
