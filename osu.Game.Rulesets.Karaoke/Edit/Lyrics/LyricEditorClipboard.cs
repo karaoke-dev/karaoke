@@ -161,6 +161,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             lyricsChangeHandler.Remove();
                             return true;
 
+                        case TextingEditMode.Verify:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -241,6 +245,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             copyObjectToClipboard(lyric.Text);
                             return true;
 
+                        case TextingEditMode.Verify:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -318,6 +326,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                             lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                             return true;
+
+                        case TextingEditMode.Verify:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException();

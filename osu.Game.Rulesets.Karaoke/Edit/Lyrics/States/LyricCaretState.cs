@@ -145,6 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 {
                     TextingEditMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
                     TextingEditMode.Split => new CuttingCaretPositionAlgorithm(lyrics),
+                    TextingEditMode.Verify => new NavigateCaretPositionAlgorithm(lyrics),
                     _ => throw new InvalidOperationException(nameof(textingEditMode))
                 };
             }
