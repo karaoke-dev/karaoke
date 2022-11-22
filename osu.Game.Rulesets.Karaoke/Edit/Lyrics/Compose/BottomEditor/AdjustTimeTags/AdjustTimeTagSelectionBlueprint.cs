@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
                 },
                 timeTagText = new OsuSpriteText
                 {
-                    Text = "Demo",
+                    Text = "Text",
                     Anchor = Anchor.BottomLeft,
                     Y = 10,
                 }
