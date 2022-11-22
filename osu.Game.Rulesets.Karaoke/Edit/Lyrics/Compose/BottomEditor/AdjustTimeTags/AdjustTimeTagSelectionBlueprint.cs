@@ -28,6 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 {
     public class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
+        private const float time_tag_triangle_size = 10;
+
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
@@ -164,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             public TimeTagPiece(TimeTag timeTag)
             {
                 RelativeSizeAxes = Axes.Y;
-                Width = 10;
+                Width = time_tag_triangle_size;
 
                 var textIndex = timeTag.Index;
                 InternalChildren = new Drawable[]
@@ -178,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
                     },
                     new DrawableTextIndex
                     {
-                        Size = new Vector2(10),
+                        Size = new Vector2(time_tag_triangle_size),
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.BottomCentre,
                         State = textIndex.State
@@ -194,14 +196,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             public TimeTagWithNoTimePiece(TimeTag timeTag)
             {
                 AutoSizeAxes = Axes.Y;
-                Width = 10;
+                Width = time_tag_triangle_size;
 
                 var state = timeTag.Index.State;
                 InternalChildren = new Drawable[]
                 {
                     new DrawableTextIndex
                     {
-                        Size = new Vector2(10),
+                        Size = new Vector2(time_tag_triangle_size),
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.BottomCentre,
                         State = state
