@@ -143,10 +143,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         }
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            hasTime() ? timeTagPiece.ReceivePositionalInputAt(screenSpacePos) : timeTagWithNoTimePiece.ReceivePositionalInputAt(screenSpacePos);
+            getContent().ReceivePositionalInputAt(screenSpacePos);
 
         public override Quad SelectionQuad =>
-            hasTime() ? timeTagPiece.ScreenSpaceDrawQuad : timeTagWithNoTimePiece.ScreenSpaceDrawQuad;
+            getContent().ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
@@ -155,6 +155,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         public TimeTag TooltipContent => Item;
 
         private bool hasTime() => startTime.Value.HasValue;
+
+        private Drawable getContent()
+            => hasTime() ? timeTagPiece : timeTagWithNoTimePiece;
 
         public class TimeTagPiece : CompositeDrawable
         {
