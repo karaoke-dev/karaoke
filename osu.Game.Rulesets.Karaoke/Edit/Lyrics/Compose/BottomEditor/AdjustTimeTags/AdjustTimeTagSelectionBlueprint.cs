@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,7 +11,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
@@ -26,8 +24,10 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class AdjustTimeTagHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
+    public class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
+        private const float time_tag_triangle_size = 10;
+
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         private readonly TimeTagWithNoTimePiece timeTagWithNoTimePiece;
         private readonly OsuSpriteText timeTagText;
 
-        public AdjustTimeTagHitObjectBlueprint(TimeTag item)
+        public AdjustTimeTagSelectionBlueprint(TimeTag item)
             : base(item)
         {
             startTime = item.TimeBindable.GetBoundCopy();
@@ -44,44 +44,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             Origin = Anchor.CentreLeft;
 
             RelativePositionAxes = Axes.X;
-            RelativeSizeAxes = Axes.Y;
+            RelativeSizeAxes = Axes.None;
             AutoSizeAxes = Axes.X;
+
+            // todo: not really sure why it fix the issue. should have more checks about this.
+            Height = AdjustTimeTagScrollContainer.TIMELINE_HEIGHT - 1;
 
             AddRangeInternal(new Drawable[]
             {
                 timeTagPiece = new TimeTagPiece(item)
                 {
                     Anchor = Anchor.CentreLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.CentreLeft, Anchor.CentreRight)
                 },
                 timeTagWithNoTimePiece = new TimeTagWithNoTimePiece(item)
                 {
                     Anchor = Anchor.BottomLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.BottomLeft, Anchor.BottomRight)
                 },
                 timeTagText = new OsuSpriteText
                 {
-                    Text = "Demo",
+                    Text = "Text",
                     Anchor = Anchor.BottomLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.TopLeft, Anchor.TopRight),
                     Y = 10,
                 }
             });
-
-            switch (item.Index.State)
-            {
-                case TextIndex.IndexState.Start:
-                    timeTagPiece.Origin = Anchor.CentreLeft;
-                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
-                    timeTagText.Origin = Anchor.TopLeft;
-                    break;
-
-                case TextIndex.IndexState.End:
-                    timeTagPiece.Origin = Anchor.CentreRight;
-                    timeTagWithNoTimePiece.Origin = Anchor.BottomRight;
-                    timeTagText.Origin = Anchor.TopRight;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item.Index.State));
-            }
         }
 
         [BackgroundDependencyLoader]
@@ -143,10 +131,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
         }
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            hasTime() ? timeTagPiece.ReceivePositionalInputAt(screenSpacePos) : timeTagWithNoTimePiece.ReceivePositionalInputAt(screenSpacePos);
+            getContent().ReceivePositionalInputAt(screenSpacePos);
 
         public override Quad SelectionQuad =>
-            hasTime() ? timeTagPiece.ScreenSpaceDrawQuad : timeTagWithNoTimePiece.ScreenSpaceDrawQuad;
+            getContent().ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
@@ -156,12 +144,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
 
         private bool hasTime() => startTime.Value.HasValue;
 
+        private Drawable getContent()
+            => hasTime() ? timeTagPiece : timeTagWithNoTimePiece;
+
         public class TimeTagPiece : CompositeDrawable
         {
             public TimeTagPiece(TimeTag timeTag)
             {
                 RelativeSizeAxes = Axes.Y;
-                Width = 10;
+                Width = time_tag_triangle_size;
 
                 var textIndex = timeTag.Index;
                 InternalChildren = new Drawable[]
@@ -175,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
                     },
                     new DrawableTextIndex
                     {
-                        Size = new Vector2(10),
+                        Size = new Vector2(time_tag_triangle_size),
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.BottomCentre,
                         State = textIndex.State
@@ -191,14 +182,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             public TimeTagWithNoTimePiece(TimeTag timeTag)
             {
                 AutoSizeAxes = Axes.Y;
-                Width = 10;
+                Width = time_tag_triangle_size;
 
                 var state = timeTag.Index.State;
                 InternalChildren = new Drawable[]
                 {
                     new DrawableTextIndex
                     {
-                        Size = new Vector2(10),
+                        Size = new Vector2(time_tag_triangle_size),
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.BottomCentre,
                         State = state

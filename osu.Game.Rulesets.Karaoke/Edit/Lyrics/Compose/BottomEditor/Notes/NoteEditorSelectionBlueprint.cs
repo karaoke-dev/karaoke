@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
     /// <summary>
     /// Copy from <see cref="NoteSelectionBlueprint"/>
     /// </summary>
-    public class NoteEditorHitObjectBlueprint : SelectionBlueprint<Note>, IHasPopover
+    public class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IHasPopover
     {
         private readonly IBindable<double> timeRange = new BindableDouble();
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
 
         protected ScrollingHitObjectContainer HitObjectContainer => ((EditorNotePlayfield)playfield).HitObjectContainer;
 
-        public NoteEditorHitObjectBlueprint(Note note)
+        public NoteEditorSelectionBlueprint(Note note)
             : base(note)
         {
             RelativeSizeAxes = Axes.None;

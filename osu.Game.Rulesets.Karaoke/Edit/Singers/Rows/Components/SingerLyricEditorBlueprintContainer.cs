@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             => new SingerLyricSelectionHandler();
 
         protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
-            => new LyricTimelineHitObjectBlueprint(item);
+            => new LyricTimelineSelectionBlueprint(item);
 
         protected override DragBox CreateDragBox() => new SingerLyricDragBox();
 

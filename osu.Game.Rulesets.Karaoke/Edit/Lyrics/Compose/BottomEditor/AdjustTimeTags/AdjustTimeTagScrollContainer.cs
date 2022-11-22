@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
     [Cached]
     public class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPositionSnapProvider
     {
-        private const float timeline_height = 38;
+        public const float TIMELINE_HEIGHT = 38;
 
         [Resolved]
         private EditorClock editorClock { get; set; }
@@ -47,14 +47,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
                 Name = "Background",
                 Depth = 1,
                 RelativeSizeAxes = Axes.X,
-                Height = timeline_height,
+                Height = TIMELINE_HEIGHT,
                 Colour = colours.Gray3,
             });
         }
 
         protected override void PostProcessContent(Container content)
         {
-            content.Height = timeline_height;
+            content.Height = TIMELINE_HEIGHT;
             content.AddRange(new Drawable[]
             {
                 new AdjustTimeTagBlueprintContainer(),

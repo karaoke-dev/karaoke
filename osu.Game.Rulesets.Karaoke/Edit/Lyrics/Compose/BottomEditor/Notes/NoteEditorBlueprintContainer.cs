@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.Notes
     internal class EditNoteBlueprintContainer : BindableBlueprintContainer<Note>
     {
         protected override SelectionBlueprint<Note> CreateBlueprintFor(Note hitObject)
-            => new NoteEditorHitObjectBlueprint(hitObject);
+            => new NoteEditorSelectionBlueprint(hitObject);
 
         protected override SelectionHandler<Note> CreateSelectionHandler() => new NoteEditorSelectionHandler();
 

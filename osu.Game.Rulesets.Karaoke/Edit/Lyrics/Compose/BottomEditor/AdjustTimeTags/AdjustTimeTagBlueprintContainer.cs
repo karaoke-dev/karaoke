@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             if (result.Time == null)
                 return false;
 
-            var timeTags = blueprints.OfType<AdjustTimeTagHitObjectBlueprint>().Select(x => x.Item).ToArray();
+            var timeTags = blueprints.OfType<AdjustTimeTagSelectionBlueprint>().Select(x => x.Item).ToArray();
             var firstTimeTag = timeTags.FirstOrDefault();
             if (firstTimeTag == null)
                 return false;
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             => new TimeTagEditorSelectionHandler();
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-            => new AdjustTimeTagHitObjectBlueprint(item);
+            => new AdjustTimeTagSelectionBlueprint(item);
 
         protected override DragBox CreateDragBox() => new TimelineDragBox();
 
