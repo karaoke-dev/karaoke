@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,7 +11,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
@@ -54,36 +52,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
                 timeTagPiece = new TimeTagPiece(item)
                 {
                     Anchor = Anchor.CentreLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.CentreLeft, Anchor.CentreRight)
                 },
                 timeTagWithNoTimePiece = new TimeTagWithNoTimePiece(item)
                 {
                     Anchor = Anchor.BottomLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.BottomLeft, Anchor.BottomRight)
                 },
                 timeTagText = new OsuSpriteText
                 {
                     Text = "Text",
                     Anchor = Anchor.BottomLeft,
+                    Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.TopLeft, Anchor.TopRight),
                     Y = 10,
                 }
             });
-
-            switch (item.Index.State)
-            {
-                case TextIndex.IndexState.Start:
-                    timeTagPiece.Origin = Anchor.CentreLeft;
-                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
-                    timeTagText.Origin = Anchor.TopLeft;
-                    break;
-
-                case TextIndex.IndexState.End:
-                    timeTagPiece.Origin = Anchor.CentreRight;
-                    timeTagWithNoTimePiece.Origin = Anchor.BottomRight;
-                    timeTagText.Origin = Anchor.TopRight;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item.Index.State));
-            }
         }
 
         [BackgroundDependencyLoader]
