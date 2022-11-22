@@ -44,8 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose.BottomEditor.AdjustTimeT
             Origin = Anchor.CentreLeft;
 
             RelativePositionAxes = Axes.X;
-            RelativeSizeAxes = Axes.Y;
+            RelativeSizeAxes = Axes.None;
             AutoSizeAxes = Axes.X;
+
+            // todo: not really sure why it fix the issue. should have more checks about this.
+            Height = AdjustTimeTagScrollContainer.TIMELINE_HEIGHT - 1;
 
             AddRangeInternal(new Drawable[]
             {
