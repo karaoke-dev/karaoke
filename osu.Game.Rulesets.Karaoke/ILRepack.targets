@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Target Name="ILRepacker" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-        <ItemGroup>
-            <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll"/>
-            <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.Resources.dll"/>
-            <InputAssemblies Include="$(OutputPath)\LanguageDetection.dll"/>
-            <InputAssemblies Include="$(OutputPath)\LrcParser.dll"/>
-            <InputAssemblies Include="$(OutputPath)\Octokit.dll"/>
-            <InputAssemblies Include="$(OutputPath)\osu.Framework.KaraokeFont.dll"/>
-            <InputAssemblies Include="$(OutputPath)\osu.Framework.Microphone.dll"/>
-            <InputAssemblies Include="$(OutputPath)\NWaves.dll"/>
-            <InputAssemblies Include="$(OutputPath)\NicoKaraParser.dll"/>
-            <InputAssemblies Include="$(OutputPath)\SixLabors.Fonts.dll"/>
-            <InputAssemblies Include="$(OutputPath)\SixLabors.ImageSharp.Drawing.dll"/>
-            <InputAssemblies Include="$(OutputPath)\WanaKanaSharp.dll"/>
-            <InputAssemblies Include="$(OutputPath)\Zipangu.dll"/>
-        </ItemGroup>
+  <Target Name="ILRepacker" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll"/>
+      <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.Resources.dll"/>
+      <InputAssemblies Include="$(OutputPath)\LanguageDetection.dll"/>
+      <InputAssemblies Include="$(OutputPath)\LrcParser.dll"/>
+      <InputAssemblies Include="$(OutputPath)\Octokit.dll"/>
+      <InputAssemblies Include="$(OutputPath)\osu.Framework.KaraokeFont.dll"/>
+      <InputAssemblies Include="$(OutputPath)\osu.Framework.Microphone.dll"/>
+      <InputAssemblies Include="$(OutputPath)\NWaves.dll"/>
+      <InputAssemblies Include="$(OutputPath)\NicoKaraParser.dll"/>
+      <InputAssemblies Include="$(OutputPath)\SixLabors.Fonts.dll"/>
+      <InputAssemblies Include="$(OutputPath)\SixLabors.ImageSharp.Drawing.dll"/>
+      <InputAssemblies Include="$(OutputPath)\WanaKanaSharp.dll"/>
+      <InputAssemblies Include="$(OutputPath)\Zipangu.dll"/>
+    </ItemGroup>
 
-        <ILRepack
-                Parallel="true"
-                InputAssemblies="@(InputAssemblies)"
-                TargetKind="Dll"
-                OutputFile="$(OutputPath)Packed\$(AssemblyName).dll"
-        />
-    </Target>
+    <ILRepack
+      Parallel="true"
+      InputAssemblies="@(InputAssemblies)"
+      TargetKind="Dll"
+      OutputFile="$(OutputPath)Packed\$(AssemblyName).dll"
+    />
+  </Target>
 </Project>

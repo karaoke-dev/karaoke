@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 ReferenceLyricConfig = new SyncLyricConfig(),
             });
 
-            void test(Lyric lyric)
+            static void test(Lyric lyric)
             {
                 HitObjectWritableUtils.IsRemoveLyricLocked(lyric);
                 HitObjectWritableUtils.GetRemoveLyricLockedBy(lyric);
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 ReferenceLyricConfig = new SyncLyricConfig(),
             });
 
-            void test(Lyric lyric)
+            static void test(Lyric lyric)
             {
                 testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
                 testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 ReferenceLyricConfig = new SyncLyricConfig(),
             });
 
-            void test(Lyric lyric)
+            static void test(Lyric lyric)
             {
                 HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
                 HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric);
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 ReferenceLyric = new Lyric(),
             });
 
-            void test(Note note)
+            static void test(Note note)
             {
                 testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
                 testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
