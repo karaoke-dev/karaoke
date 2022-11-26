@@ -11,7 +11,6 @@ using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -41,21 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             // equal to stream.ReadToEnd().DeserializeInto(output); in the base class.
             JsonConvert.PopulateObject(stream.ReadToEnd(), output, globalSetting);
-            var lyrics = output.HitObjects.OfType<Lyric>().ToArray();
-
-            foreach (var hitObject in output.HitObjects)
-            {
-                if (hitObject is Note note)
-                {
-                    // because of json serializer contains object reference issue with serialize/deserialize the beatmap.
-                    // so should re-assign the lyric instance.
-                    note.ReferenceLyric = lyrics.FirstOrDefault(x => x.ID == note.ReferenceLyric?.ID) ?? throw new InvalidOperationException();
-                }
-
-                hitObject.ApplyDefaults(output.ControlPointInfo, output.Difficulty);
-            }
-
-            var notes = output.HitObjects.OfType<Note>();
         }
 
         private class KaraokeBeatmapContractResolver : SnakeCaseKeyContractResolver
