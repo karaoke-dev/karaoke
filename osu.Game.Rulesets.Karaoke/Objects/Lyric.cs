@@ -199,6 +199,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => LockBindable.Value = value;
         }
 
+        private int? referenceLyricId;
+
+        public int? ReferenceLyricId
+        {
+            get => referenceLyricId;
+            set
+            {
+                referenceLyricId = value;
+
+                if (referenceLyricId != ReferenceLyric?.ID)
+                {
+                    ReferenceLyric = null;
+                }
+            }
+        }
+
         [JsonIgnore]
         public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
 
@@ -206,11 +222,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Reference lyric.
         /// Link the same or similar lyric for reference or sync the properties.
         /// </summary>
-        [JsonProperty(IsReference = true)]
+        [JsonIgnore]
         public Lyric? ReferenceLyric
         {
             get => ReferenceLyricBindable.Value;
-            set => ReferenceLyricBindable.Value = value;
+            set
+            {
+                ReferenceLyricBindable.Value = value;
+
+                if (value?.ID != ReferenceLyricId)
+                {
+                    ReferenceLyricId = value?.ID;
+                }
+            }
         }
 
         [JsonIgnore]

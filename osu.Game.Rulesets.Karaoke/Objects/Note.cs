@@ -132,6 +132,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         [JsonIgnore]
         public double EndTime => StartTime + Duration;
 
+        private int? referenceLyricId;
+
+        public int? ReferenceLyricId
+        {
+            get => referenceLyricId;
+            set
+            {
+                referenceLyricId = value;
+
+                if (referenceLyricId != ReferenceLyric?.ID)
+                {
+                    ReferenceLyric = null;
+                }
+            }
+        }
+
         [JsonIgnore]
         public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
 
@@ -139,11 +155,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Relative lyric.
         /// Technically parent lyric will not change after assign, but should not restrict in model layer.
         /// </summary>
-        [JsonProperty(IsReference = true)]
+        [JsonIgnore]
         public Lyric? ReferenceLyric
         {
             get => ReferenceLyricBindable.Value;
-            set => ReferenceLyricBindable.Value = value;
+            set
+            {
+                ReferenceLyricBindable.Value = value;
+
+                if (value?.ID != ReferenceLyricId)
+                {
+                    ReferenceLyricId = value?.ID;
+                }
+            }
         }
 
         [JsonIgnore]
