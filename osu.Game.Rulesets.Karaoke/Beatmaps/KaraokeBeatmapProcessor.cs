@@ -15,6 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         {
         }
 
+        public override void PreProcess()
+        {
+            base.PreProcess();
+
+            applyReferenceObject(Beatmap);
+        }
+
         public override void PostProcess()
         {
             base.PostProcess();
@@ -26,6 +33,32 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             var pattern = new LegacyLyricTimeGenerator();
             pattern.Generate(lyrics);
+        }
+
+        private void applyReferenceObject(IBeatmap beatmap)
+        {
+            foreach (var obj in beatmap.HitObjects.OfType<KaraokeHitObject>())
+            {
+                switch (obj)
+                {
+                    case Lyric lyric:
+                        if (lyric.ReferenceLyric != null || lyric.ReferenceLyricId == null)
+                            return;
+
+                        lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId.Value);
+                        break;
+
+                    case Note note:
+                        if (note.ReferenceLyric != null || note.ReferenceLyricId == null)
+                            return;
+
+                        note.ReferenceLyric = findLyricById(note.ReferenceLyricId.Value);
+                        break;
+                }
+            }
+
+            Lyric findLyricById(int id) =>
+                beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
         }
     }
 }
