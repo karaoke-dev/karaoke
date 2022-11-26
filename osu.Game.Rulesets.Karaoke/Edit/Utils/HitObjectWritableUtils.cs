@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
                 nameof(Lyric.Language) => lockState > LockState.Partial,
                 nameof(Lyric.Order) => false, // order can always be changed.
                 nameof(Lyric.Lock) => false, // order can always be changed.
-                nameof(Lyric.ReferenceLyric) => lockState > LockState.Partial,
+                nameof(Lyric.ReferenceLyric) or nameof(Lyric.ReferenceLyricId) => lockState > LockState.Partial,
                 nameof(Lyric.ReferenceLyricConfig) => lockState > LockState.Partial,
                 // base class
                 nameof(Lyric.Samples) => false,
@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
                     nameof(Lyric.Language) => true,
                     nameof(Lyric.Order) => true,
                     nameof(Lyric.Lock) => true,
-                    nameof(Lyric.ReferenceLyric) => false,
+                    nameof(Lyric.ReferenceLyric) or nameof(Lyric.ReferenceLyricId) => false,
                     nameof(Lyric.ReferenceLyricConfig) => false,
                     // base class
                     nameof(Lyric.Samples) => false,

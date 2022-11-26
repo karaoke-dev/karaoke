@@ -258,6 +258,49 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
             Assert.AreEqual(referencedLyric.Singers, lyric.Singers);
         }
 
+        [Test]
+        public void TestReferenceLyricAffectedByReferenceLyricId()
+        {
+            var lyric = new Lyric
+            {
+                ReferenceLyric = new Lyric
+                {
+                    ID = 2,
+                },
+            };
+            Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
+
+            // Should not affect the reference lyric if reference lyric id is the same.
+            lyric.ReferenceLyricId = 2;
+            Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
+
+            // Should clear the reference lyric if id changed.
+            lyric.ReferenceLyricId = 3;
+            Assert.IsNull(lyric.ReferenceLyric);
+        }
+
+        [Test]
+        public void TestReferenceLyricIdAffectedByReferenceLyric()
+        {
+            var lyric = new Lyric
+            {
+                ReferenceLyric = new Lyric
+                {
+                    ID = 2,
+                },
+                ReferenceLyricId = 2,
+            };
+            Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
+
+            // Should change the reference lyric id if reference lyric changed.
+            lyric.ReferenceLyric = new Lyric { ID = 3 };
+            Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
+
+            // Should clear the reference lyric id if remove the reference lyric.
+            lyric.ReferenceLyric = null;
+            Assert.IsNull(lyric.ReferenceLyricId);
+        }
+
         #endregion
 
         #region MyRegion
