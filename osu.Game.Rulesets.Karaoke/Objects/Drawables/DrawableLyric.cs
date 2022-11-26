@@ -111,12 +111,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
             }
 
-            mainFontUsageBindable.BindValueChanged(_ => updateLyricConfig());
-            rubyFontUsageBindable.BindValueChanged(_ => updateLyricConfig());
-            rubyMarginBindable.BindValueChanged(_ => updateLyricConfig());
-            romajiFontUsageBindable.BindValueChanged(_ => updateLyricConfig());
-            romajiMarginBindable.BindValueChanged(_ => updateLyricConfig());
-            translateFontUsageBindable.BindValueChanged(_ => updateLyricConfig());
+            mainFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
+            rubyFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
+            rubyMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
+            romajiFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
+            romajiMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
+            translateFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
 
             // property in hitobject.
             singersBindable.BindCollectionChanged((_, _) => { updateFontStyle(); });
@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.ApplySkin(skin, allowFallback);
 
             updateFontStyle();
-            updateLyricConfig();
+            updateLyricFontInfo();
             updateLayout();
         }
 
@@ -164,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             lyricStyle?.ApplyTo(this);
         }
 
-        private void updateLyricConfig()
+        private void updateLyricFontInfo()
         {
             if (CurrentSkin == null)
                 return;
@@ -172,8 +172,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricConfig = CurrentSkin.GetConfig<Lyric, LyricConfig>(HitObject)?.Value;
-            lyricConfig?.ApplyTo(this);
+            var lyricFontInfo = CurrentSkin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.Value;
+            lyricFontInfo?.ApplyTo(this);
         }
 
         private void updateLayout()

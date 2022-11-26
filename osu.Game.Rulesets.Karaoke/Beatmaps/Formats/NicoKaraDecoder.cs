@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             Enum.TryParse(firstLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
             Enum.TryParse(firstLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-            output.DefaultLyricConfig = new LyricConfig
+            output.DefaultLyricFontInfo = new LyricFontInfo
             {
                 SmartHorizon = smartHorizon,
                 LyricsInterval = firstLayout.LyricsInterval,

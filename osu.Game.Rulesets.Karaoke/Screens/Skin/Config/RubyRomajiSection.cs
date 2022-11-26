@@ -65,11 +65,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 
             manager.LoadedLyricConfig.BindValueChanged(e =>
             {
-                var lyricConfig = e.NewValue;
-                applyCurrent(rubyAlignmentDropdown.Current, lyricConfig.RubyAlignment);
-                applyCurrent(romajiAlignmentDropdown.Current, lyricConfig.RomajiAlignment);
-                applyCurrent(rubyMarginSliderBar.Current, lyricConfig.RubyMargin);
-                applyCurrent(romajiMarginSliderBar.Current, lyricConfig.RomajiMargin);
+                var lyricFontInfo = e.NewValue;
+                applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
+                applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomajiAlignment);
+                applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
+                applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomajiMargin);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;

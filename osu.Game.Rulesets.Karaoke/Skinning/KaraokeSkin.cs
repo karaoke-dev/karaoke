@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>
         {
-            { ElementType.LyricConfig, LyricConfig.CreateDefault() },
+            { ElementType.LyricConfig, LyricFontInfo.CreateDefault() },
             { ElementType.LyricStyle, LyricStyle.CreateDefault() },
             { ElementType.NoteStyle, NoteStyle.CreateDefault() },
         };
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (deserializedContent == null)
                         return;
 
-                    DefaultElement[ElementType.LyricConfig] = deserializedContent.LyricConfig;
+                    DefaultElement[ElementType.LyricConfig] = deserializedContent.LyricFontInfo;
                     DefaultElement[ElementType.LyricStyle] = deserializedContent.LyricStyle;
                     DefaultElement[ElementType.NoteStyle] = deserializedContent.NoteStyle;
                 }
@@ -170,7 +170,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private class DefaultSkinFormat
         {
-            public LyricConfig LyricConfig { get; set; } = null!;
+            public LyricFontInfo LyricFontInfo { get; set; } = null!;
 
             public LyricStyle LyricStyle { get; set; } = null!;
 

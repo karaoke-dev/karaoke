@@ -32,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 
             manager.LoadedLyricConfig.BindValueChanged(e =>
             {
-                var lyricConfig = e.NewValue;
-                applyCurrent(smartHorizonDropdown.Current, lyricConfig.SmartHorizon);
+                var lyricFontInfo = e.NewValue;
+                applyCurrent(smartHorizonDropdown.Current, lyricFontInfo.SmartHorizon);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;

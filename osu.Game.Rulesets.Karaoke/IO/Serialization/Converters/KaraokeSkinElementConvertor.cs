@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public static ElementType GetElementType(MemberInfo elementType) =>
             elementType switch
             {
-                var type when type == typeof(LyricConfig) => ElementType.LyricConfig,
+                var type when type == typeof(LyricFontInfo) => ElementType.LyricConfig,
                 var type when type == typeof(LyricLayout) => ElementType.LyricLayout,
                 var type when type == typeof(LyricStyle) => ElementType.LyricStyle,
                 var type when type == typeof(NoteStyle) => ElementType.NoteStyle,
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public static Type GetObjectType(ElementType elementType) =>
             elementType switch
             {
-                ElementType.LyricConfig => typeof(LyricConfig),
+                ElementType.LyricConfig => typeof(LyricFontInfo),
                 ElementType.LyricLayout => typeof(LyricLayout),
                 ElementType.LyricStyle => typeof(LyricStyle),
                 ElementType.NoteStyle => typeof(NoteStyle),

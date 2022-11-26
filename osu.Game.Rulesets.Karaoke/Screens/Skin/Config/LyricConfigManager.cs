@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
     public class LyricConfigManager : Component
     {
-        public readonly BindableList<LyricConfig> Configs = new();
+        public readonly BindableList<LyricFontInfo> Configs = new();
 
-        public readonly Bindable<LyricConfig> LoadedLyricConfig = new();
+        public readonly Bindable<LyricFontInfo> LoadedLyricConfig = new();
 
-        public readonly Bindable<LyricConfig> EditLyricConfig = new();
+        public readonly Bindable<LyricFontInfo> EditLyricConfig = new();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -29,15 +29,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         private void load()
         {
             var lookup = new KaraokeSkinLookup(ElementType.LyricConfig);
-            var lyricConfig = source.GetConfig<KaraokeSkinLookup, LyricConfig>(lookup)?.Value;
-            if (lyricConfig != null)
-                Configs.Add(lyricConfig);
+            var lyricFontInfo = source.GetConfig<KaraokeSkinLookup, LyricFontInfo>(lookup)?.Value;
+            if (lyricFontInfo != null)
+                Configs.Add(lyricFontInfo);
 
             LoadedLyricConfig.Value = Configs.FirstOrDefault();
             EditLyricConfig.Value = Configs.FirstOrDefault();
         }
 
-        public void ApplyCurrentLyricConfigChange(Action<LyricConfig> action)
+        public void ApplyCurrentLyricConfigChange(Action<LyricFontInfo> action)
         {
             action?.Invoke(LoadedLyricConfig.Value);
             LoadedLyricConfig.TriggerChange();

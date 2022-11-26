@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             public TestingSkin(SkinInfo skin, IStorageResourceProvider? resources)
                 : base(skin, resources)
             {
-                DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
+                DefaultElement[ElementType.LyricConfig] = LyricFontInfo.CreateDefault();
                 DefaultElement[ElementType.LyricStyle] = LyricStyle.CreateDefault();
                 DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
             }

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
     public class NicoKaraSkin
     {
-        public LyricConfig DefaultLyricConfig { get; set; } = LyricConfig.CreateDefault();
+        public LyricFontInfo DefaultLyricFontInfo { get; set; } = LyricFontInfo.CreateDefault();
 
         public List<LyricLayout> Layouts { get; set; } = new();
 

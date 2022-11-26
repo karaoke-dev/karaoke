@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public LyricEditorSkin(SkinInfo skin, IStorageResourceProvider? resources)
             : base(skin, resources)
         {
-            DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
+            DefaultElement[ElementType.LyricConfig] = LyricFontInfo.CreateDefault();
             DefaultElement[ElementType.LyricStyle] = new LyricStyle
             {
                 Name = "Default",
@@ -71,22 +71,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             FontSize = 26;
         }
 
-        protected LyricConfig LyricConfig => (LyricConfig)DefaultElement[ElementType.LyricConfig];
+        protected LyricFontInfo LyricFontInfo => (LyricFontInfo)DefaultElement[ElementType.LyricConfig];
 
         public float FontSize
         {
-            get => LyricConfig.MainTextFont.Size;
+            get => LyricFontInfo.MainTextFont.Size;
             set
             {
                 float textSize = Math.Clamp(value, MIN_FONT_SIZE, MAX_FONT_SIZE);
                 float changePercentage = textSize / FontSize;
 
-                LyricConfig.MainTextFont
-                    = multipleSize(LyricConfig.MainTextFont, changePercentage);
-                LyricConfig.RubyTextFont
-                    = multipleSize(LyricConfig.RubyTextFont, changePercentage);
-                LyricConfig.RomajiTextFont
-                    = multipleSize(LyricConfig.RomajiTextFont, changePercentage);
+                LyricFontInfo.MainTextFont
+                    = multipleSize(LyricFontInfo.MainTextFont, changePercentage);
+                LyricFontInfo.RubyTextFont
+                    = multipleSize(LyricFontInfo.RubyTextFont, changePercentage);
+                LyricFontInfo.RomajiTextFont
+                    = multipleSize(LyricFontInfo.RomajiTextFont, changePercentage);
 
                 // todo: change size might not working now.
                 // DefaultElement[ElementType.LyricConfig].TriggerChange();
