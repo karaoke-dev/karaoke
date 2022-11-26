@@ -277,7 +277,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Compose
 
             mainEditorArea.Padding = padding;
 
-            float getWidth(Panel panel)
+            static float getWidth(Panel panel)
                 => panel.State.Value == Visibility.Visible ? panel.Width : 0;
         }
 
