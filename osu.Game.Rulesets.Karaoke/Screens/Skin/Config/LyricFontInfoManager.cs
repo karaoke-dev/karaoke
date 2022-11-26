@@ -14,7 +14,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
-    public class LyricConfigManager : Component
+    public class LyricFontInfoManager : Component
     {
         public readonly BindableList<LyricFontInfo> Configs = new();
 

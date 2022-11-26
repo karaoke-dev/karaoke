@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         protected override LocalisableString Title => "Interval";
 
         [BackgroundDependencyLoader]
-        private void load(LyricConfigManager manager)
+        private void load(LyricFontInfoManager lyricFontInfoManager)
         {
             Children = new[]
             {
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                 }
             };
 
-            manager.LoadedLyricFontInfo.BindValueChanged(e =>
+            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
             {
                 var lyricFontInfo = e.NewValue;
                 applyCurrent(lyricIntervalSliderBar.Current, lyricFontInfo.LyricsInterval);
@@ -72,9 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.LyricsInterval = x.NewValue));
-            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RubyInterval = x.NewValue));
-            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RomajiInterval = x.NewValue));
+            lyricIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiInterval = x.NewValue));
         }
     }
 }

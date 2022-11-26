@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         protected override LocalisableString Title => "Ruby/Romaji";
 
         [BackgroundDependencyLoader]
-        private void load(LyricConfigManager manager)
+        private void load(LyricFontInfoManager lyricFontInfoManager)
         {
             Children = new Drawable[]
             {
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                 }
             };
 
-            manager.LoadedLyricFontInfo.BindValueChanged(e =>
+            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
             {
                 var lyricFontInfo = e.NewValue;
                 applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
@@ -75,10 +75,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
-            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
-            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
-            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
+            rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
+            rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
+            romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
         }
     }
 }

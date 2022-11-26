@@ -13,12 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
     public class ConfigScreen : KaraokeSkinEditorScreen
     {
         [Cached]
-        protected readonly LyricConfigManager ConfigManager;
+        protected readonly LyricFontInfoManager LyricFontInfoManager;
 
         public ConfigScreen(ISkin skin)
             : base(skin, KaraokeSkinEditorScreenMode.Config)
         {
-            AddInternal(ConfigManager = new LyricConfigManager());
+            AddInternal(LyricFontInfoManager = new LyricFontInfoManager());
         }
 
         protected override Section[] CreateSelectionContainer()
