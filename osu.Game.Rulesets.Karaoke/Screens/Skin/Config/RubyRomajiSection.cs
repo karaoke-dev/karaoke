@@ -75,10 +75,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyAlignment = x.NewValue));
-            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiAlignment = x.NewValue));
-            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyMargin = x.NewValue));
-            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiMargin = x.NewValue));
+            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
+            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
+            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
         }
     }
 }

@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
             EditLyricFontInfo.Value = Configs.FirstOrDefault();
         }
 
-        public void ApplyCurrentLyricConfigChange(Action<LyricFontInfo> action)
+        public void ApplyCurrentLyricFontInfoChange(Action<LyricFontInfo> action)
         {
             action?.Invoke(LoadedLyricFontInfo.Value);
             LoadedLyricFontInfo.TriggerChange();

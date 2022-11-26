@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.SmartHorizon = x.NewValue));
+            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricFontInfoChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }
