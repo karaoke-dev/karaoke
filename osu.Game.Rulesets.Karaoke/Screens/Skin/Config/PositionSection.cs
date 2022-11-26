@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                 }
             };
 
-            manager.LoadedLyricConfig.BindValueChanged(e =>
+            manager.LoadedLyricFontInfo.BindValueChanged(e =>
             {
                 var lyricFontInfo = e.NewValue;
                 applyCurrent(smartHorizonDropdown.Current, lyricFontInfo.SmartHorizon);

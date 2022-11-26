@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
     {
         public readonly BindableList<LyricFontInfo> Configs = new();
 
-        public readonly Bindable<LyricFontInfo> LoadedLyricConfig = new();
+        public readonly Bindable<LyricFontInfo> LoadedLyricFontInfo = new();
 
-        public readonly Bindable<LyricFontInfo> EditLyricConfig = new();
+        public readonly Bindable<LyricFontInfo> EditLyricFontInfo = new();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -33,14 +33,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
             if (lyricFontInfo != null)
                 Configs.Add(lyricFontInfo);
 
-            LoadedLyricConfig.Value = Configs.FirstOrDefault();
-            EditLyricConfig.Value = Configs.FirstOrDefault();
+            LoadedLyricFontInfo.Value = Configs.FirstOrDefault();
+            EditLyricFontInfo.Value = Configs.FirstOrDefault();
         }
 
         public void ApplyCurrentLyricConfigChange(Action<LyricFontInfo> action)
         {
-            action?.Invoke(LoadedLyricConfig.Value);
-            LoadedLyricConfig.TriggerChange();
+            action?.Invoke(LoadedLyricFontInfo.Value);
+            LoadedLyricFontInfo.TriggerChange();
         }
     }
 }
