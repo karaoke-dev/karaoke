@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public enum ElementType
     {
-        LyricConfig,
+        LyricFontInfo,
 
         LyricLayout,
 

@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>
         {
-            { ElementType.LyricConfig, LyricFontInfo.CreateDefault() },
+            { ElementType.LyricFontInfo, LyricFontInfo.CreateDefault() },
             { ElementType.LyricStyle, LyricStyle.CreateDefault() },
             { ElementType.NoteStyle, NoteStyle.CreateDefault() },
         };
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (deserializedContent == null)
                         return;
 
-                    DefaultElement[ElementType.LyricConfig] = deserializedContent.LyricFontInfo;
+                    DefaultElement[ElementType.LyricFontInfo] = deserializedContent.LyricFontInfo;
                     DefaultElement[ElementType.LyricStyle] = deserializedContent.LyricStyle;
                     DefaultElement[ElementType.NoteStyle] = deserializedContent.NoteStyle;
                 }
@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                     return type switch
                     {
-                        ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => SkinUtils.As<TValue>(new Bindable<TValue>((TValue)DefaultElement[type])),
+                        ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => SkinUtils.As<TValue>(new Bindable<TValue>((TValue)DefaultElement[type])),
                         ElementType.LyricLayout => null,
                         _ => throw new InvalidEnumArgumentException(nameof(type))
                     };
@@ -163,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private IKaraokeSkinElement? toElement(ElementType type)
             => type switch
             {
-                ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => DefaultElement[type],
+                ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => DefaultElement[type],
                 ElementType.LyricLayout => null,
                 _ => throw new InvalidEnumArgumentException(nameof(type))
             };

@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         [BackgroundDependencyLoader]
         private void load()
         {
-            var lookup = new KaraokeSkinLookup(ElementType.LyricConfig);
+            var lookup = new KaraokeSkinLookup(ElementType.LyricFontInfo);
             var lyricFontInfo = source.GetConfig<KaraokeSkinLookup, LyricFontInfo>(lookup)?.Value;
             if (lyricFontInfo != null)
                 Configs.Add(lyricFontInfo);

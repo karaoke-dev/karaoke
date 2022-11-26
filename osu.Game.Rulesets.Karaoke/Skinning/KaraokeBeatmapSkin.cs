@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 static string getFileNameByType(ElementType elementType)
                     => elementType switch
                     {
-                        ElementType.LyricConfig => "lyric-configs",
+                        ElementType.LyricFontInfo => "lyric-configs",
                         ElementType.LyricLayout => "lyric-layouts",
                         ElementType.LyricStyle => "lyric-styles",
                         ElementType.NoteStyle => "note-styles",

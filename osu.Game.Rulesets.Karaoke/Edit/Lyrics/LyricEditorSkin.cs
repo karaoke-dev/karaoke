@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public LyricEditorSkin(SkinInfo skin, IStorageResourceProvider? resources)
             : base(skin, resources)
         {
-            DefaultElement[ElementType.LyricConfig] = LyricFontInfo.CreateDefault();
+            DefaultElement[ElementType.LyricFontInfo] = LyricFontInfo.CreateDefault();
             DefaultElement[ElementType.LyricStyle] = new LyricStyle
             {
                 Name = "Default",
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             FontSize = 26;
         }
 
-        protected LyricFontInfo LyricFontInfo => (LyricFontInfo)DefaultElement[ElementType.LyricConfig];
+        protected LyricFontInfo LyricFontInfo => (LyricFontInfo)DefaultElement[ElementType.LyricFontInfo];
 
         public float FontSize
         {

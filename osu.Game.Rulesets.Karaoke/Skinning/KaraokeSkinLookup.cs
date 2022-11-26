@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             switch (type)
             {
                 case ElementType.LyricStyle:
-                case ElementType.LyricConfig:
+                case ElementType.LyricFontInfo:
                 case ElementType.NoteStyle:
                     return;
 
