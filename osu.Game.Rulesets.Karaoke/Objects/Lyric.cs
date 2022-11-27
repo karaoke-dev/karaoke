@@ -266,16 +266,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
             // Add because it will cause error on exit then enter gameplay.
             StartTimeBindable.UnbindAll();
-
-            // Initial working start and end time.
-            // todo: should be removed eventually because start time and duration will be calculated by KaraokeBeatmapProcessor
-            InitialWorkingTime();
-        }
-
-        public void InitialWorkingTime()
-        {
-            StartTime = LyricStartTime;
-            Duration = LyricDuration;
         }
 
         protected override HitWindows CreateHitWindows() => new KaraokeLyricHitWindows();
