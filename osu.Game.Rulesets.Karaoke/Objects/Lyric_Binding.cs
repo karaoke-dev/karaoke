@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
@@ -31,7 +32,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         break;
                 }
 
+                updateLyricTime();
+
                 void invalidate() => TimeTagsVersion.Value++;
+            };
+
+            TimeTagsVersion.ValueChanged += (_) =>
+            {
+                updateLyricTime();
             };
 
             RubyTagsBindable.CollectionChanged += (_, args) =>
@@ -91,6 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 void invalidate() => ReferenceLyricConfigVersion.Value++;
             };
+
+            void updateLyricTime()
+            {
+                // todo: should think about lyric time should be nullable?
+                LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
+                LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
+            }
         }
 
         private void initReferenceLyricEvent()

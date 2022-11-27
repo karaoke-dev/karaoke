@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Scoring;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Utils;
@@ -57,10 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             {
                 TimeTagsBindable.Clear();
                 TimeTagsBindable.AddRange(value);
-
-                // todo: it might not a good idea to set the time in here.
-                LyricStartTime = TimeTagsUtils.GetStartTime(value) ?? StartTime;
-                LyricEndTime = TimeTagsUtils.GetEndTime(value) ?? EndTime;
             }
         }
 
@@ -273,6 +268,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             StartTimeBindable.UnbindAll();
 
             // Initial working start and end time.
+            // todo: should be removed eventually because start time and duration will be calculated by KaraokeBeatmapProcessor
             InitialWorkingTime();
         }
 
