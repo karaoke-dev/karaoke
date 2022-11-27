@@ -51,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
                     RubyTags = lrcRubies
                 };
-                lyric.InitialWorkingTime();
                 output.HitObjects.Add(lyric);
             }
 

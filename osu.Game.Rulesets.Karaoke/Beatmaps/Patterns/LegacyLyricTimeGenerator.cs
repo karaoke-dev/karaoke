@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
@@ -25,9 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 
         private void assignLyricTime(IList<Lyric> lyrics)
         {
-            // Reset working time
-            lyrics.ForEach(h => h.InitialWorkingTime());
-
             // Apply start time
             for (int i = 0; i < lyrics.Count; i++)
             {
@@ -37,12 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
                 if (lastLyric == null)
                     continue;
 
-                // Adjust start time and end time
-                double lyricEndTime = lyric.EndTime;
-                lyric.StartTime = lastLyric.EndTime + 1000;
+                double lyricEndTime = lyric.LyricEndTime;
+                double lyricStartTime = lastLyric.EndTime + 1000;
 
-                // Should re-assign duration here
-                lyric.Duration = lyricEndTime - lyric.StartTime;
+                // Adjust start time and end time
+                lyric.StartTime = lyricStartTime;
+                lyric.Duration = lyricEndTime - lyricStartTime;
             }
         }
     }
