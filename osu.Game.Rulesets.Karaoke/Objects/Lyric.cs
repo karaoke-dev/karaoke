@@ -114,6 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
         /// </summary>
+        [JsonIgnore]
         public override double StartTime
         {
             get => base.StartTime;
@@ -123,6 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
         /// </summary>
+        [JsonIgnore]
         public double Duration { get; set; }
 
         /// <summary>
@@ -287,6 +289,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             string serializeString = JsonConvert.SerializeObject(this, KaraokeJsonSerializableExtensions.CreateGlobalSettings());
             var lyric = JsonConvert.DeserializeObject<Lyric>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
 
+            lyric.StartTime = StartTime;
+            lyric.Duration = Duration;
             lyric.ReferenceLyric = ReferenceLyric;
 
             return lyric;
