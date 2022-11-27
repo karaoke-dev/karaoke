@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         protected override LocalisableString Title => "Ruby/Romaji";
 
         [BackgroundDependencyLoader]
-        private void load(LyricConfigManager manager)
+        private void load(LyricFontInfoManager lyricFontInfoManager)
         {
             Children = new Drawable[]
             {
@@ -63,22 +63,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                 }
             };
 
-            manager.LoadedLyricConfig.BindValueChanged(e =>
+            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
             {
-                var lyricConfig = e.NewValue;
-                applyCurrent(rubyAlignmentDropdown.Current, lyricConfig.RubyAlignment);
-                applyCurrent(romajiAlignmentDropdown.Current, lyricConfig.RomajiAlignment);
-                applyCurrent(rubyMarginSliderBar.Current, lyricConfig.RubyMargin);
-                applyCurrent(romajiMarginSliderBar.Current, lyricConfig.RomajiMargin);
+                var lyricFontInfo = e.NewValue;
+                applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
+                applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomajiAlignment);
+                applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
+                applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomajiMargin);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyAlignment = x.NewValue));
-            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiAlignment = x.NewValue));
-            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyMargin = x.NewValue));
-            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiMargin = x.NewValue));
+            rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
+            rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
+            romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
         }
     }
 }

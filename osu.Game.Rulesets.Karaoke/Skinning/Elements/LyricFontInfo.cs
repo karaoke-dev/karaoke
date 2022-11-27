@@ -11,9 +11,9 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class LyricConfig : IKaraokeSkinElement
+    public class LyricFontInfo : IKaraokeSkinElement
     {
-        public static LyricConfig CreateDefault() => new()
+        public static LyricFontInfo CreateDefault() => new()
         {
             Name = "Default",
             SmartHorizon = KaraokeTextSmartHorizon.Multi,

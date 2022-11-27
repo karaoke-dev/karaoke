@@ -145,9 +145,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 triggerSizeChangedEvent();
             }, true);
 
-            skin.GetConfig<Lyric, LyricConfig>(HitObject)?.BindValueChanged(lyricConfig =>
+            skin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.BindValueChanged(e =>
             {
-                var newConfig = lyricConfig.NewValue;
+                var newConfig = e.NewValue;
                 if (newConfig == null)
                     return;
 

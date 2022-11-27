@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestLyricConfigSerializer()
         {
-            var lyricConfig = LyricConfig.CreateDefault();
+            var lyricConfig = LyricFontInfo.CreateDefault();
 
             const string expected =
                 "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
@@ -39,8 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             const string json =
                 "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
 
-            var expected = LyricConfig.CreateDefault();
-            var actual = (LyricConfig)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
+            var expected = LyricFontInfo.CreateDefault();
+            var actual = (LyricFontInfo)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
             ObjectAssert.ArePropertyEqual(expected, actual);
         }
 

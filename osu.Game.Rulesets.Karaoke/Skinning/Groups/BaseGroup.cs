@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
         {
             switch (elementType)
             {
-                case ElementType.LyricConfig:
+                case ElementType.LyricFontInfo:
                 case ElementType.LyricLayout:
                 case ElementType.LyricStyle:
                     return hitObject is Lyric;

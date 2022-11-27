@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         protected override LocalisableString Title => "Position";
 
         [BackgroundDependencyLoader]
-        private void load(LyricConfigManager manager)
+        private void load(LyricFontInfoManager lyricFontInfoManager)
         {
             Children = new Drawable[]
             {
@@ -30,16 +30,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
                 }
             };
 
-            manager.LoadedLyricConfig.BindValueChanged(e =>
+            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
             {
-                var lyricConfig = e.NewValue;
-                applyCurrent(smartHorizonDropdown.Current, lyricConfig.SmartHorizon);
+                var lyricFontInfo = e.NewValue;
+                applyCurrent(smartHorizonDropdown.Current, lyricFontInfo.SmartHorizon);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.SmartHorizon = x.NewValue));
+            smartHorizonDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }
