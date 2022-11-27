@@ -56,6 +56,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
             Assert.AreNotSame(clonedLyric.TimeTagsBindable, lyric.TimeTagsBindable);
             TimeTagAssert.ArePropertyEqual(clonedLyric.TimeTags, lyric.TimeTags);
 
+            Assert.AreEqual(clonedLyric.LyricStartTime, lyric.LyricStartTime);
+            Assert.AreEqual(clonedLyric.LyricEndTime, lyric.LyricEndTime);
+            Assert.AreEqual(clonedLyric.LyricDuration, lyric.LyricDuration);
+
             Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
             Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
             TextTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
