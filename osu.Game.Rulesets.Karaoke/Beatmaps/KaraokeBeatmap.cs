@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public IList<Singer> Singers { get; set; } = new List<Singer>();
 
+        public PageInfo PageInfo { get; set; } = new();
+
         public bool Scorable { get; set; }
 
         public int TotalColumns { get; set; } = 9;
