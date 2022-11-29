@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
@@ -20,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             base.PreProcess();
 
             applyReferenceObject(Beatmap);
+            applyPage(Beatmap);
         }
 
         public override void PostProcess()
@@ -59,6 +61,28 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             Lyric findLyricById(int id) =>
                 beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+        }
+
+        private void applyPage(IBeatmap beatmap)
+        {
+            if (beatmap is not KaraokeBeatmap karaokeBeatmap)
+                throw new InvalidCastException();
+
+            var pageIndo = karaokeBeatmap.PageInfo;
+
+            foreach (var obj in beatmap.HitObjects.OfType<KaraokeHitObject>())
+            {
+                switch (obj)
+                {
+                    case Lyric lyric:
+                        lyric.Page = pageIndo.GetPageAt(lyric.LyricStartTime);
+                        break;
+
+                    case Note note:
+                        note.Page = pageIndo.GetPageAt(note.StartTime);
+                        break;
+                }
+            }
         }
     }
 }

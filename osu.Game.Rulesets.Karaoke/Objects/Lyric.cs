@@ -10,6 +10,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -21,7 +22,7 @@ using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public partial class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
+    public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
     {
         /// <summary>
         /// Primary key.
@@ -182,6 +183,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => OrderBindable.Value;
             set => OrderBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<Page?> PageBindable = new();
+
+        /// <summary>
+        /// Order
+        /// </summary>
+        [JsonIgnore]
+        public Page? Page
+        {
+            get => PageBindable.Value;
+            set => PageBindable.Value = value;
         }
 
         [JsonIgnore]
