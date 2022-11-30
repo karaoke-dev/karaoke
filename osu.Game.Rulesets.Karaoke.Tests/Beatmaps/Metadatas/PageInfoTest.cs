@@ -19,7 +19,7 @@ public class PageInfoTest
     public void TestGetPageAt(double[] times, double time, double? expectedTime)
     {
         var pageInfo = new PageInfo();
-        pageInfo.Pages.AddRange(getPages(times));
+        pageInfo.Pages.AddRange(createPages(times));
 
         var actualPage = pageInfo.GetPageAt(time);
 
@@ -35,13 +35,13 @@ public class PageInfoTest
     public void TestGetPageIndexAt(double[] times, double time, int? expectedIndex)
     {
         var pageInfo = new PageInfo();
-        pageInfo.Pages.AddRange(getPages(times));
+        pageInfo.Pages.AddRange(createPages(times));
 
         int? actualPageIndex = pageInfo.GetPageIndexAt(time);
 
         Assert.AreEqual(expectedIndex, actualPageIndex);
     }
 
-    private static IEnumerable<Page> getPages(double[] pages)
-        => pages.Select(x => new Page { Time = x });
+    private static IEnumerable<Page> createPages(IEnumerable<double> times)
+        => times.Select(x => new Page { Time = x });
 }
