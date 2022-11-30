@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class ShaderConvertor : GenericTypeConvertor<ICustomizedShader>
     {
-        protected override void InteractWithJObject(JObject jObject, JsonWriter writer, ICustomizedShader value, JsonSerializer serializer)
+        protected override void PostProcessJObject(JObject jObject, ICustomizedShader value, JsonSerializer serializer)
         {
             var childShader = getShadersFromParent(value, serializer);
 

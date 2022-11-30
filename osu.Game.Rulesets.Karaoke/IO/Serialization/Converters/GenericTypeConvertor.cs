@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             var instance = (TType)Activator.CreateInstance(type);
             serializer.Populate(newReader, instance);
-            InteractWithJObject(jObject, objectType, existingValue, hasExistingValue, serializer);
+            PostProcessValue(instance, jObject, serializer);
             return instance;
 
             Type getTypeByProperties(IEnumerable<JProperty> properties)
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        protected virtual void InteractWithJObject(JObject jObject, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer) { }
+        protected virtual void PostProcessValue(TType existingValue,　JObject jObject, JsonSerializer serializer) { }
 
         public sealed override void WriteJson(JsonWriter writer, TType? value, JsonSerializer serializer)
         {
@@ -65,11 +65,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             serializer.ContractResolver = resolver;
 
             jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
-            InteractWithJObject(jObject, writer, value, serializer);
+            PostProcessJObject(jObject, value, serializer);
             jObject.WriteTo(writer);
         }
 
-        protected virtual void InteractWithJObject(JObject jObject, JsonWriter writer, TType value, JsonSerializer serializer) { }
+        protected virtual void PostProcessJObject(JObject jObject, TType value, JsonSerializer serializer) { }
 
         protected abstract Type GetTypeByName(TTypeName name);
 
