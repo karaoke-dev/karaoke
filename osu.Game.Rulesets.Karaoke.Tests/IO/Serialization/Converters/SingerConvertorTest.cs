@@ -34,9 +34,9 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
     [Test]
     public void TestSubSingerSerializer()
     {
-        var singer = new SubSinger(1);
+        var singer = new SubSinger(1, 2);
 
-        const string expected = "{\"$type\":\"SubSinger\",\"description\":\"\",\"id\":1}";
+        const string expected = "{\"$type\":\"SubSinger\",\"id\":1,\"main_singer_id\":2}";
         string actual = JsonConvert.SerializeObject(singer, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -44,10 +44,11 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
     [Test]
     public void TestSubSingerDeserializer()
     {
-        const string json = "{\"$type\":\"SubSinger\",\"description\":\"\",\"id\":1}";
+        const string json = "{\"$type\":\"SubSinger\",\"id\":1,\"main_singer_id\":2}";
 
-        var expected = new SubSinger(1);
+        var expected = new SubSinger(1, 2);
         var actual = (SubSinger)JsonConvert.DeserializeObject<ISinger>(json, CreateSettings())!;
         Assert.AreEqual(expected.ID, actual.ID);
+        Assert.AreEqual(expected.MainSingerId, actual.MainSingerId);
     }
 }
