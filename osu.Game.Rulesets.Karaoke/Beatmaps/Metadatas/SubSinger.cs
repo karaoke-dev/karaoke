@@ -7,9 +7,18 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
     public class SubSinger : ISinger
     {
+        public SubSinger()
+        {
+        }
+
+        public SubSinger(int id)
+        {
+            ID = id;
+        }
+
         public int Order { get; set; }
 
-        public int ID { get; private set; }
+        public int ID { get; protected set; }
 
         public float Hue { get; set; }
 
