@@ -26,6 +26,22 @@ public class PageInfoTest
         Assert.AreEqual(expectedTime, actualPage?.Time);
     }
 
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 999, null)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1000, 0)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1001, 0)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4001, 3)]
+    [TestCase(new double[] { }, 0, null)]
+    [TestCase(new double[] { 4000, 3000, 2000, 1000 }, 1000, 0)] // should works even not sorting.
+    public void TestGetPageIndexAt(double[] times, double time, int? expectedIndex)
+    {
+        var pageInfo = new PageInfo();
+        pageInfo.Pages.AddRange(getPages(times));
+
+        int? actualPageIndex = pageInfo.GetPageIndexAt(time);
+
+        Assert.AreEqual(expectedIndex, actualPageIndex);
+    }
+
     private static IEnumerable<Page> getPages(double[] pages)
         => pages.Select(x => new Page { Time = x });
 }

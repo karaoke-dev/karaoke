@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -21,16 +20,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     public class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, IDeepCloneable<Note>
     {
         [JsonIgnore]
-        public readonly Bindable<Page?> PageBindable = new();
+        public readonly Bindable<int?> PageIndexBindable = new();
 
         /// <summary>
         /// Order
         /// </summary>
         [JsonIgnore]
-        public Page? Page
+        public int? PageIndex
         {
-            get => PageBindable.Value;
-            set => PageBindable.Value = value;
+            get => PageIndexBindable.Value;
+            set => PageIndexBindable.Value = value;
         }
 
         [JsonIgnore]

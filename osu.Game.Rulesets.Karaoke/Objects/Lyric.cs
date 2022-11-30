@@ -10,7 +10,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -186,16 +185,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<Page?> PageBindable = new();
+        public readonly Bindable<int?> PageIndexBindable = new();
 
         /// <summary>
         /// Order
         /// </summary>
         [JsonIgnore]
-        public Page? Page
+        public int? PageIndex
         {
-            get => PageBindable.Value;
-            set => PageBindable.Value = value;
+            get => PageIndexBindable.Value;
+            set => PageIndexBindable.Value = value;
         }
 
         [JsonIgnore]

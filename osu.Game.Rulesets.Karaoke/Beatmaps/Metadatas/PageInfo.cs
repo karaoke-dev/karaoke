@@ -18,6 +18,15 @@ public class PageInfo : IDeepCloneable<PageInfo>
         return Pages.LastOrDefault(x => x.Time <= time);
     }
 
+    public int? GetPageIndexAt(double time)
+    {
+        var page = GetPageAt(time);
+        if (page == null)
+            return null;
+
+        return Pages.FindIndex(x => x == page);
+    }
+
     public PageInfo DeepClone()
     {
         var controlPointInfo = (PageInfo)Activator.CreateInstance(GetType());
