@@ -12,6 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
         public static JsonSerializerSettings CreateGlobalSettings()
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+
+            // karaoke beatmap.
+            globalSetting.Converters.Add(new SingerConvertor());
+
+            // hit-object
             globalSetting.Converters.Add(new CultureInfoConverter());
             globalSetting.Converters.Add(new RomajiTagConverter());
             globalSetting.Converters.Add(new RomajiTagsConverter());
