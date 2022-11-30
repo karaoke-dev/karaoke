@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -21,8 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public sealed override TType ReadJson(JsonReader reader, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
-            var jProperties = jObject.Children().OfType<JProperty>().ToArray();
-            var type = objectType != typeof(TType) ? objectType : getTypeByProperties(jProperties);
+            var type = objectType != typeof(TType) ? objectType : getTypeByProperties(jObject);
 
             var newReader = jObject.CreateReader();
 
@@ -31,18 +29,25 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             PostProcessValue(instance, jObject, serializer);
             return instance;
 
-            Type getTypeByProperties(IEnumerable<JProperty> properties)
+            Type getTypeByProperties(JObject jObj)
             {
-                var value = properties.FirstOrDefault(x => x.Name == "$type")?.Value;
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-
-                var elementType = value.ToObject<TTypeName>();
-                if (elementType == null)
-                    throw new InvalidCastException(nameof(elementType));
-
+                var elementType = GetValueFromProperty<TTypeName>(jObj, "$type");
                 return GetTypeByName(elementType);
             }
+        }
+
+        protected static TPropertyType GetValueFromProperty<TPropertyType>(JObject jObject, string propertyName)
+        {
+            var jProperties = jObject.Children().OfType<JProperty>().ToArray();
+            var value = jProperties.FirstOrDefault(x => x.Name == propertyName)?.Value;
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            var elementType = value.ToObject<TPropertyType>();
+            if (elementType == null)
+                throw new InvalidCastException(nameof(elementType));
+
+            return elementType;
         }
 
         protected virtual void PostProcessValue(TType existingValue,　JObject jObject, JsonSerializer serializer) { }
