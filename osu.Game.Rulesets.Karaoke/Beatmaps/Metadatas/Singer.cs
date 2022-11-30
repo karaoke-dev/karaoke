@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
             ID = id;
         }
 
-        public int ID { get; }
+        public int ID { get; protected set; }
 
         [JsonIgnore]
         public readonly Bindable<int> OrderBindable = new();
