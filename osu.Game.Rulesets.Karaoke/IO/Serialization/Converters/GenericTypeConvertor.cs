@@ -27,8 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var newReader = jObject.CreateReader();
 
             var instance = (TType)Activator.CreateInstance(type);
-            InteractWithJObject(jObject, objectType, existingValue, hasExistingValue, serializer);
             serializer.Populate(newReader, instance);
+            InteractWithJObject(jObject, objectType, existingValue, hasExistingValue, serializer);
             return instance;
 
             Type getTypeByProperties(IEnumerable<JProperty> properties)
@@ -64,8 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             serializer.Converters.Add(this);
             serializer.ContractResolver = resolver;
 
-            InteractWithJObject(jObject, writer, value, serializer);
             jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
+            InteractWithJObject(jObject, writer, value, serializer);
             jObject.WriteTo(writer);
         }
 
