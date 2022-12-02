@@ -13,8 +13,8 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -73,10 +73,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISingersChangeHandler singersChangeHandler)
+        private void load(IBeatmapSingersChangeHandler beatmapSingersChangeHandler)
         {
             // update singer
-            bindableSingers.BindTo(singersChangeHandler.Singers);
+            bindableSingers.BindTo(beatmapSingersChangeHandler.Singers);
         }
 
         protected override void OnLyricChanged(Lyric lyric)

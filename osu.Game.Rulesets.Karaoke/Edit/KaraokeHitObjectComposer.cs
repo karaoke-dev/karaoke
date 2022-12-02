@@ -15,9 +15,9 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -68,8 +68,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ILyricSingerChangeHandler))]
         private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
-        [Cached(typeof(ISingersChangeHandler))]
-        private readonly SingersChangeHandler singersChangeHandler;
+        [Cached(typeof(IBeatmapSingersChangeHandler))]
+        private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
 
         [Cached]
         private readonly ExportLyricManager exportLyricManager;
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(notePropertyChangeHandler = new NotePropertyChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
-            AddInternal(singersChangeHandler = new SingersChangeHandler());
+            AddInternal(beatmapSingersChangeHandler = new BeatmapSingersChangeHandler());
 
             AddInternal(exportLyricManager = new ExportLyricManager());
         }

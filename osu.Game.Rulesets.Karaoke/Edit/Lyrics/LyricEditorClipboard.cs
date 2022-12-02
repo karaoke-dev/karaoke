@@ -13,8 +13,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ILyricSingerChangeHandler? lyricSingerChangeHandler { get; set; }
 
         [Resolved]
-        private ISingersChangeHandler? singersChangeHandler { get; set; }
+        private IBeatmapSingersChangeHandler? singersChangeHandler { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 

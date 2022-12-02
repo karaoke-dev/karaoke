@@ -5,9 +5,9 @@ using System.IO;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public interface ISingersChangeHandler
+    public interface IBeatmapSingersChangeHandler
     {
         // todo: should use IBindableList eventually, but cannot do that because it's bind to selection item.
         BindableList<Singer> Singers { get; }

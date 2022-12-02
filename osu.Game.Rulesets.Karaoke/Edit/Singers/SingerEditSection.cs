@@ -6,7 +6,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private SingerRearrangeableList singerContainers;
 
         [BackgroundDependencyLoader]
-        private void load(ISingersChangeHandler singersChangeHandler)
+        private void load(IBeatmapSingersChangeHandler beatmapSingersChangeHandler)
         {
             InternalChild = new GridContainer
             {
@@ -48,8 +48,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 }
             };
 
-            singerContainers.Items.BindTo(singersChangeHandler.Singers);
-            singerContainers.OnOrderChanged += singersChangeHandler.ChangeOrder;
+            singerContainers.Items.BindTo(beatmapSingersChangeHandler.Singers);
+            singerContainers.OnOrderChanged += beatmapSingersChangeHandler.ChangeOrder;
         }
     }
 }
