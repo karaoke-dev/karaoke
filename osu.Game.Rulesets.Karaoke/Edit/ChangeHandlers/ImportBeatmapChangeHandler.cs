@@ -12,7 +12,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public class BeatmapChangeHandler : Component, IBeatmapChangeHandler
+    public class ImportBeatmapChangeHandler : Component, IImportBeatmapChangeHandler
     {
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
@@ -36,15 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
                 beatmap.AddRange(lyrics);
             }
-
-            beatmap.EndChange();
-        }
-
-        public void SetScorable(bool scorable)
-        {
-            beatmap.BeginChange();
-
-            karaokeBeatmap.Scorable = scorable;
 
             beatmap.EndChange();
         }

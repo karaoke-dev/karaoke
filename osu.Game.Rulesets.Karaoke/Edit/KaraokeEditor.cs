@@ -52,8 +52,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly ExportLyricManager exportLyricManager;
 
-        [Cached(typeof(IBeatmapChangeHandler))]
-        private readonly BeatmapChangeHandler beatmapChangeHandler;
+        [Cached(typeof(IImportBeatmapChangeHandler))]
+        private readonly ImportBeatmapChangeHandler importBeatmapChangeHandler;
 
         [Cached]
         private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(lyricsProvider = new LyricsProvider());
 
-            AddInternal(beatmapChangeHandler = new BeatmapChangeHandler());
+            AddInternal(importBeatmapChangeHandler = new ImportBeatmapChangeHandler());
         }
 
         protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode) =>
@@ -94,8 +94,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new ImportLyricMenu(this, "Import from text", beatmapChangeHandler),
-                            new ImportLyricMenu(this, "Import from .lrc file", beatmapChangeHandler),
+                            new ImportLyricMenu(this, "Import from text", importBeatmapChangeHandler),
+                            new ImportLyricMenu(this, "Import from .lrc file", importBeatmapChangeHandler),
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),

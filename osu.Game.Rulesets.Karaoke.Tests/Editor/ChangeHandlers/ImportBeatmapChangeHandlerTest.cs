@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public class BeatmapChangeHandlerTest : BaseChangeHandlerTest<BeatmapChangeHandler>
+    public class ImportBeatmapChangeHandlerTest : BaseChangeHandlerTest<ImportBeatmapChangeHandler>
     {
         [Test]
         public void TestImport()
@@ -41,25 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 // check the hit objects.
                 // and notice that we only import the lyric from other beatmap.
                 Assert.AreEqual(2, karaokeBeatmap.HitObjects.Count);
-            });
-        }
-
-        [Test]
-        public void TestSetScorable()
-        {
-            SetUpKaraokeBeatmap(karaokeBeatmap =>
-            {
-                karaokeBeatmap.Scorable = true;
-            });
-
-            TriggerHandlerChanged(c =>
-            {
-                c.SetScorable(false);
-            });
-
-            AssertKaraokeBeatmap(karaokeBeatmap =>
-            {
-                Assert.AreEqual(false, karaokeBeatmap.Scorable);
             });
         }
     }

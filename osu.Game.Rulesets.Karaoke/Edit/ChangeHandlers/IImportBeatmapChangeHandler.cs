@@ -5,10 +5,8 @@ using osu.Game.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public interface IBeatmapChangeHandler
+    public interface IImportBeatmapChangeHandler
     {
         void Import(IBeatmap newBeatmap);
-
-        void SetScorable(bool scorable);
     }
 }
