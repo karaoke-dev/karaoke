@@ -45,7 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info.Badge
                 if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     return;
 
-                var singers = karaokeBeatmap.Singers.Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();
+                // todo: should get the singer directly from the lyric eventually.
+                var singers = karaokeBeatmap.SingerInfo.GetAllSingers().Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();
                 singerDisplay.Current.Value = singers;
             }, true);
         }
