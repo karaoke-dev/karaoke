@@ -4,13 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 public class SingerInfo
 {
-    public IList<ISinger> Singers = new List<ISinger>();
+    // todo: should make the property as readonly.
+    public BindableList<ISinger> Singers { get; set; } = new();
 
     public IEnumerable<Singer> GetAllSingers() =>
         Singers.OfType<Singer>().OrderBy(x => x.Order);
