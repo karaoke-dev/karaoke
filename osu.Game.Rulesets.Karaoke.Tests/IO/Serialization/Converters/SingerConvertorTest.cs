@@ -51,4 +51,31 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
         Assert.AreEqual(expected.ID, actual.ID);
         Assert.AreEqual(expected.MainSingerId, actual.MainSingerId);
     }
+
+    [Test]
+    public void TestSingerInfoSerializer()
+    {
+        var singerInfo = new SingerInfo();
+        var singer = singerInfo.AddSinger();
+        singerInfo.AddSubSinger(singer);
+
+        const string expected = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SubSinger\",\"id\":2,\"main_singer_id\":1}]}";
+        string actual = JsonConvert.SerializeObject(singerInfo, CreateSettings());
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void TestSingerInfoDeserializer()
+    {
+        const string json = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SubSinger\",\"id\":2,\"main_singer_id\":1}]}";
+
+        var singerInfo = new SingerInfo();
+        var singer = singerInfo.AddSinger();
+        singerInfo.AddSubSinger(singer);
+
+        var actual = JsonConvert.DeserializeObject<SingerInfo>(json, CreateSettings())!;
+        Assert.AreEqual(singerInfo.Singers.Count, actual.Singers.Count);
+        Assert.AreEqual(singerInfo.Singers[0].ID, singerInfo.Singers[0].ID); // test singer
+        Assert.AreEqual(singerInfo.Singers[1].ID, singerInfo.Singers[1].ID); // test sub-singer.
+    }
 }
