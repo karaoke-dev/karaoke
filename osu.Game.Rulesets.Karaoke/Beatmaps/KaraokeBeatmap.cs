@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public IList<CultureInfo> AvailableTranslates { get; set; } = new List<CultureInfo>();
 
-        public IList<Singer> Singers { get; set; } = new List<Singer>();
+        public SingerInfo SingerInfo { get; set; } = new();
 
         public PageInfo PageInfo { get; set; } = new();
 
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
-            int singers = Singers.Count;
+            int singers = SingerInfo.GetAllSingers().Count();
             int lyrics = HitObjects.Count(s => s is Lyric);
 
             var defaultStatistic = new List<BeatmapStatistic>
