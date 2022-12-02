@@ -9,14 +9,14 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
     public class RemoveLanguageButton : IconButton
     {
         [Resolved]
-        private ILanguagesChangeHandler languagesChangeHandler { get; set; }
+        private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
 
         [Resolved]
         private IDialogOverlay dialogOverlay { get; set; }
@@ -29,17 +29,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             Icon = FontAwesome.Solid.Trash;
             Action = () =>
             {
-                if (languagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
+                if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
                 {
                     dialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
                     {
                         if (isOk)
-                            languagesChangeHandler.Remove(currentLanguage.Value);
+                            beatmapLanguagesChangeHandler.Remove(currentLanguage.Value);
                     }));
                 }
                 else
                 {
-                    languagesChangeHandler.Remove(currentLanguage.Value);
+                    beatmapLanguagesChangeHandler.Remove(currentLanguage.Value);
                 }
             };
         }

@@ -8,15 +8,15 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
     public class TranslateScreen : KaraokeEditorRoundedScreen
     {
-        [Cached(typeof(ILanguagesChangeHandler))]
-        private readonly LanguagesChangeHandler languagesChangeHandler;
+        [Cached(typeof(IBeatmapLanguagesChangeHandler))]
+        private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
 
         [Cached(typeof(ILyricTranslateChangeHandler))]
         private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public TranslateScreen()
             : base(KaraokeEditorScreenMode.Translate)
         {
-            AddInternal(languagesChangeHandler = new LanguagesChangeHandler());
+            AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
             AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
         }
 

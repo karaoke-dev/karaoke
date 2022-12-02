@@ -14,7 +14,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
 
         [Resolved]
-        private ILanguagesChangeHandler languagesChangeHandler { get; set; }
+        private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
 
         private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load(ILyricsProvider lyricsProvider, OverlayColourProvider colourProvider)
         {
-            languageDropdown.ItemSource = languagesChangeHandler.Languages;
+            languageDropdown.ItemSource = beatmapLanguagesChangeHandler.Languages;
 
             bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
 

@@ -4,9 +4,9 @@
 using System.Globalization;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public interface ILanguagesChangeHandler
+    public interface IBeatmapLanguagesChangeHandler
     {
         IBindableList<CultureInfo> Languages { get; }
 
