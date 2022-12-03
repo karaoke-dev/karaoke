@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -9,7 +8,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Screens.Edit;
@@ -27,37 +25,37 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             var karaokeBeatmap = base.CreateBeatmap();
 
-            // todo : insert singers
-            karaokeBeatmap.Singers = new List<Singer>
+            var singerInfo = karaokeBeatmap.SingerInfo;
+
+            singerInfo.AddSinger(s =>
             {
-                new(1)
-                {
-                    Order = 1,
-                    Name = "初音ミク",
-                    RomajiName = "Hatsune Miku",
-                    EnglishName = "Miku",
-                    Description = "International superstar vocaloid Hatsune Miku.",
-                    Hue = 189 / 360f,
-                },
-                new(2)
-                {
-                    Order = 2,
-                    Name = "ハク",
-                    RomajiName = "haku",
-                    EnglishName = "andy840119",
-                    Description = "Creator of this ruleset.",
-                    Hue = 46 / 360f,
-                },
-                new(3)
-                {
-                    Order = 3,
-                    Name = "ゴミパソコン",
-                    RomajiName = "gomi-pasokonn",
-                    EnglishName = "garbage desktop",
-                    Description = "My fucking slow desktop.",
-                    Hue = 290 / 360f,
-                }
-            };
+                s.Order = 1;
+                s.Name = "初音ミク";
+                s.RomajiName = "Hatsune Miku";
+                s.EnglishName = "Miku";
+                s.Description = "International superstar vocaloid Hatsune Miku.";
+                s.Hue = 189 / 360f;
+            });
+
+            singerInfo.AddSinger(s =>
+            {
+                s.Order = 2;
+                s.Name = "ハク";
+                s.RomajiName = "haku";
+                s.EnglishName = "andy840119";
+                s.Description = "Creator of this ruleset.";
+                s.Hue = 46 / 360f;
+            });
+
+            singerInfo.AddSinger(s =>
+            {
+                s.Order = 3;
+                s.Name = "ゴミパソコン";
+                s.RomajiName = "gomi-pasokonn";
+                s.EnglishName = "Miku";
+                s.Description = "My fucking slow desktop.";
+                s.Hue = 290 / 360f;
+            });
 
             return karaokeBeatmap;
         }

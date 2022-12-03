@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -29,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             if (new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
                 throw new InvalidCastException(nameof(karaokeBeatmap));
 
-            karaokeBeatmap.Singers = createDefaultSinger();
+            karaokeBeatmap.SingerInfo = createSingerInfo();
             createTest(new ScoreInfo(), karaokeBeatmap);
         }
 
@@ -51,21 +49,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             };
         });
 
-        private static List<Singer> createDefaultSinger()
+        private static SingerInfo createSingerInfo()
         {
-            var metadata = new List<Singer>();
+            var singerInfo = new SingerInfo();
 
             for (int i = 0; i < 10; i++)
             {
-                metadata.Add(new Singer(i)
+                int singerIndex = i;
+                singerInfo.AddSinger(s =>
                 {
-                    Name = $"Singer{i}",
-                    RomajiName = $"[Romaji]Singer{i}",
-                    EnglishName = $"[English]Singer{i}",
+                    s.Name = $"Singer{singerIndex}";
+                    s.RomajiName = $"[Romaji]Singer{singerIndex}";
+                    s.EnglishName = $"[English]Singer{singerIndex}";
                 });
             }
 
-            return metadata.ToList();
+            return singerInfo;
         }
     }
 }

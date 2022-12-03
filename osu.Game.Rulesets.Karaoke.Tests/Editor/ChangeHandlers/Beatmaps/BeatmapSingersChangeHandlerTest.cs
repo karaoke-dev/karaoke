@@ -16,22 +16,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
         [Ignore("Not working because singer in karaoke beatmap only sync to change handler once.")]
         public void TestChangeOrder()
         {
-            var firstSinger = new Singer(0)
-            {
-                Order = 1
-            };
-            var secondSinger = new Singer(1)
-            {
-                Order = 2
-            };
+            Singer firstSinger = null!;
+            Singer secondSinger = null!;
 
             SetUpKaraokeBeatmap(karaokeBeatmap =>
             {
-                karaokeBeatmap.Singers = new List<Singer>
-                {
-                    firstSinger,
-                    secondSinger,
-                };
+                firstSinger = karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 1);
+                secondSinger = karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 2);
             });
 
             TriggerHandlerChanged(c =>
@@ -61,27 +52,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
         {
             SetUpKaraokeBeatmap(karaokeBeatmap =>
             {
-                karaokeBeatmap.Singers = new List<Singer>
-                {
-                    new(0)
-                    {
-                        Order = 1
-                    },
-                    new(1)
-                    {
-                        Order = 2
-                    },
-                };
+                karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 1);
+                karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 2);
             });
 
             TriggerHandlerChanged(c =>
             {
-                c.Add(new Singer(2));
+                c.Add();
             });
 
             AssertKaraokeBeatmap(karaokeBeatmap =>
             {
-                var singers = karaokeBeatmap.Singers;
+                var singers = karaokeBeatmap.SingerInfo.Singers;
                 Assert.AreEqual(3, singers.Count);
 
                 var lastSinger = singers.Last();
@@ -94,22 +76,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
         [Ignore("Not working because singer in karaoke beatmap only sync to change handler once.")]
         public void TestRemove()
         {
-            var firstSinger = new Singer(0)
-            {
-                Order = 1
-            };
-            var secondSinger = new Singer(1)
-            {
-                Order = 2
-            };
+            Singer firstSinger = null!;
+            Singer secondSinger = null!;
 
             SetUpKaraokeBeatmap(karaokeBeatmap =>
             {
-                karaokeBeatmap.Singers = new List<Singer>
-                {
-                    firstSinger,
-                    secondSinger
-                };
+                firstSinger = karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 1);
+                secondSinger = karaokeBeatmap.SingerInfo.AddSinger(s => s.Order = 2);
 
                 karaokeBeatmap.HitObjects = new List<KaraokeHitObject>
                 {
@@ -127,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
 
             AssertKaraokeBeatmap(karaokeBeatmap =>
             {
-                var singers = karaokeBeatmap.Singers;
+                var singers = karaokeBeatmap.SingerInfo.Singers;
                 Assert.AreEqual(1, singers.Count);
 
                 Assert.AreEqual(1, secondSinger.ID);
