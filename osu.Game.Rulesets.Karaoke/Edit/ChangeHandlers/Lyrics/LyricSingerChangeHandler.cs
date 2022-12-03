@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public class LyricSingerChangeHandler : LyricPropertyChangeHandler, ILyricSingerChangeHandler
     {
-        public void Add(Singer singer)
+        public void Add(ISinger singer)
         {
             PerformOnSelection(lyric =>
             {
@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void AddRange(IEnumerable<Singer> singers)
+        public void AddRange(IEnumerable<ISinger> singers)
         {
             PerformOnSelection(lyric =>
             {
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void Remove(Singer singer)
+        public void Remove(ISinger singer)
         {
             PerformOnSelection(lyric =>
             {
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void RemoveRange(IEnumerable<Singer> singers)
+        public void RemoveRange(IEnumerable<ISinger> singers)
         {
             PerformOnSelection(lyric =>
             {
