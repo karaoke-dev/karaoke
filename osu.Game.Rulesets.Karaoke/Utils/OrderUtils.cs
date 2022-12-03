@@ -30,11 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <typeparam name="T">IHasOrder</typeparam>
         /// <param name="objects">objects</param>
         /// <returns>min order number.</returns>
-        public static int GetMinOrderNumber<T>(T[] objects) where T : IHasOrder
+        public static int GetMinOrderNumber<T>(IEnumerable<T> objects) where T : IHasOrder
         {
-            if (objects == null)
-                throw new ArgumentNullException(nameof(objects));
-
             return objects.OrderBy(x => x.Order).FirstOrDefault()?.Order ?? 0;
         }
 
@@ -44,11 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <typeparam name="T">IHasOrder</typeparam>
         /// <param name="objects">objects</param>
         /// <returns>max order number.</returns>
-        public static int GetMaxOrderNumber<T>(T[] objects) where T : IHasOrder
+        public static int GetMaxOrderNumber<T>(IEnumerable<T> objects) where T : IHasOrder
         {
-            if (objects == null)
-                throw new ArgumentNullException(nameof(objects));
-
             return objects.OrderByDescending(x => x.Order).FirstOrDefault()?.Order ?? 0;
         }
 

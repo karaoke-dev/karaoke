@@ -4,19 +4,20 @@
 using System.IO;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
     public interface IBeatmapSingersChangeHandler
     {
         // todo: should use IBindableList eventually, but cannot do that because it's bind to selection item.
-        BindableList<Singer> Singers { get; }
+        BindableList<ISinger> Singers { get; }
 
-        void ChangeOrder(Singer singer, int newIndex);
+        void ChangeOrder(ISinger singer, int newIndex);
 
         bool ChangeSingerAvatar(Singer singer, FileInfo fileInfo);
 
-        void Add(Singer singer);
+        Singer Add();
 
         void Remove(Singer singer);
     }

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,15 +9,16 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
+    public class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
     {
-        private Box dragAlert;
+        private Box dragAlert = null!;
 
-        public SingerRearrangeableListItem(Singer item)
+        public SingerRearrangeableListItem(ISinger item)
             : base(item)
         {
         }
@@ -39,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0
                     },
-                    new SingerLyricPlacementColumn(Model)
+                    new SingerLyricPlacementColumn(Model as Singer)
                     {
                         RelativeSizeAxes = Axes.Both,
                     }

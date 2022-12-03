@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Singers
 {
     public class SingerEditSection : LyricPropertySection
     {
-        private readonly IBindableList<Singer> bindableSingers = new BindableList<Singer>();
+        private readonly IBindableList<ISinger> bindableSingers = new BindableList<ISinger>();
         private readonly IBindableList<int> singerIndexes = new BindableList<int>();
         protected override LocalisableString Title => "Singer";
 
@@ -110,19 +111,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Singers
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
 
-        public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<Singer>
+        public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<ISinger>
         {
             private const float avatar_size = 48f;
 
             private readonly IBindable<string> bindableName = new Bindable<string>();
             private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
 
-            public LabelledSingerSwitchButton(Singer singer)
+            public LabelledSingerSwitchButton(ISinger singer)
             {
                 TooltipContent = singer;
 
-                bindableName.BindTo(singer.NameBindable);
-                bindableEnglishName.BindTo(singer.EnglishNameBindable);
+                if (singer is Singer mainSinger)
+                {
+                    bindableName.BindTo(mainSinger.NameBindable);
+                    bindableEnglishName.BindTo(mainSinger.EnglishNameBindable);
+                }
 
                 if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
                 {
@@ -152,9 +156,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Singers
                 bindableEnglishName.BindValueChanged(e => Description = string.IsNullOrEmpty(e.NewValue) ? "<No english name>" : e.NewValue, true);
             }
 
-            public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
+            public ITooltip<ISinger> GetCustomTooltip() => new SingerToolTip();
 
-            public Singer TooltipContent { get; }
+            public ISinger TooltipContent { get; }
         }
     }
 }

@@ -1,20 +1,20 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public class BeatmapSingersChangeHandler : BeatmapListPropertyChangeHandler<Singer>, IBeatmapSingersChangeHandler
+    public class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler, IBeatmapSingersChangeHandler
     {
         [Resolved]
         private BeatmapManager? beatmapManager { get; set; }
@@ -22,14 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
         [Resolved]
         private IBindable<WorkingBeatmap>? working { get; set; }
 
-        public BindableList<Singer> Singers => Items;
+        private SingerInfo singerInfo => KaraokeBeatmap.SingerInfo;
 
-        protected override IList<Singer> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
-            => beatmap.Singers;
+        public BindableList<ISinger> Singers => singerInfo.Singers;
 
-        public void ChangeOrder(Singer singer, int newIndex)
+        public void ChangeOrder(ISinger singer, int newIndex)
         {
-            PerformObjectChanged(singer, s =>
+            performSingerChanged(singer, s =>
             {
                 int oldOrder = s.Order;
                 int newOrder = newIndex + 1; // order is start from 1
@@ -64,27 +63,58 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
                 beatmapManager.AddFile(set, stream, $"assets/singers/{newFileName}");
             }
 
-            // Write-back the file name.
-            singer.AvatarFile = newFileName;
+            performSingerChanged(singer, s =>
+            {
+                // Write-back the file name.
+                s.AvatarFile = newFileName;
+            });
 
             return true;
         }
 
-        protected override void OnItemAdded(Singer item)
+        public Singer Add()
         {
-            // should give it a id.
-            item.Order = OrderUtils.GetMaxOrderNumber(Singers.ToArray()) + 1;
+            var newSinger = singerInfo.AddSinger(s =>
+            {
+                s.Order = getMaxSingerOrder() + 1;
+                s.Name = "New singer";
+            });
+            return newSinger;
+
+            int getMaxSingerOrder()
+                => OrderUtils.GetMaxOrderNumber(singerInfo.GetAllSingers());
         }
 
-        protected override void OnItemRemoved(Singer item)
+        public void Remove(Singer singer)
         {
+            singerInfo.RemoveSinger(singer);
+
             // Should re-sort the order
-            OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > item.Order), -1);
+            OrderUtils.ShiftingOrder(singerInfo.GetAllSingers().Where(x => x.Order > singer.Order), -1);
 
             // should clear removed singer ids in singer editor.
             Lyrics.ForEach(x =>
             {
-                x.Singers.Remove(item.ID);
+                x.Singers.Remove(singer.ID);
+            });
+        }
+
+        private void performSingerInfoChanged(Action<SingerInfo> action)
+        {
+            PerformBeatmapChanged(beatmap =>
+            {
+                action(beatmap.SingerInfo);
+            });
+        }
+
+        private void performSingerChanged<TSinger>(TSinger singer, Action<TSinger> action) where TSinger : ISinger
+        {
+            performSingerInfoChanged(singerInfo =>
+            {
+                if (!singerInfo.Singers.Contains(singer))
+                    throw new InvalidOperationException("Singer should be in the beatmap");
+
+                action(singer);
             });
         }
     }

@@ -12,7 +12,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -402,7 +402,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        private IEnumerable<Singer> getMatchedSinges(IEnumerable<int> singerIds)
+        private IEnumerable<ISinger> getMatchedSinges(IEnumerable<int> singerIds)
         {
             return singersChangeHandler == null ? throw new NullDependencyException($"Missing {nameof(singersChangeHandler)}") : singersChangeHandler.Singers.Where(x => singerIds.Contains(x.ID));
         }

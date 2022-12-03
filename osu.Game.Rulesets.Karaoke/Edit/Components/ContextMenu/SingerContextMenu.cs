@@ -21,7 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
             : base(name)
         {
             var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>().ToArray();
-            var singers = (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
+
+            // todo: should be able to support the sub-singer.
+            var singers = (beatmap.PlayableBeatmap as KaraokeBeatmap)?.SingerInfo.GetAllSingers();
 
             Items = singers?.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
             {

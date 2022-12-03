@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
@@ -31,7 +30,5 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         {
             return pitch / 20 - 7;
         }
-
-        public static IList<Singer> GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Singers ?? new List<Singer>();
     }
 }

@@ -1,19 +1,17 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerRearrangeableList : OrderRearrangeableListContainer<Singer>
+    public class SingerRearrangeableList : OrderRearrangeableListContainer<ISinger>
     {
         protected override Vector2 Spacing => new(0, 5);
 
@@ -26,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             };
         }
 
-        protected override OsuRearrangeableListItem<Singer> CreateOsuDrawable(Singer item)
+        protected override OsuRearrangeableListItem<ISinger> CreateOsuDrawable(ISinger item)
             => new SingerRearrangeableListItem(item);
 
         protected override Drawable CreateBottomDrawable()
