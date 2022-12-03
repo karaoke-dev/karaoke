@@ -12,7 +12,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
     public class CreateNewLanguageButton : IconButton, IHasPopover
     {
         [Resolved]
-        private ILanguagesChangeHandler languagesChangeHandler { get; set; }
+        private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
 
         private readonly Bindable<CultureInfo> currentLanguage = new();
 
@@ -35,9 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 if (newLanguage == null)
                     return;
 
-                if (!languagesChangeHandler.Languages.Contains(newLanguage))
+                if (!beatmapLanguagesChangeHandler.Languages.Contains(newLanguage))
                 {
-                    languagesChangeHandler.Add(newLanguage);
+                    beatmapLanguagesChangeHandler.Add(newLanguage);
                 }
 
                 // after selected the language, should always hide the popover.

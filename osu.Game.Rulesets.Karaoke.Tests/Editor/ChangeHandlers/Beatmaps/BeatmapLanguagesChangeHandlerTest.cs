@@ -4,12 +4,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Languages
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
 {
-    public class LanguagesChangeHandlerTest : BaseChangeHandlerTest<LanguagesChangeHandler>
+    public class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapLanguagesChangeHandler>
     {
         [Test]
         public void TestAdd()

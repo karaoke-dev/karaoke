@@ -7,9 +7,9 @@ using System.Linq;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public class LanguagesChangeHandler : BeatmapPropertyChangeHandler<CultureInfo>, ILanguagesChangeHandler
+    public class BeatmapLanguagesChangeHandler : BeatmapListPropertyChangeHandler<CultureInfo>, IBeatmapLanguagesChangeHandler
     {
         public IBindableList<CultureInfo> Languages => Items;
 

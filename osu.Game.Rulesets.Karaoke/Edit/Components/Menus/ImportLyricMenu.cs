@@ -12,15 +12,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
     public class ImportLyricMenu : MenuItem
     {
-        public ImportLyricMenu(IScreen screen, string text, IBeatmapChangeHandler beatmapChangeHandler)
-            : base(text, () => openLyricImporter(screen, beatmapChangeHandler))
+        public ImportLyricMenu(IScreen screen, string text, IImportBeatmapChangeHandler importBeatmapChangeHandler)
+            : base(text, () => openLyricImporter(screen, importBeatmapChangeHandler))
         {
         }
 
-        private static void openLyricImporter(IScreen screen, IBeatmapChangeHandler beatmapChangeHandler)
+        private static void openLyricImporter(IScreen screen, IImportBeatmapChangeHandler importBeatmapChangeHandler)
         {
             var importer = new LyricImporter();
-            importer.OnImportFinished += beatmapChangeHandler.Import;
+            importer.OnImportFinished += importBeatmapChangeHandler.Import;
             screen?.Push(importer);
         }
     }

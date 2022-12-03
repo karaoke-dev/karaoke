@@ -20,7 +20,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Database;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         private OsuGameBase game { get; set; }
 
         [Resolved]
-        private ISingersChangeHandler singersChangeHandler { get; set; }
+        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
 
         private readonly Singer singer;
 
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             this.HidePopover();
 
-            singersChangeHandler.ChangeSingerAvatar(singer, file.NewValue);
+            beatmapSingersChangeHandler.ChangeSingerAvatar(singer, file.NewValue);
         }
 
         Task ICanAcceptFiles.Import(params string[] paths)

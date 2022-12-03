@@ -12,9 +12,9 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public class SingersChangeHandler : BeatmapPropertyChangeHandler<Singer>, ISingersChangeHandler
+    public class BeatmapSingersChangeHandler : BeatmapListPropertyChangeHandler<Singer>, IBeatmapSingersChangeHandler
     {
         [Resolved]
         private BeatmapManager? beatmapManager { get; set; }

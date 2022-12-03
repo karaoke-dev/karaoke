@@ -12,9 +12,9 @@ using osu.Framework.Localisation;
 using osu.Game.Overlays;
 using osu.Game.Overlays.OSD;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -59,8 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricSingerChangeHandler))]
         private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
-        [Cached(typeof(ISingersChangeHandler))]
-        private readonly SingersChangeHandler singersChangeHandler;
+        [Cached(typeof(IBeatmapSingersChangeHandler))]
+        private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
 
         [Cached(typeof(ILockChangeHandler))]
         private readonly LockChangeHandler lockChangeHandler;
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(notePropertyChangeHandler = new NotePropertyChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
-            AddInternal(singersChangeHandler = new SingersChangeHandler());
+            AddInternal(beatmapSingersChangeHandler = new BeatmapSingersChangeHandler());
             AddInternal(lockChangeHandler = new LockChangeHandler());
 
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)

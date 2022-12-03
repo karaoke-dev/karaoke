@@ -17,7 +17,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             private const int sub_text_size = 12;
 
             [Resolved]
-            private ISingersChangeHandler singersChangeHandler { get; set; }
+            private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
 
             [Resolved]
             private IDialogOverlay dialogOverlay { get; set; }
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     dialogOverlay.Push(new DeleteSingerDialog(isOk =>
                     {
                         if (isOk)
-                            singersChangeHandler.Remove(singer);
+                            beatmapSingersChangeHandler.Remove(singer);
                     }));
                 }),
             };

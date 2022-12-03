@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
     public class CreateNewLyricPlacementColumn : LyricPlacementColumn
     {
         [Resolved]
-        private ISingersChangeHandler singersChangeHandler { get; set; }
+        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
 
         public CreateNewLyricPlacementColumn()
             : base(new Singer(-1) { Name = "Press to create new singer" })
@@ -37,8 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     TooltipText = "Click to add new singer",
                     Action = () =>
                     {
-                        int singerId = singersChangeHandler.Singers.Count + 1;
-                        singersChangeHandler.Add(new Singer(singerId)
+                        int singerId = beatmapSingersChangeHandler.Singers.Count + 1;
+                        beatmapSingersChangeHandler.Add(new Singer(singerId)
                         {
                             Name = "New singer"
                         });

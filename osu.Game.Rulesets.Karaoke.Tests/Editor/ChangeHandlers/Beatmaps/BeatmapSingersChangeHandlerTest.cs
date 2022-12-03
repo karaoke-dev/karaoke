@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Singers
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
 {
-    public class SingersChangeHandlerTest : BaseChangeHandlerTest<SingersChangeHandler>
+    public class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<BeatmapSingersChangeHandler>
     {
         [Test]
         [Ignore("Not working because singer in karaoke beatmap only sync to change handler once.")]
