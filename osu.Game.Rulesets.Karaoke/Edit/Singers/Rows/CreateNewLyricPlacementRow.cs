@@ -37,11 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     TooltipText = "Click to add new singer",
                     Action = () =>
                     {
-                        int singerId = beatmapSingersChangeHandler.Singers.Count + 1;
-                        beatmapSingersChangeHandler.Add(new Singer(singerId)
-                        {
-                            Name = "New singer"
-                        });
+                        beatmapSingersChangeHandler.Add();
                     }
                 }
             };
