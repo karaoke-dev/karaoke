@@ -32,22 +32,22 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
     }
 
     [Test]
-    public void TestSubSingerSerializer()
+    public void TestSingerStateSerializer()
     {
-        var singer = new SubSinger(1, 2);
+        var singer = new SingerState(1, 2);
 
-        const string expected = "{\"$type\":\"SubSinger\",\"id\":1,\"main_singer_id\":2}";
+        const string expected = "{\"$type\":\"SingerState\",\"id\":1,\"main_singer_id\":2}";
         string actual = JsonConvert.SerializeObject(singer, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
 
     [Test]
-    public void TestSubSingerDeserializer()
+    public void TestSingerStateDeserializer()
     {
-        const string json = "{\"$type\":\"SubSinger\",\"id\":1,\"main_singer_id\":2}";
+        const string json = "{\"$type\":\"SingerState\",\"id\":1,\"main_singer_id\":2}";
 
-        var expected = new SubSinger(1, 2);
-        var actual = (SubSinger)JsonConvert.DeserializeObject<ISinger>(json, CreateSettings())!;
+        var expected = new SingerState(1, 2);
+        var actual = (SingerState)JsonConvert.DeserializeObject<ISinger>(json, CreateSettings())!;
         Assert.AreEqual(expected.ID, actual.ID);
         Assert.AreEqual(expected.MainSingerId, actual.MainSingerId);
     }
@@ -57,9 +57,9 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
     {
         var singerInfo = new SingerInfo();
         var singer = singerInfo.AddSinger();
-        singerInfo.AddSubSinger(singer);
+        singerInfo.AddSingerState(singer);
 
-        const string expected = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SubSinger\",\"id\":2,\"main_singer_id\":1}]}";
+        const string expected = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SingerState\",\"id\":2,\"main_singer_id\":1}]}";
         string actual = JsonConvert.SerializeObject(singerInfo, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -67,11 +67,11 @@ public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
     [Test]
     public void TestSingerInfoDeserializer()
     {
-        const string json = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SubSinger\",\"id\":2,\"main_singer_id\":1}]}";
+        const string json = "{\"singers\":[{\"$type\":\"Singer\",\"id\":1},{\"$type\":\"SingerState\",\"id\":2,\"main_singer_id\":1}]}";
 
         var singerInfo = new SingerInfo();
         var singer = singerInfo.AddSinger();
-        singerInfo.AddSubSinger(singer);
+        singerInfo.AddSingerState(singer);
 
         var actual = JsonConvert.DeserializeObject<SingerInfo>(json, CreateSettings())!;
         Assert.AreEqual(singerInfo.Singers.Count, actual.Singers.Count);

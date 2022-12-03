@@ -7,13 +7,13 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
-    public class SubSinger : ISinger
+    public class SingerState : ISinger
     {
-        public SubSinger()
+        public SingerState()
         {
         }
 
-        public SubSinger(int id, int mainSingerId)
+        public SingerState(int id, int mainSingerId)
         {
             ID = id;
             MainSingerId = mainSingerId;

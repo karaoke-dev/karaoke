@@ -17,24 +17,24 @@ public class SingerInfo
     public IEnumerable<Singer> GetAllSingers() =>
         Singers.OfType<Singer>().OrderBy(x => x.Order);
 
-    public IEnumerable<SubSinger> GetAllAvailableSubSinger(Singer singer) =>
-        Singers.OfType<SubSinger>().Where(x => x.MainSingerId == singer.ID).OrderBy(x => x.Order);
+    public IEnumerable<SingerState> GetAllAvailableSingerStates(Singer singer) =>
+        Singers.OfType<SingerState>().Where(x => x.MainSingerId == singer.ID).OrderBy(x => x.Order);
 
-    public IDictionary<Singer, SubSinger[]> GetSingerByIds(int[] singerIds)
+    public IDictionary<Singer, SingerState[]> GetSingerByIds(int[] singerIds)
     {
         var matchedMainSingers = GetAllSingers().Where(x => singerIds.Contains(x.ID));
         return matchedMainSingers.ToDictionary(k => k, v =>
         {
-            var matchedSubSingers = GetAllAvailableSubSinger(v);
+            var matchedSingerStates = GetAllAvailableSingerStates(v);
 
-            return matchedSubSingers.Where(x => singerIds.Contains(x.ID)).ToArray();
+            return matchedSingerStates.Where(x => singerIds.Contains(x.ID)).ToArray();
         });
     }
 
-    public IDictionary<Singer, SubSinger[]> GetSingerMap()
+    public IDictionary<Singer, SingerState[]> GetSingerMap()
     {
         var matchedMainSingers = GetAllSingers();
-        return matchedMainSingers.ToDictionary(k => k, v => GetAllAvailableSubSinger(v).ToArray());
+        return matchedMainSingers.ToDictionary(k => k, v => GetAllAvailableSingerStates(v).ToArray());
     }
 
     public Singer AddSinger(Action<Singer>? action = null)
@@ -48,19 +48,19 @@ public class SingerInfo
         return singer;
     }
 
-    public SubSinger AddSubSinger(Singer singer, Action<SubSinger>? action = null)
+    public SingerState AddSingerState(Singer singer, Action<SingerState>? action = null)
     {
         if (!Singers.Contains(singer))
             throw new InvalidOperationException("Main singer must in the singer info.");
 
         int id = getNewSingerId();
         int mainSingerId = singer.ID;
-        var subSinger = new SubSinger(id, mainSingerId);
-        action?.Invoke(subSinger);
+        var singerState = new SingerState(id, mainSingerId);
+        action?.Invoke(singerState);
 
-        Singers.Add(subSinger);
+        Singers.Add(singerState);
 
-        return subSinger;
+        return singerState;
     }
 
     public bool RemoveSinger(ISinger singer)
@@ -69,17 +69,17 @@ public class SingerInfo
         {
             case Singer mainSinger:
             {
-                var subSingers = GetAllAvailableSubSinger(mainSinger);
+                var singerStates = GetAllAvailableSingerStates(mainSinger);
 
-                foreach (var subSinger in subSingers)
+                foreach (var singerState in singerStates)
                 {
-                    RemoveSinger(subSinger);
+                    RemoveSinger(singerState);
                 }
 
                 return Singers.Remove(singer);
             }
 
-            case SubSinger:
+            case SingerState:
                 return Singers.Remove(singer);
 
             default:
