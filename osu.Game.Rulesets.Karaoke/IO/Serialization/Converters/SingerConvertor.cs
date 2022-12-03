@@ -20,11 +20,11 @@ public class SingerConvertor : GenericTypeConvertor<ISinger>
         int singerId = GetValueFromProperty<int>(jObject, singer_id_field);
         assignIdToSinger(existingValue, nameof(ISinger.ID), singerId);
 
-        if (existingValue is not SubSinger subSinger)
+        if (existingValue is not SingerState singerState)
             return;
 
         int mainSingerId = GetValueFromProperty<int>(jObject, main_singer_id_field);
-        assignIdToSinger(subSinger, nameof(SubSinger.MainSingerId), mainSingerId);
+        assignIdToSinger(singerState, nameof(SingerState.MainSingerId), mainSingerId);
     }
 
     private static void assignIdToSinger(ISinger singer, string propertyName, int value)
@@ -40,8 +40,8 @@ public class SingerConvertor : GenericTypeConvertor<ISinger>
     {
         jObject.Add(singer_id_field, value.ID);
 
-        if (value is SubSinger subSinger)
-            jObject.Add(main_singer_id_field, subSinger.MainSingerId);
+        if (value is SingerState singerState)
+            jObject.Add(main_singer_id_field, singerState.MainSingerId);
     }
 
     protected override Type GetTypeByName(string name)
