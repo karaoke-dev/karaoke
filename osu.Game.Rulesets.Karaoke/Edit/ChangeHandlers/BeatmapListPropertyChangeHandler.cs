@@ -14,7 +14,10 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public abstract class BeatmapPropertyChangeHandler<TItem> : Component
+    // todo: not a good design because eventually karaoke beatmap will not have the the field with list type.
+    // it should be wrap into class (e.g. localizationInfo) with list of translate inside.
+    // so guess this class will be removed eventually.
+    public abstract class BeatmapListPropertyChangeHandler<TItem> : Component
     {
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
