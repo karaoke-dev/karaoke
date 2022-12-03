@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 public class SingerInfo
 {
+    public bool SupportSingerState { get; set; }
+
     // todo: should make the property as readonly.
     public BindableList<ISinger> Singers { get; set; } = new();
 
