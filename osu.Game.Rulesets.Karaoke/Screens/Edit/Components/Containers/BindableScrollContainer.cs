@@ -9,7 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers
 {
     public abstract class BindableScrollContainer : ZoomableScrollContainer
     {

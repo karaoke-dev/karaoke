@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 {
     public class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
     {

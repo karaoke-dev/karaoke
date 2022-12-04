@@ -6,7 +6,7 @@ using osu.Framework.Bindables;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 {
     public class LanguageSelectorPopover : OsuPopover
     {
