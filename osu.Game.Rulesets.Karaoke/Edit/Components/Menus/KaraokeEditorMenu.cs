@@ -5,6 +5,7 @@
 
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 
         private static void openKaraokeEditor(IScreen screen)
         {
-            screen?.Push(new KaraokeEditor());
+            screen?.Push(new KaraokeBeatmapEditor());
         }
     }
 }

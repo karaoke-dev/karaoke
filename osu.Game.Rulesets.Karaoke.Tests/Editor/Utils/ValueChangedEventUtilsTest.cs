@@ -4,10 +4,10 @@
 using NUnit.Framework;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 {

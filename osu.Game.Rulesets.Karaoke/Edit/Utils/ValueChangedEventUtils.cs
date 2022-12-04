@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 {
