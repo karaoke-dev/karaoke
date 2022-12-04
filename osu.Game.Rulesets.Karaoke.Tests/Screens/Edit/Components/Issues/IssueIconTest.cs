@@ -2,10 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components.Issues;
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues;
 
 public class IssueIconTest
 {

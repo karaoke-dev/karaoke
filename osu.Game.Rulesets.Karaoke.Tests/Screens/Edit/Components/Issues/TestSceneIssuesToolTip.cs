@@ -4,10 +4,10 @@
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components.Issues
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues
 {
     [TestFixture]
     public class TestSceneIssuesToolTip : OsuTestScene

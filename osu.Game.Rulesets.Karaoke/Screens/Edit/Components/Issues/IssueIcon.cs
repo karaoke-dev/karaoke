@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Issues;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 
 public class IssueIcon : CompositeDrawable
 {

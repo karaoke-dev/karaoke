@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Issues
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues
 {
     public class IssuesToolTip : BackgroundToolTip<Issue[]>
     {
