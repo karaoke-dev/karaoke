@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Objects;
@@ -15,90 +14,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
     public abstract class BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject> : BaseChangeHandlerTest<TChangeHandler>
         where TChangeHandler : HitObjectChangeHandler<THitObject>, new() where THitObject : HitObject
     {
-        private EditorBeatmap editorBeatmap = null!;
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            editorBeatmap = Dependencies.Get<EditorBeatmap>();
-        }
-
-        [SetUp]
-        public virtual void SetUp()
-        {
-            AddStep("Setup", () =>
-            {
-                editorBeatmap.Clear();
-                editorBeatmap.SelectedHitObjects.Clear();
-            });
-        }
-
-        protected void PrepareHitObject(HitObject hitObject, bool selected = true)
-            => PrepareHitObjects(new[] { hitObject }, selected);
-
-        protected void PrepareHitObjects(IEnumerable<HitObject> selectedHitObjects, bool selected = true)
-        {
-            AddStep("Prepare testing hit objects", () =>
-            {
-                var hitobjects = selectedHitObjects.ToList();
-                editorBeatmap.AddRange(hitobjects);
-
-                if (selected)
-                {
-                    editorBeatmap.SelectedHitObjects.AddRange(hitobjects);
-                }
-            });
-        }
-
         protected void AssertHitObject(Action<THitObject> assert)
         {
-            AddStep("Is result matched", () =>
-            {
-                foreach (var hitObject in editorBeatmap.HitObjects.OfType<THitObject>())
-                {
-                    assert(hitObject);
-                }
-            });
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
+            AssertHitObject<THitObject>(assert);
         }
 
         protected void AssertHitObjects(Action<IEnumerable<THitObject>> assert)
         {
-            AddStep("Is result matched", () =>
-            {
-                assert(editorBeatmap.HitObjects.OfType<THitObject>());
-            });
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
+            AssertHitObjects<THitObject>(assert);
         }
 
         protected void AssertSelectedHitObject(Action<THitObject> assert)
         {
-            AddStep("Is result matched", () =>
+            AssertSelectedHitObjects(hitObjects =>
             {
-                foreach (var hitObject in editorBeatmap.SelectedHitObjects.OfType<THitObject>())
+                foreach (var hitObject in hitObjects)
                 {
                     assert(hitObject);
                 }
             });
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
         }
 
         protected void AssertSelectedHitObjects(Action<IEnumerable<THitObject>> assert)
         {
             AddStep("Is result matched", () =>
             {
+                var editorBeatmap = Dependencies.Get<EditorBeatmap>();
                 assert(editorBeatmap.SelectedHitObjects.OfType<THitObject>());
             });
 

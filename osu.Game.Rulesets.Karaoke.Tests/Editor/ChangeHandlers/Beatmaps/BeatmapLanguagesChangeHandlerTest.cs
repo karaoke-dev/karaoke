@@ -69,19 +69,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
                     new("zh-TW"),
                     new("Ja-jp")
                 };
+            });
 
-                karaokeBeatmap.HitObjects = new List<KaraokeHitObject>
+            PrepareHitObject(new Lyric
+            {
+                Translates = new Dictionary<CultureInfo, string>
                 {
-                    new Lyric
                     {
-                        Translates = new Dictionary<CultureInfo, string>
-                        {
-                            {
-                                new("zh-TW"), "卡拉 OK"
-                            }
-                        }
+                        new("zh-TW"), "卡拉 OK"
                     }
-                };
+                }
             });
 
             TriggerHandlerChanged(c =>
