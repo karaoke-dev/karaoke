@@ -6,7 +6,7 @@
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
-using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
