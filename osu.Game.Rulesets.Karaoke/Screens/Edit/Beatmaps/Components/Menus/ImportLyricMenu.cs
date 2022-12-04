@@ -8,7 +8,7 @@ using osu.Framework.Screens;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
 {
     public class ImportLyricMenu : MenuItem
     {

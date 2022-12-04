@@ -11,7 +11,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
 {
     public class AutoFocusToEditLyricMenu : MenuItem
     {

@@ -5,10 +5,11 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
 {
     /// <summary>
     /// If click the lock icon in <see cref="LyricEditor"/>, will apply <see cref="LockState.Partial"/> or <see cref="LockState.Full"/>

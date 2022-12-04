@@ -5,9 +5,10 @@
 
 using System.Collections.Generic;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
 {
     public class LyricEditorModeMenu : EnumMenu<LyricEditorMode>
     {

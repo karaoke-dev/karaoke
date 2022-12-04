@@ -2,9 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
 {
     public class LyricEditorPreferLayoutMenu : EnumMenu<LyricEditorLayout>
     {
