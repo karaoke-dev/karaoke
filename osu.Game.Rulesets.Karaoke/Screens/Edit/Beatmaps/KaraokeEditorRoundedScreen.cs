@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
     /// <summary>
     /// Copied from EditorRoundedScreen

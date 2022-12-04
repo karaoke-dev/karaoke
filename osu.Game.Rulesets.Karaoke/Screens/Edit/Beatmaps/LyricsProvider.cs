@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
     public class LyricsProvider : Component, ILyricsProvider
     {

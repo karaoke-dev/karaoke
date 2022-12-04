@@ -14,16 +14,15 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
-using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Screens.Edit.Components.Menus;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public class KaraokeEditor : GenericEditor<KaraokeEditorScreenMode>
+    public class KaraokeBeatmapEditor : GenericEditor<KaraokeEditorScreenMode>
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
@@ -58,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
 
-        public KaraokeEditor()
+        public KaraokeBeatmapEditor()
         {
             editConfigManager = new KaraokeRulesetEditConfigManager();
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();

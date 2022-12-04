@@ -6,7 +6,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
     public interface ILyricsProvider
     {

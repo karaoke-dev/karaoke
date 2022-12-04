@@ -5,7 +5,7 @@
 
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
     public enum KaraokeEditorScreenMode
     {

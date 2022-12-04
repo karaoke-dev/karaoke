@@ -7,14 +7,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
-    public class TestSceneKaraokeEditor : ScreenTestScene<KaraokeEditor>
+    public class TestSceneKaraokeBeatmapEditor : ScreenTestScene<KaraokeBeatmapEditor>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -22,11 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override KaraokeEditor CreateScreen() => new();
+        protected override KaraokeBeatmapEditor CreateScreen() => new();
 
         private DialogOverlay dialogOverlay = null!;
 
-        public TestSceneKaraokeEditor()
+        public TestSceneKaraokeBeatmapEditor()
         {
             var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;

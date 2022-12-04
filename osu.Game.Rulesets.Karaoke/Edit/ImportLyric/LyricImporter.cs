@@ -17,6 +17,7 @@ using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 

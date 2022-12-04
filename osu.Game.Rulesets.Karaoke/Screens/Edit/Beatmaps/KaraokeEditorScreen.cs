@@ -4,10 +4,9 @@
 #nullable disable
 
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
     public abstract class KaraokeEditorScreen : GenericEditorScreen<KaraokeEditorScreenMode>
     {

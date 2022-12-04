@@ -8,9 +8,8 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
-using osu.Game.Rulesets.Karaoke.Tests.Editor;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
