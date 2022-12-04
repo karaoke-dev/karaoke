@@ -15,7 +15,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
-    public abstract class KaraokeEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeEditorScreen
+    public abstract class BeatmapEditorScreenTestScene<T> : EditorClockTestScene where T : BeatmapEditorScreen
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
 
-        protected KaraokeEditorScreenTestScene()
+        protected BeatmapEditorScreenTestScene()
         {
             editorBeatmap = new EditorBeatmap(CreateBeatmap());
         }

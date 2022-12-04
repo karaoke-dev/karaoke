@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     [Cached(typeof(ISingerScreenScrollingInfoProvider))]
-    public class SingerScreen : KaraokeEditorRoundedScreen, ISingerScreenScrollingInfoProvider
+    public class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScrollingInfoProvider
     {
         [Cached(typeof(IBeatmapSingersChangeHandler))]
         private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
         public BindableFloat BindableCurrent { get; } = new();
 
         public SingerScreen()
-            : base(KaraokeEditorScreenMode.Singer)
+            : base(KaraokeBeatmapEditorScreenMode.Singer)
         {
             AddInternal(beatmapSingersChangeHandler = new BeatmapSingersChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());

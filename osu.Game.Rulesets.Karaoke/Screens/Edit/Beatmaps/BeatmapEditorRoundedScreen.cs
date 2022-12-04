@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
     /// Copied from EditorRoundedScreen
     /// todo: will remove this screen eventually because new editor design not have round screen style.
     /// </summary>
-    public class KaraokeEditorRoundedScreen : KaraokeEditorScreen
+    public class BeatmapEditorRoundedScreen : BeatmapEditorScreen
     {
         public const int HORIZONTAL_PADDING = 100;
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 
         protected override Container<Drawable> Content => roundedContent;
 
-        public KaraokeEditorRoundedScreen(KaraokeEditorScreenMode type)
+        public BeatmapEditorRoundedScreen(KaraokeBeatmapEditorScreenMode type)
             : base(type)
         {
         }

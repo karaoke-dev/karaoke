@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public enum KaraokeEditorScreenMode
+    public enum KaraokeBeatmapEditorScreenMode
     {
         [Description("Lyric")]
         Lyric,

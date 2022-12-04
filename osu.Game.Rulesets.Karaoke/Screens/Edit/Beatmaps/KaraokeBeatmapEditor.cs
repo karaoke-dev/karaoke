@@ -23,7 +23,7 @@ using osu.Game.Screens.Edit.Components.Menus;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public class KaraokeBeatmapEditor : GenericEditor<KaraokeEditorScreenMode>
+    public class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorScreenMode>
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
@@ -75,20 +75,20 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
             AddInternal(importBeatmapChangeHandler = new ImportBeatmapChangeHandler());
         }
 
-        protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode) =>
+        protected override GenericEditorScreen<KaraokeBeatmapEditorScreenMode> GenerateScreen(KaraokeBeatmapEditorScreenMode screenMode) =>
             screenMode switch
             {
-                KaraokeEditorScreenMode.Lyric => new LyricEditorScreen(),
-                KaraokeEditorScreenMode.Singer => new SingerScreen(),
-                KaraokeEditorScreenMode.Translate => new TranslateScreen(),
+                KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
+                KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
+                KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
                 _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
             };
 
-        protected override MenuItem[] GenerateMenuItems(KaraokeEditorScreenMode screenMode)
+        protected override MenuItem[] GenerateMenuItems(KaraokeBeatmapEditorScreenMode screenMode)
         {
             return screenMode switch
             {
-                KaraokeEditorScreenMode.Lyric => new MenuItem[]
+                KaraokeBeatmapEditorScreenMode.Lyric => new MenuItem[]
                 {
                     new("File")
                     {

@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
-    public class TestSceneSingerScreen : KaraokeEditorScreenTestScene<SingerScreen>
+    public class TestSceneSingerScreen : BeatmapEditorScreenTestScene<SingerScreen>
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 

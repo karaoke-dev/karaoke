@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
-    public class TranslateScreen : KaraokeEditorRoundedScreen
+    public class TranslateScreen : BeatmapEditorRoundedScreen
     {
         [Cached(typeof(IBeatmapLanguagesChangeHandler))]
         private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
         private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
 
         public TranslateScreen()
-            : base(KaraokeEditorScreenMode.Translate)
+            : base(KaraokeBeatmapEditorScreenMode.Translate)
         {
             AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
             AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());

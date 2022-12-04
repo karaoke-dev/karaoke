@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
-    public class TestSceneTranslateScreen : KaraokeEditorScreenTestScene<TranslateScreen>
+    public class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<TranslateScreen>
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 

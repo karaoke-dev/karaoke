@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
-    public class TestSceneLyricEditorScreen : KaraokeEditorScreenTestScene<LyricEditorScreen>
+    public class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<LyricEditorScreen>
     {
         [Cached]
         private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
