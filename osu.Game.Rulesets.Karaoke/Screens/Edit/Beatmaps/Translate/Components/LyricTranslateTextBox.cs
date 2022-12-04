@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
     public class LyricTranslateTextBox : OsuTextBox
     {

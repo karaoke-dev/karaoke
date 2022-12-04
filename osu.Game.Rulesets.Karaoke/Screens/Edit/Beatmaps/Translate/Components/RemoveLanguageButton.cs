@@ -11,7 +11,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
     public class RemoveLanguageButton : IconButton
     {

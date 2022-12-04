@@ -10,9 +10,10 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+using osu.Game.Rulesets.Karaoke.Tests.Editor;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
     public class TestSceneTranslateScreen : KaraokeEditorScreenTestScene<TranslateScreen>

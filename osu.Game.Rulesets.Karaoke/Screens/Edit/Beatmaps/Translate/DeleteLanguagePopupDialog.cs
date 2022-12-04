@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
     public class DeleteLanguagePopupDialog : PopupDialog
     {

@@ -15,9 +15,9 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Screens.Edit.Components.Menus;
 

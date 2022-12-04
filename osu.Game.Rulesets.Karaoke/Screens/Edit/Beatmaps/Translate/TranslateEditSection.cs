@@ -14,13 +14,14 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
     [Cached(typeof(ITranslateInfoProvider))]
     public class TranslateEditSection : Container, ITranslateInfoProvider

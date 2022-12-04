@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
     public class TranslateLyricSpriteText : DrawableLyricSpriteText, IHasCustomTooltip<Lyric>
     {

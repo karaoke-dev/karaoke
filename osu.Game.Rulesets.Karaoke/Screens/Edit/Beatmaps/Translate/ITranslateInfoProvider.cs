@@ -6,7 +6,7 @@
 using System.Globalization;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
     public interface ITranslateInfoProvider
     {

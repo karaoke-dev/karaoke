@@ -8,10 +8,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
     public class TranslateScreen : KaraokeEditorRoundedScreen
     {
