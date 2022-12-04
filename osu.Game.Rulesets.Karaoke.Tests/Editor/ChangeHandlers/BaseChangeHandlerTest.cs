@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Testing;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
@@ -47,6 +48,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 editorBeatmap,
                 changeHandler = new TChangeHandler()
             };
+        }
+
+        [SetUp]
+        public virtual void SetUp()
+        {
+            AddStep("Setup", () =>
+            {
+                var editorBeatmap = Dependencies.Get<EditorBeatmap>();
+                editorBeatmap.Clear();
+                editorBeatmap.SelectedHitObjects.Clear();
+
+                if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
+                    throw new InvalidCastException();
+
+                karaokeBeatmap.AvailableTranslates.Clear();
+                karaokeBeatmap.SingerInfo = new SingerInfo();
+                karaokeBeatmap.PageInfo = new PageInfo();
+            });
         }
 
         protected void SetUpEditorBeatmap(Action<EditorBeatmap> action)

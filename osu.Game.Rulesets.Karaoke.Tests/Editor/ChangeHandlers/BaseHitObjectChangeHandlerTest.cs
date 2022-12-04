@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Objects;
@@ -21,16 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
         private void load()
         {
             editorBeatmap = Dependencies.Get<EditorBeatmap>();
-        }
-
-        [SetUp]
-        public virtual void SetUp()
-        {
-            AddStep("Setup", () =>
-            {
-                editorBeatmap.Clear();
-                editorBeatmap.SelectedHitObjects.Clear();
-            });
         }
 
         protected void PrepareHitObject(HitObject hitObject, bool selected = true)
