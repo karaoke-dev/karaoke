@@ -41,18 +41,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 
         protected void AssertHitObject(Action<THitObject> assert)
         {
-            AddStep("Is result matched", () =>
+            AssertHitObjects(hitObjects =>
             {
-                foreach (var hitObject in editorBeatmap.HitObjects.OfType<THitObject>())
+                foreach (var hitObject in hitObjects)
                 {
                     assert(hitObject);
                 }
             });
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
         }
 
         protected void AssertHitObjects(Action<IEnumerable<THitObject>> assert)
@@ -70,18 +65,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 
         protected void AssertSelectedHitObject(Action<THitObject> assert)
         {
-            AddStep("Is result matched", () =>
+            AssertSelectedHitObjects(hitObjects =>
             {
-                foreach (var hitObject in editorBeatmap.SelectedHitObjects.OfType<THitObject>())
+                foreach (var hitObject in hitObjects)
                 {
                     assert(hitObject);
                 }
             });
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
         }
 
         protected void AssertSelectedHitObjects(Action<IEnumerable<THitObject>> assert)
