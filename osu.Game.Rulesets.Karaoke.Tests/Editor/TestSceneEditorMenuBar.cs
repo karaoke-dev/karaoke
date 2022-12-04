@@ -11,7 +11,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
 

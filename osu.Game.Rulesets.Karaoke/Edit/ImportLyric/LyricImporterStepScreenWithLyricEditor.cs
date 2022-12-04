@@ -7,9 +7,9 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {

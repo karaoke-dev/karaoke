@@ -5,8 +5,8 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
