@@ -10,10 +10,10 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
     public class DefaultLyricPlacementColumn : LyricPlacementColumn
     {

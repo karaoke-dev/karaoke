@@ -24,7 +24,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
 {
     public class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopover
     {

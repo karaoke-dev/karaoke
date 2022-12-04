@@ -5,7 +5,7 @@
 
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
 {
     internal abstract class EditSingerSection : Section
     {

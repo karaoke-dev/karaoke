@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
 {
     [Cached]
     public class SingerLyricTimeline : BindableScrollContainer

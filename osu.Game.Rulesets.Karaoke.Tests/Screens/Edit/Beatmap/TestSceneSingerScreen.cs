@@ -9,10 +9,11 @@ using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Singers;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
+using osu.Game.Rulesets.Karaoke.Tests.Editor;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
     public class TestSceneSingerScreen : KaraokeEditorScreenTestScene<SingerScreen>

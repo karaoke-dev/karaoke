@@ -10,9 +10,9 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     public class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
     {

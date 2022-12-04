@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Blueprints
 {
     public class LyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
     {

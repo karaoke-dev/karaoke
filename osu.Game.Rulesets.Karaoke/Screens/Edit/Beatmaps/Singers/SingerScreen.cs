@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -16,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     [Cached(typeof(ISingerScreenScrollingInfoProvider))]
     public class SingerScreen : KaraokeEditorRoundedScreen, ISingerScreenScrollingInfoProvider

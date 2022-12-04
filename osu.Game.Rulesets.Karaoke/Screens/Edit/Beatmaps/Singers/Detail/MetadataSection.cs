@@ -8,7 +8,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
 {
     internal class MetadataSection : EditSingerSection
     {

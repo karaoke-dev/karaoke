@@ -5,7 +5,7 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     public interface ISingerScreenScrollingInfoProvider
     {

@@ -10,8 +10,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
     public abstract class LyricPlacementColumn : CompositeDrawable
     {

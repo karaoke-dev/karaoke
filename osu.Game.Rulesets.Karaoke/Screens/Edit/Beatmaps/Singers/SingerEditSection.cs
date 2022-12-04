@@ -7,9 +7,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     public class SingerEditSection : CompositeDrawable
     {
