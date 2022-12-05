@@ -11,7 +11,7 @@ using osu.Game.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
-    public class HitObjectCheckTest<THitObject, TCheck> : BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
+    public abstract class HitObjectCheckTest<THitObject, TCheck> : BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
     {
         protected void AssertOk(HitObject hitObject)
         {

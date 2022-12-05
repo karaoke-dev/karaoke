@@ -17,7 +17,7 @@ using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapAvailableTranslat
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
     [TestFixture]
-    public class CheckBeatmapAvailableTranslatesTest : BaseCheckTest<CheckBeatmapAvailableTranslates>
+    public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<CheckBeatmapAvailableTranslates>
     {
         [Test]
         public void TestNoLyricAndNoLanguage()
