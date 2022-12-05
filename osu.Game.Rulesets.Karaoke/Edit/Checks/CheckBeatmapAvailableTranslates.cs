@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<CultureInfo>, Lyric>
     {
-        protected override string Description => "Lyrics with invalid translations.";
+        protected override string Description => "Beatmap with invalid localization info.";
 
         public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
