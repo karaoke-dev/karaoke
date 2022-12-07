@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
-    public class LanguageInfo : SubInfo, IHasPopover
+    public partial class LanguageInfo : SubInfo, IHasPopover
     {
         private readonly Bindable<CultureInfo> languageBindable;
 

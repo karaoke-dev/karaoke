@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Language
 {
-    public class AcceptLanguagesSection : GeneratorConfigSection<LanguageDetectorConfig>
+    public partial class AcceptLanguagesSection : GeneratorConfigSection<LanguageDetectorConfig>
     {
         protected override string Title => "Accept languages";
 
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lang
         }
 
         // todo: will use rearrangeable list view for able to change the order.
-        private class SelectedLanguage : CompositeDrawable
+        private partial class SelectedLanguage : CompositeDrawable
         {
             private const float delete_button_size = 20f;
             private const int padding = 15;
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lang
             }
         }
 
-        private class CreateLanguageSubsection : CompositeDrawable
+        private partial class CreateLanguageSubsection : CompositeDrawable
         {
             private const int padding = 15;
 

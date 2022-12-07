@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
 {
-    public class TestSceneLyricEditorColourProvider : OsuTestScene
+    public partial class TestSceneLyricEditorColourProvider : OsuTestScene
     {
         [Test]
         public void ShowWithNoFetch()
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
             }
         }
 
-        private class PreviewColourDrawable : CompositeDrawable
+        private partial class PreviewColourDrawable : CompositeDrawable
         {
             [Resolved, AllowNull]
             private GameHost host { get; set; }

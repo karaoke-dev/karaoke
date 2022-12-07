@@ -8,13 +8,13 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public class RomajiTagIssueSection : TextTagIssueSection
+    public partial class RomajiTagIssueSection : TextTagIssueSection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
 
         protected override LyricsIssueTable CreateIssueTable() => new RomajiTagIssueTable();
 
-        private class RomajiTagIssueTable : TextTagIssueTable<RomajiTag>
+        private partial class RomajiTagIssueTable : TextTagIssueTable<RomajiTag>
         {
             protected override Tuple<Lyric, RomajiTag> GetInvalidByIssue(Issue issue)
             {

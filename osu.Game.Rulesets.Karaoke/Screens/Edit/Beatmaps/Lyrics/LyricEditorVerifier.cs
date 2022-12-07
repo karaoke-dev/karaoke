@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-public class LyricEditorVerifier : Component, ILyricEditorVerifier
+public partial class LyricEditorVerifier : Component, ILyricEditorVerifier
 {
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }

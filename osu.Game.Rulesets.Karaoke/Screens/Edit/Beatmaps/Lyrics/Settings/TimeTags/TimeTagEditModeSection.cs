@@ -12,7 +12,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class TimeTagEditModeSection : EditModeSection<ITimeTagModeState, TimeTagEditMode>
+    public partial class TimeTagEditModeSection : EditModeSection<ITimeTagModeState, TimeTagEditMode>
     {
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private class TimeTagVerifySelection : VerifySelection
+        private partial class TimeTagVerifySelection : VerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
         }

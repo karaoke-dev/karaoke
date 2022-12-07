@@ -22,7 +22,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
-    public class LyricEditorScreen : BeatmapEditorScreen
+    public partial class LyricEditorScreen : BeatmapEditorScreen
     {
         [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
             lyricEditor.ResetSelectedHitObject();
         }
 
-        private class FullScreenLyricEditor : LyricEditor
+        private partial class FullScreenLyricEditor : LyricEditor
         {
             private ILyricCaretState lyricCaretState { get; set; }
 
@@ -146,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
             }
         }
 
-        public class LyricEditorEditModeToast : Toast
+        public partial class LyricEditorEditModeToast : Toast
         {
             public LyricEditorEditModeToast(LyricEditorMode mode)
                 : base(getDescription(), getValue(mode), getShortcut(mode))

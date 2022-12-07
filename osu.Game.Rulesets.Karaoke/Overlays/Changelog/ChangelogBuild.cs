@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// <summary>
     /// Display full content in <see cref="APIChangelogBuild"/>
     /// </summary>
-    public class ChangelogBuild : FillFlowContainer
+    public partial class ChangelogBuild : FillFlowContainer
     {
         public const float HORIZONTAL_PADDING = 70;
 

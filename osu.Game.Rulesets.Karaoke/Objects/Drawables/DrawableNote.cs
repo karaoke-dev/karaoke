@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// <summary>
     /// Visualises a <see cref="Note"/> hit object.
     /// </summary>
-    public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeScoringAction>
+    public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeScoringAction>
     {
         private readonly SkinnableDrawable background;
         private readonly OsuSpriteText textPiece;

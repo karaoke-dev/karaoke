@@ -6,7 +6,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public abstract class KaraokeModPerfectTestScene : ModPerfectTestScene
+    public abstract partial class KaraokeModPerfectTestScene : ModPerfectTestScene
     {
         protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 

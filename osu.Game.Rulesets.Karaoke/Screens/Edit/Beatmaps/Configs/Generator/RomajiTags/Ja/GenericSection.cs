@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RomajiTags.Ja
 {
-    public class GenericSection : GeneratorConfigSection<JaRomajiTagGeneratorConfig>
+    public partial class GenericSection : GeneratorConfigSection<JaRomajiTagGeneratorConfig>
     {
         private readonly LabelledSwitchButton uppercaseSwitchButton;
 

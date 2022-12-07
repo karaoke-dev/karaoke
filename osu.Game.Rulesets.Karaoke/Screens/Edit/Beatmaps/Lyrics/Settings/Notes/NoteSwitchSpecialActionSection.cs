@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
+    public partial class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
     {
         protected override string SwitchActionTitle => "Special actions";
         protected override string SwitchActionDescription => "Auto-generate, edit or clear the notes.";

@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
     [Cached(typeof(ISingerScreenScrollingInfoProvider))]
-    public class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScrollingInfoProvider
+    public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScrollingInfoProvider
     {
         [Cached(typeof(IBeatmapSingersChangeHandler))]
         private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
             selectedLyrics.Clear();
         }
 
-        private class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
+        private partial class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
         {
             private readonly Container<T> content;
 
@@ -92,11 +92,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
             }
         }
 
-        private class SingerScreenHeader : OverlayHeader
+        private partial class SingerScreenHeader : OverlayHeader
         {
             protected override OverlayTitle CreateTitle() => new SingerScreenTitle();
 
-            private class SingerScreenTitle : OverlayTitle
+            private partial class SingerScreenTitle : OverlayTitle
             {
                 public SingerScreenTitle()
                 {

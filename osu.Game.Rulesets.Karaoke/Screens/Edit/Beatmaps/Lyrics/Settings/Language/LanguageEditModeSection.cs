@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public class LanguageEditModeSection : EditModeSection<ILanguageModeState, LanguageEditMode>
+    public partial class LanguageEditModeSection : EditModeSection<ILanguageModeState, LanguageEditMode>
     {
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Pink;
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private class LanguageVerifySelection : VerifySelection
+        private partial class LanguageVerifySelection : VerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.Language;
         }

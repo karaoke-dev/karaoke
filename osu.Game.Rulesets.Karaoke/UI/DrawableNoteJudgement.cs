@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class DrawableNoteJudgement : DrawableJudgement
+    public partial class DrawableNoteJudgement : DrawableJudgement
     {
         public DrawableNoteJudgement(JudgementResult result, DrawableHitObject judgedObject)
             : base(result, judgedObject)
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected override Drawable CreateDefaultJudgement(HitResult result) => new DefaultKaraokeJudgementPiece(result);
 
-        private class DefaultKaraokeJudgementPiece : DefaultJudgementPiece
+        private partial class DefaultKaraokeJudgementPiece : DefaultJudgementPiece
         {
             public DefaultKaraokeJudgementPiece(HitResult result)
                 : base(result)

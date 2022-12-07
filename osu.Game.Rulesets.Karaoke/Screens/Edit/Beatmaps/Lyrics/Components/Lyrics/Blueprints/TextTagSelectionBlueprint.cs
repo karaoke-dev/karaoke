@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public abstract class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
+    public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
     {
         private readonly Container previewTextArea;
         private readonly Container indexRangeBackground;

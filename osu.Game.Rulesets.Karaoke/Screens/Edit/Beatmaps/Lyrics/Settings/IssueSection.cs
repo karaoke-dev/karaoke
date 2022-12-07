@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class IssueSection : LyricEditorSection
+    public abstract partial class IssueSection : LyricEditorSection
     {
         protected sealed override LocalisableString Title => "Issues";
 
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             bindableIssues.BindTo(verifier.GetIssueByEditMode(EditMode));
         }
 
-        private class EmptyIssue : ClickableContainer
+        private partial class EmptyIssue : ClickableContainer
         {
             [BackgroundDependencyLoader]
             private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricEditorVerifier verifier, OsuColour colours)
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         }
 
-        private class IssueNavigator : CompositeDrawable
+        private partial class IssueNavigator : CompositeDrawable
         {
             private readonly Box background;
             private readonly FillFlowContainer<IssueCategory> categoryList;
@@ -251,7 +251,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
                 }
             }
 
-            private class IssueCategory : CompositeDrawable
+            private partial class IssueCategory : CompositeDrawable
             {
                 private const int text_size = 14;
 
@@ -343,7 +343,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         }
 
-        protected abstract class LyricsIssueTable : IssueTable
+        protected abstract partial class LyricsIssueTable : IssueTable
         {
         }
 

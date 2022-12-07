@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes
 {
-    internal class EditNoteBlueprintContainer : BindableBlueprintContainer<Note>
+    internal partial class EditNoteBlueprintContainer : BindableBlueprintContainer<Note>
     {
         protected override SelectionBlueprint<Note> CreateBlueprintFor(Note hitObject)
             => new NoteEditorSelectionBlueprint(hitObject);
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             RegisterBindable(notes);
         }
 
-        protected class NoteEditorSelectionHandler : BindableSelectionHandler
+        protected partial class NoteEditorSelectionHandler : BindableSelectionHandler
         {
             [BackgroundDependencyLoader]
             private void load(IEditNoteModeState editNoteModeState)

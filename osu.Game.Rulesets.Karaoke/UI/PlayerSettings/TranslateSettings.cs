@@ -16,7 +16,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class TranslateSettings : PlayerSettingsGroup
+    public partial class TranslateSettings : PlayerSettingsGroup
     {
         private readonly PlayerCheckbox translateCheckBox;
         private readonly OsuSpriteText translateText;

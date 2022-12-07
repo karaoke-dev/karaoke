@@ -13,7 +13,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class NotScorableGraph : Container
+    public partial class NotScorableGraph : Container
     {
         public NotScorableGraph()
         {

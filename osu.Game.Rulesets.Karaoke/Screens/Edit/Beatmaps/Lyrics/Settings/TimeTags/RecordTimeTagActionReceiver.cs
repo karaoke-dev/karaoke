@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class RecordTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
+    public partial class RecordTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
     {
         [Resolved]
         private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }

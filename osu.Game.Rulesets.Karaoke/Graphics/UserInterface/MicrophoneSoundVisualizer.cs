@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class MicrophoneSoundVisualizer : CompositeDrawable
+    public partial class MicrophoneSoundVisualizer : CompositeDrawable
     {
         private const float max_decibel = 100;
         private const float max_pitch = 60;
@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             return false;
         }
 
-        internal class MicrophoneInfo : CompositeDrawable
+        internal partial class MicrophoneInfo : CompositeDrawable
         {
             private readonly Box background;
             private readonly SpriteIcon microphoneIcon;
@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        internal class DecibelVisualizer : CompositeDrawable
+        internal partial class DecibelVisualizer : CompositeDrawable
         {
             private const float var_width = 294;
 
@@ -320,7 +320,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 => decibel / max_decibel * var_width;
         }
 
-        internal class PitchVisualizer : CompositeDrawable
+        internal partial class PitchVisualizer : CompositeDrawable
         {
             private const int dot_width = 5;
             private const int dot_height = 10;
@@ -398,7 +398,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private float calculateDotPosition(int index)
                 => (dot_width + spacing) * index;
 
-            public class PitchDot : Container
+            public partial class PitchDot : Container
             {
                 private readonly CircularContainer circle;
 

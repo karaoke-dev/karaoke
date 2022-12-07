@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Scoring
 {
-    internal class KaraokeScoreProcessor : ScoreProcessor
+    internal partial class KaraokeScoreProcessor : ScoreProcessor
     {
         public KaraokeScoreProcessor()
             : base(new KaraokeRuleset())

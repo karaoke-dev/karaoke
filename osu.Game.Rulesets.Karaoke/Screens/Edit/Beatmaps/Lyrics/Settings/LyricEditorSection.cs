@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
     /// Base section class for lyric editor.
     /// todo: should inherit the EditorRoundedScreenSettingsSection eventually, but seems that class haven't ready.
     /// </summary>
-    public abstract class LyricEditorSection : Section
+    public abstract partial class LyricEditorSection : Section
     {
         protected LyricEditorSection()
         {

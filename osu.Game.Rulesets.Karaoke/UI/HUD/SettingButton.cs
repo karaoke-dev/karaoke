@@ -9,7 +9,7 @@ using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class SettingButton : OsuButton, IHasTooltip
+    public partial class SettingButton : OsuButton, IHasTooltip
     {
         public LocalisableString TooltipText { get; set; }
 

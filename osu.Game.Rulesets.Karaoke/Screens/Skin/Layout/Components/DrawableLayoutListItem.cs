@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
 {
-    public class DrawableLayoutListItem : OsuRearrangeableListItem<LyricLayout>
+    public partial class DrawableLayoutListItem : OsuRearrangeableListItem<LyricLayout>
     {
         private const float item_height = 35;
         private const float button_width = item_height * 0.75f;
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
         /// <summary>
         /// The main content of the <see cref="DrawableLayoutListItem"/>.
         /// </summary>
-        private class ItemContent : CircularContainer
+        private partial class ItemContent : CircularContainer
         {
             public readonly Bindable<bool> IsCreated = new();
 
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
                 IsCreated.Value = true;
             }
 
-            private class ItemTextBox : OsuTextBox
+            private partial class ItemTextBox : OsuTextBox
             {
                 protected override float LeftRightPadding => item_height / 2;
 
@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
                 }
             }
 
-            public class DeleteButton : CompositeDrawable
+            public partial class DeleteButton : CompositeDrawable
             {
                 public readonly IBindable<bool> IsCreated = new Bindable<bool>();
 

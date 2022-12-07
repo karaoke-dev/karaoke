@@ -11,7 +11,7 @@ using osu.Framework.Input.Events;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor
 {
-    public abstract class BaseBottomEditor : CompositeDrawable
+    public abstract partial class BaseBottomEditor : CompositeDrawable
     {
         private const int info_part_spacing = 210;
 

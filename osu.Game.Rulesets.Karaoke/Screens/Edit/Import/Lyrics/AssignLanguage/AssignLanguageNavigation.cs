@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
 {
-    public class AssignLanguageNavigation : TopNavigation<AssignLanguageStepScreen>
+    public partial class AssignLanguageNavigation : TopNavigation<AssignLanguageStepScreen>
     {
         private const string auto_assign_language = "AUTO_ASSIGN_LANGUAGE";
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
                 _ => throw new ArgumentOutOfRangeException(nameof(value))
             };
 
-        private class AssignLanguageTextFlowContainer : NavigationTextContainer
+        private partial class AssignLanguageTextFlowContainer : NavigationTextContainer
         {
             public AssignLanguageTextFlowContainer(AssignLanguageStepScreen screen)
             {

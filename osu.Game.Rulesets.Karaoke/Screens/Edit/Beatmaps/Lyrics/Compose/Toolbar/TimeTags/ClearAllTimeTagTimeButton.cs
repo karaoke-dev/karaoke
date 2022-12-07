@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class ClearAllTimeTagTimeButton : ActionButton
+    public partial class ClearAllTimeTagTimeButton : ActionButton
     {
         [Resolved, AllowNull]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }

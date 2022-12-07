@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
 {
-    public class LyricSettings : KaraokeSettingsSubsection
+    public partial class LyricSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Lyric";
 

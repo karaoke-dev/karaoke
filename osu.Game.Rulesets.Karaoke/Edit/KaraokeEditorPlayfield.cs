@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeEditorPlayfield : KaraokePlayfield
+    public partial class KaraokeEditorPlayfield : KaraokePlayfield
     {
         public KaraokeEditorPlayfield()
         {

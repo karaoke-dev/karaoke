@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Playback
 {
-    public class PlaybackSwitchButton : CompositeDrawable
+    public partial class PlaybackSwitchButton : CompositeDrawable
     {
         private readonly IBindable<Track> track = new Bindable<Track>();
         private readonly BindableNumber<double> freqAdjust = new BindableDouble(1);
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
             base.Dispose(isDisposing);
         }
 
-        private class PlaybackTabControl : OsuTabControl<double>
+        private partial class PlaybackTabControl : OsuTabControl<double>
         {
             private static readonly double[] tempo_values = { 0.25, 0.5, 0.75, 1 };
 
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
                 tempo_values.ForEach(AddItem);
             }
 
-            public class PlaybackTabItem : TabItem<double>
+            public partial class PlaybackTabItem : TabItem<double>
             {
                 private const float fade_duration = 200;
 

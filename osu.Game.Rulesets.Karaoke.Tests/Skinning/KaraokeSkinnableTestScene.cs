@@ -7,7 +7,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public abstract class KaraokeSkinnableTestScene : SkinnableTestScene
+    public abstract partial class KaraokeSkinnableTestScene : SkinnableTestScene
     {
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 

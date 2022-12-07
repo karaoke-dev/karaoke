@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
-    public class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatmapResourcesProvider
+    public partial class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatmapResourcesProvider
     {
         [Resolved]
         private BeatmapManager beatmapManager { get; set; }

@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public abstract class BackgroundToolTip<T> : VisibilityContainer, ITooltip<T>
+    public abstract partial class BackgroundToolTip<T> : VisibilityContainer, ITooltip<T>
     {
         protected const int BORDER = 5;
 

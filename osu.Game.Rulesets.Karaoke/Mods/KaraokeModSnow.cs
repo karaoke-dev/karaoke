@@ -16,7 +16,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModSnow : Mod, IApplicableToHUD
+    public partial class KaraokeModSnow : Mod, IApplicableToHUD
     {
         public override string Name => "Snow";
 
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             Depth = 1,
         };
 
-        protected class SnowContainer : Container
+        protected partial class SnowContainer : Container
         {
             // Max can have 1000 snow at the scene
             public int SnowGenerateParSecond { get; set; }
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             /// <summary>
             /// Show spirit
             /// </summary>
-            private class SnowSprite : Circle
+            private partial class SnowSprite : Circle
             {
                 public float HorizontalSpeed { get; set; }
 

@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RubyTags.Ja
 {
-    public class JaRubyTagGeneratorConfigPopover : GeneratorConfigPopover<JaRubyTagGeneratorConfig>
+    public partial class JaRubyTagGeneratorConfigPopover : GeneratorConfigPopover<JaRubyTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig;
 

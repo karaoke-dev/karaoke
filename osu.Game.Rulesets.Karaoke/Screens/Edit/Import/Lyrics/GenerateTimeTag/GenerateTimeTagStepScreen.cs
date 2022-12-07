@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
 {
-    public class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
+    public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Generate time tag";
 

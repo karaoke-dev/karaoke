@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Input
 {
-    public class MicrophoneSettings : KaraokeSettingsSubsection
+    public partial class MicrophoneSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Microphone";
 

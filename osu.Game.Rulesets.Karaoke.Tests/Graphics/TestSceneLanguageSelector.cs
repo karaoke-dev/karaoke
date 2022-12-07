@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
-    public class TestSceneLanguageSelector : OsuManualInputManagerTestScene
+    public partial class TestSceneLanguageSelector : OsuManualInputManagerTestScene
     {
         [Test]
         public void TestAllLanguages()

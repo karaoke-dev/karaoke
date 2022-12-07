@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
-    public abstract class LyricPlacementColumn : CompositeDrawable
+    public abstract partial class LyricPlacementColumn : CompositeDrawable
     {
         protected const int INFO_SIZE = 178;
 

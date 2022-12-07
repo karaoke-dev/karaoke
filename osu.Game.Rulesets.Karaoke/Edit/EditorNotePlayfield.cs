@@ -15,7 +15,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class EditorNotePlayfield : ScrollingNotePlayfield
+    public partial class EditorNotePlayfield : ScrollingNotePlayfield
     {
         private readonly SingerVoiceVisualization singerVoiceVisualization;
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             // todo : load data from scoring manager.
         }
 
-        public class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
+        public partial class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
         {
             protected override double GetTime(KeyValuePair<double, float?> frame) => frame.Key;
 

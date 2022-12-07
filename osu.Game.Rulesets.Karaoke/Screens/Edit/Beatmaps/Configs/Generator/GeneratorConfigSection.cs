@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig<TConfig>, new()
+    public abstract partial class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig<TConfig>, new()
     {
         private readonly TConfig defaultConfig;
         private readonly Bindable<TConfig> current;
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
             => current.Value.GetType().GetProperty(propertyName)?.SetValue(current.Value, value);
     }
 
-    public abstract class GeneratorConfigSection : Container
+    public abstract partial class GeneratorConfigSection : Container
     {
         private readonly FillFlowContainer flow;
 

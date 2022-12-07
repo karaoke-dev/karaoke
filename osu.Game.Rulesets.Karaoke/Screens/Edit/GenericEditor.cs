@@ -28,7 +28,7 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 {
-    public abstract class GenericEditor<TScreenMode> : ScreenWithBeatmapBackground, IKeyBindingHandler<GlobalAction> where TScreenMode : Enum
+    public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBackground, IKeyBindingHandler<GlobalAction> where TScreenMode : Enum
     {
         public override float BackgroundParallaxAmount => 0.1f;
 

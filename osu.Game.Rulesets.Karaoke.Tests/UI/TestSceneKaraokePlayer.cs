@@ -9,7 +9,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestSceneKaraokePlayer : PlayerTestScene
+    public partial class TestSceneKaraokePlayer : PlayerTestScene
     {
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
     /// <summary>
     /// TODO: eventually make this inherit Screen and add a local screen stack inside the Editor.
     /// </summary>
-    public abstract class GenericEditorScreen<TType> : VisibilityContainer
+    public abstract partial class GenericEditorScreen<TType> : VisibilityContainer
     {
         protected override Container<Drawable> Content => content;
         private readonly Container content;

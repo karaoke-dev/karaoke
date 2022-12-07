@@ -19,7 +19,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
-    public class TestSceneEditorMenuBar : OsuTestScene
+    public partial class TestSceneEditorMenuBar : OsuTestScene
     {
         [Cached]
         private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Aquamarine);

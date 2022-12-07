@@ -8,7 +8,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
     [TestFixture]
-    public class TestSceneKaraokeChangeLogOverlay : OsuTestScene
+    public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
     {
         private TestChangelogOverlay changelog = null!;
 
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
             AddAssert(@"listing displayed", () => changelog.Current.Value == null);
         }
 
-        private class TestChangelogOverlay : KaraokeChangelogOverlay
+        private partial class TestChangelogOverlay : KaraokeChangelogOverlay
         {
             public TestChangelogOverlay()
                 : base("karaoke-dev")

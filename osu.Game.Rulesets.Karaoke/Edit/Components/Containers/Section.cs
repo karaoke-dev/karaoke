@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
 {
-    public abstract class Section : Container
+    public abstract partial class Section : Container
     {
         protected const float SECTION_PADDING = 10;
 

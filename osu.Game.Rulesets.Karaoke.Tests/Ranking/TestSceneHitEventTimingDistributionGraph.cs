@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneHitEventTimingDistributionGraph : OsuTestScene
+    public partial class TestSceneHitEventTimingDistributionGraph : OsuTestScene
     {
         [Test]
         public void TestManyDistributedEvents()

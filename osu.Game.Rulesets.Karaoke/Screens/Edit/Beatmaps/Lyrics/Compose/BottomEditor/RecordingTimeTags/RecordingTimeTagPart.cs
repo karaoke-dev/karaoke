@@ -25,7 +25,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.RecordingTimeTags
 {
-    public class RecordingTimeTagPart : TimelinePart
+    public partial class RecordingTimeTagPart : TimelinePart
     {
         private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
         }
 
-        private class CurrentRecordingTimeTagVisualization : CompositeDrawable
+        private partial class CurrentRecordingTimeTagVisualization : CompositeDrawable
         {
             private IBindable<ICaretPosition?> position = null!;
 
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             }
         }
 
-        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
+        private partial class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
         {
             [Resolved, AllowNull]
             private ILyricCaretState lyricCaretState { get; set; }
@@ -225,7 +225,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
                 };
         }
 
-        private class TextIndexPiece : DrawableTextIndex
+        private partial class TextIndexPiece : DrawableTextIndex
         {
             public override bool RemoveCompletedTransforms => false;
         }

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
+    public partial class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
     {
         public TestSceneDrawableJudgement()
         {

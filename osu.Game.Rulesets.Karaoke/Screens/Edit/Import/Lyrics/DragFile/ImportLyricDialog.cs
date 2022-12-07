@@ -9,7 +9,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile
 {
-    public class ImportLyricDialog : PopupDialog
+    public partial class ImportLyricDialog : PopupDialog
     {
         public ImportLyricDialog(Action<bool> resetAction = null)
         {

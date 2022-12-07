@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
 {
-    internal class AvatarSection : EditSingerSection
+    internal partial class AvatarSection : EditSingerSection
     {
         protected override LocalisableString Title => "Avatar";
 

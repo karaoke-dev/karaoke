@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {
-    public class ChangelogSidebar : CompositeDrawable
+    public partial class ChangelogSidebar : CompositeDrawable
     {
         [Cached]
         public readonly Bindable<APIChangelogSidebar> Metadata = new();

@@ -12,7 +12,7 @@ using osu.Game.Screens.Edit.Setup;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup
 {
-    public class KaraokeSetupSection : RulesetSetupSection
+    public partial class KaraokeSetupSection : RulesetSetupSection
     {
         private KaraokeBeatmap karaokeBeatmap => Beatmap.PlayableBeatmap as KaraokeBeatmap;
 

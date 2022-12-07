@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
+    public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     {
         private const float time_tag_size = 10;
 

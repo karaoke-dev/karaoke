@@ -21,7 +21,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 {
-    public class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
+    public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
     {
         private readonly LyricSelectionSearchTextBox filter;
 
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfa
             GetContainingInputManager().ChangeFocus(filter);
         }
 
-        private class LyricSelectionSearchTextBox : SearchTextBox
+        private partial class LyricSelectionSearchTextBox : SearchTextBox
         {
             protected override Color4 SelectionColour => Color4.Gray;
 
@@ -101,12 +101,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfa
             }
         }
 
-        protected class RearrangeableLyricListContainer : RearrangeableTextFlowListContainer<Lyric?>
+        protected partial class RearrangeableLyricListContainer : RearrangeableTextFlowListContainer<Lyric?>
         {
             protected override DrawableTextListItem CreateDrawable(Lyric? item)
                 => new DrawableLyricListItem(item);
 
-            protected class DrawableLyricListItem : DrawableTextListItem
+            protected partial class DrawableLyricListItem : DrawableTextListItem
             {
                 [Resolved, AllowNull]
                 private OsuColour colours { get; set; }

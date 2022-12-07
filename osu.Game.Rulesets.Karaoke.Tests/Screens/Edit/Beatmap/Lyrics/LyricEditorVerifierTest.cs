@@ -17,7 +17,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics;
 
 [HeadlessTest]
-public class LyricEditorVerifierTest : EditorClockTestScene
+public partial class LyricEditorVerifierTest : EditorClockTestScene
 {
     private Lyric internalLyric = null!;
 

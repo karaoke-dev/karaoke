@@ -20,7 +20,7 @@ using Component = osu.Framework.Graphics.Component;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
 {
-    public class LyricCaretState : Component, ILyricCaretState
+    public partial class LyricCaretState : Component, ILyricCaretState
     {
         public IBindable<ICaretPosition?> BindableHoverCaretPosition => bindableHoverCaretPosition;
         public IBindable<ICaretPosition?> BindableCaretPosition => bindableCaretPosition;

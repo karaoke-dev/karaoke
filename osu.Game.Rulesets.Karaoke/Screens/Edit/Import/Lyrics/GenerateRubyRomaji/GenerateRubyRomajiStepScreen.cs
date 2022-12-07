@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji
 {
-    public class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
+    public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Generate ruby";
 

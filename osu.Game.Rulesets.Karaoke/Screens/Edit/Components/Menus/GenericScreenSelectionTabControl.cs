@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
     /// Copied from <see cref="EditorScreenSwitcherControl"/>
     /// </summary>
     /// <typeparam name="TScreenMode"></typeparam>
-    public class GenericScreenSelectionTabControl<TScreenMode> : OsuTabControl<TScreenMode>
+    public partial class GenericScreenSelectionTabControl<TScreenMode> : OsuTabControl<TScreenMode>
     {
         public GenericScreenSelectionTabControl()
         {
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
 
         protected override TabItem<TScreenMode> CreateTabItem(TScreenMode value) => new TabItem(value);
 
-        private class TabItem : OsuTabItem
+        private partial class TabItem : OsuTabItem
         {
             private const float transition_length = 250;
 

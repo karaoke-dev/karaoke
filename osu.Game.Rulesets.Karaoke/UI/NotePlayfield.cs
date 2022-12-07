@@ -28,7 +28,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeScoringAction>
+    public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeScoringAction>
     {
         private readonly BindableInt scoringPitch = new();
 

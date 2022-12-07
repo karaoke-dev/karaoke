@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RomajiTags.Ja
 {
-    public class JaRomajiTagGeneratorConfigPopover : GeneratorConfigPopover<JaRomajiTagGeneratorConfig>
+    public partial class JaRomajiTagGeneratorConfigPopover : GeneratorConfigPopover<JaRomajiTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig;
 

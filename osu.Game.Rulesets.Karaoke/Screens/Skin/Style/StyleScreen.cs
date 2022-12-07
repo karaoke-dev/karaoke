@@ -13,7 +13,7 @@ using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    public class StyleScreen : KaraokeSkinEditorScreen
+    public partial class StyleScreen : KaraokeSkinEditorScreen
     {
         [Cached]
         protected readonly StyleManager StyleManager;

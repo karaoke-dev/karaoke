@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 /// <summary>
 /// Just a copy of class <see cref="EditorTable"/>
 /// </summary>
-public abstract class LyricEditorTable : TableContainer
+public abstract partial class LyricEditorTable : TableContainer
 {
     protected virtual float HorizontalInset => 0;
 
@@ -58,7 +58,7 @@ public abstract class LyricEditorTable : TableContainer
         }
     }
 
-    private class HeaderText : OsuSpriteText
+    private partial class HeaderText : OsuSpriteText
     {
         public HeaderText(LocalisableString text)
         {
@@ -67,7 +67,7 @@ public abstract class LyricEditorTable : TableContainer
         }
     }
 
-    public class RowBackground : OsuClickableContainer
+    public partial class RowBackground : OsuClickableContainer
     {
         public readonly object Item;
 

@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
     /// <summary>
     /// Button with click effect.
     /// </summary>
-    public abstract class ActionButton : ToolbarButton
+    public abstract partial class ActionButton : ToolbarButton
     {
         [Resolved, AllowNull]
         private OsuColour colours { get; set; }

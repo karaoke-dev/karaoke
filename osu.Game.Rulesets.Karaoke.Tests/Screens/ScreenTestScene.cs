@@ -6,7 +6,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public abstract class ScreenTestScene<T> : ScreenTestScene where T : OsuScreen
+    public abstract partial class ScreenTestScene<T> : ScreenTestScene where T : OsuScreen
     {
         protected T Screen { get; private set; } = null!;
 

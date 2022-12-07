@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
-    public class TimeTagInfo : SubInfo
+    public partial class TimeTagInfo : SubInfo
     {
         private readonly IBindable<int> bindableTimeTagsVersion;
         private readonly IBindableList<TimeTag> bindableTimeTags;

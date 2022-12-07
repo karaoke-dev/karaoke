@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class SelectLyricButton : OsuButton
+    public abstract partial class SelectLyricButton : OsuButton
     {
         private IBindable<bool> selecting;
 

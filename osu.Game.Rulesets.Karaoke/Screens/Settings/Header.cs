@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class Header : Container
+    public partial class Header : Container
     {
         public const float HEIGHT = 75;
 
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             set => tabs.Current = value;
         }
 
-        private class KaraokeConfigHeaderTitle : CompositeDrawable
+        private partial class KaraokeConfigHeaderTitle : CompositeDrawable
         {
             private const float spacing = 6;
 
@@ -146,12 +146,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             }
         }
 
-        private class KaraokeConfigPageTabControl : PageTabControl<SettingsSection>
+        private partial class KaraokeConfigPageTabControl : PageTabControl<SettingsSection>
         {
             protected override TabItem<SettingsSection> CreateTabItem(SettingsSection value)
                 => new KaraokeConfigPageTabItem(value);
 
-            internal class KaraokeConfigPageTabItem : PageTabItem
+            internal partial class KaraokeConfigPageTabItem : PageTabItem
             {
                 public KaraokeConfigPageTabItem(SettingsSection value)
                     : base(value)

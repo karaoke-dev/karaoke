@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public class NoteClearSubsection : SelectLyricButton
+    public partial class NoteClearSubsection : SelectLyricButton
     {
         [Resolved]
         private INotesChangeHandler notesChangeHandler { get; set; }

@@ -21,7 +21,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public abstract class VoiceVisualization<T> : LifetimeManagementContainer
+    public abstract partial class VoiceVisualization<T> : LifetimeManagementContainer
     {
         private const float safe_lifetime_end_multiplier = 1;
 
@@ -200,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             path.X = (x + Offset) * multiple;
         }
 
-        protected class ScoringPath : Path
+        protected partial class ScoringPath : Path
         {
             public override bool RemoveWhenNotAlive => false;
 

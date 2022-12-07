@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LabelledHueSelector : LabelledComponent<LabelledHueSelector.OsuHueSelector, float>
+    public partial class LabelledHueSelector : LabelledComponent<LabelledHueSelector.OsuHueSelector, float>
     {
         public LabelledHueSelector()
             : base(true)
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         /// <summary>
         /// Copied from <see cref="OsuHSVColourPicker"/>
         /// </summary>
-        public class OsuHueSelector : HSVColourPicker.HueSelector, IHasCurrentValue<float>
+        public partial class OsuHueSelector : HSVColourPicker.HueSelector, IHasCurrentValue<float>
         {
             private const float corner_radius = 10;
             private const float control_border_thickness = 3;
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 
             protected override Drawable CreateSliderNub() => new SliderNub(this);
 
-            private class SliderNub : CompositeDrawable
+            private partial class SliderNub : CompositeDrawable
             {
                 private readonly Bindable<float> hue;
                 private readonly Box fill;

@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile
 {
-    public class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFiles
+    public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFiles
     {
         public override string Title => "Import";
         public override string ShortTitle => "Import";

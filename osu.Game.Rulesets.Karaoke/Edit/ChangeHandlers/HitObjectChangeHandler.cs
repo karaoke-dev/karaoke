@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public abstract class HitObjectChangeHandler<THitObject> : Component where THitObject : HitObject
+    public abstract partial class HitObjectChangeHandler<THitObject> : Component where THitObject : HitObject
     {
         private readonly Cached changingCache = new();
 

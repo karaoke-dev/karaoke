@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 
-public class IssueIcon : CompositeDrawable
+public partial class IssueIcon : CompositeDrawable
 {
     private Issue? issue;
 

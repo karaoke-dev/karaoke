@@ -23,7 +23,7 @@ using osu.Game.Screens.Edit.Components.Menus;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorScreenMode>
+    public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorScreenMode>
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);

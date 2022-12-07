@@ -16,7 +16,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class DefaultHitExplosion : CompositeDrawable
+    public partial class DefaultHitExplosion : CompositeDrawable
     {
         // need to check about what is this.
         public const float EXPLOSION_SIZE = 15;

@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
-    public class TestSceneKaraokeBeatmapEditor : ScreenTestScene<KaraokeBeatmapEditor>
+    public partial class TestSceneKaraokeBeatmapEditor : ScreenTestScene<KaraokeBeatmapEditor>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

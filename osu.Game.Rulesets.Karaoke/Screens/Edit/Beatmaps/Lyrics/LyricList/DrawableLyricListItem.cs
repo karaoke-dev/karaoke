@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public abstract class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
+    public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
     {
         public const float HANDLER_WIDTH = 22;
 

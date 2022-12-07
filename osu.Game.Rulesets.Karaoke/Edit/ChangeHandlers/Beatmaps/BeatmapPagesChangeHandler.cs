@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-public class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapPagesChangeHandler
+public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapPagesChangeHandler
 {
     public void Add(Page page)
     {

@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Notes
 {
-    public class NoteGeneratorConfigDialog : GeneratorConfigDialog<NoteGeneratorConfig>
+    public partial class NoteGeneratorConfigDialog : GeneratorConfigDialog<NoteGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig;
 

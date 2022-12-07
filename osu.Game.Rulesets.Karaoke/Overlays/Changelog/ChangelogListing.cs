@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// <summary>
     /// Display list of <see cref="APIChangelogBuild"/>
     /// </summary>
-    public class ChangelogListing : ChangelogContent
+    public partial class ChangelogListing : ChangelogContent
     {
         private readonly List<APIChangelogBuild> entries;
 

@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class AutoGenerateSubsection : FillFlowContainer
+    public abstract partial class AutoGenerateSubsection : FillFlowContainer
     {
         private const int horizontal_padding = 20;
 
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 
         protected abstract ConfigButton CreateConfigButton();
 
-        private class AutoGenerateButton : SelectLyricButton
+        private partial class AutoGenerateButton : SelectLyricButton
         {
             [Resolved]
             private ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler { get; set; }
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         }
 
-        protected abstract class ConfigButton : IconButton, IHasPopover
+        protected abstract partial class ConfigButton : IconButton, IHasPopover
         {
             protected ConfigButton()
             {
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             public abstract Popover GetPopover();
         }
 
-        protected abstract class MultiConfigButton : ConfigButton
+        protected abstract partial class MultiConfigButton : ConfigButton
         {
             private KaraokeRulesetEditGeneratorSetting? selectedSetting;
 

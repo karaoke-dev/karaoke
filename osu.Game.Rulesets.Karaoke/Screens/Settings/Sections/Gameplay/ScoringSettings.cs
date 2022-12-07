@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
 {
-    public class ScoringSettings : KaraokeSettingsSubsection
+    public partial class ScoringSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Scoring";
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
             };
         }
 
-        private class PitchSlider : OsuSliderBar<int>
+        private partial class PitchSlider : OsuSliderBar<int>
         {
             public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : string.Empty) + Current.Value.ToString("N0");
         }

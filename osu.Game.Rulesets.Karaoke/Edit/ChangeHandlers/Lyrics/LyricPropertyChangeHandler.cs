@@ -9,7 +9,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public abstract class LyricPropertyChangeHandler : HitObjectPropertyChangeHandler<Lyric>, ILyricPropertyChangeHandler
+    public abstract partial class LyricPropertyChangeHandler : HitObjectPropertyChangeHandler<Lyric>, ILyricPropertyChangeHandler
     {
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }

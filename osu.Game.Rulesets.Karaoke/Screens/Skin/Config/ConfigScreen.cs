@@ -10,7 +10,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
-    public class ConfigScreen : KaraokeSkinEditorScreen
+    public partial class ConfigScreen : KaraokeSkinEditorScreen
     {
         [Cached]
         protected readonly LyricFontInfoManager LyricFontInfoManager;

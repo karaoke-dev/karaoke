@@ -10,7 +10,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     [TestFixture]
-    public class TestSceneMessageContainer : OsuTestScene
+    public partial class TestSceneMessageContainer : OsuTestScene
     {
         private MessageContainer messageContainer = null!;
 

@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class ReplayScoringVisualization : VoiceVisualization<KaraokeReplayFrame>
+    public partial class ReplayScoringVisualization : VoiceVisualization<KaraokeReplayFrame>
     {
         protected override float PathRadius => 1.5f;
 

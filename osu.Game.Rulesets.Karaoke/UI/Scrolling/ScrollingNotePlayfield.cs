@@ -21,7 +21,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 {
-    public abstract class ScrollingNotePlayfield : ScrollingPlayfield
+    public abstract partial class ScrollingNotePlayfield : ScrollingPlayfield
     {
         public const float COLUMN_SPACING = 1;
 

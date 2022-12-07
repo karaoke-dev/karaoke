@@ -18,7 +18,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class SettingButtonsDisplay : CompositeDrawable, ISkinnableDrawable
+    public partial class SettingButtonsDisplay : CompositeDrawable, ISkinnableDrawable
     {
         private readonly CornerBackground background;
         private readonly FillFlowContainer<SettingButton> triggerButtons;

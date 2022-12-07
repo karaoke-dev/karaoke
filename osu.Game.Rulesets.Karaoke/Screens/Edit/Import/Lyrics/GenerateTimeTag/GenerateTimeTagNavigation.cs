@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
 {
-    public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagStepScreen>
+    public partial class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagStepScreen>
     {
         private const string auto_generate_time_tag = "AUTO_GENERATE_TIME_TAG";
 
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
         protected override bool AbleToNextStep(NavigationState value)
             => value is NavigationState.Working or NavigationState.Done;
 
-        private class GenerateTimeTagTextFlowContainer : NavigationTextContainer
+        private partial class GenerateTimeTagTextFlowContainer : NavigationTextContainer
         {
             public GenerateTimeTagTextFlowContainer(GenerateTimeTagStepScreen screen)
             {

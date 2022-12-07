@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class LyricPropertySection : LyricEditorSection
+    public abstract partial class LyricPropertySection : LyricEditorSection
     {
         private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
         private readonly IBindable<int> bindablePropertyWritableVersion = new Bindable<int>();

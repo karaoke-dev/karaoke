@@ -25,7 +25,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
 {
-    public class LyricBlueprintContainer : BlueprintContainer<Lyric>
+    public partial class LyricBlueprintContainer : BlueprintContainer<Lyric>
     {
         private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
 
         protected override DragBox CreateDragBox() => new SingerLyricDragBox();
 
-        protected class SingerLyricSelectionHandler : SelectionHandler<Lyric>
+        protected partial class SingerLyricSelectionHandler : SelectionHandler<Lyric>
         {
             [Resolved]
             private EditorBeatmap beatmap { get; set; }
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
             }
         }
 
-        private class SingerLyricDragBox : DragBox
+        private partial class SingerLyricDragBox : DragBox
         {
             public double MinTime { get; private set; }
 
@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
             }
         }
 
-        protected class SingerLyricSelectionBlueprintContainer : Container<SelectionBlueprint<Lyric>>
+        protected partial class SingerLyricSelectionBlueprintContainer : Container<SelectionBlueprint<Lyric>>
         {
             protected override Container<SelectionBlueprint<Lyric>> Content { get; }
 

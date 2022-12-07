@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    public class LayoutScreen : KaraokeSkinEditorScreen
+    public partial class LayoutScreen : KaraokeSkinEditorScreen
     {
         [Cached]
         protected readonly LayoutManager LayoutManager;

@@ -11,7 +11,7 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.RecordingTimeTags
 {
-    public class CentreMarker : CompositeDrawable
+    public partial class CentreMarker : CompositeDrawable
     {
         private const float bar_width = 2;
 

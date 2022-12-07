@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
 {
-    public class EditLyricPreviewRow : PreviewRow
+    public partial class EditLyricPreviewRow : PreviewRow
     {
         private const int min_height = 75;
 

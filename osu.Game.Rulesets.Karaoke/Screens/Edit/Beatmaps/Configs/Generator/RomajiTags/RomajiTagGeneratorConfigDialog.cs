@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RomajiTags
 {
-    public abstract class RomajiTagGeneratorConfigDialog<T> : GeneratorConfigDialog<T> where T : IHasConfig<T>, new()
+    public abstract partial class RomajiTagGeneratorConfigDialog<T> : GeneratorConfigDialog<T> where T : IHasConfig<T>, new()
     {
         protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Pink;
 

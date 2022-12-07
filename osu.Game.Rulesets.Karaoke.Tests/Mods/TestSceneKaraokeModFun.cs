@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModFun : KaraokeModTestScene
+    public partial class TestSceneKaraokeModFun : KaraokeModTestScene
     {
         [Test]
         public void TestSnowMod() => CreateModTest(new ModTestData

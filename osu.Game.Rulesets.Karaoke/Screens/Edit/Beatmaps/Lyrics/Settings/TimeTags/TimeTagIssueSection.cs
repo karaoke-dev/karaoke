@@ -16,13 +16,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class TimeTagIssueSection : IssueSection
+    public partial class TimeTagIssueSection : IssueSection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
 
         protected override LyricsIssueTable CreateIssueTable() => new TimeTagIssueTable();
 
-        private class TimeTagIssueTable : LyricsIssueTable
+        private partial class TimeTagIssueTable : LyricsIssueTable
         {
             protected override TableColumn[] CreateHeaders() => new[]
             {

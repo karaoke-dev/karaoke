@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public class TestSceneNotePlayfield : KaraokeSkinnableColumnTestScene
+    public partial class TestSceneNotePlayfield : KaraokeSkinnableColumnTestScene
     {
         [BackgroundDependencyLoader]
         private void load()

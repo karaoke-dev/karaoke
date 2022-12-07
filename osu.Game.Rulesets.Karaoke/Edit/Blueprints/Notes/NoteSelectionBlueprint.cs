@@ -22,7 +22,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
-    public class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, IHasPopover
+    public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, IHasPopover
     {
         [Resolved]
         private INotesChangeHandler notesChangeHandler { get; set; }

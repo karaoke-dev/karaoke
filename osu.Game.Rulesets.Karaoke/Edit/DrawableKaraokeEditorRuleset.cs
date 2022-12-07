@@ -15,7 +15,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
+    public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     {
         private readonly Bindable<bool> bindableDisplayRubyToggle = new();
         private readonly Bindable<bool> bindableDisplayRomajiToggle = new();

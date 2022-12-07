@@ -9,7 +9,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
 {
-    public class AlreadyContainTimeTagPopupDialog : PopupDialog
+    public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
     {
         public AlreadyContainTimeTagPopupDialog(Action<bool> okAction = null)
         {

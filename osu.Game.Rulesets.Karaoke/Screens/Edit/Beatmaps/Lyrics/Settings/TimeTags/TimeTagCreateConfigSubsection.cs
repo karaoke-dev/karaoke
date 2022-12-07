@@ -23,7 +23,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurrentValue<CreateTimeTagEditMode>
+    public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurrentValue<CreateTimeTagEditMode>
     {
         private const int button_vertical_margin = 20;
         private const int horizontal_padding = 20;
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 _ => throw new InvalidOperationException(nameof(mode))
             };
 
-        private class EditModeButton : OsuButton
+        private partial class EditModeButton : OsuButton
         {
             public CreateTimeTagEditMode Mode { get; }
 

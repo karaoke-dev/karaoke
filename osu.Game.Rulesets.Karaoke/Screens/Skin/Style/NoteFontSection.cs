@@ -12,7 +12,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    internal class NoteFontSection : StyleSection
+    internal partial class NoteFontSection : StyleSection
     {
         private LabelledColourSelector textColorPicker;
         private LabelledSwitchButton boldSwitchButton;

@@ -11,7 +11,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
-    public class NotePositionInfo : SkinReloadableDrawable, INotePositionInfo
+    public partial class NotePositionInfo : SkinReloadableDrawable, INotePositionInfo
     {
         private const int columns = 9;
 

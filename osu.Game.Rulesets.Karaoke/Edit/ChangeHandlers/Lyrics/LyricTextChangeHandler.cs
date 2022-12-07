@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricTextChangeHandler : LyricPropertyChangeHandler, ILyricTextChangeHandler
+    public partial class LyricTextChangeHandler : LyricPropertyChangeHandler, ILyricTextChangeHandler
     {
         public void InsertText(int index, string text)
         {

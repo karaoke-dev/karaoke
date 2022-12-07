@@ -20,14 +20,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class SettingsFont : SettingsItem<FontUsage>
+    public partial class SettingsFont : SettingsItem<FontUsage>
     {
         protected override Drawable CreateControl() => new FontSelectionButton
         {
             RelativeSizeAxes = Axes.X,
         };
 
-        private class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>, IHasPopover
+        private partial class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>, IHasPopover
         {
             private const float height = 30;
 
@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             }
         }
 
-        private class FontSelectorPopover : OsuPopover
+        private partial class FontSelectorPopover : OsuPopover
         {
             public FontSelectorPopover(Bindable<FontUsage> bindableFontUsage)
             {

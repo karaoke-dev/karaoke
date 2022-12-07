@@ -12,12 +12,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components
 {
-    public class DrawableDragFile : Container
+    public partial class DrawableDragFile : Container
     {
         private const float button_height = 50;
         private const float button_vertical_margin = 15;
@@ -25,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Componen
         private OsuFileSelector fileSelector;
         private TextFlowContainer currentFileText;
 
-        private TriangleButton importButton;
+        private RoundedButton importButton;
 
         [BackgroundDependencyLoader(true)]
         private void load(OsuColour colours)
@@ -81,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Componen
                                 }
                             },
                         },
-                        importButton = new TriangleButton
+                        importButton = new RoundedButton
                         {
                             Text = "Import",
                             Anchor = Anchor.BottomCentre,

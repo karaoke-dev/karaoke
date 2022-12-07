@@ -17,7 +17,7 @@ using osu.Game.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown
 {
-    public class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
+    public partial class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
     {
         private readonly DescriptionMarkdownTextFlowContainer description;
 
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
             Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
         };
 
-        internal class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
+        internal partial class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
             private readonly DescriptionTextFlowContainer descriptionTextFlowContainer;
 

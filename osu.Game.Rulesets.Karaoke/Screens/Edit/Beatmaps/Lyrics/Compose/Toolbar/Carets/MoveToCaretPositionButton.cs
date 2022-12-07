@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets
 {
-    public abstract class MoveToCaretPositionButton : KeyActionButton
+    public abstract partial class MoveToCaretPositionButton : KeyActionButton
     {
         protected abstract MovingCaretAction AcceptAction { get; }
 

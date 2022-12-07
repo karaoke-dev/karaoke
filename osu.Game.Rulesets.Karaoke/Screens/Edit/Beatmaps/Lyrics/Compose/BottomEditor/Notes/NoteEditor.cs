@@ -22,7 +22,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes
 {
     [Cached]
-    public class NoteEditor : Container
+    public partial class NoteEditor : Container
     {
         private const int columns = 9;
 

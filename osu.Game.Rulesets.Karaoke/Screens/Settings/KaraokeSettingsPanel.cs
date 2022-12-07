@@ -21,7 +21,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class KaraokeSettingsPanel : SettingsPanel
+    public partial class KaraokeSettingsPanel : SettingsPanel
     {
         public new const float WIDTH = 300;
 

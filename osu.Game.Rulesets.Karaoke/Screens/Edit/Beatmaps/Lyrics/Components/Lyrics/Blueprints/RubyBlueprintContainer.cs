@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
+    public partial class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
     {
         [UsedImplicitly]
         private readonly BindableList<RubyTag> rubyTags;
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
         protected override SelectionBlueprint<RubyTag> CreateBlueprintFor(RubyTag item)
             => new RubyTagSelectionBlueprint(item);
 
-        protected class RubyTagSelectionHandler : TextTagSelectionHandler
+        protected partial class RubyTagSelectionHandler : TextTagSelectionHandler
         {
             [Resolved]
             private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }

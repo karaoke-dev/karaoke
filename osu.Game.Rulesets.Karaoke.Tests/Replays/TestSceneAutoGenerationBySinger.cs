@@ -14,7 +14,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 {
-    public class TestSceneAutoGenerationBySinger : OsuTestScene
+    public partial class TestSceneAutoGenerationBySinger : OsuTestScene
     {
         [Test]
         public void TestSingDemoSong()

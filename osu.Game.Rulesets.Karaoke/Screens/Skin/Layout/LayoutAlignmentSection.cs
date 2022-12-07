@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    internal class LayoutAlignmentSection : LayoutSection
+    internal partial class LayoutAlignmentSection : LayoutSection
     {
         private LabelledEnumDropdown<Anchor> alignmentDropdown;
         private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;

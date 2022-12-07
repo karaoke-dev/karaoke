@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singers;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public class SingerSettings : LyricEditorSettings
+    public partial class SingerSettings : LyricEditorSettings
     {
         public override SettingsDirection Direction => SettingsDirection.Left;
 

@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
 {
     [Cached(typeof(IEditableLyricState))]
-    public class EditableLyric : InteractableLyric, IEditableLyricState
+    public partial class EditableLyric : InteractableLyric, IEditableLyricState
     {
         [Resolved, AllowNull]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }

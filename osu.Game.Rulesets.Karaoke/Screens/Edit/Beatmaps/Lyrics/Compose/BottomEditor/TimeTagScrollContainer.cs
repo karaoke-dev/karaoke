@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor
 {
-    public abstract class TimeTagScrollContainer : BindableScrollContainer
+    public abstract partial class TimeTagScrollContainer : BindableScrollContainer
     {
         private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 

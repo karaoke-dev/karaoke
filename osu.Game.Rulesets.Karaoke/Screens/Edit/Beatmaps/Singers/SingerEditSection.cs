@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
-    public class SingerEditSection : CompositeDrawable
+    public partial class SingerEditSection : CompositeDrawable
     {
         private SingerRearrangeableList singerContainers;
 

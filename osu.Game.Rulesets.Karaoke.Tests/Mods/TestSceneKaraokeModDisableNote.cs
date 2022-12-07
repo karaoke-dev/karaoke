@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModDisableNote : KaraokeModTestScene
+    public partial class TestSceneKaraokeModDisableNote : KaraokeModTestScene
     {
         [Test]
         public void TestCheckNoteExistInPlayfield() => CreateModTest(new ModTestData

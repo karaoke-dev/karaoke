@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class BeatmapMetadataGraph : Container
+    public partial class BeatmapMetadataGraph : Container
     {
         private const float spacing = 10;
         private const float transition_duration = 250;
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             };
         }
 
-        private abstract class MetadataSection : Container
+        private abstract partial class MetadataSection : Container
         {
             protected FillFlowContainer TextContainer { get; }
 
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        private class TextMetadataSection : MetadataSection
+        private partial class TextMetadataSection : MetadataSection
         {
             private TextFlowContainer textFlow;
 
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        private class SingerMetadataSection : MetadataSection
+        private partial class SingerMetadataSection : MetadataSection
         {
             private FillFlowContainer<SingerSpriteText> textFlow;
 
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 }
             }
 
-            private class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
+            private partial class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
             {
                 private Singer singer;
                 private readonly OsuSpriteText osuSpriteText;

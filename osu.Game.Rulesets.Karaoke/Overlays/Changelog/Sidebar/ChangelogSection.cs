@@ -24,7 +24,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {
-    public class ChangelogSection : CompositeDrawable
+    public partial class ChangelogSection : CompositeDrawable
     {
         private const int animation_duration = 250;
         private const float font_size = 16;
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             };
         }
 
-        private class PostButton : OsuHoverContainer
+        private partial class PostButton : OsuHoverContainer
         {
             protected override IEnumerable<Drawable> EffectTargets => new[] { text };
 
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             }
         }
 
-        private class PostsContainer : Container
+        private partial class PostsContainer : Container
         {
             public readonly BindableBool Expanded = new();
 

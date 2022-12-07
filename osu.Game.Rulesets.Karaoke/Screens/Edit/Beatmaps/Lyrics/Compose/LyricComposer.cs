@@ -22,7 +22,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 {
-    public class LyricComposer : CompositeDrawable
+    public partial class LyricComposer : CompositeDrawable
     {
         private readonly Bindable<PanelLayout> bindablePanelLayout = new();
         private readonly Bindable<BottomEditorType?> bindableBottomEditorType = new();

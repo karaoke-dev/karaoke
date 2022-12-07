@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 {
-    public class LanguageSelectorPopover : OsuPopover
+    public partial class LanguageSelectorPopover : OsuPopover
     {
         private readonly LanguageSelector languageSelector;
 

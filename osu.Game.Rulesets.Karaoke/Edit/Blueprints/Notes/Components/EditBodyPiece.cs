@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Default;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components
 {
-    public class EditBodyPiece : Container
+    public partial class EditBodyPiece : Container
     {
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)

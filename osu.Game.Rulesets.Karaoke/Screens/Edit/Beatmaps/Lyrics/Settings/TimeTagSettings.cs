@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public class TimeTagSettings : LyricEditorSettings
+    public partial class TimeTagSettings : LyricEditorSettings
     {
         public override SettingsDirection Direction => SettingsDirection.Right;
         public override float SettingsWidth => 300;

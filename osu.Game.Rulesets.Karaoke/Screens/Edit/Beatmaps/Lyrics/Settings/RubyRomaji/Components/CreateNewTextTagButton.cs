@@ -21,7 +21,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components
 {
-    public class CreateNewTextTagButton<TTextTag> : OsuButton, IHasPopover where TTextTag : class, ITextTag, new()
+    public partial class CreateNewTextTagButton<TTextTag> : OsuButton, IHasPopover where TTextTag : class, ITextTag, new()
     {
         public new Action<TTextTag> Action;
 
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             };
         }
 
-        private class CreateNewPopover : OsuPopover
+        private partial class CreateNewPopover : OsuPopover
         {
             public Action<TTextTag> Action;
 
@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 });
             }
 
-            private class AddButton : OsuButton
+            private partial class AddButton : OsuButton
             {
                 public AddButton()
                 {

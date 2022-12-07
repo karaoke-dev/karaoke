@@ -9,7 +9,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
-    public class DeleteSingerDialog : PopupDialog
+    public partial class DeleteSingerDialog : PopupDialog
     {
         public DeleteSingerDialog(Action<bool> okAction = null)
         {

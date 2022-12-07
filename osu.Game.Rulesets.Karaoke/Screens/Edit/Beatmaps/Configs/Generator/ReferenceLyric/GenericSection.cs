@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.ReferenceLyric
 {
-    public class GenericSection : GeneratorConfigSection<ReferenceLyricDetectorConfig>
+    public partial class GenericSection : GeneratorConfigSection<ReferenceLyricDetectorConfig>
     {
         private readonly LabelledSwitchButton ignorePrefixAndPostfixSymbol;
 

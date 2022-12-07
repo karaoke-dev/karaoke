@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags.Ja
 {
-    internal class CheckLineEndSection : GeneratorConfigSection<JaTimeTagGeneratorConfig>
+    internal partial class CheckLineEndSection : GeneratorConfigSection<JaTimeTagGeneratorConfig>
     {
         private readonly LabelledSwitchButton checkLineEndKeyUpSwitchButton;
 

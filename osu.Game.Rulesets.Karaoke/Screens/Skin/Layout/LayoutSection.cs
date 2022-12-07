@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    internal abstract class LayoutSection : Section
+    internal abstract partial class LayoutSection : Section
     {
     }
 }

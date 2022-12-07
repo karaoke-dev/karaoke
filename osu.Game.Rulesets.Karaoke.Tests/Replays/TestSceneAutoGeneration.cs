@@ -12,7 +12,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 {
-    public class TestSceneAutoGeneration : OsuTestScene
+    public partial class TestSceneAutoGeneration : OsuTestScene
     {
         [Test]
         public void TestSingleShortNote()

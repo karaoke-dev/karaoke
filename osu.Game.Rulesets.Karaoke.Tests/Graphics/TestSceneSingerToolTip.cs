@@ -11,7 +11,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     [TestFixture]
-    public class TestSceneSingerToolTip : OsuTestScene
+    public partial class TestSceneSingerToolTip : OsuTestScene
     {
         private SingerToolTip toolTip = null!;
 

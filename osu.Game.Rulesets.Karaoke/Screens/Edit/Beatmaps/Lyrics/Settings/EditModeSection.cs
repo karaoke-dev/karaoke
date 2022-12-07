@@ -26,7 +26,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
+    public abstract partial class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
         where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
     {
         [Resolved]
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         }
     }
 
-    public abstract class EditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
+    public abstract partial class EditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
     {
         private const int horizontal_padding = 20;
 
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 
         protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
 
-        protected class Selection : OsuButton
+        protected partial class Selection : OsuButton
         {
             public new Action<TEditMode> Action;
 
@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         }
 
-        protected abstract class VerifySelection : Selection
+        protected abstract partial class VerifySelection : Selection
         {
             private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
 
@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         /// <summary>
         /// Copied from <see cref="ToolbarNotificationButton"/>
         /// </summary>
-        private class CountCircle : CompositeDrawable
+        private partial class CountCircle : CompositeDrawable
         {
             private readonly OsuSpriteText countText;
             private readonly Circle circle;

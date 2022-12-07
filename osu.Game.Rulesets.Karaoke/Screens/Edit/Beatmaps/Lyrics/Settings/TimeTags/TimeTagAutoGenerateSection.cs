@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class TimeTagAutoGenerateSection : LyricEditorSection
+    public partial class TimeTagAutoGenerateSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Auto generate";
 
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             };
         }
 
-        private class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
+        private partial class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
         {
             private const string language_mode = "LANGUAGE_MODE";
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             protected override ConfigButton CreateConfigButton()
                 => new TimeTagAutoGenerateConfigButton();
 
-            protected class TimeTagAutoGenerateConfigButton : MultiConfigButton
+            protected partial class TimeTagAutoGenerateConfigButton : MultiConfigButton
             {
                 protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
                 {

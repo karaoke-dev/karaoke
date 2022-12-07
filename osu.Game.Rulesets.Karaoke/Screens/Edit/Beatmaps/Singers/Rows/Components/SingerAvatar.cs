@@ -26,7 +26,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
 {
-    public class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopover
+    public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopover
     {
         private readonly string[] handledExtensions = { ".jpg", ".jpeg", ".png" };
 
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
 
         public Popover GetPopover() => new FileChooserPopover(handledExtensions, currentFile);
 
-        private class FileChooserPopover : OsuPopover
+        private partial class FileChooserPopover : OsuPopover
         {
             public FileChooserPopover(string[] handledExtensions, Bindable<FileInfo> currentFile)
             {

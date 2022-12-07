@@ -8,7 +8,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public class RollBackResetPopupDialog : PopupDialog
+    public partial class RollBackResetPopupDialog : PopupDialog
     {
         public RollBackResetPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction = null)
         {

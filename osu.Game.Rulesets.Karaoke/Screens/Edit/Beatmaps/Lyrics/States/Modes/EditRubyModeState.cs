@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
 {
-    public class EditRubyModeState : ModeStateWithBlueprintContainer<RubyTag>, IEditRubyModeState
+    public partial class EditRubyModeState : ModeStateWithBlueprintContainer<RubyTag>, IEditRubyModeState
     {
         private readonly Bindable<RubyTagEditMode> bindableEditMode = new();
 

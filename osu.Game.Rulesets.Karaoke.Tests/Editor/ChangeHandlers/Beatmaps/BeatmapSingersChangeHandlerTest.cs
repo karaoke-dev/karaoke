@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps
 {
-    public class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<BeatmapSingersChangeHandler>
+    public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<BeatmapSingersChangeHandler>
     {
         [Test]
         [Ignore("Not working because singer in karaoke beatmap only sync to change handler once.")]

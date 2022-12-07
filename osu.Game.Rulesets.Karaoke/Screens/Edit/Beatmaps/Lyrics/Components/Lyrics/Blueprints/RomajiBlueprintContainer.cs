@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
+    public partial class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
     {
         [UsedImplicitly]
         private readonly BindableList<RomajiTag> romajiTags;
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
         protected override SelectionBlueprint<RomajiTag> CreateBlueprintFor(RomajiTag item)
             => new RomajiTagSelectionBlueprint(item);
 
-        protected class RomajiTagSelectionHandler : TextTagSelectionHandler
+        protected partial class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
             [Resolved]
             private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }

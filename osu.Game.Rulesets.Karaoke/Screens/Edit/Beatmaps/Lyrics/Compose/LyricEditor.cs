@@ -13,7 +13,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 {
-    public class LyricEditor : CompositeDrawable
+    public partial class LyricEditor : CompositeDrawable
     {
         private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
         private readonly IBindable<float> bindableFontSize = new Bindable<float>();

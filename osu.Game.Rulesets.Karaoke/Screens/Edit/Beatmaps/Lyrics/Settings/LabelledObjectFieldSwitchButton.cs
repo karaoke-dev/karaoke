@@ -16,7 +16,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class LabelledObjectFieldSwitchButton<T> : LabelledSwitchButton where T : class
+    public abstract partial class LabelledObjectFieldSwitchButton<T> : LabelledSwitchButton where T : class
     {
         protected readonly BindableList<T> SelectedItems = new();
 
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         };
 
-        protected class ObjectFieldSwitchButton : SwitchButton
+        protected partial class ObjectFieldSwitchButton : SwitchButton
         {
             public Action<bool> Selected;
 

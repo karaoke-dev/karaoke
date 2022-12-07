@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<Singer>>
+    public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<Singer>>
     {
         private const int fade_duration = 1000;
 
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             base.OnHoverLost(e);
         }
 
-        private class DrawableSinger : DrawableCircleSingerAvatar, IHasCustomTooltip<ISinger>
+        private partial class DrawableSinger : DrawableCircleSingerAvatar, IHasCustomTooltip<ISinger>
         {
             public ITooltip<ISinger> GetCustomTooltip() => new SingerToolTip();
 

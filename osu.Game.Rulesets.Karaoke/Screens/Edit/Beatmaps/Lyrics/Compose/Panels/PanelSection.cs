@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels;
 
-public abstract class PanelSection : Section
+public abstract partial class PanelSection : Section
 {
     private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 

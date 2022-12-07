@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting
 {
-    public class TextingDeleteSubsection : SelectLyricButton
+    public partial class TextingDeleteSubsection : SelectLyricButton
     {
         [Resolved]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }

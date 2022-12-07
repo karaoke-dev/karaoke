@@ -21,7 +21,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    internal class PreviewSection : LayoutSection
+    internal partial class PreviewSection : LayoutSection
     {
         private LabelledEnumDropdown<PreviewRatio> previewRatioDropdown = null!;
         private LabelledEnumDropdown<PreviewSample> previewSampleDropdown = null!;
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             SampleLarge
         }
 
-        private class StyleLabelledDropdown : LabelledDropdown<KeyValuePair<int, string>>
+        private partial class StyleLabelledDropdown : LabelledDropdown<KeyValuePair<int, string>>
         {
             protected override OsuDropdown<KeyValuePair<int, string>> CreateDropdown()
                 => new StyleDropdown
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                     RelativeSizeAxes = Axes.X,
                 };
 
-            private class StyleDropdown : OsuDropdown<KeyValuePair<int, string>>
+            private partial class StyleDropdown : OsuDropdown<KeyValuePair<int, string>>
             {
                 protected override LocalisableString GenerateItemText(KeyValuePair<int, string> item)
                     => item.Value ?? $"Style{item.Key}";

@@ -49,7 +49,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke
 {
     [ExcludeFromDynamicCompile]
-    public class KaraokeRuleset : Ruleset
+    public partial class KaraokeRuleset : Ruleset
     {
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
         public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
@@ -318,7 +318,7 @@ namespace osu.Game.Rulesets.Karaoke
             RulesetInfo.OnlineID = 111;
         }
 
-        private class KaraokeIcon : CompositeDrawable
+        private partial class KaraokeIcon : CompositeDrawable
         {
             private readonly KaraokeRuleset ruleset;
 

@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
-    public class CreateNewLyricPlacementColumn : LyricPlacementColumn
+    public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
     {
         [Resolved]
         private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }

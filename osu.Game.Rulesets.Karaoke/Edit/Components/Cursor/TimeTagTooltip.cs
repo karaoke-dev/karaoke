@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
-    public class TimeTagTooltip : BackgroundToolTip<TimeTag>
+    public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
     {
         private const int time_display_height = 25;
 

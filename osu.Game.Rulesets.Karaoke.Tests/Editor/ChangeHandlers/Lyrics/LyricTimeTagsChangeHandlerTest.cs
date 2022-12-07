@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTimeTagsChangeHandler>
+    public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTimeTagsChangeHandler>
     {
         [Test]
         public void TestSetTimeTagTime()

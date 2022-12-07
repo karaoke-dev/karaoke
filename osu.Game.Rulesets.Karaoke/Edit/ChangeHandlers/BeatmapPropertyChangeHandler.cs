@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 
-public class BeatmapPropertyChangeHandler : Component
+public partial class BeatmapPropertyChangeHandler : Component
 {
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }

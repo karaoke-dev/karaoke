@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
-    public abstract class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
+    public abstract partial class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
         private BindableList<T> bindableList;
 
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
             return SelectedItems.Any(x => !items.Contains(x));
         }
 
-        public abstract class BindableSelectionHandler : SelectionHandler<T>
+        public abstract partial class BindableSelectionHandler : SelectionHandler<T>
         {
             protected override void OnSelectionChanged()
             {

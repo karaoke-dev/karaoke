@@ -23,7 +23,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
     [TestFixture]
-    public class TestSceneOverlayColourProvider : OsuTestScene
+    public partial class TestSceneOverlayColourProvider : OsuTestScene
     {
         [Test]
         public void ShowWithNoFetch()
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
             }
         }
 
-        private class PreviewColourDrawable : CompositeDrawable
+        private partial class PreviewColourDrawable : CompositeDrawable
         {
             [Resolved, AllowNull]
             private GameHost host { get; set; }

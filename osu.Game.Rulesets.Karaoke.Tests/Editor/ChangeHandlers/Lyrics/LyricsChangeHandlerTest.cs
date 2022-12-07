@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricsChangeHandler, Lyric>
+    public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricsChangeHandler, Lyric>
     {
         [Test]
         public void TestSplit()

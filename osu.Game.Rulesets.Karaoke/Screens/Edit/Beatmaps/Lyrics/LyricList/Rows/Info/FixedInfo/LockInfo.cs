@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo
 {
-    public class LockInfo : SpriteIcon, IHasContextMenu
+    public partial class LockInfo : SpriteIcon, IHasContextMenu
     {
         [Resolved]
         private ILockChangeHandler lockChangeHandler { get; set; }

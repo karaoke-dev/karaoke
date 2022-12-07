@@ -15,7 +15,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
 {
     [TestFixture]
-    public class TestSceneDescriptionTextFlowContainer : OsuTestScene
+    public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
     {
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);

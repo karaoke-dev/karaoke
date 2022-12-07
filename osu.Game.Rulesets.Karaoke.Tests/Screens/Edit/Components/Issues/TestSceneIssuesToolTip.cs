@@ -10,7 +10,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues
 {
     [TestFixture]
-    public class TestSceneIssuesToolTip : OsuTestScene
+    public partial class TestSceneIssuesToolTip : OsuTestScene
     {
         private IssuesToolTip toolTip = null!;
 

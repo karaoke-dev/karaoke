@@ -13,7 +13,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
+    public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
 

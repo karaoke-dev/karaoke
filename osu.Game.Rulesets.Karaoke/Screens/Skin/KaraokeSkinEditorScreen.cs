@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin
 {
-    public abstract class KaraokeSkinEditorScreen : GenericEditorScreen<KaraokeSkinEditorScreenMode>
+    public abstract partial class KaraokeSkinEditorScreen : GenericEditorScreen<KaraokeSkinEditorScreenMode>
     {
         private const float section_scale = 0.75f;
         private const float left_column_width = 200;

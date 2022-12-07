@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     /// <summary>
     /// A karaoke legacy skin element.
     /// </summary>
-    public class LegacyKaraokeElement : CompositeDrawable
+    public partial class LegacyKaraokeElement : CompositeDrawable
     {
         [Resolved]
         protected KaraokePlayfield? Playfield { get; private set; }

@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.View
 {
-    public class AdjustFontSizeButton : CompositeDrawable
+    public partial class AdjustFontSizeButton : CompositeDrawable
     {
         private readonly Bindable<float> bindableFontSize = new();
 

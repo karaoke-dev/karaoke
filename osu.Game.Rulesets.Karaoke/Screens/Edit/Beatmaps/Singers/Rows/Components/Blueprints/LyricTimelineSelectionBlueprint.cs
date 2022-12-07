@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Blueprints
 {
-    public class LyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
+    public partial class LyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
     {
         private const float lyric_size = 20;
 

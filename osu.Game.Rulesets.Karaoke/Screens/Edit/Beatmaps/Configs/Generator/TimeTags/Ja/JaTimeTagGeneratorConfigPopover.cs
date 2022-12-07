@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags.Ja
 {
-    public class JaTimeTagGeneratorConfigPopover : GeneratorConfigPopover<JaTimeTagGeneratorConfig>
+    public partial class JaTimeTagGeneratorConfigPopover : GeneratorConfigPopover<JaTimeTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig;
 

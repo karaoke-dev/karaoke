@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
-    public class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObject>
+    public partial class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObject>
     {
         protected DrawableKaraokeHitObject(KaraokeHitObject hitObject)
             : base(hitObject)

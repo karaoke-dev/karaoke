@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
 {
-    public class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, IEditNoteModeState
+    public partial class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, IEditNoteModeState
     {
         private readonly Bindable<NoteEditMode> bindableEditMode = new();
         private readonly BindableList<HitObject> selectedHitObjects = new();

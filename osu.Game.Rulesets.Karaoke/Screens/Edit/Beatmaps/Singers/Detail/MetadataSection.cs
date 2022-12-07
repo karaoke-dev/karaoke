@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
 {
-    internal class MetadataSection : EditSingerSection
+    internal partial class MetadataSection : EditSingerSection
     {
         protected override LocalisableString Title => "Metadata";
 

@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input
 {
-    public class MicrophoneDevicePreview : SettingsSubsectionPreview
+    public partial class MicrophoneDevicePreview : SettingsSubsectionPreview
     {
         private readonly Bindable<string> bindableMicrophoneDeviceName = new();
 

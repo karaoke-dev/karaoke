@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    public class LayoutPreview : Container
+    public partial class LayoutPreview : Container
     {
         private Container previewContainer;
 
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             }, true);
         }
 
-        internal class LyricPreviewArea : Container
+        internal partial class LyricPreviewArea : Container
         {
             [BackgroundDependencyLoader]
             private void load(LayoutManager manager)
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 }, true);
             }
 
-            public class PreviewDrawableLyric : DrawableLyric
+            public partial class PreviewDrawableLyric : DrawableLyric
             {
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             }
         }
 
-        internal class LayoutPreviewArea : Container
+        internal partial class LayoutPreviewArea : Container
         {
             private readonly OsuSpriteText widthRatioText;
             private readonly OsuSpriteText heightRatioText;

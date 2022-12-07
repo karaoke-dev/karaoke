@@ -25,7 +25,7 @@ using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
+    public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
         public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;

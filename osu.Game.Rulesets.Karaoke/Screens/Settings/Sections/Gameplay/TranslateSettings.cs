@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
 {
-    public class TranslateSettings : KaraokeSettingsSubsection
+    public partial class TranslateSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Translate";
 

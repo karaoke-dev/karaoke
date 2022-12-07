@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
     /// <summary>
     /// A container for <see cref="SelectionBlueprint{T}"/> ordered by their <see cref="TimeTag"/> start times.
     /// </summary>
-    public class TimeTagOrderedSelectionContainer : Container<SelectionBlueprint<TimeTag>>
+    public partial class TimeTagOrderedSelectionContainer : Container<SelectionBlueprint<TimeTag>>
     {
         public override void Add(SelectionBlueprint<TimeTag> drawable)
         {

@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections
 {
-    public class ScoringSection : KaraokeSettingsSection
+    public partial class ScoringSection : KaraokeSettingsSection
     {
         public override LocalisableString Header => "Scoring";
 

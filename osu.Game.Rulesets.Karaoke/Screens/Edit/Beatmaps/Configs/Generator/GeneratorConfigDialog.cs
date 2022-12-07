@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract class GeneratorConfigDialog<T> : OsuFocusedOverlayContainer where T : IHasConfig<T>, new()
+    public abstract partial class GeneratorConfigDialog<T> : OsuFocusedOverlayContainer where T : IHasConfig<T>, new()
     {
         private const float section_scale = 0.75f;
 
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
             bindableConfig.BindTo(config.GetBindable<T>(Config));
         }
 
-        internal class GeneratorConfigScreenHeader : OverlayHeader
+        internal partial class GeneratorConfigScreenHeader : OverlayHeader
         {
             protected override OverlayTitle CreateTitle() => new GeneratorConfigScreenTitle();
 
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
                     generatorConfigScreenTitle.SetTitleFromDialog(dialog);
             }
 
-            private class GeneratorConfigScreenTitle : OverlayTitle
+            private partial class GeneratorConfigScreenTitle : OverlayTitle
             {
                 public void SetTitleFromDialog(GeneratorConfigDialog<T> dialog)
                 {
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
         }
 
         // not really sure should user this toi apply save button because should wait and follow lazer design.
-        internal class GeneratorConfigScreenFooter : Container
+        internal partial class GeneratorConfigScreenFooter : Container
         {
             public GeneratorConfigScreenFooter()
             {

@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo
 {
-    public class OrderInfo : OsuSpriteText
+    public partial class OrderInfo : OsuSpriteText
     {
         private readonly IBindable<int> bindableOrder;
 

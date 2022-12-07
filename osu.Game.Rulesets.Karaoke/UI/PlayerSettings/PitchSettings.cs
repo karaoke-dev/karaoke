@@ -11,7 +11,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class PitchSettings : PlayerSettingsGroup
+    public partial class PitchSettings : PlayerSettingsGroup
     {
         private readonly ClickablePlayerSliderBar pitchSliderBar;
         private readonly ClickablePlayerSliderBar vocalPitchSliderBar;

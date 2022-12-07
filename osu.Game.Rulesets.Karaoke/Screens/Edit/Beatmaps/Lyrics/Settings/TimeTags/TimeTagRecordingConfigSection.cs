@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public class TimeTagRecordingConfigSection : LyricEditorSection
+    public partial class TimeTagRecordingConfigSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Config";
 

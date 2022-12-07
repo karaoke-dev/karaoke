@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState, RomajiTagEditMode>
+    public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState, RomajiTagEditMode>
     {
         protected override Selection CreateSelection(RomajiTagEditMode mode) =>
             mode switch
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private class RomajiTagVerifySelection : VerifySelection
+        private partial class RomajiTagVerifySelection : VerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
         }

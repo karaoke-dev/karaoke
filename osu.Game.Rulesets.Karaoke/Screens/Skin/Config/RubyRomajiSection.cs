@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
-    internal class RubyRomajiSection : LyricConfigSection
+    internal partial class RubyRomajiSection : LyricConfigSection
     {
         private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
         private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;

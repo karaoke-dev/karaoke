@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public class DrawablePreviewLyricList : DrawableLyricList
+    public partial class DrawablePreviewLyricList : DrawableLyricList
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<bool> bindableAutoFocusToEditLyric = new Bindable<bool>();

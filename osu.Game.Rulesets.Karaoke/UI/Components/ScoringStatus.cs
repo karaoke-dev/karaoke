@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
+    public partial class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
     {
         private const float size = 22;
 

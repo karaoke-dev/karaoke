@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public abstract class KaraokeSettingsSubsection : SettingsSubsection
+    public abstract partial class KaraokeSettingsSubsection : SettingsSubsection
     {
         [Resolved]
         protected KaraokeRulesetConfigManager Config { get; private set; }

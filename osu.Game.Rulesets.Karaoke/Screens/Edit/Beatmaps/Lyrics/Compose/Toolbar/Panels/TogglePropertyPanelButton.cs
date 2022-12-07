@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels
 {
-    public class TogglePropertyPanelButton : LyricEditorConfigButton
+    public partial class TogglePropertyPanelButton : LyricEditorConfigButton
     {
         protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer;
 

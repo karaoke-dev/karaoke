@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
-    public class RemoveLanguageButton : IconButton
+    public partial class RemoveLanguageButton : IconButton
     {
         [Resolved]
         private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }

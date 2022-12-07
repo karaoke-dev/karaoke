@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
-    public class DrawableSingerAvatar : CompositeDrawable
+    public partial class DrawableSingerAvatar : CompositeDrawable
     {
         private readonly IBindable<string> bindableAvatarFile = new Bindable<string>();
 

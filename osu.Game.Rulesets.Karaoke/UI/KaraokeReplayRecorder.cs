@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class KaraokeReplayRecorder : ReplayRecorder<KaraokeScoringAction>
+    public partial class KaraokeReplayRecorder : ReplayRecorder<KaraokeScoringAction>
     {
         public KaraokeReplayRecorder(Score score)
             : base(score)

@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
 {
-    public class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
+    public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
     {
         private const int time_tag_spacing = 8;
 
@@ -198,7 +198,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
         public override bool RemoveCompletedTransforms => false;
 
-        public class EditorLyricSpriteText : LyricSpriteText
+        public partial class EditorLyricSpriteText : LyricSpriteText
         {
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
                 => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));

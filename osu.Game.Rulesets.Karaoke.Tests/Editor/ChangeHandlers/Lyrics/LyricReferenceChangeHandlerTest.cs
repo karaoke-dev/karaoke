@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricReferenceChangeHandler>
+    public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricReferenceChangeHandler>
     {
         [Test]
         public void TestUpdateReferenceLyric()

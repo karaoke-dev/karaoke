@@ -16,7 +16,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEditor>
+    public partial class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEditor>
     {
         // todo: karaoke skin editor might not need editor beatmap, or at least it will be optional.
         [Cached(typeof(EditorBeatmap))]

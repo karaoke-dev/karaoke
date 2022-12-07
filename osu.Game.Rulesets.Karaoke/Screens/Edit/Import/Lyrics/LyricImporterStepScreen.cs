@@ -14,7 +14,7 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public abstract class LyricImporterStepScreen : OsuScreen, ILyricImporterStepScreen
+    public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporterStepScreen
     {
         public const float X_SHIFT = 200;
         public const double X_MOVE_DURATION = 800;

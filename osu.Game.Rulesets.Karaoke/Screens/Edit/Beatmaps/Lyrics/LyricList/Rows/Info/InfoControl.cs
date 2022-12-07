@@ -27,7 +27,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info
 {
-    public class InfoControl : Container, IHasContextMenu
+    public partial class InfoControl : Container, IHasContextMenu
     {
         private const int max_height = 120;
 

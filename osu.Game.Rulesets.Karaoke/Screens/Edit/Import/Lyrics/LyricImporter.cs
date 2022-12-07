@@ -24,7 +24,7 @@ using osu.Game.Screens.Play;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
     [Cached(typeof(IImportStateResolver))]
-    public class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
+    public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
     {
         private readonly LyricImporterWaveContainer waves;
         private readonly Box background;
@@ -159,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
         {
         }
 
-        private class LyricImporterWaveContainer : WaveContainer
+        private partial class LyricImporterWaveContainer : WaveContainer
         {
             protected override bool StartHidden => true;
 

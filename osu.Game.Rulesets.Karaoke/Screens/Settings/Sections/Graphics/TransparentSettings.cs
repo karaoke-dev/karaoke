@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics
 {
-    public class TransparentSettings : KaraokeSettingsSubsection
+    public partial class TransparentSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Transparent";
 

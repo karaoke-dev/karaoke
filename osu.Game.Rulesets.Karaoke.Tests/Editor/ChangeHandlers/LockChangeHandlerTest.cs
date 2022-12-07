@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<LockChangeHandler, KaraokeHitObject>
+    public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<LockChangeHandler, KaraokeHitObject>
     {
         [Test]
         public void TestLock()

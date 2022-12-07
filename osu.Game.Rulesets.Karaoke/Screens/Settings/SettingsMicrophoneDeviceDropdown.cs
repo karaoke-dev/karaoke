@@ -14,7 +14,7 @@ using osu.Game.Overlays.Settings;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class SettingsMicrophoneDeviceDropdown : SettingsDropdown<string>
+    public partial class SettingsMicrophoneDeviceDropdown : SettingsDropdown<string>
     {
         protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
 
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             Items = deviceItems.Distinct().ToList();
         }
 
-        private class MicrophoneDeviceDropdownControl : DropdownControl
+        private partial class MicrophoneDeviceDropdownControl : DropdownControl
         {
             protected override LocalisableString GenerateItemText(string item)
                 => string.IsNullOrEmpty(item) ? CommonStrings.Default : base.GenerateItemText(item);

@@ -26,7 +26,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestSceneNotePlayfield : OsuTestScene
+    public partial class TestSceneNotePlayfield : OsuTestScene
     {
         public const int COLUMNS = 9;
 

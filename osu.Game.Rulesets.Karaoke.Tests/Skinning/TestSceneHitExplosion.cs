@@ -16,7 +16,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     [TestFixture]
-    public class TestSceneHitExplosion : KaraokeSkinnableColumnTestScene
+    public partial class TestSceneHitExplosion : KaraokeSkinnableColumnTestScene
     {
         public TestSceneHitExplosion()
         {

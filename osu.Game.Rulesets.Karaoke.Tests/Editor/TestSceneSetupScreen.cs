@@ -14,7 +14,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneSetupScreen : EditorClockTestScene
+    public partial class TestSceneSetupScreen : EditorClockTestScene
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

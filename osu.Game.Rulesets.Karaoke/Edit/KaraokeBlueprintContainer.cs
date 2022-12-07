@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeBlueprintContainer : ComposeBlueprintContainer
+    public partial class KaraokeBlueprintContainer : ComposeBlueprintContainer
     {
         public KaraokeBlueprintContainer(HitObjectComposer composer)
             : base(composer)

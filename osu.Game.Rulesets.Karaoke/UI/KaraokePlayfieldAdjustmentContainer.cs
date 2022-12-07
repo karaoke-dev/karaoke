@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
     /// Having a place to get all user customize font.
     /// todo : need to check will have better place or not.
     /// </summary>
-    public class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
+    public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
     {
         [Resolved]
         private FontStore fontStore { get; set; }

@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting
 {
-    public class TextingEditModeSection : EditModeSection<ITextingModeState, TextingEditMode>
+    public partial class TextingEditModeSection : EditModeSection<ITextingModeState, TextingEditMode>
     {
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Red;
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Textin
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private class TextingVerifySelection : VerifySelection
+        private partial class TextingVerifySelection : VerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.Texting;
         }

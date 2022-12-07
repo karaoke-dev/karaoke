@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
-    public class TestSceneRightTriangle : OsuTestScene
+    public partial class TestSceneRightTriangle : OsuTestScene
     {
         private RightTriangle rightTriangle = null!;
 

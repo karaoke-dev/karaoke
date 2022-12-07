@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
-    public class NotePropertyChangeHandler : HitObjectPropertyChangeHandler<Note>, INotePropertyChangeHandler
+    public partial class NotePropertyChangeHandler : HitObjectPropertyChangeHandler<Note>, INotePropertyChangeHandler
     {
         public void ChangeText(string text)
         {

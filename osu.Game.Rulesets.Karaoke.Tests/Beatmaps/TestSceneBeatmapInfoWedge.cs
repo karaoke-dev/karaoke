@@ -14,7 +14,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 {
     [TestFixture]
-    public class TestSceneBeatmapInfoWedge : OsuTestScene
+    public partial class TestSceneBeatmapInfoWedge : OsuTestScene
     {
         private TestBeatmapInfoWedge infoWedge = null!;
 
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             AddUntilStep("wait for async load", () => infoWedge.Info != infoBefore);
         }
 
-        private class TestBeatmapInfoWedge : BeatmapInfoWedge
+        private partial class TestBeatmapInfoWedge : BeatmapInfoWedge
         {
             public new WedgeInfoText Info => base.Info;
         }

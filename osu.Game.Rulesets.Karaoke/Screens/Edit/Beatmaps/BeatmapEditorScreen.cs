@@ -8,7 +8,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public abstract class BeatmapEditorScreen : GenericEditorScreen<KaraokeBeatmapEditorScreenMode>
+    public abstract partial class BeatmapEditorScreen : GenericEditorScreen<KaraokeBeatmapEditorScreenMode>
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

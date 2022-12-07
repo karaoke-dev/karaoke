@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
 {
-    public class ReferenceLyricConfigSection : LyricPropertySection
+    public partial class ReferenceLyricConfigSection : LyricPropertySection
     {
         private const string sync = "sync";
         private const string reference = "reference";

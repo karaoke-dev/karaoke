@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class ScoringMarker : CompositeDrawable
+    public partial class ScoringMarker : CompositeDrawable
     {
         private const float triangle_width = 20;
         private const float triangle_height = 20;

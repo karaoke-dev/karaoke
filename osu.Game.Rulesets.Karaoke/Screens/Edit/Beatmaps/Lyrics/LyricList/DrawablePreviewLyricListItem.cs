@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public class DrawablePreviewLyricListItem : DrawableLyricListItem
+    public partial class DrawablePreviewLyricListItem : DrawableLyricListItem
     {
         public DrawablePreviewLyricListItem(Lyric item)
             : base(item)

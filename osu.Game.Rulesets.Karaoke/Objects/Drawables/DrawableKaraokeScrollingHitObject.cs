@@ -12,7 +12,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
-    public abstract class DrawableKaraokeScrollingHitObject : DrawableHitObject<KaraokeHitObject>
+    public abstract partial class DrawableKaraokeScrollingHitObject : DrawableHitObject<KaraokeHitObject>
     {
         protected readonly IBindable<ScrollingDirection> Direction = new Bindable<ScrollingDirection>();
 
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
     }
 
-    public abstract class DrawableKaraokeScrollingHitObject<TObject> : DrawableKaraokeScrollingHitObject
+    public abstract partial class DrawableKaraokeScrollingHitObject<TObject> : DrawableKaraokeScrollingHitObject
         where TObject : KaraokeHitObject
     {
         public new TObject HitObject => base.HitObject as TObject;

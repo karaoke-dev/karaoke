@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
 {
-    public class LyricPreview : SettingsSubsectionPreview
+    public partial class LyricPreview : SettingsSubsectionPreview
     {
         private readonly Bindable<FontUsage> mainFont = new();
         private readonly Bindable<FontUsage> rubyFont = new();

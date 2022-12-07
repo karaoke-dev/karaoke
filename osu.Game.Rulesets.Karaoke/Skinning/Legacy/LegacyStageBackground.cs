@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class LegacyStageBackground : LegacyKaraokeElement
+    public partial class LegacyStageBackground : LegacyKaraokeElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 

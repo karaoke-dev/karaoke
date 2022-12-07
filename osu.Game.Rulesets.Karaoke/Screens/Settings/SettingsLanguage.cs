@@ -16,14 +16,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class SettingsLanguage : SettingsItem<CultureInfo>
+    public partial class SettingsLanguage : SettingsItem<CultureInfo>
     {
         protected override Drawable CreateControl() => new LanguageSelectionButton
         {
             RelativeSizeAxes = Axes.X,
         };
 
-        private class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
+        private partial class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
         {
             private readonly BindableWithCurrent<CultureInfo> current = new();
 
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                 => new LanguageSelectorPopover(Current);
         }
 
-        private class LanguageSelectorPopover : OsuPopover
+        private partial class LanguageSelectorPopover : OsuPopover
         {
             public LanguageSelectorPopover(Bindable<CultureInfo> bindableCultureInfo)
             {

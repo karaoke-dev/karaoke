@@ -24,7 +24,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class LegacyNotePiece : LegacyKaraokeColumnElement
+    public partial class LegacyNotePiece : LegacyKaraokeColumnElement
     {
         protected readonly Bindable<Color4> AccentColour = new();
         protected readonly Bindable<Color4> HitColour = new();
@@ -238,7 +238,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             subtractionCache.Invalidate();
         }
 
-        private class LayerContainer : Container
+        private partial class LayerContainer : Container
         {
             public IEnumerable<TextureAnimation> AnimateChildren => Children.OfType<TextureAnimation>();
 

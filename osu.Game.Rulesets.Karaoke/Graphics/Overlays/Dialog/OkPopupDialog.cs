@@ -8,7 +8,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog
 {
-    public class OkPopupDialog : PopupDialog
+    public partial class OkPopupDialog : PopupDialog
     {
         public OkPopupDialog(Action<bool> okAction = null)
         {

@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting
 {
-    public class TextingSwitchSpecialActionSection : SpecialActionSection<TextingEditModeSpecialAction>
+    public partial class TextingSwitchSpecialActionSection : SpecialActionSection<TextingEditModeSpecialAction>
     {
         protected override string SwitchActionTitle => "Special actions";
 

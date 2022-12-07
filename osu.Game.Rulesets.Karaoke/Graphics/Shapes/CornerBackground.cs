@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
 {
-    public class CornerBackground : CompositeDrawable
+    public partial class CornerBackground : CompositeDrawable
     {
         public CornerBackground()
         {

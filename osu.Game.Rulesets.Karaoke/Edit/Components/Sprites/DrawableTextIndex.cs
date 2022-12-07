@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
 {
-    public class DrawableTextIndex : RightTriangle
+    public partial class DrawableTextIndex : RightTriangle
     {
         private TextIndex.IndexState state;
 

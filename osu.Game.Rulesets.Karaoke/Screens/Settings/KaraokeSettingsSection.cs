@@ -13,7 +13,7 @@ using osu.Game.Overlays.Settings;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public abstract class KaraokeSettingsSection : SettingsSection
+    public abstract partial class KaraokeSettingsSection : SettingsSection
     {
         private const int margin = 20;
 

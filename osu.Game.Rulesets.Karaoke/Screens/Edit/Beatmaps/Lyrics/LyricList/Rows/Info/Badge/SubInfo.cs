@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
-    public abstract class SubInfo : Container
+    public abstract partial class SubInfo : Container
     {
         private readonly Box box;
         private readonly OsuSpriteText badgeText;

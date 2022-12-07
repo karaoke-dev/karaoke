@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 {
-    public abstract class Panel : FocusedOverlayContainer
+    public abstract partial class Panel : FocusedOverlayContainer
     {
         private Sample? samplePopIn;
         private Sample? samplePopOut;
