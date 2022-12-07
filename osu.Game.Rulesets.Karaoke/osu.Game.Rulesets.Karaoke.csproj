@@ -7,30 +7,30 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18"/>
-    <PackageReference Include="osu.Game.Rulesets.Karaoke.Resources" Version="2022.611.0"/>
-    <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha"/>
-    <PackageReference Include="LrcParser" Version="2022.529.1"/>
-    <PackageReference Include="Octokit" Version="4.0.1"/>
-    <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.1118.0"/>
-    <PackageReference Include="osu.Framework.Microphone" Version="2022.909.0"/>
+    <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18" />
+    <PackageReference Include="osu.Game.Rulesets.Karaoke.Resources" Version="2022.611.0" />
+    <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
+    <PackageReference Include="LrcParser" Version="2022.529.1" />
+    <PackageReference Include="Octokit" Version="4.0.1" />
+    <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.1118.0" />
+    <PackageReference Include="osu.Framework.Microphone" Version="2022.909.0" />
     <PackageReference Include="ppy.LocalisationAnalyser" Version="2022.809.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ppy.osu.Game" Version="2022.1117.0"/>
-    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016"/>
-    <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016"/>
-    <PackageReference Include="NicoKaraParser" Version="1.1.0"/>
-    <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta18"/>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15"/>
+    <PackageReference Include="ppy.osu.Game" Version="2022.1117.0" />
+    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
+    <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
+    <PackageReference Include="NicoKaraParser" Version="1.1.0" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta18" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
-    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0"/>
-    <PackageReference Include="WanaKanaSharp" Version="0.2.0"/>
-    <PackageReference Include="Zipangu" Version="1.1.8"/>
+    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+    <PackageReference Include="WanaKanaSharp" Version="0.2.0" />
+    <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Samples\Gameplay"/>
+    <Folder Include="Resources\Samples\Gameplay" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
@@ -44,28 +44,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.dll"/>
-    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.Resources.dll"/>
-    <InputAssemblies Include="$(OutputPath)**/osu.Game.Rulesets.Karaoke.Resources.resources.dll" Exclude="$(OutputPath)DLLs/osu.Game.Rulesets.Karaoke.Resources.resources.dll"/>
-    <InputAssemblies Include="$(OutputPath)LanguageDetection.dll"/>
-    <InputAssemblies Include="$(OutputPath)LrcParser.dll"/>
-    <InputAssemblies Include="$(OutputPath)Octokit.dll"/>
-    <InputAssemblies Include="$(OutputPath)osu.Framework.KaraokeFont.dll"/>
-    <InputAssemblies Include="$(OutputPath)osu.Framework.Microphone.dll"/>
-    <InputAssemblies Include="$(OutputPath)NWaves.dll"/>
-    <InputAssemblies Include="$(OutputPath)Lucene.Net.dll"/>
-    <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Common.dll"/>
-    <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Kuromoji.dll"/>
-    <InputAssemblies Include="$(OutputPath)J2N.dll"/>
-    <InputAssemblies Include="$(OutputPath)NicoKaraParser.dll"/>
-    <InputAssemblies Include="$(OutputPath)SixLabors.Fonts.dll"/>
-    <InputAssemblies Include="$(OutputPath)SixLabors.ImageSharp.Drawing.dll"/>
-    <InputAssemblies Include="$(OutputPath)WanaKanaSharp.dll"/>
-    <InputAssemblies Include="$(OutputPath)Zipangu.dll"/>
+    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.dll" />
+    <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.Resources.dll" />
+    <InputAssemblies Include="$(OutputPath)**/osu.Game.Rulesets.Karaoke.Resources.resources.dll" Exclude="$(OutputPath)DLLs/osu.Game.Rulesets.Karaoke.Resources.resources.dll" />
+    <InputAssemblies Include="$(OutputPath)LanguageDetection.dll" />
+    <InputAssemblies Include="$(OutputPath)LrcParser.dll" />
+    <InputAssemblies Include="$(OutputPath)Octokit.dll" />
+    <InputAssemblies Include="$(OutputPath)osu.Framework.KaraokeFont.dll" />
+    <InputAssemblies Include="$(OutputPath)osu.Framework.Microphone.dll" />
+    <InputAssemblies Include="$(OutputPath)NWaves.dll" />
+    <InputAssemblies Include="$(OutputPath)Lucene.Net.dll" />
+    <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Common.dll" />
+    <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Kuromoji.dll" />
+    <InputAssemblies Include="$(OutputPath)J2N.dll" />
+    <InputAssemblies Include="$(OutputPath)NicoKaraParser.dll" />
+    <InputAssemblies Include="$(OutputPath)SixLabors.Fonts.dll" />
+    <InputAssemblies Include="$(OutputPath)SixLabors.ImageSharp.Drawing.dll" />
+    <InputAssemblies Include="$(OutputPath)WanaKanaSharp.dll" />
+    <InputAssemblies Include="$(OutputPath)Zipangu.dll" />
   </ItemGroup>
 
   <Target Name="CopyCustomContent" Condition=" '$(Configuration)'=='Release' " AfterTargets="AfterBuild">
-    <Copy SourceFiles="@(InputAssemblies)" DestinationFiles="$(OutDir)/DLLs/%(RecursiveDir)%(Filename)%(Extension)"/>
+    <Copy SourceFiles="@(InputAssemblies)" DestinationFiles="$(OutDir)/DLLs/%(RecursiveDir)%(Filename)%(Extension)" />
   </Target>
 
 </Project>
