@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public class DetailLyricList : BaseLyricList
+    public partial class DetailLyricList : BaseLyricList
     {
         public DetailLyricList()
         {

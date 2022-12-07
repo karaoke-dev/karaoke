@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
-    public class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
+    public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
     {
         private Box dragAlert = null!;
 

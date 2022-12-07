@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
     [TestFixture]
-    public class TestSceneStyleScreen : KaraokeSkinEditorScreenTestScene<StyleScreen>
+    public partial class TestSceneStyleScreen : KaraokeSkinEditorScreenTestScene<StyleScreen>
     {
         protected override StyleScreen CreateEditorScreen(KaraokeSkin karaokeSkin) => new(karaokeSkin);
     }

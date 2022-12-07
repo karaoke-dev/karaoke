@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModFlashlight : ModFlashlight<KaraokeHitObject>
+    public partial class KaraokeModFlashlight : ModFlashlight<KaraokeHitObject>
     {
         public override double ScoreMultiplier => 1;
         public override Type[] IncompatibleMods => new[] { typeof(ModHidden) };
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         protected override Flashlight CreateFlashlight() => new KaraokeFlashlight(this);
 
-        internal class KaraokeFlashlight : Flashlight
+        internal partial class KaraokeFlashlight : Flashlight
         {
             private readonly LayoutValue flashlightProperties = new(Invalidation.DrawSize);
 

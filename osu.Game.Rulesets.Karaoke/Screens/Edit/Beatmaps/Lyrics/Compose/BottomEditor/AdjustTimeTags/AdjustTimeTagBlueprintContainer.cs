@@ -25,7 +25,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
+    public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
     {
         [Resolved(CanBeNull = true)]
         private AdjustTimeTagScrollContainer timeline { get; set; }
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             return true;
         }
 
-        protected class TimeTagEditorSelectionHandler : BindableSelectionHandler
+        protected partial class TimeTagEditorSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             }
         }
 
-        private class TimelineDragBox : DragBox
+        private partial class TimelineDragBox : DragBox
         {
             public double MinTime { get; private set; }
 
@@ -172,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             }
         }
 
-        protected class TimeTagEditorSelectionBlueprintContainer : Container<SelectionBlueprint<TimeTag>>
+        protected partial class TimeTagEditorSelectionBlueprintContainer : Container<SelectionBlueprint<TimeTag>>
         {
             protected override Container<SelectionBlueprint<TimeTag>> Content { get; }
 

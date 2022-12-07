@@ -10,7 +10,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     [TestFixture]
-    public class TestSceneMicrophoneSoundVisualizer : OsuTestScene
+    public partial class TestSceneMicrophoneSoundVisualizer : OsuTestScene
     {
         private MicrophoneSoundVisualizer preview = null!;
 

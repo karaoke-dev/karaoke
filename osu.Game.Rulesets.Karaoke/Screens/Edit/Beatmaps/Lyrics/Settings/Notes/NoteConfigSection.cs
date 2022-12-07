@@ -11,7 +11,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public class NoteConfigSection : LyricEditorSection
+    public partial class NoteConfigSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Config";
 

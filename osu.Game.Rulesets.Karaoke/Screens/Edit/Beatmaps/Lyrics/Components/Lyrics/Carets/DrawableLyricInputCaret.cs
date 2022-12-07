@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
+    public partial class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
             this.FlashColour(colours.Red, 200);
         }
 
-        private class InputCaretTextBox : BasicTextBox
+        private partial class InputCaretTextBox : BasicTextBox
         {
             public Action<string> NewCommitText;
 

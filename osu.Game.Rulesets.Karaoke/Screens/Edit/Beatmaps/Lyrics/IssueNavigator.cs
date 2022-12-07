@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
-    public class IssueNavigator : Component, IIssueNavigator
+    public partial class IssueNavigator : Component, IIssueNavigator
     {
         [Resolved, AllowNull]
         private ILyricEditorState lyricEditorState { get; set; }

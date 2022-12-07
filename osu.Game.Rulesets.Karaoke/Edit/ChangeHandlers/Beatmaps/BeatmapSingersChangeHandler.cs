@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
 {
-    public class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler, IBeatmapSingersChangeHandler
+    public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler, IBeatmapSingersChangeHandler
     {
         [Resolved]
         private BeatmapManager? beatmapManager { get; set; }

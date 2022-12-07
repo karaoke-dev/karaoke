@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<RomajiTag>
+    public partial class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<RomajiTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;

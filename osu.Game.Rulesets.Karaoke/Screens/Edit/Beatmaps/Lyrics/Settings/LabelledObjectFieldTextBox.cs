@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class LabelledObjectFieldTextBox<T> : LabelledTextBox where T : class
+    public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox where T : class
     {
         protected readonly IBindableList<T> SelectedItems = new BindableList<T>();
 
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         protected virtual bool IsFocused(Drawable focusedDrawable)
             => focusedDrawable == Component;
 
-        protected class ObjectFieldTextBox : OsuTextBox
+        protected partial class ObjectFieldTextBox : OsuTextBox
         {
             [Resolved]
             private OsuColour colours { get; set; }

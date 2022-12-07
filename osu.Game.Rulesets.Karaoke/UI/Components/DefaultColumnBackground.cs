@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class DefaultColumnBackground : Box
+    public partial class DefaultColumnBackground : Box
     {
         public const float COLUMN_HEIGHT = 20;
 

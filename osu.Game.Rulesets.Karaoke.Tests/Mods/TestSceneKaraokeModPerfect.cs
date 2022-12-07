@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
+    public partial class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
     {
         public TestSceneKaraokeModPerfect()
             : base(new KaraokeModPerfect())

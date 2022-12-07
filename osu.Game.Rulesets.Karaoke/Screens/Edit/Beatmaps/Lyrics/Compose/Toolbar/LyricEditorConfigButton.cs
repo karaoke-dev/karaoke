@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
     /// <summary>
     /// Button that able to change the boolean config in the <see cref="KaraokeRulesetLyricEditorConfigManager"/>
     /// </summary>
-    public abstract class LyricEditorConfigButton : ToggleButton
+    public abstract partial class LyricEditorConfigButton : ToggleButton
     {
         protected LyricEditorConfigButton()
         {

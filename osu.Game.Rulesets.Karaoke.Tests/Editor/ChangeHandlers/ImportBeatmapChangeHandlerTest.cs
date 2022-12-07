@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public class ImportBeatmapChangeHandlerTest : BaseChangeHandlerTest<ImportBeatmapChangeHandler>
+    public partial class ImportBeatmapChangeHandlerTest : BaseChangeHandlerTest<ImportBeatmapChangeHandler>
     {
         [Test]
         public void TestImport()

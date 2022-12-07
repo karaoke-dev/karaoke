@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews
 {
-    public class DefaultPreview : SettingsSubsectionPreview
+    public partial class DefaultPreview : SettingsSubsectionPreview
     {
         private const double transition_time = 1000;
 

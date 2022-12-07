@@ -26,7 +26,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
-    public class SingerLyricPlacementColumn : LyricPlacementColumn
+    public partial class SingerLyricPlacementColumn : LyricPlacementColumn
     {
         public SingerLyricPlacementColumn(Singer singer)
             : base(singer)
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
         protected override Drawable CreateTimeLinePart(Singer singer)
             => new SingerLyricTimeline(singer);
 
-        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu, IHasPopover
+        internal partial class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu, IHasPopover
         {
             private const int avatar_size = 48;
             private const int main_text_size = 24;

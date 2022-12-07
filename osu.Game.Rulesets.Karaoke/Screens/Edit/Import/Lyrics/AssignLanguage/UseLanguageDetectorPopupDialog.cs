@@ -9,7 +9,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
 {
-    public class UseLanguageDetectorPopupDialog : PopupDialog
+    public partial class UseLanguageDetectorPopupDialog : PopupDialog
     {
         public UseLanguageDetectorPopupDialog(Action<bool> okAction = null)
         {

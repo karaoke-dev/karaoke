@@ -21,7 +21,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
 {
-    public class LabelledReferenceLyricSelector : LabelledComponent<LabelledReferenceLyricSelector.SelectLyricButton, Lyric?>
+    public partial class LabelledReferenceLyricSelector : LabelledComponent<LabelledReferenceLyricSelector.SelectLyricButton, Lyric?>
     {
         public LabelledReferenceLyricSelector()
             : base(true)
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             set => Component.IgnoredLyric = value;
         }
 
-        public class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
+        public partial class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
         {
             [Resolved, AllowNull]
             private EditorBeatmap editorBeatmap { get; set; }
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
                 => new LyricSelectorPopover(Current, IgnoredLyric);
         }
 
-        private class LyricSelectorPopover : OsuPopover
+        private partial class LyricSelectorPopover : OsuPopover
         {
             private readonly ReferenceLyricSelector lyricSelector;
 
@@ -110,17 +110,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             }
         }
 
-        protected class ReferenceLyricSelector : LyricSelector
+        protected partial class ReferenceLyricSelector : LyricSelector
         {
             protected override RearrangeableLyricListContainer CreateRearrangeableLyricListContainer()
                 => new RearrangeableReferenceLyricListContainer();
 
-            protected class RearrangeableReferenceLyricListContainer : RearrangeableLyricListContainer
+            protected partial class RearrangeableReferenceLyricListContainer : RearrangeableLyricListContainer
             {
                 protected override DrawableTextListItem CreateDrawable(Lyric? item)
                     => new DrawableReferenceLyricListItem(item);
 
-                protected class DrawableReferenceLyricListItem : DrawableLyricListItem
+                protected partial class DrawableReferenceLyricListItem : DrawableLyricListItem
                 {
                     [Resolved, AllowNull]
                     private OsuColour colours { get; set; }

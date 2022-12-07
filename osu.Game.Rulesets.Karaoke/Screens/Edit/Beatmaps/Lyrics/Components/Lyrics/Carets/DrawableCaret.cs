@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
 {
-    public abstract class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
+    public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
     {
         protected DrawableCaret(DrawableCaretType type)
             : base(type)
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
         protected abstract void Apply(TCaret caret);
     }
 
-    public abstract class DrawableCaret : CompositeDrawable
+    public abstract partial class DrawableCaret : CompositeDrawable
     {
         public readonly DrawableCaretType Type;
 

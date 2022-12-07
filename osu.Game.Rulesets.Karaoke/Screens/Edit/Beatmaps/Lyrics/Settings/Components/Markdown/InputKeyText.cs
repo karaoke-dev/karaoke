@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
     /// <summary>
     /// For showing the key and adjust the key binding.
     /// </summary>
-    public class InputKeyText : OsuMarkdownLinkText, IHasPopover
+    public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
     {
         private readonly InputKey inputKey;
 
@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
                 keyCombinationProvider.KeymapChanged -= updateDisplayText;
         }
 
-        private class PopoverKeyBindingsSubsection : VariantBindingsSubsection
+        private partial class PopoverKeyBindingsSubsection : VariantBindingsSubsection
         {
             public PopoverKeyBindingsSubsection(IEnumerable<KaraokeEditAction> actions)
                 : base(new KaraokeRuleset().RulesetInfo, KaraokeRuleset.EDIT_INPUT_VARIANT)

@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
 {
-    public class NoteEditPopover : OsuPopover
+    public partial class NoteEditPopover : OsuPopover
     {
         public NoteEditPopover(Note note)
         {
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
             };
         }
 
-        private class NoteSection : Section
+        private partial class NoteSection : Section
         {
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
 {
-    public abstract class ModeStateWithBlueprintContainer<TObject> : Component, IHasBlueprintSelection<TObject> where TObject : class
+    public abstract partial class ModeStateWithBlueprintContainer<TObject> : Component, IHasBlueprintSelection<TObject> where TObject : class
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();

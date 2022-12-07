@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
 {
-    public class DrawableLayoutList : OsuRearrangeableListContainer<LyricLayout>
+    public partial class DrawableLayoutList : OsuRearrangeableListContainer<LyricLayout>
     {
         private Scroll scroll;
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
         /// <remarks>
         /// Use <see cref="ReplacePlaceholder"/> to transfer the placeholder into the main list.
         /// </remarks>
-        private class Scroll : OsuScrollContainer
+        private partial class Scroll : OsuScrollContainer
         {
             /// <summary>
             /// The currently-displayed placeholder item.
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
         /// <summary>
         /// The flow of <see cref="DrawableLayoutListItem"/>. Disables layout easing unless a drag is in progress.
         /// </summary>
-        private class Flow : FillFlowContainer<RearrangeableListItem<LyricLayout>>
+        private partial class Flow : FillFlowContainer<RearrangeableListItem<LyricLayout>>
         {
             public readonly IBindable<bool> DragActive = new Bindable<bool>();
 

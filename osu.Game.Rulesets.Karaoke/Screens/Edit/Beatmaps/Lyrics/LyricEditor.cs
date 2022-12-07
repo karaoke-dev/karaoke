@@ -33,7 +33,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
     [Cached(typeof(ILyricEditorState))]
-    public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
+    public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
     {
         [Cached]
         private readonly LyricEditorColourProvider colourProvider = new();

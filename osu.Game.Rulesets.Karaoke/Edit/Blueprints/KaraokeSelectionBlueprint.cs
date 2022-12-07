@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 {
-    public class KaraokeSelectionBlueprint<T> : HitObjectSelectionBlueprint<T>
+    public partial class KaraokeSelectionBlueprint<T> : HitObjectSelectionBlueprint<T>
         where T : KaraokeHitObject
     {
         protected KaraokeSelectionBlueprint(T hitObject)

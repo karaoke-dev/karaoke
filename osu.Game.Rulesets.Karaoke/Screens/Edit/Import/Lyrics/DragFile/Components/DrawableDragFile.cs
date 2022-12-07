@@ -16,7 +16,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components
 {
-    public class DrawableDragFile : Container
+    public partial class DrawableDragFile : Container
     {
         private const float button_height = 50;
         private const float button_vertical_margin = 15;

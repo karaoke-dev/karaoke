@@ -23,7 +23,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricAutoGenerateChangeHandler : LyricPropertyChangeHandler, ILyricAutoGenerateChangeHandler
+    public partial class LyricAutoGenerateChangeHandler : LyricPropertyChangeHandler, ILyricAutoGenerateChangeHandler
     {
         [Resolved, AllowNull]
         private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }

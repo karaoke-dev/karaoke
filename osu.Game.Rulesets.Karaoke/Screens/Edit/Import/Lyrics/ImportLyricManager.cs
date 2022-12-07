@@ -17,7 +17,7 @@ using FileInfo = System.IO.FileInfo;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public class ImportLyricManager : Component
+    public partial class ImportLyricManager : Component
     {
         public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar", ".txt" };
 

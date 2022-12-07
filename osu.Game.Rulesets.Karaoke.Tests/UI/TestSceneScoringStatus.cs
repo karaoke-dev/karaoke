@@ -9,7 +9,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestSceneScoringStatus : OsuTestScene
+    public partial class TestSceneScoringStatus : OsuTestScene
     {
         [TestCase(ScoringStatusMode.AndroidMicrophonePermissionDeclined)]
         [TestCase(ScoringStatusMode.AndroidDoesNotSupported)]

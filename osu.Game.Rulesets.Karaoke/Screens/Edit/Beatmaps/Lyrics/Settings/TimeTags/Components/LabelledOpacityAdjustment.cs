@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags.Components
 {
-    public class LabelledOpacityAdjustment : LabelledSwitchButton
+    public partial class LabelledOpacityAdjustment : LabelledSwitchButton
     {
         protected const float CONFIG_BUTTON_SIZE = 20f;
 
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             set => opacityButton.Current = value;
         }
 
-        private class OpacityButton : IconButton, IHasPopover, IHasCurrentValue<float>
+        private partial class OpacityButton : IconButton, IHasPopover, IHasCurrentValue<float>
         {
             public Bindable<float> Current { get; set; }
 
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                     }
                 };
 
-            private class OpacitySliderBar : OsuSliderBar<float>
+            private partial class OpacitySliderBar : OsuSliderBar<float>
             {
                 public override LocalisableString TooltipText => (Current.Value * 100).ToString("N0") + "%";
             }

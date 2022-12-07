@@ -8,7 +8,7 @@ using osu.Game.Overlays.OSD;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
-    public class ClipboardToast : Toast
+    public partial class ClipboardToast : Toast
     {
         public ClipboardToast(LyricEditorMode mode, ClipboardAction action)
             : base(getDescription(), getValue(action), getShortcut(mode, action))

@@ -24,7 +24,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
     [Cached(typeof(ITranslateInfoProvider))]
-    public class TranslateEditSection : Container, ITranslateInfoProvider
+    public partial class TranslateEditSection : Container, ITranslateInfoProvider
     {
         private const int row_height = 50;
         private const int column_spacing = 10;

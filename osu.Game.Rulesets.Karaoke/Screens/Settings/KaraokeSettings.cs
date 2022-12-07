@@ -22,7 +22,7 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class KaraokeSettings : OsuScreen
+    public partial class KaraokeSettings : OsuScreen
     {
         [Cached]
         private KaraokeSettingsColourProvider colourProvider = new();
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             return true;
         }
 
-        private class KaraokeConfigWaveContainer : WaveContainer
+        private partial class KaraokeConfigWaveContainer : WaveContainer
         {
             protected override bool StartHidden => true;
 

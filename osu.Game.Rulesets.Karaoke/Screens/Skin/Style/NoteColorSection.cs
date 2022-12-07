@@ -11,7 +11,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    internal class NoteColorSection : StyleSection
+    internal partial class NoteColorSection : StyleSection
     {
         private LabelledColourSelector noteColorPicker;
         private LabelledColourSelector blinkColorPicker;

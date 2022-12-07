@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
 {
-    public class ManageFontPreview : SettingsSubsectionPreview
+    public partial class ManageFontPreview : SettingsSubsectionPreview
     {
         private const float preview_width = 400;
         private const float preview_height = 320;
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
             }
         }
 
-        public class GenerateRowContainer : BeatSyncedContainer
+        public partial class GenerateRowContainer : BeatSyncedContainer
         {
             private readonly IDictionary<string, int> words = new Dictionary<string, int>
             {
@@ -265,7 +265,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
             }
         }
 
-        public class EggContainer : BeatSyncedContainer
+        public partial class EggContainer : BeatSyncedContainer
         {
             [Resolved]
             private TextureStore textures { get; set; }

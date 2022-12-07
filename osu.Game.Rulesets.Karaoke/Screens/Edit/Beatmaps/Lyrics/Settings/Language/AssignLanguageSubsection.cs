@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public class AssignLanguageSubsection : SelectLyricButton, IHasPopover
+    public partial class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     {
         private readonly Bindable<CultureInfo> bindableLanguage = new();
 

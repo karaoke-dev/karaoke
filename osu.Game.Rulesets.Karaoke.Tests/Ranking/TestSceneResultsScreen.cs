@@ -24,7 +24,7 @@ using osuTK.Input;
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
     [TestFixture]
-    public class TestSceneResultsScreen : OsuManualInputManagerTestScene
+    public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
     {
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             AddAssert("expanded panel still expanded", () => expandedPanel.State == PanelState.Expanded);
         }
 
-        private class TestResultsContainer : Container
+        private partial class TestResultsContainer : Container
         {
             [Cached(typeof(Player))]
             private readonly Player player = new TestPlayer();
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             }
         }
 
-        private class TestResultsScreen : ResultsScreen
+        private partial class TestResultsScreen : ResultsScreen
         {
             public TestResultsScreen(ScoreInfo score)
                 : base(score, true)

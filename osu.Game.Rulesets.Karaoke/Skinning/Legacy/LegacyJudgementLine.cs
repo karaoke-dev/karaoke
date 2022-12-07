@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class LegacyJudgementLine : LegacyKaraokeElement
+    public partial class LegacyJudgementLine : LegacyKaraokeElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
         private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);

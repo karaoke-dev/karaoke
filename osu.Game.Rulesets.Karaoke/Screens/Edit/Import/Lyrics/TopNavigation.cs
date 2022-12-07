@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public abstract class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreenWithTopNavigation
+    public abstract partial class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreenWithTopNavigation
     {
         protected new T Screen => base.Screen as T;
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
         }
     }
 
-    public abstract class TopNavigation : CompositeDrawable
+    public abstract partial class TopNavigation : CompositeDrawable
     {
         [Resolved]
         private OsuColour colours { get; set; }
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
             editorBeatmap.TransactionEnded -= TriggerStateChange;
         }
 
-        public class NavigationTextContainer : CustomizableTextContainer
+        public partial class NavigationTextContainer : CustomizableTextContainer
         {
             protected void AddLinkFactory(string name, string text, Action action)
             {
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
                 });
             }
 
-            internal class ClickableSpriteText : OsuSpriteText
+            internal partial class ClickableSpriteText : OsuSpriteText
             {
                 public Action Action { get; set; }
 

@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
 {
-    public class DefaultLyricPlacementColumn : LyricPlacementColumn
+    public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
     {
         protected const int LEFT_MARGIN = 22;
 

@@ -14,7 +14,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues
 {
-    public class IssuesToolTip : BackgroundToolTip<Issue[]>
+    public partial class IssuesToolTip : BackgroundToolTip<Issue[]>
     {
         private readonly MessageContainer invalidMessage;
 

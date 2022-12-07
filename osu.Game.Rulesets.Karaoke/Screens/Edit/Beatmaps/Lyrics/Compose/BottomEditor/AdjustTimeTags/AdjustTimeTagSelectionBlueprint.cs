@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
+    public partial class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
         private const float time_tag_triangle_size = 10;
 
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
         private Drawable getContent()
             => hasTime() ? timeTagPiece : timeTagWithNoTimePiece;
 
-        public class TimeTagPiece : CompositeDrawable
+        public partial class TimeTagPiece : CompositeDrawable
         {
             public TimeTagPiece(TimeTag timeTag)
             {
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             public override bool RemoveCompletedTransforms => false;
         }
 
-        public class TimeTagWithNoTimePiece : CompositeDrawable
+        public partial class TimeTagWithNoTimePiece : CompositeDrawable
         {
             public TimeTagWithNoTimePiece(TimeTag timeTag)
             {

@@ -6,7 +6,7 @@ using osu.Game.Tests;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
-    public class KaraokeTestBrowser : OsuTestBrowser
+    public partial class KaraokeTestBrowser : OsuTestBrowser
     {
         [BackgroundDependencyLoader]
         private void load()

@@ -11,7 +11,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneTimeTagTooltip : OsuTestScene
+    public partial class TestSceneTimeTagTooltip : OsuTestScene
     {
         private TimeTagTooltip toolTip = null!;
 

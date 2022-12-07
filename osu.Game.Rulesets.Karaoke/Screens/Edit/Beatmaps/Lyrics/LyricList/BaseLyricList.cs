@@ -15,7 +15,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public abstract class BaseLyricList : CompositeDrawable
+    public abstract partial class BaseLyricList : CompositeDrawable
     {
         public const float LYRIC_LIST_PADDING = 10;
 

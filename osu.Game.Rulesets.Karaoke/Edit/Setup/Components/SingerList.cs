@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
     /// <summary>
     /// A component which displays a collection of singers in individual <see cref="SingerDisplay"/>s.
     /// </summary>
-    public class SingerList : CompositeDrawable
+    public partial class SingerList : CompositeDrawable
     {
         public BindableList<Singer> Singers { get; } = new();
 
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             }
         }
 
-        internal class AddSingerButton : CompositeDrawable
+        internal partial class AddSingerButton : CompositeDrawable
         {
             public Action Action
             {

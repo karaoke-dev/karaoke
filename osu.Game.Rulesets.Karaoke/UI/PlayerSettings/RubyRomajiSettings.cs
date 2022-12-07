@@ -10,7 +10,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class RubyRomajiSettings : PlayerSettingsGroup
+    public partial class RubyRomajiSettings : PlayerSettingsGroup
     {
         private readonly PlayerCheckbox displayRubyCheckBox;
         private readonly PlayerCheckbox displayRomajiCheckBox;

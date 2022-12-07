@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
 {
-    public class ReferenceLyricSection : LyricPropertySection
+    public partial class ReferenceLyricSection : LyricPropertySection
     {
         protected override LocalisableString Title => "Reference lyric";
 

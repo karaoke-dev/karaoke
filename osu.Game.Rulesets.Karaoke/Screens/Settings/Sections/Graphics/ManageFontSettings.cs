@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics
 {
-    public class ManageFontSettings : KaraokeSettingsSubsection
+    public partial class ManageFontSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Font Management";
 

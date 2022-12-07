@@ -23,7 +23,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
-    public class DrawableLyric : DrawableKaraokeHitObject
+    public partial class DrawableLyric : DrawableKaraokeHitObject
     {
         private Container<DefaultLyricPiece> lyricPieces;
         private OsuSpriteText translateText;

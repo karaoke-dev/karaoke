@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricAutoGenerateChangeHandler>
+    public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricAutoGenerateChangeHandler>
     {
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {

@@ -6,7 +6,7 @@ using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract class TextTagSettings<TEditMode> : LyricEditorSettings
+    public abstract partial class TextTagSettings<TEditMode> : LyricEditorSettings
         where TEditMode : Enum
     {
         public override SettingsDirection Direction => SettingsDirection.Right;

@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    internal class LyricStylePreview : Container
+    internal partial class LyricStylePreview : Container
     {
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider, StyleManager manager)
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
             };
         }
 
-        private class PreviewDrawableLyricLine : DrawableLyric
+        private partial class PreviewDrawableLyricLine : DrawableLyric
         {
             public PreviewDrawableLyricLine(Lyric hitObject)
                 : base(hitObject)

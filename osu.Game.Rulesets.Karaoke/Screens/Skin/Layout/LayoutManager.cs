@@ -16,7 +16,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    public class LayoutManager : Component
+    public partial class LayoutManager : Component
     {
         public readonly BindableList<LyricLayout> Layouts = new();
 

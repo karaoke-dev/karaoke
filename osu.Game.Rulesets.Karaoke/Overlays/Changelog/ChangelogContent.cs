@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// <summary>
     /// Base change log content
     /// </summary>
-    public abstract class ChangelogContent : FillFlowContainer
+    public abstract partial class ChangelogContent : FillFlowContainer
     {
         public Action<APIChangelogBuild> BuildSelected;
 

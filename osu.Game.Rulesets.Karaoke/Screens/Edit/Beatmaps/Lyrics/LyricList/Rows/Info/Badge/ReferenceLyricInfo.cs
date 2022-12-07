@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
-    public class ReferenceLyricInfo : SubInfo
+    public partial class ReferenceLyricInfo : SubInfo
     {
         private readonly IBindable<Lyric?> bindableReferenceLyric;
 

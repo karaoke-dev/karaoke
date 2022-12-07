@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     /// Implement most feature for searchable text container.
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    public class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeableListContainer<TModel>
+    public partial class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeableListContainer<TModel>
     {
         public readonly Bindable<TModel> SelectedSet = new();
 
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected new virtual DrawableTextListItem CreateDrawable(TModel item)
             => new(item);
 
-        public class DrawableTextListItem : OsuRearrangeableListItem<TModel>, IFilterable
+        public partial class DrawableTextListItem : OsuRearrangeableListItem<TModel>, IFilterable
         {
             public readonly Bindable<TModel> SelectedSet = new();
 

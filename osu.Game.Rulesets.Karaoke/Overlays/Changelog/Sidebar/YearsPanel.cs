@@ -18,7 +18,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {
-    public class YearsPanel : CompositeDrawable
+    public partial class YearsPanel : CompositeDrawable
     {
         private readonly Bindable<APIChangelogSidebar> metadata = new();
 
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             Show();
         }
 
-        public class YearButton : OsuHoverContainer
+        public partial class YearButton : OsuHoverContainer
         {
             private readonly int year;
             private readonly OsuSpriteText yearText;

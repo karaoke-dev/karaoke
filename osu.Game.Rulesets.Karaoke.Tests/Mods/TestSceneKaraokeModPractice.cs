@@ -10,7 +10,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModPractice : KaraokeModTestScene
+    public partial class TestSceneKaraokeModPractice : KaraokeModTestScene
     {
         [Test]
         public void TestAllPanelExist() => CreateModTest(new ModTestData

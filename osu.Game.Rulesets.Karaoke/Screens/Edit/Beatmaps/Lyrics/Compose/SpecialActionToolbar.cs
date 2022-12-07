@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 {
-    public class SpecialActionToolbar : CompositeDrawable
+    public partial class SpecialActionToolbar : CompositeDrawable
     {
         public const int HEIGHT = 26;
         public const int PADDING = 2;

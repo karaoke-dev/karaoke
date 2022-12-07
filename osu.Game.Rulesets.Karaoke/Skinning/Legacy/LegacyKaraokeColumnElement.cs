@@ -7,7 +7,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class LegacyKaraokeColumnElement : LegacyKaraokeElement
+    public partial class LegacyKaraokeColumnElement : LegacyKaraokeElement
     {
         protected ScrollingNotePlayfield? NotePlayfield => Playfield?.NotePlayfield;
 

@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 {
-    public class MessageContainer : OsuTextFlowContainer
+    public partial class MessageContainer : OsuTextFlowContainer
     {
         [Resolved]
         private OsuColour colours { get; set; }

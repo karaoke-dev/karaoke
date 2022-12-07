@@ -19,7 +19,7 @@ using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    public class NoteStylePreview : Container
+    public partial class NoteStylePreview : Container
     {
         private const int columns = 9;
 
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
             };
         }
 
-        public class PreviewDrawableNoteArea : NotePlayfield
+        public partial class PreviewDrawableNoteArea : NotePlayfield
         {
             public PreviewDrawableNoteArea()
                 : base(columns)

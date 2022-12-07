@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
-    public class TestSceneFontSelector : OsuManualInputManagerTestScene
+    public partial class TestSceneFontSelector : OsuManualInputManagerTestScene
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 

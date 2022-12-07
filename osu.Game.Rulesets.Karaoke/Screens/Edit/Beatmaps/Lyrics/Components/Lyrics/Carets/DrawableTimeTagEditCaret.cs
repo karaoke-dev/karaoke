@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableTimeTagEditCaret : DrawableCaret<TimeTagIndexCaretPosition>
+    public partial class DrawableTimeTagEditCaret : DrawableCaret<TimeTagIndexCaretPosition>
     {
         private const float triangle_width = 8;
 

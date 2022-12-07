@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics
 {
-    public class LyricSelectionBlueprint : KaraokeSelectionBlueprint<Lyric>
+    public partial class LyricSelectionBlueprint : KaraokeSelectionBlueprint<Lyric>
     {
         public LyricSelectionBlueprint(Lyric lyric)
             : base(lyric)

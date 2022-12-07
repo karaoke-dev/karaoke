@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneBeatmapMetadataGraph : OsuTestScene
+    public partial class TestSceneBeatmapMetadataGraph : OsuTestScene
     {
         [Test]
         public void TestBeatmapMetadataGraph()

@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// <summary>
     /// Change log header, display <see cref="APIChangelogBuild"/> title
     /// </summary>
-    public class ChangelogHeader : BreadcrumbControlOverlayHeader
+    public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
     {
         public readonly Bindable<APIChangelogBuild> Build = new();
 
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         protected override OverlayTitle CreateTitle() => new ChangelogHeaderTitle();
 
-        private class ChangelogHeaderTitle : OverlayTitle
+        private partial class ChangelogHeaderTitle : OverlayTitle
         {
             public ChangelogHeaderTitle()
             {

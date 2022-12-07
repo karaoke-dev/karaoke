@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 {
-    public class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<NotePropertyChangeHandler, Note>
+    public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<NotePropertyChangeHandler, Note>
     {
         [Test]
         public void TestChangeText()

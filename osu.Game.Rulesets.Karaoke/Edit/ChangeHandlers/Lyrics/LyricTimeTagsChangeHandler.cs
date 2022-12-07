@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, ILyricTimeTagsChangeHandler
+    public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, ILyricTimeTagsChangeHandler
     {
         public void SetTimeTagTime(TimeTag timeTag, double time)
         {

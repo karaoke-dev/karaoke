@@ -11,7 +11,7 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers
 {
-    public abstract class BindableScrollContainer : ZoomableScrollContainer
+    public abstract partial class BindableScrollContainer : ZoomableScrollContainer
     {
         protected readonly BindableFloat BindableZoom = new();
         protected readonly BindableFloat BindableCurrent = new();

@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
+    public partial class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
     {
         public override string Name => "Windows update";
         public override string Acronym => "WD";
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             return false;
         }
 
-        private class WindowsUpdateContainer : Container
+        private partial class WindowsUpdateContainer : Container
         {
             public WindowsUpdateContainer()
             {
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 };
             }
 
-            private class LoadingIcon : ModIcon
+            private partial class LoadingIcon : ModIcon
             {
                 public LoadingIcon()
                     : base(new KaraokeModWindowsUpdate())

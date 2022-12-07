@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// <summary>
     /// Display <see cref="APIChangelogBuild"/> detail
     /// </summary>
-    public class ChangelogSingleBuild : ChangelogContent
+    public partial class ChangelogSingleBuild : ChangelogContent
     {
         private readonly APIChangelogBuild build;
 
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
         }
 
-        public class ChangelogBuildWithNavigation : ChangelogBuild
+        public partial class ChangelogBuildWithNavigation : ChangelogBuild
         {
             public ChangelogBuildWithNavigation(APIChangelogBuild build)
                 : base(build)
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
         }
 
-        private class NavigationIconButton : IconButton
+        private partial class NavigationIconButton : IconButton
         {
             public Action<APIChangelogBuild> SelectBuild;
 

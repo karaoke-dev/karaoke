@@ -20,7 +20,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
     // refactor this shit
-    public class LabelledColourSelector : LabelledComponent<LabelledColourSelector.ColourSelectorDisplay, Colour4>
+    public partial class LabelledColourSelector : LabelledComponent<LabelledColourSelector.ColourSelectorDisplay, Colour4>
     {
         public LabelledColourSelector()
             : base(true)
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         protected override ColourSelectorDisplay CreateComponent()
             => new();
 
-        public class ColourSelectorDisplay : CompositeDrawable, IHasCurrentValue<Colour4>, IHasPopover
+        public partial class ColourSelectorDisplay : CompositeDrawable, IHasCurrentValue<Colour4>, IHasPopover
         {
             private readonly BindableWithCurrent<Colour4> current = new();
 

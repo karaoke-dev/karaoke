@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
-    public class SingerInfo : Container
+    public partial class SingerInfo : Container
     {
         private readonly Lyric lyric;
         private readonly SingerDisplay singerDisplay;

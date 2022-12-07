@@ -16,7 +16,7 @@ using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class LyricPlayfield : Playfield
+    public partial class LyricPlayfield : Playfield
     {
         private readonly Bindable<Lyric[]> singingLyrics = new();
 

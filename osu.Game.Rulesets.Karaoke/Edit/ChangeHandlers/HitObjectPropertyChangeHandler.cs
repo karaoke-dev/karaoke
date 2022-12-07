@@ -10,7 +10,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public abstract class HitObjectPropertyChangeHandler<THitObject> : HitObjectChangeHandler<THitObject> where THitObject : HitObject
+    public abstract partial class HitObjectPropertyChangeHandler<THitObject> : HitObjectChangeHandler<THitObject> where THitObject : HitObject
     {
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }

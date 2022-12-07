@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     /// <summary>
     /// A test scene for skinnable karaoke components.
     /// </summary>
-    public abstract class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
+    public abstract partial class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
     {
         protected const double START_TIME = 1000000000;
         protected const double DURATION = 1000000000;

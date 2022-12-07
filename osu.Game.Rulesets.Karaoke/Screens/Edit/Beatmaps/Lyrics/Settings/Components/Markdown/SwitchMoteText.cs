@@ -14,7 +14,7 @@ using osu.Game.Overlays;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown
 {
-    public class SwitchMoteText : OsuMarkdownLinkText
+    public partial class SwitchMoteText : OsuMarkdownLinkText
     {
         [Resolved, AllowNull]
         private ILyricEditorState state { get; set; }

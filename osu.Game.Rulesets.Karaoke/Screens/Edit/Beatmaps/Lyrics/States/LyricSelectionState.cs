@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
 {
-    public class LyricSelectionState : Component, ILyricSelectionState
+    public partial class LyricSelectionState : Component, ILyricSelectionState
     {
         public IBindable<bool> Selecting => selecting;
 

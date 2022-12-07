@@ -25,7 +25,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.States
 {
     [HeadlessTest]
-    public class LyricCaretStateTest : OsuTestScene
+    public partial class LyricCaretStateTest : OsuTestScene
     {
         private readonly IBeatmap beatmap;
         private ILyricEditorState state = null!;

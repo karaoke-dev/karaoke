@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.ReferenceLyric
 {
-    public class ReferenceLyricDetectorConfigPopover : GeneratorConfigPopover<ReferenceLyricDetectorConfig>
+    public partial class ReferenceLyricDetectorConfigPopover : GeneratorConfigPopover<ReferenceLyricDetectorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig;
 

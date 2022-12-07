@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class LyricTooltip : BackgroundToolTip<Lyric>
+    public partial class LyricTooltip : BackgroundToolTip<Lyric>
     {
         private Lyric lastLyric;
 

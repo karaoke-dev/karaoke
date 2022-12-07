@@ -23,7 +23,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
 {
-    public class NotePlayfieldPreview : SettingsSubsectionPreview
+    public partial class NotePlayfieldPreview : SettingsSubsectionPreview
     {
         private const int columns = 9;
 

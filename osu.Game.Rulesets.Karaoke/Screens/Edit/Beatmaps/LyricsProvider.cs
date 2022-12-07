@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 {
-    public class LyricsProvider : Component, ILyricsProvider
+    public partial class LyricsProvider : Component, ILyricsProvider
     {
         /// <summary>
         /// Get the bindable lyrics with sorted order.

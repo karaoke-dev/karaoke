@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 {
-    public abstract class OrderRearrangeableListContainer<TModel> : OsuRearrangeableListContainer<TModel>
+    public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearrangeableListContainer<TModel>
     {
         public event Action<TModel, int> OnOrderChanged;
 

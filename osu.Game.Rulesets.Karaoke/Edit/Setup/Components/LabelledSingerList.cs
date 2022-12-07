@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 {
-    public class LabelledSingerList : LabelledDrawable<SingerList>
+    public partial class LabelledSingerList : LabelledDrawable<SingerList>
     {
         public LabelledSingerList()
             : base(true)

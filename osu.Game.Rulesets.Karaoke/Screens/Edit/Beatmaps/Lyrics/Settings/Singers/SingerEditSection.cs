@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singers
 {
-    public class SingerEditSection : LyricPropertySection
+    public partial class SingerEditSection : LyricPropertySection
     {
         private readonly IBindableList<ISinger> bindableSingers = new BindableList<ISinger>();
         private readonly IBindableList<int> singerIndexes = new BindableList<int>();
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singer
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
 
-        public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<ISinger>
+        public partial class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<ISinger>
         {
             private const float avatar_size = 48f;
 

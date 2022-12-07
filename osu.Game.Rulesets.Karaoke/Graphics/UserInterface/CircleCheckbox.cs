@@ -20,7 +20,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
+    public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     {
         private const float expanded_size = 24;
 

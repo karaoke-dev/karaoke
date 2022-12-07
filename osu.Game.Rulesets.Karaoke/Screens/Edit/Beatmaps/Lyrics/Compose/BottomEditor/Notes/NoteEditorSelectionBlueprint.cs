@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
     /// <summary>
     /// Copy from <see cref="NoteSelectionBlueprint"/>
     /// </summary>
-    public class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IHasPopover
+    public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IHasPopover
     {
         private readonly IBindable<double> timeRange = new BindableDouble();
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();

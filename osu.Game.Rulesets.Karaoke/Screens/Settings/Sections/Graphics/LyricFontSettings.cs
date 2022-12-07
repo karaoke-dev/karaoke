@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics
 {
-    public class LyricFontSettings : KaraokeSettingsSubsection
+    public partial class LyricFontSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Lyric font";
 

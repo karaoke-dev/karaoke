@@ -18,7 +18,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class SettingOverlayContainer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>, ISettingHUDOverlay
+    public partial class SettingOverlayContainer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>, ISettingHUDOverlay
     {
         private GeneralSettingOverlay generalSettingsOverlay;
 

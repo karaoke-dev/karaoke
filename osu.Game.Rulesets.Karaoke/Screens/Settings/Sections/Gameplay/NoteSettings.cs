@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
 {
-    public class NoteSettings : KaraokeSettingsSubsection
+    public partial class NoteSettings : KaraokeSettingsSubsection
     {
         protected override LocalisableString Header => "Note";
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
             };
         }
 
-        private class TimeSlider : OsuSliderBar<double>
+        private partial class TimeSlider : OsuSliderBar<double>
         {
             public override LocalisableString TooltipText => Current.Value.ToString("N0") + "ms";
         }

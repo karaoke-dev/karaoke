@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.EditLyric
 {
-    public class EditLyricStepScreen : LyricImporterStepScreenWithLyricEditor
+    public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Edit lyric";
 

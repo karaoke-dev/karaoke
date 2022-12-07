@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public class LockChangeHandler : HitObjectPropertyChangeHandler<KaraokeHitObject>, ILockChangeHandler
+    public partial class LockChangeHandler : HitObjectPropertyChangeHandler<KaraokeHitObject>, ILockChangeHandler
     {
         public void Lock(LockState lockState)
         {

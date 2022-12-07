@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public class EditReferenceLyricModeState : Component, IEditReferenceLyricModeState
+public partial class EditReferenceLyricModeState : Component, IEditReferenceLyricModeState
 {
     private readonly Bindable<ReferenceLyricEditMode> bindableEditMode = new();
 

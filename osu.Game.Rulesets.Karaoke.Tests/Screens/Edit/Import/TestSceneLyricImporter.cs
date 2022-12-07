@@ -20,7 +20,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
 {
     [TestFixture]
-    public class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
+    public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
             }
         }
 
-        public class TestLyricImporter : LyricImporter
+        public partial class TestLyricImporter : LyricImporter
         {
             public TestLyricImporter(FileInfo fileInfo)
             {

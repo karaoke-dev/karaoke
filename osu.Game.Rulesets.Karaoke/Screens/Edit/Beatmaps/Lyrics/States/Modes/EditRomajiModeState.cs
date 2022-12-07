@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
 {
-    public class EditRomajiModeState : ModeStateWithBlueprintContainer<RomajiTag>, IEditRomajiModeState
+    public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<RomajiTag>, IEditRomajiModeState
     {
         private readonly Bindable<RomajiTagEditMode> bindableEditMode = new();
 

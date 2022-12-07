@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Language
 {
-    public class LanguageDetectorConfigPopover : GeneratorConfigPopover<LanguageDetectorConfig>
+    public partial class LanguageDetectorConfigPopover : GeneratorConfigPopover<LanguageDetectorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig;
 

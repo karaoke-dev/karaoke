@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
 {
-    public class RightTriangle : Sprite
+    public partial class RightTriangle : Sprite
     {
         /// <summary>
         /// Creates a new right triangle with a white pixel as texture.

@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    internal class LyricColorSection : StyleSection
+    internal partial class LyricColorSection : StyleSection
     {
         private LabelledEnumDropdown<ColorArea> colorAreaDropdown;
         private LabelledColourSelector colorPicker;

@@ -8,7 +8,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public class DrawableDetailLyricList : DrawableLyricList
+    public partial class DrawableDetailLyricList : DrawableLyricList
     {
         protected override Vector2 Spacing => new();
 

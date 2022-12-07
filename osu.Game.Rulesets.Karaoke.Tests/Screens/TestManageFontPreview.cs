@@ -13,7 +13,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public class TestManageFontPreview : OsuTestScene
+    public partial class TestManageFontPreview : OsuTestScene
     {
         private readonly NowPlayingOverlay np;
 

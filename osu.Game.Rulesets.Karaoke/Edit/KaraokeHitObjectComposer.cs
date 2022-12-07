@@ -34,7 +34,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
+    public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditorRuleset drawableRuleset;
 

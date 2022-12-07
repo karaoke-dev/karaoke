@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets
 {
-    public class MoveToNextIndexButton : MoveToCaretPositionButton
+    public partial class MoveToNextIndexButton : MoveToCaretPositionButton
     {
         protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToNextIndex;
 

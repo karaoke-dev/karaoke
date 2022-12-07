@@ -10,7 +10,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneStatisticsPanel : OsuTestScene
+    public partial class TestSceneStatisticsPanel : OsuTestScene
     {
         [Test]
         public void TestScoreWithStatistics()

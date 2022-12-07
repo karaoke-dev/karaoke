@@ -11,7 +11,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
 {
-    public class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>, ITimeTagModeState
+    public partial class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>, ITimeTagModeState
     {
         private readonly Bindable<TimeTagEditMode> bindableEditMode = new();
 

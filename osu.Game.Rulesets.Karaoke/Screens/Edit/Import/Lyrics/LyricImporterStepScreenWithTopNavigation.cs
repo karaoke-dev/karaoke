@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public abstract class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
+    public abstract partial class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
     {
         protected LyricImporterStepScreenWithTopNavigation()
         {

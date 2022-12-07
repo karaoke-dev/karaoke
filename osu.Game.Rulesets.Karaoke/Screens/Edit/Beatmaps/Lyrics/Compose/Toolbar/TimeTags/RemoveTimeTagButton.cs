@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class RemoveTimeTagButton : KeyActionButton
+    public partial class RemoveTimeTagButton : KeyActionButton
     {
         protected override KaraokeEditAction EditAction => KaraokeEditAction.RemoveTimeTag;
 

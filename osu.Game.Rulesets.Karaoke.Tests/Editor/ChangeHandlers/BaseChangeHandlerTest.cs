@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
     /// Should inherit <see cref="OsuTestScene"/> because all change handler need the injecting to get the value.
     /// </summary>
     [HeadlessTest]
-    public abstract class BaseChangeHandlerTest<TChangeHandler> : EditorClockTestScene where TChangeHandler : Component, new()
+    public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorClockTestScene where TChangeHandler : Component, new()
     {
         private TChangeHandler changeHandler = null!;
 
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             });
         }
 
-        private class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
+        private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
         {
             public event Action? OnStateChange;
 

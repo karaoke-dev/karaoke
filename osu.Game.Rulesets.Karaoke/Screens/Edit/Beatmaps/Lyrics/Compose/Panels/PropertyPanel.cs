@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels
 {
-    public class PropertyPanel : Panel
+    public partial class PropertyPanel : Panel
     {
         public PropertyPanel()
         {

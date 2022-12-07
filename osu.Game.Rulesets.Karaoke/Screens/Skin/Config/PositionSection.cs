@@ -12,7 +12,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
-    internal class PositionSection : LyricConfigSection
+    internal partial class PositionSection : LyricConfigSection
     {
         private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 

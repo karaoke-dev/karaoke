@@ -11,7 +11,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public abstract class BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject> : BaseChangeHandlerTest<TChangeHandler>
+    public abstract partial class BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject> : BaseChangeHandlerTest<TChangeHandler>
         where TChangeHandler : HitObjectChangeHandler<THitObject>, new() where THitObject : HitObject
     {
         protected void AssertHitObject(Action<THitObject> assert)

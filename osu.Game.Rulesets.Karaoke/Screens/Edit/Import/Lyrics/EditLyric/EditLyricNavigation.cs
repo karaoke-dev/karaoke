@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.EditLyric
 {
-    public class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
+    public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
     {
         private const string typing_mode = "TYPING_MODE";
         private const string split_mode = "SPLIT_MODE";
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.EditLyric
         protected override bool AbleToNextStep(NavigationState value)
             => true;
 
-        private class EditLyricTextFlowContainer : NavigationTextContainer
+        private partial class EditLyricTextFlowContainer : NavigationTextContainer
         {
             public EditLyricTextFlowContainer(EditLyricStepScreen screen)
             {

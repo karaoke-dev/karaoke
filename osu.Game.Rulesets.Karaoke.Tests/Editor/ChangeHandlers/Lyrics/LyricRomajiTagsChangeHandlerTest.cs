@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRomajiTagsChangeHandler>
+    public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRomajiTagsChangeHandler>
     {
         [Test]
         public void TestAdd()

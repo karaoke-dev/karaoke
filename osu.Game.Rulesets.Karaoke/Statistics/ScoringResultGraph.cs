@@ -24,7 +24,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class ScoringResultGraph : CompositeDrawable
+    public partial class ScoringResultGraph : CompositeDrawable
     {
         private readonly Box background;
         private readonly ScoringResultLyricPreview lyricGraph;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         }
 
         // todo: refactor needed.
-        public class LyricPreview : CompositeDrawable
+        public partial class LyricPreview : CompositeDrawable
         {
             public Bindable<Lyric> SelectedLyric { get; } = new();
 
@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
             protected virtual ClickableLyric CreateLyricContainer(Lyric lyric) => new(lyric);
 
-            public class ClickableLyric : ClickableContainer
+            public partial class ClickableLyric : ClickableContainer
             {
                 private const float fade_duration = 100;
 
@@ -204,7 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        private class ScoringResultLyricPreview : LyricPreview
+        private partial class ScoringResultLyricPreview : LyricPreview
         {
             public ScoringResultLyricPreview(IBeatmap beatmap)
                 : base(beatmap.HitObjects.OfType<Lyric>())
@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             protected override ClickableLyric CreateLyricContainer(Lyric lyric)
                 => new ScoringResultClickableLyric(lyric);
 
-            private class ScoringResultClickableLyric : ClickableLyric
+            private partial class ScoringResultClickableLyric : ClickableLyric
             {
                 public ScoringResultClickableLyric(Lyric lyric)
                     : base(lyric)
@@ -235,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        private class NoteGraph : CompositeDrawable
+        private partial class NoteGraph : CompositeDrawable
         {
             public NoteGraph(ScoreInfo score)
             {
@@ -249,7 +249,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 // todo : add list of note colors to present state.
             }
 
-            internal class DrawableNote : Box
+            internal partial class DrawableNote : Box
             {
                 internal DrawableNote(HitResult result)
                 {

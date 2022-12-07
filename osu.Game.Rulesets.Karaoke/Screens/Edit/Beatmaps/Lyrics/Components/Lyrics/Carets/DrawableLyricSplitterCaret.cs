@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricSplitterCaret : DrawableLyricTextCaret<CuttingCaretPosition>
+    public partial class DrawableLyricSplitterCaret : DrawableLyricTextCaret<CuttingCaretPosition>
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;

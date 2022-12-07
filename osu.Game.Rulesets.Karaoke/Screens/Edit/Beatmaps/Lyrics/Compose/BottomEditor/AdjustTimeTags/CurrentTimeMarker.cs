@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public class CurrentTimeMarker : CompositeDrawable
+    public partial class CurrentTimeMarker : CompositeDrawable
     {
         private const float triangle_width = 15;
         private const float triangle_height = 10;

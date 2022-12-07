@@ -13,7 +13,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
 {
-    public abstract class PreviewRow : Row
+    public abstract partial class PreviewRow : Row
     {
         protected const int DEFAULT_HEIGHT = 75;
 

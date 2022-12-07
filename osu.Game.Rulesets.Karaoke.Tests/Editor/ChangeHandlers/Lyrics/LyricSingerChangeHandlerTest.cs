@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricSingerChangeHandler>
+    public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricSingerChangeHandler>
     {
         [Test]
         public void TestAdd()

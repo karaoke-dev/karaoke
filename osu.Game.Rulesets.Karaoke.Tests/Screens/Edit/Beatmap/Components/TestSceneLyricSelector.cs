@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Components
 {
-    public class TestSceneLyricSelector : OsuManualInputManagerTestScene
+    public partial class TestSceneLyricSelector : OsuManualInputManagerTestScene
     {
         [Cached(typeof(EditorBeatmap))]
         private readonly EditorBeatmap editorBeatmap;

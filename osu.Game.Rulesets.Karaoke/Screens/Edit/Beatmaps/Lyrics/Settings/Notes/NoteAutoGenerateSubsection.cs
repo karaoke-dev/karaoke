@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
     /// But need to make sure that lyric should not have any <see cref="LyricTimeTagIssue"/>
     /// If found any issue, will navigate to target lyric.
     /// </summary>
-    public class NoteAutoGenerateSubsection : AutoGenerateSubsection
+    public partial class NoteAutoGenerateSubsection : AutoGenerateSubsection
     {
         private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
 
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
         protected override ConfigButton CreateConfigButton()
             => new NoteAutoGenerateConfigButton();
 
-        protected class NoteAutoGenerateConfigButton : ConfigButton
+        protected partial class NoteAutoGenerateConfigButton : ConfigButton
         {
             public override Popover GetPopover()
                 => new NoteGeneratorConfigPopover();

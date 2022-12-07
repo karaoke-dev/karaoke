@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
 {
-    public class SingerRearrangeableList : OrderRearrangeableListContainer<ISinger>
+    public partial class SingerRearrangeableList : OrderRearrangeableListContainer<ISinger>
     {
         protected override Vector2 Spacing => new(0, 5);
 

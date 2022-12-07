@@ -26,7 +26,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeInputManager : RulesetInputManager<KaraokeScoringAction>
+    public partial class KaraokeInputManager : RulesetInputManager<KaraokeScoringAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
             : base(ruleset, 0, SimultaneousBindingMode.All)

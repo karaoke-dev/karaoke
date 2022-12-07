@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public abstract class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
+    public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
 
-        protected abstract class TextTagSelectionHandler : BindableSelectionHandler
+        protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
         {
             [Resolved]
             private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }

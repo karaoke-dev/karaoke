@@ -12,7 +12,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     [TestFixture]
-    public class TestSceneLyricTooltip : OsuTestScene
+    public partial class TestSceneLyricTooltip : OsuTestScene
     {
         private LyricTooltip toolTip = null!;
 

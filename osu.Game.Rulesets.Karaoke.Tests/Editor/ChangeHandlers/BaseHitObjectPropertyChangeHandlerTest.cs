@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public abstract class BaseHitObjectPropertyChangeHandlerTest<TChangeHandler, THitObject> : BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject>
+    public abstract partial class BaseHitObjectPropertyChangeHandlerTest<TChangeHandler, THitObject> : BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject>
         where TChangeHandler : HitObjectPropertyChangeHandler<THitObject>, new() where THitObject : HitObject
     {
         protected void TriggerHandlerChangedWithChangeForbiddenException(Action<TChangeHandler> c)

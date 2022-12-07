@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
 {
-    public class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyTag>
+    public partial class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;

@@ -21,7 +21,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 {
-    public class Header : Container
+    public partial class Header : Container
     {
         public const float HEIGHT = 80;
 
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
             background.Colour = colourProvider.Background5;
         }
 
-        private class LyricImporterHeaderTitle : CompositeDrawable
+        private partial class LyricImporterHeaderTitle : CompositeDrawable
         {
             private const float spacing = 6;
 
@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
             }
         }
 
-        private class HeaderBreadcrumbControl : ScreenBreadcrumbControl
+        private partial class HeaderBreadcrumbControl : ScreenBreadcrumbControl
         {
             public HeaderBreadcrumbControl(ScreenStack stack)
                 : base(stack)
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
                 AccentColour = AccentColour
             };
 
-            private class HeaderBreadcrumbTabItem : BreadcrumbTabItem
+            private partial class HeaderBreadcrumbTabItem : BreadcrumbTabItem
             {
                 public HeaderBreadcrumbTabItem(IScreen value)
                     : base(value)

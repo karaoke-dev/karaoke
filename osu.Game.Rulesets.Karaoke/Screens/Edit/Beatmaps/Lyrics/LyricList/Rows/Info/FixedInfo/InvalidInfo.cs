@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo
 {
-    public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>
+    public partial class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>
     {
         // todo : might able to have auto-fix option by right-click
         public MenuItem[] ContextMenuItems => Array.Empty<MenuItem>();

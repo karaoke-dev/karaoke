@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricRubyTagsChangeHandler : LyricTextTagsChangeHandler<RubyTag>, ILyricRubyTagsChangeHandler
+    public partial class LyricRubyTagsChangeHandler : LyricTextTagsChangeHandler<RubyTag>, ILyricRubyTagsChangeHandler
     {
         protected override bool ContainsInLyric(Lyric lyric, RubyTag textTag)
             => lyric.RubyTags.Contains(textTag);

@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModFlashlight : KaraokeModTestScene
+    public partial class TestSceneKaraokeModFlashlight : KaraokeModTestScene
     {
         [Test]
         public void TestFlashlightExist() => CreateModTest(new ModTestData

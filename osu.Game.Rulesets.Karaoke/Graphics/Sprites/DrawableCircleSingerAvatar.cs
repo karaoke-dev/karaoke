@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
-    public class DrawableCircleSingerAvatar : DrawableSingerAvatar
+    public partial class DrawableCircleSingerAvatar : DrawableSingerAvatar
     {
         private readonly IBindable<float> bindableHue = new Bindable<float>();
 

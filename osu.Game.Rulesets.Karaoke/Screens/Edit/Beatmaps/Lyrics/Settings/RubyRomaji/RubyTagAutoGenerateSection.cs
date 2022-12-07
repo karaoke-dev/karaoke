@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RubyTags
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
+    public partial class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
     {
         public RubyTagAutoGenerateSection()
         {
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             };
         }
 
-        private class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
+        private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
         {
             public RubyTagAutoGenerateSubsection()
                 : base(LyricAutoGenerateProperty.AutoGenerateRubyTags)
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             protected override ConfigButton CreateConfigButton()
                 => new RubyTagAutoGenerateConfigButton();
 
-            protected class RubyTagAutoGenerateConfigButton : MultiConfigButton
+            protected partial class RubyTagAutoGenerateConfigButton : MultiConfigButton
             {
                 protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
                 {

@@ -14,7 +14,7 @@ using static osu.Game.Screens.Select.BeatmapInfoWedge;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class BeatmapInfoGraph : ClickableContainer
+    public partial class BeatmapInfoGraph : ClickableContainer
     {
         [Resolved(CanBeNull = true)]
         private OsuGame game { get; set; }
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value), Add);
         }
 
-        public class BeatmapInfoWedge : WedgeInfoText
+        public partial class BeatmapInfoWedge : WedgeInfoText
         {
             public BeatmapInfoWedge(WorkingBeatmap beatmap)
                 : base(beatmap, new KaraokeRuleset().RulesetInfo)

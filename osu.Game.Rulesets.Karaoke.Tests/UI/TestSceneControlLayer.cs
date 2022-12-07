@@ -12,7 +12,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestSceneControlLayer : OsuTestScene
+    public partial class TestSceneControlLayer : OsuTestScene
     {
         public SettingOverlayContainer SettingOverlayContainer { get; set; } = null!;
 

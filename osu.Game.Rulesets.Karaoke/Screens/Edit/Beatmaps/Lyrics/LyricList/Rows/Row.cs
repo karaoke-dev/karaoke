@@ -21,7 +21,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
 {
-    public abstract class Row : CompositeDrawable
+    public abstract partial class Row : CompositeDrawable
     {
         public const int SELECT_AREA_WIDTH = 48;
 
@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
             Focus
         }
 
-        public class SelectArea : CompositeDrawable
+        public partial class SelectArea : CompositeDrawable
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
             private readonly IBindable<bool> selecting = new Bindable<bool>();

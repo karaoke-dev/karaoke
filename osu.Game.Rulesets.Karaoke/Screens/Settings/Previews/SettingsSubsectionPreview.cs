@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews
 {
-    public abstract class SettingsSubsectionPreview : Container
+    public abstract partial class SettingsSubsectionPreview : Container
     {
         private const double transition_time = 1000;
 

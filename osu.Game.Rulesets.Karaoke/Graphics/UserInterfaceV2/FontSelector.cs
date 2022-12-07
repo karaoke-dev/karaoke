@@ -28,7 +28,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsage>
+    public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsage>
     {
         private readonly SpriteText previewText;
         private readonly FontFamilyPropertyList familyProperty;
@@ -248,17 +248,17 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             fontStore?.RemoveStore(localFontStore);
         }
 
-        internal class FontFamilyPropertyList : FontPropertyList<string>
+        internal partial class FontFamilyPropertyList : FontPropertyList<string>
         {
             protected override RearrangeableTextFlowListContainer<string> CreateRearrangeableListContainer()
                 => new RearrangeableFontFamilyListContainer();
 
-            private class RearrangeableFontFamilyListContainer : RearrangeableTextFlowListContainer<string>
+            private partial class RearrangeableFontFamilyListContainer : RearrangeableTextFlowListContainer<string>
             {
                 protected override DrawableTextListItem CreateDrawable(string item)
                     => new DrawableFontFamilyListItem(item);
 
-                private class DrawableFontFamilyListItem : DrawableTextListItem
+                private partial class DrawableFontFamilyListItem : DrawableTextListItem
                 {
                     [Resolved]
                     private FontManager fontManager { get; set; }
@@ -287,7 +287,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 }
             }
 
-            private class FontFormatBadge : Container
+            private partial class FontFormatBadge : Container
             {
                 private readonly FontFormat fontFormat;
                 private readonly Box box;
@@ -335,7 +335,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             }
         }
 
-        internal class FontPropertyList<T> : CompositeDrawable
+        internal partial class FontPropertyList<T> : CompositeDrawable
         {
             private readonly CornerBackground background;
             private readonly TextPropertySearchTextBox filter;
@@ -409,7 +409,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 background.Colour = colours.ContextMenuGray;
             }
 
-            private class TextPropertySearchTextBox : SearchTextBox
+            private partial class TextPropertySearchTextBox : SearchTextBox
             {
                 protected override Color4 SelectionColour => Color4.Gray;
 

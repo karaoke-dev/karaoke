@@ -21,7 +21,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels;
 
-public class IssueSection : PanelSection
+public partial class IssueSection : PanelSection
 {
     protected override LocalisableString Title => "Issues";
 
@@ -87,7 +87,7 @@ public class IssueSection : PanelSection
     }
 
     // todo: change the style.
-    private class EmptyIssue : ClickableContainer
+    private partial class EmptyIssue : ClickableContainer
     {
         [BackgroundDependencyLoader]
         private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricEditorVerifier verifier, OsuColour colours)
@@ -146,7 +146,7 @@ public class IssueSection : PanelSection
         }
     }
 
-    private class SingleLyricIssueTable : IssueTable
+    private partial class SingleLyricIssueTable : IssueTable
     {
         public SingleLyricIssueTable()
         {

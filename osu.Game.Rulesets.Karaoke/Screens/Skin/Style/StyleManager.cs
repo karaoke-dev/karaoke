@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    public class StyleManager : Component
+    public partial class StyleManager : Component
     {
         public readonly Bindable<LyricStyle> EditStyle = new();
 

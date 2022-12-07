@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji
 {
-    public class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRomajiStepScreen>
+    public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRomajiStepScreen>
     {
         private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
         private const string auto_generate_romaji = "AUTO_GENERATE_ROMAJI";
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaj
         protected override bool AbleToNextStep(NavigationState value)
             => value is NavigationState.Initial or NavigationState.Working or NavigationState.Done;
 
-        private class GenerateRubyTextFlowContainer : NavigationTextContainer
+        private partial class GenerateRubyTextFlowContainer : NavigationTextContainer
         {
             public GenerateRubyTextFlowContainer(GenerateRubyRomajiStepScreen screen)
             {

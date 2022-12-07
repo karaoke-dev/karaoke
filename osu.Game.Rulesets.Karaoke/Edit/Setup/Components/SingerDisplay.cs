@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
     /// <summary>
     /// A component which displays a singer along with related description text.
     /// </summary>
-    public class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
+    public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
     {
         /// <summary>
         /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name, true);
         }
 
-        private class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
+        private partial class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
         {
             public Bindable<Singer> Current { get; } = new();
 

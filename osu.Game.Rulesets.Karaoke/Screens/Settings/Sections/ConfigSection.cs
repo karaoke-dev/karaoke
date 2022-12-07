@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections
 {
-    public class ConfigSection : KaraokeSettingsSection
+    public partial class ConfigSection : KaraokeSettingsSection
     {
         public override LocalisableString Header => "Config";
 

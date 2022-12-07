@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public class LanguageAutoGenerateSubsection : AutoGenerateSubsection
+    public partial class LanguageAutoGenerateSubsection : AutoGenerateSubsection
     {
         private const string typing_mode = "TYPING_MODE";
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
         protected override ConfigButton CreateConfigButton()
             => new LanguageAutoGenerateConfigButton();
 
-        protected class LanguageAutoGenerateConfigButton : ConfigButton
+        protected partial class LanguageAutoGenerateConfigButton : ConfigButton
         {
             public override Popover GetPopover()
                 => new LanguageDetectorConfigPopover();

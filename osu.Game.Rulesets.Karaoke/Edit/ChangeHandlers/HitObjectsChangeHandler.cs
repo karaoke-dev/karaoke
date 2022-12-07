@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public abstract class HitObjectsChangeHandler<THitObject> : HitObjectChangeHandler<THitObject> where THitObject : HitObject
+    public abstract partial class HitObjectsChangeHandler<THitObject> : HitObjectChangeHandler<THitObject> where THitObject : HitObject
     {
     }
 }

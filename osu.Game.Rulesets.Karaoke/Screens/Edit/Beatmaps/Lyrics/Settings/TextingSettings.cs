@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public class TextingSettings : LyricEditorSettings
+    public partial class TextingSettings : LyricEditorSettings
     {
         public override SettingsDirection Direction => SettingsDirection.Right;
 

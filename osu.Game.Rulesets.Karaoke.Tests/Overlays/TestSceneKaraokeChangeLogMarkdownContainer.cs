@@ -14,7 +14,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
     [TestFixture]
-    public class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
+    public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
     {
         private ChangeLogMarkdownContainer markdownContainer = null!;
 

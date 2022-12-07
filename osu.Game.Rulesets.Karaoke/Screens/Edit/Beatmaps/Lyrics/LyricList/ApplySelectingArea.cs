@@ -21,7 +21,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
 {
-    public class ApplySelectingArea : CompositeDrawable
+    public partial class ApplySelectingArea : CompositeDrawable
     {
         private const float spacing = 10;
         private const float button_width = 100;
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
             }
         }
 
-        public class SelectAllArea : CompositeDrawable
+        public partial class SelectAllArea : CompositeDrawable
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
             private readonly IBindableDictionary<Lyric, LocalisableString> disableSelectingLyrics = new BindableDictionary<Lyric, LocalisableString>();
@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
             }
         }
 
-        public class ActionButton : OsuButton
+        public partial class ActionButton : OsuButton
         {
             public ActionButton()
             {

@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public class LanguageSwitchSpecialActionSection : SpecialActionSection<LanguageEditModeSpecialAction>
+    public partial class LanguageSwitchSpecialActionSection : SpecialActionSection<LanguageEditModeSpecialAction>
     {
         protected override string SwitchActionTitle => "Special actions";
         protected override string SwitchActionDescription => "Auto-generate or batch change the language by hands.";

@@ -13,7 +13,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public abstract class KaraokeSkinEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeSkinEditorScreen
+    public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeSkinEditorScreen
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);

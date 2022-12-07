@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
 {
-    public class CreateNewLyricPreviewRow : PreviewRow
+    public partial class CreateNewLyricPreviewRow : PreviewRow
     {
         [Resolved]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }

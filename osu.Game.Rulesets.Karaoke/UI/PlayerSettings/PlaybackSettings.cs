@@ -13,7 +13,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
+    public partial class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
         private readonly ClickablePlayerSliderBar playBackSliderBar;
 

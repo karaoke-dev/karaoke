@@ -26,7 +26,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeSelectionHandler : EditorSelectionHandler
+    public partial class KaraokeSelectionHandler : EditorSelectionHandler
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

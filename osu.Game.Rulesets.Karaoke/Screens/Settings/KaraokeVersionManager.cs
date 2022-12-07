@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class KaraokeVersionManager : VisibilityContainer
+    public partial class KaraokeVersionManager : VisibilityContainer
     {
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, TextureStore textures)

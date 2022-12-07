@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class KaraokePlayfield : ScrollingPlayfield
+    public partial class KaraokePlayfield : ScrollingPlayfield
     {
         [Resolved]
         private IBindable<WorkingBeatmap> beatmap { get; set; }

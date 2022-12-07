@@ -10,11 +10,11 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public abstract class TextTagAutoGenerateSection : LyricEditorSection
+    public abstract partial class TextTagAutoGenerateSection : LyricEditorSection
     {
         protected sealed override LocalisableString Title => "Auto generate";
 
-        protected abstract class TextTagAutoGenerateSubsection : AutoGenerateSubsection
+        protected abstract partial class TextTagAutoGenerateSubsection : AutoGenerateSubsection
         {
             private const string language_mode = "LANGUAGE_MODE";
 

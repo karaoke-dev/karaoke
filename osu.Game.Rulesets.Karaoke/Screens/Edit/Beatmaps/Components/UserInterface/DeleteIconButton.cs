@@ -12,7 +12,7 @@ using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterface
 {
-    public class DeleteIconButton : IconButton
+    public partial class DeleteIconButton : IconButton
     {
         [Resolved]
         protected OsuColour Colours { get; private set; }

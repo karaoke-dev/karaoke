@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
-    internal class IntervalSection : LyricConfigSection
+    internal partial class IntervalSection : LyricConfigSection
     {
         private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
         private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;

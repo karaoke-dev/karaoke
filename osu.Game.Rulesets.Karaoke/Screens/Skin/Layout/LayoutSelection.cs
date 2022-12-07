@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
-    public class LayoutSelection : Section
+    public partial class LayoutSelection : Section
     {
         private const float layout_setting_horizontal_padding = 20;
 
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             */
         }
 
-        public class LayoutSelectionItem : FillFlowContainer
+        public partial class LayoutSelectionItem : FillFlowContainer
         {
             private const float selection_size = (240 - layout_setting_horizontal_padding * 2 - SECTION_SPACING) / 2;
 

@@ -9,7 +9,7 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji
 {
-    public class UseAutoGenerateRomajiPopupDialog : PopupDialog
+    public partial class UseAutoGenerateRomajiPopupDialog : PopupDialog
     {
         public UseAutoGenerateRomajiPopupDialog(Action<bool> okAction = null)
         {

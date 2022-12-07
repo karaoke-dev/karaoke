@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public class TestSceneNote : KaraokeHitObjectTestScene
+    public partial class TestSceneNote : KaraokeHitObjectTestScene
     {
         public TestSceneNote()
         {

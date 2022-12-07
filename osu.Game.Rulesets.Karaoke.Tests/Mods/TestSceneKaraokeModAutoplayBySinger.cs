@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModAutoplayBySinger : KaraokeModTestScene
+    public partial class TestSceneKaraokeModAutoplayBySinger : KaraokeModTestScene
     {
         [Ignore("mod auto-play will cause crash")]
         public void TestMod() => CreateModTest(new ModTestData

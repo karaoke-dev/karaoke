@@ -29,7 +29,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {
-    public class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
+    public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     {
         public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 

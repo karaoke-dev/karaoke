@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
 {
-    public class ViewOnlyLyric : InteractableLyric
+    public partial class ViewOnlyLyric : InteractableLyric
     {
         public ViewOnlyLyric(Lyric lyric)
             : base(lyric)

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
 {
-    public class SingerEditPopover : OsuPopover
+    public partial class SingerEditPopover : OsuPopover
     {
         public SingerEditPopover(Singer singer)
         {

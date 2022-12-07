@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
-    public class LayoutToolTip : BackgroundToolTip<Lyric>
+    public partial class LayoutToolTip : BackgroundToolTip<Lyric>
     {
         private const float scale = 0.4f;
 

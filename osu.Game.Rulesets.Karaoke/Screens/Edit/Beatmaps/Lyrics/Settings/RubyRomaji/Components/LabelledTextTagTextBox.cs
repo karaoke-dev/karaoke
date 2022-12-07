@@ -21,7 +21,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components
 {
-    public abstract class LabelledTextTagTextBox<T> : LabelledObjectFieldTextBox<T> where T : class, ITextTag
+    public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTextBox<T> where T : class, ITextTag
     {
         protected const float DELETE_BUTTON_SIZE = 20f;
 
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             }
         }
 
-        private class IndexShiftingPart : TabbableContainer, IKeyBindingHandler<KaraokeEditAction>
+        private partial class IndexShiftingPart : TabbableContainer, IKeyBindingHandler<KaraokeEditAction>
         {
             private const int button_size = 20;
             private const int button_spacing = 5;

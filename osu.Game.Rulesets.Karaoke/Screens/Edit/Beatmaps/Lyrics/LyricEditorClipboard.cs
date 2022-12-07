@@ -22,7 +22,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 {
-    public class LyricEditorClipboard : Component, ILyricEditorClipboard
+    public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     {
         [Resolved, AllowNull]
         private GameHost host { get; set; }

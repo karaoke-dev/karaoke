@@ -16,7 +16,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
 {
-    public class DrawableLayoutPreview : CompositeDrawable
+    public partial class DrawableLayoutPreview : CompositeDrawable
     {
         private const float scale = 0.4f;
 

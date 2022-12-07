@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
-    public class LyricTranslateTextBox : OsuTextBox
+    public partial class LyricTranslateTextBox : OsuTextBox
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

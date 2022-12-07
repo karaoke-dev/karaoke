@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
 {
-    public class ReferenceLyricAutoGenerateSection : LyricEditorSection
+    public partial class ReferenceLyricAutoGenerateSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Auto generate";
 
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             };
         }
 
-        private class ReferenceLyricAutoGenerateSubsection : AutoGenerateSubsection
+        private partial class ReferenceLyricAutoGenerateSubsection : AutoGenerateSubsection
         {
             public ReferenceLyricAutoGenerateSubsection()
                 : base(LyricAutoGenerateProperty.DetectReferenceLyric)
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             protected override ConfigButton CreateConfigButton()
                 => new ReferenceLyricAutoGenerateConfigButton();
 
-            protected class ReferenceLyricAutoGenerateConfigButton : ConfigButton
+            protected partial class ReferenceLyricAutoGenerateConfigButton : ConfigButton
             {
                 public override Popover GetPopover()
                     => new ReferenceLyricDetectorConfigPopover();

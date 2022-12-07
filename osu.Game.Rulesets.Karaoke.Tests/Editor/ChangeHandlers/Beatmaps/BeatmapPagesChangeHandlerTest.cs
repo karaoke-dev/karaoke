@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
-public class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapPagesChangeHandler>
+public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapPagesChangeHandler>
 {
     [Test]
     public void TestAdd()

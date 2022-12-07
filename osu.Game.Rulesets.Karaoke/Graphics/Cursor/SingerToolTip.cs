@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class SingerToolTip : BackgroundToolTip<ISinger>
+    public partial class SingerToolTip : BackgroundToolTip<ISinger>
     {
         private const int avatar_size = 60;
         private const int main_text_size = 24;

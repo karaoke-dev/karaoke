@@ -19,7 +19,7 @@ using SharpCompress.Archives.Zip;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Export
 {
-    public class ExportLyricManager : Component
+    public partial class ExportLyricManager : Component
     {
         [Resolved]
         private Storage storage { get; set; }

@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
     /// A labelled text box which reveals an inline file chooser when clicked.
     /// Will be replaced after has official one.
     /// </summary>
-    public class LabelledImageSelector : LabelledTextBox
+    public partial class LabelledImageSelector : LabelledTextBox
     {
     }
 }

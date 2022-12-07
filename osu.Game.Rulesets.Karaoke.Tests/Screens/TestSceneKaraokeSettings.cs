@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
     [TestFixture]
-    public class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>
+    public partial class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>
     {
         protected override KaraokeSettings CreateScreen() => new();
     }

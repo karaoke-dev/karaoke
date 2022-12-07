@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RubyTags.Ja
 {
-    public class GenericSection : GeneratorConfigSection<JaRubyTagGeneratorConfig>
+    public partial class GenericSection : GeneratorConfigSection<JaRubyTagGeneratorConfig>
     {
         private readonly LabelledSwitchButton rubyAsKatakanaSwitchButton;
         private readonly LabelledSwitchButton enableDuplicatedRubySwitchButton;

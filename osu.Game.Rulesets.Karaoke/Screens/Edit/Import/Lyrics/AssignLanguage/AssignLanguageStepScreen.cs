@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
 {
-    public class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
+    public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Language";
 

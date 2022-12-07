@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 {
-    public class DeleteLanguagePopupDialog : PopupDialog
+    public partial class DeleteLanguagePopupDialog : PopupDialog
     {
         public DeleteLanguagePopupDialog(CultureInfo currentLanguage, Action<bool> okAction = null)
         {

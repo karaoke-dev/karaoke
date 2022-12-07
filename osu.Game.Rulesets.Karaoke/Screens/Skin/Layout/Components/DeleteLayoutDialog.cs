@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
 {
-    public class DeleteLayoutDialog : PopupDialog
+    public partial class DeleteLayoutDialog : PopupDialog
     {
         public DeleteLayoutDialog(LyricLayout layout, Action deleteAction)
         {

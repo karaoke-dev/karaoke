@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.Success
 {
-    public class SuccessStepScreen : LyricImporterStepScreen
+    public partial class SuccessStepScreen : LyricImporterStepScreen
     {
         public override string Title => "Success";
 

@@ -12,7 +12,7 @@ using osu.Game.Input.Bindings;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
+    public partial class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
     {
         public KaraokeEditInputManager(RulesetInfo ruleset)
             : base(ruleset, 2, SimultaneousBindingMode.Unique, KeyCombinationMatchingMode.Modifiers)

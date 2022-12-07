@@ -18,7 +18,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public class NoteEditPropertySection : LyricPropertySection
+    public partial class NoteEditPropertySection : LyricPropertySection
     {
         protected override LocalisableString Title => "Properties";
 
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
 
-        private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
+        private partial class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
         {
             [Resolved]
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
             }
         }
 
-        private class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
+        private partial class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
         {
             [Resolved]
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
             }
         }
 
-        private class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
+        private partial class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
         {
             [Resolved]
             private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }

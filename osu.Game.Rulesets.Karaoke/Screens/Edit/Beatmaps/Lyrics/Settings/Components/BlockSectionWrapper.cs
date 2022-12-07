@@ -15,7 +15,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 {
-    public class BlockSectionWrapper : CompositeDrawable, IHasTooltip
+    public partial class BlockSectionWrapper : CompositeDrawable, IHasTooltip
     {
         public BlockSectionWrapper(IconUsage iconUsage, LocalisableString name, LocalisableString description, LocalisableString tooltip)
         {
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         public LocalisableString TooltipText { get; }
 
-        public class BlockSectionMessage : CompositeDrawable
+        public partial class BlockSectionMessage : CompositeDrawable
         {
             private FillFlowContainer textContainer { get; }
 

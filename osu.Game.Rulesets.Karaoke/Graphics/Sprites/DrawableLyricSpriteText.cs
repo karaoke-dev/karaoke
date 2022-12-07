@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
-    public class DrawableLyricSpriteText : LyricSpriteText
+    public partial class DrawableLyricSpriteText : LyricSpriteText
     {
         private readonly IBindable<string> textBindable = new Bindable<string>();
         private readonly IBindable<int> rubyTagsVersion = new Bindable<int>();

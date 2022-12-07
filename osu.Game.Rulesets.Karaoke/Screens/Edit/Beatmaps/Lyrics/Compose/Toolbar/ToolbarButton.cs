@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
     /// <summary>
     /// Base toolbar button.
     /// </summary>
-    public abstract class ToolbarButton : OsuClickableContainer
+    public abstract partial class ToolbarButton : OsuClickableContainer
     {
         public void SetIcon(Drawable icon)
         {

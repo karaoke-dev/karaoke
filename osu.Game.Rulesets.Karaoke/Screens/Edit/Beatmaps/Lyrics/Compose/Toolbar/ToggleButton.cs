@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
     /// <summary>
     /// Button for toggle open and close.
     /// </summary>
-    public abstract class ToggleButton : ToolbarButton
+    public abstract partial class ToggleButton : ToolbarButton
     {
         protected readonly Bindable<bool> Active = new();
 

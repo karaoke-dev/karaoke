@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     /// <summary>
     /// A container to be used in a <see cref="KaraokeSkinnableColumnTestScene"/> to provide a resolvable <see cref="NotePlayfield"/> dependency.
     /// </summary>
-    public class NotePlayfieldTestContainer : Container
+    public partial class NotePlayfieldTestContainer : Container
     {
         protected override Container<Drawable> Content => content;
 

@@ -14,13 +14,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
 
-public class TextingIssueSection : IssueSection
+public partial class TextingIssueSection : IssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.Texting;
 
     protected override LyricsIssueTable CreateIssueTable() => new TextingIssueTable();
 
-    private class TextingIssueTable : LyricsIssueTable
+    private partial class TextingIssueTable : LyricsIssueTable
     {
         protected override TableColumn[] CreateHeaders() => new[]
         {

@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class PracticeOverlay : SettingOverlay
+    public partial class PracticeOverlay : SettingOverlay
     {
         protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Purple;
 

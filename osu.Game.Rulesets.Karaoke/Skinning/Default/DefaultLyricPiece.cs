@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
     /// <summary>
     /// This component is focusing on display ruby and romaji.
     /// </summary>
-    public class DefaultLyricPiece : DrawableKaraokeSpriteText<LyricSpriteText>
+    public partial class DefaultLyricPiece : DrawableKaraokeSpriteText<LyricSpriteText>
     {
         private const int whole_chunk_index = -1;
 

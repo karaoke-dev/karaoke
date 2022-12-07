@@ -14,7 +14,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class LegacyColumnBackground : LegacyKaraokeColumnElement
+    public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 

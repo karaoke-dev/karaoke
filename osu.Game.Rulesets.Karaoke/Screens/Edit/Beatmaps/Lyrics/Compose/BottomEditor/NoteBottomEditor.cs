@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEdito
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor
 {
-    public class NoteBottomEditor : BaseBottomEditor
+    public partial class NoteBottomEditor : BaseBottomEditor
     {
         public override float ContentHeight => 180;
 

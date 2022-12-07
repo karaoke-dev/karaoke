@@ -22,7 +22,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class LyricsPreview : CompositeDrawable
+    public partial class LyricsPreview : CompositeDrawable
     {
         private readonly Bindable<double> bindablePreemptTime = new();
         private readonly Bindable<Lyric[]> singingLyrics = new();
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
         }
 
-        private class ClickableLyric : ClickableContainer
+        private partial class ClickableLyric : ClickableContainer
         {
             private const float fade_duration = 100;
 

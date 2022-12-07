@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
 {
-    public class CreateNewLanguageButton : IconButton, IHasPopover
+    public partial class CreateNewLanguageButton : IconButton, IHasPopover
     {
         [Resolved]
         private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }

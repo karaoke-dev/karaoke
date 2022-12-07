@@ -11,7 +11,7 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class CenterLine : Container
+    public partial class CenterLine : Container
     {
         private readonly Box centerLineBox;
 

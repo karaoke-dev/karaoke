@@ -17,7 +17,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
     [TestFixture]
-    public class TestSceneGeneratorConfigDialog : OsuTestScene
+    public partial class TestSceneGeneratorConfigDialog : OsuTestScene
     {
         [BackgroundDependencyLoader]
         private void load()

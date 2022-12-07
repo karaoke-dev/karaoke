@@ -14,7 +14,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Default
 {
-    public class DefaultBodyPiece : Container
+    public partial class DefaultBodyPiece : Container
     {
         public const float CORNER_RADIUS = 5;
 

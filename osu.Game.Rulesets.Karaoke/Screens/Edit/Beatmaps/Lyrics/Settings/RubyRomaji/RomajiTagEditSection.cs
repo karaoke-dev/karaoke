@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public class RomajiTagEditSection : TextTagEditSection<RomajiTag>
+    public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
     {
         protected override LocalisableString Title => "Romaji";
 
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
 
-        protected class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
+        protected partial class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
         {
             [Resolved]
             private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }

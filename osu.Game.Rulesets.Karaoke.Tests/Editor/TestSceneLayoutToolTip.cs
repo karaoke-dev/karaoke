@@ -18,7 +18,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneLayoutToolTip : OsuTestScene
+    public partial class TestSceneLayoutToolTip : OsuTestScene
     {
         private readonly ISkin skin = new TestingSkin(null);
         private LayoutToolTip toolTip = null!;

@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricLanguageChangeHandler : LyricPropertyChangeHandler, ILyricLanguageChangeHandler
+    public partial class LyricLanguageChangeHandler : LyricPropertyChangeHandler, ILyricLanguageChangeHandler
     {
         public void SetLanguage(CultureInfo? language)
         {

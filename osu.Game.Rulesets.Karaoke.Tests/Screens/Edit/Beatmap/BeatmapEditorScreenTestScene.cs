@@ -15,7 +15,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
-    public abstract class BeatmapEditorScreenTestScene<T> : EditorClockTestScene where T : BeatmapEditorScreen
+    public abstract partial class BeatmapEditorScreenTestScene<T> : EditorClockTestScene where T : BeatmapEditorScreen
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

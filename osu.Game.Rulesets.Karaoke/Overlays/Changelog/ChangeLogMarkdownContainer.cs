@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
-    public class ChangeLogMarkdownContainer : OsuMarkdownContainer
+    public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
     {
         public ChangeLogMarkdownContainer(APIChangelogBuild build)
         {
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         /// <summary>
         /// Re-calculate image size by changelog width.
         /// </summary>
-        public class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
+        public partial class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
             protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
 
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             /// Override <see cref="OsuMarkdownImage"/> to limit image display size
             /// </summary>
             /// <returns></returns>
-            private class ChangeLogMarkdownImage : OsuMarkdownImage
+            private partial class ChangeLogMarkdownImage : OsuMarkdownImage
             {
                 private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
 
@@ -181,7 +181,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
             }
 
-            private class UserLinkText : OsuMarkdownLinkText
+            private partial class UserLinkText : OsuMarkdownLinkText
             {
                 public UserLinkText(string text, LinkInline linkInline)
                     : base(text, linkInline)

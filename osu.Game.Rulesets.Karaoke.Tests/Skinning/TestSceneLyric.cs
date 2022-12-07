@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Mods;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     [TestFixture]
-    public class TestSceneLyric : KaraokeSkinnableTestScene
+    public partial class TestSceneLyric : KaraokeSkinnableTestScene
     {
         private static CultureInfo cultureInfo { get; } = new("en-US");
 
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Depth = depthIndex++
             };
 
-        protected class TestDrawableLyric : DrawableLyric
+        protected partial class TestDrawableLyric : DrawableLyric
         {
             public TestDrawableLyric(Lyric h)
                 : base(h)

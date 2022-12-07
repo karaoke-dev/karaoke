@@ -15,7 +15,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin
 {
-    public class KaraokeSkinEditor : GenericEditor<KaraokeSkinEditorScreenMode>
+    public partial class KaraokeSkinEditor : GenericEditor<KaraokeSkinEditorScreenMode>
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);

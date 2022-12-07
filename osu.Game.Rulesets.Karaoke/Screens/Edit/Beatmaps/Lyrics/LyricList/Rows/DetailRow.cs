@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
 {
-    public abstract class DetailRow : Row
+    public abstract partial class DetailRow : Row
     {
         public const int TIMIMG_WIDTH = 210;
 

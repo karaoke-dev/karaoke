@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo>
+    public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo>
     {
         private readonly LanguageSelectionSearchTextBox filter;
 
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             GetContainingInputManager().ChangeFocus(filter);
         }
 
-        private class LanguageSelectionSearchTextBox : SearchTextBox
+        private partial class LanguageSelectionSearchTextBox : SearchTextBox
         {
             protected override Color4 SelectionColour => Color4.Gray;
 
@@ -91,12 +91,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             }
         }
 
-        private class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<CultureInfo>
+        private partial class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<CultureInfo>
         {
             protected override DrawableTextListItem CreateDrawable(CultureInfo item)
                 => new DrawableLanguageListItem(item);
 
-            private class DrawableLanguageListItem : DrawableTextListItem
+            private partial class DrawableLanguageListItem : DrawableTextListItem
             {
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)

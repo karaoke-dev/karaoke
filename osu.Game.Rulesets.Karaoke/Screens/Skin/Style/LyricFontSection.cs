@@ -13,7 +13,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    internal class LyricFontSection : StyleSection
+    internal partial class LyricFontSection : StyleSection
     {
         private LabelledEnumDropdown<Font> fontDropdown;
         private LabelledSwitchButton boldSwitchButton;

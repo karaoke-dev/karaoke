@@ -12,7 +12,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags
 {
-    public class SetTimeTagTimeButton : KeyActionButton
+    public partial class SetTimeTagTimeButton : KeyActionButton
     {
         protected override KaraokeEditAction EditAction => KaraokeEditAction.SetTime;
 
