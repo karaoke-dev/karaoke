@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             return elementType;
         }
 
-        protected virtual void PostProcessValue(TType existingValue,　JObject jObject, JsonSerializer serializer) { }
+        protected virtual void PostProcessValue(TType existingValue, JObject jObject, JsonSerializer serializer) { }
 
         public sealed override void WriteJson(JsonWriter writer, TType? value, JsonSerializer serializer)
         {
