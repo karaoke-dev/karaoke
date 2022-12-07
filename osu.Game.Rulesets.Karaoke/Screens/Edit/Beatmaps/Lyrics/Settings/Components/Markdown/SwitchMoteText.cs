@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Allocation;
@@ -16,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 {
     public partial class SwitchMoteText : OsuMarkdownLinkText
     {
-        [Resolved, AllowNull]
-        private ILyricEditorState state { get; set; }
+        [Resolved]
+        private ILyricEditorState? state { get; set; }
 
         private readonly SwitchMode switchMode;
 
@@ -51,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         {
             base.OnLinkPressed();
 
-            state.NavigateToFix(switchMode.Mode);
+            state?.NavigateToFix(switchMode.Mode);
         }
     }
 }
