@@ -13,8 +13,12 @@ public class PageInfoTest
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 999, null)]
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1000, 1000)]
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1001, 1000)]
-    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4001, 4000)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4000, 4000)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4001, null)]
     [TestCase(new double[] { }, 0, null)]
+    [TestCase(new double[] { 1000 }, 999, null)] // should be able to get the time only if time is between two pages.
+    [TestCase(new double[] { 1000 }, 1000, null)]
+    [TestCase(new double[] { 1000 }, 1002, null)]
     [TestCase(new double[] { 4000, 3000, 2000, 1000 }, 1000, 1000)] // should works even not sorting.
     public void TestGetPageAt(double[] times, double time, double? expectedTime)
     {
@@ -29,8 +33,12 @@ public class PageInfoTest
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 999, null)]
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1000, 0)]
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 1001, 0)]
-    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4001, 3)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4000, 3)]
+    [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 4001, null)]
     [TestCase(new double[] { }, 0, null)]
+    [TestCase(new double[] { 1000 }, 999, null)] // should be able to get the time only if time is between two pages.
+    [TestCase(new double[] { 1000 }, 1000, null)]
+    [TestCase(new double[] { 1000 }, 1002, null)]
     [TestCase(new double[] { 4000, 3000, 2000, 1000 }, 1000, 0)] // should works even not sorting.
     public void TestGetPageIndexAt(double[] times, double time, int? expectedIndex)
     {

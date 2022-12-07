@@ -1,45 +1,47 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckBeatmapAvailableTranslates : ICheck
+    public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<CultureInfo>, Lyric>
     {
-        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid translations.");
+        protected override string Description => "Beatmap with invalid localization info.";
 
-        public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
+        public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
             new IssueTemplateMissingTranslate(this),
             new IssueTemplateMissingPartialTranslate(this),
             new IssueTemplateContainsNotListedLanguage(this)
         };
 
-        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
-        {
-            var languages = availableTranslateInBeatmap(context.Beatmap);
+        protected override IList<CultureInfo> GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)
+            => karaokeBeatmap.AvailableTranslates;
 
-            var lyrics = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
-            if (lyrics.Count == 0)
+        protected override IEnumerable<Issue> CheckProperty(IList<CultureInfo> property)
+        {
+            // todo: maybe check duplicated languages?
+            yield break;
+        }
+
+        protected override IEnumerable<Issue> CheckHitObjects(IList<CultureInfo> property, IReadOnlyList<Lyric> hitObject)
+        {
+            if (hitObject.Count == 0)
                 yield break;
 
             // check if some translate is missing or empty.
-            foreach (var language in languages)
+            foreach (var language in property)
             {
-                var notTranslateLyrics = lyrics.Where(x => !x.Translates.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translates[language])).ToArray();
+                var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translates[language])).ToArray();
 
-                if (notTranslateLyrics.Length == lyrics.Count)
+                if (notTranslateLyrics.Length == hitObject.Count)
                 {
                     yield return new IssueTemplateMissingTranslate(this).Create(notTranslateLyrics, language);
                 }
@@ -51,26 +53,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
             // should check is lyric contains translate that is not listed in beatmap.
             // if got this issue, then it's a bug.
-            var allTranslateLanguageInLyric = lyrics.SelectMany(x => x.Translates.Keys).Distinct();
-            var languageNotListInBeatmap = allTranslateLanguageInLyric.Except(languages);
+            var allTranslateLanguageInLyric = hitObject.SelectMany(x => x.Translates.Keys).Distinct();
+            var languageNotListInBeatmap = allTranslateLanguageInLyric.Except(property);
 
             foreach (var language in languageNotListInBeatmap)
             {
-                var notTranslateLyrics = lyrics.Where(x => !x.Translates.ContainsKey(language));
+                var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language));
 
                 yield return new IssueTemplateContainsNotListedLanguage(this).Create(notTranslateLyrics, language);
             }
-        }
-
-        private IList<CultureInfo> availableTranslateInBeatmap(IBeatmap beatmap)
-        {
-            if (beatmap is not EditorBeatmap editorBeatmap)
-                return Array.Empty<CultureInfo>();
-
-            if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                return Array.Empty<CultureInfo>();
-
-            return karaokeBeatmap.AvailableTranslates;
         }
 
         public class IssueTemplateMissingTranslate : IssueTemplate

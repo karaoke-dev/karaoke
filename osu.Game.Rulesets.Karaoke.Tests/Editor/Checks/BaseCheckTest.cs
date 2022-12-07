@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 {
-    public class BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
+    public abstract class BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
     {
         private TCheck check = null!;
 

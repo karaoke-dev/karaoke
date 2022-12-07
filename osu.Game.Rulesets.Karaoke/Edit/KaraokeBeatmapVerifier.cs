@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly List<ICheck> checks = new()
         {
             new CheckBeatmapAvailableTranslates(),
+            new CheckBeatmapPageInfo(),
             new CheckLyricLanguage(),
             new CheckLyricReferenceLyric(),
             new CheckLyricRomajiTag(),

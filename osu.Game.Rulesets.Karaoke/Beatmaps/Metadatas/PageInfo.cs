@@ -15,7 +15,17 @@ public class PageInfo : IDeepCloneable<PageInfo>
 
     public Page? GetPageAt(double time)
     {
-        return Pages.LastOrDefault(x => x.Time <= time);
+        if (Pages.Count < 2)
+            return null;
+
+        var page = Pages.LastOrDefault(x => x.Time <= time);
+
+        // should not be able to get the page if time exceed the last page.
+        var lastPage = Pages.LastOrDefault();
+        if (page == lastPage && page?.Time < time)
+            return null;
+
+        return page;
     }
 
     public int? GetPageIndexAt(double time)
