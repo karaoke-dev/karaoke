@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                AddTextAction = ProcessLinkText,
+                AddTextAction = processLinkText,
             });
         }
 
@@ -51,32 +51,32 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
             Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
         };
 
-        protected virtual OsuMarkdownLinkText? ProcessLinkText(string text, string? url)
+        private OsuMarkdownLinkText? processLinkText(string text, string? url)
         {
             switch (text)
             {
                 case DescriptionFormat.LINK_KEY_INPUT:
+                case DescriptionFormat.LINK_KEY_EDIT_MODE:
                 {
-                    var keys = Description.Keys;
+                    var keys = Description.Actions;
                     if (url == null || !keys.TryGetValue(url, out var inputKey))
                         throw new ArgumentNullException(nameof(keys));
 
-                    return new InputKeyText(inputKey);
-                }
-
-                case DescriptionFormat.LINK_KEY_EDIT_MODE:
-                {
-                    var editModes = Description.EditModes;
-                    if (url == null || !editModes.TryGetValue(url, out var mode))
-                        throw new ArgumentNullException(nameof(editModes));
-
-                    return new SwitchMoteText(mode);
+                    return GetLinkTextByDescriptionAction(inputKey);
                 }
 
                 default:
                     return null;
             }
         }
+
+        protected virtual OsuMarkdownLinkText GetLinkTextByDescriptionAction(IDescriptionAction descriptionAction) =>
+            descriptionAction switch
+            {
+                InputKey inputKey => new InputKeyText(inputKey),
+                SwitchMode switchMode => new SwitchMoteText(switchMode),
+                _ => throw new InvalidCastException()
+            };
 
         internal partial class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {

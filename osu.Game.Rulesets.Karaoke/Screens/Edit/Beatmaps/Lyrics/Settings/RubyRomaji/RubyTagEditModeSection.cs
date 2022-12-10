@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                            + $"Click [{DescriptionFormat.LINK_KEY_INPUT}](directions) to select the target lyric.\n"
                            + "Press `Tab` to switch between the ruby tags.\n"
                            + $"Than, press [{DescriptionFormat.LINK_KEY_INPUT}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
-                    Keys = new Dictionary<string, InputKey>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             "directions", new InputKey

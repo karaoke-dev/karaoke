@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
             => new()
             {
                 Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({typing_mode}) to fill the text.",
-                EditModes = new Dictionary<string, SwitchMode>
+                Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
                         typing_mode, new SwitchMode

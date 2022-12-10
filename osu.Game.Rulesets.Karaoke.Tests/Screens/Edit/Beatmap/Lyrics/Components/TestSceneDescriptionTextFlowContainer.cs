@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                 lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
-                    Keys = new Dictionary<string, InputKey>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             "set_time", new InputKey
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                 lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
-                    Keys = new Dictionary<string, InputKey>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             "set_time", new InputKey
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                 lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_EDIT_MODE}](singer_mode)",
-                    EditModes = new Dictionary<string, SwitchMode>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             "singer_mode", new SwitchMode

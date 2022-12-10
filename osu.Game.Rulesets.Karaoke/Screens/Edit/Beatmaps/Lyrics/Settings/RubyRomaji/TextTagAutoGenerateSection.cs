@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 => new()
                 {
                     Text = $"Seems some lyric missing language, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({language_mode}) to fill the language.",
-                    EditModes = new Dictionary<string, SwitchMode>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             language_mode, new SwitchMode

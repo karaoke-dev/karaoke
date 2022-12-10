@@ -15,9 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         public LocalisableString Text { get; set; }
 
-        public IDictionary<string, InputKey> Keys { get; set; }
-
-        public IDictionary<string, SwitchMode> EditModes { get; set; }
+        public IDictionary<string, IDescriptionAction> Actions { get; set; }
 
         // todo: will be removed eventually.
         public static implicit operator DescriptionFormat(string text)
@@ -29,14 +27,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         };
     }
 
-    public struct SwitchMode
+    public struct SwitchMode : IDescriptionAction
     {
         public LocalisableString Text { get; set; }
 
         public LyricEditorMode Mode { get; set; }
     }
 
-    public struct InputKey
+    public struct InputKey : IDescriptionAction
     {
         public LocalisableString Text { get; set; }
 

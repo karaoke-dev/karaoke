@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 {
                     Text =
                         $"Press [{DescriptionFormat.LINK_KEY_INPUT}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_INPUT}](clear_time_tag_time) to clear the time-tag time.",
-                    Keys = new Dictionary<string, InputKey>
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
                             "set_time_tag_time", new InputKey
