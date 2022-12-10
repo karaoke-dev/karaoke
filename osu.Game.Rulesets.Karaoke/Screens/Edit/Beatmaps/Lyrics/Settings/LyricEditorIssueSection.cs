@@ -24,13 +24,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class IssueSection : EditorSection
+    public abstract partial class LyricEditorIssueSection : EditorSection
     {
         protected sealed override LocalisableString Title => "Issues";
 
         private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
 
-        protected IssueSection()
+        protected LyricEditorIssueSection()
         {
             EmptyIssue emptyIssue;
 

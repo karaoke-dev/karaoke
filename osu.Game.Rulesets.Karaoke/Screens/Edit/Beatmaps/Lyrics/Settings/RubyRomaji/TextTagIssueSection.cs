@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public abstract partial class TextTagIssueSection : IssueSection
+    public abstract partial class TextTagIssueSection : LyricEditorIssueSection
     {
         protected abstract partial class TextTagIssueTable<TTextTag> : LyricsIssueTable where TTextTag : ITextTag
         {

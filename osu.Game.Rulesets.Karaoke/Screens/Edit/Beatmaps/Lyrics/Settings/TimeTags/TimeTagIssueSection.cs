@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public partial class TimeTagIssueSection : IssueSection
+    public partial class TimeTagIssueSection : LyricEditorIssueSection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
 
