@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using Markdig.Syntax;
@@ -23,10 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         public LyricEditorDescriptionTextFlowContainer()
         {
-            AddInternal(description = new DescriptionMarkdownTextFlowContainer(this)
+            AddInternal(description = new DescriptionMarkdownTextFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
+                AddTextAction = ProcessLinkText,
             });
         }
 
@@ -52,44 +51,48 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
             Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
         };
 
+        protected virtual OsuMarkdownLinkText? ProcessLinkText(string text, string? url)
+        {
+            switch (text)
+            {
+                case DescriptionFormat.LINK_KEY_INPUT:
+                {
+                    var keys = Description.Keys;
+                    if (url == null || !keys.TryGetValue(url, out var inputKey))
+                        throw new ArgumentNullException(nameof(keys));
+
+                    return new InputKeyText(inputKey);
+                }
+
+                case DescriptionFormat.LINK_KEY_EDIT_MODE:
+                {
+                    var editModes = Description.EditModes;
+                    if (url == null || !editModes.TryGetValue(url, out var mode))
+                        throw new ArgumentNullException(nameof(editModes));
+
+                    return new SwitchMoteText(mode);
+                }
+
+                default:
+                    return null;
+            }
+        }
+
         internal partial class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
-            private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescriptionTextFlowContainer;
-
-            public DescriptionMarkdownTextFlowContainer(LyricEditorDescriptionTextFlowContainer parent)
-            {
-                lyricEditorDescriptionTextFlowContainer = parent;
-            }
+            public Func<string, string?, OsuMarkdownLinkText?>? AddTextAction;
 
             protected override void AddLinkText(string text, LinkInline linkInline)
             {
-                switch (text)
+                var linkText = AddTextAction?.Invoke(text, linkInline.Url);
+
+                if (linkText != null)
                 {
-                    case DescriptionFormat.LINK_KEY_INPUT:
-                    {
-                        var keys = lyricEditorDescriptionTextFlowContainer.Description.Keys;
-                        string key = linkInline.Url;
-                        if (keys == null || !keys.TryGetValue(key, out var inputKey))
-                            throw new ArgumentNullException(nameof(keys));
-
-                        AddDrawable(new InputKeyText(inputKey));
-                        return;
-                    }
-
-                    case DescriptionFormat.LINK_KEY_EDIT_MODE:
-                    {
-                        var editModes = lyricEditorDescriptionTextFlowContainer.Description.EditModes;
-                        string key = linkInline.Url;
-                        if (editModes == null || !editModes.TryGetValue(key, out var mode))
-                            throw new ArgumentNullException(nameof(editModes));
-
-                        AddDrawable(new SwitchMoteText(mode));
-                        return;
-                    }
-
-                    default:
-                        base.AddLinkText(text, linkInline);
-                        break;
+                    AddDrawable(linkText);
+                }
+                else
+                {
+                    base.AddLinkText(text, linkInline);
                 }
             }
         }
