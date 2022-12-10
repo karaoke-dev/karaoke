@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
@@ -31,11 +32,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
         protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
             => new()
             {
-                Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({create_time_tag_mode}) to fix those issue.",
-                EditModes = new Dictionary<string, SwitchMode>
+                Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_ACTION}]({create_time_tag_mode}) to fix those issue.",
+                Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
-                        create_time_tag_mode, new SwitchMode
+                        create_time_tag_mode, new SwitchModeDescriptionAction
                         {
                             Text = "adjust time-tag mode",
                             Mode = LyricEditorMode.EditTimeTag

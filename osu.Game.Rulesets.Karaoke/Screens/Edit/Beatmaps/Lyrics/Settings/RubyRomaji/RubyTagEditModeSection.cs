@@ -7,6 +7,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
@@ -47,13 +48,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 RubyTagEditMode.Edit => new DescriptionFormat
                 {
                     Text = "Create / delete and edit lyric rubies in here.\n"
-                           + $"Click [{DescriptionFormat.LINK_KEY_INPUT}](directions) to select the target lyric.\n"
+                           + $"Click [{DescriptionFormat.LINK_KEY_ACTION}](directions) to select the target lyric.\n"
                            + "Press `Tab` to switch between the ruby tags.\n"
-                           + $"Than, press [{DescriptionFormat.LINK_KEY_INPUT}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
-                    Keys = new Dictionary<string, InputKey>
+                           + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "directions", new InputKey
+                            "directions", new InputKeyDescriptionAction
                             {
                                 Text = "Up or down",
                                 AdjustableActions = new List<KaraokeEditAction>
@@ -64,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                             }
                         },
                         {
-                            "adjust_text_tag_index", new InputKey
+                            "adjust_text_tag_index", new InputKeyDescriptionAction
                             {
                                 Text = "Keys",
                                 AdjustableActions = new List<KaraokeEditAction>

@@ -8,6 +8,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
@@ -23,11 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
         protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
             => new()
             {
-                Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({typing_mode}) to fill the text.",
-                EditModes = new Dictionary<string, SwitchMode>
+                Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_ACTION}]({typing_mode}) to fill the text.",
+                Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
-                        typing_mode, new SwitchMode
+                        typing_mode, new SwitchModeDescriptionAction
                         {
                             Text = "typing mode",
                             Mode = LyricEditorMode.Texting

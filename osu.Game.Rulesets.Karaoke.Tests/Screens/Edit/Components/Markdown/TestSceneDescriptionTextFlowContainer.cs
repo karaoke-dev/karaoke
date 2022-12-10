@@ -7,12 +7,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Markdown
 {
     [TestFixture]
     public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
@@ -20,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);
 
-        private DescriptionTextFlowContainer descriptionTextFlowContainer = null!;
+        private DescriptionTextFlowContainer lyricEditorDescriptionTextFlowContainer = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
@@ -28,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
             Child = new PopoverContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = descriptionTextFlowContainer = new DescriptionTextFlowContainer
+                Child = lyricEditorDescriptionTextFlowContainer = new DescriptionTextFlowContainer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -42,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         {
             AddStep("Markdown description", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = "Test description with `Markdown` format."
                 };
@@ -54,13 +53,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         {
             AddStep("Markdown description with key", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
-                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
-                    Keys = new Dictionary<string, InputKey>
+                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_ACTION}](set_time)",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time", new InputKey
+                            "set_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new[]
                                 {
@@ -74,41 +73,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
 
             AddStep("Markdown description with key text and tooltip", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
-                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
-                    Keys = new Dictionary<string, InputKey>
+                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_ACTION}](set_time)",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time", new InputKey
+                            "set_time", new InputKeyDescriptionAction
                             {
                                 Text = "set time key.",
                                 AdjustableActions = new[]
                                 {
                                     KaraokeEditAction.SetTime
                                 }
-                            }
-                        }
-                    }
-                };
-            });
-        }
-
-        [Test]
-        public void TestDisplayDescriptionWithEditMode()
-        {
-            AddStep("Markdown description", () =>
-            {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
-                {
-                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_EDIT_MODE}](singer_mode)",
-                    EditModes = new Dictionary<string, SwitchMode>
-                    {
-                        {
-                            "singer_mode", new SwitchMode
-                            {
-                                Text = "edit text mode",
-                                Mode = LyricEditorMode.Singer
                             }
                         }
                     }

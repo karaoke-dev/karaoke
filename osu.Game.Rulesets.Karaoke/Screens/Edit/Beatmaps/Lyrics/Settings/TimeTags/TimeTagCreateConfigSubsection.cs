@@ -17,6 +17,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
@@ -30,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
         private const int corner_radius = 15;
 
         private readonly EditModeButton[] buttons;
-        private readonly DescriptionTextFlowContainer description;
+        private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescription;
 
         private readonly BindableWithCurrent<CreateTimeTagEditMode> current = new();
 
@@ -86,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                         }
                     }
                 },
-                description = new DescriptionTextFlowContainer
+                lyricEditorDescription = new LyricEditorDescriptionTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -120,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             }
 
             // update description text.
-            description.Description = getDescription(mode);
+            lyricEditorDescription.Description = getDescription(mode);
         }
 
         private LocalisableString getButtonTitle(CreateTimeTagEditMode mode)
@@ -145,21 +146,21 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 CreateTimeTagEditMode.Create => new DescriptionFormat
                 {
                     Text =
-                        $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
-                    Keys = new Dictionary<string, InputKey>
+                        $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_ACTION}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_ACTION}](remove_time_tag) to delete exist time-tag.",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
-                        { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
-                        { "remove_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
+                        { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
+                        { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
                     }
                 },
                 CreateTimeTagEditMode.Modify => new DescriptionFormat
                 {
                     Text =
-                        $"Press [{DescriptionFormat.LINK_KEY_INPUT}](move_time_tag_position) to move the time-tag position. Press press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
-                    Keys = new Dictionary<string, InputKey>
+                        $"Press [{DescriptionFormat.LINK_KEY_ACTION}](move_time_tag_position) to move the time-tag position. Press press [{DescriptionFormat.LINK_KEY_ACTION}](create_time_tag) to create new time-tag and [{DescriptionFormat.LINK_KEY_ACTION}](remove_time_tag) to delete exist time-tag.",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "move_time_tag_position", new InputKey
+                            "move_time_tag_position", new InputKeyDescriptionAction
                             {
                                 Text = "Shifting Time-tag index keys.",
                                 AdjustableActions = new List<KaraokeEditAction>
@@ -171,8 +172,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                                 }
                             }
                         },
-                        { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
-                        { "remove_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
+                        { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
+                        { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
                     }
                 },
                 _ => throw new InvalidOperationException(nameof(mode))

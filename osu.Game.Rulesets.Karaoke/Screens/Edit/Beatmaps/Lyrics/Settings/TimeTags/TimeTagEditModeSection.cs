@@ -8,6 +8,7 @@ using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
@@ -51,17 +52,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 TimeTagEditMode.Recording => new DescriptionFormat
                 {
                     Text =
-                        $"Press [{DescriptionFormat.LINK_KEY_INPUT}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_INPUT}](clear_time_tag_time) to clear the time-tag time.",
-                    Keys = new Dictionary<string, InputKey>
+                        $"Press [{DescriptionFormat.LINK_KEY_ACTION}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_ACTION}](clear_time_tag_time) to clear the time-tag time.",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time_tag_time", new InputKey
+                            "set_time_tag_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
                             }
                         },
                         {
-                            "clear_time_tag_time", new InputKey
+                            "clear_time_tag_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
                             }

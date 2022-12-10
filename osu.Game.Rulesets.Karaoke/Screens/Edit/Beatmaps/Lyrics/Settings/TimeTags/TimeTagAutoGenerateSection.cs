@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
@@ -39,11 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
                 => new()
                 {
-                    Text = $"Seems some lyric missing language, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({language_mode}) to fill the language.",
-                    EditModes = new Dictionary<string, SwitchMode>
+                    Text = $"Seems some lyric missing language, go to [{DescriptionFormat.LINK_KEY_ACTION}]({language_mode}) to fill the language.",
+                    Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            language_mode, new SwitchMode
+                            language_mode, new SwitchModeDescriptionAction
                             {
                                 Text = "edit language mode",
                                 Mode = LyricEditorMode.Language
