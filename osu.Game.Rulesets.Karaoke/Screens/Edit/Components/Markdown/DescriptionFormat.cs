@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown
 {
     public struct DescriptionFormat
     {
