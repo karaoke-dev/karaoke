@@ -14,11 +14,11 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public partial class LanguageIssueSection : IssueSection
+    public partial class LanguageIssueSection : LyricEditorIssueSection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.Language;
 
-        protected override LyricsIssueTable CreateIssueTable() => new LanguageIssueTable();
+        protected override LyricsIssueTable CreateLyricsIssueTable() => new LanguageIssueTable();
 
         private partial class LanguageIssueTable : LyricsIssueTable
         {
