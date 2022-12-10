@@ -18,7 +18,7 @@ public partial class ReferenceLyricIssueSection : LyricEditorIssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.Reference;
 
-    protected override LyricsIssueTable CreateIssueTable() => new ReferenceLyricIssueTable();
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new ReferenceLyricIssueTable();
 
     private partial class ReferenceLyricIssueTable : LyricsIssueTable
     {

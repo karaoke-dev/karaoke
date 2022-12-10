@@ -18,7 +18,7 @@ public partial class TextingIssueSection : LyricEditorIssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.Texting;
 
-    protected override LyricsIssueTable CreateIssueTable() => new TextingIssueTable();
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new TextingIssueTable();
 
     private partial class TextingIssueTable : LyricsIssueTable
     {
