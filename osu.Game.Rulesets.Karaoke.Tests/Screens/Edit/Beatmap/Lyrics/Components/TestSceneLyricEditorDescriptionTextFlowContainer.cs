@@ -39,63 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         });
 
         [Test]
-        public void TestDisplayDescription()
-        {
-            AddStep("Markdown description", () =>
-            {
-                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
-                {
-                    Text = "Test description with `Markdown` format."
-                };
-            });
-        }
-
-        [Test]
-        public void TestDisplayDescriptionWithKey()
-        {
-            AddStep("Markdown description with key", () =>
-            {
-                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
-                {
-                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_ACTION}](set_time)",
-                    Actions = new Dictionary<string, IDescriptionAction>
-                    {
-                        {
-                            "set_time", new InputKeyDescriptionAction
-                            {
-                                AdjustableActions = new[]
-                                {
-                                    KaraokeEditAction.SetTime
-                                }
-                            }
-                        }
-                    }
-                };
-            });
-
-            AddStep("Markdown description with key text and tooltip", () =>
-            {
-                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
-                {
-                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_ACTION}](set_time)",
-                    Actions = new Dictionary<string, IDescriptionAction>
-                    {
-                        {
-                            "set_time", new InputKeyDescriptionAction
-                            {
-                                Text = "set time key.",
-                                AdjustableActions = new[]
-                                {
-                                    KaraokeEditAction.SetTime
-                                }
-                            }
-                        }
-                    }
-                };
-            });
-        }
-
-        [Test]
         public void TestDisplayDescriptionWithEditMode()
         {
             AddStep("Markdown description", () =>
