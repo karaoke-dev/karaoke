@@ -2,21 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
-public abstract partial class IssueTable : LyricEditorTable
+public abstract partial class IssueTable : EditorTable
 {
-    [Resolved, AllowNull]
-    private IIssueNavigator issueNavigator { get; set; }
-
     protected IssueTable()
     {
         Columns = CreateHeaders();
@@ -31,18 +27,22 @@ public abstract partial class IssueTable : LyricEditorTable
 
             foreach (var issue in value)
             {
-                BackgroundFlow.Add(new RowBackground(issue)
+                BackgroundFlow.Add(CreateRowBackground(issue).With(x =>
                 {
-                    Action = () =>
+                    x.Action = () =>
                     {
-                        issueNavigator.Navigate(issue);
-                    },
-                });
+                        OnIssueClicked(issue);
+                    };
+                }));
             }
 
             Content = value.Select(CreateContent).ToArray().ToRectangular();
         }
     }
+
+    protected abstract void OnIssueClicked(Issue issue);
+
+    protected virtual RowBackground CreateRowBackground(Issue issue) => new(issue);
 
     protected abstract TableColumn[] CreateHeaders();
 

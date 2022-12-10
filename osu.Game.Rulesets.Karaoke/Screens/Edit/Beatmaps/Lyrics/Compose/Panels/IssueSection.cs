@@ -35,7 +35,7 @@ public partial class IssueSection : PanelSection
         EmptyIssue emptyIssue;
 
         IconButton reloadButton;
-        IssueTable issueTable;
+        LyricEditorIssueTable issueTable;
 
         Children = new Drawable[]
         {
@@ -146,7 +146,7 @@ public partial class IssueSection : PanelSection
         }
     }
 
-    private partial class SingleLyricIssueTable : IssueTable
+    private partial class SingleLyricIssueTable : LyricEditorIssueTable
     {
         public SingleLyricIssueTable()
         {
