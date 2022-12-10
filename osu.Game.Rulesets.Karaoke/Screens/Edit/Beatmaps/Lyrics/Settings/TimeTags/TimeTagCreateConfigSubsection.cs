@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
         private const int corner_radius = 15;
 
         private readonly EditModeButton[] buttons;
-        private readonly DescriptionTextFlowContainer description;
+        private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescription;
 
         private readonly BindableWithCurrent<CreateTimeTagEditMode> current = new();
 
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                         }
                     }
                 },
-                description = new DescriptionTextFlowContainer
+                lyricEditorDescription = new LyricEditorDescriptionTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             }
 
             // update description text.
-            description.Description = getDescription(mode);
+            lyricEditorDescription.Description = getDescription(mode);
         }
 
         private LocalisableString getButtonTitle(CreateTimeTagEditMode mode)

@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         private ILyricSelectionState lyricSelectionState { get; set; }
 
         private readonly Selection[] selections;
-        private readonly DescriptionTextFlowContainer description;
+        private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescription;
 
         protected EditModeSection()
         {
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
                         selections = createSelections()
                     }
                 },
-                description = new DescriptionTextFlowContainer
+                lyricEditorDescription = new LyricEditorDescriptionTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
                 Schedule(() =>
                 {
                     // update description text.
-                    description.Description = GetSelectionDescription(mode);
+                    lyricEditorDescription.Description = GetSelectionDescription(mode);
                 });
             }
         }

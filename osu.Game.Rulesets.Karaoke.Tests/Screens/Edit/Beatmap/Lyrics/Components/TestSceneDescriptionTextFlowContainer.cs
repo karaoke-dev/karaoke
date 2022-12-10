@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);
 
-        private DescriptionTextFlowContainer descriptionTextFlowContainer = null!;
+        private LyricEditorDescriptionTextFlowContainer lyricEditorDescriptionTextFlowContainer = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
             Child = new PopoverContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = descriptionTextFlowContainer = new DescriptionTextFlowContainer
+                Child = lyricEditorDescriptionTextFlowContainer = new LyricEditorDescriptionTextFlowContainer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         {
             AddStep("Markdown description", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = "Test description with `Markdown` format."
                 };
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         {
             AddStep("Markdown description with key", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
                     Keys = new Dictionary<string, InputKey>
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
 
             AddStep("Markdown description with key text and tooltip", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
                     Keys = new Dictionary<string, InputKey>
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         {
             AddStep("Markdown description", () =>
             {
-                descriptionTextFlowContainer.Description = new DescriptionFormat
+                lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
                 {
                     Text = $"Test description with [{DescriptionFormat.LINK_KEY_EDIT_MODE}](singer_mode)",
                     EditModes = new Dictionary<string, SwitchMode>

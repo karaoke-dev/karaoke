@@ -17,11 +17,11 @@ using osu.Game.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown
 {
-    public partial class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
+    public partial class LyricEditorDescriptionTextFlowContainer : Container, IMarkdownTextComponent
     {
         private readonly DescriptionMarkdownTextFlowContainer description;
 
-        public DescriptionTextFlowContainer()
+        public LyricEditorDescriptionTextFlowContainer()
         {
             AddInternal(description = new DescriptionMarkdownTextFlowContainer(this)
             {
@@ -54,11 +54,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         internal partial class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
-            private readonly DescriptionTextFlowContainer descriptionTextFlowContainer;
+            private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescriptionTextFlowContainer;
 
-            public DescriptionMarkdownTextFlowContainer(DescriptionTextFlowContainer parent)
+            public DescriptionMarkdownTextFlowContainer(LyricEditorDescriptionTextFlowContainer parent)
             {
-                descriptionTextFlowContainer = parent;
+                lyricEditorDescriptionTextFlowContainer = parent;
             }
 
             protected override void AddLinkText(string text, LinkInline linkInline)
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
                 {
                     case DescriptionFormat.LINK_KEY_INPUT:
                     {
-                        var keys = descriptionTextFlowContainer.Description.Keys;
+                        var keys = lyricEditorDescriptionTextFlowContainer.Description.Keys;
                         string key = linkInline.Url;
                         if (keys == null || !keys.TryGetValue(key, out var inputKey))
                             throw new ArgumentNullException(nameof(keys));
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
                     case DescriptionFormat.LINK_KEY_EDIT_MODE:
                     {
-                        var editModes = descriptionTextFlowContainer.Description.EditModes;
+                        var editModes = lyricEditorDescriptionTextFlowContainer.Description.EditModes;
                         string key = linkInline.Url;
                         if (editModes == null || !editModes.TryGetValue(key, out var mode))
                             throw new ArgumentNullException(nameof(editModes));

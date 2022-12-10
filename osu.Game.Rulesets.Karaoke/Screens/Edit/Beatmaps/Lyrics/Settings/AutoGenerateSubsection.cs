@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
                             }
                         },
                     },
-                    new DescriptionTextFlowContainer
+                    new LyricEditorDescriptionTextFlowContainer
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
