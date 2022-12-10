@@ -4,15 +4,15 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 {
     /// <summary>
     /// Base section class for lyric editor.
     /// todo: should inherit the EditorRoundedScreenSettingsSection eventually, but seems that class haven't ready.
     /// </summary>
-    public abstract partial class LyricEditorSection : Section
+    public abstract partial class EditorSection : Section
     {
-        protected LyricEditorSection()
+        protected EditorSection()
         {
             Padding = new MarginPadding(0);
         }

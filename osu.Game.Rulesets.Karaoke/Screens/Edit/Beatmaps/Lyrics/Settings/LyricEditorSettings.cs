@@ -3,24 +3,13 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class LyricEditorSettings : EditorRoundedScreenSettings
+    public abstract partial class LyricEditorSettings : EditorSettings
     {
-        public abstract SettingsDirection Direction { get; }
-
-        public abstract float SettingsWidth { get; }
-
-        protected void ReloadSections()
-        {
-            this.ChildrenOfType<FillFlowContainer>().First().Children = CreateSections();
-        }
-
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
         {

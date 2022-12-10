@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
 {
-    public partial class TimeTagAutoGenerateSection : LyricEditorSection
+    public partial class TimeTagAutoGenerateSection : EditorSection
     {
         protected override LocalisableString Title => "Auto generate";
 

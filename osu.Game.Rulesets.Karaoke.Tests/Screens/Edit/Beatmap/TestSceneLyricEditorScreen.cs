@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
         {
             AddStep("Click the button", () =>
             {
-                var editModeSection = this.ChildrenOfType<EditModeSection<T>>().Single();
+                var editModeSection = this.ChildrenOfType<LyricEditorEditModeSection<T>>().Single();
                 editModeSection.UpdateEditMode(editMode);
             });
             AddWaitStep("wait for switch to new edit mode.", 10);

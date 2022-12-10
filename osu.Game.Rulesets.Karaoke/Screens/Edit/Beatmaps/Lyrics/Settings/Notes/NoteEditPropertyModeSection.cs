@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public partial class NoteEditPropertyModeSection : LyricEditorSection
+    public partial class NoteEditPropertyModeSection : EditorSection
     {
         protected override LocalisableString Title => "Edit property";
 

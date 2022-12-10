@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class SpecialActionSection<TAction> : LyricEditorSection where TAction : struct, Enum
+    public abstract partial class SpecialActionSection<TAction> : EditorSection where TAction : struct, Enum
     {
         protected sealed override LocalisableString Title => "Action";
 

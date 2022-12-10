@@ -24,7 +24,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class IssueSection : LyricEditorSection
+    public abstract partial class IssueSection : EditorSection
     {
         protected sealed override LocalisableString Title => "Issues";
 
