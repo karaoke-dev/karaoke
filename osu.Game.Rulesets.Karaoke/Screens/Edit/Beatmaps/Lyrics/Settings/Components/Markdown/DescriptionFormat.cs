@@ -10,8 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 {
     public struct DescriptionFormat
     {
-        public const string LINK_KEY_INPUT = "input_key";
-        public const string LINK_KEY_EDIT_MODE = "edit_mode";
+        public const string LINK_KEY_ACTION = "action";
 
         public LocalisableString Text { get; set; }
 

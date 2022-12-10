@@ -47,9 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 RubyTagEditMode.Edit => new DescriptionFormat
                 {
                     Text = "Create / delete and edit lyric rubies in here.\n"
-                           + $"Click [{DescriptionFormat.LINK_KEY_INPUT}](directions) to select the target lyric.\n"
+                           + $"Click [{DescriptionFormat.LINK_KEY_ACTION}](directions) to select the target lyric.\n"
                            + "Press `Tab` to switch between the ruby tags.\n"
-                           + $"Than, press [{DescriptionFormat.LINK_KEY_INPUT}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
+                           + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {

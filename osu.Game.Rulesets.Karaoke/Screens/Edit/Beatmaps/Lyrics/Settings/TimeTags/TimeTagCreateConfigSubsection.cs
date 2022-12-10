@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 CreateTimeTagEditMode.Create => new DescriptionFormat
                 {
                     Text =
-                        $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
+                        $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_ACTION}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_ACTION}](remove_time_tag) to delete exist time-tag.",
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 CreateTimeTagEditMode.Modify => new DescriptionFormat
                 {
                     Text =
-                        $"Press [{DescriptionFormat.LINK_KEY_INPUT}](move_time_tag_position) to move the time-tag position. Press press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
+                        $"Press [{DescriptionFormat.LINK_KEY_ACTION}](move_time_tag_position) to move the time-tag position. Press press [{DescriptionFormat.LINK_KEY_ACTION}](create_time_tag) to create new time-tag and [{DescriptionFormat.LINK_KEY_ACTION}](remove_time_tag) to delete exist time-tag.",
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {

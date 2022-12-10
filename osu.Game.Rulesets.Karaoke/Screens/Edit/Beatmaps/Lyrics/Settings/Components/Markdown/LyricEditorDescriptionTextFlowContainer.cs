@@ -53,21 +53,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         private OsuMarkdownLinkText? processLinkText(string text, string? url)
         {
-            switch (text)
-            {
-                case DescriptionFormat.LINK_KEY_INPUT:
-                case DescriptionFormat.LINK_KEY_EDIT_MODE:
-                {
-                    var keys = Description.Actions;
-                    if (url == null || !keys.TryGetValue(url, out var inputKey))
-                        throw new ArgumentNullException(nameof(keys));
+            if (text != DescriptionFormat.LINK_KEY_ACTION)
+                return null;
 
-                    return GetLinkTextByDescriptionAction(inputKey);
-                }
+            var keys = Description.Actions;
+            if (url == null || !keys.TryGetValue(url, out var inputKey))
+                throw new ArgumentNullException(nameof(keys));
 
-                default:
-                    return null;
-            }
+            return GetLinkTextByDescriptionAction(inputKey);
         }
 
         protected virtual OsuMarkdownLinkText GetLinkTextByDescriptionAction(IDescriptionAction descriptionAction) =>

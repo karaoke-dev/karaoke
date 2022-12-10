@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 TimeTagEditMode.Recording => new DescriptionFormat
                 {
                     Text =
-                        $"Press [{DescriptionFormat.LINK_KEY_INPUT}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_INPUT}](clear_time_tag_time) to clear the time-tag time.",
+                        $"Press [{DescriptionFormat.LINK_KEY_ACTION}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_ACTION}](clear_time_tag_time) to clear the time-tag time.",
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {

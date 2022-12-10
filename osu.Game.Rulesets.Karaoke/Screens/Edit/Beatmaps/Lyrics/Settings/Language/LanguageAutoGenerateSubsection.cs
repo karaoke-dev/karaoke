@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
         protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
             => new()
             {
-                Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({typing_mode}) to fill the text.",
+                Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_ACTION}]({typing_mode}) to fill the text.",
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
