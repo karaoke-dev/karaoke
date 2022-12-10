@@ -49,7 +49,7 @@ public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
 
-    private partial class ReferenceLyricVerifySelection : VerifySelection
+    private partial class ReferenceLyricVerifySelection : LyricEditorVerifySelection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.Reference;
     }

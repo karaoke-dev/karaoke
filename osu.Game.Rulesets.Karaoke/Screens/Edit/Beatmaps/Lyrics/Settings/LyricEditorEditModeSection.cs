@@ -57,11 +57,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             base.UpdateEditMode(mode);
         }
 
-        protected abstract partial class VerifySelection : Selection
+        protected abstract partial class LyricEditorVerifySelection : Selection
         {
             private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
 
-            protected VerifySelection()
+            protected LyricEditorVerifySelection()
             {
                 CountCircle countCircle;
 

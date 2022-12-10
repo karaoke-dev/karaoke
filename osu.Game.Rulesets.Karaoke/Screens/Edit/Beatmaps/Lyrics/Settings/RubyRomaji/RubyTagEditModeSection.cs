@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private partial class RubyTagVerifySelection : VerifySelection
+        private partial class RubyTagVerifySelection : LyricEditorVerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.EditRuby;
         }

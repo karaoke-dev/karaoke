@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
 
-        private partial class NoteVerifySelection : VerifySelection
+        private partial class NoteVerifySelection : LyricEditorVerifySelection
         {
             protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
         }
