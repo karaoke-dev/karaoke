@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin
 {
     public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeSkinEditorScreen
     {

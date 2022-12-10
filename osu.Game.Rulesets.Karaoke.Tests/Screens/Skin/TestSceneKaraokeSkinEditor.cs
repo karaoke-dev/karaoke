@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin
 {
     public partial class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEditor>
     {
