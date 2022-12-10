@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public abstract partial class TextTagAutoGenerateSection : LyricEditorSection
+    public abstract partial class TextTagAutoGenerateSection : EditorSection
     {
         protected sealed override LocalisableString Title => "Auto generate";
 

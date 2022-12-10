@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         }
     }
 
-    public abstract partial class LyricEditorEditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
+    public abstract partial class LyricEditorEditModeSection<TEditMode> : EditorSection where TEditMode : Enum
     {
         private const int horizontal_padding = 20;
 
