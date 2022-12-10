@@ -17,5 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
 
         [Description("Translate")]
         Translate,
+
+        [Description("Page")]
+        Page,
     }
 }

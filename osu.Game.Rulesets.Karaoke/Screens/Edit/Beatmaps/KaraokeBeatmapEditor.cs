@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
@@ -81,6 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
                 KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
                 KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
                 KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
+                KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
                 _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
             };
 
