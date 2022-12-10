@@ -8,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Skinning;

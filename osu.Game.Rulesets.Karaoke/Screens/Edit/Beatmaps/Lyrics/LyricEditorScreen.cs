@@ -11,7 +11,6 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Overlays;
 using osu.Game.Overlays.OSD;
-using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;

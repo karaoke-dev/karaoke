@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin
 {
     [TestFixture]
     public partial class TestSceneLayoutScreen : KaraokeSkinEditorScreenTestScene<LayoutScreen>

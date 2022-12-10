@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Settings
 {
     [TestFixture]
     public partial class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>

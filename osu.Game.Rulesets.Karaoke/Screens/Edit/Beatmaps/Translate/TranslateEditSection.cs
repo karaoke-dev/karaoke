@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;

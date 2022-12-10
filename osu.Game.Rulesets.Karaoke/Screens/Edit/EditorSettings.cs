@@ -2,21 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
 public abstract partial class EditorSettings : EditorRoundedScreenSettings
 {
-    public abstract SettingsDirection Direction { get; }
-
-    public abstract float SettingsWidth { get; }
-
-    protected void ReloadSections()
+    protected void ChangeBackgroundColour(Colour4 colour4)
     {
-        this.ChildrenOfType<FillFlowContainer>().First().Children = CreateSections();
+        this.ChildrenOfType<Box>().First().Colour = colour4;
     }
 }

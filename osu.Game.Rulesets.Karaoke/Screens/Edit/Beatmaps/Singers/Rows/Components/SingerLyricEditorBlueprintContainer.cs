@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Objects;
