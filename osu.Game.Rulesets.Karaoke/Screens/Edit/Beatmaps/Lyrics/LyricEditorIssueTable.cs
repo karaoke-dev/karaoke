@@ -12,12 +12,12 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-public abstract partial class IssueTable : LyricEditorTable
+public abstract partial class LyricEditorIssueTable : LyricEditorTable
 {
     [Resolved, AllowNull]
     private IIssueNavigator issueNavigator { get; set; }
 
-    protected IssueTable()
+    protected LyricEditorIssueTable()
     {
         Columns = CreateHeaders();
     }

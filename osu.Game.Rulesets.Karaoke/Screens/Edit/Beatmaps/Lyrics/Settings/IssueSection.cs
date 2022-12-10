@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             EmptyIssue emptyIssue;
 
             IssueNavigator issueNavigator;
-            IssueTable issueTable;
+            LyricEditorIssueTable issueTable;
 
             Children = new Drawable[]
             {
@@ -343,7 +343,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             }
         }
 
-        protected abstract partial class LyricsIssueTable : IssueTable
+        protected abstract partial class LyricsIssueTable : LyricEditorIssueTable
         {
         }
 
