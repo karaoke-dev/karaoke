@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "directions", new InputKey
+                            "directions", new InputKeyDescriptionAction
                             {
                                 Text = "Up or down",
                                 AdjustableActions = new List<KaraokeEditAction>
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                             }
                         },
                         {
-                            "adjust_text_tag_index", new InputKey
+                            "adjust_text_tag_index", new InputKeyDescriptionAction
                             {
                                 Text = "Keys",
                                 AdjustableActions = new List<KaraokeEditAction>

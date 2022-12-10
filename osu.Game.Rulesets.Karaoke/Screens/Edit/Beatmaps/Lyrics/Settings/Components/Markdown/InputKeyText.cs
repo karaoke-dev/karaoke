@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
     /// </summary>
     public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
     {
-        private readonly InputKey inputKey;
+        private readonly InputKeyDescriptionAction inputKeyDescriptionAction;
 
         [Resolved]
         private ReadableKeyCombinationProvider keyCombinationProvider { get; set; }
@@ -39,10 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         [Resolved]
         private RealmAccess realm { get; set; }
 
-        public InputKeyText(InputKey inputKey)
-            : base(inputKey.Text.ToString(), new LinkInline { Title = "Click to change the key." })
+        public InputKeyText(InputKeyDescriptionAction inputKeyDescriptionAction)
+            : base(inputKeyDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the key." })
         {
-            this.inputKey = inputKey;
+            this.inputKeyDescriptionAction = inputKeyDescriptionAction;
 
             CornerRadius = 4;
             Masking = true;
@@ -67,9 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
 
         private void updateDisplayText()
         {
-            string text = string.IsNullOrEmpty(inputKey.Text.ToString())
-                ? getKeyName(inputKey.AdjustableActions.FirstOrDefault())
-                : inputKey.Text.ToString();
+            string text = string.IsNullOrEmpty(inputKeyDescriptionAction.Text.ToString())
+                ? getKeyName(inputKeyDescriptionAction.AdjustableActions.FirstOrDefault())
+                : inputKeyDescriptionAction.Text.ToString();
 
             var spriteText = InternalChildren.OfType<OsuSpriteText>().FirstOrDefault();
             Debug.Assert(spriteText != null);
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         {
             var popover = new OsuPopover
             {
-                Child = new PopoverKeyBindingsSubsection(inputKey.AdjustableActions)
+                Child = new PopoverKeyBindingsSubsection(inputKeyDescriptionAction.AdjustableActions)
                 {
                     Width = 300,
                     RelativeSizeAxes = Axes.None,

@@ -18,12 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         [Resolved]
         private ILyricEditorState? state { get; set; }
 
-        private readonly SwitchMode switchMode;
+        private readonly SwitchModeDescriptionAction switchModeDescriptionAction;
 
-        public SwitchMoteText(SwitchMode switchMode)
-            : base(switchMode.Text.ToString(), new LinkInline { Title = "Click to change the edit mode." })
+        public SwitchMoteText(SwitchModeDescriptionAction switchModeDescriptionAction)
+            : base(switchModeDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the edit mode." })
         {
-            this.switchMode = switchMode;
+            this.switchModeDescriptionAction = switchModeDescriptionAction;
 
             CornerRadius = 4;
             Masking = true;
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         {
             base.OnLinkPressed();
 
-            state?.NavigateToFix(switchMode.Mode);
+            state?.NavigateToFix(switchModeDescriptionAction.Mode);
         }
     }
 }

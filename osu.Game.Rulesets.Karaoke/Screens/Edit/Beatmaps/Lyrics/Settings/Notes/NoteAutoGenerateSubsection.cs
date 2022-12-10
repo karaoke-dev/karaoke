@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
-                        create_time_tag_mode, new SwitchMode
+                        create_time_tag_mode, new SwitchModeDescriptionAction
                         {
                             Text = "adjust time-tag mode",
                             Mode = LyricEditorMode.EditTimeTag

@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            language_mode, new SwitchMode
+                            language_mode, new SwitchModeDescriptionAction
                             {
                                 Text = "edit language mode",
                                 Mode = LyricEditorMode.Language

@@ -66,8 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         protected virtual OsuMarkdownLinkText GetLinkTextByDescriptionAction(IDescriptionAction descriptionAction) =>
             descriptionAction switch
             {
-                InputKey inputKey => new InputKeyText(inputKey),
-                SwitchMode switchMode => new SwitchMoteText(switchMode),
+                InputKeyDescriptionAction inputKey => new InputKeyText(inputKey),
+                SwitchModeDescriptionAction switchMode => new SwitchMoteText(switchMode),
                 _ => throw new InvalidCastException()
             };
 

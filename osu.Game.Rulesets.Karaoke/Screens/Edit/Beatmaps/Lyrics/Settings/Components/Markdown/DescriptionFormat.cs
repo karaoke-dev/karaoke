@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using osu.Framework.Localisation;
 
@@ -24,19 +22,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Compon
         {
             Text = text
         };
-    }
-
-    public struct SwitchMode : IDescriptionAction
-    {
-        public LocalisableString Text { get; set; }
-
-        public LyricEditorMode Mode { get; set; }
-    }
-
-    public struct InputKey : IDescriptionAction
-    {
-        public LocalisableString Text { get; set; }
-
-        public IList<KaraokeEditAction> AdjustableActions { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time", new InputKey
+                            "set_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new[]
                                 {
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time", new InputKey
+                            "set_time", new InputKeyDescriptionAction
                             {
                                 Text = "set time key.",
                                 AdjustableActions = new[]
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "singer_mode", new SwitchMode
+                            "singer_mode", new SwitchModeDescriptionAction
                             {
                                 Text = "edit text mode",
                                 Mode = LyricEditorMode.Singer

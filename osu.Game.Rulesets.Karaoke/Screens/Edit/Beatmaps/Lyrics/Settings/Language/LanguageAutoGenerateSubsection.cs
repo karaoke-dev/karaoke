@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
-                        typing_mode, new SwitchMode
+                        typing_mode, new SwitchModeDescriptionAction
                         {
                             Text = "typing mode",
                             Mode = LyricEditorMode.Texting

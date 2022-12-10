@@ -55,13 +55,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                     Actions = new Dictionary<string, IDescriptionAction>
                     {
                         {
-                            "set_time_tag_time", new InputKey
+                            "set_time_tag_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
                             }
                         },
                         {
-                            "clear_time_tag_time", new InputKey
+                            "clear_time_tag_time", new InputKeyDescriptionAction
                             {
                                 AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
                             }
