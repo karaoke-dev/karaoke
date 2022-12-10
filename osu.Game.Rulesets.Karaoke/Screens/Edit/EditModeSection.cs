@@ -7,12 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Overlays.Toolbar;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
@@ -124,6 +129,85 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
             Content.CornerRadius = 15;
 
             base.Action = () => Action?.Invoke(Mode);
+        }
+    }
+
+    protected abstract partial class VerifySelection : Selection
+    {
+        protected readonly IBindableList<Issue> Issues = new BindableList<Issue>();
+
+        protected VerifySelection()
+        {
+            CountCircle countCircle;
+
+            AddInternal(countCircle = new CountCircle
+            {
+                Anchor = Anchor.TopRight,
+                Origin = Anchor.Centre,
+                X = -5,
+            });
+
+            Issues.BindCollectionChanged((_, _) =>
+            {
+                int count = Issues.Count;
+                countCircle.Alpha = count == 0 ? 0 : 1;
+                countCircle.Count = count;
+            });
+        }
+    }
+
+    /// <summary>
+    /// Copied from <see cref="ToolbarNotificationButton"/>
+    /// </summary>
+    private partial class CountCircle : CompositeDrawable
+    {
+        private readonly OsuSpriteText countText;
+        private readonly Circle circle;
+
+        private int count;
+
+        public int Count
+        {
+            get => count;
+            set
+            {
+                if (count == value)
+                    return;
+
+                if (value != count)
+                {
+                    circle.FlashColour(Color4.White, 600, Easing.OutQuint);
+                    this.ScaleTo(1.1f).Then().ScaleTo(1, 600, Easing.OutElastic);
+                }
+
+                count = value;
+                countText.Text = value.ToString("#,0");
+            }
+        }
+
+        public CountCircle()
+        {
+            AutoSizeAxes = Axes.X;
+            Height = 20;
+
+            InternalChildren = new Drawable[]
+            {
+                circle = new Circle
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.Red
+                },
+                countText = new OsuSpriteText
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Y = -1,
+                    Font = OsuFont.GetFont(size: 18, weight: FontWeight.Bold),
+                    Padding = new MarginPadding(5),
+                    Colour = Color4.White,
+                    UseFullGlyphHeight = true,
+                }
+            };
         }
     }
 }
