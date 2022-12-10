@@ -12,7 +12,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference;
 
-public partial class ReferenceLyricEditModeSection : EditModeSection<IEditReferenceLyricModeState, ReferenceLyricEditMode>
+public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<IEditReferenceLyricModeState, ReferenceLyricEditMode>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;

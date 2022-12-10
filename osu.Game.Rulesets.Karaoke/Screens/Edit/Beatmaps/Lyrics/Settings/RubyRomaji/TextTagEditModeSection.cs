@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public abstract partial class TextTagEditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditModeState, TEditMode>
+    public abstract partial class TextTagEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditModeState, TEditMode>
         where TEditModeState : IHasEditModeState<TEditMode>
         where TEditMode : Enum
     {

@@ -27,7 +27,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
+    public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
         where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
     {
         [Resolved]
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         }
     }
 
-    public abstract partial class EditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
+    public abstract partial class LyricEditorEditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
     {
         private const int horizontal_padding = 20;
 
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         private readonly Selection[] selections;
         private readonly LyricEditorDescriptionTextFlowContainer lyricEditorDescription;
 
-        protected EditModeSection()
+        protected LyricEditorEditModeSection()
         {
             overlayColourProvider = new OverlayColourProvider(CreateColourScheme());
 
