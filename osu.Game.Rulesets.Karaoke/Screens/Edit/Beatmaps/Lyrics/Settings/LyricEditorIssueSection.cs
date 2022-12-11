@@ -2,17 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Colour;
-using osu.Game.Rulesets.Edit.Checks.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
     public abstract partial class LyricEditorIssueSection : IssueSection
     {
-        private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
-
         protected abstract LyricEditorMode EditMode { get; }
 
         protected abstract LyricsIssueTable CreateLyricsIssueTable();
@@ -26,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         [BackgroundDependencyLoader]
         private void load(ILyricEditorVerifier verifier)
         {
-            bindableIssues.BindTo(verifier.GetIssueByEditMode(EditMode));
+            Issues.BindTo(verifier.GetIssueByEditMode(EditMode));
         }
 
         private partial class LyricEditorEmptyIssue : EmptyIssue

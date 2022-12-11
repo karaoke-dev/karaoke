@@ -13,8 +13,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
 public abstract partial class IssueTable : EditorTable
 {
+    private const float horizontal_inset = 0;
+
     protected IssueTable()
     {
+        Padding = new MarginPadding { Horizontal = horizontal_inset };
+        BackgroundFlow.Padding = new MarginPadding { Horizontal = -horizontal_inset };
+
         Columns = CreateHeaders();
     }
 
