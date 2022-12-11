@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
