@@ -24,6 +24,22 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
+public abstract partial class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
+    where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
+{
+    [Resolved]
+    private TEditModeState tEditModeState { get; set; }
+
+    protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
+
+    internal override void UpdateEditMode(TEditMode mode)
+    {
+        tEditModeState.ChangeEditMode(mode);
+
+        base.UpdateEditMode(mode);
+    }
+}
+
 public abstract partial class EditModeSection<TEditMode> : EditorSection where TEditMode : Enum
 {
     private const int horizontal_padding = 20;

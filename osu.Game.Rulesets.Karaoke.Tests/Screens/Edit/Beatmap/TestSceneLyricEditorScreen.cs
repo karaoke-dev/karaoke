@@ -11,9 +11,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
         {
             AddStep("Click the button", () =>
             {
-                var editModeSection = this.ChildrenOfType<LyricEditorEditModeSection<T>>().Single();
+                var editModeSection = this.ChildrenOfType<EditModeSection<T>>().Single();
                 editModeSection.UpdateEditMode(editMode);
             });
             AddWaitStep("wait for switch to new edit mode.", 10);

@@ -4,7 +4,7 @@
 using System;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 {
     public interface IHasEditModeState<T> where T : Enum
     {
