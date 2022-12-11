@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
@@ -13,13 +14,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
 public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditMode>
 {
+    [Resolved, AllowNull]
+    private IPageStateProvider pageStateProvider { get; set; }
+
     protected sealed override LocalisableString Title => "Edit mode";
+
+    protected override PageEditorEditMode DefaultMode()
+        => pageStateProvider.EditMode;
+
+    internal sealed override void UpdateEditMode(PageEditorEditMode mode)
+    {
+        pageStateProvider.ChangeEditMode(mode);
+
+        base.UpdateEditMode(mode);
+    }
 
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Green;
-
-    protected override PageEditorEditMode DefaultMode()
-        => PageEditorEditMode.Edit;
 
     protected override Selection CreateSelection(PageEditorEditMode mode) =>
         mode switch

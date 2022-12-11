@@ -15,8 +15,9 @@ public partial class PageSettings : EditorSettings
     private readonly IBindable<PageEditorEditMode> bindableMode = new Bindable<PageEditorEditMode>();
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider)
+    private void load(OverlayColourProvider colourProvider, IPageStateProvider pageStateProvider)
     {
+        bindableMode.BindTo(pageStateProvider.BindableEditMode);
         bindableMode.BindValueChanged(e =>
         {
             ReloadSections();

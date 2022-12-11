@@ -23,6 +23,12 @@ public partial class PageEditorIssueSection : IssueSection
 
     protected override IssueTable CreateIssueTable() => new PageEditorIssueTable();
 
+    [BackgroundDependencyLoader]
+    private void load(IPageEditorVerifier pageEditorVerifier)
+    {
+        Issues.BindTo(pageEditorVerifier.Issues);
+    }
+
     private partial class PageEditorEmptyIssue : EmptyIssue
     {
         [Resolved]
@@ -47,9 +53,7 @@ public partial class PageEditorIssueSection : IssueSection
         private IPageEditorVerifier pageEditorVerifier { get; set; } = null!;
 
         protected override void OnIssueClicked(Issue issue)
-        {
-            pageEditorVerifier.Navigate(issue);
-        }
+            => pageEditorVerifier.Navigate(issue);
 
         protected override TableColumn[] CreateHeaders() => new[]
         {
