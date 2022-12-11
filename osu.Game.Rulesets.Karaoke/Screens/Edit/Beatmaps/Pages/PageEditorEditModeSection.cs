@@ -10,15 +10,12 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
-public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditMode>
+public partial class PageEditorEditModeSection : EditModeSection<IPageStateProvider, PageEditorEditMode>
 {
     protected sealed override LocalisableString Title => "Edit mode";
 
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Green;
-
-    protected override PageEditorEditMode DefaultMode()
-        => PageEditorEditMode.Edit;
 
     protected override Selection CreateSelection(PageEditorEditMode mode) =>
         mode switch

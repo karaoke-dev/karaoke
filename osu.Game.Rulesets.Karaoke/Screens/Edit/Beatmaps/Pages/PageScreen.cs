@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
@@ -10,10 +11,15 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
-public partial class PageScreen : BeatmapEditorRoundedScreen
+[Cached(typeof(IPageStateProvider))]
+public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
 {
     [Cached(typeof(IBeatmapPagesChangeHandler))]
     private readonly BeatmapPagesChangeHandler beatmapPagesChangeHandler;
+
+    public IBindable<PageEditorEditMode> BindableEditMode => bindableEditMode;
+
+    private readonly Bindable<PageEditorEditMode> bindableEditMode = new();
 
     public PageScreen()
         : base(KaraokeBeatmapEditorScreenMode.Page)
@@ -49,6 +55,11 @@ public partial class PageScreen : BeatmapEditorRoundedScreen
                 }
             }
         });
+    }
+
+    public void ChangeEditMode(PageEditorEditMode mode)
+    {
+        bindableEditMode.Value = mode;
     }
 
     private partial class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
