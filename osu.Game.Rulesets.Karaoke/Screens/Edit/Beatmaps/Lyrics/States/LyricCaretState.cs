@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
             return mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => subMode is TextingEditMode textingEditMode ? getTextingmodeAlgorithm(textingEditMode) : throw new InvalidCastException(),
+                LyricEditorMode.Texting => subMode is TextingEditMode textingEditMode ? getTextingModeAlgorithm(textingEditMode) : throw new InvalidCastException(),
                 LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
@@ -139,16 +139,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
                 _ => throw new InvalidOperationException(nameof(mode))
             };
 
-            ICaretPositionAlgorithm getTextingmodeAlgorithm(TextingEditMode textingEditMode)
-            {
-                return textingEditMode switch
+            ICaretPositionAlgorithm getTextingModeAlgorithm(TextingEditMode textingEditMode) =>
+                textingEditMode switch
                 {
                     TextingEditMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
                     TextingEditMode.Split => new CuttingCaretPositionAlgorithm(lyrics),
                     TextingEditMode.Verify => new NavigateCaretPositionAlgorithm(lyrics),
                     _ => throw new InvalidOperationException(nameof(textingEditMode))
                 };
-            }
 
             ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditMode timeTagEditMode)
             {

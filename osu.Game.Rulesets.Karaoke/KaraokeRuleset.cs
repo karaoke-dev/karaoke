@@ -197,22 +197,14 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override ISkin CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
         {
-            switch (skin)
+            return skin switch
             {
-                case TrianglesSkin:
-                    return new KaraokeTrianglesSkinTransformer(skin, beatmap);
-
-                case ArgonSkin:
-                    return new KaraokeArgonSkinTransformer(skin, beatmap);
-
-                case DefaultLegacySkin:
-                    return new KaraokeClassicSkinTransformer(skin, beatmap);
-
-                case LegacySkin:
-                    return new KaraokeLegacySkinTransformer(skin, beatmap);
-            }
-
-            return null;
+                TrianglesSkin => new KaraokeTrianglesSkinTransformer(skin, beatmap),
+                ArgonSkin => new KaraokeArgonSkinTransformer(skin, beatmap),
+                DefaultLegacySkin => new KaraokeClassicSkinTransformer(skin, beatmap),
+                LegacySkin => new KaraokeLegacySkinTransformer(skin, beatmap),
+                _ => null
+            };
         }
 
         public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();

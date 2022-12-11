@@ -18,10 +18,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public static ElementType GetElementType(MemberInfo elementType) =>
             elementType switch
             {
-                var type when type == typeof(LyricFontInfo) => ElementType.LyricFontInfo,
-                var type when type == typeof(LyricLayout) => ElementType.LyricLayout,
-                var type when type == typeof(LyricStyle) => ElementType.LyricStyle,
-                var type when type == typeof(NoteStyle) => ElementType.NoteStyle,
+                _ when elementType == typeof(LyricFontInfo) => ElementType.LyricFontInfo,
+                _ when elementType == typeof(LyricLayout) => ElementType.LyricLayout,
+                _ when elementType == typeof(LyricStyle) => ElementType.LyricStyle,
+                _ when elementType == typeof(NoteStyle) => ElementType.NoteStyle,
                 _ => throw new NotSupportedException()
             };
 

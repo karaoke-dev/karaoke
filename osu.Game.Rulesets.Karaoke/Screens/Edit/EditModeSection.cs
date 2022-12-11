@@ -103,7 +103,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
         }
     }
 
-    protected abstract DescriptionTextFlowContainer CreateDescriptionTextFlowContainer();
+    protected virtual DescriptionTextFlowContainer CreateDescriptionTextFlowContainer() => new();
 
     protected abstract OverlayColourScheme CreateColourScheme();
 
