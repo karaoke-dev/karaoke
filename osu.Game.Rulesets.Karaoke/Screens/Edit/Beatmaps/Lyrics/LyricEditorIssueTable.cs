@@ -14,16 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public abstract partial class LyricEditorIssueTable : IssueTable
 {
-    private const float horizontal_inset = 20;
-
     [Resolved, AllowNull]
     private IIssueNavigator issueNavigator { get; set; }
-
-    protected LyricEditorIssueTable()
-    {
-        Padding = new MarginPadding { Horizontal = horizontal_inset };
-        BackgroundFlow.Padding = new MarginPadding { Horizontal = -horizontal_inset };
-    }
 
     public new bool ShowHeaders
     {
