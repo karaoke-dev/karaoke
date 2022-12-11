@@ -15,10 +15,14 @@ public partial class PageScreen : BeatmapEditorRoundedScreen
     [Cached(typeof(IBeatmapPagesChangeHandler))]
     private readonly BeatmapPagesChangeHandler beatmapPagesChangeHandler;
 
+    [Cached(typeof(IPageEditorVerifier))]
+    private readonly PageEditorVerifier pageEditorVerifier;
+
     public PageScreen()
         : base(KaraokeBeatmapEditorScreenMode.Page)
     {
         AddInternal(beatmapPagesChangeHandler = new BeatmapPagesChangeHandler());
+        AddInternal(pageEditorVerifier = new PageEditorVerifier());
     }
 
     [BackgroundDependencyLoader]
