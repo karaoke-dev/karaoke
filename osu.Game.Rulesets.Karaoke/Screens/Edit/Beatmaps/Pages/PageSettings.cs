@@ -32,6 +32,7 @@ public partial class PageSettings : EditorSettings
         PageEditorEditMode.Edit => new Drawable[]
         {
             new PageEditorEditModeSection(),
+            new PagesSection(),
         },
         PageEditorEditMode.Verify => new Drawable[]
         {
