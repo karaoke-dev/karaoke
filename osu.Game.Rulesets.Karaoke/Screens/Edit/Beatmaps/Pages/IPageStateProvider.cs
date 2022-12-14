@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
@@ -12,4 +13,6 @@ public interface IPageStateProvider
     PageEditorEditMode EditMode => BindableEditMode.Value;
 
     void ChangeEditMode(PageEditorEditMode mode);
+
+    PageInfo PageInfo { get; }
 }
