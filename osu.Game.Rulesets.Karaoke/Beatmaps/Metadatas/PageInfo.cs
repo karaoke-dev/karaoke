@@ -4,24 +4,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Lists;
+using osu.Framework.Bindables;
 using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 public class PageInfo : IDeepCloneable<PageInfo>
 {
-    public SortedList<Page> Pages = new(Comparer<Page>.Default);
+    public BindableList<Page> Pages = new();
+
+    public List<Page> SortedPages => Pages.OrderBy(x => x.Time).ToList();
 
     public Page? GetPageAt(double time)
     {
-        if (Pages.Count < 2)
+        if (SortedPages.Count < 2)
             return null;
 
-        var page = Pages.LastOrDefault(x => x.Time <= time);
+        var page = SortedPages.LastOrDefault(x => x.Time <= time);
 
         // should not be able to get the page if time exceed the last page.
-        var lastPage = Pages.LastOrDefault();
+        var lastPage = SortedPages.LastOrDefault();
         if (page == lastPage && page?.Time < time)
             return null;
 
@@ -34,7 +36,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
         if (page == null)
             return null;
 
-        return Pages.FindIndex(x => x == page);
+        return SortedPages.FindIndex(x => x == page);
     }
 
     public PageInfo DeepClone()
