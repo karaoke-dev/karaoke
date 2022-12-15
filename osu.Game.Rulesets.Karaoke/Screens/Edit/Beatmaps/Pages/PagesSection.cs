@@ -29,8 +29,16 @@ public partial class PagesSection : EditorSection
 
     private readonly IBindableList<Page> bindablePages = new BindableList<Page>();
 
+    private FillFlowContainer? fillFlowContainer => Content as FillFlowContainer;
+
     public PagesSection()
     {
+        if (fillFlowContainer != null)
+        {
+            fillFlowContainer.LayoutDuration = 100;
+            fillFlowContainer.LayoutEasing = Easing.Out;
+        }
+
         bindablePages.BindCollectionChanged((_, args) =>
         {
             switch (args.Action)
@@ -65,13 +73,11 @@ public partial class PagesSection : EditorSection
 
     private void addCreateButton()
     {
-        var fillFlowContainer = Content as FillFlowContainer;
         fillFlowContainer?.Insert(int.MaxValue, new CreateNewPageButton());
     }
 
     private void updatePagePosition(Drawable drawable, float newPosition)
     {
-        var fillFlowContainer = Content as FillFlowContainer;
         fillFlowContainer?.SetLayoutPosition(drawable, newPosition);
     }
 
