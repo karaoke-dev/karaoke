@@ -3,17 +3,19 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
-public partial class EditableLyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>
+public partial class EditableLyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
 {
     private const float lyric_size = 20;
 
@@ -111,4 +113,8 @@ public partial class EditableLyricTimelineSelectionBlueprint : SelectionBlueprin
             Width = duration;
         }
     }
+
+    public virtual ITooltip<Lyric> GetCustomTooltip() => new LyricTooltip();
+
+    public Lyric TooltipContent => Item;
 }
