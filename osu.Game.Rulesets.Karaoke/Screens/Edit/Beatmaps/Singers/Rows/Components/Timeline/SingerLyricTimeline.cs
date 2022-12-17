@@ -1,8 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -11,20 +11,17 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
 {
     [Cached]
-    public partial class SingerLyricTimeline : BindableScrollContainer
+    public partial class SingerLyricTimeline : EditableTimeline
     {
         private const float timeline_height = 38;
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
-
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
         public readonly Singer Singer;
@@ -34,10 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
             Singer = singer;
 
             RelativeSizeAxes = Axes.Both;
-
-            ZoomDuration = 200;
-            ZoomEasing = Easing.OutQuint;
-            ScrollbarVisible = false;
         }
 
         [BackgroundDependencyLoader]
@@ -53,24 +46,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
                 Origin = Anchor.CentreLeft,
                 Colour = colour.Gray3,
             });
-            AddRange(new Drawable[]
-            {
-                new Container
-                {
-                    RelativeSizeAxes = Axes.X,
-                    Height = timeline_height,
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                    Depth = float.MaxValue,
-                    Children = new Drawable[]
-                    {
-                        new LyricBlueprintContainer(),
-                    }
-                },
-            });
 
             BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);
             BindableCurrent.BindTo(scrollingInfoProvider.BindableCurrent);
+        }
+
+        protected override Container CreateMainContainer()
+        {
+            return base.CreateMainContainer().With(c => c.Height = timeline_height);
+        }
+
+        protected override IEnumerable<Drawable> CreateBlueprintContainer()
+        {
+            yield return new SingerLyricEditorBlueprintContainer();
         }
 
         protected override void LoadComplete()
@@ -85,16 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
 
             float position = PositionAtTime(firstLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
-        }
-
-        public double TimeAtPosition(float x)
-        {
-            return x / Content.DrawWidth * editorClock.TrackLength;
-        }
-
-        public float PositionAtTime(double time)
-        {
-            return (float)(time / editorClock.TrackLength * Content.DrawWidth);
         }
     }
 }
