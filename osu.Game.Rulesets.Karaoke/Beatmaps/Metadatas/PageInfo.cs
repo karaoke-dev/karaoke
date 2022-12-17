@@ -39,6 +39,12 @@ public class PageInfo : IDeepCloneable<PageInfo>
         return SortedPages.FindIndex(x => x == page);
     }
 
+    public int? GetPageOrder(Page page)
+    {
+        int index = SortedPages.IndexOf(page);
+        return index == -1 ? null : index + 1;
+    }
+
     public PageInfo DeepClone()
     {
         var controlPointInfo = (PageInfo)Activator.CreateInstance(GetType());

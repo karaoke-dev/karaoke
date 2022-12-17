@@ -149,7 +149,7 @@ public partial class PagesSection : EditorSection
 
             bindableTime.BindValueChanged(x =>
             {
-                int order = pageStateProvider.PageInfo.SortedPages.IndexOf(Page) + 1;
+                int? order = pageStateProvider.PageInfo.GetPageOrder(Page);
                 double time = x.NewValue;
 
                 DepthChanged?.Invoke(this, (float)time);
