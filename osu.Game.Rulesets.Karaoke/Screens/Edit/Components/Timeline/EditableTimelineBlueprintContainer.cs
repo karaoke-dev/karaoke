@@ -81,7 +81,7 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
         private double? startTime;
 
         [Resolved, AllowNull]
-        private LyricsTimeline timeline { get; set; }
+        private EditableTimeline timeline { get; set; }
 
         protected override Drawable CreateBox() => new Box
         {

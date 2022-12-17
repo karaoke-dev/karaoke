@@ -17,7 +17,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
 {
     [Cached]
-    public partial class SingerLyricTimeline : LyricsTimeline
+    public partial class SingerLyricTimeline : EditableTimeline
     {
         private const float timeline_height = 38;
 

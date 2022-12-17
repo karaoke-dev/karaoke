@@ -14,12 +14,12 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
 [Cached]
-public partial class LyricsTimeline : BindableScrollContainer
+public partial class EditableTimeline : BindableScrollContainer
 {
     [Resolved, AllowNull]
     private EditorClock editorClock { get; set; }
 
-    public LyricsTimeline()
+    public EditableTimeline()
     {
         ZoomDuration = 200;
         ZoomEasing = Easing.OutQuint;
