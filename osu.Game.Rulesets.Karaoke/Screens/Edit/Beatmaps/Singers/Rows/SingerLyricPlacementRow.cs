@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
