@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
 {
-    public partial class LyricTimelineSelectionBlueprint : LyricSelectionBlueprint, IHasCustomTooltip<Lyric>
+    public partial class LyricTimelineSelectionBlueprint : EditableLyricTimelineSelectionBlueprint, IHasCustomTooltip<Lyric>
     {
         private readonly IBindableList<int> singersBindable;
 

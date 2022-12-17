@@ -58,7 +58,7 @@ public partial class LyricsBlueprintContainer : BlueprintContainer<Lyric>
         => new LyricSelectionHandler();
 
     protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
-        => new LyricSelectionBlueprint(item);
+        => new EditableLyricTimelineSelectionBlueprint(item);
 
     protected override DragBox CreateDragBox() => new LyricDragBox();
 

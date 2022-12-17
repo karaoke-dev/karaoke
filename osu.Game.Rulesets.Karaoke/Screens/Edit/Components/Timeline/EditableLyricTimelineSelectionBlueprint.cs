@@ -13,13 +13,13 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
-public partial class LyricSelectionBlueprint : SelectionBlueprint<Lyric>
+public partial class EditableLyricTimelineSelectionBlueprint : SelectionBlueprint<Lyric>
 {
     private const float lyric_size = 20;
 
     private bool selectable = true;
 
-    public LyricSelectionBlueprint(Lyric item)
+    public EditableLyricTimelineSelectionBlueprint(Lyric item)
         : base(item)
     {
         Anchor = Anchor.CentreLeft;
