@@ -31,6 +31,8 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
 
     public PageInfo PageInfo => (editorBeatmap.PlayableBeatmap as KaraokeBeatmap)!.PageInfo;
 
+    public BindableList<Page> SelectedItems { get; } = new();
+
     private readonly Bindable<PageEditorEditMode> bindableEditMode = new();
 
     public PageScreen()
@@ -73,6 +75,12 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
     public void ChangeEditMode(PageEditorEditMode mode)
     {
         bindableEditMode.Value = mode;
+    }
+
+    public void Select(Page item)
+    {
+        SelectedItems.Clear();
+        SelectedItems.Add(item);
     }
 
     private partial class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
