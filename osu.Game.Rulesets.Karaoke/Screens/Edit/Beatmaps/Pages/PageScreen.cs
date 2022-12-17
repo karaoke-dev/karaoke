@@ -11,6 +11,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
@@ -33,6 +34,10 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
 
     public BindableList<Page> SelectedItems { get; } = new();
 
+    public BindableFloat BindableZoom { get; } = new();
+
+    public BindableFloat BindableCurrent { get; } = new();
+
     private readonly Bindable<PageEditorEditMode> bindableEditMode = new();
 
     public PageScreen()
@@ -43,8 +48,12 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
     }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(EditorClock editorClock)
     {
+        BindableZoom.MaxValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 8000);
+        BindableZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 80000);
+        BindableZoom.Value = BindableZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 40000);
+
         Add(new FixedSectionsContainer<Drawable>
         {
             FixedHeader = new PageScreenHeader(),

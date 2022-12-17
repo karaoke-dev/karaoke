@@ -19,4 +19,8 @@ public interface IPageStateProvider
     BindableList<Page> SelectedItems { get; }
 
     void Select(Page item);
+
+    BindableFloat BindableZoom { get; }
+
+    BindableFloat BindableCurrent { get; }
 }
