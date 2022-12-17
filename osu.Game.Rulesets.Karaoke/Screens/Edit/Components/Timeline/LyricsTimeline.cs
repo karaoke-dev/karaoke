@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers;
 using osu.Game.Screens.Edit;
 
@@ -48,7 +49,7 @@ public partial class LyricsTimeline : BindableScrollContainer
 
     protected virtual IEnumerable<Drawable> CreateBlueprintContainer()
     {
-        yield return new LyricsBlueprintContainer();
+        yield return new EditableTimelineBlueprintContainer<Lyric>();
     }
 
     public double TimeAtPosition(float x)

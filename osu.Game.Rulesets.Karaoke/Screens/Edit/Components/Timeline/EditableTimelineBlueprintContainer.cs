@@ -12,57 +12,50 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
-public partial class LyricsBlueprintContainer : BlueprintContainer<Lyric>
+public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContainer<TItem> where TItem : class
 {
-    protected readonly IBindableList<Lyric> Lyrics = new BindableList<Lyric>();
+    protected readonly IBindableList<TItem> Items = new BindableList<TItem>();
 
-    public LyricsBlueprintContainer()
+    public EditableTimelineBlueprintContainer()
     {
-        Lyrics.BindCollectionChanged((_, b) =>
+        Items.BindCollectionChanged((_, b) =>
         {
-            var removedLyrics = b.OldItems?.OfType<Lyric>().ToArray();
-            var createdLyrics = b.NewItems?.OfType<Lyric>().ToArray();
+            var removedItems = b.OldItems?.OfType<TItem>().ToArray();
+            var createdItems = b.NewItems?.OfType<TItem>().ToArray();
 
-            if (removedLyrics != null)
+            if (removedItems != null)
             {
-                foreach (var lyric in removedLyrics)
-                    RemoveBlueprintFor(lyric);
+                foreach (var item in removedItems)
+                    RemoveBlueprintFor(item);
             }
 
-            if (createdLyrics != null)
+            if (createdItems != null)
             {
-                foreach (var lyric in createdLyrics)
-                    AddBlueprintFor(lyric);
+                foreach (var item in createdItems)
+                    AddBlueprintFor(item);
             }
         });
     }
 
     protected override void SelectAll()
     {
-        SelectedItems.AddRange(Lyrics);
+        SelectedItems.AddRange(Items);
     }
 
-    protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
-        => blueprints.OrderBy(b => b.Item.LyricStartTime);
+    protected override Container<SelectionBlueprint<TItem>> CreateSelectionBlueprintContainer()
+        => new EditableTimelineSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
 
-    protected override Container<SelectionBlueprint<Lyric>> CreateSelectionBlueprintContainer()
-        => new LyricSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
+    protected override SelectionHandler<TItem> CreateSelectionHandler()
+        => new EditableTimelineSelectionHandler();
 
-    protected override SelectionHandler<Lyric> CreateSelectionHandler()
-        => new LyricSelectionHandler();
+    protected override DragBox CreateDragBox() => new EditableTimelineDragBox();
 
-    protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
-        => new EditableLyricTimelineSelectionBlueprint(item);
-
-    protected override DragBox CreateDragBox() => new LyricDragBox();
-
-    protected partial class LyricSelectionHandler : SelectionHandler<Lyric>
+    protected partial class EditableTimelineSelectionHandler : SelectionHandler<TItem>
     {
         protected override void OnSelectionChanged()
         {
@@ -73,13 +66,13 @@ public partial class LyricsBlueprintContainer : BlueprintContainer<Lyric>
             SelectionBox.FadeTo(dragging ? 1f : 0.0f);
         }
 
-        protected override void DeleteItems(IEnumerable<Lyric> items)
+        protected override void DeleteItems(IEnumerable<TItem> items)
         {
             // implement in the child class.
         }
     }
 
-    private partial class LyricDragBox : DragBox
+    private partial class EditableTimelineDragBox : DragBox
     {
         public double MinTime { get; private set; }
 
@@ -115,13 +108,13 @@ public partial class LyricsBlueprintContainer : BlueprintContainer<Lyric>
         }
     }
 
-    protected partial class LyricSelectionBlueprintContainer : Container<SelectionBlueprint<Lyric>>
+    protected partial class EditableTimelineSelectionBlueprintContainer : Container<SelectionBlueprint<TItem>>
     {
-        protected override Container<SelectionBlueprint<Lyric>> Content { get; }
+        protected override Container<SelectionBlueprint<TItem>> Content { get; }
 
-        public LyricSelectionBlueprintContainer()
+        public EditableTimelineSelectionBlueprintContainer()
         {
-            AddInternal(new TimelinePart<SelectionBlueprint<Lyric>>(Content = new Container<SelectionBlueprint<Lyric>> { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
+            AddInternal(new TimelinePart<SelectionBlueprint<TItem>>(Content = new Container<SelectionBlueprint<TItem>> { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
         }
     }
 }

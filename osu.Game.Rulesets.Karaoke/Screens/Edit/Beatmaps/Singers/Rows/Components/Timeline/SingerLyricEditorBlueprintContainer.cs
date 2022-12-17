@@ -18,12 +18,12 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
 {
-    public partial class SingerLyricEditorBlueprintContainer : LyricsBlueprintContainer
+    public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBlueprintContainer<Lyric>
     {
         [BackgroundDependencyLoader]
         private void load(ILyricsProvider lyricsProvider)
         {
-            Lyrics.BindTo(lyricsProvider.BindableLyrics);
+            Items.BindTo(lyricsProvider.BindableLyrics);
         }
 
         protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
         protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
             => new LyricTimelineSelectionBlueprint(item);
 
-        protected partial class SingerLyricSelectionHandler : LyricSelectionHandler
+        protected partial class SingerLyricSelectionHandler : EditableTimelineSelectionHandler
         {
             [Resolved]
             private EditorBeatmap beatmap { get; set; }
