@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
                     Depth = float.MaxValue,
                     Children = new Drawable[]
                     {
-                        new LyricBlueprintContainer(),
+                        new SingerLyricEditorBlueprintContainer(),
                     }
                 },
             });

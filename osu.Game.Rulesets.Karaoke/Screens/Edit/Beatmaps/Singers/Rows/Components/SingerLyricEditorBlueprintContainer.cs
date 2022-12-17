@@ -24,11 +24,11 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
 {
-    public partial class LyricBlueprintContainer : BlueprintContainer<Lyric>
+    public partial class SingerLyricEditorBlueprintContainer : BlueprintContainer<Lyric>
     {
         private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
-        public LyricBlueprintContainer()
+        public SingerLyricEditorBlueprintContainer()
         {
             bindableLyrics.BindCollectionChanged((_, b) =>
             {
