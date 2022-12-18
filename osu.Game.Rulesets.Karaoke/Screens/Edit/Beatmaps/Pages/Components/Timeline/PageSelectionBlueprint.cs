@@ -61,6 +61,7 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
     private partial class PageInfoPiece : CompositeDrawable
     {
         private readonly Page page;
+        private readonly IBindable<int> pagesVersion = new Bindable<int>();
 
         public PageInfoPiece(Page page)
         {
@@ -80,7 +81,7 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, IPageStateProvider pageStateProvider)
         {
-            int? order = pageStateProvider.PageInfo.GetPageOrder(page);
+            OsuSpriteText spriteText;
 
             InternalChildren = new Drawable[]
             {
@@ -89,16 +90,22 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
                     Colour = colours.Yellow,
                     RelativeSizeAxes = Axes.Both,
                 },
-                new OsuSpriteText
+                spriteText = new OsuSpriteText
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Padding = new MarginPadding(3),
                     Font = OsuFont.Default.With(size: 14, weight: FontWeight.SemiBold),
                     Colour = colours.B5,
-                    Text = $" #{order} "
                 }
             };
+
+            pagesVersion.BindTo(pageStateProvider.PageInfo.PagesVersion);
+            pagesVersion.BindValueChanged(x =>
+            {
+                int? order = pageStateProvider.PageInfo.GetPageOrder(page);
+                spriteText.Text = $" #{order} ";
+            }, true);
         }
     }
 
