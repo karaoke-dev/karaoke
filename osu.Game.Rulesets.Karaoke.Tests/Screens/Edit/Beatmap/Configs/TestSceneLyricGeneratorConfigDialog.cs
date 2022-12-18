@@ -14,10 +14,10 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.T
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.TimeTags.Zh;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Configs
 {
     [TestFixture]
-    public partial class TestSceneGeneratorConfigDialog : OsuTestScene
+    public partial class TestSceneLyricGeneratorConfigDialog : OsuTestScene
     {
         [BackgroundDependencyLoader]
         private void load()
