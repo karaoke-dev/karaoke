@@ -7,14 +7,16 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
 [Cached]
-public partial class EditableTimeline : BindableScrollContainer
+public partial class EditableTimeline : BindableScrollContainer, IPositionSnapProvider
 {
     [Resolved, AllowNull]
     private EditorClock editorClock { get; set; }
@@ -60,5 +62,11 @@ public partial class EditableTimeline : BindableScrollContainer
     public float PositionAtTime(double time)
     {
         return (float)(time / editorClock.TrackLength * Content.DrawWidth);
+    }
+
+    public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
+    {
+        double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
+        return new SnapResult(screenSpacePosition, time);
     }
 }
