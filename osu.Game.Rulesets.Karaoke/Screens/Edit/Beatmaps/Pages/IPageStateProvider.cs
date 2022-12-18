@@ -15,4 +15,12 @@ public interface IPageStateProvider
     void ChangeEditMode(PageEditorEditMode mode);
 
     PageInfo PageInfo { get; }
+
+    BindableList<Page> SelectedItems { get; }
+
+    void Select(Page item);
+
+    BindableFloat BindableZoom { get; }
+
+    BindableFloat BindableCurrent { get; }
 }

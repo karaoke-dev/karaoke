@@ -50,6 +50,21 @@ public class PageInfoTest
         Assert.AreEqual(expectedIndex, actualPageIndex);
     }
 
+    [Test]
+    public void TestGetPageOrder()
+    {
+        var pageInfo = new PageInfo();
+        pageInfo.Pages.AddRange(createPages(new double[] { 1000 }));
+
+        var existPage = pageInfo.Pages.First();
+        int? existPageOrder = pageInfo.GetPageOrder(existPage);
+        Assert.AreEqual(1, existPageOrder);
+
+        var notExistPage = new Page { Time = 1000 };
+        int? notExistPageOrder = pageInfo.GetPageOrder(notExistPage);
+        Assert.IsNull(notExistPageOrder);
+    }
+
     private static IEnumerable<Page> createPages(IEnumerable<double> times)
         => times.Select(x => new Page { Time = x });
 }

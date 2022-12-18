@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
@@ -20,8 +21,14 @@ public partial class PageEditor : CompositeDrawable
             background = new Box
             {
                 RelativeSizeAxes = Axes.Both
+            },
+            new PagesTimeLine
+            {
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
+                RelativeSizeAxes = Axes.X,
+                Height = 100,
             }
-            // todo: add the time-line and the top editor.
         };
     }
 

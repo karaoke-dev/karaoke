@@ -9,22 +9,21 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
 {
-    public partial class AdjustTimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
+    public partial class AdjustTimeTagSelectionBlueprint : EditableTimelineSelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
         private const float time_tag_triangle_size = 10;
 
@@ -39,11 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             : base(item)
         {
             startTime = item.TimeBindable.GetBoundCopy();
-
-            Anchor = Anchor.CentreLeft;
-            Origin = Anchor.CentreLeft;
-
-            RelativePositionAxes = Axes.X;
             RelativeSizeAxes = Axes.None;
             AutoSizeAxes = Axes.X;
 
@@ -120,32 +114,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
             }, true);
         }
 
-        protected override void OnSelected()
-        {
-            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
-        }
-
-        protected override void OnDeselected()
-        {
-            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
-        }
-
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            getContent().ReceivePositionalInputAt(screenSpacePos);
-
-        public override Quad SelectionQuad =>
-            getContent().ScreenSpaceDrawQuad;
-
-        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+        protected override Drawable GetInteractDrawable() => hasTime() ? timeTagPiece : timeTagWithNoTimePiece;
 
         public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
 
         public TimeTag TooltipContent => Item;
 
         private bool hasTime() => startTime.Value.HasValue;
-
-        private Drawable getContent()
-            => hasTime() ? timeTagPiece : timeTagWithNoTimePiece;
 
         public partial class TimeTagPiece : CompositeDrawable
         {
