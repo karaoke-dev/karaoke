@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Notes
 {
     [TestFixture]
-    public class NoteGeneratorTest : BaseGeneratorTest<NoteGenerator, Note[], NoteGeneratorConfig>
+    public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], NoteGeneratorConfig>
     {
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, true)]
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000" }, true)]

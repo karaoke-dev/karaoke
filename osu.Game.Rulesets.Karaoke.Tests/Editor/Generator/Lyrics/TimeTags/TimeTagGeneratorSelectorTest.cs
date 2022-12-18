@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
-    public class TimeTagGeneratorSelectorTest : BaseGeneratorSelectorTest<TimeTagGeneratorSelector>
+    public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeTagGeneratorSelector>
     {
         [TestCase(17, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese

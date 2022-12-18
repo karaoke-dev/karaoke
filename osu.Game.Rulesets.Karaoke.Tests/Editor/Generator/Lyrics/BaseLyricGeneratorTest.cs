@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
 {
-    public abstract class BaseGeneratorTest<TGenerator, TObject, TConfig>
+    public abstract class BaseLyricGeneratorTest<TGenerator, TObject, TConfig>
         where TGenerator : class, ILyricPropertyGenerator<TObject> where TConfig : new()
     {
         protected static TConfig GeneratorConfig(params string?[] properties)

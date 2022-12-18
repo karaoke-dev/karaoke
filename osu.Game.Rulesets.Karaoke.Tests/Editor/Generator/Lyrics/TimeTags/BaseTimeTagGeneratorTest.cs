@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
-    public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
+    public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseLyricGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
         protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)

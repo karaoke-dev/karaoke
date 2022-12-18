@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.ReferenceLyric
 {
     [TestFixture]
-    public class ReferenceLyricDetectorTest : BaseDetectorTest<ReferenceLyricDetector, Lyric?, ReferenceLyricDetectorConfig>
+    public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDetector, Lyric?, ReferenceLyricDetectorConfig>
     {
         [TestCase("karaoke", "karaoke", true)]
         [TestCase("karaoke", "karaoke -", false)] // should be able to detect only if two lyric text are the same.

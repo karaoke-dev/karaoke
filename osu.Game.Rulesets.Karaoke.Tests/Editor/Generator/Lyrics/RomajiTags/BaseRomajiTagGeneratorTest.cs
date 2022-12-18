@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags
 {
-    public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
+    public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseLyricGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
         where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, new()
     {
         protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
