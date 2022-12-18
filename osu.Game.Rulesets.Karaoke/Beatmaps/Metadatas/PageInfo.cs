@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Utils;
 
@@ -11,9 +13,45 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 public class PageInfo : IDeepCloneable<PageInfo>
 {
+    [JsonIgnore]
+    public IBindable<int> PagesVersion => pagesVersion;
+
+    private readonly Bindable<int> pagesVersion = new();
+
     public BindableList<Page> Pages = new();
 
-    public List<Page> SortedPages => Pages.OrderBy(x => x.Time).ToList();
+    [JsonIgnore]
+    public List<Page> SortedPages { get; private set; } = new();
+
+    public PageInfo()
+    {
+        Pages.CollectionChanged += (_, args) =>
+        {
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var c in args.NewItems.Cast<Page>())
+                        c.TimeBindable.ValueChanged += timeValueChanged;
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var c in args.OldItems.Cast<Page>())
+                        c.TimeBindable.ValueChanged -= timeValueChanged;
+                    break;
+            }
+
+            onPageChanged();
+
+            void timeValueChanged(ValueChangedEvent<double> e) => onPageChanged();
+        };
+
+        void onPageChanged()
+        {
+            SortedPages = Pages.OrderBy(x => x.Time).ToList();
+            pagesVersion.Value++;
+        }
+    }
 
     public Page? GetPageAt(double time)
     {
