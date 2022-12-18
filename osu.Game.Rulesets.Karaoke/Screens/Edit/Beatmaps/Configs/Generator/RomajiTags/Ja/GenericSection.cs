@@ -6,7 +6,7 @@
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.RomajiTags.Ja
 {

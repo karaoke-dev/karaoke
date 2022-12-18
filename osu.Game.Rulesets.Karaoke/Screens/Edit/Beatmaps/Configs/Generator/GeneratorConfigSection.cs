@@ -12,7 +12,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator

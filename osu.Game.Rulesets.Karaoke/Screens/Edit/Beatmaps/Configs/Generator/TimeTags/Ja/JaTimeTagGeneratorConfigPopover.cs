@@ -5,7 +5,7 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags.Ja
 {

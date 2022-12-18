@@ -4,7 +4,7 @@
 #nullable disable
 
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.TimeTags
 {

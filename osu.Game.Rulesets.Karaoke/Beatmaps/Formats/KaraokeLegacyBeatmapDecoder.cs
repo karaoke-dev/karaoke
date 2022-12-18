@@ -9,7 +9,7 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats

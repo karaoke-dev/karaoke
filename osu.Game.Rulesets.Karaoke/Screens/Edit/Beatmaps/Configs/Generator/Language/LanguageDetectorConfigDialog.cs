@@ -6,7 +6,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Language
 {

@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Language

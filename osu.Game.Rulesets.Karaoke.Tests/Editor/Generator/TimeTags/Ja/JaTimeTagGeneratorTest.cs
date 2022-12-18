@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja

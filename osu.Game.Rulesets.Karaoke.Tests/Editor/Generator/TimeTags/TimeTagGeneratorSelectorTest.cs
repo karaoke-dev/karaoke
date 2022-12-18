@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;

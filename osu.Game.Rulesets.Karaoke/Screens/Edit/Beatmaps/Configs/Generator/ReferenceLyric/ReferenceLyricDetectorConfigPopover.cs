@@ -5,7 +5,7 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.ReferenceLyric
 {

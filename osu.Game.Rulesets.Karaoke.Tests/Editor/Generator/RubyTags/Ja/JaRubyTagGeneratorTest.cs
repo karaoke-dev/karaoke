@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
 {

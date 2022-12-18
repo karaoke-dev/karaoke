@@ -3,7 +3,7 @@
 
 using System.Linq;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
