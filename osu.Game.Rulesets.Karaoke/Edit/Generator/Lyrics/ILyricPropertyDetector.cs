@@ -4,7 +4,7 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Types
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 {
     /// <summary>
     /// Base interface of the detector.

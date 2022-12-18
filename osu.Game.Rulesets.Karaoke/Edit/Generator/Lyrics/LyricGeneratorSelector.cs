@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
