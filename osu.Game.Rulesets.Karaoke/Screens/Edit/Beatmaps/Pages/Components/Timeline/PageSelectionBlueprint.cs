@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Components.Timel
 
 public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint<Page>
 {
-    private const float body_width = 2;
+    private const float body_width = 4;
 
     private readonly IBindable<double> startTime;
 
@@ -55,8 +55,6 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
     private void load(IPageEditorVerifier pageEditorVerifier)
     {
     }
-
-    protected override Drawable GetInteractDrawable() => pageBodyPiece;
 
     private partial class PageInfoPiece : CompositeDrawable
     {
