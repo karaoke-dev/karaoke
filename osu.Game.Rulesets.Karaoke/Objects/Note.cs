@@ -17,7 +17,7 @@ using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, IDeepCloneable<Note>
+    public partial class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, IDeepCloneable<Note>
     {
         [JsonIgnore]
         public readonly Bindable<int?> PageIndexBindable = new();
@@ -198,35 +198,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Note()
         {
-            ReferenceLyricBindable.ValueChanged += e =>
-            {
-                if (e.OldValue != null)
-                    e.OldValue.TimeTagsVersion.ValueChanged -= timeTagVersionChanged;
-
-                if (e.NewValue != null)
-                    e.NewValue.TimeTagsVersion.ValueChanged += timeTagVersionChanged;
-
-                syncStartTimeAndDurationFromTimeTag();
-            };
-
-            StartTimeOffsetBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
-            EndTimeOffsetBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
-            ReferenceTimeTagIndexBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
-
-            void timeTagVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
-
-            void syncStartTimeAndDurationFromTimeTag()
-            {
-                var startTimeTag = StartReferenceTimeTag;
-                var endTimeTag = EndReferenceTimeTag;
-
-                double startTime = startTimeTag?.Time ?? 0;
-                double endTime = endTimeTag?.Time ?? 0;
-                double duration = endTime - startTime;
-
-                StartTimeBindable.Value = startTimeTag == null ? 0 : startTime + StartTimeOffset;
-                DurationBindable.Value = endTimeTag == null ? 0 : Math.Max(duration - StartTimeOffset + EndTimeOffset, 0);
-            }
+            initInternalBindingEvent();
+            initReferenceLyricEvent();
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
