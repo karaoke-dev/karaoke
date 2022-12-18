@@ -9,7 +9,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -62,15 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public double LyricStartTime { get; private set; }
-
-        [JsonIgnore]
-        public double LyricEndTime { get; private set; }
-
-        [JsonIgnore]
-        public double LyricDuration => LyricEndTime - LyricStartTime;
-
-        [JsonIgnore]
         public IBindable<int> RubyTagsVersion => rubyTagsVersion;
 
         private readonly Bindable<int> rubyTagsVersion = new();
@@ -111,28 +101,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 RomajiTagsBindable.AddRange(value);
             }
         }
-
-        /// <summary>
-        /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
-        /// </summary>
-        [JsonIgnore]
-        public override double StartTime
-        {
-            get => base.StartTime;
-            set => base.StartTime = value;
-        }
-
-        /// <summary>
-        /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
-        /// </summary>
-        [JsonIgnore]
-        public double Duration { get; set; }
-
-        /// <summary>
-        /// The time at which the HitObject end.
-        /// </summary>
-        [JsonIgnore]
-        public double EndTime => StartTime + Duration;
 
         [JsonIgnore]
         public readonly BindableList<int> SingersBindable = new();
@@ -191,19 +159,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int?> PageIndexBindable = new();
-
-        /// <summary>
-        /// Order
-        /// </summary>
-        [JsonIgnore]
-        public int? PageIndex
-        {
-            get => PageIndexBindable.Value;
-            set => PageIndexBindable.Value = value;
-        }
-
-        [JsonIgnore]
         public readonly Bindable<LockState> LockBindable = new();
 
         /// <summary>
@@ -227,28 +182,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 if (referenceLyricId != ReferenceLyric?.ID)
                 {
                     ReferenceLyric = null;
-                }
-            }
-        }
-
-        [JsonIgnore]
-        public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
-
-        /// <summary>
-        /// Reference lyric.
-        /// Link the same or similar lyric for reference or sync the properties.
-        /// </summary>
-        [JsonIgnore]
-        public Lyric? ReferenceLyric
-        {
-            get => ReferenceLyricBindable.Value;
-            set
-            {
-                ReferenceLyricBindable.Value = value;
-
-                if (value?.ID != ReferenceLyricId)
-                {
-                    ReferenceLyricId = value?.ID;
                 }
             }
         }

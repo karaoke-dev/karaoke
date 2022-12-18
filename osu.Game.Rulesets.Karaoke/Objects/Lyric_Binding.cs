@@ -12,6 +12,9 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
+    /// <summary>
+    /// Placing the binding-related logic.
+    /// </summary>
     public partial class Lyric
     {
         private void initInternalBindingEvent()
