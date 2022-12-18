@@ -2,14 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
