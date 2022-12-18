@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 updateLyricTime();
 
-                void invalidate() => TimeTagsVersion.Value++;
+                void invalidate() => timeTagsVersion.Value++;
             };
 
             TimeTagsVersion.ValueChanged += (_) =>
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         break;
                 }
 
-                void invalidate() => RubyTagsVersion.Value++;
+                void invalidate() => rubyTagsVersion.Value++;
             };
 
             RomajiTagsBindable.CollectionChanged += (_, args) =>
@@ -77,12 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         break;
                 }
 
-                void invalidate() => RomajiTagsVersion.Value++;
+                void invalidate() => romajiTagsVersion.Value++;
             };
 
             LockBindable.ValueChanged += e =>
             {
-                LyricPropertyWritableVersion.Value++;
+                lyricPropertyWritableVersion.Value++;
             };
 
             ReferenceLyricConfigBindable.ValueChanged += e =>
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     e.NewValue.Changed += invalidate;
                 }
 
-                void invalidate() => ReferenceLyricConfigVersion.Value++;
+                void invalidate() => referenceLyricConfigVersion.Value++;
             };
 
             void updateLyricTime()
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
             ReferenceLyricBindable.ValueChanged += e =>
             {
-                LyricPropertyWritableVersion.Value++;
+                lyricPropertyWritableVersion.Value++;
 
                 // text.
                 bindValueChange(e, l => l.TextBindable, (lyric, config) =>

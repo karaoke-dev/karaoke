@@ -41,7 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> TimeTagsVersion = new();
+        public IBindable<int> TimeTagsVersion => timeTagsVersion;
+
+        private readonly Bindable<int> timeTagsVersion = new();
 
         [JsonIgnore]
         public readonly BindableList<TimeTag> TimeTagsBindable = new();
@@ -69,7 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double LyricDuration => LyricEndTime - LyricStartTime;
 
         [JsonIgnore]
-        public readonly Bindable<int> RubyTagsVersion = new();
+        public IBindable<int> RubyTagsVersion => rubyTagsVersion;
+
+        private readonly Bindable<int> rubyTagsVersion = new();
 
         [JsonIgnore]
         public readonly BindableList<RubyTag> RubyTagsBindable = new();
@@ -88,7 +92,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> RomajiTagsVersion = new();
+        public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
+
+        private readonly Bindable<int> romajiTagsVersion = new();
 
         [JsonIgnore]
         public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
@@ -248,7 +254,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> ReferenceLyricConfigVersion = new();
+        public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
+
+        private readonly Bindable<int> referenceLyricConfigVersion = new();
 
         [JsonIgnore]
         public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
@@ -263,7 +271,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> LyricPropertyWritableVersion = new();
+        public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
+
+        private readonly Bindable<int> lyricPropertyWritableVersion = new();
 
         public Lyric()
         {
