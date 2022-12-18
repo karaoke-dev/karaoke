@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags
 {
-    public class RomajiTagGeneratorSelector : GeneratorSelector<RomajiTag[], RomajiTagGeneratorConfig>
+    public class RomajiTagGeneratorSelector : LyricGeneratorSelector<RomajiTag[], RomajiTagGeneratorConfig>
     {
         public RomajiTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
             : base(generatorConfigManager)

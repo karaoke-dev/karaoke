@@ -12,13 +12,13 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 {
-    public abstract class GeneratorSelector<TProperty, TBaseConfig> : ILyricPropertyGenerator<TProperty>
+    public abstract class LyricGeneratorSelector<TProperty, TBaseConfig> : ILyricPropertyGenerator<TProperty>
     {
         protected Dictionary<CultureInfo, Lazy<ILyricPropertyGenerator<TProperty>>> Generator { get; } = new();
 
         private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
-        protected GeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
+        protected LyricGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
         {
             this.generatorConfigManager = generatorConfigManager;
         }
