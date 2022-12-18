@@ -93,7 +93,7 @@ public partial class PagesSection : EditorSection
 
         public Action<LabelledPage, float>? DepthChanged;
 
-        private readonly IBindable<double> bindableTime = new Bindable<double>();
+        private readonly IBindable<int> pagesVersion = new Bindable<int>();
 
         [Resolved, AllowNull]
         private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
@@ -105,7 +105,6 @@ public partial class PagesSection : EditorSection
         public LabelledPage(Page page)
         {
             Page = page;
-            bindableTime.BindTo(Page.TimeBindable);
 
             Masking = true;
             CornerRadius = 5;
@@ -147,10 +146,11 @@ public partial class PagesSection : EditorSection
             spriteText.Colour = colour.YellowDarker;
             deleteIconButton.IconColour = colour.YellowDarker;
 
-            bindableTime.BindValueChanged(x =>
+            pagesVersion.BindTo(pageStateProvider.PageInfo.PagesVersion);
+            pagesVersion.BindValueChanged(_ =>
             {
                 int? order = pageStateProvider.PageInfo.GetPageOrder(Page);
-                double time = x.NewValue;
+                double time = Page.Time;
 
                 DepthChanged?.Invoke(this, (float)time);
                 spriteText.Text = $"#{order} {time.ToEditorFormattedString()}";
