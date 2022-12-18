@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
     public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()

@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
     public class TimeTagGeneratorSelectorTest : BaseGeneratorSelectorTest<TimeTagGeneratorSelector>
     {

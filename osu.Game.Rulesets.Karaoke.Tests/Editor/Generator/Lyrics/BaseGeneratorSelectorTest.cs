@@ -4,7 +4,7 @@
 using System;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
 {
     public abstract class BaseGeneratorSelectorTest<TSelector> where TSelector : class
     {

@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags.Ja
 {
     [TestFixture]
     public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerator, JaRubyTagGeneratorConfig>

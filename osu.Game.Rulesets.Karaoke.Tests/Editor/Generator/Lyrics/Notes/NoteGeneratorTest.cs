@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Notes
 {
     [TestFixture]
     public class NoteGeneratorTest : BaseGeneratorTest<NoteGenerator, Note[], NoteGeneratorConfig>

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
 {
     [TestFixture]
     public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerator, JaTimeTagGeneratorConfig>

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Language
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Language
 {
     [TestFixture]
     public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo?, LanguageDetectorConfig>

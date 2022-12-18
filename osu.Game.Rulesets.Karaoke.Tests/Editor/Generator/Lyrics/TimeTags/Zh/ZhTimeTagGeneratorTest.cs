@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Zh
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Zh
 {
     [TestFixture]
     public class ZhTimeTagGeneratorTest : BaseTimeTagGeneratorTest<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>

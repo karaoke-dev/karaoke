@@ -6,7 +6,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.ReferenceLyric
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.ReferenceLyric
 {
     [TestFixture]
     public class ReferenceLyricDetectorTest : BaseDetectorTest<ReferenceLyricDetector, Lyric?, ReferenceLyricDetectorConfig>

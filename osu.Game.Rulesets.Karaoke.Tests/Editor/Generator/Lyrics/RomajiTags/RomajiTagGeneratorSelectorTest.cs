@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags
 {
     public class RomajiTagGeneratorSelectorTest : BaseGeneratorSelectorTest<RomajiTagGeneratorSelector>
     {

@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags.Ja
 {
     public class JaRomajiTagGeneratorTest : BaseRomajiTagGeneratorTest<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>
     {
