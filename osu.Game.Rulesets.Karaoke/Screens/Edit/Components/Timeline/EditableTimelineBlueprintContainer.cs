@@ -47,6 +47,21 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
         SelectedItems.AddRange(Items);
     }
 
+    protected sealed override bool ApplySnapResult(SelectionBlueprint<TItem>[] blueprints, SnapResult result)
+    {
+        if (!base.ApplySnapResult(blueprints, result))
+            return false;
+
+        if (result.Time == null)
+            return false;
+
+        var items = blueprints.Select(x => x.Item).ToArray();
+        double time = result.Time.Value;
+        return ApplyOffsetResult(items, time);
+    }
+
+    protected virtual bool ApplyOffsetResult(TItem[] items, double time) => false;
+
     protected override Container<SelectionBlueprint<TItem>> CreateSelectionBlueprintContainer()
         => new EditableTimelineSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
 

@@ -15,10 +15,20 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Components.Timel
 
 public partial class PageBlueprintContainer : EditableTimelineBlueprintContainer<Page>
 {
+    [Resolved, AllowNull]
+    private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+
     [BackgroundDependencyLoader]
     private void load(IPageStateProvider pageStateProvider)
     {
         Items.BindTo(pageStateProvider.PageInfo.Pages);
+    }
+
+    protected override bool ApplyOffsetResult(Page[] items, double time)
+    {
+        double offset = time - items.First().Time;
+        beatmapPagesChangeHandler.ShiftingPageTime(items, offset);
+        return true;
     }
 
     protected override IEnumerable<SelectionBlueprint<Page>> SortForMovement(IReadOnlyList<SelectionBlueprint<Page>> blueprints)
@@ -43,6 +53,9 @@ public partial class PageBlueprintContainer : EditableTimelineBlueprintContainer
         {
             SelectedItems.BindTo(pageStateProvider.SelectedItems);
         }
+
+        // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+        public override bool HandleMovement(MoveSelectionEvent<Page> moveEvent) => true;
 
         protected override void DeleteItems(IEnumerable<Page> items)
         {
