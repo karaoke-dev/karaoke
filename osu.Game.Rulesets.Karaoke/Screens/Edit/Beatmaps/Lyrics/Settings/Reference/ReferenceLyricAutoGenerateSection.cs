@@ -2,24 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
 {
-    public partial class ReferenceLyricAutoGenerateSection : EditorSection
+    public partial class ReferenceLyricAutoGenerateSection : AutoGenerateSection
     {
-        protected override LocalisableString Title => "Auto generate";
-
-        public ReferenceLyricAutoGenerateSection()
-        {
-            Children = new[]
-            {
-                new ReferenceLyricAutoGenerateSubsection()
-            };
-        }
+        protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
+            => new ReferenceLyricAutoGenerateSubsection();
 
         private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
         {
