@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags.Ja
         [TestCase("はなび", new[] { "[0,3]:HANABI" })]
         public void TestGenerateWithUppercase(string text, string[] expectedRomajies)
         {
-            var config = GeneratorConfig(nameof(JaRomajiTagGeneratorConfig.Uppercase));
+            var config = GeneratorConfig(x => x.Uppercase = true);
             CheckGenerateResult(text, expectedRomajies, config);
         }
     }

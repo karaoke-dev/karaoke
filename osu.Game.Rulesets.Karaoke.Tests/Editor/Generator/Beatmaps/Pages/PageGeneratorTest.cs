@@ -26,7 +26,7 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     [TestCase(new string[] { }, false)]
     public void TestCanGenerate(string[] lyrics, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap
         {
             HitObjects = TestCaseTagHelper.ParseLyrics(lyrics).OfType<KaraokeHitObject>().ToList(),
@@ -38,7 +38,7 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     [Test]
     public void TestGenerateWithZeroLyric()
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap
         {
             HitObjects = new List<KaraokeHitObject>()
@@ -53,7 +53,7 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     [TestCase("[1000,23000]:karaoke", new[] { 1000, 1000 + max_interval, 1000 + max_interval * 2, 23000 })]
     public void TestGenerateWithSingleLyric(string lyric, double[] expectedTimes)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap
         {
             HitObjects = new List<KaraokeHitObject>
@@ -77,7 +77,7 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     [TestCase("[1000,23000]:karaoke", "[3000,4000]:karaoke", new[] { 1000, 1000 + max_interval, 1000 + max_interval * 2, 23000 })] // should ignore second lyric.
     public void TestGenerateWithTwoLyrics(string firstLyric, string secondLyric, double[] expectedTimes)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap
         {
             HitObjects = new List<KaraokeHitObject>

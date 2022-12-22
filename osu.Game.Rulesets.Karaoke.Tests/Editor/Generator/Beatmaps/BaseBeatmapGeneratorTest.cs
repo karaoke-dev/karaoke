@@ -10,15 +10,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps
 {
     public abstract class BaseBeatmapGeneratorTest<TGenerator, TObject, TConfig>
+        : BaseGeneratorTest<TConfig>
         where TGenerator : class, IBeatmapPropertyGenerator<TObject> where TConfig : IHasConfig<TConfig>, new()
     {
-        protected static TConfig GeneratorConfig(Action<TConfig>? action = null)
-        {
-            var config = new TConfig().CreateDefaultConfig();
-            action?.Invoke(config);
-            return config;
-        }
-
         protected static TGenerator GenerateGenerator(TConfig config)
         {
             if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
