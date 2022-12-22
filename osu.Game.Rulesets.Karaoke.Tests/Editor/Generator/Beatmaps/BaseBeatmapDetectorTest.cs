@@ -3,13 +3,13 @@
 
 using System;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps
 {
-    public abstract class BaseLyricDetectorTest<TDetector, TObject, TConfig>
-        where TDetector : class, ILyricPropertyDetector<TObject> where TConfig : new()
+    public abstract class BaseBeatmapDetectorTest<TDetector, TObject, TConfig>
+        where TDetector : class, IBeatmapPropertyDetector<TObject> where TConfig : new()
     {
         protected static TConfig GeneratorConfig(params string?[] properties)
         {
@@ -38,30 +38,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
             return detector;
         }
 
-        protected static void CheckCanDetect(Lyric lyric, bool canDetect, TConfig config)
+        protected static void CheckCanDetect(KaraokeBeatmap beatmap, bool canDetect, TConfig config)
         {
             var detector = GenerateDetector(config);
 
-            CheckCanDetect(lyric, canDetect, detector);
+            CheckCanDetect(beatmap, canDetect, detector);
         }
 
-        protected static void CheckCanDetect(Lyric lyric, bool canDetect, TDetector detector)
+        protected static void CheckCanDetect(KaraokeBeatmap beatmap, bool canDetect, TDetector detector)
         {
-            bool actual = detector.CanDetect(lyric);
+            bool actual = detector.CanDetect(beatmap);
             Assert.AreEqual(canDetect, actual);
         }
 
-        protected void CheckDetectResult(Lyric lyric, TObject expected, TConfig config)
+        protected void CheckDetectResult(KaraokeBeatmap beatmap, TObject expected, TConfig config)
         {
             var detector = GenerateDetector(config);
 
-            CheckDetectResult(lyric, expected, detector);
+            CheckDetectResult(beatmap, expected, detector);
         }
 
-        protected void CheckDetectResult(Lyric lyric, TObject expected, TDetector detector)
+        protected void CheckDetectResult(KaraokeBeatmap beatmap, TObject expected, TDetector detector)
         {
             // create time tag and actually time tag.
-            var actual = detector.Detect(lyric);
+            var actual = detector.Detect(beatmap);
             AssertEqual(expected, actual);
         }
 
