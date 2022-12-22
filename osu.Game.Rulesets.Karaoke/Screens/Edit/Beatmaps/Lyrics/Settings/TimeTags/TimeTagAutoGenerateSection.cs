@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
             };
         }
 
-        private partial class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
+        private partial class TimeTageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
         {
             private const string language_mode = "LANGUAGE_MODE";
 

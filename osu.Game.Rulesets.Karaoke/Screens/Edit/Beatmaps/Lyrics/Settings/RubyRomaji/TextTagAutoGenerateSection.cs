@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
     {
         protected sealed override LocalisableString Title => "Auto generate";
 
-        protected abstract partial class TextTagAutoGenerateSubsection : AutoGenerateSubsection
+        protected abstract partial class TextTagAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
         {
             private const string language_mode = "LANGUAGE_MODE";
 

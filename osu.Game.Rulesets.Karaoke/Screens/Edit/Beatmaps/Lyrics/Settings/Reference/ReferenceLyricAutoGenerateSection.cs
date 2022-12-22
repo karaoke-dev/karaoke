@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             };
         }
 
-        private partial class ReferenceLyricAutoGenerateSubsection : AutoGenerateSubsection
+        private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
         {
             public ReferenceLyricAutoGenerateSubsection()
                 : base(LyricAutoGenerateProperty.DetectReferenceLyric)

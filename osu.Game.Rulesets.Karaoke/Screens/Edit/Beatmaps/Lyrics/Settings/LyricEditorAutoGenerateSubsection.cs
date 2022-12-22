@@ -25,13 +25,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class AutoGenerateSubsection : FillFlowContainer
+    public abstract partial class LyricEditorAutoGenerateSubsection : FillFlowContainer
     {
         private const int horizontal_padding = 20;
 
         private readonly LyricAutoGenerateProperty autoGenerateProperty;
 
-        protected AutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
+        protected LyricEditorAutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
         {
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
