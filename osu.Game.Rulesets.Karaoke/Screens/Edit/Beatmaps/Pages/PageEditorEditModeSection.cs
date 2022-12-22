@@ -17,8 +17,6 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
     [Resolved, AllowNull]
     private IPageStateProvider pageStateProvider { get; set; }
 
-    protected sealed override LocalisableString Title => "Edit mode";
-
     protected override PageEditorEditMode DefaultMode()
         => pageStateProvider.EditMode;
 

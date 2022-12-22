@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
@@ -14,13 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
 {
     public partial class RomajiTagAutoGenerateSection : TextTagAutoGenerateSection
     {
-        public RomajiTagAutoGenerateSection()
-        {
-            Children = new[]
-            {
-                new RomajiTagAutoGenerateSubsection()
-            };
-        }
+        protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
+            => new RomajiTagAutoGenerateSubsection();
 
         private partial class RomajiTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
         {

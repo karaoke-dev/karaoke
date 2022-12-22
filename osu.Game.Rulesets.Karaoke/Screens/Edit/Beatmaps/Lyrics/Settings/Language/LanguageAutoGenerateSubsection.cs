@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
 {
-    public partial class LanguageAutoGenerateSubsection : AutoGenerateSubsection
+    public partial class LanguageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
     {
         private const string typing_mode = "TYPING_MODE";
 

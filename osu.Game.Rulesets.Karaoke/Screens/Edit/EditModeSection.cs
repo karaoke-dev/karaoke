@@ -28,6 +28,8 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
 {
     private const int horizontal_padding = 20;
 
+    protected sealed override LocalisableString Title => "Edit mode";
+
     [Cached]
     private readonly OverlayColourProvider overlayColourProvider;
 
