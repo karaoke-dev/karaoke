@@ -3,33 +3,16 @@
 
 using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
 {
     public abstract class BaseLyricDetectorTest<TDetector, TObject, TConfig>
-        where TDetector : class, ILyricPropertyDetector<TObject> where TConfig : new()
+        : BaseGeneratorTest<TConfig>
+        where TDetector : class, ILyricPropertyDetector<TObject> where TConfig : IHasConfig<TConfig>, new()
     {
-        protected static TConfig GeneratorConfig(params string?[] properties)
-        {
-            var config = new TConfig();
-
-            foreach (string? propertyName in properties)
-            {
-                if (propertyName == null)
-                    continue;
-
-                var theMethod = config.GetType().GetProperty(propertyName);
-                if (theMethod == null)
-                    throw new MissingMethodException("Config is not exist.");
-
-                theMethod.SetValue(config, true);
-            }
-
-            return config;
-        }
-
         protected static TDetector GenerateDetector(TConfig config)
         {
             if (Activator.CreateInstance(typeof(TDetector), config) is not TDetector detector)
