@@ -27,10 +27,10 @@ public abstract class PropertyGenerator<TItem, TProperty>
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public TProperty? Generate(TItem item)
+    public TProperty Generate(TItem item)
     {
         if (!CanGenerate(item))
-            return default;
+            throw new NotGeneratableException();
 
         return GenerateFromItem(item);
     }

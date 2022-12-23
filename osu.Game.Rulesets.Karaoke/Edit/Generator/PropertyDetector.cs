@@ -27,10 +27,10 @@ public abstract class PropertyDetector<TItem, TProperty>
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public TProperty? Detect(TItem item)
+    public TProperty Detect(TItem item)
     {
         if (!CanDetect(item))
-            return default;
+            throw new NotDetectatableException();
 
         return DetectFromItem(item);
     }
