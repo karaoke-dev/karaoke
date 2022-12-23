@@ -6,7 +6,6 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -18,12 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
     public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricAutoGenerateChangeHandler>
     {
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            baseDependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
-            return baseDependencies;
-        }
+        protected override bool IncludeAutoGenerator => true;
 
         #region Reference lyric
 

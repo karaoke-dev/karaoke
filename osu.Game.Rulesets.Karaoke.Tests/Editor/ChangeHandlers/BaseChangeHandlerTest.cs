@@ -10,6 +10,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Testing;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -69,6 +70,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 karaokeBeatmap.SingerInfo = new SingerInfo();
                 karaokeBeatmap.PageInfo = new PageInfo();
             });
+        }
+
+        protected virtual bool IncludeAutoGenerator => false;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            if (!IncludeAutoGenerator)
+            {
+                return base.CreateChildDependencies(parent);
+            }
+
+            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            baseDependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
+            return baseDependencies;
         }
 
         protected void SetUpEditorBeatmap(Action<EditorBeatmap> action)
