@@ -3,13 +3,46 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using osu.Framework.Allocation;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapPagesChangeHandler
 {
+    [Resolved, AllowNull]
+    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+
+    public LocalisableString? GetNotGeneratableMessage()
+    {
+        var config = getGeneratorConfig();
+        var generator = new PageGenerator(config);
+        return generator.GetInvalidMessage(KaraokeBeatmap);
+    }
+
+    public void AutoGenerate()
+    {
+        var config = getGeneratorConfig();
+        var generator = new PageGenerator(config);
+        var pages = generator.Generate(KaraokeBeatmap);
+
+        performPageInfoChanged(pageInfo =>
+        {
+            if (config.ClearExistPages)
+                pageInfo.Pages.Clear();
+
+            pageInfo.Pages.AddRange(pages);
+        });
+    }
+
+    private PageGeneratorConfig getGeneratorConfig()
+        => generatorConfigManager.Get<PageGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig);
+
     public void Add(Page page)
     {
         performPageInfoChanged(pageInfo =>
