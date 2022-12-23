@@ -15,23 +15,21 @@ using osu.Game.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 
-public class PageGenerator : IBeatmapPropertyGenerator<Page[]>
+public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfig>
 {
-    protected PageGeneratorConfig Config { get; }
-
     public PageGenerator(PageGeneratorConfig config)
+        : base(config)
     {
-        Config = config;
     }
 
-    public LocalisableString? GetInvalidMessage(KaraokeBeatmap beatmap)
+    protected override LocalisableString? GetInvalidMessageFromItem(KaraokeBeatmap item)
     {
-        var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
+        var lyrics = item.HitObjects.OfType<Lyric>().ToArray();
         if (lyrics.Length < 1)
             return "There's not lyric in the beatmap.";
 
         var timeTagChecker = new CheckLyricTimeTag();
-        var invalidIssues = timeTagChecker.Run(getContext(beatmap));
+        var invalidIssues = timeTagChecker.Run(getContext(item));
         if (invalidIssues.Any())
             return "Should not have any time-tag related issues";
 
@@ -41,13 +39,13 @@ public class PageGenerator : IBeatmapPropertyGenerator<Page[]>
     private static BeatmapVerifierContext getContext(IBeatmap beatmap)
         => new(beatmap, new TestWorkingBeatmap(beatmap));
 
-    public Page[] Generate(KaraokeBeatmap beatmap)
+    protected override Page[] GenerateFromItem(KaraokeBeatmap item)
     {
         if (Config.MinTime < CheckBeatmapPageInfo.MIN_INTERVAL || Config.MaxTime > CheckBeatmapPageInfo.MAX_INTERVAL)
             throw new InvalidOperationException("Inverval time should be validate.");
 
-        var existPages = Config.ClearExistPages ? Array.Empty<Page>() : beatmap.PageInfo.SortedPages.ToArray();
-        var lyricTimingInfos = beatmap.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo
+        var existPages = Config.ClearExistPages ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
+        var lyricTimingInfos = item.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo
         {
             StartTime = x.LyricStartTime,
             EndTime = x.EndTime,

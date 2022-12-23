@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps
 {
     public abstract class BaseBeatmapDetectorTest<TDetector, TObject, TConfig>
         : BaseGeneratorTest<TConfig>
-        where TDetector : class, IBeatmapPropertyDetector<TObject> where TConfig : IHasConfig<TConfig>, new()
+        where TDetector : BeatmapPropertyDetector<TObject, TConfig> where TConfig : IHasConfig<TConfig>, new()
     {
         protected static TDetector GenerateDetector(TConfig config)
         {
