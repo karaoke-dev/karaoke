@@ -5,6 +5,17 @@ using osu.Framework.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 
+public abstract class PropertyDetector<TItem, TProperty, TConfig> : PropertyDetector<TItem, TProperty>
+    where TConfig : IHasConfig<TConfig>, new()
+{
+    protected readonly TConfig Config;
+
+    protected PropertyDetector(TConfig config)
+    {
+        Config = config;
+    }
+}
+
 public abstract class PropertyDetector<TItem, TProperty>
 {
     /// <summary>
@@ -39,3 +50,4 @@ public abstract class PropertyDetector<TItem, TProperty>
 
     protected abstract TProperty DetectFromItem(TItem item);
 }
+
