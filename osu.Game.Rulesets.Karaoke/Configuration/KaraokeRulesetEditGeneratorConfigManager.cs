@@ -3,6 +3,7 @@
 
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
@@ -18,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         protected override void InitialiseDefaults()
         {
             base.InitialiseDefaults();
+
+            // Beatmap page
+            SetDefault(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig, CreateDefaultConfig<PageGeneratorConfig>());
 
             // Language detection
             SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
@@ -37,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Time tag generator
             SetDefault(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefaultConfig<JaTimeTagGeneratorConfig>());
             SetDefault(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefaultConfig<ZhTimeTagGeneratorConfig>());
+
+            // Language detection
+            SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
         }
 
         protected static T CreateDefaultConfig<T>() where T : IHasConfig<T>, new()
@@ -45,6 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
     public enum KaraokeRulesetEditGeneratorSetting
     {
+        // Beatmap
+        BeatmapPageGeneratorConfig,
+
         // Reference lyric detection.
         ReferenceLyricDetectorConfig,
 
