@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
@@ -58,6 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 
             Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
+            Dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }
     }
 }
