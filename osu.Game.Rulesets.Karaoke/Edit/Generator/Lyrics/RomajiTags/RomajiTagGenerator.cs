@@ -6,23 +6,20 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags
 {
-    public abstract class RomajiTagGenerator<T> : ILyricPropertyGenerator<RomajiTag[]> where T : RomajiTagGeneratorConfig
+    public abstract class RomajiTagGenerator<TConfig> : LyricPropertyGenerator<RomajiTag[], TConfig>
+        where TConfig : RomajiTagGeneratorConfig, IHasConfig<TConfig>, new()
     {
-        protected T Config { get; }
-
-        protected RomajiTagGenerator(T config)
+        protected RomajiTagGenerator(TConfig config)
+            : base(config)
         {
-            Config = config;
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            if (string.IsNullOrWhiteSpace(lyric.Text))
+            if (string.IsNullOrWhiteSpace(item.Text))
                 return "Lyric should not be empty.";
 
             return null;
         }
-
-        public abstract RomajiTag[] Generate(Lyric lyric);
     }
 }

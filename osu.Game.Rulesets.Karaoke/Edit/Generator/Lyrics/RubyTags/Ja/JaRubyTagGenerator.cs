@@ -25,9 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja
             });
         }
 
-        public override RubyTag[] Generate(Lyric lyric)
+        protected override RubyTag[] GenerateFromItem(Lyric item)
         {
-            string text = lyric.Text;
+            string text = item.Text;
             var tags = new List<RubyTag>();
 
             // Tokenize the text

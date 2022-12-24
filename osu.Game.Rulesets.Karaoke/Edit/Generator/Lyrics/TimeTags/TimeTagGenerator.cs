@@ -9,27 +9,26 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
 {
-    public abstract class TimeTagGenerator<T> : ILyricPropertyGenerator<TimeTag[]> where T : TimeTagGeneratorConfig
+    public abstract class TimeTagGenerator<TConfig> : LyricPropertyGenerator<TimeTag[], TConfig>
+        where TConfig : TimeTagGeneratorConfig, IHasConfig<TConfig>, new()
     {
-        protected T Config { get; }
-
-        protected TimeTagGenerator(T config)
+        protected TimeTagGenerator(TConfig config)
+            : base(config)
         {
-            Config = config;
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            if (string.IsNullOrEmpty(lyric.Text))
+            if (string.IsNullOrEmpty(item.Text))
                 return "Lyric should not be empty.";
 
             return null;
         }
 
-        public virtual TimeTag[] Generate(Lyric lyric)
+        protected sealed override TimeTag[] GenerateFromItem(Lyric item)
         {
             var timeTags = new List<TimeTag>();
-            string text = lyric.Text;
+            string text = item.Text;
 
             if (string.IsNullOrEmpty(text))
                 return timeTags.ToArray();
@@ -48,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
             if (Config.CheckLineEndKeyUp)
                 timeTags.Add(new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End)));
 
-            TimeTagLogic(lyric, timeTags);
+            TimeTagLogic(item, timeTags);
 
             return timeTags.OrderBy(x => x.Index).ToArray();
         }

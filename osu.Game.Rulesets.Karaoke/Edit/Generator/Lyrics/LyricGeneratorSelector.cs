@@ -4,16 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 {
-    public abstract class LyricGeneratorSelector<TProperty, TBaseConfig> : ILyricPropertyGenerator<TProperty>
+    public abstract class LyricGeneratorSelector<TProperty, TBaseConfig> : PropertyGenerator<Lyric, TProperty>
     {
-        protected Dictionary<CultureInfo, Lazy<ILyricPropertyGenerator<TProperty>>> Generator { get; } = new();
+        private Dictionary<CultureInfo, Lazy<PropertyGenerator<Lyric, TProperty>>> generator { get; } = new();
 
         private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
@@ -22,13 +21,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
             this.generatorConfigManager = generatorConfigManager;
         }
 
-        protected void RegisterGenerator<TGenerator, TConfig>(CultureInfo info) where TGenerator : ILyricPropertyGenerator<TProperty> where TConfig : TBaseConfig, new()
+        protected void RegisterGenerator<TGenerator, TConfig>(CultureInfo info)
+            where TGenerator : LyricPropertyGenerator<TProperty, TConfig>
+            where TConfig : TBaseConfig, IHasConfig<TConfig>, new()
         {
-            Generator.Add(info, new Lazy<ILyricPropertyGenerator<TProperty>>(() =>
+            generator.Add(info, new Lazy<PropertyGenerator<Lyric, TProperty>>(() =>
             {
                 var generatorSetting = GetGeneratorConfigSetting(info);
                 var config = generatorConfigManager.Get<TConfig>(generatorSetting);
-                if (Activator.CreateInstance(typeof(TGenerator), config) is not ILyricPropertyGenerator<TProperty> generator)
+                if (Activator.CreateInstance(typeof(TGenerator), config) is not PropertyGenerator<Lyric, TProperty> generator)
                     throw new InvalidCastException();
 
                 return generator;
@@ -37,18 +38,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 
         protected abstract KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info);
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override TProperty GenerateFromItem(Lyric item)
         {
-            if (lyric.Language == null)
-                return "Oops, language is missing.";
+            if (item.Language == null)
+                throw new NotGeneratableException();
 
-            var generator = Generator.FirstOrDefault(g => EqualityComparer<CultureInfo>.Default.Equals(g.Key, lyric.Language));
-            if (generator.Key == null)
-                return "Sorry, the language of lyric is not supported yet.";
+            if (!this.generator.TryGetValue(item.Language, out var generator))
+                throw new NotGeneratableException();
 
-            return generator.Value.Value.GetInvalidMessage(lyric);
+            return generator.Value.Generate(item);
         }
 
-        public abstract TProperty Generate(Lyric lyric);
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
+        {
+            if (item.Language == null)
+                return "Oops, language is missing.";
+
+            if (string.IsNullOrWhiteSpace(item.Text))
+                return "Should have the text in the lyric";
+
+            if (!this.generator.TryGetValue(item.Language, out var generator))
+                return "Sorry, the language of lyric is not supported yet.";
+
+            return generator.Value.GetInvalidMessage(item);
+        }
     }
 }

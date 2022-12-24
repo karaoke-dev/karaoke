@@ -10,34 +10,33 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric
 {
-    public class ReferenceLyricDetector : ILyricPropertyDetector<Lyric?>
+    public class ReferenceLyricDetector : LyricPropertyDetector<Lyric?, ReferenceLyricDetectorConfig>
     {
         private readonly Lyric[] lyrics;
-        private readonly ReferenceLyricDetectorConfig config;
 
         public ReferenceLyricDetector(IEnumerable<Lyric> lyrics, ReferenceLyricDetectorConfig config)
+            : base(config)
         {
             this.lyrics = lyrics.ToArray();
-            this.config = config;
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            var referencedLyric = getReferenceLyric(lyric);
+            var referencedLyric = getReferenceLyric(item);
             if (referencedLyric == null)
                 return "There's no matched lyric.";
 
             return null;
         }
 
-        public Lyric? Detect(Lyric lyric)
+        protected override Lyric? DetectFromItem(Lyric item)
         {
-            var referencedLyric = getReferenceLyric(lyric);
+            var referencedLyric = getReferenceLyric(item);
             if (referencedLyric == null)
                 return null;
 
             // prevent first lyric(referenced lyric) reference by other lyric.
-            if (referencedLyric.Order > lyric.Order)
+            if (referencedLyric.Order > item.Order)
                 return null;
 
             return referencedLyric;
@@ -59,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric
             if (lyricText == referencedLyricText)
                 return true;
 
-            if (!config.IgnorePrefixAndPostfixSymbol)
+            if (!Config.IgnorePrefixAndPostfixSymbol)
                 return false;
 
             // check if contains intersect part between two lyrics.

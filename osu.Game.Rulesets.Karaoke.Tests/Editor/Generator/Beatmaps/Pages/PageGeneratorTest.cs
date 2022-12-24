@@ -23,6 +23,7 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     [TestCase(new[] { "[1000,3000]:karaoke" }, true)]
     [TestCase(new[] { "[1000,3000]:karaoke", "[4000,6000]:karaoke" }, true)]
     [TestCase(new[] { "[1000,3000]:karaoke", "[1000,3000]:karaoke" }, true)] // should still runnable even if lyric is overlapping.
+    [TestCase(new[] { "" }, false)] // should not be able to generate if lyric is empty.
     [TestCase(new string[] { }, false)]
     public void TestCanGenerate(string[] lyrics, bool canGenerate)
     {
@@ -33,20 +34,6 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
         };
 
         CheckCanGenerate(beatmap, canGenerate, config);
-    }
-
-    [Test]
-    public void TestGenerateWithZeroLyric()
-    {
-        var config = GeneratorDefaultConfig();
-        var beatmap = new KaraokeBeatmap
-        {
-            HitObjects = new List<KaraokeHitObject>()
-        };
-
-        var expectedPages = Array.Empty<Page>();
-
-        CheckGenerateResult(beatmap, expectedPages, config);
     }
 
     [TestCase("[1000,3000]:karaoke", new double[] { 1000, 3000 })]

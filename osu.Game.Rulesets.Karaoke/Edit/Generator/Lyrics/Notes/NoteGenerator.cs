@@ -11,20 +11,18 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
 {
-    public class NoteGenerator : ILyricPropertyGenerator<Note[]>
+    public class NoteGenerator : LyricPropertyGenerator<Note[], NoteGeneratorConfig>
     {
-        protected NoteGeneratorConfig Config { get; }
-
         public NoteGenerator(NoteGeneratorConfig config)
+            : base(config)
         {
-            Config = config;
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            var timeTags = lyric.TimeTags;
+            var timeTags = item.TimeTags;
 
-            if (lyric.TimeTags.Count < 2)
+            if (item.TimeTags.Count < 2)
                 return "Sorry, lyric must have at least two time-tags.";
 
             if (timeTags.Any(x => x.Time == null))
@@ -33,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
             return null;
         }
 
-        public Note[] Generate(Lyric lyric)
+        protected override Note[] GenerateFromItem(Lyric item)
         {
-            var timeTags = TimeTagsUtils.ToTimeBasedDictionary(lyric.TimeTags);
+            var timeTags = TimeTagsUtils.ToTimeBasedDictionary(item.TimeTags);
             var notes = new List<Note>();
 
             foreach (var timeTag in timeTags)
@@ -55,8 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
                     continue;
 
                 int timeTagIndex = timeTags.IndexOf(timeTag);
-                string text = lyric.Text[startIndex..endIndex];
-                string? ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+                string text = item.Text[startIndex..endIndex];
+                string? ruby = item.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {
@@ -64,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
                     {
                         Text = text,
                         RubyText = ruby,
-                        ReferenceLyric = lyric,
+                        ReferenceLyric = item,
                         ReferenceTimeTagIndex = timeTagIndex
                     });
                 }

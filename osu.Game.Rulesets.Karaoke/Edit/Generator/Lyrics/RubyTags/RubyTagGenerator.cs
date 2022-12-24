@@ -6,23 +6,20 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
 {
-    public abstract class RubyTagGenerator<T> : ILyricPropertyGenerator<RubyTag[]> where T : RubyTagGeneratorConfig
+    public abstract class RubyTagGenerator<TConfig> : LyricPropertyGenerator<RubyTag[], TConfig>
+        where TConfig : RubyTagGeneratorConfig, IHasConfig<TConfig>, new()
     {
-        protected T Config { get; }
-
-        protected RubyTagGenerator(T config)
+        protected RubyTagGenerator(TConfig config)
+            : base(config)
         {
-            Config = config;
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            if (string.IsNullOrWhiteSpace(lyric.Text))
+            if (string.IsNullOrWhiteSpace(item.Text))
                 return "Lyric should not be empty.";
 
             return null;
         }
-
-        public abstract RubyTag[] Generate(Lyric lyric);
     }
 }

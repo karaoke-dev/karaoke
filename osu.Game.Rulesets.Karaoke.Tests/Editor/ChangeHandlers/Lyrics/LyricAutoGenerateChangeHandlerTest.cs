@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -61,13 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Text = "???"
             });
 
-            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsNull(h.ReferenceLyric);
-                Assert.IsNull(h.ReferenceLyricConfig);
-            });
+            TriggerHandlerChangedWithException<NotDetectatableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
         }
 
         #endregion
@@ -149,13 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags));
-
-            AssertSelectedHitObject(h =>
-            {
-                // should not able to generate time-tag if lyric text is empty, or did not have language.
-                Assert.IsEmpty(h.RubyTags);
-            });
+            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags));
         }
 
         #endregion
@@ -201,13 +190,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags));
-
-            AssertSelectedHitObject(h =>
-            {
-                // should not able to generate time-tag if lyric text is empty, or did not have language.
-                Assert.IsEmpty(h.RomajiTags);
-            });
+            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags));
         }
 
         #endregion
@@ -251,13 +234,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateTimeTags));
-
-            AssertSelectedHitObject(h =>
-            {
-                // should not able to generate time-tag if lyric text is empty, or did not have language.
-                Assert.IsEmpty(h.TimeTags);
-            });
+            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateTimeTags));
         }
 
         #endregion
@@ -302,12 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Text = "カラオケ",
             });
 
-            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateNotes));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsEmpty(getMatchedNotes(h));
-            });
+            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateNotes));
         }
 
         private Note[] getMatchedNotes(Lyric lyric)

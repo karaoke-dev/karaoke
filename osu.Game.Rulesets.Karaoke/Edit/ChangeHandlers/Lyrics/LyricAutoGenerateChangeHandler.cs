@@ -9,7 +9,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
@@ -69,10 +69,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
             }
 
-            bool canDetect<T>(ILyricPropertyDetector<T> detector)
+            bool canDetect<T>(PropertyDetector<Lyric, T> detector)
                 => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(detector.CanDetect);
 
-            bool canGenerate<T>(ILyricPropertyGenerator<T> generator)
+            bool canGenerate<T>(PropertyGenerator<Lyric, T> generator)
                 => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(generator.CanGenerate);
         }
 
@@ -110,12 +110,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
             }
 
-            IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(ILyricPropertyDetector<T> detector)
+            IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(PropertyDetector<Lyric, T> detector)
                 => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, detector.GetInvalidMessage(x) ?? getReferenceLyricInvalidMessage(x)))
                              .Where(x => x.Value != null)
                              .ToDictionary(k => k.Key, v => v.Value!.Value);
 
-            IDictionary<Lyric, LocalisableString> getInvalidMessageFromGenerator<T>(ILyricPropertyGenerator<T> generator)
+            IDictionary<Lyric, LocalisableString> getInvalidMessageFromGenerator<T>(PropertyGenerator<Lyric, T> generator)
                 => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, generator.GetInvalidMessage(x) ?? getReferenceLyricInvalidMessage(x)))
                              .Where(x => x.Value != null)
                              .ToDictionary(k => k.Key, v => v.Value!.Value);
@@ -196,40 +196,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
         }
 
-        private ILyricPropertyDetector<T> createLyricDetector<T>()
+        private PropertyDetector<Lyric, T> createLyricDetector<T>()
         {
             switch (typeof(T))
             {
                 case Type t when t == typeof(Lyric):
                     var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
                     var referenceLyricDetectorConfig = generatorConfigManager.Get<ReferenceLyricDetectorConfig>(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig);
-                    return (ILyricPropertyDetector<T>)new ReferenceLyricDetector(lyrics, referenceLyricDetectorConfig);
+                    return (PropertyDetector<Lyric, T>)(object)new ReferenceLyricDetector(lyrics, referenceLyricDetectorConfig);
 
                 case Type t when t == typeof(CultureInfo):
                     var languageDetectorConfig = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
-                    return (ILyricPropertyDetector<T>)new LanguageDetector(languageDetectorConfig);
+                    return (PropertyDetector<Lyric, T>)(object)new LanguageDetector(languageDetectorConfig);
 
                 default:
                     throw new NotSupportedException();
             }
         }
 
-        private ILyricPropertyGenerator<T> createLyricGenerator<T>()
+        private PropertyGenerator<Lyric, TProperty> createLyricGenerator<TProperty>()
         {
-            switch (typeof(T))
+            switch (typeof(TProperty))
             {
                 case Type t when t == typeof(RubyTag[]):
-                    return (ILyricPropertyGenerator<T>)new RubyTagGeneratorSelector(generatorConfigManager);
+                    return (PropertyGenerator<Lyric, TProperty>)(object)new RubyTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(RomajiTag[]):
-                    return (ILyricPropertyGenerator<T>)new RomajiTagGeneratorSelector(generatorConfigManager);
+                    return (PropertyGenerator<Lyric, TProperty>)(object)new RomajiTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(TimeTag[]):
-                    return (ILyricPropertyGenerator<T>)new TimeTagGeneratorSelector(generatorConfigManager);
+                    return (PropertyGenerator<Lyric, TProperty>)(object)new TimeTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(Note[]):
                     var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
-                    return (ILyricPropertyGenerator<T>)new NoteGenerator(config);
+                    return (PropertyGenerator<Lyric, TProperty>)(object)new NoteGenerator(config);
 
                 default:
                     throw new NotSupportedException();

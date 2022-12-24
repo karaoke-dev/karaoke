@@ -7,6 +7,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -26,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja
             });
         }
 
-        public override RomajiTag[] Generate(Lyric lyric)
+        protected override RomajiTag[] GenerateFromItem(Lyric item)
         {
-            string text = lyric.Text;
+            string text = item.Text;
             var processingTags = new List<RomajiTagGeneratorParameter>();
 
             // Tokenize the text

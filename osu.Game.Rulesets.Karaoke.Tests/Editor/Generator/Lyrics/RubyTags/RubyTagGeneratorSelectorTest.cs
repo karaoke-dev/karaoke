@@ -10,11 +10,28 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags
 {
-    public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyTagGeneratorSelector>
+    public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyTagGeneratorSelector, RubyTag[]>
     {
+        [TestCase(17, "花火大会", true)]
+        [TestCase(17, "我是中文", true)] // only change the language code to decide should be able to generate or not.
+        [TestCase(17, "", false)] // will not able to generate the romaji if lyric is empty.
+        [TestCase(17, "   ", false)]
+        [TestCase(17, null, false)]
+        [TestCase(1028, "はなび", false)] // Should not be able to generate if language is not supported.
+        public void TestCanGenerate(int lcid, string text, bool canGenerate)
+        {
+            var selector = CreateSelector();
+            var lyric = new Lyric
+            {
+                Language = new CultureInfo(lcid),
+                Text = text,
+            };
+
+            CheckCanGenerate(lyric, canGenerate, selector);
+        }
+
         [TestCase(17, "花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })] // Japanese
         [TestCase(1041, "はなび", new string[] { })] // Japanese
-        [TestCase(1028, "はなび", new string[] { })] // Chinese(should not supported)
         public void TestGenerate(int lcid, string text, string[] expectedRubies)
         {
             var selector = CreateSelector();
@@ -25,7 +42,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags
             };
 
             var expected = TestCaseTagHelper.ParseRubyTags(expectedRubies);
-            var actual = selector.Generate(lyric);
+            CheckGenerateResult(lyric, expected, selector);
+        }
+
+        protected override void AssertEqual(RubyTag[] expected, RubyTag[] actual)
+        {
             TextTagAssert.ArePropertyEqual(expected, actual);
         }
     }

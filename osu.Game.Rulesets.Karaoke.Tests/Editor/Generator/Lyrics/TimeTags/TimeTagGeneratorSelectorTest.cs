@@ -10,12 +10,29 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
-    public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeTagGeneratorSelector>
+    public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeTagGeneratorSelector, TimeTag[]>
     {
+        [TestCase(17, "花火大会", true)]
+        [TestCase(1028, "喵", true)] // Support the chinese.
+        [TestCase(3081, "hello", false)] // English is not supported.
+        [TestCase(17, "", false)] // will not able to generate the romaji if lyric is empty.
+        [TestCase(17, "   ", false)]
+        [TestCase(17, null, false)]
+        public void TestCanGenerate(int lcid, string text, bool canGenerate)
+        {
+            var selector = CreateSelector();
+            var lyric = new Lyric
+            {
+                Language = new CultureInfo(lcid),
+                Text = text,
+            };
+
+            CheckCanGenerate(lyric, canGenerate, selector);
+        }
+
         [TestCase(17, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinese
-        [TestCase(3081, "hello", new string[] { })] // English
         public void TestGenerate(int lcid, string text, string[] expectedTimeTags)
         {
             var selector = CreateSelector();
@@ -26,7 +43,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
             };
 
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = selector.Generate(lyric);
+            CheckGenerateResult(lyric, expected, selector);
+        }
+
+        protected override void AssertEqual(TimeTag[] expected, TimeTag[] actual)
+        {
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
     }
