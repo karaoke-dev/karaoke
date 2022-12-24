@@ -8,11 +8,12 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
 {
-    public class LanguageDetector : ILyricPropertyDetector<CultureInfo?>
+    public class LanguageDetector : LyricPropertyDetector<CultureInfo?, LanguageDetectorConfig>
     {
         private readonly LanguageDetection.LanguageDetector detector = new();
 
         public LanguageDetector(LanguageDetectorConfig config)
+            : base(config)
         {
             var targetLanguages = config.AcceptLanguages.Where(x => x != null).ToList();
 
@@ -26,17 +27,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
             }
         }
 
-        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
         {
-            if (string.IsNullOrWhiteSpace(lyric.Text))
+            if (string.IsNullOrWhiteSpace(item.Text))
                 return "Lyric should not be empty.";
 
             return null;
         }
 
-        public CultureInfo? Detect(Lyric lyric)
+        protected override CultureInfo? DetectFromItem(Lyric item)
         {
-            var result = detector.DetectAll(lyric.Text);
+            var result = detector.DetectAll(item.Text);
             string? languageCode = result.FirstOrDefault()?.Language;
 
             return languageCode == null ? null : new CultureInfo(languageCode);

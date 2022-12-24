@@ -18,18 +18,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags
             RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
         }
 
-        public override RomajiTag[] Generate(Lyric lyric)
+        protected override RomajiTag[] GenerateFromItem(Lyric item)
         {
-            if (lyric.Language == null)
+            if (item.Language == null)
                 return Array.Empty<RomajiTag>();
 
-            if (string.IsNullOrEmpty(lyric.Text))
+            if (string.IsNullOrEmpty(item.Text))
                 return Array.Empty<RomajiTag>();
 
-            if (!Generator.TryGetValue(lyric.Language, out var generator))
+            if (!Generator.TryGetValue(item.Language, out var generator))
                 return Array.Empty<RomajiTag>();
 
-            return generator.Value.Generate(lyric);
+            return generator.Value.Generate(item);
         }
 
         protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info)

@@ -18,18 +18,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
             RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
         }
 
-        public override RubyTag[] Generate(Lyric lyric)
+        protected override RubyTag[] GenerateFromItem(Lyric item)
         {
-            if (lyric.Language == null)
+            if (item.Language == null)
                 return Array.Empty<RubyTag>();
 
-            if (string.IsNullOrEmpty(lyric.Text))
+            if (string.IsNullOrEmpty(item.Text))
                 return Array.Empty<RubyTag>();
 
-            if (!Generator.TryGetValue(lyric.Language, out var generator))
+            if (!Generator.TryGetValue(item.Language, out var generator))
                 return Array.Empty<RubyTag>();
 
-            return generator.Value.Generate(lyric);
+            return generator.Value.Generate(item);
         }
 
         protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info)

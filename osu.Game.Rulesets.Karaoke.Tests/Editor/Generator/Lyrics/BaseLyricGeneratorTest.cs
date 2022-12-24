@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
 {
     public abstract class BaseLyricGeneratorTest<TGenerator, TObject, TConfig>
         : BaseGeneratorTest<TConfig>
-        where TGenerator : class, ILyricPropertyGenerator<TObject> where TConfig : IHasConfig<TConfig>, new()
+        where TGenerator : LyricPropertyGenerator<TObject, TConfig> where TConfig : IHasConfig<TConfig>, new()
     {
         protected static TGenerator GenerateGenerator(TConfig config)
         {
