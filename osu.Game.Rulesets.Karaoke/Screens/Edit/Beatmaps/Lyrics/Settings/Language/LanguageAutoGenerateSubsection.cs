@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
         {
         }
 
-        protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+        protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
             {
                 Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_ACTION}]({typing_mode}) to fill the text.",

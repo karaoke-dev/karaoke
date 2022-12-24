@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             {
             }
 
-            protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+            protected override DescriptionFormat CreateInvalidDescriptionFormat()
                 => new()
                 {
                     Text = $"Seems some lyric missing language, go to [{DescriptionFormat.LINK_KEY_ACTION}]({language_mode}) to fill the language.",

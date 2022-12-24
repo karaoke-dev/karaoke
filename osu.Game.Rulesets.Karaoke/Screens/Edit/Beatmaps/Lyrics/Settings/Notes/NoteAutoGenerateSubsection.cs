@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
         {
         }
 
-        protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+        protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
             {
                 Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_ACTION}]({create_time_tag_mode}) to fix those issue.",
