@@ -20,20 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
             RegisterGenerator<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>(new CultureInfo(1028));
         }
 
-        protected override TimeTag[] GenerateFromItem(Lyric item)
-        {
-            if (item.Language == null)
-                return Array.Empty<TimeTag>();
-
-            if (string.IsNullOrEmpty(item.Text))
-                return Array.Empty<TimeTag>();
-
-            if (!Generator.TryGetValue(item.Language, out var generator))
-                return Array.Empty<TimeTag>();
-
-            return generator.Value.Generate(item);
-        }
-
         protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info) =>
             info.LCID switch
             {
