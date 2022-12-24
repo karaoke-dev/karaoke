@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterface;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
 
 public partial class PagesSection : EditorSection
 {

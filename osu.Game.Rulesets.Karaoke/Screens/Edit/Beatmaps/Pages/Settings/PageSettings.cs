@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Overlays;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
 
 public partial class PageSettings : EditorSettings
 {
