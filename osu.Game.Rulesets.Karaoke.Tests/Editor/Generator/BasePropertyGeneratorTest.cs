@@ -8,10 +8,24 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator;
 
 public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TConfig>
-    : BaseGeneratorTest<TConfig>
+    : BasePropertyGeneratorTest<TGenerator, TItem, TProperty>
     where TGenerator : PropertyGenerator<TItem, TProperty>
     where TConfig : IHasConfig<TConfig>, new()
 {
+    protected static TConfig GeneratorConfig(Action<TConfig>? action = null)
+    {
+        var config = new TConfig();
+        action?.Invoke(config);
+        return config;
+    }
+
+    protected static TConfig GeneratorDefaultConfig(Action<TConfig>? action = null)
+    {
+        var config = new TConfig().CreateDefaultConfig();
+        action?.Invoke(config);
+        return config;
+    }
+
     protected static TGenerator GenerateGenerator(TConfig config)
     {
         if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
@@ -27,17 +41,21 @@ public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TC
         CheckCanGenerate(item, canGenerate, generator);
     }
 
-    protected static void CheckCanGenerate(TItem item, bool canGenerate, TGenerator generator)
-    {
-        bool actual = generator.CanGenerate(item);
-        Assert.AreEqual(canGenerate, actual);
-    }
-
     protected void CheckGenerateResult(TItem item, TProperty expected, TConfig config)
     {
         var generator = GenerateGenerator(config);
 
         CheckGenerateResult(item, expected, generator);
+    }
+}
+
+public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty>
+    where TGenerator : PropertyGenerator<TItem, TProperty>
+{
+    protected static void CheckCanGenerate(TItem item, bool canGenerate, TGenerator generator)
+    {
+        bool actual = generator.CanGenerate(item);
+        Assert.AreEqual(canGenerate, actual);
     }
 
     protected void CheckGenerateResult(TItem item, TProperty expected, TGenerator generator)
