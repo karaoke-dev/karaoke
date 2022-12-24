@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
@@ -179,15 +178,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                 _ => throw new InvalidOperationException(nameof(mode))
             };
 
-        private partial class EditModeButton : OsuButton
+        private partial class EditModeButton : EditorSectionButton
         {
             public CreateTimeTagEditMode Mode { get; }
 
             public EditModeButton(CreateTimeTagEditMode mode)
             {
                 Mode = mode;
-                RelativeSizeAxes = Axes.X;
-                Content.CornerRadius = 15;
             }
         }
     }

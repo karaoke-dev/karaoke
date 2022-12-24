@@ -14,7 +14,6 @@ using osu.Framework.Localisation;
 using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterface;
@@ -158,7 +157,7 @@ public partial class PagesSection : EditorSection
         }
     }
 
-    private partial class CreateNewPageButton : OsuButton
+    private partial class CreateNewPageButton : EditorSectionButton
     {
         [Resolved, AllowNull]
         private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
@@ -168,8 +167,6 @@ public partial class PagesSection : EditorSection
 
         public CreateNewPageButton()
         {
-            RelativeSizeAxes = Axes.X;
-            Content.CornerRadius = 15;
             Text = "Create new page";
             Action = () =>
             {
