@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.ReferenceLyric
         [TestCase("karaoke", "karaoke", true)]
         [TestCase("karaoke", "karaoke -", false)] // should be able to detect only if two lyric text are the same.
         [TestCase("- karaoke", "karaoke", false)] // should be able to detect only if two lyric text are the same.
+        [TestCase("karaoke", "カラオケ", false)] // should be able to detect only if two lyric text are the same.
         public void TestCanDetect(string lyricText, string detectedLyricText, bool canDetect)
         {
             var detectedLyric = new Lyric
@@ -64,7 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.ReferenceLyric
         }
 
         [TestCase("karaoke", "karaoke", true)]
-        [TestCase("karaoke", "カラオケ", false)]
         public void TestDetect(string firstLyricText, string secondLyricText, bool referenced)
         {
             var firstLyric = new Lyric

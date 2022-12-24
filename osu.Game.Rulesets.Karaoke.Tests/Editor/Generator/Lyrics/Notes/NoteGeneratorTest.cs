@@ -16,7 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Notes
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000" }, true)]
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:" }, false)] // all time-tag should with time.
         [TestCase(new[] { "[0,start]:1000", "[1,start]:" }, false)] // should have at least two time-tags with time.
-        [TestCase(new[] { "[0,start]:1000" }, false)]
+        [TestCase(new[] { "[0,start]:1000" }, false)] // should have at least two time-tags.
+        [TestCase(new[] { "[0,start]:" }, false)] // no-time.
         [TestCase(new string[] { }, false)]
         public void TestCanGenerate(string[] timeTags, bool canGenerate)
         {
@@ -33,10 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Notes
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
         [TestCase(new[] { "[3,end]:1000", "[3,start]:2000", "[2,start]:3000", "[1,start]:4000", "[0,start]:5000" }, new string[] { })]
         [TestCase(new[] { "[0,start]:1000", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if time is duplicated.
-        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if got no time.
-        [TestCase(new[] { "[0,start]:", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "ラ", "オ", "ケ" })]
-        [TestCase(new[] { "[0,start]:1000" }, new string[] { })]
-        [TestCase(new[] { "[0,start]:" }, new string[] { })]
         public void TestGenerate(string[] timeTags, string[] expectedNotes)
         {
             var config = GeneratorConfig();
