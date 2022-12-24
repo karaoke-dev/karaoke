@@ -2,12 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public interface IBeatmapPagesChangeHandler
 {
+    LocalisableString? GetNotGeneratableMessage();
+
+    void AutoGenerate();
+
     void Add(Page page);
 
     void Remove(Page page);

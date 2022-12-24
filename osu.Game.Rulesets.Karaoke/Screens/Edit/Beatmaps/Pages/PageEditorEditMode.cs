@@ -5,6 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
 public enum PageEditorEditMode
 {
+    Generate,
+
     Edit,
 
     Verify

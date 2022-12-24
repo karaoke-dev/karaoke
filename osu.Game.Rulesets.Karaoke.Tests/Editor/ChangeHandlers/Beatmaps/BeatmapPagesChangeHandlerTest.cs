@@ -4,11 +4,43 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapPagesChangeHandler>
 {
+    protected override bool IncludeAutoGenerator => true;
+
+    [Test]
+    public void TestGeneratePage()
+    {
+        PrepareHitObject(TestCaseTagHelper.ParseLyric("[1000,3000]:karaoke"), false);
+
+        TriggerHandlerChanged(c => c.AutoGenerate());
+
+        AssertKaraokeBeatmap(karaokeBeatmap =>
+        {
+            var pages = karaokeBeatmap.PageInfo.SortedPages;
+
+            Assert.AreEqual(2, pages.Count);
+
+            Assert.AreEqual(1000, pages[0].Time);
+            Assert.AreEqual(3000, pages[1].Time);
+        });
+    }
+
+    [Test]
+    public void TestGeneratePageWithInvalidCase()
+    {
+        // there's no time-info inside.
+        PrepareHitObject(new Lyric(), false);
+
+        TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate());
+    }
+
     [Test]
     public void TestAdd()
     {
