@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -119,7 +118,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
 
     protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
 
-    protected partial class Selection : OsuButton
+    protected partial class Selection : EditorSectionButton
     {
         public new Action<TEditMode> Action;
 
@@ -127,9 +126,6 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
 
         public Selection()
         {
-            RelativeSizeAxes = Axes.X;
-            Content.CornerRadius = 15;
-
             base.Action = () => Action?.Invoke(Mode);
         }
     }

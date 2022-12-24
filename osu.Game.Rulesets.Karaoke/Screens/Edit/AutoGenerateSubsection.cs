@@ -70,17 +70,17 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                     x.RelativeSizeAxes = Axes.X;
                     x.AutoSizeAxes = Axes.Y;
                     x.Padding = new MarginPadding { Horizontal = horizontal_padding };
-                    x.Description = CreateInvalidLyricDescriptionFormat();
+                    x.Description = CreateInvalidDescriptionFormat();
                 })
             };
         });
     }
 
-    protected abstract OsuButton CreateGenerateButton();
+    protected abstract EditorSectionButton CreateGenerateButton();
 
     protected virtual DescriptionTextFlowContainer CreateDescriptionTextFlowContainer() => new();
 
-    protected abstract DescriptionFormat CreateInvalidLyricDescriptionFormat();
+    protected abstract DescriptionFormat CreateInvalidDescriptionFormat();
 
     protected abstract ConfigButton CreateConfigButton();
 

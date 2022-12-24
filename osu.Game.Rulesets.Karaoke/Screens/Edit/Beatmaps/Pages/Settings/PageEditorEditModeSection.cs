@@ -10,7 +10,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
 
 public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditMode>
 {

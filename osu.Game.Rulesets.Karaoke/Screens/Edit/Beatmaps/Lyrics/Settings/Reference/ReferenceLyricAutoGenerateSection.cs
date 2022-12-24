@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             {
             }
 
-            protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+            protected override DescriptionFormat CreateInvalidDescriptionFormat()
                 => new()
                 {
                     Text = "Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands."

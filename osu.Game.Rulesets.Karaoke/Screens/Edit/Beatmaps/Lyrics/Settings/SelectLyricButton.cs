@@ -7,16 +7,14 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class SelectLyricButton : OsuButton
+    public abstract partial class SelectLyricButton : EditorSectionButton
     {
         private IBindable<bool> selecting;
 
@@ -35,12 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }
-
-        protected SelectLyricButton()
-        {
-            RelativeSizeAxes = Axes.X;
-            Content.CornerRadius = 15;
-        }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)

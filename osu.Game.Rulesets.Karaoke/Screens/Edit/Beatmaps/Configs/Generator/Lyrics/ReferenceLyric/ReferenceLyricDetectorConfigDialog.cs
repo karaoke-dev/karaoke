@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyri
 {
     public partial class ReferenceLyricGeneratorConfigDialog : GeneratorConfigDialog<ReferenceLyricDetectorConfig>
     {
-        protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig;
+        protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig;
 
         protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Green;
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
@@ -22,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             this.autoGenerateProperty = autoGenerateProperty;
         }
 
-        protected override OsuButton CreateGenerateButton()
+        protected override EditorSectionButton CreateGenerateButton()
             => new AutoGenerateButton(autoGenerateProperty);
 
         protected sealed override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()

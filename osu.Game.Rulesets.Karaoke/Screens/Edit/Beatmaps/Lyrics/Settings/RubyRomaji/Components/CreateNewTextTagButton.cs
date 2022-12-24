@@ -11,7 +11,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -21,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components
 {
-    public partial class CreateNewTextTagButton<TTextTag> : OsuButton, IHasPopover where TTextTag : class, ITextTag, new()
+    public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHasPopover where TTextTag : class, ITextTag, new()
     {
         public new Action<TTextTag> Action;
 
@@ -34,8 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
 
         public CreateNewTextTagButton()
         {
-            RelativeSizeAxes = Axes.X;
-            Content.CornerRadius = 15;
             base.Action = this.ShowPopover;
         }
 
@@ -151,13 +148,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 });
             }
 
-            private partial class AddButton : OsuButton
+            private partial class AddButton : EditorSectionButton
             {
-                public AddButton()
-                {
-                    RelativeSizeAxes = Axes.X;
-                    Content.CornerRadius = 15;
-                }
             }
         }
     }
