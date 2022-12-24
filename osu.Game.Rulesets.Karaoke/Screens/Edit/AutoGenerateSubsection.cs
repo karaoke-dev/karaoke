@@ -76,7 +76,7 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
         });
     }
 
-    protected abstract OsuButton CreateGenerateButton();
+    protected abstract EditorSectionButton CreateGenerateButton();
 
     protected virtual DescriptionTextFlowContainer CreateDescriptionTextFlowContainer() => new();
 
