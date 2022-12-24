@@ -29,6 +29,11 @@ public partial class PageSettings : EditorSettings
 
     protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
     {
+        PageEditorEditMode.Generate => new Drawable[]
+        {
+            new PageEditorEditModeSection(),
+            new PageAutoGenerateSection(),
+        },
         PageEditorEditMode.Edit => new Drawable[]
         {
             new PageEditorEditModeSection(),

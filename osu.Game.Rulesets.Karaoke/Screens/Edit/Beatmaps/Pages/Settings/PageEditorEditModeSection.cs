@@ -33,6 +33,7 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
     protected override Selection CreateSelection(PageEditorEditMode mode) =>
         mode switch
         {
+            PageEditorEditMode.Generate => new Selection(),
             PageEditorEditMode.Edit => new Selection(),
             PageEditorEditMode.Verify => new PageEditorVerifySelection(),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
@@ -41,7 +42,8 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
     protected override LocalisableString GetSelectionText(PageEditorEditMode mode) =>
         mode switch
         {
-            PageEditorEditMode.Edit => "Generate",
+            PageEditorEditMode.Generate => "Generate",
+            PageEditorEditMode.Edit => "Edit",
             PageEditorEditMode.Verify => "Verify",
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
@@ -49,7 +51,8 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
     protected override Color4 GetSelectionColour(OsuColour colours, PageEditorEditMode mode, bool active) =>
         mode switch
         {
-            PageEditorEditMode.Edit => active ? colours.Blue : colours.BlueDarker,
+            PageEditorEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
+            PageEditorEditMode.Edit => active ? colours.Red : colours.RedDarker,
             PageEditorEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
@@ -57,7 +60,8 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
     protected override DescriptionFormat GetSelectionDescription(PageEditorEditMode mode) =>
         mode switch
         {
-            PageEditorEditMode.Edit => "Edit the page.",
+            PageEditorEditMode.Generate => "Generate the pages by lyric.",
+            PageEditorEditMode.Edit => "Batch edit page in here.",
             PageEditorEditMode.Verify => "Check if have any page issues.",
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
