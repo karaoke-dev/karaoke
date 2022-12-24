@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
 {
-    public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeTagGeneratorSelector>
+    public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeTagGeneratorSelector, TimeTag[]>
     {
         [TestCase(17, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
@@ -26,7 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
             };
 
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = selector.Generate(lyric);
+            CheckGenerateResult(lyric, expected, selector);
+        }
+
+        protected override void AssertEqual(TimeTag[] expected, TimeTag[] actual)
+        {
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
     }

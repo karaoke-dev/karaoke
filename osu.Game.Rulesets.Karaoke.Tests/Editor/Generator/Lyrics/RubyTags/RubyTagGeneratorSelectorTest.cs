@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags
 {
-    public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyTagGeneratorSelector>
+    public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyTagGeneratorSelector, RubyTag[]>
     {
         [TestCase(17, "花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })] // Japanese
         [TestCase(1041, "はなび", new string[] { })] // Japanese
@@ -25,7 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags
             };
 
             var expected = TestCaseTagHelper.ParseRubyTags(expectedRubies);
-            var actual = selector.Generate(lyric);
+            CheckGenerateResult(lyric, expected, selector);
+        }
+
+        protected override void AssertEqual(RubyTag[] expected, RubyTag[] actual)
+        {
             TextTagAssert.ArePropertyEqual(expected, actual);
         }
     }

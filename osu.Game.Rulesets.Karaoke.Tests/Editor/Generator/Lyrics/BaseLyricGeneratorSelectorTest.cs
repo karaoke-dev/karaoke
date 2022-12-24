@@ -3,10 +3,14 @@
 
 using System;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics
 {
-    public abstract class BaseLyricGeneratorSelectorTest<TSelector> where TSelector : class
+    public abstract class BaseLyricGeneratorSelectorTest<TSelector, TProperty>
+        : BasePropertyGeneratorTest<TSelector, Lyric, TProperty>
+        where TSelector : PropertyGenerator<Lyric, TProperty>
     {
         protected TSelector CreateSelector()
         {
