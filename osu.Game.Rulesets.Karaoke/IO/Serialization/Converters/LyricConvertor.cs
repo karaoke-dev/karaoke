@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             var newReader = jObject.CreateReader();
 
-            var instance = (Lyric)Activator.CreateInstance(objectType);
+            var instance = (Lyric)Activator.CreateInstance(objectType)!;
             serializer.Populate(newReader, instance);
             return instance;
         }
