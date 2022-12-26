@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public abstract class DictionaryConverter<TKey, TValue> : JsonConverter<IDictionary<TKey, TValue>>
+    public abstract class DictionaryConverter<TKey, TValue> : JsonConverter<IDictionary<TKey, TValue>> where TKey : notnull
     {
         public sealed override IDictionary<TKey, TValue> ReadJson(JsonReader reader, Type objectType, IDictionary<TKey, TValue>? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
