@@ -293,7 +293,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     triggerPropertyChanged();
             }
 
-            void propertyChanged(object sender, NotifyCollectionChangedEventArgs _) => triggerPropertyChanged();
+            void propertyChanged(object? sender, NotifyCollectionChangedEventArgs _) => triggerPropertyChanged();
 
             void triggerPropertyChanged()
             {

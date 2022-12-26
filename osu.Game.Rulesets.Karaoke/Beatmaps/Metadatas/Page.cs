@@ -27,7 +27,7 @@ public class Page : IDeepCloneable<Page>, IComparable<Page>
         };
     }
 
-    public int CompareTo(Page other) => Time.CompareTo(other.Time);
+    public int CompareTo(Page? other) => Time.CompareTo(other?.Time);
 
     public override int GetHashCode() => Time.GetHashCode();
 }

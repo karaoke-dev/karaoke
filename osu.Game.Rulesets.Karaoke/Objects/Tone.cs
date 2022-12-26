@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public bool Equals(int other) => Scale == other && Half == false;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj switch
             {

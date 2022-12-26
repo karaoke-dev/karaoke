@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 foreach (var lyric in lyrics)
                 {
-                    string translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : string.Empty;
+                    string translateString = lyric.Translates.TryGetValue(translate, out string? value) ? value : string.Empty;
                     yield return $"@tr[{translate.Name}]={translateString}";
                 }
             }
