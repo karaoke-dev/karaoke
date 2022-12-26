@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
@@ -12,7 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         protected override Type GetTypeByName(string name)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            return assembly.GetType($"osu.Game.Rulesets.Karaoke.Objects.Properties.{name}");
+            var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Objects.Properties.{name}");
+            Debug.Assert(type != null);
+            return type;
         }
     }
 }

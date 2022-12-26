@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -47,6 +48,8 @@ public class SingerConvertor : GenericTypeConvertor<ISinger>
     protected override Type GetTypeByName(string name)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        return assembly.GetType($"osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.{name}");
+        var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.{name}");
+        Debug.Assert(type != null);
+        return type;
     }
 }

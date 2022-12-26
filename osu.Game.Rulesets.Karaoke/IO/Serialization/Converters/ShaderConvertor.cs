@@ -36,7 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             // only get name from font
             var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");
             Debug.Assert(assembly != null);
-            return assembly.GetType($"osu.Framework.Graphics.Shaders.{name}");
+
+            var type = assembly.GetType($"osu.Framework.Graphics.Shaders.{name}");
+            Debug.Assert(type != null);
+            return type;
         }
     }
 }

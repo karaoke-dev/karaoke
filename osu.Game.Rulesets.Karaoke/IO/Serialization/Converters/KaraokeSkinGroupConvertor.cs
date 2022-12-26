@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
 
@@ -13,7 +14,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         {
             // only get name from font
             var assembly = Assembly.GetExecutingAssembly();
-            return assembly.GetType($"osu.Game.Rulesets.Karaoke.Skinning.Groups.{name}");
+            var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Skinning.Groups.{name}");
+            Debug.Assert(type != null);
+            return type;
         }
     }
 }
