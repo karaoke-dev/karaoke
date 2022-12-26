@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -43,6 +44,8 @@ public partial class PagesSection : EditorSection
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    Debug.Assert(args.NewItems != null);
+
                     foreach (var obj in args.NewItems.OfType<Page>())
                     {
                         Add(new LabelledPage(obj)
@@ -54,6 +57,8 @@ public partial class PagesSection : EditorSection
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
+                    Debug.Assert(args.OldItems != null);
+
                     foreach (var obj in args.OldItems.OfType<Page>())
                     {
                         var drawable = Children.OfType<LabelledPage>().FirstOrDefault(x => x.Page == obj);
