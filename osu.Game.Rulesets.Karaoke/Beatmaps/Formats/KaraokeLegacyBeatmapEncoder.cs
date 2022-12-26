@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 var lyric = g.Key;
                 if (lyric == null)
-                    throw new NullReferenceException();
+                    throw new ArgumentNullException();
 
                 // Get note group
                 var noteGroup = g.ToList().GroupBy(n => n.ReferenceTimeTagIndex);

@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             // todo : use better way to get the resource provider.
             var prop = typeof(BeatmapManager).GetField("workingBeatmapCache", BindingFlags.Instance | BindingFlags.NonPublic);
             if (prop == null)
-                throw new NullReferenceException();
+                throw new ArgumentNullException();
 
             return prop.GetValue(beatmapManager) as WorkingBeatmapCache;
         }

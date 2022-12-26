@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
         protected void RegisterBindable(BindableList<T> bindable)
         {
             if (bindableList != null)
-                throw new Exception();
+                throw new InvalidOperationException("Already have bindable.");
 
             bindableList = bindable;
 

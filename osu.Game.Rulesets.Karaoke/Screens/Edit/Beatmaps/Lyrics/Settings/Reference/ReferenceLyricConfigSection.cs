@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
                         break;
 
                     default:
-                        throw new IndexOutOfRangeException();
+                        throw new InvalidOperationException();
                 }
             });
 
@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
                     break;
 
                 default:
-                    throw new IndexOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(config), config, "unknown config.");
             }
 
             isConfigChanging = false;
