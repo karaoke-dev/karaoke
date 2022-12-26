@@ -64,7 +64,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
             {
                 case CaretGenerateType.Action:
                     if (SelectFirstProperty(lyric))
-                        SelectedItems.Add(SelectableProperties(lyric).FirstOrDefault());
+                    {
+                        var firstItem = SelectableProperties(lyric).FirstOrDefault();
+
+                        if (firstItem != null)
+                            SelectedItems.Add(firstItem);
+                    }
+
                     break;
 
                 case CaretGenerateType.TargetLyric:

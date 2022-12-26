@@ -230,7 +230,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var translations = translateLines.Select(translate => new
             {
                 key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
-                value = translate.Split('=').LastOrDefault()
+                value = translate.Split('=').LastOrDefault() ?? string.Empty
             }).GroupBy(x => x.key, y => y.value).ToList();
 
             foreach (var translation in translations)
