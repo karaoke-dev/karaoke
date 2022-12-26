@@ -132,7 +132,7 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                     Children = AvailableSettings.Select(x =>
                     {
                         string name = GetDisplayName(x);
-                        return new OsuButton
+                        return new AutoGenerateButton
                         {
                             Text = name,
                             Width = 150,
@@ -148,5 +148,9 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                     }).ToList()
                 }
             };
+
+        private partial class AutoGenerateButton : EditorSectionButton
+        {
+        }
     }
 }

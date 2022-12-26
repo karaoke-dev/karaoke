@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
 
             InternalChildren = new Drawable[]
             {
-                new OsuButton
+                new LyricImporterStepButton
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -89,5 +89,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
         }
 
         public override string ToString() => Title;
+
+        private partial class LyricImporterStepButton : OsuButton
+        {
+        }
     }
 }
