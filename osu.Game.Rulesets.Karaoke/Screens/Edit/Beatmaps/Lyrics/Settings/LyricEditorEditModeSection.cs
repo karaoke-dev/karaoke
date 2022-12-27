@@ -5,7 +5,6 @@
 
 using System;
 using osu.Framework.Allocation;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
@@ -14,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
     public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
-        where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
+        where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : struct, Enum
     {
         [Resolved]
         private TEditModeState tEditModeState { get; set; }
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
     }
 
     public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSection<TEditMode>
-        where TEditMode : Enum
+        where TEditMode : struct, Enum
     {
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }

@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
@@ -59,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
         [Test]
         public void TestGoToStep()
         {
-            var steps = EnumUtils.GetValues<LyricImporterStep>();
+            var steps = Enum.GetValues<LyricImporterStep>();
 
             foreach (var step in steps)
             {
@@ -88,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
                 if (step <= lyricSubScreen.Step)
                     return;
 
-                var totalSteps = EnumUtils.GetValues<LyricImporterStep>().Where(x => x > lyricSubScreen.Step && x <= step);
+                var totalSteps = Enum.GetValues<LyricImporterStep>().Where(x => x > lyricSubScreen.Step && x <= step);
 
                 foreach (var gotoStep in totalSteps)
                 {

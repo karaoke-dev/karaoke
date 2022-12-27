@@ -20,7 +20,6 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
@@ -217,7 +216,7 @@ public abstract partial class IssueSection : EditorSection
         }
 
         private IssueCategory[] createCategory()
-            => EnumUtils.GetValues<IssueType>().Select(type => new IssueCategory
+            => Enum.GetValues<IssueType>().Select(type => new IssueCategory
             {
                 Type = type,
                 Text = getTextByIssueType(type),

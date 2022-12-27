@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 {
@@ -24,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             test(new Lyric());
 
             // test lock state.
-            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            foreach (var lockState in Enum.GetValues<LockState>())
             {
                 test(new Lyric
                 {
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             test(new Lyric());
 
             // test lock state.
-            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            foreach (var lockState in Enum.GetValues<LockState>())
             {
                 test(new Lyric
                 {
@@ -101,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             test(new Lyric());
 
             // test lock state.
-            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            foreach (var lockState in Enum.GetValues<LockState>())
             {
                 test(new Lyric
                 {

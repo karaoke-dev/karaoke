@@ -18,7 +18,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 {
@@ -175,7 +174,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
 
         private void initializePanel()
         {
-            foreach (var panelType in EnumUtils.GetValues<PanelType>())
+            foreach (var panelType in Enum.GetValues<PanelType>())
             {
                 var instance = getInstance(panelType);
 

@@ -16,7 +16,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Tests.Visual;
 using osuTK.Graphics;
 
@@ -28,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
         public void ShowWithNoFetch()
         {
             var provider = new LyricEditorColourProvider();
-            var types = EnumUtils.GetValues<LyricEditorMode>();
+            var types = Enum.GetValues<LyricEditorMode>();
 
             string[] colourName =
             {

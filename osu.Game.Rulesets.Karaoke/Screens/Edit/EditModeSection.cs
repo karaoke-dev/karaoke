@@ -18,12 +18,11 @@ using osu.Game.Overlays;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
-public abstract partial class EditModeSection<TEditMode> : EditorSection where TEditMode : Enum
+public abstract partial class EditModeSection<TEditMode> : EditorSection where TEditMode : struct, Enum
 {
     private const int horizontal_padding = 20;
 
@@ -73,7 +72,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
     }
 
     private Selection[] createSelections()
-        => EnumUtils.GetValues<TEditMode>().Select(mode =>
+        => Enum.GetValues<TEditMode>().Select(mode =>
         {
             var selection = CreateSelection(mode);
             selection.Mode = mode;
