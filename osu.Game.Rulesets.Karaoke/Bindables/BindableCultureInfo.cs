@@ -26,11 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             switch (input)
             {
                 case string str:
-                    Value = new CultureInfo(str);
+                    Value = CultureInfoUtils.CreateLoadCultureInfoByCode(str);
                     break;
 
                 case int lcid:
-                    Value = new CultureInfo(lcid);
+                    Value = CultureInfoUtils.CreateLoadCultureInfoById(lcid);
                     break;
 
                 case CultureInfo cultureInfo:
@@ -46,6 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         protected override Bindable<CultureInfo?> CreateInstance() => new BindableCultureInfo();
 
         public override string ToString(string format, IFormatProvider formatProvider)
-            => CultureInfoUtils.GetLanguageDisplayText(Value);
+            => Value != null ? CultureInfoUtils.GetSaveCultureInfoCode(Value) : string.Empty;
     }
 }
