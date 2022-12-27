@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
@@ -18,12 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (value == null)
                 return null;
 
-            return new CultureInfo(value.Value);
+            return CultureInfoUtils.CreateLoadCultureInfoById(value.Value);
         }
 
         public override void WriteJson(JsonWriter writer, CultureInfo? value, JsonSerializer serializer)
         {
-            writer.WriteValue(value?.LCID);
+            int? id = value != null ? CultureInfoUtils.GetSaveCultureInfoId(value) : null;
+
+            writer.WriteValue(id);
         }
     }
 }
