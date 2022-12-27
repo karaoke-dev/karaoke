@@ -8,10 +8,10 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
-    [Ignore("Cannot run those test cases right now because will got different results in the different platform...")]
     public class CultureInfoUtilsTest
     {
         [Test]
+        [Ignore("Cannot run those test cases right now because will got different results in the different platform...")]
         public void TestGetAvailableLanguages()
         {
             // seems there are 276 languages in the world.
@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [Test]
+        [Ignore("Cannot run those test cases right now because will got different results in the different platform...")]
         public void TestGetAvailableLanguagesWithUniqueLcid()
         {
             var languages = CultureInfoUtils.GetAvailableLanguages();
@@ -63,11 +64,48 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(31748, "中文（繁體）")]
         [TestCase(30724, "中文")]
         [TestCase(1028, "中文（台灣）")]
+        [Ignore("Cannot run those test cases right now because will got different results in the different platform...")]
         public void TestGetLanguageDisplayText(int lcid, string displayText)
         {
             var cultureInfo = new CultureInfo(lcid);
             string actual = CultureInfoUtils.GetLanguageDisplayText(cultureInfo);
             Assert.AreEqual(displayText, actual);
+        }
+
+        [Test]
+        public void TestSaveAndLoadCultureInfoById()
+        {
+            var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
+            foreach (var cultureInfo in cultureInfos)
+            {
+                // this weird cultureInfo will let test case failed.
+                if (cultureInfo.LCID is 4096 or 4 or 31748)
+                    continue;
+
+                // get the lcid and convert back to culture info again.
+                int lcid = CultureInfoUtils.GetSaveCultureInfoId(cultureInfo);
+                var actual = CultureInfoUtils.CreateLoadCultureInfoById(lcid);
+                Assert.AreEqual(cultureInfo, actual);
+            }
+        }
+
+        [Test]
+        public void TestSaveAndLoadCultureInfoByCode()
+        {
+            var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
+            foreach (var cultureInfo in cultureInfos)
+            {
+                // this weird cultureInfo will let test case failed.
+                if (cultureInfo.LCID is 4096 or 4 or 31748)
+                    continue;
+
+                // get the code and convert back to culture info again.
+                string lcid = CultureInfoUtils.GetSaveCultureInfoCode(cultureInfo);
+                var actual = CultureInfoUtils.CreateLoadCultureInfoByCode(lcid);
+                Assert.AreEqual(cultureInfo, actual);
+            }
         }
     }
 }

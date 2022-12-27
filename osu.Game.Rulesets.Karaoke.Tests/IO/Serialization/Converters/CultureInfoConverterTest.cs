@@ -27,22 +27,5 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             var result = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
             Assert.AreEqual(lcid, result?.LCID);
         }
-
-        [Test]
-        public void TestAllCultureInfo()
-        {
-            var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
-
-            foreach (var cultureInfo in cultureInfos)
-            {
-                // this weird cultureInfo will let test case failed.
-                if (cultureInfo.LCID is 4096 or 4 or 31748)
-                    continue;
-
-                string json = JsonConvert.SerializeObject(cultureInfo, CreateSettings());
-                var actual = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
-                Assert.AreEqual(cultureInfo, actual);
-            }
-        }
     }
 }

@@ -22,5 +22,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string GetLanguageDisplayText(CultureInfo? cultureInfo)
             => cultureInfo?.NativeName ?? "None";
+
+        public static int GetSaveCultureInfoId(CultureInfo cultureInfo)
+            => cultureInfo.LCID;
+
+        public static CultureInfo CreateLoadCultureInfoById(int lcid) => new(lcid);
+
+        public static string GetSaveCultureInfoCode(CultureInfo cultureInfo)
+            => cultureInfo.ToString();
+
+        public static CultureInfo CreateLoadCultureInfoByCode(string code) => new(code);
     }
 }
