@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 
         private void switchToMode(LyricEditorMode mode)
         {
-            AddStep($"switch to mode {Enum.GetName(typeof(LyricEditorMode), mode)}", () =>
+            AddStep($"switch to mode {Enum.GetName(mode)}", () =>
             {
                 bindableLyricEditorMode.Value = mode;
             });

@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 var globalSetting = SkinJsonSerializableExtensions.CreateSkinElementGlobalSettings();
 
                 // we may want to move this to some kind of async operation in the future.
-                foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
+                foreach (ElementType skinnableTarget in Enum.GetValues<ElementType>())
                 {
                     string filename = $"{getFileNameByType(skinnableTarget)}.json";
 

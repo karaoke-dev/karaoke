@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Import
 
             foreach (var step in steps)
             {
-                AddStep($"go to step {Enum.GetName(typeof(LyricImporterStep), step)}", () => { Screen.GoToStep(step); });
+                AddStep($"go to step {Enum.GetName(step)}", () => { Screen.GoToStep(step); });
             }
         }
 
