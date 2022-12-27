@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 {
@@ -109,22 +108,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
 
         private void switchToMode(LyricEditorMode mode)
         {
-            AddStep($"switch to mode {Enum.GetName(typeof(LyricEditorMode), mode)}", () =>
+            AddStep($"switch to mode {Enum.GetName(mode)}", () =>
             {
                 bindableLyricEditorMode.Value = mode;
             });
             AddWaitStep("wait for switch to new mode", 5);
         }
 
-        private void clickEditModeButtons<T>() where T : Enum
+        private void clickEditModeButtons<T>() where T : struct, Enum
         {
-            foreach (var editMode in EnumUtils.GetValues<T>())
+            foreach (var editMode in Enum.GetValues<T>())
             {
                 clickTargetEditModeButton(editMode);
             }
         }
 
-        private void clickTargetEditModeButton<T>(T editMode) where T : Enum
+        private void clickTargetEditModeButton<T>(T editMode) where T : struct, Enum
         {
             AddStep("Click the button", () =>
             {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +9,6 @@ using osu.Framework.Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
@@ -46,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
             }).ToArray();
         }
 
-        protected virtual IEnumerable<T> ValidEnums => EnumUtils.GetValues<T>();
+        protected virtual IEnumerable<T> ValidEnums => Enum.GetValues<T>();
 
         protected string GetName(T selection)
             => selection.GetDescription();

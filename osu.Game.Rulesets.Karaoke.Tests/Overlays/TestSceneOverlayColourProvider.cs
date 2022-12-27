@@ -16,7 +16,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Tests.Visual;
 using osuTK.Graphics;
 
@@ -28,8 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         [Test]
         public void ShowWithNoFetch()
         {
-            var providers = EnumUtils.GetValues<OverlayColourScheme>()
-                                     .Select(x => new OverlayColourProvider(x));
+            var providers = Enum.GetValues<OverlayColourScheme>()
+                                .Select(x => new OverlayColourProvider(x));
             string[] colourName =
             {
                 "Colour1",
