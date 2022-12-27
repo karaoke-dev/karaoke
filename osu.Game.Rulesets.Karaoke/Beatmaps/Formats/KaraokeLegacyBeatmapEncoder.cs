@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 var lyric = g.Key;
                 if (lyric == null)
-                    throw new NullReferenceException();
+                    throw new ArgumentNullException();
 
                 // Get note group
                 var noteGroup = g.ToList().GroupBy(n => n.ReferenceTimeTagIndex);
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 foreach (var lyric in lyrics)
                 {
-                    string translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : string.Empty;
+                    string translateString = lyric.Translates.TryGetValue(translate, out string? value) ? value : string.Empty;
                     yield return $"@tr[{translate.Name}]={translateString}";
                 }
             }

@@ -24,12 +24,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 switch (args.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
+                        Debug.Assert(args.NewItems != null);
+
                         foreach (var c in args.NewItems.Cast<TimeTag>())
                             c.Changed += invalidate;
                         break;
 
                     case NotifyCollectionChangedAction.Reset:
                     case NotifyCollectionChangedAction.Remove:
+                        Debug.Assert(args.OldItems != null);
+
                         foreach (var c in args.OldItems.Cast<TimeTag>())
                             c.Changed -= invalidate;
                         break;
@@ -50,12 +54,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 switch (args.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
+                        Debug.Assert(args.NewItems != null);
+
                         foreach (var c in args.NewItems.Cast<RubyTag>())
                             c.Changed += invalidate;
                         break;
 
                     case NotifyCollectionChangedAction.Reset:
                     case NotifyCollectionChangedAction.Remove:
+                        Debug.Assert(args.OldItems != null);
+
                         foreach (var c in args.OldItems.Cast<RubyTag>())
                             c.Changed -= invalidate;
                         break;
@@ -69,12 +77,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 switch (args.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
+                        Debug.Assert(args.NewItems != null);
+
                         foreach (var c in args.NewItems.Cast<RomajiTag>())
                             c.Changed += invalidate;
                         break;
 
                     case NotifyCollectionChangedAction.Reset:
                     case NotifyCollectionChangedAction.Remove:
+                        Debug.Assert(args.OldItems != null);
+
                         foreach (var c in args.OldItems.Cast<RomajiTag>())
                             c.Changed -= invalidate;
                         break;
@@ -281,7 +293,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     triggerPropertyChanged();
             }
 
-            void propertyChanged(object sender, NotifyCollectionChangedEventArgs _) => triggerPropertyChanged();
+            void propertyChanged(object? sender, NotifyCollectionChangedEventArgs _) => triggerPropertyChanged();
 
             void triggerPropertyChanged()
             {

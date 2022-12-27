@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
             return Task.CompletedTask;
         }
 
-        Task ICanAcceptFiles.Import(params ImportTask[] tasks) => throw new NotImplementedException();
+        Task ICanAcceptFiles.Import(ImportTask[] tasks, ImportParameters parameters) => throw new NotImplementedException();
 
         protected override void Dispose(bool isDisposing)
         {

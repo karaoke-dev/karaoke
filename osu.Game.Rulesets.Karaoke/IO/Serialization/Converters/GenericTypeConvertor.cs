@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             var newReader = jObject.CreateReader();
 
-            var instance = (TType)Activator.CreateInstance(type);
+            var instance = (TType)Activator.CreateInstance(type)!;
             serializer.Populate(newReader, instance);
             PostProcessValue(instance, jObject, serializer);
             return instance;

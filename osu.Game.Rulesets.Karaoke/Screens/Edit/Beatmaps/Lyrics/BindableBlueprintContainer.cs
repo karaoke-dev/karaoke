@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -20,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
         protected void RegisterBindable(BindableList<T> bindable)
         {
             if (bindableList != null)
-                throw new Exception();
+                throw new InvalidOperationException("Already have bindable.");
 
             bindableList = bindable;
 
@@ -30,12 +31,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
                 switch (args.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
+                        Debug.Assert(args.NewItems != null);
+
                         foreach (var obj in args.NewItems.OfType<T>())
                             AddBlueprintFor(obj);
 
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
+                        Debug.Assert(args.OldItems != null);
+
                         foreach (var obj in args.OldItems.OfType<T>())
                             RemoveBlueprintFor(obj);
 

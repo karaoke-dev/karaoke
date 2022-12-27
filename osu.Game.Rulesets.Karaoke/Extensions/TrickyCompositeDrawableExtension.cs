@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
             if (prop == null)
                 return null;
 
-            return (IReadOnlyList<Drawable>)prop.GetValue(compositeDrawable);
+            return (IReadOnlyList<Drawable>)prop.GetValue(compositeDrawable)!;
         }
     }
 }

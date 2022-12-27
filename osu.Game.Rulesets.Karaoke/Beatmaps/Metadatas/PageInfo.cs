@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
@@ -30,12 +31,16 @@ public class PageInfo : IDeepCloneable<PageInfo>
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    Debug.Assert(args.NewItems != null);
+
                     foreach (var c in args.NewItems.Cast<Page>())
                         c.TimeBindable.ValueChanged += timeValueChanged;
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                 case NotifyCollectionChangedAction.Remove:
+                    Debug.Assert(args.OldItems != null);
+
                     foreach (var c in args.OldItems.Cast<Page>())
                         c.TimeBindable.ValueChanged -= timeValueChanged;
                     break;
@@ -85,7 +90,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
 
     public PageInfo DeepClone()
     {
-        var controlPointInfo = (PageInfo)Activator.CreateInstance(GetType());
+        var controlPointInfo = (PageInfo)Activator.CreateInstance(GetType())!;
 
         return controlPointInfo;
     }

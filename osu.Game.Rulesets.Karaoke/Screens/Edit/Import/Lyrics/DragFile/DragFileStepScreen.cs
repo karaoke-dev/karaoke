@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile
             return Task.CompletedTask;
         }
 
-        public Task Import(params ImportTask[] tasks)
+        public Task Import(ImportTask[] tasks, ImportParameters parameters = default)
         {
             // todo : wail until really implement needed.
             throw new NotImplementedException("Report to https://github.com/karaoke-dev/karaoke and i will implement it.");

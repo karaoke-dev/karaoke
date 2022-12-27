@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
         {
             var editModeState = getEditModeState<TSubMode>();
             if (editModeState == null)
-                throw new NullReferenceException("Unknows sub mode.");
+                throw new ArgumentNullException();
 
             editModeState.BindableEditMode.BindValueChanged(e =>
             {
@@ -448,7 +448,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
         {
             var editModeState = getEditModeState<TSubMode>();
             if (editModeState == null)
-                throw new NullReferenceException("Unknows sub mode.");
+                throw new ArgumentNullException();
 
             editModeState.ChangeEditMode(subMode);
         }
