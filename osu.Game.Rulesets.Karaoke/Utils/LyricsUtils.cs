@@ -18,8 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric, int splitIndex)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             string lyricText = lyric.Text;
             if (string.IsNullOrEmpty(lyricText))
@@ -80,11 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Lyric CombineLyric(Lyric firstLyric, Lyric secondLyric)
         {
-            if (firstLyric == null)
-                throw new ArgumentNullException(nameof(firstLyric));
-
-            if (secondLyric == null)
-                throw new ArgumentNullException(nameof(secondLyric));
+            ArgumentNullException.ThrowIfNull(firstLyric);
+            ArgumentNullException.ThrowIfNull(secondLyric);
 
             int offsetIndexForSecondLyric = firstLyric.Text.Length;
             string lyricText = firstLyric.Text + secondLyric.Text;

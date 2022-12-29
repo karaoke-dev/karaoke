@@ -54,8 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public sealed override void WriteJson(JsonWriter writer, TType? value, JsonSerializer serializer)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             var resolver = serializer.ContractResolver;
 

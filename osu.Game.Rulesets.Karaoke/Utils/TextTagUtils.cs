@@ -27,16 +27,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static bool ValidNewStartIndex<T>(T textTag, int newStartIndex) where T : ITextTag
         {
-            if (textTag == null)
-                throw new ArgumentNullException(nameof(textTag));
+            ArgumentNullException.ThrowIfNull(textTag);
 
             return newStartIndex < textTag.EndIndex;
         }
 
         public static bool ValidNewEndIndex<T>(T textTag, int newEndIndex) where T : ITextTag
         {
-            if (textTag == null)
-                throw new ArgumentNullException(nameof(textTag));
+            ArgumentNullException.ThrowIfNull(textTag);
 
             return newEndIndex > textTag.StartIndex;
         }

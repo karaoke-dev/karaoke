@@ -19,8 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static void RemoveText(Lyric lyric, int position, int count = 1)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             int textLength = lyric.Text.Length;
             if (textLength == 0)
@@ -80,8 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static void AddText(Lyric lyric, int position, string text)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             // make position is at the range.
             string lyricText = lyric.Text;
@@ -125,8 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string GetTimeTagIndexDisplayText(Lyric lyric, TextIndex index)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             string text = lyric.Text;
             if (string.IsNullOrEmpty(text))
@@ -163,16 +160,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string GetTimeTagDisplayText(Lyric lyric, TimeTag timeTag)
         {
-            if (timeTag == null)
-                throw new ArgumentNullException(nameof(timeTag));
+            ArgumentNullException.ThrowIfNull(timeTag);
 
             return GetTimeTagIndexDisplayText(lyric, timeTag.Index);
         }
 
         public static string GetTimeTagDisplayRubyText(Lyric lyric, TimeTag timeTag)
         {
-            if (timeTag == null)
-                throw new ArgumentNullException(nameof(timeTag));
+            ArgumentNullException.ThrowIfNull(timeTag);
 
             var state = timeTag.Index.State;
 
@@ -228,8 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string LyricTimeFormattedString(Lyric lyric)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             string startTime = lyric.StartTime.ToEditorFormattedString();
             string endTime = lyric.EndTime.ToEditorFormattedString();
@@ -238,8 +232,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string TimeTagTimeFormattedString(Lyric lyric)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
+            ArgumentNullException.ThrowIfNull(lyric);
 
             var availableTimeTags = lyric.TimeTags.Where(x => x.Time != null).ToArray();
             var minTimeTag = availableTimeTags.OrderBy(x => x.Time).FirstOrDefault();
@@ -256,19 +249,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static bool ContainsSinger(Lyric lyric, Singer singer)
         {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
-            if (singer == null)
-                throw new ArgumentNullException(nameof(singer));
+            ArgumentNullException.ThrowIfNull(lyric);
+            ArgumentNullException.ThrowIfNull(singer);
 
             return lyric.Singers.Contains(singer.ID);
         }
 
         public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
         {
-            if (singers == null)
-                throw new ArgumentNullException(nameof(singers));
+            ArgumentNullException.ThrowIfNull(singers);
 
             var singerIds = singers.Select(x => x.ID);
             return lyric.Singers.All(x => singerIds.Contains(x));

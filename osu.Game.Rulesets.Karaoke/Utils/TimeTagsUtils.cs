@@ -21,11 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, TextIndex index)
         {
-            if (startTimeTag == null)
-                throw new ArgumentNullException(nameof(startTimeTag));
-
-            if (endTimeTag == null)
-                throw new ArgumentNullException(nameof(endTimeTag));
+            ArgumentNullException.ThrowIfNull(startTimeTag);
+            ArgumentNullException.ThrowIfNull(endTimeTag);
 
             if (startTimeTag.Index > endTimeTag.Index)
                 throw new InvalidOperationException($"{nameof(endTimeTag.Index)} cannot larger than {startTimeTag.Index}");

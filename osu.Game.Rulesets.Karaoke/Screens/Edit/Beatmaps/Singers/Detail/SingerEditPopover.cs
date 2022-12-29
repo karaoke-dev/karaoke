@@ -16,8 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
     {
         public SingerEditPopover(Singer singer)
         {
-            if (singer == null)
-                throw new ArgumentNullException(nameof(singer));
+            ArgumentNullException.ThrowIfNull(singer);
 
             Child = new OsuScrollContainer
             {

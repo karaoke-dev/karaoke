@@ -100,8 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
             void moveCaret(int offset)
             {
-                if (caretPosition == null)
-                    throw new ArgumentNullException(nameof(caretPosition));
+                ArgumentNullException.ThrowIfNull(caretPosition);
 
                 // calculate new caret position.
                 var lyric = caretPosition.Value.Lyric;

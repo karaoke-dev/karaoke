@@ -18,8 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>contain duplicated id or not</returns>
         public static bool ContainDuplicatedId<T>(T[] objects) where T : IHasOrder
         {
-            if (objects == null)
-                throw new ArgumentNullException(nameof(objects));
+            ArgumentNullException.ThrowIfNull(objects);
 
             return objects.Length != objects.Select(x => x.Order).Distinct().Count();
         }

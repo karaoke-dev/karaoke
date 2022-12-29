@@ -21,8 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
     {
         public NoteEditPopover(Note note)
         {
-            if (note == null)
-                throw new ArgumentNullException(nameof(note));
+            ArgumentNullException.ThrowIfNull(note);
 
             Child = new OsuScrollContainer
             {
