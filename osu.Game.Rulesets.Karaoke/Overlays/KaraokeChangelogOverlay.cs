@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <param name="build"> Singer <see cref="APIChangelogBuild"/>.</param>
         public void ShowBuild([NotNull] APIChangelogBuild build)
         {
-            if (build == null) throw new ArgumentNullException(nameof(build));
+            ArgumentNullException.ThrowIfNull(build);
 
             Current.Value = build;
             Show();

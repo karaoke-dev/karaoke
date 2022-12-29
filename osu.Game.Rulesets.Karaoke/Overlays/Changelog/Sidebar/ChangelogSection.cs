@@ -35,8 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
         {
             Debug.Assert(posts.All(p =>
             {
-                if (p == null)
-                    throw new ArgumentNullException(nameof(p));
+                ArgumentNullException.ThrowIfNull(p);
 
                 return p.PublishedAt.Year == year;
             }));

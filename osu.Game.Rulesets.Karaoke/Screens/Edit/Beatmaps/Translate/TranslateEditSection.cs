@@ -249,8 +249,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
 
         public string GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
         {
-            if (cultureInfo == null)
-                throw new ArgumentNullException(nameof(cultureInfo));
+            ArgumentNullException.ThrowIfNull(currentLanguage);
 
             return lyric.Translates.TryGetValue(cultureInfo, out string translate) ? translate : null;
         }

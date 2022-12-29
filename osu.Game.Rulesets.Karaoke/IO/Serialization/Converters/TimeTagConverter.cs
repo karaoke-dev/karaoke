@@ -36,8 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, TimeTag? value, JsonSerializer serializer)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             var index = value.Index;
             string state = TextIndexUtils.GetValueByState(index, "start", "end");

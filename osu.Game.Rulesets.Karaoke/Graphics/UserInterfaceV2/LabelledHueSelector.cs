@@ -46,8 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 get => Hue;
                 set
                 {
-                    if (value == null)
-                        throw new ArgumentNullException(nameof(value));
+                    ArgumentNullException.ThrowIfNull(value);
 
                     Hue.UnbindBindings();
                     Hue.BindTo(value);

@@ -28,8 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, Lyric? value, JsonSerializer serializer)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             // follow: https://stackoverflow.com/a/59329703
             // not a good way but seems there's no better choice.

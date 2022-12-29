@@ -20,8 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, IEnumerable<TObject>? value, JsonSerializer serializer)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             // see: https://stackoverflow.com/questions/3330989/order-of-serialized-fields-using-json-net
             var sortedTimeTags = GetSortedValue(value);

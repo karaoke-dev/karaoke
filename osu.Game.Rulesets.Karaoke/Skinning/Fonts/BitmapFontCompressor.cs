@@ -13,8 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
     {
         public static BitmapFont Compress(BitmapFont bitmapFont, char[] chars)
         {
-            if (bitmapFont == null)
-                throw new ArgumentNullException(nameof(bitmapFont));
+            ArgumentNullException.ThrowIfNull(bitmapFont);
 
             var characters = GenerateCharacters(bitmapFont.Info, bitmapFont.Common, bitmapFont.Characters, chars);
 

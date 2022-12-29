@@ -35,8 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, RomajiTag? value, JsonSerializer serializer)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
             writer.WriteValue(str);

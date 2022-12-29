@@ -35,8 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             get => current;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
+                ArgumentNullException.ThrowIfNull(value);
 
                 current.UnbindBindings();
                 current.BindTo(value);
