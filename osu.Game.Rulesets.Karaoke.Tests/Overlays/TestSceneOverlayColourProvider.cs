@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -29,45 +30,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         {
             var providers = Enum.GetValues<OverlayColourScheme>()
                                 .Select(x => new OverlayColourProvider(x));
-            string[] colourName =
-            {
-                "Colour1",
-                "Colour2",
-                "Colour3",
-                "Colour4",
-                "Highlight1",
-                "Content1",
-                "Content2",
-                "Light1",
-                "Light2",
-                "Light3",
-                "Light4",
-                "Dark1",
-                "Dark2",
-                "Dark3",
-                "Dark4",
-                "Dark5",
-                "Dark6",
-                "Foreground1",
-                "Background1",
-                "Background2",
-                "Background3",
-                "Background4",
-                "Background5",
-                "Background6",
-            };
+
+            var colourProperties = typeof(OverlayColourProvider)
+                                   .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                   .Where(x => x.PropertyType == typeof(Color4)).ToArray();
 
             Schedule(() =>
             {
-                var columns = colourName.Select(c => new TitleTableColumn(c)).OfType<TableColumn>().ToArray();
+                var columns = colourProperties.Select(c => new TitleTableColumn(c.Name)).OfType<TableColumn>().ToArray();
                 var content = providers.Select(provider =>
                 {
                     if (provider == null)
                         throw new ArgumentNullException(nameof(provider));
 
-                    return colourName.Select(c =>
+                    return colourProperties.Select(c =>
                     {
-                        object? value = provider.GetType().GetProperty(c)?.GetValue(provider);
+                        object? value = c.GetValue(provider);
                         if (value == null)
                             throw new ArgumentNullException(nameof(value));
 

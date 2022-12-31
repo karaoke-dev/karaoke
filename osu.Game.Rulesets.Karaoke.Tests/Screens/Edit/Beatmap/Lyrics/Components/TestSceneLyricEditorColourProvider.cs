@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -29,33 +30,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
             var provider = new LyricEditorColourProvider();
             var types = Enum.GetValues<LyricEditorMode>();
 
-            string[] colourName =
-            {
-                "Colour1",
-                "Colour2",
-                "Colour3",
-                "Colour4",
-                "Highlight1",
-                "Content1",
-                "Content2",
-                "Light1",
-                "Light2",
-                "Light3",
-                "Light4",
-                "Dark1",
-                "Dark2",
-                "Dark3",
-                "Dark4",
-                "Dark5",
-                "Dark6",
-                "Foreground1",
-                "Background1",
-                "Background2",
-                "Background3",
-                "Background4",
-                "Background5",
-                "Background6",
-            };
+            var colourMethods = typeof(LyricEditorColourProvider)
+                                .GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                                .Where(x =>
+                                {
+                                    var parameters = x.GetBaseDefinition().GetParameters();
+                                    return parameters.Length == 1 && parameters[0].ParameterType == typeof(LyricEditorMode);
+                                }).ToArray();
 
             Schedule(() =>
             {
@@ -74,12 +55,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                     };
                 }).To2DArray();
 
-                var columns = colourName.Select(c => new TitleTableColumn(c)).OfType<TableColumn>().ToArray();
+                var columns = colourMethods.Select(c => new TitleTableColumn(c.Name)).OfType<TableColumn>().ToArray();
                 var content = types.Select(type =>
                 {
-                    return colourName.Select(c =>
+                    return colourMethods.Select(c =>
                     {
-                        object? value = provider.GetType().GetMethod(c)?.Invoke(provider, new object[] { type });
+                        object? value = c.Invoke(provider, new object[] { type });
                         if (value == null)
                             throw new ArgumentNullException(nameof(value));
 
