@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -29,33 +30,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
             var provider = new LyricEditorColourProvider();
             var types = Enum.GetValues<LyricEditorMode>();
 
-            string[] colourName =
-            {
-                nameof(LyricEditorColourProvider.Colour1),
-                nameof(LyricEditorColourProvider.Colour2),
-                nameof(LyricEditorColourProvider.Colour3),
-                nameof(LyricEditorColourProvider.Colour4),
-                nameof(LyricEditorColourProvider.Highlight1),
-                nameof(LyricEditorColourProvider.Content1),
-                nameof(LyricEditorColourProvider.Content2),
-                nameof(LyricEditorColourProvider.Light1),
-                nameof(LyricEditorColourProvider.Light2),
-                nameof(LyricEditorColourProvider.Light3),
-                nameof(LyricEditorColourProvider.Light4),
-                nameof(LyricEditorColourProvider.Dark1),
-                nameof(LyricEditorColourProvider.Dark2),
-                nameof(LyricEditorColourProvider.Dark3),
-                nameof(LyricEditorColourProvider.Dark4),
-                nameof(LyricEditorColourProvider.Dark5),
-                nameof(LyricEditorColourProvider.Dark6),
-                nameof(LyricEditorColourProvider.Foreground1),
-                nameof(LyricEditorColourProvider.Background1),
-                nameof(LyricEditorColourProvider.Background2),
-                nameof(LyricEditorColourProvider.Background3),
-                nameof(LyricEditorColourProvider.Background4),
-                nameof(LyricEditorColourProvider.Background5),
-                nameof(LyricEditorColourProvider.Background6),
-            };
+            var colourMethods = typeof(LyricEditorColourProvider)
+                                .GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                                .Where(x =>
+                                {
+                                    var parameters = x.GetBaseDefinition().GetParameters();
+                                    return parameters.Length == 1 && parameters[0].ParameterType == typeof(LyricEditorMode);
+                                }).ToArray();
 
             Schedule(() =>
             {
@@ -74,12 +55,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
                     };
                 }).To2DArray();
 
-                var columns = colourName.Select(c => new TitleTableColumn(c)).OfType<TableColumn>().ToArray();
+                var columns = colourMethods.Select(c => new TitleTableColumn(c.Name)).OfType<TableColumn>().ToArray();
                 var content = types.Select(type =>
                 {
-                    return colourName.Select(c =>
+                    return colourMethods.Select(c =>
                     {
-                        object? value = provider.GetType().GetMethod(c)?.Invoke(provider, new object[] { type });
+                        object? value = c.Invoke(provider, new object[] { type });
                         if (value == null)
                             throw new ArgumentNullException(nameof(value));
 
