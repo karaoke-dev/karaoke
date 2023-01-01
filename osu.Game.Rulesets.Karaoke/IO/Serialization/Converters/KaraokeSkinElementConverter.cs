@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class KaraokeSkinElementConverter : GenericTypeConvertor<IKaraokeSkinElement, ElementType>
+    public class KaraokeSkinElementConverter : GenericTypeConverter<IKaraokeSkinElement, ElementType>
     {
         protected override Type GetTypeByName(ElementType name)
             => GetObjectType(name);
