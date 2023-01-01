@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
-public class SingerConvertor : GenericTypeConvertor<ISinger>
+public class SingerConverter : GenericTypeConverter<ISinger>
 {
     private const string singer_id_field = "id";
     private const string main_singer_id_field = "main_singer_id";

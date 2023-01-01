@@ -4,16 +4,17 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class ReferenceLyricPropertyConfigConvertor : GenericTypeConvertor<IReferenceLyricPropertyConfig>
+    public class KaraokeSkinMappingRoleConverter : GenericTypeConverter<IMappingRole>
     {
         protected override Type GetTypeByName(string name)
         {
+            // only get name from font
             var assembly = Assembly.GetExecutingAssembly();
-            var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Objects.Properties.{name}");
+            var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Skinning.MappingRoles.{name}");
             Debug.Assert(type != null);
             return type;
         }

@@ -14,11 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
             globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.Add(new KaraokeSkinElementConvertor());
-            globalSetting.Converters.Add(new ShaderConvertor());
+            globalSetting.Converters.Add(new KaraokeSkinElementConverter());
+            globalSetting.Converters.Add(new ShaderConverter());
             globalSetting.Converters.Add(new Vector2Converter());
-            globalSetting.Converters.Add(new ColourConvertor());
-            globalSetting.Converters.Add(new FontUsageConvertor());
+            globalSetting.Converters.Add(new ColourConverter());
+            globalSetting.Converters.Add(new FontUsageConverter());
             return globalSetting;
         }
 
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
             globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.Add(new KaraokeSkinGroupConvertor());
+            globalSetting.Converters.Add(new KaraokeSkinGroupConverter());
             return globalSetting;
         }
 
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
             globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.Add(new KaraokeSkinMappingRoleConvertor());
+            globalSetting.Converters.Add(new KaraokeSkinMappingRoleConverter());
             return globalSetting;
         }
     }

@@ -171,7 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         // because it's impossible to get the current time in skin.
         protected override IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
+            var type = KaraokeSkinElementConverter.GetElementType(elementType);
             var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));
 
             if (firstMatchedRole == null)

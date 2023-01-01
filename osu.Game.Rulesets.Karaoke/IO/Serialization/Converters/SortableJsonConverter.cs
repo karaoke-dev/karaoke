@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public abstract class SortableJsonConvertor<TObject> : JsonConverter<IEnumerable<TObject>>
+    public abstract class SortableJsonConverter<TObject> : JsonConverter<IEnumerable<TObject>>
     {
         public sealed override IEnumerable<TObject> ReadJson(JsonReader reader, Type objectType, IEnumerable<TObject>? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {

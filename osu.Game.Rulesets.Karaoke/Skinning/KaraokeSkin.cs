@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
+            var type = KaraokeSkinElementConverter.GetElementType(elementType);
             return toElement(type);
         }
 

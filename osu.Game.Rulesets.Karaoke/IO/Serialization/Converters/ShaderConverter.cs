@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class ShaderConvertor : GenericTypeConvertor<ICustomizedShader>
+    public class ShaderConverter : GenericTypeConverter<ICustomizedShader>
     {
         protected override void PostProcessJObject(JObject jObject, ICustomizedShader value, JsonSerializer serializer)
         {

@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
-public class SingerConvertorTest : BaseSingleConverterTest<SingerConvertor>
+public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
 {
     [Test]
     public void TestMainSingerSerializer()

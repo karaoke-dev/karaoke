@@ -11,15 +11,15 @@ using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class KaraokeSkinElementConvertorTest : BaseSingleConverterTest<KaraokeSkinElementConvertor>
+    public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSkinElementConverter>
     {
         protected override JsonConverter[] CreateExtraConverts()
             => new JsonConverter[]
             {
-                new ColourConvertor(),
+                new ColourConverter(),
                 new Vector2Converter(),
-                new ShaderConvertor(),
-                new FontUsageConvertor()
+                new ShaderConverter(),
+                new FontUsageConverter()
             };
 
         [Test]

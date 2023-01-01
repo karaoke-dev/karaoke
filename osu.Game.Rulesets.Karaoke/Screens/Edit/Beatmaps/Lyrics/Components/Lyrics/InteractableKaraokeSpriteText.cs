@@ -139,8 +139,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
                 if (newStyle == null)
                     return;
 
-                LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newStyle);
-                RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newStyle);
+                LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, newStyle);
+                RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, newStyle);
 
                 triggerSizeChangedEvent();
             }, true);

@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class LyricConvertor : JsonConverter<Lyric>
+    public class LyricConverter : JsonConverter<Lyric>
     {
         public override Lyric ReadJson(JsonReader reader, Type objectType, Lyric? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {

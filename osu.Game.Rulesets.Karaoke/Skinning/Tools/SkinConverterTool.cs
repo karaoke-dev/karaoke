@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
 {
     // it's the temp logic to collect logic.
-    public static class SkinConvertorTool
+    public static class SkinConverterTool
     {
         public static ICustomizedShader[] ConvertLeftSideShader(ShaderManager? shaderManager, LyricStyle lyricStyle)
         {

@@ -9,13 +9,13 @@ using Newtonsoft.Json.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public abstract class GenericTypeConvertor<TType> : GenericTypeConvertor<TType, string>
+    public abstract class GenericTypeConverter<TType> : GenericTypeConverter<TType, string>
     {
         protected override string GetNameByType(MemberInfo type)
             => type.Name;
     }
 
-    public abstract class GenericTypeConvertor<TType, TTypeName> : JsonConverter<TType> where TTypeName : notnull
+    public abstract class GenericTypeConverter<TType, TTypeName> : JsonConverter<TType> where TTypeName : notnull
     {
         public sealed override TType ReadJson(JsonReader reader, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
