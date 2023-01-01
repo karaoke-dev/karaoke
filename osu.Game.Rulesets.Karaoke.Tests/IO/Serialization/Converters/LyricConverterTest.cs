@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class LyricConvertorTest : BaseSingleConverterTest<LyricConverter>
+    public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
     {
         protected override JsonConverter[] CreateExtraConverts() =>
             new JsonConverter[]

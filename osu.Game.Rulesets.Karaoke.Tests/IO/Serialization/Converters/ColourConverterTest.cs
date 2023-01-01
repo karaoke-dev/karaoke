@@ -9,7 +9,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class ColourConvertorTest : BaseSingleConverterTest<ColourConverter>
+    public class ColourConverterTest : BaseSingleConverterTest<ColourConverter>
     {
         [TestCase("#aaaaaa", "#AAAAAA")]
         [TestCase("#aaaaaaaa", "#AAAAAAAA")]

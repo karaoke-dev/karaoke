@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class FontUsageConvertorTest : BaseSingleConverterTest<FontUsageConverter>
+    public class FontUsageConverterTest : BaseSingleConverterTest<FontUsageConverter>
     {
         [TestCase("", 20, "", false, false, "{}")]
         [TestCase("OpenSans", 20, "", false, false, "{\"family\":\"OpenSans\"}")]

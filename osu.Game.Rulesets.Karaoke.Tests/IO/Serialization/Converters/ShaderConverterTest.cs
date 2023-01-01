@@ -12,7 +12,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class ShaderConvertorTest : BaseSingleConverterTest<ShaderConverter>
+    public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
     {
         protected override JsonConverter[] CreateExtraConverts()
             => new JsonConverter[]
