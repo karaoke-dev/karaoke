@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 
         private readonly GridContainer gridContainer;
         private readonly Container editArea;
-        private LoadingSpinner loading;
+        private readonly LoadingSpinner loading;
         private readonly Container leftSideSettings;
         private readonly Container rightSideSettings;
 
@@ -267,9 +267,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
                     _ => null
                 };
 
-            bool checkDuplicatedWithExistSettings(LyricEditorSettings settings)
+            bool checkDuplicatedWithExistSettings(LyricEditorSettings lyricEditorSettings)
             {
-                var type = settings.GetType();
+                var type = lyricEditorSettings.GetType();
                 if (leftSideSettings.Children?.FirstOrDefault()?.GetType() == type)
                     return true;
 
