@@ -77,8 +77,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
             drawableLyric.ApplyToLyricPieces(l =>
             {
                 // Apply shader.
-                l.LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, this);
-                l.RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, this);
+                l.LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, this);
+                l.RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, this);
             });
         }
     }
