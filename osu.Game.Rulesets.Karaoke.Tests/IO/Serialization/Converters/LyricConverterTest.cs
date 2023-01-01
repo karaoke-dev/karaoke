@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
         [Test]
-        public void TestLyricConvertorWithNoConfig()
+        public void TestLyricConverterWithNoConfig()
         {
             var lyric = new Lyric();
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         }
 
         [Test]
-        public void TestLyricConvertorWithSyncConfig()
+        public void TestLyricConverterWithSyncConfig()
         {
             var lyric = new Lyric
             {
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         }
 
         [Test]
-        public void TestLyricConvertorWithReferenceConfig()
+        public void TestLyricConverterWithReferenceConfig()
         {
             var lyric = new Lyric
             {
