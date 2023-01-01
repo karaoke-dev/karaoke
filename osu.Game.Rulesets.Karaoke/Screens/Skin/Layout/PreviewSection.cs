@@ -189,7 +189,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             private partial class StyleDropdown : OsuDropdown<KeyValuePair<int, string>>
             {
                 protected override LocalisableString GenerateItemText(KeyValuePair<int, string> item)
-                    => item.Value ?? $"Style{item.Key}";
+                    => item.Value;
             }
         }
     }
