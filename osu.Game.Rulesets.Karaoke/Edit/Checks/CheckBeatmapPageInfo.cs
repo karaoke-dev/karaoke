@@ -66,7 +66,7 @@ public class CheckBeatmapPageInfo : CheckBeatmapProperty<PageInfo, Lyric>
 
         var availablePagesInObject = hitObject.ToDictionary(k => k, v => property.GetPageAt(v.LyricStartTime));
 
-        var missingHitObjectPages = pages.Where(page => !availablePagesInObject.Values.Contains(page)).ToArray();
+        var missingHitObjectPages = pages.Where(page => !availablePagesInObject.ContainsValue(page)).ToArray();
 
         for (int i = 1; i < missingHitObjectPages.Length; i++)
         {
