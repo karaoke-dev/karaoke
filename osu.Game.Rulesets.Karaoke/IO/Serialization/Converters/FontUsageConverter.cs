@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class FontUsageConvertor : JsonConverter<FontUsage>
+    public class FontUsageConverter : JsonConverter<FontUsage>
     {
         private const float default_text_size = 20;
 

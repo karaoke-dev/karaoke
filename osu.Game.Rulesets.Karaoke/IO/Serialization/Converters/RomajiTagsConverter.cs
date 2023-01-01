@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class RomajiTagsConverter : SortableJsonConvertor<RomajiTag>
+    public class RomajiTagsConverter : SortableJsonConverter<RomajiTag>
     {
         protected override IEnumerable<RomajiTag> GetSortedValue(IEnumerable<RomajiTag> objects)
             => TextTagsUtils.Sort(objects);

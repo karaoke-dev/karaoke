@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class KaraokeSkinMappingRoleConvertorTest : BaseSingleConverterTest<KaraokeSkinMappingRoleConvertor>
+    public class KaraokeSkinMappingRoleConvertorTest : BaseSingleConverterTest<KaraokeSkinMappingRoleConverter>
     {
         [Test]
         public void TestDefaultMappingRoleSerializer()

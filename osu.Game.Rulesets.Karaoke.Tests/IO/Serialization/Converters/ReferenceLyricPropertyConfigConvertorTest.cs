@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class ReferenceLyricPropertyConfigConvertorTest : BaseSingleConverterTest<ReferenceLyricPropertyConfigConvertor>
+    public class ReferenceLyricPropertyConfigConvertorTest : BaseSingleConverterTest<ReferenceLyricPropertyConfigConverter>
     {
         [Test]
         public void TestReferenceLyricConfigSerializer()

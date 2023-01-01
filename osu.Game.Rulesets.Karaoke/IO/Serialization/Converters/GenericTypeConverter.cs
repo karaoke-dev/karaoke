@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public abstract class GenericTypeConvertor<TType> : GenericTypeConvertor<TType, string>
+    public abstract class GenericTypeConverter<TType> : GenericTypeConvertor<TType, string>
     {
         protected override string GetNameByType(MemberInfo type)
             => type.Name;

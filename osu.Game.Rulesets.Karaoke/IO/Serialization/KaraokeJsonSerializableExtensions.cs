@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
 
             // karaoke beatmap.
-            globalSetting.Converters.Add(new SingerConvertor());
+            globalSetting.Converters.Add(new SingerConverter());
 
             // hit-object
             globalSetting.Converters.Add(new CultureInfoConverter());
@@ -25,9 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
             globalSetting.Converters.Add(new TimeTagConverter());
             globalSetting.Converters.Add(new TimeTagsConverter());
             globalSetting.Converters.Add(new ToneConverter());
-            globalSetting.Converters.Add(new TranslatesConvertor());
-            globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConvertor());
-            globalSetting.Converters.Add(new LyricConvertor());
+            globalSetting.Converters.Add(new TranslatesConverter());
+            globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConverter());
+            globalSetting.Converters.Add(new LyricConverter());
 
             return globalSetting;
         }

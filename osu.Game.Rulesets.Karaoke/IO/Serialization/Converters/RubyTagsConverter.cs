@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class RubyTagsConverter : SortableJsonConvertor<RubyTag>
+    public class RubyTagsConverter : SortableJsonConverter<RubyTag>
     {
         protected override IEnumerable<RubyTag> GetSortedValue(IEnumerable<RubyTag> objects)
             => TextTagsUtils.Sort(objects);

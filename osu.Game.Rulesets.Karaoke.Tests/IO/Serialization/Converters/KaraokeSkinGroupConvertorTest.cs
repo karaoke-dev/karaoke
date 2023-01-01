@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
-    public class KaraokeSkinGroupConvertorTest : BaseSingleConverterTest<KaraokeSkinGroupConvertor>
+    public class KaraokeSkinGroupConvertorTest : BaseSingleConverterTest<KaraokeSkinGroupConverter>
     {
         [Test]
         public void TestGroupBySingerIdsSerializer()
