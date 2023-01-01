@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
                 if (deltaXPosition < 0)
                 {
-                    var firstTimeTag = SelectedItems.OrderBy(x => x.StartIndex).FirstOrDefault();
+                    var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex);
                     int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
                     int offset = newStartIndex - firstTimeTag!.StartIndex;
                     if (offset == 0)
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
                 }
                 else
                 {
-                    var lastTimeTag = SelectedItems.OrderBy(x => x.EndIndex).LastOrDefault();
+                    var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex);
                     int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
                     int offset = newEndIndex - lastTimeTag!.EndIndex;
                     if (offset == 0)

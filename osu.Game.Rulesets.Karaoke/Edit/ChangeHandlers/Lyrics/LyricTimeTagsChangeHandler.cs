@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (!matchedTimeTags.Any())
                     return;
 
-                var removedTimeTag = matchedTimeTags.OrderBy(x => x.Time).FirstOrDefault();
+                var removedTimeTag = matchedTimeTags.MinBy(x => x.Time ?? double.MinValue);
                 if (removedTimeTag != null)
                     lyric.TimeTags.Remove(removedTimeTag);
             });

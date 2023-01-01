@@ -235,8 +235,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             ArgumentNullException.ThrowIfNull(lyric);
 
             var availableTimeTags = lyric.TimeTags.Where(x => x.Time != null).ToArray();
-            var minTimeTag = availableTimeTags.OrderBy(x => x.Time).FirstOrDefault();
-            var maxTimeTag = availableTimeTags.OrderByDescending(x => x.Time).FirstOrDefault();
+            var minTimeTag = availableTimeTags.MinBy(x => x.Time);
+            var maxTimeTag = availableTimeTags.MaxBy(x => x.Time);
 
             string startTime = TimeTagUtils.FormattedString(minTimeTag ?? new TimeTag(new TextIndex()));
             string endTime = TimeTagUtils.FormattedString(maxTimeTag ?? new TimeTag(new TextIndex()));
