@@ -15,11 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             globalSetting.Formatting = Formatting.None; // do not change new line in testing.
             globalSetting.Converters.Add(new TConverter());
 
-            var extraConvertors = CreateExtraConverts();
+            var converters = CreateExtraConverts();
 
-            foreach (var extraConvertor in extraConvertors)
+            foreach (var converter in converters)
             {
-                globalSetting.Converters.Add(extraConvertor);
+                globalSetting.Converters.Add(converter);
             }
 
             return globalSetting;
