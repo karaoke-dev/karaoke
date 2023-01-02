@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
@@ -18,6 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         public SingerInfo SingerInfo { get; set; } = new();
 
         public PageInfo PageInfo { get; set; } = new();
+
+        public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
 
         public bool Scorable { get; set; }
 
