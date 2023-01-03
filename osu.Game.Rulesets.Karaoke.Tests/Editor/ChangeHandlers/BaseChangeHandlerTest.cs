@@ -95,14 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             });
         }
 
-        protected void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> assert)
+        protected void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
         {
             SetUpEditorBeatmap(editorBeatmap =>
             {
                 if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     throw new InvalidCastException();
 
-                assert.Invoke(karaokeBeatmap);
+                action.Invoke(karaokeBeatmap);
             });
         }
 
@@ -126,16 +126,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 
         protected void AssertEditorBeatmap(Action<EditorBeatmap> assert)
         {
-            AddStep("Is result matched", () =>
+            AddAssert("Is result matched", () =>
             {
                 var editorBeatmap = Dependencies.Get<EditorBeatmap>();
                 assert(editorBeatmap);
-            });
 
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
+                // even if there's no property changed in the lyric editor, should still trigger the change handler.
+                // because every change handler call should cause one undo step.
+                // also, technically should not call the change handler if there's no possible to change the properties.
+                return IsTransactionOnlyTriggerOnce();
+            });
         }
 
         protected void AssertKaraokeBeatmap(Action<KaraokeBeatmap> assert)
@@ -181,24 +181,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 
         protected void AssertHitObjects<THitObject>(Action<IEnumerable<THitObject>> assert) where THitObject : HitObject
         {
-            AddStep("Is result matched", () =>
+            AddAssert("Is result matched", () =>
             {
                 var editorBeatmap = Dependencies.Get<EditorBeatmap>();
                 assert(editorBeatmap.HitObjects.OfType<THitObject>());
-            });
 
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            AssertTransactionOnlyTriggerOnce();
+                // even if there's no property changed in the lyric editor, should still trigger the change handler.
+                // because every change handler call should cause one undo step.
+                // also, technically should not call the change handler if there's no possible to change the properties.
+                return IsTransactionOnlyTriggerOnce();
+            });
         }
 
-        protected void AssertTransactionOnlyTriggerOnce()
+        protected bool IsTransactionOnlyTriggerOnce()
         {
-            AddStep("Should only trigger transaction once", () =>
-            {
-                Assert.AreEqual(1, transactionCount);
-            });
+            return transactionCount == 1;
         }
 
         private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
