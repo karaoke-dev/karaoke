@@ -95,14 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             });
         }
 
-        protected void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> assert)
+        protected void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
         {
             SetUpEditorBeatmap(editorBeatmap =>
             {
                 if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     throw new InvalidCastException();
 
-                assert.Invoke(karaokeBeatmap);
+                action.Invoke(karaokeBeatmap);
             });
         }
 
