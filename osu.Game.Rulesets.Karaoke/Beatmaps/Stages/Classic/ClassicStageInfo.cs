@@ -15,7 +15,7 @@ public class ClassicStageInfo : StageInfo
     /// Default <see cref="Lyric"/> and <see cref="Note"/>'s style.
     /// Will use this style as default if there's no mapping result in the <see cref="StyleMappings"/>
     /// </summary>
-    public ClassicStyle DefaultStyle { get; set; } = new();
+    public ClassicStyle DefaultStyle { get; set; } = new(0);
 
     /// <summary>
     /// All available <see cref="Lyric"/> and <see cref="Note"/>'s style.
@@ -41,7 +41,7 @@ public class ClassicStageInfo : StageInfo
     /// Default <see cref="Lyric"/> layout.
     /// Will use this layout as default if there's no mapping result in the <see cref="LyricLayoutMappings"/>
     /// </summary>
-    public ClassicLyricLayout DefaultLyricLayout { get; set; } = new();
+    public ClassicLyricLayout DefaultLyricLayout { get; set; } = new(0);
 
     /// <summary>
     /// All available lyric layout.
