@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public interface IStageElement
 {
-    public int ID { get; set; }
+    public int ID { get; }
 
-    public string Name { get; set; }
+    public string Name { get; }
 }

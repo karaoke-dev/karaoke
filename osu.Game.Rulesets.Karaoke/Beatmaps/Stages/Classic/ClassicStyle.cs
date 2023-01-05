@@ -7,10 +7,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
 public class ClassicStyle : IStageElement
 {
+    public ClassicStyle(int id)
+    {
+        ID = id;
+    }
+
     /// <summary>
     /// Index of the element.
     /// </summary>
-    public int ID { get; set; }
+    public int ID { get; protected set; }
 
     /// <summary>
     /// Name of the element.
