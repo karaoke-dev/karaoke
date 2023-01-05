@@ -17,7 +17,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     {
         var stageInfo = new ClassicStageInfo();
 
-        const string expected = "{\"$type\":\"classic\",\"default_style\":{\"name\":\"\"},\"available_styles\":[],\"style_mappings\":{},\"lyric_layout_definition\":{},\"default_lyric_layout\":{\"name\":\"\",\"alignment\":1},\"available_lyric_layouts\":[],\"lyric_layout_mappings\":{}}";
+        const string expected = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{}}";
         string actual = JsonConvert.SerializeObject(stageInfo, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -25,7 +25,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     [Test]
     public void TestClassicStageInfoDeserializer()
     {
-        const string json = "{\"$type\":\"classic\",\"default_style\":{\"name\":\"\"},\"available_styles\":[],\"style_mappings\":{},\"lyric_layout_definition\":{},\"default_lyric_layout\":{\"name\":\"\",\"alignment\":1},\"available_lyric_layouts\":[],\"lyric_layout_mappings\":{}}";
+        const string json = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{}}";
 
         var expected = new ClassicStageInfo();
         var actual = (ClassicStageInfo)JsonConvert.DeserializeObject<StageInfo>(json, CreateSettings())!;
