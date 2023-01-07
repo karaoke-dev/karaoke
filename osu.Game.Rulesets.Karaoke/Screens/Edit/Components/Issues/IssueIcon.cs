@@ -47,7 +47,7 @@ public partial class IssueIcon : CompositeDrawable
 
             return new SpriteIcon
             {
-                Icon = GetIconUsageByIssueTemplate(issue.Template) ?? GetIconUsageByCheck(issue.Check)
+                Icon = GetIconByIssueTemplate(issue.Template)
             };
         }
     }
@@ -58,6 +58,9 @@ public partial class IssueIcon : CompositeDrawable
             LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
             _ => null
         };
+
+    internal static IconUsage GetIconByIssueTemplate(IssueTemplate issueTemplate)
+        => GetIconUsageByIssueTemplate(issueTemplate) ?? GetIconUsageByCheck(issueTemplate.Check);
 
     internal static IconUsage? GetIconUsageByIssueTemplate(IssueTemplate issueTemplate)
     {
