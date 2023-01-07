@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 /// It's a category to record the list of <typeparamref name="TStageElement"/> and handle the mapping by several rules.
 /// </summary>
 public abstract class StageElementCategory<TStageElement, THitObject>
-    where TStageElement : IStageElement
+    where TStageElement : class, IStageElement
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     /// <summary>
@@ -89,6 +89,12 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     {
         int key = hitObject.ID;
         int value = element.ID;
+
+        if (!AvailableElements.Contains(element))
+            throw new InvalidOperationException();
+
+        if (element == DefaultElement)
+            throw new InvalidOperationException();
 
         if (Mappings.ContainsKey(key))
         {
