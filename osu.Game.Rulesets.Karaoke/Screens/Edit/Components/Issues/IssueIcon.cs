@@ -69,6 +69,7 @@ public partial class IssueIcon : CompositeDrawable
         check switch
         {
             CheckBeatmapAvailableTranslates => FontAwesome.Solid.Language,
+            CheckBeatmapClassicStageInfo => FontAwesome.Solid.AlignLeft,
             CheckBeatmapPageInfo => FontAwesome.Solid.Pager,
             CheckLyricLanguage => FontAwesome.Solid.Globe,
             CheckLyricReferenceLyric => FontAwesome.Solid.Link,
