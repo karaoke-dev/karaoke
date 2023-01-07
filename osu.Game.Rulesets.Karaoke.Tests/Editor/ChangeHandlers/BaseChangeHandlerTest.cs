@@ -77,6 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 karaokeBeatmap.AvailableTranslates.Clear();
                 karaokeBeatmap.SingerInfo = new SingerInfo();
                 karaokeBeatmap.PageInfo = new PageInfo();
+                karaokeBeatmap.StageInfos.Clear();
             });
         }
 
