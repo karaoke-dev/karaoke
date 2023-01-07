@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
     /// Should inherit <see cref="OsuTestScene"/> because all change handler need the injecting to get the value.
     /// </summary>
     [HeadlessTest]
-    public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorClockTestScene where TChangeHandler : Component, new()
+    public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorClockTestScene where TChangeHandler : Component
     {
         private TChangeHandler changeHandler = null!;
 
@@ -50,8 +50,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             Children = new Drawable[]
             {
                 editorBeatmap,
-                changeHandler = new TChangeHandler()
+                changeHandler = CreateChangeHandler()
             };
+        }
+
+        protected virtual TChangeHandler CreateChangeHandler()
+        {
+            if (Activator.CreateInstance(typeof(TChangeHandler)) is not TChangeHandler handler)
+                throw new InvalidOperationException("Change handler should have no params in the ctor.");
+
+            return handler;
         }
 
         [SetUp]
