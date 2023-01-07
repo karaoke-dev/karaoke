@@ -24,6 +24,8 @@ public abstract class CheckBeatmapProperty<TProperty, THitObject> : ICheck where
     {
         var beatmap = getBeatmap(context);
         var property = GetPropertyFromBeatmap(beatmap);
+        if (property == null)
+            return Array.Empty<Issue>();
 
         var issues = CheckProperty(property);
         var hitObjectIssues = context.Beatmap.HitObjects.OfType<THitObject>().SelectMany(x => CheckHitObject(property, x));
@@ -32,7 +34,7 @@ public abstract class CheckBeatmapProperty<TProperty, THitObject> : ICheck where
         return issues.Concat(hitObjectIssues).Concat(hitObjectsIssues);
     }
 
-    protected abstract TProperty GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap);
+    protected abstract TProperty? GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap);
 
     protected virtual IEnumerable<Issue> CheckProperty(TProperty property)
     {
