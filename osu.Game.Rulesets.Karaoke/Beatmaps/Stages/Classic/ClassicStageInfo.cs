@@ -26,6 +26,11 @@ public class ClassicStageInfo : StageInfo
     /// </summary>
     public ClassicLyricLayoutCategory LyricLayoutCategory { get; set; } = new();
 
+    /// <summary>
+    /// Timing info for saving the <see cref="Lyric"/>'s appear and disappear time.
+    /// </summary>
+    public ClassicLyricTimingInfo LyricTimingInfo { get; set; } = new();
+
     #endregion
 
     #region Stage element
