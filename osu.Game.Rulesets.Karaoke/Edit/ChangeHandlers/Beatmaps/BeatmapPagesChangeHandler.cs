@@ -47,6 +47,9 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
     {
         performPageInfoChanged(pageInfo =>
         {
+            if (checkPageExist(pageInfo, page))
+                throw new InvalidOperationException($"Should not add duplicated {nameof(page)} into the {nameof(pageInfo)}.");
+
             pageInfo.Pages.Add(page);
         });
     }
@@ -55,6 +58,9 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
     {
         performPageInfoChanged(pageInfo =>
         {
+            if (!checkPageExist(pageInfo, page))
+                throw new InvalidOperationException($"{nameof(page)} does ont in the {nameof(pageInfo)}.");
+
             pageInfo.Pages.Remove(page);
         });
     }
@@ -65,6 +71,9 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
         {
             foreach (var page in pages.ToArray())
             {
+                if (!checkPageExist(pageInfo, page))
+                    throw new InvalidOperationException($"{nameof(page)} does ont in the {nameof(pageInfo)}.");
+
                 pageInfo.Pages.Remove(page);
             }
         });
@@ -76,12 +85,17 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
         {
             foreach (var page in pages)
             {
-                if (!pageInfo.Pages.Contains(page))
-                    throw new InvalidOperationException("All pages should be in the page info.");
+                if (!checkPageExist(pageInfo, page))
+                    throw new InvalidOperationException($"{nameof(page)} does ont in the {nameof(pageInfo)}.");
 
                 page.Time += offset;
             }
         });
+    }
+
+    private static bool checkPageExist(PageInfo pageInfo, Page page)
+    {
+        return pageInfo.Pages.Contains(page);
     }
 
     private void performPageInfoChanged(Action<PageInfo> action)
