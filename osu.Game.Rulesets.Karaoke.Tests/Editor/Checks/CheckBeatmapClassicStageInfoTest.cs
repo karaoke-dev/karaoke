@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
@@ -20,6 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
 public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapClassicStageInfo>
 {
+    #region stage definition
+
     [Test]
     public void TestCheckInvalidRowHeight()
     {
@@ -35,6 +38,148 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
         });
         AssertNotOk<IssueTemplateInvalidRowHeight>(getContext(beatmap2));
     }
+
+    #endregion
+
+    #region timing info
+
+    [Test]
+    public void TestCheckLessThanTwoTimingPoints()
+    {
+        var lyrics = new List<Lyric>
+        {
+            new(),
+        };
+
+        // test with 0 lyric and 0 timing points.
+        var beatmap = createTestingBeatmap(null, timingInfos => timingInfos.Timings.Clear());
+        AssertNotOk<IssueTemplateLessThanTwoTimingPoints>(getContext(beatmap));
+
+        // test with 0 lyric and 1 timing points.
+        var beatmap2 = createTestingBeatmap(null, timingInfos => timingInfos.AddTimingPoint());
+        AssertNotOk<IssueTemplateLessThanTwoTimingPoints>(getContext(beatmap2));
+
+        // test with 1 lyric and 0 timing points.
+        var beatmap3 = createTestingBeatmap(lyrics, timingInfos => timingInfos.Timings.Clear());
+        AssertNotOk<IssueTemplateLessThanTwoTimingPoints>(getContext(beatmap3));
+
+        // test with 1 lyric and 1 timing points.
+        var beatmap4 = createTestingBeatmap(lyrics, timingInfos => timingInfos.AddTimingPoint());
+        AssertNotOk<IssueTemplateLessThanTwoTimingPoints>(getContext(beatmap4));
+    }
+
+    [Test]
+    public void TestCheckTimingIntervalTooShort()
+    {
+        var beatmap = createTestingBeatmap(null, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL - 1);
+        });
+        AssertNotOk<BeatmapClassicLyricTimingPointIssue, IssueTemplateTimingIntervalTooShort>(getContext(beatmap));
+    }
+
+    [Test]
+    public void TestCheckTimingIntervalTooLong()
+    {
+        var beatmap = createTestingBeatmap(null, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MAX_TIMING_INTERVAL + 1);
+        });
+        AssertNotOk<BeatmapClassicLyricTimingPointIssue, IssueTemplateTimingIntervalTooLong>(getContext(beatmap));
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void TestCheckTimingInfoHitObjectNotExist(bool hasHitObjectsInBeatmap)
+    {
+        var lyrics = new List<Lyric>
+        {
+            new(),
+        };
+
+        var beatmap = createTestingBeatmap(hasHitObjectsInBeatmap ? lyrics : null, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
+
+            var timingPoint = timingInfos.Timings.First();
+            var lyric = new Lyric { ID = 1 };
+
+            // should have error because lyric is not in the beatmap.
+            timingInfos.AddToMapping(timingPoint, lyric);
+        });
+        AssertNotOk<IssueTemplateTimingInfoHitObjectNotExist>(getContext(beatmap));
+    }
+
+    [Test]
+    public void TestCheckTimingInfoMappingHasNoTiming()
+    {
+        var lyrics = new List<Lyric>
+        {
+            new(),
+        };
+
+        var beatmap = createTestingBeatmap(lyrics, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
+
+            // should have error because mapping value is empty.
+            timingInfos.Mappings.Add(lyrics.First().ID, Array.Empty<int>());
+        });
+        AssertNotOk<IssueTemplateTimingInfoMappingHasNoTiming>(getContext(beatmap));
+    }
+
+    [Test]
+    public void TestCheckTimingInfoTimingNotExist()
+    {
+        var lyrics = new List<Lyric>
+        {
+            new(),
+        };
+
+        var beatmap = createTestingBeatmap(lyrics, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
+
+            // should have error because mapping value is not exist.
+            timingInfos.Mappings.Add(lyrics.First().ID, new[] { 100 });
+        });
+        AssertNotOk<IssueTemplateTimingInfoTimingNotExist>(getContext(beatmap));
+    }
+
+    [Test]
+    public void TestCheckTimingInfoLyricNotHaveTwoTiming()
+    {
+        var lyrics = new List<Lyric>
+        {
+            new(),
+        };
+
+        var beatmap = createTestingBeatmap(lyrics, timingInfos =>
+        {
+            timingInfos.Timings.Clear();
+            timingInfos.AddTimingPoint(x => x.Time = 0);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
+            timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL * 2 + 1);
+
+            // should have error because mapping value is not exactly 2.
+            timingInfos.Mappings.Add(lyrics.First().ID, timingInfos.Timings.Select(x => x.ID).ToArray());
+        });
+        AssertNotOk<IssueTemplateTimingInfoLyricNotHaveTwoTiming>(getContext(beatmap));
+    }
+
+    #endregion
+
+    #region element
 
     [Test]
     public void TestCheckLyricLayoutInvalidLineNumber()
@@ -54,6 +199,18 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
         AssertNotOk<IssueTemplateLyricLayoutInvalidLineNumber>(getContext(beatmap2));
     }
 
+    #endregion
+
+    private static IBeatmap createTestingBeatmap(IEnumerable<Lyric>? lyrics, Action<ClassicLyricTimingInfo>? editStageAction = null)
+    {
+        return createTestingBeatmap(lyrics, info =>
+        {
+            // clear the timing info created in the base method.
+            info.LyricTimingInfo.Timings.Clear();
+            editStageAction?.Invoke(info.LyricTimingInfo);
+        });
+    }
+
     private static IBeatmap createTestingBeatmap(IEnumerable<Lyric>? lyrics, Action<ClassicStageInfo>? editStageAction = null)
     {
         var stageInfo = new ClassicStageInfo();
@@ -62,6 +219,10 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
         stageInfo.LyricLayoutCategory.AddElement(x => x.Line = MIN_LINE_SIZE);
         stageInfo.LyricLayoutCategory.AddElement(x => x.Line = MIN_LINE_SIZE);
         stageInfo.LyricLayoutDefinition.LineHeight = MIN_ROW_HEIGHT;
+
+        // add default timing info to prevent the error.
+        stageInfo.LyricTimingInfo.AddTimingPoint(x => x.Time = 0);
+        stageInfo.LyricTimingInfo.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
 
         editStageAction?.Invoke(stageInfo);
 
