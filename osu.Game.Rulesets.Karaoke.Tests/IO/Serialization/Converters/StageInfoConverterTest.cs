@@ -17,7 +17,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     {
         var stageInfo = new ClassicStageInfo();
 
-        const string expected = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{}}";
+        const string expected = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[]}}";
         string actual = JsonConvert.SerializeObject(stageInfo, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -25,7 +25,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     [Test]
     public void TestClassicStageInfoDeserializer()
     {
-        const string json = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{}}";
+        const string json = "{\"$type\":\"classic\",\"style_category\":{},\"lyric_layout_definition\":{},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[]}}";
 
         var expected = new ClassicStageInfo();
         var actual = (ClassicStageInfo)JsonConvert.DeserializeObject<StageInfo>(json, CreateSettings())!;
