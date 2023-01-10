@@ -57,7 +57,7 @@ public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THi
     {
         performStageInfoChanged(s =>
         {
-            s.RemoveFromMapping(hitObject);
+            s.RemoveHitObjectFromMapping(hitObject);
         });
     }
 
