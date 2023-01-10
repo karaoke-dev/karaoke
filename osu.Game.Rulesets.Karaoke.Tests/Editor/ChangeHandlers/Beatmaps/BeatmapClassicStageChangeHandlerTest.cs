@@ -35,6 +35,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var classicStageInfo = getClassicStageInfo(karaokeBeatmap);
             Assert.IsNotNull(classicStageInfo);
 
+            // assert definition.
             var definition = classicStageInfo.LyricLayoutDefinition;
             Assert.AreEqual(12, definition.LineHeight);
         });
@@ -54,9 +55,9 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
 
         TriggerHandlerChanged(c =>
         {
-            c.AddTimingPoint(new ClassicLyricTimingPoint
+            c.AddTimingPoint(x =>
             {
-                Time = 1000
+                x.Time = 1000;
             });
         });
 
@@ -65,6 +66,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
+            // assert timing.
             var timingPoint = timingInfo.Timings.FirstOrDefault();
             Assert.IsNotNull(timingPoint);
             Assert.AreEqual(1000, timingPoint!.Time);
@@ -102,6 +104,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
+            // assert timing.
             var timingPoint = timingInfo.Timings.FirstOrDefault();
             Assert.IsNotNull(timingPoint);
             Assert.AreEqual(1000, timingPoint!.Time);
@@ -139,6 +142,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
+            // assert timing.
             var timingPoint = timingInfo.Timings.FirstOrDefault();
             Assert.IsNotNull(timingPoint);
             Assert.AreEqual(1000, timingPoint!.Time);
@@ -177,6 +181,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
+            // assert timing.
             var timingPoint = timingInfo.Timings;
             Assert.AreEqual(2, timingPoint.Count);
             Assert.AreEqual(1100, timingPoint[0].Time);
@@ -200,8 +205,11 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             karaokeBeatmap.StageInfos.Add(classicStageInfo);
         });
 
-        PrepareHitObject(new Lyric { ID = 1 });
-        PrepareHitObject(new Lyric { ID = 2 }, false);
+        Lyric lyric1;
+        Lyric lyric2;
+
+        PrepareHitObject(lyric1 = new Lyric { ID = 1 });
+        PrepareHitObject(lyric2 = new Lyric { ID = 2 }, false);
 
         TriggerHandlerChanged(c =>
         {
@@ -213,8 +221,9 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
-            var actualTimingPoint = timingInfo.Timings.First();
-            Assert.AreEqual(new[] { 1 }, actualTimingPoint!.LyricIds);
+            // assert mapping status.
+            Assert.AreEqual(new[] { timingPoint }, timingInfo.GetLyricTimingPoints(lyric1));
+            Assert.IsEmpty(timingInfo.GetLyricTimingPoints(lyric2));
         });
     }
 
@@ -223,20 +232,24 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
     {
         ClassicLyricTimingPoint timingPoint = null!;
 
+        Lyric lyric1;
+        Lyric lyric2;
+
+        PrepareHitObject(lyric1 = new Lyric { ID = 1 });
+        PrepareHitObject(lyric2 = new Lyric { ID = 2 }, false);
+
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var classicStageInfo = new ClassicStageInfo();
             classicStageInfo.LyricTimingInfo.Timings.Add(timingPoint = new ClassicLyricTimingPoint
             {
                 Time = 1000,
-                LyricIds = new[] { 1, 2 }
             });
+            classicStageInfo.LyricTimingInfo.AddToMapping(timingPoint, lyric1);
+            classicStageInfo.LyricTimingInfo.AddToMapping(timingPoint, lyric2);
 
             karaokeBeatmap.StageInfos.Add(classicStageInfo);
         });
-
-        PrepareHitObject(new Lyric { ID = 1 });
-        PrepareHitObject(new Lyric { ID = 2 }, false);
 
         TriggerHandlerChanged(c =>
         {
@@ -248,8 +261,9 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             var timingInfo = getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
-            var actualTimingPoint = timingInfo.Timings.First();
-            Assert.AreEqual(new[] { 2 }, actualTimingPoint!.LyricIds);
+            // assert mapping status.
+            Assert.IsEmpty(timingInfo.GetLyricTimingPoints(lyric1)); // should clear the mapping in the lyric1 because it's being selected.
+            Assert.AreEqual(new[] { timingPoint }, timingInfo.GetLyricTimingPoints(lyric2));
         });
     }
 
