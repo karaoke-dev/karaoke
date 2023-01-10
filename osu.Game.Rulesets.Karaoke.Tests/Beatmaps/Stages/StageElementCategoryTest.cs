@@ -102,7 +102,7 @@ public class StageElementCategoryTest
     }
 
     [Test]
-    public void TestRemoveFromMapping()
+    public void TestRemoveHitObjectFromMapping()
     {
         var category = new TestStageElementCategory();
         category.AddElement();
@@ -111,7 +111,24 @@ public class StageElementCategoryTest
         var lyric1 = new Lyric { ID = 1 };
 
         category.AddToMapping(element1, lyric1);
-        category.RemoveFromMapping(lyric1);
+        category.RemoveHitObjectFromMapping(lyric1);
+
+        // Should clear added mappings.
+        var mappings = category.Mappings;
+        Assert.IsEmpty(mappings);
+    }
+
+    [Test]
+    public void TestRemoveElementFromMapping()
+    {
+        var category = new TestStageElementCategory();
+        category.AddElement();
+
+        var element1 = category.AvailableElements[0];
+        var lyric1 = new Lyric { ID = 1 };
+
+        category.AddToMapping(element1, lyric1);
+        category.RemoveElementFromMapping(element1);
 
         // Should clear added mappings.
         var mappings = category.Mappings;

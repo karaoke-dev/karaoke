@@ -72,17 +72,9 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     public void RemoveElement(TStageElement element)
     {
-        var objectIds = getMappingHitObjectIds(element);
-
-        foreach (int objectId in objectIds)
-        {
-            Mappings.Remove(objectId);
-        }
+        RemoveElementFromMapping(element);
 
         AvailableElements.Remove(element);
-
-        IEnumerable<int> getMappingHitObjectIds(TStageElement stageElement)
-            => Mappings.Where(x => x.Value == stageElement.ID).Select(x => x.Key).ToArray();
     }
 
     public void AddToMapping(TStageElement element, THitObject hitObject)
@@ -102,9 +94,22 @@ public abstract class StageElementCategory<TStageElement, THitObject>
         }
     }
 
-    public void RemoveFromMapping(THitObject hitObject)
+    public void RemoveHitObjectFromMapping(THitObject hitObject)
     {
         Mappings.Remove(hitObject.ID);
+    }
+
+    public void RemoveElementFromMapping(TStageElement element)
+    {
+        var objectIds = getMappingHitObjectIds(element);
+
+        foreach (int objectId in objectIds)
+        {
+            Mappings.Remove(objectId);
+        }
+
+        IEnumerable<int> getMappingHitObjectIds(TStageElement stageElement)
+            => Mappings.Where(x => x.Value == stageElement.ID).Select(x => x.Key).ToArray();
     }
 
     public void ClearUnusedMapping(Func<int, bool> checkExist)
