@@ -24,6 +24,14 @@ public class ClassicLyricTimingInfo
     [JsonIgnore]
     public List<ClassicLyricTimingPoint> SortedTimings { get; private set; } = new();
 
+    [JsonIgnore]
+    public IBindable<int> MappingVersion => mappingVersion;
+
+    private readonly Bindable<int> mappingVersion = new();
+
+    // todo: should be private.
+    public BindableDictionary<int, int[]> Mappings = new();
+
     public ClassicLyricTimingInfo()
     {
         Timings.CollectionChanged += (_, args) =>
@@ -56,6 +64,23 @@ public class ClassicLyricTimingInfo
             SortedTimings = Timings.OrderBy(x => x.Time).ToList();
             timingVersion.Value++;
         }
+
+        Mappings.CollectionChanged += (_, args) =>
+        {
+            switch (args.Action)
+            {
+                case NotifyDictionaryChangedAction.Add:
+                case NotifyDictionaryChangedAction.Replace:
+                case NotifyDictionaryChangedAction.Remove:
+                    onMappingChanged();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        };
+
+        void onMappingChanged() => mappingVersion.Value++;
     }
 
     public Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
