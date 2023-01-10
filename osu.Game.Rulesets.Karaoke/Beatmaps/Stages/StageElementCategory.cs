@@ -96,13 +96,9 @@ public abstract class StageElementCategory<TStageElement, THitObject>
         if (element == DefaultElement)
             throw new InvalidOperationException();
 
-        if (Mappings.ContainsKey(key))
+        if (!Mappings.TryAdd(key, value))
         {
             Mappings[key] = value;
-        }
-        else
-        {
-            Mappings.TryAdd(key, value);
         }
     }
 
