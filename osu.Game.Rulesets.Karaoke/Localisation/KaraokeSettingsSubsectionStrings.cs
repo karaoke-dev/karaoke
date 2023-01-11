@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         public static LocalisableString OpenRulesetSettings => new TranslatableString(getKey(@"open_ruleset_settings"), @"Open ruleset settings");
 
         /// <summary>
-        /// "Open ruleset settings for adjusting more configs."
+        /// "Open ruleset settings for adjust more configs."
         /// </summary>
         public static LocalisableString OpenRulesetSettingsTooltip => new TranslatableString(getKey(@"open_ruleset_settings_tooltip"), @"Open ruleset settings for adjust more configs.");
 
