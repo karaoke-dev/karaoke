@@ -41,3 +41,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
+      - name: Send notification after upload success or failed.
+        uses: mshick/add-pr-comment@v2
+          with:
+            if: always()
+            message: |
+              🚀🚀🚀 New localization string has been successfully uploaded to the crowdin 🚀🚀🚀
+              Go to https://crowdin.com/project/karaoke-dev to fill the translation.
+            message-failure: |
+              💥💥💥 New localization string uploaded failed to the crowdin. 💥💥💥
+              You can ignore this message or contact to the developer if you want to translate it now.
