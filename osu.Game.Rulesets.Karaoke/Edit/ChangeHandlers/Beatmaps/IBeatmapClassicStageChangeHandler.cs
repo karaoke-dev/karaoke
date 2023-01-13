@@ -17,7 +17,7 @@ public interface IBeatmapClassicStageChangeHandler
 
     #region Timing info
 
-    void AddTimingPoint(ClassicLyricTimingPoint timePoint);
+    void AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null);
 
     void RemoveTimingPoint(ClassicLyricTimingPoint timePoint);
 

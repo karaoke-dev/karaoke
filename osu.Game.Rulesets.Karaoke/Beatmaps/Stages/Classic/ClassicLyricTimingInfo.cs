@@ -19,10 +19,19 @@ public class ClassicLyricTimingInfo
 
     private readonly Bindable<int> timingVersion = new();
 
-    public BindableList<ClassicLyricTimingPoint> Timings = new();
+    // todo: should be readonly.
+    public BindableList<ClassicLyricTimingPoint> Timings = new BindableList<ClassicLyricTimingPoint>();
 
     [JsonIgnore]
     public List<ClassicLyricTimingPoint> SortedTimings { get; private set; } = new();
+
+    [JsonIgnore]
+    public IBindable<int> MappingVersion => mappingVersion;
+
+    private readonly Bindable<int> mappingVersion = new();
+
+    // todo: should be private.
+    public BindableDictionary<int, int[]> Mappings = new();
 
     public ClassicLyricTimingInfo()
     {
@@ -56,19 +65,139 @@ public class ClassicLyricTimingInfo
             SortedTimings = Timings.OrderBy(x => x.Time).ToList();
             timingVersion.Value++;
         }
+
+        Mappings.CollectionChanged += (_, args) =>
+        {
+            switch (args.Action)
+            {
+                case NotifyDictionaryChangedAction.Add:
+                case NotifyDictionaryChangedAction.Replace:
+                case NotifyDictionaryChangedAction.Remove:
+                    onMappingChanged();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        };
+
+        void onMappingChanged() => mappingVersion.Value++;
+    }
+
+    #region Edit
+
+    public void AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null)
+    {
+        int id = getNewTimingPointId();
+        var timingPoint = new ClassicLyricTimingPoint(id);
+
+        action?.Invoke(timingPoint);
+        Timings.Add(timingPoint);
+
+        int getNewTimingPointId()
+        {
+            if (Timings.Count == 0)
+                return 1;
+
+            return Timings.Max(x => x.ID) + 1;
+        }
+    }
+
+    public void RemoveTimingPoint(ClassicLyricTimingPoint point)
+    {
+        ClearTimingPointFromMapping(point);
+
+        Timings.Remove(point);
+    }
+
+    public void AddToMapping(ClassicLyricTimingPoint point, Lyric lyric)
+    {
+        int key = lyric.ID;
+        int value = point.ID;
+
+        if (!Timings.Contains(point))
+            throw new InvalidOperationException($"{nameof(point)} does ont in the {nameof(point)}.");
+
+        if (Mappings.TryGetValue(key, out int[]? timingIds))
+        {
+            Mappings[key] = timingIds.Concat(new[] { value }).ToArray();
+        }
+        else
+        {
+            Mappings.Add(key, new[] { value });
+        }
+    }
+
+    public void RemoveFromMapping(ClassicLyricTimingPoint point, Lyric lyric)
+    {
+        int key = lyric.ID;
+        int value = point.ID;
+
+        if (!Timings.Contains(point))
+            throw new InvalidOperationException($"{nameof(point)} does ont in the {nameof(point)}.");
+
+        if (!Mappings.TryGetValue(key, out int[]? values))
+            return;
+
+        if (values.All(x => x == point.ID))
+        {
+            ClearLyricFromMapping(lyric);
+        }
+        else
+        {
+            Mappings[key] = values.Where(x => x != value).ToArray();
+        }
+    }
+
+    public void ClearTimingPointFromMapping(ClassicLyricTimingPoint point)
+    {
+        int value = point.ID;
+
+        foreach ((int key, int[]? values) in Mappings)
+        {
+            if (values.All(x => x == point.ID))
+            {
+                Mappings.Remove(key);
+            }
+            else
+            {
+                Mappings[key] = values.Where(x => x != value).ToArray();
+            }
+        }
+    }
+
+    public void ClearLyricFromMapping(Lyric lyric)
+    {
+        Mappings.Remove(lyric.ID);
+    }
+
+    #endregion
+
+    #region Query
+
+    public IEnumerable<ClassicLyricTimingPoint> GetLyricTimingPoints(Lyric lyric)
+    {
+        if (!Mappings.TryGetValue(lyric.ID, out int[]? ids))
+            return Array.Empty<ClassicLyricTimingPoint>();
+
+        return SortedTimings.Where(x => ids.Contains(x.ID));
     }
 
     public Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {
-        // matched time should be sorted.
-        var matchedTimes = SortedTimings.Select(x => x.GetLyricTime(lyric))
-                                        .Where(x => x != null)
-                                        .OfType<double>()
-                                        .ToList();
+        // already sorted.
+        double[] matchedTimings = GetLyricTimingPoints(lyric).Select(x => x.Time).ToArray();
 
-        double? matchedStartTime = matchedTimes.Any() ? matchedTimes.Min() : default(double?);
-        double? matchedEndTime = matchedTimes.Any() ? matchedTimes.Max() : default(double?);
+        double? matchedStartTime = matchedTimings.Any() ? matchedTimings.Min() : default(double?);
+        double? matchedEndTime = matchedTimings.Any() ? matchedTimings.Max() : default(double?);
 
         return new Tuple<double?, double?>(matchedStartTime, matchedEndTime);
     }
+
+    public IEnumerable<int> GetMatchedLyricIds(ClassicLyricTimingPoint point)
+    {
+        return Mappings.Where(x => x.Value.Contains(point.ID)).Select(x => x.Key);
+    }
+
+    #endregion
 }

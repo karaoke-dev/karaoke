@@ -32,14 +32,11 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
 
     #region Timing info
 
-    public void AddTimingPoint(ClassicLyricTimingPoint timePoint)
+    public void AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null)
     {
         performTimingInfoChanged(timingInfo =>
         {
-            if (checkTimingPointExist(timingInfo, timePoint))
-                throw new InvalidOperationException($"Should not add duplicated {nameof(timePoint)} into the {nameof(timingInfo)}.");
-
-            timingInfo.Timings.Add(timePoint);
+            timingInfo.AddTimingPoint(action);
         });
     }
 
@@ -47,10 +44,7 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
     {
         performTimingInfoChanged(timingInfo =>
         {
-            if (!checkTimingPointExist(timingInfo, timePoint))
-                throw new InvalidOperationException($"{nameof(timePoint)} does ont in the {nameof(timingInfo)}.");
-
-            timingInfo.Timings.Remove(timePoint);
+            timingInfo.RemoveTimingPoint(timePoint);
         });
     }
 
@@ -60,10 +54,7 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
         {
             foreach (var timePoint in timePoints)
             {
-                if (!checkTimingPointExist(timingInfo, timePoint))
-                    throw new InvalidOperationException($"{nameof(timePoint)} does ont in the {nameof(timingInfo)}.");
-
-                timingInfo.Timings.Remove(timePoint);
+                timingInfo.RemoveTimingPoint(timePoint);
             }
         });
     }
@@ -74,9 +65,6 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
         {
             foreach (var timePoint in timePoints)
             {
-                if (!checkTimingPointExist(timingInfo, timePoint))
-                    throw new InvalidOperationException($"{nameof(timePoint)} does ont in the {nameof(timingInfo)}.");
-
                 timePoint.Time += offset;
             }
         });
@@ -86,17 +74,11 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
     {
         performTimingInfoChanged(timingInfo =>
         {
-            if (!checkTimingPointExist(timingInfo, timePoint))
-                throw new InvalidOperationException($"{nameof(timePoint)} does ont in the {nameof(timingInfo)}.");
-
             var selectedLyric = beatmap.SelectedHitObjects.OfType<Lyric>();
 
             foreach (var lyric in selectedLyric)
             {
-                if (timePoint.LyricIds.Contains(lyric.ID))
-                    continue;
-
-                timePoint.LyricIds.Add(lyric.ID);
+                timingInfo.AddToMapping(timePoint, lyric);
             }
         });
     }
@@ -105,14 +87,11 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
     {
         performTimingInfoChanged(timingInfo =>
         {
-            if (!checkTimingPointExist(timingInfo, timePoint))
-                throw new InvalidOperationException($"{nameof(timePoint)} does ont in the {nameof(timingInfo)}.");
-
             var selectedLyric = beatmap.SelectedHitObjects.OfType<Lyric>();
 
             foreach (var lyric in selectedLyric)
             {
-                timePoint.LyricIds.Remove(lyric.ID);
+                timingInfo.RemoveFromMapping(timePoint, lyric);
             }
         });
     }
