@@ -36,19 +36,19 @@ public class CheckBeatmapPageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapPag
 
         // should have at least two pages.
         var beatmap = createTestingBeatmap(null, null);
-        AssertNotOk<Issue, IssueTemplateLessThanTwoPages>(getContext(beatmap));
+        AssertNotOk<IssueTemplateLessThanTwoPages>(getContext(beatmap));
 
         // should have at least two pages.
         var beatmap2 = createTestingBeatmap(pages, null);
-        AssertNotOk<Issue, IssueTemplateLessThanTwoPages>(getContext(beatmap2));
+        AssertNotOk<IssueTemplateLessThanTwoPages>(getContext(beatmap2));
 
         // should have at least two pages.
         var beatmap3 = createTestingBeatmap(null, lyrics);
-        AssertNotOk<Issue, IssueTemplateLessThanTwoPages>(getContext(beatmap3));
+        AssertNotOk<IssueTemplateLessThanTwoPages>(getContext(beatmap3));
 
         // should have at least two pages.
         var beatmap4 = createTestingBeatmap(pages, lyrics);
-        AssertNotOk<Issue, IssueTemplateLessThanTwoPages>(getContext(beatmap4));
+        AssertNotOk<IssueTemplateLessThanTwoPages>(getContext(beatmap4));
     }
 
     [Test]

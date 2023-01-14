@@ -40,12 +40,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         {
             var issues = Run(context).ToList();
 
-            Assert.That(issues, Has.Count.EqualTo(1));
+            // should make sure that only has one issue.
             Assert.AreEqual(typeof(TIssue), issues.Single().GetType());
             Assert.AreEqual(typeof(TIssueTemplate), issues.Single().Template.GetType());
 
-            // should make sure that have issue template in the list.
-            Assert.IsTrue(check.PossibleTemplates.OfType<TIssueTemplate>().Single() != null);
+            // should make sure that issue template is in the list.
+            Assert.IsNotNull(check.PossibleTemplates.OfType<TIssueTemplate>().Single());
         }
 
         protected IEnumerable<Issue> Run(BeatmapVerifierContext context)
