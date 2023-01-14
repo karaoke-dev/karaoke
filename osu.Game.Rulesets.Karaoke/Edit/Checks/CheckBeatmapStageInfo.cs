@@ -45,7 +45,7 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
 
     protected sealed override IEnumerable<Issue> CheckHitObjects(TStageInfo property, IReadOnlyList<KaraokeHitObject> hitObjects)
     {
-        var issues = CheckStageInfo(property).ToList();
+        var issues = CheckStageInfo(property, hitObjects).ToList();
 
         foreach (var stageInfoCategoryAction in stageInfoCategoryActions)
         {
@@ -55,7 +55,7 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
         return issues;
     }
 
-    public abstract IEnumerable<Issue> CheckStageInfo(TStageInfo stageInfo);
+    public abstract IEnumerable<Issue> CheckStageInfo(TStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects);
 
     private IEnumerable<Issue> checkElementCategory<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects, int minimumRequiredElements)
         where TStageElement : class, IStageElement

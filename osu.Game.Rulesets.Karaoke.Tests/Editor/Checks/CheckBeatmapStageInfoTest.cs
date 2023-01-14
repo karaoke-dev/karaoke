@@ -76,7 +76,7 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
 
         public override IEnumerable<IssueTemplate> StageTemplates => Array.Empty<IssueTemplate>();
 
-        public override IEnumerable<Issue> CheckStageInfo(ClassicStageInfo stageInfo)
+        public override IEnumerable<Issue> CheckStageInfo(ClassicStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects)
         {
             yield break;
         }
