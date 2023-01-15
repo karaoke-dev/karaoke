@@ -153,7 +153,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
     private void recalculateEditModeIssue()
     {
         var allIssues = hitObjectIssues.Values.SelectMany(x => x);
-        var groupByEditModeIssues = allIssues.GroupBy(x => ClassifyCheck(x.Check)).ToDictionary(x => x.Key, x => x.ToArray());
+        var groupByEditModeIssues = allIssues.GroupBy(ClassifyIssue).ToDictionary(x => x.Key, x => x.ToArray());
 
         foreach (var editorMode in Enum.GetValues<LyricEditorMode>())
         {

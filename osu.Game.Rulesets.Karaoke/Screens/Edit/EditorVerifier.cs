@@ -71,11 +71,11 @@ public abstract partial class EditorVerifier<TEnum> : Component, IEditorVerifier
         issues[type].AddRange(newIssues);
     }
 
-    protected virtual TEnum ClassifyCheck(ICheck check)
+    protected virtual TEnum ClassifyIssue(Issue issue)
     {
         foreach (var (type, checks) in checkMappings)
         {
-            if (checks.Contains(check))
+            if (checks.Contains(issue.Check))
                 return type;
         }
 
