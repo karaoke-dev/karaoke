@@ -3,7 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using OpenTabletDriver.Plugin.DependencyInjection;
+using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
@@ -14,8 +14,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 
 public partial class StageEditorEditModeSection : EditModeSection<StageEditorEditMode>
 {
-    [Resolved, AllowNull]
+    [OpenTabletDriver.Plugin.DependencyInjection.Resolved, AllowNull]
     private IStageEditorStateProvider stageEditorStateProvider { get; set; }
+
+    private readonly StageEditorEditCategory category;
+
+    public StageEditorEditModeSection(StageEditorEditCategory category)
+    {
+        this.category = category;
+    }
 
     protected override StageEditorEditMode DefaultMode()
         => stageEditorStateProvider.EditMode;
@@ -34,7 +41,7 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
         mode switch
         {
             StageEditorEditMode.Edit => new Selection(),
-            StageEditorEditMode.Verify => new Selection(), // todo: apply the section.
+            StageEditorEditMode.Verify => new StageEditorVerifySelection(category),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
 
@@ -61,4 +68,20 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
             StageEditorEditMode.Verify => "Check if have any stage issues.",
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
+
+    private partial class StageEditorVerifySelection : VerifySelection
+    {
+        private readonly StageEditorEditCategory category;
+
+        public StageEditorVerifySelection(StageEditorEditCategory category)
+        {
+            this.category = category;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IStageEditorVerifier stageEditorVerifier)
+        {
+            Issues.BindTo(stageEditorVerifier.GetIssueByType(category));
+        }
+    }
 }

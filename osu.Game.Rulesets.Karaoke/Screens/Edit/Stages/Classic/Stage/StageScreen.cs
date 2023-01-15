@@ -18,9 +18,14 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     private readonly Bindable<StageEditorEditMode> bindableEditMode = new();
     private readonly Bindable<StageEditorEditCategory> bindableCategory = new();
 
+    [Cached(typeof(IStageEditorVerifier))]
+    private readonly StageEditorVerifier stageEditorVerifier;
+
     public StageScreen()
         : base(ClassicStageEditorScreenMode.Stage)
     {
+        AddInternal(stageEditorVerifier = new StageEditorVerifier());
+
         Child = new GridContainer
         {
             RelativeSizeAxes = Axes.Both,
