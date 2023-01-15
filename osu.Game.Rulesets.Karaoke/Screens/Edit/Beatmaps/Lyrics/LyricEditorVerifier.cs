@@ -196,7 +196,7 @@ public partial class LyricEditorVerifier : Component, ILyricEditorVerifier
 
     private class LyricEditorBeatmapVerifier : IBeatmapVerifier
     {
-        private readonly IDictionary<LyricEditorMode, ICheck[]> editModeChecks = new J2N.Collections.Generic.Dictionary<LyricEditorMode, ICheck[]>
+        private readonly IDictionary<LyricEditorMode, ICheck[]> editModeChecks = new Dictionary<LyricEditorMode, ICheck[]>
         {
             { LyricEditorMode.Texting, new ICheck[] { new CheckLyricText() } },
             { LyricEditorMode.Reference, new ICheck[] { new CheckLyricReferenceLyric() } },
