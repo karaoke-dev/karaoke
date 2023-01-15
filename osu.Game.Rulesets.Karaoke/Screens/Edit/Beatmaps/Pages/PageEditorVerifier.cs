@@ -5,9 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
@@ -41,17 +38,18 @@ public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
 
     public void Navigate(Issue issue)
     {
+        if (issue.Time.HasValue)
+            clock.Seek(issue.Time.Value);
+
         switch (issue)
         {
             case LyricIssue lyricIssue:
                 // todo: select the lyric.
                 var lyric = lyricIssue.Lyric;
-                clock.Seek(lyric.LyricStartTime);
                 break;
 
             case BeatmapPageIssue beatmapPageIssue:
                 // todo: select the pages.
-                clock.Seek(beatmapPageIssue.StartPage.Time);
                 break;
 
             case Issue:

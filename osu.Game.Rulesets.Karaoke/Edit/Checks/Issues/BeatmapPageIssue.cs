@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
@@ -17,5 +18,7 @@ public class BeatmapPageIssue : Issue
     {
         StartPage = startPage;
         EndPage = endPage;
+
+        Time = Math.Min(StartPage.Time, EndPage.Time);
     }
 }

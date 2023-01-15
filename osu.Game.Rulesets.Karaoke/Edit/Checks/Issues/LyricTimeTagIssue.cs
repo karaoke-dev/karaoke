@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
             : base(lyric, template, args)
         {
             TimeTag = timeTag;
+
+            Time = TimeTag.Time ?? Lyric.LyricStartTime;
         }
     }
 }

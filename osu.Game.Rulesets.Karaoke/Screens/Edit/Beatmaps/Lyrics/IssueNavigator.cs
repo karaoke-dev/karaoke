@@ -41,6 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 
         public void Navigate(Issue issue)
         {
+            // seek the time if contains the time in the issue.
+            if (issue.Time.HasValue)
+                clock.Seek(issue.Time.Value);
+
             // navigate to edit mode.
             var targetEditMode = getNavigateEditMode(issue.Check);
             if (targetEditMode != null)
@@ -57,7 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
                 return;
 
             lyricCaretState.MoveCaretToTargetPosition(lyric);
-            clock.Seek(lyric.LyricStartTime);
 
             // navigate to the target index in the lyric.
             if (lyricIndex == null)
@@ -65,12 +68,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
 
             var blueprintSelection = getBlueprintSelection(lyricIndex);
             blueprintSelection?.Select(lyricIndex);
-
-            if (lyricIndex is not TimeTag timeTag || timeTag.Time == null)
-                return;
-
-            // seek to target time-tag time if time-tag has time.
-            clock.Seek(timeTag.Time.Value);
         }
 
         private static LyricEditorMode? getNavigateEditMode(ICheck check)
