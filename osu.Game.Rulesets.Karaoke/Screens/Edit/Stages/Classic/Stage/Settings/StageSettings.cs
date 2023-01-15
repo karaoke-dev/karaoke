@@ -51,6 +51,7 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(),
+            new StageEditorIssueSection(StageEditorEditCategory.Layout)
         },
         _ => throw new ArgumentOutOfRangeException()
     };
@@ -64,6 +65,7 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(),
+            new StageEditorIssueSection(StageEditorEditCategory.Timing)
         },
         _ => throw new ArgumentOutOfRangeException()
     };
@@ -77,6 +79,7 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(),
+            new StageEditorIssueSection(StageEditorEditCategory.Style)
         },
         _ => throw new ArgumentOutOfRangeException()
     };
