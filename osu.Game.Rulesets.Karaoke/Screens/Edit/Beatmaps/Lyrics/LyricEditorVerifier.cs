@@ -8,7 +8,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
-using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -20,37 +19,34 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-public partial class LyricEditorVerifier : Component, ILyricEditorVerifier
+public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyricEditorVerifier
 {
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }
 
-    [Resolved, AllowNull]
-    private IBindable<WorkingBeatmap> workingBeatmap { get; set; }
-
     private readonly Dictionary<KaraokeHitObject, BindableList<Issue>> hitObjectIssues = new();
 
-    private readonly IDictionary<LyricEditorMode, BindableList<Issue>> editModeIssues = new Dictionary<LyricEditorMode, BindableList<Issue>>
-    {
-        { LyricEditorMode.Texting, new BindableList<Issue>() },
-        { LyricEditorMode.Reference, new BindableList<Issue>() },
-        { LyricEditorMode.Language, new BindableList<Issue>() },
-        { LyricEditorMode.EditRuby, new BindableList<Issue>() },
-        { LyricEditorMode.EditRomaji, new BindableList<Issue>() },
-        { LyricEditorMode.EditTimeTag, new BindableList<Issue>() },
-        { LyricEditorMode.EditNote, new BindableList<Issue>() },
-    };
-
     private readonly Cached editModeCache = new();
-    private readonly LyricEditorBeatmapVerifier verifier = new();
+
+    protected override IEnumerable<ICheck> CreateChecks(LyricEditorMode type) =>
+        type switch
+        {
+            LyricEditorMode.View => Array.Empty<ICheck>(),
+            LyricEditorMode.Texting => new ICheck[] { new CheckLyricText() },
+            LyricEditorMode.Reference => new ICheck[] { new CheckLyricReferenceLyric() },
+            LyricEditorMode.Language => new ICheck[] { new CheckLyricLanguage() },
+            LyricEditorMode.EditRuby => new ICheck[] { new CheckLyricRubyTag() },
+            LyricEditorMode.EditRomaji => new ICheck[] { new CheckLyricRomajiTag() },
+            LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTag() },
+            LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText() },
+            LyricEditorMode.Singer => Array.Empty<ICheck>(),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
 
     public IBindableList<Issue> GetBindable(KaraokeHitObject hitObject)
         => hitObjectIssues[hitObject];
 
-    public IBindableList<Issue> GetIssueByEditMode(LyricEditorMode editorMode)
-        => editModeIssues[editorMode];
-
-    public void Refresh()
+    public override void Refresh()
         => recalculateIssues();
 
     public void RefreshByHitObject(KaraokeHitObject hitObject)
@@ -157,33 +153,31 @@ public partial class LyricEditorVerifier : Component, ILyricEditorVerifier
     private void recalculateEditModeIssue()
     {
         var allIssues = hitObjectIssues.Values.SelectMany(x => x);
-        var groupByEditModeIssues = allIssues.GroupBy(x => getNavigateEditMode(x.Check)).ToDictionary(x => x.Key, x => x.ToArray());
+        var groupByEditModeIssues = allIssues.GroupBy(x => ClassifyCheck(x.Check)).ToDictionary(x => x.Key, x => x.ToArray());
 
-        foreach (var (editorMode, editModeBindableList) in editModeIssues)
+        foreach (var editorMode in Enum.GetValues<LyricEditorMode>())
         {
-            editModeBindableList.Clear();
+            ClearChecks(editorMode);
 
             if (groupByEditModeIssues.TryGetValue(editorMode, out var issues))
-                editModeBindableList.AddRange(issues);
+                AddChecks(editorMode, issues);
         }
 
         editModeCache.Validate();
     }
 
+    protected override BeatmapVerifierContext CreateBeatmapVerifierContext(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => new(new Beatmap<HitObject>(), workingBeatmap);
+
     private IEnumerable<Issue> getIssueByHitObject(KaraokeHitObject karaokeHitObject)
     {
-        var context = new BeatmapVerifierContext(new Beatmap<HitObject>
+        return CreateIssues(context =>
         {
-            HitObjects =
-            {
-                karaokeHitObject
-            }
-        }, workingBeatmap.Value);
-        return verifier.Run(context);
-    }
+            if (context.Beatmap is not Beatmap<HitObject> beatmap)
+                throw new InvalidCastException();
 
-    private LyricEditorMode getNavigateEditMode(ICheck check)
-        => verifier.GetNavigateEditMode(check);
+            beatmap.HitObjects.Add(karaokeHitObject);
+        });
+    }
 
     protected override void Dispose(bool isDisposing)
     {
@@ -192,36 +186,5 @@ public partial class LyricEditorVerifier : Component, ILyricEditorVerifier
         beatmap.HitObjectAdded -= hitObjectAdded;
         beatmap.HitObjectRemoved -= hitObjectRemoved;
         beatmap.HitObjectUpdated -= hitObjectUpdated;
-    }
-
-    private class LyricEditorBeatmapVerifier : IBeatmapVerifier
-    {
-        private readonly IDictionary<LyricEditorMode, ICheck[]> editModeChecks = new J2N.Collections.Generic.Dictionary<LyricEditorMode, ICheck[]>
-        {
-            { LyricEditorMode.Texting, new ICheck[] { new CheckLyricText() } },
-            { LyricEditorMode.Reference, new ICheck[] { new CheckLyricReferenceLyric() } },
-            { LyricEditorMode.Language, new ICheck[] { new CheckLyricLanguage() } },
-            { LyricEditorMode.EditRuby, new ICheck[] { new CheckLyricRubyTag() } },
-            { LyricEditorMode.EditRomaji, new ICheck[] { new CheckLyricRomajiTag() } },
-            { LyricEditorMode.EditTimeTag, new ICheck[] { new CheckLyricTimeTag() } },
-            { LyricEditorMode.EditNote, new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText() } },
-        };
-
-        public LyricEditorMode GetNavigateEditMode(ICheck check)
-        {
-            foreach (var (editorMode, checks) in editModeChecks)
-            {
-                if (checks.Contains(check))
-                    return editorMode;
-            }
-
-            throw new ArgumentOutOfRangeException();
-        }
-
-        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
-        {
-            var allChecks = editModeChecks.Values.SelectMany(x => x);
-            return allChecks.SelectMany(check => check.Run(context));
-        }
     }
 }

@@ -7,13 +7,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-public interface ILyricEditorVerifier
+public interface ILyricEditorVerifier : IEditorVerifier<LyricEditorMode>
 {
     IBindableList<Issue> GetBindable(KaraokeHitObject hitObject);
-
-    IBindableList<Issue> GetIssueByEditMode(LyricEditorMode editorMode);
-
-    void Refresh();
 
     void RefreshByHitObject(KaraokeHitObject hitObject);
 }

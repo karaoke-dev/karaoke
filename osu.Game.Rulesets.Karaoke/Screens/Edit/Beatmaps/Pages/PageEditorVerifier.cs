@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -17,21 +15,12 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
-public partial class PageEditorVerifier : Component, IPageEditorVerifier
+public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
-
-    [Resolved, AllowNull]
-    private IBindable<WorkingBeatmap> workingBeatmap { get; set; }
-
     [Resolved, AllowNull]
     private EditorClock clock { get; set; }
 
-    private readonly BindableList<Issue> issues = new();
-    private readonly PageBeatmapVerifier verifier = new();
-
-    public IBindableList<Issue> Issues => issues;
+    protected override IEnumerable<ICheck> CreateChecks() => new ICheck[] { new CheckBeatmapPageInfo() };
 
     protected override void LoadComplete()
     {
@@ -39,16 +28,15 @@ public partial class PageEditorVerifier : Component, IPageEditorVerifier
         Refresh();
     }
 
-    public void Refresh()
+    public override void Refresh()
     {
-        issues.Clear();
-        issues.AddRange(getIssues());
+        ClearChecks();
+        AddChecks(getIssues());
     }
 
     private IEnumerable<Issue> getIssues()
     {
-        var context = new BeatmapVerifierContext(beatmap, workingBeatmap.Value);
-        return verifier.Run(context);
+        return CreateIssues();
     }
 
     public void Navigate(Issue issue)
@@ -72,15 +60,5 @@ public partial class PageEditorVerifier : Component, IPageEditorVerifier
             default:
                 throw new NotSupportedException();
         }
-    }
-
-    private class PageBeatmapVerifier : IBeatmapVerifier
-    {
-        private readonly List<ICheck> checks = new()
-        {
-            new CheckBeatmapPageInfo(),
-        };
-
-        public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
     }
 }

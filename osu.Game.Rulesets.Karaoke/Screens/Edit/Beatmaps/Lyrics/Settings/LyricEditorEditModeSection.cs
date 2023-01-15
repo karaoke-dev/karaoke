@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
             [BackgroundDependencyLoader]
             private void load(ILyricEditorVerifier verifier)
             {
-                Issues.BindTo(verifier.GetIssueByEditMode(EditMode));
+                Issues.BindTo(verifier.GetIssueByType(EditMode));
             }
 
             protected abstract LyricEditorMode EditMode { get; }

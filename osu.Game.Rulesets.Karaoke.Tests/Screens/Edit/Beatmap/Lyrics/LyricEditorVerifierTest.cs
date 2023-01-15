@@ -173,7 +173,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
     {
         AddStep("Check edit mode issue amount.", () =>
         {
-            var editModeIssues = verifier.GetIssueByEditMode(editMode);
+            var editModeIssues = verifier.GetIssueByType(editMode);
             Assert.AreEqual(issueCount, editModeIssues.Count);
         });
     }
