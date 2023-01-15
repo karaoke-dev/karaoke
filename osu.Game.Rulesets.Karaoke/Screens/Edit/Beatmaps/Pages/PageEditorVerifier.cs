@@ -20,8 +20,6 @@ public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
     [Resolved, AllowNull]
     private EditorClock clock { get; set; }
 
-    public IBindableList<Issue> Issues => GetIssues();
-
     protected override IEnumerable<ICheck> CreateChecks() => new ICheck[] { new CheckBeatmapPageInfo() };
 
     protected override void LoadComplete()
@@ -30,7 +28,7 @@ public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
         Refresh();
     }
 
-    public void Refresh()
+    public override void Refresh()
     {
         ClearChecks();
         AddChecks(getIssues());
