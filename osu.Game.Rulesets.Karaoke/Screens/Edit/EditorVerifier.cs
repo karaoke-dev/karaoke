@@ -109,3 +109,66 @@ public abstract partial class EditorVerifier<TEnum> : Component where TEnum : st
         }
     }
 }
+
+/// <summary>
+/// This class is focus on mange the list of <see cref="ICheck"/> and save/load list of <see cref="Issue"/>.
+/// </summary>
+public abstract partial class EditorVerifier : Component
+{
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    [Resolved, AllowNull]
+    private IBindable<WorkingBeatmap> workingBeatmap { get; set; }
+
+    private readonly List<ICheck> checks = new();
+    private readonly BindableList<Issue> issues = new();
+
+    protected EditorVerifier()
+    {
+        checks.AddRange(CreateChecks().ToList());
+    }
+
+    #region Checks
+
+    protected abstract IEnumerable<ICheck> CreateChecks();
+
+    protected IBindableList<Issue> GetIssues()
+        => issues;
+
+    protected void ClearChecks()
+    {
+        issues.Clear();
+    }
+
+    protected void AddChecks(IEnumerable<Issue> newIssues)
+    {
+        issues.AddRange(newIssues);
+    }
+
+    protected virtual BeatmapVerifierContext CreateBeatmapVerifierContext(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => new(beatmap, workingBeatmap);
+
+    protected IEnumerable<Issue> CreateIssues(Action<BeatmapVerifierContext>? action = null)
+    {
+        var context = CreateBeatmapVerifierContext(beatmap, workingBeatmap.Value);
+        action?.Invoke(context);
+        return new EditorBeatmapVerifier(checks).Run(context);
+    }
+
+    #endregion
+
+    private class EditorBeatmapVerifier : IBeatmapVerifier
+    {
+        private readonly IEnumerable<ICheck> checks;
+
+        public EditorBeatmapVerifier(IEnumerable<ICheck> checks)
+        {
+            this.checks = checks;
+        }
+
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
+        {
+            return checks.SelectMany(check => check.Run(context));
+        }
+    }
+}
