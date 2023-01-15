@@ -89,24 +89,6 @@ public partial class PageEditorIssueSection : IssueSection
             };
         }
 
-        private string getInvalidObjectTimeByIssue(Issue issue)
-        {
-            switch (issue)
-            {
-                case LyricIssue lyricIssue:
-                    var lyric = lyricIssue.Lyric;
-                    return lyric.LyricStartTime.ToEditorFormattedString();
-
-                case BeatmapPageIssue beatmapPageIssue:
-                    var startPage = beatmapPageIssue.StartPage;
-                    return startPage.Time.ToEditorFormattedString();
-
-                case Issue:
-                    return string.Empty;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
+        private static string getInvalidObjectTimeByIssue(Issue issue) => issue.Time?.ToEditorFormattedString() ?? string.Empty;
     }
 }
