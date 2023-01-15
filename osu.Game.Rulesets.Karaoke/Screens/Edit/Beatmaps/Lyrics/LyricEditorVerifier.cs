@@ -46,10 +46,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
     public IBindableList<Issue> GetBindable(KaraokeHitObject hitObject)
         => hitObjectIssues[hitObject];
 
-    public IBindableList<Issue> GetIssueByEditMode(LyricEditorMode editorMode)
-        => GetIssueByType(editorMode);
-
-    public void Refresh()
+    public override void Refresh()
         => recalculateIssues();
 
     public void RefreshByHitObject(KaraokeHitObject hitObject)
