@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 /// This class is focus on mange the list of <see cref="ICheck"/> and save/load list of <see cref="Issue"/>.
 /// </summary>
 /// <typeparam name="TEnum"></typeparam>
-public abstract partial class EditorVerifier<TEnum> : Component where TEnum : struct, Enum
+public abstract partial class EditorVerifier<TEnum> : Component, IEditorVerifier<TEnum> where TEnum : struct, Enum
 {
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }
@@ -52,12 +52,14 @@ public abstract partial class EditorVerifier<TEnum> : Component where TEnum : st
         }
     }
 
+    public IBindableList<Issue> GetIssueByType(TEnum type)
+        => issues[type];
+
+    public abstract void Refresh();
+
     #region Checks
 
     protected abstract IEnumerable<ICheck> CreateChecks(TEnum type);
-
-    protected IBindableList<Issue> GetIssueByType(TEnum type)
-        => issues[type];
 
     protected void ClearChecks(TEnum type)
     {
@@ -113,7 +115,7 @@ public abstract partial class EditorVerifier<TEnum> : Component where TEnum : st
 /// <summary>
 /// This class is focus on mange the list of <see cref="ICheck"/> and save/load list of <see cref="Issue"/>.
 /// </summary>
-public abstract partial class EditorVerifier : Component
+public abstract partial class EditorVerifier : Component, IEditorVerifier
 {
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }
@@ -124,10 +126,14 @@ public abstract partial class EditorVerifier : Component
     private readonly List<ICheck> checks = new();
     private readonly BindableList<Issue> issues = new();
 
+    public IBindableList<Issue> Issues => issues;
+
     protected EditorVerifier()
     {
         checks.AddRange(CreateChecks().ToList());
     }
+
+    public abstract void Refresh();
 
     #region Checks
 
