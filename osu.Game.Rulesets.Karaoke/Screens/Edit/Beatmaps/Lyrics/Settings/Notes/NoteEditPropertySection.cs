@@ -4,85 +4,24 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
 {
-    public partial class NoteEditPropertySection : LyricPropertySection
+    public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
     {
         protected override LocalisableString Title => "Properties";
 
-        private readonly Bindable<Note[]> notes = new();
-        private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
-
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
-        public NoteEditPropertySection()
-        {
-            bindableNoteEditPropertyMode.BindValueChanged(e =>
-            {
-                reCreateEditComponents();
-            });
-
-            notes.BindValueChanged(e =>
-            {
-                reCreateEditComponents();
-            });
-
-            void reCreateEditComponents()
-            {
-                RemoveAll(x => x is LabelledObjectFieldTextBox<Note>, true);
-                RemoveAll(x => x is LabelledSwitchButton, true);
-
-                if (notes.Value == null)
-                    return;
-
-                AddRange(notes.Value.Select(x =>
-                {
-                    int index = Array.IndexOf(notes.Value, x);
-                    return bindableNoteEditPropertyMode.Value switch
-                    {
-                        NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(x)
-                        {
-                            Label = $"#{index + 1}",
-                            TabbableContentContainer = this
-                        } as Drawable,
-                        NoteEditPropertyMode.RubyText => new LabelledNoteRubyTextTextBox(x)
-                        {
-                            Label = x.Text,
-                            TabbableContentContainer = this
-                        },
-                        NoteEditPropertyMode.Display => new LabelledNoteDisplaySwitchButton(x)
-                        {
-                            Label = x.Text,
-                        },
-                        _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value))
-                    };
-                }));
-            }
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(IEditNoteModeState editNoteModeState)
-        {
-            bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
-        }
-
-        protected override void OnLyricChanged(Lyric lyric)
-        {
-            notes.Value = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric).ToArray();
-        }
+        protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new NotePropertiesEditor();
 
         protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric); //todo: should reference by another utils.
@@ -102,6 +41,60 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
                 LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the note.",
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
+
+        private partial class NotePropertiesEditor : LyricPropertiesEditor
+        {
+            private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
+
+            [Resolved]
+            private EditorBeatmap beatmap { get; set; }
+
+            public NotePropertiesEditor()
+            {
+                bindableNoteEditPropertyMode.BindValueChanged(e =>
+                {
+                    RedrewContent();
+                });
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(IEditNoteModeState editNoteModeState)
+            {
+                bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
+            }
+
+            protected override Drawable CreateDrawable(Note item)
+            {
+                // todo: deal with create or remove the notes.
+                int index = Items.IndexOf(item);
+                return bindableNoteEditPropertyMode.Value switch
+                {
+                    NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(item)
+                    {
+                        Label = $"#{index + 1}",
+                        TabbableContentContainer = this
+                    },
+                    NoteEditPropertyMode.RubyText => new LabelledNoteRubyTextTextBox(item)
+                    {
+                        Label = item.Text,
+                        TabbableContentContainer = this
+                    },
+                    NoteEditPropertyMode.Display => new LabelledNoteDisplaySwitchButton(item)
+                    {
+                        Label = item.Text,
+                    },
+                    _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value))
+                };
+            }
+
+            protected override EditorSectionButton CreateCreateNewItemButton() => null;
+
+            protected override IBindableList<Note> GetItems(Lyric lyric)
+            {
+                var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
+                return new BindableList<Note>(notes);
+            }
+        }
 
         private partial class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
         {
