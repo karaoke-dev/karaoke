@@ -3,10 +3,8 @@
 
 #nullable disable
 
-using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -15,72 +13,48 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
-    public abstract partial class TextTagEditSection<TTextTag> : LyricPropertySection where TTextTag : class, ITextTag, new()
+    public abstract partial class TextTagEditSection<TTextTag> : LyricPropertiesSection<TTextTag> where TTextTag : class, ITextTag, new()
     {
-        protected readonly IBindableList<TTextTag> TextTags = new BindableList<TTextTag>();
-
-        private Lyric lyric;
-
-        protected TextTagEditSection()
+        protected abstract partial class TextTagsEditor : LyricPropertiesEditor
         {
-            // add create button.
-            addCreateButton();
-
-            // create list of text-tag text-box if bindable changed.
-            TextTags.BindCollectionChanged((_, _) =>
+            protected sealed override Drawable CreateDrawable(TTextTag item)
             {
-                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>, true);
-                AddRange(TextTags.Select(x =>
+                string relativeToLyricText = TextTagUtils.GetTextFromLyric(item, CurrentLyric.Text);
+                string range = TextTagUtils.PositionFormattedString(item);
+
+                return CreateLabelledTextTagTextBox(CurrentLyric, item).With(t =>
                 {
-                    string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, lyric.Text);
-                    string range = TextTagUtils.PositionFormattedString(x);
+                    t.Label = relativeToLyricText;
+                    t.Description = range;
+                    t.TabbableContentContainer = this;
+                });
+            }
 
-                    return CreateLabelledTextTagTextBox(lyric, x).With(t =>
-                    {
-                        t.Label = relativeToLyricText;
-                        t.Description = range;
-                        t.TabbableContentContainer = this;
-                    });
-                }));
-            });
-        }
+            protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(Lyric lyric, TTextTag textTag);
 
-        protected override void OnLyricChanged(Lyric lyric)
-        {
-            TextTags.UnbindBindings();
-
-            if (lyric == null)
-                return;
-
-            this.lyric = lyric;
-
-            TextTags.BindTo(GetBindableTextTags(lyric));
-        }
-
-        private void addCreateButton()
-        {
-            var fillFlowContainer = Content as FillFlowContainer;
-
-            // create new button.
-            fillFlowContainer?.Insert(int.MaxValue, new CreateNewTextTagButton<TTextTag>
+            protected override EditorSectionButton CreateCreateNewItemButton()
             {
-                Text = CreateNewTextTagButtonText(),
-                LabelledTextBoxLabel = CreateNewTextTagTitle(),
-                LabelledTextBoxDescription = CreateNewTextTagDescription(),
-                Action = AddTextTag
-            });
+                return new CreateNewTextTagButton<TTextTag>
+                {
+                    Text = CreateNewTextTagButtonText(),
+                    LabelledTextBoxLabel = CreateNewTextTagTitle(),
+                    LabelledTextBoxDescription = CreateNewTextTagDescription(),
+                    Action = AddTextTag
+                };
+            }
+
+            protected override IBindableList<TTextTag> GetItems(Lyric lyric)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            protected abstract LocalisableString CreateNewTextTagButtonText();
+
+            protected abstract LocalisableString CreateNewTextTagTitle();
+
+            protected abstract LocalisableString CreateNewTextTagDescription();
+
+            protected abstract void AddTextTag(TTextTag textTag);
         }
-
-        protected abstract IBindableList<TTextTag> GetBindableTextTags(Lyric lyric);
-
-        protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(Lyric lyric, TTextTag textTag);
-
-        protected abstract void AddTextTag(TTextTag textTag);
-
-        protected abstract LocalisableString CreateNewTextTagButtonText();
-
-        protected abstract LocalisableString CreateNewTextTagTitle();
-
-        protected abstract LocalisableString CreateNewTextTagDescription();
     }
 }

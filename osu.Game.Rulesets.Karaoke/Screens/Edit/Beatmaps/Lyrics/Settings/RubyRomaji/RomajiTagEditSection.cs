@@ -20,26 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
     {
         protected override LocalisableString Title => "Romaji";
 
-        [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
-
-        protected override IBindableList<RomajiTag> GetBindableTextTags(Lyric lyric)
-            => lyric.RomajiTagsBindable;
-
-        protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(Lyric lyric, RomajiTag textTag)
-            => new LabelledRomajiTagTextBox(lyric, textTag);
-
-        protected override void AddTextTag(RomajiTag textTag)
-            => romajiTagsChangeHandler.Add(textTag);
-
-        protected override LocalisableString CreateNewTextTagButtonText()
-            => "Create new romaji";
-
-        protected override LocalisableString CreateNewTextTagTitle()
-            => "Romaji";
-
-        protected override LocalisableString CreateNewTextTagDescription()
-            => "Please enter the romaji.";
+        protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new RomajiTagsEditor();
 
         protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RomajiTags));
@@ -59,6 +40,30 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the romaji.",
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
+
+        private partial class RomajiTagsEditor : TextTagsEditor
+        {
+            [Resolved]
+            private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+
+            protected override IBindableList<RomajiTag> GetItems(Lyric lyric)
+                => lyric.RomajiTagsBindable;
+
+            protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(Lyric lyric, RomajiTag textTag)
+                => new LabelledRomajiTagTextBox(lyric, textTag);
+
+            protected override void AddTextTag(RomajiTag textTag)
+                => romajiTagsChangeHandler.Add(textTag);
+
+            protected override LocalisableString CreateNewTextTagButtonText()
+                => "Create new romaji";
+
+            protected override LocalisableString CreateNewTextTagTitle()
+                => "Romaji";
+
+            protected override LocalisableString CreateNewTextTagDescription()
+                => "Please enter the romaji.";
+        }
 
         protected partial class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
         {
