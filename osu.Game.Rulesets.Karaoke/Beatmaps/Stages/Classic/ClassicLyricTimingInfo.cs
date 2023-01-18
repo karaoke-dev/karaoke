@@ -20,7 +20,7 @@ public class ClassicLyricTimingInfo
     private readonly Bindable<int> timingVersion = new();
 
     // todo: should be readonly.
-    public BindableList<ClassicLyricTimingPoint> Timings = new BindableList<ClassicLyricTimingPoint>();
+    public BindableList<ClassicLyricTimingPoint> Timings = new();
 
     [JsonIgnore]
     public List<ClassicLyricTimingPoint> SortedTimings { get; private set; } = new();
