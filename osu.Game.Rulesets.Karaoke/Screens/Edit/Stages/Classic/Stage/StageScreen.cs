@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 using osu.Game.Screens.Edit;
 
@@ -23,6 +24,9 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     private readonly Bindable<StageEditorEditCategory> bindableCategory = new();
     private readonly Bindable<StageEditorEditMode> bindableEditMode = new();
 
+    [Cached(typeof(IBeatmapClassicStageChangeHandler))]
+    private readonly BeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler;
+
     [Cached(typeof(IStageEditorVerifier))]
     private readonly StageEditorVerifier stageEditorVerifier;
 
@@ -35,6 +39,7 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     public StageScreen()
         : base(ClassicStageEditorScreenMode.Stage)
     {
+        AddInternal(beatmapClassicStageChangeHandler = new BeatmapClassicStageChangeHandler());
         AddInternal(stageEditorVerifier = new StageEditorVerifier());
 
         Child = new GridContainer
