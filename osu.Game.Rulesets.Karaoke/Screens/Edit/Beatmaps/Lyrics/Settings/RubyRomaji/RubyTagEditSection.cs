@@ -20,26 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
     {
         protected override LocalisableString Title => "Ruby";
 
-        [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
-
-        protected override IBindableList<RubyTag> GetBindableTextTags(Lyric lyric)
-            => lyric.RubyTagsBindable;
-
-        protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(Lyric lyric, RubyTag textTag)
-            => new LabelledRubyTagTextBox(lyric, textTag);
-
-        protected override void AddTextTag(RubyTag textTag)
-            => rubyTagsChangeHandler.Add(textTag);
-
-        protected override LocalisableString CreateNewTextTagButtonText()
-            => "Create new ruby";
-
-        protected override LocalisableString CreateNewTextTagTitle()
-            => "Ruby";
-
-        protected override LocalisableString CreateNewTextTagDescription()
-            => "Please enter the ruby.";
+        protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new RubyTagsEditor();
 
         protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags));
@@ -59,6 +40,30 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                 LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the ruby.",
                 _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
             };
+
+        private partial class RubyTagsEditor : TextTagsEditor
+        {
+            [Resolved]
+            private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
+            protected override IBindableList<RubyTag> GetItems(Lyric lyric)
+                => lyric.RubyTagsBindable;
+
+            protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(Lyric lyric, RubyTag textTag)
+                => new LabelledRubyTagTextBox(lyric, textTag);
+
+            protected override void AddTextTag(RubyTag textTag)
+                => rubyTagsChangeHandler.Add(textTag);
+
+            protected override LocalisableString CreateNewTextTagButtonText()
+                => "Create new ruby";
+
+            protected override LocalisableString CreateNewTextTagTitle()
+                => "Ruby";
+
+            protected override LocalisableString CreateNewTextTagDescription()
+                => "Please enter the ruby.";
+        }
 
         protected partial class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
         {
