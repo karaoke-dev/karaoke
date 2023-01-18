@@ -154,6 +154,21 @@ public class ClassicLyricTimingInfoTest
     #region Query
 
     [Test]
+    public void TestGetTimingPointOrder()
+    {
+        var timingInfo = new ClassicLyricTimingInfo();
+        timingInfo.Timings.AddRange(new[] { new ClassicLyricTimingPoint { Time = 1000 } });
+
+        var existTimingPoint = timingInfo.Timings.First();
+        int? existTimingPointOrder = timingInfo.GetTimingPointOrder(existTimingPoint);
+        Assert.AreEqual(1, existTimingPointOrder);
+
+        var notExistTimingPoint = new ClassicLyricTimingPoint { Time = 1000 };
+        int? notExistTimingPointOrder = timingInfo.GetTimingPointOrder(notExistTimingPoint);
+        Assert.IsNull(notExistTimingPointOrder);
+    }
+
+    [Test]
     public void TestGetLyricTimingPoints()
     {
         var timingInfo = new ClassicLyricTimingInfo();

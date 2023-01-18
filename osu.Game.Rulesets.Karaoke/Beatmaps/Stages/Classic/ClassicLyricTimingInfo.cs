@@ -175,6 +175,12 @@ public class ClassicLyricTimingInfo
 
     #region Query
 
+    public int? GetTimingPointOrder(ClassicLyricTimingPoint point)
+    {
+        int index = SortedTimings.IndexOf(point);
+        return index == -1 ? null : index + 1;
+    }
+
     public IEnumerable<ClassicLyricTimingPoint> GetLyricTimingPoints(Lyric lyric)
     {
         if (!Mappings.TryGetValue(lyric.ID, out int[]? ids))
