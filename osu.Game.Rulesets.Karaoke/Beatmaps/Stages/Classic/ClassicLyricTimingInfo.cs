@@ -20,7 +20,7 @@ public class ClassicLyricTimingInfo
     private readonly Bindable<int> timingVersion = new();
 
     // todo: should be readonly.
-    public BindableList<ClassicLyricTimingPoint> Timings = new BindableList<ClassicLyricTimingPoint>();
+    public BindableList<ClassicLyricTimingPoint> Timings = new();
 
     [JsonIgnore]
     public List<ClassicLyricTimingPoint> SortedTimings { get; private set; } = new();
@@ -55,12 +55,12 @@ public class ClassicLyricTimingInfo
                     break;
             }
 
-            onPageChanged();
+            onTimingChanged();
 
-            void timeValueChanged(ValueChangedEvent<double> e) => onPageChanged();
+            void timeValueChanged(ValueChangedEvent<double> e) => onTimingChanged();
         };
 
-        void onPageChanged()
+        void onTimingChanged()
         {
             SortedTimings = Timings.OrderBy(x => x.Time).ToList();
             timingVersion.Value++;
@@ -174,6 +174,12 @@ public class ClassicLyricTimingInfo
     #endregion
 
     #region Query
+
+    public int? GetTimingPointOrder(ClassicLyricTimingPoint point)
+    {
+        int index = SortedTimings.IndexOf(point);
+        return index == -1 ? null : index + 1;
+    }
 
     public IEnumerable<ClassicLyricTimingPoint> GetLyricTimingPoints(Lyric lyric)
     {

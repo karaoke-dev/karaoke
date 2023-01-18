@@ -61,6 +61,7 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Edit => new Drawable[]
         {
             new StageEditorEditModeSection(StageEditorEditCategory.Timing),
+            new TimingPointsSection(),
         },
         StageEditorEditMode.Verify => new Drawable[]
         {
