@@ -26,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public int TotalColumns { get; set; } = 9;
 
+        public TStageInfo? GetStageInfo<TStageInfo>() => StageInfos.OfType<TStageInfo>().FirstOrDefault();
+
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = SingerInfo.GetAllSingers().Count();
