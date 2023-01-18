@@ -55,12 +55,12 @@ public class ClassicLyricTimingInfo
                     break;
             }
 
-            onPageChanged();
+            onTimingChanged();
 
-            void timeValueChanged(ValueChangedEvent<double> e) => onPageChanged();
+            void timeValueChanged(ValueChangedEvent<double> e) => onTimingChanged();
         };
 
-        void onPageChanged()
+        void onTimingChanged()
         {
             SortedTimings = Timings.OrderBy(x => x.Time).ToList();
             timingVersion.Value++;
