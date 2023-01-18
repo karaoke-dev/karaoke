@@ -1,11 +1,16 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 
@@ -20,6 +25,12 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
 
     [Cached(typeof(IStageEditorVerifier))]
     private readonly StageEditorVerifier stageEditorVerifier;
+
+    [Resolved, AllowNull]
+    private EditorBeatmap editorBeatmap { get; set; }
+
+    public ClassicStageInfo StageInfo => (editorBeatmap.PlayableBeatmap as KaraokeBeatmap)!.GetStageInfo<ClassicStageInfo>()
+                                         ?? throw new InvalidOperationException();
 
     public StageScreen()
         : base(ClassicStageEditorScreenMode.Stage)

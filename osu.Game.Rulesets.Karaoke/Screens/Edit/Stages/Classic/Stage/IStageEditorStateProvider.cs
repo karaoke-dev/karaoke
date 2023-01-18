@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 
@@ -18,4 +19,6 @@ public interface IStageEditorStateProvider
     StageEditorEditMode EditMode => BindableEditMode.Value;
 
     void ChangeEditMode(StageEditorEditMode mode);
+
+    ClassicStageInfo StageInfo { get; }
 }
