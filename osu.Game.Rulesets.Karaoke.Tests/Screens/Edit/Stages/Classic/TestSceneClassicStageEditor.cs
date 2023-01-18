@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
@@ -29,6 +30,10 @@ public partial class TestSceneClassicStageEditor : ScreenTestScene<ClassicStageE
     {
         var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
         var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+
+        // add classic stage info for testing purpose.
+        karaokeBeatmap!.StageInfos.Add(new ClassicStageInfo());
+
         editorBeatmap = new EditorBeatmap(karaokeBeatmap);
     }
 
