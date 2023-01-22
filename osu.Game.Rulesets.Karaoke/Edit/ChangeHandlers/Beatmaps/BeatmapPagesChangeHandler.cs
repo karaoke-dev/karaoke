@@ -18,6 +18,13 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
     [Resolved, AllowNull]
     private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
 
+    public bool CanGenerate()
+    {
+        var config = getGeneratorConfig();
+        var generator = new PageGenerator(config);
+        return generator.CanGenerate(KaraokeBeatmap);
+    }
+
     public LocalisableString? GetNotGeneratableMessage()
     {
         var config = getGeneratorConfig();
