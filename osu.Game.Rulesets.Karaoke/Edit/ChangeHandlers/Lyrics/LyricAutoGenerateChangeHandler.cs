@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(generator.CanGenerate);
         }
 
-        public IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty)
+        public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(LyricAutoGenerateProperty autoGenerateProperty)
         {
             currentAutoGenerateProperty = autoGenerateProperty;
 

@@ -354,7 +354,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
             TriggerHandlerChanged(c =>
             {
-                bool notGeneratable = c.GetNotGeneratableLyrics(autoGenerateProperty).Any();
+                bool notGeneratable = c.GetGeneratorNotSupportedLyrics(autoGenerateProperty).Any();
                 Assert.AreEqual(generatable, !notGeneratable);
             });
         }

@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public interface ILyricAutoGenerateChangeHandler : IAutoGenerateChangeHandler<LyricAutoGenerateProperty>, ILyricPropertyChangeHandler
     {
-        IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty);
+        IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(LyricAutoGenerateProperty autoGenerateProperty);
     }
 
     public enum LyricAutoGenerateProperty

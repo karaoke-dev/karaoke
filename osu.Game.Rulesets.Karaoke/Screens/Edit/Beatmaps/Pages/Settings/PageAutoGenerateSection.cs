@@ -64,7 +64,7 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
                         {
                             Icon = FontAwesome.Solid.ExclamationTriangle,
                             HeaderText = "Seems still have some issues need to be fixed.",
-                            BodyText = beatmapPagesChangeHandler.GetNotGeneratableMessage()!.Value,
+                            BodyText = beatmapPagesChangeHandler.GetGeneratorNotSupportedMessage()!.Value,
                         });
                         return;
                     }

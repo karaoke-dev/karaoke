@@ -25,7 +25,7 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
         return generator.CanGenerate(KaraokeBeatmap);
     }
 
-    public LocalisableString? GetNotGeneratableMessage()
+    public LocalisableString? GetGeneratorNotSupportedMessage()
     {
         var config = getGeneratorConfig();
         var generator = new PageGenerator(config);
