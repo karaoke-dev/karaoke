@@ -27,16 +27,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             DocumentUrl = build.DocumentUrl;
             RootUrl = build.RootUrl;
 
-            using (var httpClient = new HttpClient())
+            using var httpClient = new HttpClient();
+
+            try
             {
-                try
-                {
-                    Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
-                }
-                catch (Exception)
-                {
-                    Text = "Oops, seems there's something wrong with network.";
-                }
+                Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
+            }
+            catch (Exception)
+            {
+                Text = "Oops, seems there's something wrong with network.";
             }
         }
 

@@ -73,12 +73,11 @@ public class KaraokeLegacyBeatmapEncoderTest
             }
         };
 
-        using (var ms = new MemoryStream())
-        using (var sw = new StreamWriter(ms))
-        {
-            var encoder = new KaraokeLegacyBeatmapEncoder();
-            string encodeResult = encoder.Encode(beatmap);
-            sw.WriteLine(encodeResult);
-        }
+        using var ms = new MemoryStream();
+        using var sw = new StreamWriter(ms);
+
+        var encoder = new KaraokeLegacyBeatmapEncoder();
+        string encodeResult = encoder.Encode(beatmap);
+        sw.WriteLine(encodeResult);
     }
 }

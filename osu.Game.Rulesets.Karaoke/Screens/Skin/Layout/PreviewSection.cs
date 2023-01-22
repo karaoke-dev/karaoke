@@ -118,43 +118,42 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             double startTime = Time.Current;
             const double duration = 1000000;
 
-            using (var stream = new MemoryStream())
-            using (var writer = new StreamWriter(stream))
-            using (var reader = new LineBufferedReader(stream))
+            using var stream = new MemoryStream();
+            using var writer = new StreamWriter(stream);
+            using var reader = new LineBufferedReader(stream);
+
+            writer.WriteLine("karaoke file format v1");
+            writer.WriteLine("[HitObjects]");
+
+            writer.WriteLine(text);
+            ruby.ForEach(x => writer.WriteLine(x));
+            romaji.ForEach(x => writer.WriteLine(x));
+
+            writer.WriteLine("end");
+            writer.Flush();
+            stream.Position = 0;
+
+            var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
+
+            // Check is not null
+            if (lyric == null)
+                throw new ArgumentNullException();
+
+            // Apply property
+            lyric.StartTime = startTime;
+            lyric.Duration = duration;
+
+            // todo : implementation
+            var defaultLanguage = new CultureInfo("en-US");
+            lyric.Translates.Add(defaultLanguage, translate);
+
+            lyric.TimeTags = new List<TimeTag>
             {
-                writer.WriteLine("karaoke file format v1");
-                writer.WriteLine("[HitObjects]");
+                new(new TextIndex(0), startTime),
+                new(new TextIndex(4), startTime + duration)
+            };
 
-                writer.WriteLine(text);
-                ruby.ForEach(x => writer.WriteLine(x));
-                romaji.ForEach(x => writer.WriteLine(x));
-
-                writer.WriteLine("end");
-                writer.Flush();
-                stream.Position = 0;
-
-                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
-
-                // Check is not null
-                if (lyric == null)
-                    throw new ArgumentNullException();
-
-                // Apply property
-                lyric.StartTime = startTime;
-                lyric.Duration = duration;
-
-                // todo : implementation
-                var defaultLanguage = new CultureInfo("en-US");
-                lyric.Translates.Add(defaultLanguage, translate);
-
-                lyric.TimeTags = new List<TimeTag>
-                {
-                    new(new TextIndex(0), startTime),
-                    new(new TextIndex(4), startTime + duration)
-                };
-
-                return lyric;
-            }
+            return lyric;
         }
 
         internal enum PreviewRatio

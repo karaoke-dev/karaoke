@@ -29,36 +29,35 @@ public class KaraokeLegacyBeatmapDecoderTest
     [Test]
     public void TestDecodeBeatmapLyric()
     {
-        using (var resStream = TestResources.OpenBeatmapResource("karaoke-file-samples"))
-        using (var stream = new LineBufferedReader(resStream))
-        {
-            var decoder = Decoder.GetDecoder<Beatmap>(stream);
-            Assert.AreEqual(typeof(KaraokeLegacyBeatmapDecoder), decoder.GetType());
+        using var resStream = TestResources.OpenBeatmapResource("karaoke-file-samples");
+        using var stream = new LineBufferedReader(resStream);
 
-            var working = new TestWorkingBeatmap(decoder.Decode(stream));
+        var decoder = Decoder.GetDecoder<Beatmap>(stream);
+        Assert.AreEqual(typeof(KaraokeLegacyBeatmapDecoder), decoder.GetType());
 
-            Assert.AreEqual(1, working.BeatmapInfo.BeatmapVersion);
-            Assert.AreEqual(1, working.Beatmap.BeatmapInfo.BeatmapVersion);
-            Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
+        var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
-            // Test lyric part decode result
-            var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
-            Assert.AreEqual(54, lyrics.Count());
+        Assert.AreEqual(1, working.BeatmapInfo.BeatmapVersion);
+        Assert.AreEqual(1, working.Beatmap.BeatmapInfo.BeatmapVersion);
+        Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
 
-            // Test note decode part
-            var notes = working.Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToList();
-            Assert.AreEqual(36, notes.Count);
+        // Test lyric part decode result
+        var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
+        Assert.AreEqual(54, lyrics.Count());
 
-            testNote("た", 0, actualNote: notes[0]);
-            testNote("だ", 0, actualNote: notes[1]);
-            testNote("か", 0, actualNote: notes[2]); // 風,か
-            testNote("ぜ", 0, actualNote: notes[3]); // 風,ぜ
-            testNote("に", 1, actualNote: notes[4]);
-            testNote("揺", 2, actualNote: notes[5]);
-            testNote("ら", 3, actualNote: notes[6]);
-            testNote("れ", 4, actualNote: notes[7]);
-            testNote("て", 3, actualNote: notes[8]);
-        }
+        // Test note decode part
+        var notes = working.Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToList();
+        Assert.AreEqual(36, notes.Count);
+
+        testNote("た", 0, actualNote: notes[0]);
+        testNote("だ", 0, actualNote: notes[1]);
+        testNote("か", 0, actualNote: notes[2]); // 風,か
+        testNote("ぜ", 0, actualNote: notes[3]); // 風,ぜ
+        testNote("に", 1, actualNote: notes[4]);
+        testNote("揺", 2, actualNote: notes[5]);
+        testNote("ら", 3, actualNote: notes[6]);
+        testNote("れ", 4, actualNote: notes[7]);
+        testNote("て", 3, actualNote: notes[8]);
     }
 
     [Test]
@@ -110,18 +109,17 @@ public class KaraokeLegacyBeatmapDecoderTest
 
     private static KaraokeBeatmap decodeBeatmap(string fileName)
     {
-        using (var resStream = TestResources.OpenBeatmapResource(fileName))
-        using (var stream = new LineBufferedReader(resStream))
-        {
-            // Create karaoke beatmap decoder
-            var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+        using var resStream = TestResources.OpenBeatmapResource(fileName);
+        using var stream = new LineBufferedReader(resStream);
 
-            // Create initial beatmap
-            var beatmap = lrcDecoder.Decode(stream);
+        // Create karaoke beatmap decoder
+        var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
 
-            // Convert to karaoke beatmap
-            return (KaraokeBeatmap)new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
-        }
+        // Create initial beatmap
+        var beatmap = lrcDecoder.Decode(stream);
+
+        // Convert to karaoke beatmap
+        return (KaraokeBeatmap)new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
     }
 
     private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, Note actualNote = default!)
