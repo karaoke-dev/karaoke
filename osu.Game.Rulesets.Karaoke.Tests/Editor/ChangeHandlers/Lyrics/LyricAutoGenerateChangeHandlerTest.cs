@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Text = "???"
             });
 
-            TriggerHandlerChangedWithException<NotDetectatableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
+            TriggerHandlerChangedWithException<DetectorNotSupportedException>(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
         }
 
         #endregion
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags));
+            TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags));
         }
 
         #endregion
@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags));
+            TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags));
         }
 
         #endregion
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
             });
 
-            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateTimeTags));
+            TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateTimeTags));
         }
 
         #endregion
@@ -273,7 +273,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Text = "カラオケ",
             });
 
-            TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateNotes));
+            TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateNotes));
         }
 
         private Note[] getMatchedNotes(Lyric lyric)

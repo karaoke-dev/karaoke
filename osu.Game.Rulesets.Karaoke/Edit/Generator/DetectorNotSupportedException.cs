@@ -5,9 +5,9 @@ using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 
-public class NotDetectatableException : Exception
+public class DetectorNotSupportedException : NotSupportedException
 {
-    public NotDetectatableException()
+    public DetectorNotSupportedException()
         : base("Cannnot generate the property due to have some invalid fields, please make sure that run the CanDetect() first.")
     {
     }

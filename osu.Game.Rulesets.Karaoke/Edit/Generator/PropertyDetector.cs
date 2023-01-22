@@ -41,7 +41,7 @@ public abstract class PropertyDetector<TItem, TProperty>
     public TProperty Detect(TItem item)
     {
         if (!CanDetect(item))
-            throw new NotDetectatableException();
+            throw new DetectorNotSupportedException();
 
         return DetectFromItem(item);
     }
