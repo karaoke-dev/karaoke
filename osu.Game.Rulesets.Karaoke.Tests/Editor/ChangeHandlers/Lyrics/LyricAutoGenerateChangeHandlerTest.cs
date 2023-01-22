@@ -292,7 +292,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-        public void TestCanGenerateWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        public void TestCanGenerateWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
         {
             if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
             {
@@ -318,7 +318,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
             TriggerHandlerChanged(c =>
             {
-                Assert.AreEqual(generatable, c.CanGenerate(autoGenerateProperty));
+                Assert.AreEqual(canGenerate, c.CanGenerate(autoGenerateProperty));
             });
         }
 
@@ -328,7 +328,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-        public void TestGetNotGeneratableLyricsWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        public void TestGeneratorNotSupportedLyricsWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
         {
             if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
             {
@@ -354,8 +354,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
             TriggerHandlerChanged(c =>
             {
-                bool notGeneratable = c.GetGeneratorNotSupportedLyrics(autoGenerateProperty).Any();
-                Assert.AreEqual(generatable, !notGeneratable);
+                bool hasNotSupportedLyrics = c.GetGeneratorNotSupportedLyrics(autoGenerateProperty).Any();
+                Assert.AreEqual(canGenerate, !hasNotSupportedLyrics);
             });
         }
 
@@ -365,7 +365,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
         [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-        public void TestAutoGenerate(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        public void TestAutoGenerate(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
         {
             if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
             {
@@ -389,7 +389,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            if (generatable)
+            if (canGenerate)
             {
                 TriggerHandlerChanged(c => c.AutoGenerate(autoGenerateProperty));
             }
