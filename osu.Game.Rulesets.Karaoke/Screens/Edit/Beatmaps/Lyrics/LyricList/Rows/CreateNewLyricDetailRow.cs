@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
         protected override IEnumerable<Dimension> GetColumnDimensions() =>
             new[]
             {
-                new Dimension(GridSizeMode.Absolute, TIMIMG_WIDTH),
+                new Dimension(GridSizeMode.Absolute, TIMING_WIDTH),
                 new Dimension()
             };
 
