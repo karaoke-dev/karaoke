@@ -7,7 +7,6 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
