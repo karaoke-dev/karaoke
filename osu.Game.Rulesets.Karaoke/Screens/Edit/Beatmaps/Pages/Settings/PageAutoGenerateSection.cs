@@ -56,15 +56,15 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
                 Text = "Generate";
                 Action = () =>
                 {
-                    var invalidMessage = beatmapPagesChangeHandler.GetNotGeneratableMessage();
+                    bool canGenerate = beatmapPagesChangeHandler.CanGenerate();
 
-                    if (invalidMessage != null)
+                    if (canGenerate)
                     {
                         dialogOverlay.Push(new OkPopupDialog
                         {
                             Icon = FontAwesome.Solid.ExclamationTriangle,
                             HeaderText = "Seems still have some issues need to be fixed.",
-                            BodyText = invalidMessage.Value,
+                            BodyText = beatmapPagesChangeHandler.GetNotGeneratableMessage()!.Value,
                         });
                         return;
                     }

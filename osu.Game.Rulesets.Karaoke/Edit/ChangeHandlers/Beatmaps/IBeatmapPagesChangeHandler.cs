@@ -7,11 +7,9 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-public interface IBeatmapPagesChangeHandler
+public interface IBeatmapPagesChangeHandler : IAutoGenerateChangeHandler
 {
     LocalisableString? GetNotGeneratableMessage();
-
-    void AutoGenerate();
 
     void Add(Page page);
 

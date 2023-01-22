@@ -7,13 +7,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricAutoGenerateChangeHandler : ILyricPropertyChangeHandler
+    public interface ILyricAutoGenerateChangeHandler : IAutoGenerateChangeHandler<LyricAutoGenerateProperty>, ILyricPropertyChangeHandler
     {
-        bool CanGenerate(LyricAutoGenerateProperty autoGenerateProperty);
-
         IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty);
-
-        void AutoGenerate(LyricAutoGenerateProperty autoGenerateProperty);
     }
 
     public enum LyricAutoGenerateProperty
