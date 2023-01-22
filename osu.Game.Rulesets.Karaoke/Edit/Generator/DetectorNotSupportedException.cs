@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 public class DetectorNotSupportedException : NotSupportedException
 {
     public DetectorNotSupportedException()
-        : base("Cannnot generate the property due to have some invalid fields, please make sure that run the CanDetect() first.")
+        : base("Cannot generate the property due to have some invalid fields, please make sure that run the CanDetect() first.")
     {
     }
 }
