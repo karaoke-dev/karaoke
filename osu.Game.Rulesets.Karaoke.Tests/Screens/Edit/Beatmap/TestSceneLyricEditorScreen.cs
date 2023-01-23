@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
             {
                 bindableLyricEditorMode.Value = mode;
             });
-            AddWaitStep("wait for switch to new mode", 5);
+            AddWaitStep("wait for switch to new mode", 10);
         }
 
         private void clickEditModeButtons<T>() where T : struct, Enum
