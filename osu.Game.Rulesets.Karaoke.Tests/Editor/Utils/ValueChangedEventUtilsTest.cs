@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
         }
 
         [Test]
-        public void TestLyricChangedWithSameLyricButDifferentCaretPosiiton()
+        public void TestLyricChangedWithSameLyricButDifferentCaretPosition()
         {
             var lyric1 = new Lyric
             {

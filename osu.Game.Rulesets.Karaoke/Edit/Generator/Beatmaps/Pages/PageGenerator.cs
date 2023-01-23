@@ -42,7 +42,7 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
     protected override Page[] GenerateFromItem(KaraokeBeatmap item)
     {
         if (Config.MinTime < CheckBeatmapPageInfo.MIN_INTERVAL || Config.MaxTime > CheckBeatmapPageInfo.MAX_INTERVAL)
-            throw new InvalidOperationException("Inverval time should be validate.");
+            throw new InvalidOperationException("Interval time should be validate.");
 
         var existPages = Config.ClearExistPages ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
         var lyricTimingInfos = item.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo

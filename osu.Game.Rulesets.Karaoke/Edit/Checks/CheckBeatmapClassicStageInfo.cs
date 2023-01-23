@@ -214,7 +214,7 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
     public class IssueTemplateTimingInfoLyricNotHaveTwoTiming : IssueTemplate
     {
         public IssueTemplateTimingInfoLyricNotHaveTwoTiming(ICheck check)
-            : base(check, IssueType.Warning, "Lyric shoul have exactly two timing. One is for start time and another one is for end time.")
+            : base(check, IssueType.Warning, "Lyric should have exactly two timing. One is for start time and another one is for end time.")
         {
         }
 

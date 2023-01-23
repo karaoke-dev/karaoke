@@ -38,7 +38,7 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         // there's no time-info inside.
         PrepareHitObject(new Lyric(), false);
 
-        TriggerHandlerChangedWithException<NotGeneratableException>(c => c.AutoGenerate());
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate());
     }
 
     [Test]

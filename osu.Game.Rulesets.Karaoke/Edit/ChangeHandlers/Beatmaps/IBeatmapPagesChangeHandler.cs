@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public interface IBeatmapPagesChangeHandler : IAutoGenerateChangeHandler
 {
-    LocalisableString? GetNotGeneratableMessage();
+    LocalisableString? GetGeneratorNotSupportedMessage();
 
     void Add(Page page);
 

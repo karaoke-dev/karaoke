@@ -41,10 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
         protected override TProperty GenerateFromItem(Lyric item)
         {
             if (item.Language == null)
-                throw new NotGeneratableException();
+                throw new GeneratorNotSupportedException();
 
             if (!this.generator.TryGetValue(item.Language, out var generator))
-                throw new NotGeneratableException();
+                throw new GeneratorNotSupportedException();
 
             return generator.Value.Generate(item);
         }

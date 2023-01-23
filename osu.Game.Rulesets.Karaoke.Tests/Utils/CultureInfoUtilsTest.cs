@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("zh-TW", false)] // 中文（台灣）, 1028
         [TestCase("zh-Hant-TW", false)] // 中文（繁體，台灣）, 4096
         [TestCase("zh-Hans-HK", false)] // 中文（简体，香港特别行政区）, 4096
-        public void TesIsLanguage(string name, bool isLanguage)
+        public void TestIsLanguage(string name, bool isLanguage)
         {
             var cultureInfo = new CultureInfo(name);
             bool actual = CultureInfoUtils.IsLanguage(cultureInfo);
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(31748, true)] // 中文（繁體）
         [TestCase(30724, true)] // 中文
         [TestCase(1028, false)] // 中文（台灣）
-        public void TesIsLanguage(int lcid, bool isLanguage)
+        public void TestIsLanguage(int lcid, bool isLanguage)
         {
             var cultureInfo = new CultureInfo(lcid);
             bool actual = CultureInfoUtils.IsLanguage(cultureInfo);

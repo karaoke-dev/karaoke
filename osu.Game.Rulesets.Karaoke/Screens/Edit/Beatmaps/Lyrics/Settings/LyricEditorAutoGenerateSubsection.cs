@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 
             protected override IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
             {
-                return lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty);
+                return lyricAutoGenerateChangeHandler.GetGeneratorNotSupportedLyrics(autoGenerateProperty);
             }
 
             protected override void Apply()

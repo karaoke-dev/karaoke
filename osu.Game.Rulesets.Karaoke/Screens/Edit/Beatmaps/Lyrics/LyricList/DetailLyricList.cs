@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
         {
             bool containsHandler = mode == LyricEditorMode.Texting;
 
-            const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMIMG_WIDTH;
+            const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMING_WIDTH;
             float timingWidth = containsHandler ? DrawableLyricListItem.HANDLER_WIDTH + timing_base_width : timing_base_width;
             return new GridContainer
             {

@@ -41,7 +41,7 @@ public abstract class PropertyGenerator<TItem, TProperty>
     public TProperty Generate(TItem item)
     {
         if (!CanGenerate(item))
-            throw new NotGeneratableException();
+            throw new GeneratorNotSupportedException();
 
         return GenerateFromItem(item);
     }
