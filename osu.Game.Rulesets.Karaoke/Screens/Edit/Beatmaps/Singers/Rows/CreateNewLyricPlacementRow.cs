@@ -43,6 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
             };
         }
 
-        protected override Drawable CreateTimeLinePart(Singer singer) => new Container();
+        protected override Drawable CreateTimeLinePart(Singer singer) => Empty();
     }
 }
