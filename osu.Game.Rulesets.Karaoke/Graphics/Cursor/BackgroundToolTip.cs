@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         public abstract void SetContent(T content);
 
-        protected virtual Drawable SetBackground() => new Box();
+        protected virtual Drawable SetBackground() => Empty();
 
         public void Move(Vector2 pos) => Position = pos;
 

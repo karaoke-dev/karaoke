@@ -62,9 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
                     },
                     Content = new[]
                     {
-                        new Drawable[]
+                        new[]
                         {
-                            new Box(),
+                            Empty(),
                             new SelectAllArea
                             {
                                 RelativeSizeAxes = Axes.Both,
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
                             {
                                 RelativeSizeAxes = Axes.Both,
                             },
-                            new Box(),
+                            Empty(),
                             applyButton = new ActionButton
                             {
                                 Text = "Apply",
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
                                     lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Apply);
                                 }
                             },
-                            new Box(),
+                            Empty(),
                             new ActionButton
                             {
                                 Text = "Cancel",
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
                                     lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
                                 }
                             },
-                            new Box(),
+                            Empty(),
                             new ActionButton
                             {
                                 Text = "Preview",
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
                                     // todo : implement
                                 }
                             },
-                            new Box(),
+                            Empty(),
                         }
                     }
                 }
