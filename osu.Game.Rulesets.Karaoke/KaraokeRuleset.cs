@@ -253,7 +253,7 @@ namespace osu.Game.Rulesets.Karaoke
                             RelativeSizeAxes = Axes.X,
                             Height = info_height
                         }, dimension: new Dimension(GridSizeMode.Relative, 0.6f)),
-                        new StatisticItem(string.Empty, () => new Container(), dimension: new Dimension(GridSizeMode.Absolute, 10)),
+                        new StatisticItem(string.Empty, Drawable.Empty, dimension: new Dimension(GridSizeMode.Absolute, 10)),
                         new StatisticItem("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,

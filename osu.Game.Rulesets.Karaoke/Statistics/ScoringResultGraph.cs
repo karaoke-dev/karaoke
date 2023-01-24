@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     };
 
                 protected override Drawable CreateIcon()
-                    => new Container();
+                    => Empty();
             }
         }
 

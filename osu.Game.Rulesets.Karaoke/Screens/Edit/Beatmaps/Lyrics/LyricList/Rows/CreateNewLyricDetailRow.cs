@@ -32,9 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
             };
 
         protected override Drawable CreateTimingInfo(Lyric lyric)
-        {
-            return new Container();
-        }
+            => Empty();
 
         protected override Drawable CreateContent(Lyric lyric)
         {
