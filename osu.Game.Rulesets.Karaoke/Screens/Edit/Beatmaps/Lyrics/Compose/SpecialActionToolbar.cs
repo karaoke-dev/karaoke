@@ -59,7 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
             bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
             bindableModeAndSubMode.BindValueChanged(e =>
             {
-                reGenerateButtons();
+                // Note: add the schedule because will have the "The collection's state is no longer correct." error if not add this.
+                Schedule(reGenerateButtons);
 
                 if (ValueChangedEventUtils.EditModeChanged(e) || !IsLoaded)
                     background.Colour = colourProvider.Background2(state.Mode);
