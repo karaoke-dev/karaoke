@@ -49,11 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
                     AutoSizeAxes = Axes.Both,
                     Padding = new MarginPadding(5),
                     Spacing = new Vector2(SPACING),
-                    Children = new Drawable[]
-                    {
-                        new TogglePropertyPanelButton(),
-                        new ToggleInvalidInfoPanelButton(),
-                    }
                 }
             };
         }
