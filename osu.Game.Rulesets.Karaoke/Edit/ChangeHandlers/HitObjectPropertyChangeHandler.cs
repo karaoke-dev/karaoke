@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected abstract bool IsWritePropertyLocked(THitObject hitObject);
 
-        public class ChangeForbiddenException : Exception
+        public class ChangeForbiddenException : InvalidOperationException
         {
             public ChangeForbiddenException()
                 : base("Should not change the property because this property is referenced by other lyric.")
