@@ -105,7 +105,6 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     public void TestAddToMapping()
     {
         ClassicLyricLayout lyricLayout = null!;
-        Lyric lyric = null!;
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
@@ -116,11 +115,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
         });
 
-        PrepareHitObject(lyric = new Lyric());
+        PrepareHitObject(new Lyric());
 
         TriggerHandlerChanged(c =>
         {
-            c.AddToMapping(lyricLayout, lyric);
+            c.AddToMapping(lyricLayout);
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
@@ -132,16 +131,61 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     }
 
     [Test]
+    public void TestOffsetMapping()
+    {
+        Lyric lyric = new Lyric { ID = 1 };
+        Lyric unSelectedLyric = new Lyric { ID = 2 };
+
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        {
+            var stageInfo = new ClassicStageInfo();
+            stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 1");
+            stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 2");
+            karaokeBeatmap.StageInfos.Add(stageInfo);
+
+            var lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+
+            // Add to Mapping
+            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
+            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, unSelectedLyric);
+        });
+
+        PrepareHitObject(lyric);
+        PrepareHitObject(unSelectedLyric, false);
+
+        TriggerHandlerChanged(c =>
+        {
+            c.OffsetMapping(1);
+        });
+
+        AssertKaraokeBeatmap(karaokeBeatmap =>
+        {
+            var category = getStageCategory(karaokeBeatmap);
+
+            Assert.AreEqual("Layout 2", category.GetElementByItem(lyric).Name);
+            Assert.AreEqual("Layout 1", category.GetElementByItem(unSelectedLyric).Name); // should not change the id if lyric is not selected.
+        });
+    }
+
+    [Test]
+    public void TestOffsetMappingWithZeroValue()
+    {
+        PrepareHitObject(new Lyric());
+
+        // offset value should not be zero.
+        TriggerHandlerChangedWithException<InvalidOperationException>(c => c.OffsetMapping(0));
+    }
+
+    [Test]
     public void TestRemoveFromMapping()
     {
-        Lyric lyric = null!;
+        Lyric lyric = new Lyric();
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
             stageInfo.LyricLayoutCategory.AddElement();
             karaokeBeatmap.StageInfos.Add(stageInfo);
-            karaokeBeatmap.HitObjects.Add(lyric = new Lyric());
 
             var lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
 
@@ -149,9 +193,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
         });
 
+        PrepareHitObject(lyric);
+
         TriggerHandlerChanged(c =>
         {
-            c.RemoveFromMapping(lyric);
+            c.RemoveFromMapping();
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
