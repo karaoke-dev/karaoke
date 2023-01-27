@@ -8,7 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -42,8 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
         {
             singerIndexesBindable.BindCollectionChanged((_, _) =>
             {
-                if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                    return;
+                var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
 
                 // todo: should get the singer directly from the lyric eventually.
                 var singers = karaokeBeatmap.SingerInfo.GetAllSingers().Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();

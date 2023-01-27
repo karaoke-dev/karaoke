@@ -11,6 +11,7 @@ using osu.Framework.Testing;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -71,9 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 editorBeatmap.Clear();
                 editorBeatmap.SelectedHitObjects.Clear();
 
-                if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                    throw new InvalidCastException();
-
+                var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
                 karaokeBeatmap.AvailableTranslates.Clear();
                 karaokeBeatmap.SingerInfo = new SingerInfo();
                 karaokeBeatmap.PageInfo = new PageInfo();
@@ -108,9 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
         {
             SetUpEditorBeatmap(editorBeatmap =>
             {
-                if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                    throw new InvalidCastException();
-
+                var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
                 action.Invoke(karaokeBeatmap);
             });
         }
@@ -151,9 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
         {
             AssertEditorBeatmap(editorBeatmap =>
             {
-                if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                    throw new InvalidCastException();
-
+                var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
                 assert.Invoke(karaokeBeatmap);
             });
         }

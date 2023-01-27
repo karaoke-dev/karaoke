@@ -8,6 +8,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -18,7 +19,7 @@ public partial class BeatmapPropertyChangeHandler : Component
     [Resolved, AllowNull]
     private EditorBeatmap beatmap { get; set; }
 
-    protected KaraokeBeatmap KaraokeBeatmap => (KaraokeBeatmap)beatmap.PlayableBeatmap;
+    protected KaraokeBeatmap KaraokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
 
     protected IEnumerable<Lyric> Lyrics => KaraokeBeatmap.HitObjects.OfType<Lyric>();
 

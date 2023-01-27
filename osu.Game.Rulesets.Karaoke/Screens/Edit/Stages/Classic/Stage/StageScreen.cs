@@ -7,9 +7,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 using osu.Game.Screens.Edit;
 
@@ -33,7 +33,7 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     [Resolved, AllowNull]
     private EditorBeatmap editorBeatmap { get; set; }
 
-    public ClassicStageInfo StageInfo => (editorBeatmap.PlayableBeatmap as KaraokeBeatmap)!.GetStageInfo<ClassicStageInfo>()
+    public ClassicStageInfo StageInfo => EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap).GetStageInfo<ClassicStageInfo>()
                                          ?? throw new InvalidOperationException();
 
     public StageScreen()

@@ -12,8 +12,8 @@ using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Extensions;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit;
 using SharpCompress.Archives.Zip;
 
@@ -94,10 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
         private string generateJsonBeatmap()
         {
             var encoder = new KaraokeJsonBeatmapEncoder();
-
-            // not use editor.workingBeatmap(KaraokeBeatmap) is because karaoke beatmap is not inherit beatmap class.
-            if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                throw new ArgumentNullException(nameof(karaokeBeatmap));
+            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
 
             var encodeBeatmap = new Beatmap
             {

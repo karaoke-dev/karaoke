@@ -8,13 +8,14 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit.Setup;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup
 {
     public partial class KaraokeSetupSection : RulesetSetupSection
     {
-        private KaraokeBeatmap karaokeBeatmap => Beatmap.PlayableBeatmap as KaraokeBeatmap;
+        private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(Beatmap);
 
         private LabelledSwitchButton scorable;
         private LabelledSingerList singerList;
