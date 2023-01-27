@@ -6,9 +6,9 @@
 using System;
 using System.Linq;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -23,7 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
             var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>().ToArray();
 
             // todo: should be able to support the sub-singer.
-            var singers = (beatmap.PlayableBeatmap as KaraokeBeatmap)?.SingerInfo.GetAllSingers();
+            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
+            var singers = karaokeBeatmap.SingerInfo.GetAllSingers();
 
             Items = singers?.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
             {

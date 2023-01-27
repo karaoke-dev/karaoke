@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -31,7 +30,7 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
     [Resolved, AllowNull]
     private EditorBeatmap editorBeatmap { get; set; }
 
-    public PageInfo PageInfo => (editorBeatmap.PlayableBeatmap as KaraokeBeatmap)!.PageInfo;
+    public PageInfo PageInfo => EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap).PageInfo;
 
     public BindableList<Page> SelectedItems { get; } = new();
 
