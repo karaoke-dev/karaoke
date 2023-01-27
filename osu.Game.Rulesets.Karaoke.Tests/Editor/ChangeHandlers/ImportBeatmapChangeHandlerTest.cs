@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
         {
             SetUpKaraokeBeatmap(karaokeBeatmap =>
             {
-                karaokeBeatmap.TotalColumns = 10;
+                karaokeBeatmap.NoteInfo.Columns = 10;
             });
 
             TriggerHandlerChanged(c =>
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             AssertKaraokeBeatmap(karaokeBeatmap =>
             {
                 // should not change the property in the karaoke beatmap.
-                Assert.AreEqual(10, karaokeBeatmap.TotalColumns);
+                Assert.AreEqual(10, karaokeBeatmap.NoteInfo.Columns);
 
                 // check the hit objects.
                 // and notice that we only import the lyric from other beatmap.

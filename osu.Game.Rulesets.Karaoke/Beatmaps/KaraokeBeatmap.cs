@@ -22,9 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
 
-        public bool Scorable { get; set; }
+        public NoteInfo NoteInfo { get; set; } = new();
 
-        public int TotalColumns { get; set; } = 9;
+        public bool Scorable { get; set; }
 
         public TStageInfo? GetStageInfo<TStageInfo>() => StageInfos.OfType<TStageInfo>().FirstOrDefault();
 

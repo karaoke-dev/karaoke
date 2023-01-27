@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Utils;
 using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Mods;
@@ -25,9 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         private double individualStrain;
         private double overallStrain;
 
-        public Strain(Mod[] mods, int totalColumns)
+        public Strain(Mod[] mods, NoteInfo noteInfo)
             : base(mods)
         {
+            int totalColumns = noteInfo.Columns;
+
             holdEndTimes = new double[totalColumns * 2 - 1];
             individualStrains = new double[totalColumns * 2 - 1];
             overallStrain = 1;
