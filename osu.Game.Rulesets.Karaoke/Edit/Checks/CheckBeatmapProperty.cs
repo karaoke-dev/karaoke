@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -54,8 +55,8 @@ public abstract class CheckBeatmapProperty<TProperty, THitObject> : ICheck where
     private static KaraokeBeatmap getBeatmap(BeatmapVerifierContext context)
     {
         // follow the usage in the IssueList in osu.Game
-        if (context.Beatmap is EditorBeatmap editorBeatmap && editorBeatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
-            return karaokeBeatmap;
+        if (context.Beatmap is EditorBeatmap editorBeatmap)
+            return EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
 
         throw new InvalidOperationException();
     }
