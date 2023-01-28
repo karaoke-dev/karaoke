@@ -185,6 +185,21 @@ public class StageElementCategoryTest
         Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2)); // Should get the default element because it's not in the mapping list.
     }
 
+    [Test]
+    public void TestGetElementOrder()
+    {
+        var category = new TestStageElementCategory();
+        category.AddElement();
+
+        var existElement = category.AvailableElements.First();
+        int? existElementOrder = category.GetElementOrder(existElement);
+        Assert.AreEqual(1, existElementOrder);
+
+        var notExistElement = new TestStageElement(-1);
+        int? notExistElementOrder = category.GetElementOrder(notExistElement);
+        Assert.IsNull(notExistElementOrder);
+    }
+
     #endregion
 
     private class TestStageElement : IStageElement, IComparable<TestStageElement>

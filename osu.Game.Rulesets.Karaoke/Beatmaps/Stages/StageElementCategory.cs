@@ -180,5 +180,11 @@ public abstract class StageElementCategory<TStageElement, THitObject>
         return matchedStyle ?? DefaultElement;
     }
 
+    public int? GetElementOrder(TStageElement element)
+    {
+        int index = SortedElements.IndexOf(element);
+        return index == -1 ? null : index + 1;
+    }
+
     #endregion
 }
