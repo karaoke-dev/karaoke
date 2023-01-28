@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects
@@ -9,6 +10,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
     [TestFixture]
     public class ToneCalculationTest
     {
+        [TestCase(0, false, 0)]
+        [TestCase(0, true, 1)] // left tone should be larger than right tone.
+        [TestCase(1, false, 1)]
+        [TestCase(-1, false, -1)] // left tone should be smaller than right tone.
+        [TestCase(-1, true, -1)]
+        public void TestCompareTo(int scale, bool half, int expected)
+        {
+            var leftTone = new Tone(scale, half);
+            var rightTone = new Tone();
+
+            int actual = leftTone.CompareTo(rightTone);
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(1, 1, 2)]
         [TestCase(-1, 1, 0)]
         [TestCase(1, -1, 0)]
