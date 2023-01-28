@@ -3,7 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
+using Newtonsoft.Json;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -22,10 +26,18 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     /// </summary>
     public TStageElement DefaultElement { get; protected set; }
 
+    [JsonIgnore]
+    public IBindable<int> ElementsVersion => elementsVersion;
+
+    private readonly Bindable<int> elementsVersion = new();
+
     /// <summary>
     /// All available elements.
     /// </summary>
-    public IList<TStageElement> AvailableElements { get; protected set; } = new List<TStageElement>();
+    public BindableList<TStageElement> AvailableElements { get; protected set; } = new();
+
+    [JsonIgnore]
+    public List<TStageElement> SortedElements { get; private set; } = new();
 
     /// <summary>
     /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/>
@@ -36,6 +48,37 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     protected StageElementCategory()
     {
         DefaultElement = CreateElement(0);
+
+        AvailableElements.CollectionChanged += (_, args) =>
+        {
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    Debug.Assert(args.NewItems != null);
+
+                    foreach (var c in args.NewItems.Cast<TStageElement>())
+                        c.OrderVersion.ValueChanged += orderValueChanged;
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                case NotifyCollectionChangedAction.Remove:
+                    Debug.Assert(args.OldItems != null);
+
+                    foreach (var c in args.OldItems.Cast<TStageElement>())
+                        c.OrderVersion.ValueChanged -= orderValueChanged;
+                    break;
+            }
+
+            onElementOrderChanged();
+
+            void orderValueChanged(ValueChangedEvent<int> e) => onElementOrderChanged();
+        };
+
+        void onElementOrderChanged()
+        {
+            SortedElements = AvailableElements.OrderBy(x => x).ToList();
+            elementsVersion.Value++;
+        }
     }
 
     #region Edit
