@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -196,6 +197,8 @@ public class StageElementCategoryTest
         public int ID { get; }
 
         public string Name { get; set; } = string.Empty;
+
+        public IBindable<int> OrderVersion { get; } = new Bindable<int>();
 
         public int CompareTo(TestStageElement? other)
         {
