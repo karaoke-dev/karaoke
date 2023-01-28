@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
@@ -107,6 +108,11 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
 
         public double EndTime { get; set; }
 
-        public int CompareTo(LyricTimingInfo other) => StartTime.CompareTo(other.StartTime);
+        public int CompareTo(LyricTimingInfo other)
+        {
+            return ComparableUtils.CompareByProperty(this, other,
+                t => t.StartTime,
+                t => t.EndTime);
+        }
     }
 }

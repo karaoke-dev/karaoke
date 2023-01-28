@@ -4,6 +4,7 @@
 using System;
 using System.Text.Json.Serialization;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
@@ -38,5 +39,10 @@ public class ClassicLyricTimingPoint : IDeepCloneable<ClassicLyricTimingPoint>, 
         };
     }
 
-    public int CompareTo(ClassicLyricTimingPoint? other) => Time.CompareTo(other?.Time);
+    public int CompareTo(ClassicLyricTimingPoint? other)
+    {
+        return ComparableUtils.CompareByProperty(this, other,
+            t => t.Time,
+            t => t.ID);
+    }
 }
