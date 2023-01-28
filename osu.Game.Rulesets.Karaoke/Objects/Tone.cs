@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
@@ -19,30 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int CompareTo(Tone other)
         {
-            if (Scale > other.Scale)
-                return 1;
-
-            if (Scale < other.Scale)
-                return -1;
-
-            if (Half == other.Half)
-                return 0;
-
-            if (Half)
-                return 1;
-
-            return -1;
+            return ComparableUtils.CompareByProperty(this, other,
+                t => t.Scale,
+                t => t.Half);
         }
 
         public int CompareTo(int other)
         {
-            if (Scale > other)
-                return 1;
-
-            if (Scale < other)
-                return -1;
-
-            return Half ? 1 : 0;
+            return CompareTo(new Tone(other));
         }
 
         public bool Equals(Tone other) => Scale == other.Scale && Half == other.Half;
