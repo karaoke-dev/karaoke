@@ -30,7 +30,7 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
         = new List<Func<TStageInfo, IReadOnlyList<KaraokeHitObject>, IEnumerable<Issue>>>();
 
     public void RegisterCategory<TStageElement, THitObject>(Func<TStageInfo, StageElementCategory<TStageElement, THitObject>> categoryAction, int minimumRequiredElements)
-        where TStageElement : class, IStageElement
+        where TStageElement : class, IStageElement, IComparable<TStageElement>
         where THitObject : KaraokeHitObject, IHasPrimaryKey
     {
         stageInfoCategoryActions.Add((info, hitObjects) =>
@@ -58,7 +58,7 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
     public abstract IEnumerable<Issue> CheckStageInfo(TStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects);
 
     private IEnumerable<Issue> checkElementCategory<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects, int minimumRequiredElements)
-        where TStageElement : class, IStageElement
+        where TStageElement : class, IStageElement, IComparable<TStageElement>
         where THitObject : KaraokeHitObject, IHasPrimaryKey
     {
         // check mapping.
@@ -82,7 +82,7 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
     protected abstract IEnumerable<Issue> CheckElement<TStageElement>(TStageElement element) where TStageElement : IStageElement;
 
     private IEnumerable<Issue> checkMappings<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects)
-        where TStageElement : class, IStageElement
+        where TStageElement : class, IStageElement, IComparable<TStageElement>
         where THitObject : KaraokeHitObject, IHasPrimaryKey
     {
         var elements = category.AvailableElements;
