@@ -1,10 +1,12 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Stages;
 
@@ -184,7 +186,7 @@ public class StageElementCategoryTest
 
     #endregion
 
-    private class TestStageElement : IStageElement
+    private class TestStageElement : IStageElement, IComparable<TestStageElement>
     {
         public TestStageElement(int id)
         {
@@ -194,6 +196,13 @@ public class StageElementCategoryTest
         public int ID { get; }
 
         public string Name { get; set; } = string.Empty;
+
+        public int CompareTo(TestStageElement? other)
+        {
+            return ComparableUtils.CompareByProperty(this, other,
+                x => x.Name,
+                x => x.ID);
+        }
     }
 
     private class TestStageElementCategory : StageElementCategory<TestStageElement, Lyric>
