@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
-public class ClassicLyricLayout : IStageElement
+public class ClassicLyricLayout : IStageElement, IComparable<ClassicLyricLayout>
 {
     public ClassicLyricLayout(int id)
     {
@@ -37,4 +37,13 @@ public class ClassicLyricLayout : IStageElement
     /// <see cref="Lyric"/> will at bottom if <see cref="Line"/> is zero.
     /// </summary>
     public int Line { get; set; }
+
+    public int CompareTo(ClassicLyricLayout? other)
+    {
+        return ComparableUtils.CompareByProperty(this, other,
+            x => x.Line,
+            x => x.Alignment,
+            x => x.HorizontalMargin,
+            x => x.ID);
+    }
 }
