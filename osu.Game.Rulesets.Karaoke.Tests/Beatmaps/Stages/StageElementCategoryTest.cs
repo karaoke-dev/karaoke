@@ -1,10 +1,13 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Stages;
 
@@ -182,9 +185,24 @@ public class StageElementCategoryTest
         Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2)); // Should get the default element because it's not in the mapping list.
     }
 
+    [Test]
+    public void TestGetElementOrder()
+    {
+        var category = new TestStageElementCategory();
+        category.AddElement();
+
+        var existElement = category.AvailableElements.First();
+        int? existElementOrder = category.GetElementOrder(existElement);
+        Assert.AreEqual(1, existElementOrder);
+
+        var notExistElement = new TestStageElement(-1);
+        int? notExistElementOrder = category.GetElementOrder(notExistElement);
+        Assert.IsNull(notExistElementOrder);
+    }
+
     #endregion
 
-    private class TestStageElement : IStageElement
+    private class TestStageElement : IStageElement, IComparable<TestStageElement>
     {
         public TestStageElement(int id)
         {
@@ -194,6 +212,15 @@ public class StageElementCategoryTest
         public int ID { get; }
 
         public string Name { get; set; } = string.Empty;
+
+        public IBindable<int> OrderVersion { get; } = new Bindable<int>();
+
+        public int CompareTo(TestStageElement? other)
+        {
+            return ComparableUtils.CompareByProperty(this, other,
+                x => x.Name,
+                x => x.ID);
+        }
     }
 
     private class TestStageElementCategory : StageElementCategory<TestStageElement, Lyric>
