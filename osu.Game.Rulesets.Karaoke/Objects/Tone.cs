@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             };
         }
 
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(Scale, Half);
 
         public static Tone operator +(Tone left, Tone right) => add(left, right);
 
