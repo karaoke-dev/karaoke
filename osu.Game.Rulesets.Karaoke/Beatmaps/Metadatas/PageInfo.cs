@@ -79,7 +79,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
         if (page == null)
             return null;
 
-        return SortedPages.FindIndex(x => x == page);
+        return SortedPages.IndexOf(page);
     }
 
     public int? GetPageOrder(Page page)
