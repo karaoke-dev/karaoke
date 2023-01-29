@@ -133,30 +133,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             float lastCenterPosition = calculator.YPositionAt(lastTone);
             float delta = centerPosition.Y - lastCenterPosition;
 
-            // get delta tone.
+            // get offset tone.
             const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
-            var deltaTone = delta switch
+            var offset = delta switch
             {
                 > trigger_height => -new Tone { Half = true },
                 < 0 => new Tone { Half = true },
                 _ => default
             };
 
-            if (deltaTone == default(Tone))
+            if (offset == default(Tone))
                 return;
 
-            foreach (var note in EditorBeatmap.SelectedHitObjects.OfType<Note>())
-            {
-                if (note.Tone >= calculator.MaxTone && deltaTone > 0)
-                    continue;
-                if (note.Tone <= calculator.MinTone && deltaTone < 0)
-                    continue;
-
-                note.Tone += deltaTone;
-
-                //Change all note to visible
-                note.Display = true;
-            }
+            notePropertyChangeHandler.OffsetTone(offset);
         }
     }
 }

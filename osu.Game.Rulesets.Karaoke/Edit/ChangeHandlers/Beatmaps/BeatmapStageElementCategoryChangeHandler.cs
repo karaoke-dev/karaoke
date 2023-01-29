@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IBeatmapStageElementCategoryChangeHandler<TStageElement, THitObject>
+public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IBeatmapStageElementCategoryChangeHandler<TStageElement>
     where TStageElement : class, IStageElement, IComparable<TStageElement>
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
@@ -45,19 +45,50 @@ public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THi
         });
     }
 
-    public void AddToMapping(TStageElement element, THitObject hitObject)
+    public void AddToMapping(TStageElement element)
     {
-        performStageInfoChanged(s =>
+        PerformOnSelection<THitObject>(hitObject =>
         {
-            s.AddToMapping(element, hitObject);
+            performStageInfoChanged(s =>
+            {
+                s.AddToMapping(element, hitObject);
+            });
         });
     }
 
-    public void RemoveFromMapping(THitObject hitObject)
+    public void OffsetMapping(int offset)
     {
-        performStageInfoChanged(s =>
+        if (offset == 0)
+            throw new InvalidOperationException("Offset number should not be zero.");
+
+        PerformOnSelection<THitObject>(hitObject =>
         {
-            s.RemoveHitObjectFromMapping(hitObject);
+            performStageInfoChanged(s =>
+            {
+                var element = s.GetElementByItem(hitObject);
+                int mappingIndex = s.SortedElements.IndexOf(element);
+                if (mappingIndex < 0)
+                    return;
+
+                int newMappingIndex = mappingIndex + offset;
+                var newElement = s.SortedElements.ElementAtOrDefault(newMappingIndex);
+                if (newElement == null)
+                    return;
+
+                s.RemoveHitObjectFromMapping(hitObject);
+                s.AddToMapping(newElement, hitObject);
+            });
+        });
+    }
+
+    public void RemoveFromMapping()
+    {
+        PerformOnSelection<THitObject>(hitObject =>
+        {
+            performStageInfoChanged(s =>
+            {
+                s.RemoveHitObjectFromMapping(hitObject);
+            });
         });
     }
 

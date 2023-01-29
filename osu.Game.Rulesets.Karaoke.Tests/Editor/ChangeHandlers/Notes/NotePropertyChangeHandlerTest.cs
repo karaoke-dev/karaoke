@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -88,6 +89,37 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
             });
 
             TriggerHandlerChangedWithChangeForbiddenException(c => c.ChangeText("からおけ"));
+        }
+
+        [Test]
+        public void TestOffsetTone()
+        {
+            PrepareHitObject(new Note
+            {
+                Display = true,
+                Tone = new Tone(3)
+            });
+
+            TriggerHandlerChanged(c => c.OffsetTone(new Tone(-3)));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.AreEqual(new Tone(), h.Tone);
+                Assert.IsTrue(h.Display);
+            });
+        }
+
+        [Test]
+        public void TestOffsetToneWithZeroValue()
+        {
+            PrepareHitObject(new Note
+            {
+                Display = true,
+                Tone = new Tone(3)
+            });
+
+            // offset value should not be zero.
+            TriggerHandlerChangedWithException<InvalidOperationException>(c => c.OffsetTone(new Tone()));
         }
     }
 }

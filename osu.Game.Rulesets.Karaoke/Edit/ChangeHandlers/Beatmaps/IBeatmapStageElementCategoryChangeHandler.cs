@@ -3,14 +3,11 @@
 
 using System;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-public interface IBeatmapStageElementCategoryChangeHandler<TStageElement, in THitObject>
+public interface IBeatmapStageElementCategoryChangeHandler<TStageElement>
     where TStageElement : IStageElement
-    where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     void AddElement(Action<TStageElement>? action = null);
 
@@ -18,9 +15,11 @@ public interface IBeatmapStageElementCategoryChangeHandler<TStageElement, in THi
 
     void RemoveElement(TStageElement element);
 
-    void AddToMapping(TStageElement element, THitObject hitObject);
+    void AddToMapping(TStageElement element);
 
-    void RemoveFromMapping(THitObject hitObject);
+    void OffsetMapping(int offset);
+
+    void RemoveFromMapping();
 
     void ClearUnusedMapping();
 }
