@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             new CheckBeatmapAvailableTranslates(),
             new CheckBeatmapClassicStageInfo(),
+            new CheckBeatmapNoteInfo(),
             new CheckBeatmapPageInfo(),
             new CheckLyricLanguage(),
             new CheckLyricReferenceLyric(),
