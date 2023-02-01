@@ -86,6 +86,7 @@ public partial class IssueIcon : CompositeDrawable
             CheckLyricTranslate => FontAwesome.Solid.Language,
             CheckNoteReferenceLyric => FontAwesome.Solid.Link,
             CheckNoteText => FontAwesome.Solid.Link,
+            CheckNoteTime => FontAwesome.Solid.Times,
             _ => throw new ArgumentOutOfRangeException(nameof(check), check, null)
         };
 }
