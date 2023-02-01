@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckLyricTranslate(),
             new CheckNoteReferenceLyric(),
             new CheckNoteText(),
+            new CheckNoteTime(),
         };
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
