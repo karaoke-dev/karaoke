@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             new IssueTemplateNoteNullReferenceLyric(this),
             new IssueTemplateNoteInvalidReferenceLyric(this),
-            new IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(this),
+            new IssueTemplateNoteMissingReferenceTimeTag(this),
             new IssueTemplateNoteMissingStartReferenceTimeTag(this),
             new IssueTemplateNoteStartReferenceTimeTagMissingTime(this),
             new IssueTemplateNoteMissingEndReferenceTimeTag(this),
@@ -36,15 +36,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             if (note.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(note.ReferenceLyric))
                 yield return new IssueTemplateNoteInvalidReferenceLyric(this).Create(note);
 
-            if (note.ReferenceLyric?.TimeTags.Count < 2)
+            var startTimeTag = note.StartReferenceTimeTag;
+            var endTimeTag = note.EndReferenceTimeTag;
+
+            if (startTimeTag == null && endTimeTag == null)
             {
-                yield return new IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(this).Create(note);
+                yield return new IssueTemplateNoteMissingReferenceTimeTag(this).Create(note);
 
                 yield break;
             }
-
-            var startTimeTag = note.StartReferenceTimeTag;
-            var endTimeTag = note.EndReferenceTimeTag;
 
             if (startTimeTag == null)
                 yield return new IssueTemplateNoteMissingStartReferenceTimeTag(this).Create(note);
@@ -81,10 +81,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 => new NoteIssue(note, this);
         }
 
-        public class IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag : IssueTemplate
+        public class IssueTemplateNoteMissingReferenceTimeTag : IssueTemplate
         {
-            public IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag(ICheck check)
-                : base(check, IssueType.Problem, "Note's reference lyric must have at least two time-tags.")
+            public IssueTemplateNoteMissingReferenceTimeTag(ICheck check)
+                : base(check, IssueType.Problem, "Note's reference time-tag is missing.")
             {
             }
 

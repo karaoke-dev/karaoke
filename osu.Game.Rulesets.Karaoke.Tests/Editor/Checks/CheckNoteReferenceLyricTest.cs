@@ -63,11 +63,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             AssertNotOk<NoteIssue, IssueTemplateNoteInvalidReferenceLyric>(note);
         }
 
-        [TestCase(0, new string[] { })]
-        [TestCase(0, new[] { "[0,start]:1000" })]
-        [TestCase(-1, new[] { "[0,start]:1000" })] // should not show other error if time-tag amount is not enough.
-        [TestCase(2, new[] { "[0,start]:1000" })]
-        public void TestCheckReferenceLyricHasLessThanTwoTimeTag(int referenceTimeTagIndex, string[] timeTags)
+        [TestCase(2, new[] { "[0,start]:1000", "[3,end]:5000" })] // will find the time-tag at index 2 and 3.
+        [TestCase(-2, new[] { "[0,start]:1000", "[3,end]:5000" })] // will find the time-tag at index -2 and -1.
+        [TestCase(0, new string[] { })] // should have error because start and end time-tag not found.
+        [TestCase(1, new[] { "[0,start]:1000" })]
+        [TestCase(-2, new[] { "[0,start]:1000" })]
+        public void TestCheckMissingReferenceTimeTag(int referenceTimeTagIndex, string[] timeTags)
         {
             var lyric = new Lyric
             {
@@ -80,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 ReferenceTimeTagIndex = referenceTimeTagIndex,
             };
 
-            AssertNotOk<NoteIssue, IssueTemplateNoteReferenceLyricHasLessThanTwoTimeTag>(new HitObject[] { lyric, note });
+            AssertNotOk<NoteIssue, IssueTemplateNoteMissingReferenceTimeTag>(new HitObject[] { lyric, note });
         }
 
         [TestCase(-1, new[] { "[0,start]:1000", "[3,end]:5000" })]
