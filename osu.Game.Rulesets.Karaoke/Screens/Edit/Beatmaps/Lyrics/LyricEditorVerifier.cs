@@ -38,7 +38,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
             LyricEditorMode.EditRuby => new ICheck[] { new CheckLyricRubyTag() },
             LyricEditorMode.EditRomaji => new ICheck[] { new CheckLyricRomajiTag() },
             LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTag() },
-            LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText() },
+            LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText(), new CheckNoteTime() },
             LyricEditorMode.Singer => Array.Empty<ICheck>(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
