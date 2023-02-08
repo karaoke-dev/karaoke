@@ -35,7 +35,7 @@ jobs:
     - name: Zip the dlls
       run: |
         cd osu.Game.Rulesets.Karaoke/bin/Release/net6.0/DLLs
-        zip -r ../osu.Game.Rulesets.Karaoke.zip ./
+        zip -r ../osu.Game.Rulesets.Karaoke.zip ./*
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v1
       with:
