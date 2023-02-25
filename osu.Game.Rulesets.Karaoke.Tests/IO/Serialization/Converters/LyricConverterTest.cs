@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             const string expected =
-                $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"reference_lyric_id\":0,\"reference_lyric_config\":{{\"$type\":\"SyncLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
+                "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"reference_lyric_id\":0,\"reference_lyric_config\":{\"$type\":\"SyncLyricConfig\"},\"samples\":[],\"auxiliary_samples\":[]}";
             string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
             Assert.AreEqual(expected, actual);
         }
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             const string expected =
-                $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100}},\"difficulty_control_point\":{{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0}},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{{}},\"reference_lyric_id\":0,\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
+                "{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"sample_control_point\":{\"sample_bank_bindable\":\"normal\",\"sample_volume_bindable\":100,\"sample_bank\":\"normal\",\"sample_volume\":100},\"difficulty_control_point\":{\"slider_velocity_bindable\":1.0,\"slider_velocity\":1.0},\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"romaji_tags\":[],\"singers\":[],\"translates\":{},\"reference_lyric_id\":0,\"reference_lyric_config\":{\"$type\":\"ReferenceLyricConfig\"},\"samples\":[],\"auxiliary_samples\":[]}";
             string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
             Assert.AreEqual(expected, actual);
         }
