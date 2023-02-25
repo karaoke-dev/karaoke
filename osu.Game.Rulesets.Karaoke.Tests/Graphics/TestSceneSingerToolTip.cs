@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             AddStep(testName, () =>
             {
                 var singer = new Singer(1);
-                callBack?.Invoke(singer);
+                callBack(singer);
                 toolTip.SetContent(singer);
             });
         }
