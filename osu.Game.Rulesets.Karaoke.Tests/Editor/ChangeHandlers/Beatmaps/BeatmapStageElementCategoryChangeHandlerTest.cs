@@ -243,8 +243,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
     public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<ClassicLyricLayout, Lyric>
     {
-        public TestBeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<ClassicLyricLayout, Lyric>> action)
-            : base(action)
+        public TestBeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<ClassicLyricLayout, Lyric>> stageCategoryAction)
+            : base(stageCategoryAction)
         {
         }
     }
