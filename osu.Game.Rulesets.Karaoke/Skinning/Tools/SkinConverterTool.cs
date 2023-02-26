@@ -49,8 +49,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
                         attachShaders(shaderManager, stepShader.StepShaders.ToArray());
                         break;
 
+                    case null:
+                        throw new InvalidCastException("shader cannot be null.");
+
                     default:
-                        throw new InvalidCastException($"{shader?.GetType()} cannot attach shader.");
+                        throw new InvalidCastException($"{shader.GetType()} cannot attach shader.");
                 }
             }
         }

@@ -14,11 +14,11 @@ public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THi
     where TStageElement : class, IStageElement, IComparable<TStageElement>
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
-    private readonly Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> action;
+    private readonly Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction;
 
-    public BeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> action)
+    public BeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction)
     {
-        this.action = action;
+        this.stageCategoryAction = stageCategoryAction;
     }
 
     public void AddElement(Action<TStageElement>? action = null)
@@ -104,7 +104,7 @@ public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THi
     {
         PerformBeatmapChanged(beatmap =>
         {
-            var stageCategory = action(beatmap.StageInfos);
+            var stageCategory = stageCategoryAction(beatmap.StageInfos);
             stageAction(stageCategory);
         });
     }

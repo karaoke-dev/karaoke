@@ -42,9 +42,9 @@ public class ComparableUtilsTest
         var leftObject = JsonConvert.DeserializeObject<TestObject>(leftObjectProperty);
         var rightObject = JsonConvert.DeserializeObject<TestObject>(rightObjectProperty);
         int actual = ComparableUtils.CompareByProperty(leftObject, rightObject,
-            (t) => t.A,
-            (t) => t.B,
-            (t) => t.C);
+            t => t.A,
+            t => t.B,
+            t => t.C);
         Assert.AreEqual(expected, actual);
     }
 

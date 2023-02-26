@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
         public LanguageDetector(LanguageDetectorConfig config)
             : base(config)
         {
-            var targetLanguages = config.AcceptLanguages.Where(x => x != null).ToList();
+            var targetLanguages = config.AcceptLanguages.ToList();
 
             if (targetLanguages.Any())
             {

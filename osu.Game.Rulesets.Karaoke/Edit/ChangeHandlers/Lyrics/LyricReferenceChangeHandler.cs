@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                if (lyric == null)
+                if (lyric.ReferenceLyric == null)
                     throw new InvalidOperationException($"{nameof(lyric)} must have reference lyric.");
 
                 lyric.ReferenceLyricConfig = new ReferenceLyricConfig();
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                if (lyric == null)
+                if (lyric.ReferenceLyric == null)
                     throw new InvalidOperationException($"{nameof(lyric)} must have reference lyric.");
 
                 lyric.ReferenceLyricConfig = new SyncLyricConfig();

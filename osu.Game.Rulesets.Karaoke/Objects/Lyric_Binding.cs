@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 void invalidate() => timeTagsVersion.Value++;
             };
 
-            TimeTagsVersion.ValueChanged += (_) =>
+            TimeTagsVersion.ValueChanged += _ =>
             {
                 updateLyricTime();
             };

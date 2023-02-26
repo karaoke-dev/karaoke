@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
             var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
             var singers = karaokeBeatmap.SingerInfo.GetAllSingers();
 
-            Items = singers?.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
+            Items = singers.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
             {
                 // if only one lyric
                 if (allSingerInLyric(singer))
