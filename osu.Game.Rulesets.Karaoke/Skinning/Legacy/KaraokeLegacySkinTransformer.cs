@@ -30,10 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             switch (lookup)
             {
-                case GlobalSkinComponentLookup targetComponent:
-                    switch (targetComponent.Lookup)
+                case SkinComponentsContainerLookup targetComponent:
+                    switch (targetComponent.Target)
                     {
-                        case GlobalSkinComponentLookup.LookupType.MainHUDComponents:
+                        case SkinComponentsContainerLookup.TargetArea.MainHUDComponents:
                             var components = base.GetDrawableComponent(lookup) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
                             components?.Add(new SettingButtonsDisplay
                             {
