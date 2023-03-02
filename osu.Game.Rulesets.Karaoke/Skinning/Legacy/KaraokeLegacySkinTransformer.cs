@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
+using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     switch (targetComponent.Target)
                     {
                         case SkinComponentsContainerLookup.TargetArea.MainHUDComponents:
-                            var components = base.GetDrawableComponent(lookup) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
+                            var components = base.GetDrawableComponent(lookup) as Container ?? getTargetComponentsContainerFromOtherPlace();
                             components?.Add(new SettingButtonsDisplay
                             {
                                 Anchor = Anchor.CentreRight,
@@ -67,10 +68,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     return base.GetDrawableComponent(lookup);
             }
 
-            SkinnableTargetComponentsContainer? getTargetComponentsContainerFromOtherPlace() =>
+            Container? getTargetComponentsContainerFromOtherPlace() =>
                 Skin switch
                 {
-                    LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(lookup) as SkinnableTargetComponentsContainer,
+                    LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(lookup) as Container,
                     _ => throw new InvalidCastException()
                 };
         }
