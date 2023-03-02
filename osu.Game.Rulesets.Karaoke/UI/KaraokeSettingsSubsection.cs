@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             };
         }
 
-        private partial class TimeSlider : OsuSliderBar<double>
+        private partial class TimeSlider : RoundedSliderBar<double>
         {
             public override LocalisableString TooltipText => Current.Value.ToString("N0") + "ms";
         }

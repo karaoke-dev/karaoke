@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                     }
                 };
 
-            private partial class OpacitySliderBar : OsuSliderBar<float>
+            private partial class OpacitySliderBar : RoundedSliderBar<float>
             {
                 public override LocalisableString TooltipText => (Current.Value * 100).ToString("N0") + "%";
             }

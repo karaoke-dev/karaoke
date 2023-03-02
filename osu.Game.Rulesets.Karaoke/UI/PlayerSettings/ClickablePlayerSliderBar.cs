@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
         public void TriggerIncrease() => bar.TriggerIncrease();
 
-        private partial class ClickableSliderBar : OsuSliderBar<int>
+        private partial class ClickableSliderBar : RoundedSliderBar<int>
         {
             private readonly ToolTipButton decreaseButton;
             private readonly ToolTipButton increaseButton;
