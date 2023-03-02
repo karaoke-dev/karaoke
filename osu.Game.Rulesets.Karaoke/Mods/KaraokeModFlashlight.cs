@@ -45,11 +45,13 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         {
             base.ApplyToDrawableRuleset(drawableRuleset);
 
-            var notePlayfield = (drawableRuleset as DrawableKaraokeRuleset)?.Playfield?.NotePlayfield;
+            var drawableKaraokeRuleset = drawableRuleset as DrawableKaraokeRuleset;
+
+            var notePlayfield = drawableKaraokeRuleset?.Playfield?.NotePlayfield;
             if (notePlayfield == null)
                 return;
 
-            var flashlight = drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeFlashlight>().FirstOrDefault();
+            var flashlight = drawableKaraokeRuleset?.KeyBindingInputManager.Children.OfType<KaraokeFlashlight>().FirstOrDefault();
             if (flashlight == null)
                 return;
 
