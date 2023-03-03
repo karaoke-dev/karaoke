@@ -3,6 +3,7 @@
 
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Testing;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
                     return false;
 
                 // Should has at least one flashlight
-                return drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
+                return drawableRuleset.KeyBindingInputManager.ChildrenOfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
             }
         });
     }

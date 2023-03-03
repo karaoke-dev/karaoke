@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
             };
         }
 
-        private partial class PitchSlider : OsuSliderBar<int>
+        private partial class PitchSlider : RoundedSliderBar<int>
         {
             public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : string.Empty) + Current.Value.ToString("N0");
         }

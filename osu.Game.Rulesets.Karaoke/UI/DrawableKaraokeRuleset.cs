@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
+        public new KaraokeInputManager KeyBindingInputManager => (KaraokeInputManager)base.KeyBindingInputManager;
+
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
         [Cached(typeof(INotePositionInfo))]

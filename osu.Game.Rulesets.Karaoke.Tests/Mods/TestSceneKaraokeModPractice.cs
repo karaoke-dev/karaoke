@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             PassCondition = () =>
             {
                 // just need to check has setting button display area.
-                var skinnableTargetContainers = Player.HUDOverlay.OfType<SkinnableTargetContainer>().FirstOrDefault();
+                var skinnableTargetContainers = Player.HUDOverlay.OfType<ISerialisableDrawableContainer>().FirstOrDefault();
 
                 // todo: because setting buttons display created from skin transform , so might not able to get from here.
                 var hud = skinnableTargetContainers?.Components.OfType<SettingButtonsDisplay>().FirstOrDefault();

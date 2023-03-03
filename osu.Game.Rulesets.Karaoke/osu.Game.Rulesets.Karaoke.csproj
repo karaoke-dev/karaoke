@@ -18,14 +18,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ppy.osu.Game" Version="2023.207.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2023.301.0" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta18" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
-    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
     <PackageReference Include="WanaKanaSharp" Version="0.2.0" />
     <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
