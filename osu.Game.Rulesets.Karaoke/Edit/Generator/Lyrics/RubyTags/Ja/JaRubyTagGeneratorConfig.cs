@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja
 {
-    public class JaRubyTagGeneratorConfig : RubyTagGeneratorConfig, IHasConfig<JaRubyTagGeneratorConfig>
+    public class JaRubyTagGeneratorConfig : RubyTagGeneratorConfig, IHasConfig
     {
         /// <summary>
         /// Generate ruby as Katakana.

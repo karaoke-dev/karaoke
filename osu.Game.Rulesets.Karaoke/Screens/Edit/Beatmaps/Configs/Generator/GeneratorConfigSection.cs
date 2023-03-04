@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract partial class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig<TConfig>, new()
+    public abstract partial class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig, new()
     {
         private readonly TConfig defaultConfig;
         private readonly Bindable<TConfig> current;

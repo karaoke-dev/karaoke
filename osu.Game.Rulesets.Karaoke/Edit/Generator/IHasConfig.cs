@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 {
-    public interface IHasConfig<out T> where T : new()
+    public interface IHasConfig
     {
     }
 }

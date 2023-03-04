@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
     /// <typeparam name="TProperty"></typeparam>
     /// <typeparam name="TConfig"></typeparam>
     public abstract class LyricPropertyGenerator<TProperty, TConfig> : PropertyGenerator<Lyric, TProperty, TConfig>
-        where TConfig : IHasConfig<TConfig>, new()
+        where TConfig : IHasConfig, new()
     {
         protected LyricPropertyGenerator(TConfig config)
             : base(config)

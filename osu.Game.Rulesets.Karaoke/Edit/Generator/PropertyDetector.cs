@@ -6,7 +6,7 @@ using osu.Framework.Localisation;
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 
 public abstract class PropertyDetector<TItem, TProperty, TConfig> : PropertyDetector<TItem, TProperty>
-    where TConfig : IHasConfig<TConfig>, new()
+    where TConfig : IHasConfig, new()
 {
     protected readonly TConfig Config;
 

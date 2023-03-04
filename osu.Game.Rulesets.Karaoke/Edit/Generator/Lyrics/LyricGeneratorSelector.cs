@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 
         protected void RegisterGenerator<TGenerator, TConfig>(CultureInfo info)
             where TGenerator : LyricPropertyGenerator<TProperty, TConfig>
-            where TConfig : TBaseConfig, IHasConfig<TConfig>, new()
+            where TConfig : TBaseConfig, IHasConfig, new()
         {
             generator.Add(info, new Lazy<PropertyGenerator<Lyric, TProperty>>(() =>
             {

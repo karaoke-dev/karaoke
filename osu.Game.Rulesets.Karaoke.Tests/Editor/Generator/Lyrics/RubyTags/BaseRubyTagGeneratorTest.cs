@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags
 {
     public abstract class BaseRubyTagGeneratorTest<TRubyTagGenerator, TConfig> : BaseLyricGeneratorTest<TRubyTagGenerator, RubyTag[], TConfig>
-        where TRubyTagGenerator : RubyTagGenerator<TConfig> where TConfig : RubyTagGeneratorConfig, IHasConfig<TConfig>, new()
+        where TRubyTagGenerator : RubyTagGenerator<TConfig> where TConfig : RubyTagGeneratorConfig, IHasConfig, new()
     {
         protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
         {

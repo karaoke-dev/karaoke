@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
 {
-    public class NoteGeneratorConfig : IHasConfig<NoteGeneratorConfig>
+    public class NoteGeneratorConfig : IHasConfig
     {
         public NoteGeneratorConfig CreateDefaultConfig() => new();
     }

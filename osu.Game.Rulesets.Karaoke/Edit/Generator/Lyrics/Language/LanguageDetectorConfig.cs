@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
 {
-    public class LanguageDetectorConfig : IHasConfig<LanguageDetectorConfig>
+    public class LanguageDetectorConfig : IHasConfig
     {
         public CultureInfo[] AcceptLanguages { get; set; } = Array.Empty<CultureInfo>();
 

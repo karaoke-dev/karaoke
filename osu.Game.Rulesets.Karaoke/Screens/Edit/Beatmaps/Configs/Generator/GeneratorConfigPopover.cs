@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract partial class GeneratorConfigPopover<TConfig> : OsuPopover where TConfig : IHasConfig<TConfig>, new()
+    public abstract partial class GeneratorConfigPopover<TConfig> : OsuPopover where TConfig : IHasConfig, new()
     {
         private readonly Bindable<TConfig> bindableConfig = new();
 

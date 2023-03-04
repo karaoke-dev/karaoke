@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
         }
 
-        protected static T CreateDefaultConfig<T>() where T : IHasConfig<T>, new() => new();
+        protected static T CreateDefaultConfig<T>() where T : IHasConfig, new() => new();
     }
 
     public enum KaraokeRulesetEditGeneratorSetting
