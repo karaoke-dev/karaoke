@@ -87,7 +87,7 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
             }
 
             private bool clearExistPagesAfterGenerated()
-                => generatorConfigManager.Get<PageGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig).ClearExistPages;
+                => generatorConfigManager.Get<PageGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig).ClearExistPages.Value;
         }
     }
 }

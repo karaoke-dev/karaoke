@@ -42,10 +42,10 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
 
     protected override Page[] GenerateFromItem(KaraokeBeatmap item)
     {
-        if (Config.MinTime < CheckBeatmapPageInfo.MIN_INTERVAL || Config.MaxTime > CheckBeatmapPageInfo.MAX_INTERVAL)
+        if (Config.MinTime.Value < CheckBeatmapPageInfo.MIN_INTERVAL || Config.MaxTime.Value > CheckBeatmapPageInfo.MAX_INTERVAL)
             throw new InvalidOperationException("Interval time should be validate.");
 
-        var existPages = Config.ClearExistPages ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
+        var existPages = Config.ClearExistPages.Value ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
         var lyricTimingInfos = item.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo
         {
             StartTime = x.LyricStartTime,
@@ -79,14 +79,14 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
 
             while (currentTime < expectedEndTime)
             {
-                if (expectedEndTime - currentTime < Config.MinTime && getAverageTimeWithNextLyric)
+                if (expectedEndTime - currentTime < Config.MinTime.Value && getAverageTimeWithNextLyric)
                 {
                     break;
                 }
 
-                if (expectedEndTime - currentTime > Config.MaxTime)
+                if (expectedEndTime - currentTime > Config.MaxTime.Value)
                 {
-                    yield return createReturnPage(currentTime + Config.MaxTime);
+                    yield return createReturnPage(currentTime + Config.MaxTime.Value);
                 }
                 else
                 {
