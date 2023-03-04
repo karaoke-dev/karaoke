@@ -17,7 +17,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Configs
 {
     [TestFixture]
-    public partial class TestSceneLyricGeneratorConfigDialog : OsuTestScene
+    public partial class TestSceneLyricGeneratorConfigPopover : OsuTestScene
     {
         [BackgroundDependencyLoader]
         private void load()
@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Configs
             Dependencies.Cache(config);
         }
 
-        [TestCase(typeof(LanguageDetectorConfigDialog), TestName = nameof(LanguageDetectorConfigDialog))]
-        [TestCase(typeof(NoteGeneratorConfigDialog), TestName = nameof(NoteGeneratorConfigDialog))]
-        [TestCase(typeof(JaRomajiTagGeneratorConfigDialog), TestName = nameof(JaRomajiTagGeneratorConfigDialog))]
-        [TestCase(typeof(JaRubyTagGeneratorConfigDialog), TestName = nameof(JaRubyTagGeneratorConfigDialog))]
-        [TestCase(typeof(JaTimeTagGeneratorConfigDialog), TestName = nameof(JaTimeTagGeneratorConfigDialog))]
-        [TestCase(typeof(ZhTimeTagGeneratorConfigDialog), TestName = nameof(ZhTimeTagGeneratorConfigDialog))]
+        [TestCase(typeof(LanguageDetectorConfigPopover), TestName = nameof(LanguageDetectorConfigPopover))]
+        [TestCase(typeof(NoteGeneratorConfigPopover), TestName = nameof(NoteGeneratorConfigPopover))]
+        [TestCase(typeof(JaRomajiTagGeneratorConfigPopover), TestName = nameof(JaRomajiTagGeneratorConfigPopover))]
+        [TestCase(typeof(JaRubyTagGeneratorConfigPopover), TestName = nameof(JaRubyTagGeneratorConfigPopover))]
+        [TestCase(typeof(JaTimeTagGeneratorConfigPopover), TestName = nameof(JaTimeTagGeneratorConfigPopover))]
+        [TestCase(typeof(ZhTimeTagGeneratorConfigPopover), TestName = nameof(ZhTimeTagGeneratorConfigPopover))]
         public void TestGenerate(Type configType)
         {
             AddStep("Show dialog", () =>
