@@ -3,13 +3,17 @@
 
 using System;
 using System.Globalization;
+using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
 {
     public class LanguageDetectorConfig : GeneratorConfig
     {
-        public CultureInfo[] AcceptLanguages { get; set; } = Array.Empty<CultureInfo>();
+        protected const string CATEGORY_ACCEPT_LANGUAGES = "Accept languages";
 
-        public LanguageDetectorConfig CreateDefaultConfig() => new();
+        // todo: change to the bindablie list.
+        [ConfigCategory(CATEGORY_ACCEPT_LANGUAGES)]
+        [ConfigSource("Accept languages", "All accepted languages.")]
+        public Bindable<CultureInfo[]> AcceptLanguages { get; } = new(Array.Empty<CultureInfo>());
     }
 }
