@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.ReferenceLyric
                 },
                 detectedLyric
             };
-            var config = GeneratorConfig(x => x.IgnorePrefixAndPostfixSymbol = true);
+            var config = GeneratorConfig(x => x.IgnorePrefixAndPostfixSymbol.Value = true);
             CheckCanDetect(lyrics, detectedLyric, canDetect, config);
         }
 

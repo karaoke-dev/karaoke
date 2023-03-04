@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric
             if (lyricText == referencedLyricText)
                 return true;
 
-            if (!Config.IgnorePrefixAndPostfixSymbol)
+            if (!Config.IgnorePrefixAndPostfixSymbol.Value)
                 return false;
 
             // check if contains intersect part between two lyrics.
