@@ -21,7 +21,7 @@ public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TC
 
     protected static TConfig GeneratorDefaultConfig(Action<TConfig>? action = null)
     {
-        var config = new TConfig().CreateDefaultConfig();
+        var config = new TConfig();
         action?.Invoke(config);
         return config;
     }

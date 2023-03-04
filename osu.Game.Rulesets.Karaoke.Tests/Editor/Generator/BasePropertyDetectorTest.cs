@@ -21,7 +21,7 @@ public abstract class BasePropertyDetectorTest<TDetector, TItem, TProperty, TCon
 
     protected static TConfig GeneratorDefaultConfig(Action<TConfig>? action = null)
     {
-        var config = new TConfig().CreateDefaultConfig();
+        var config = new TConfig();
         action?.Invoke(config);
         return config;
     }

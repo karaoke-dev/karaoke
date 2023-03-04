@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
         protected GeneratorConfigSection(Bindable<TConfig> current)
         {
             this.current = current;
-            defaultConfig = new TConfig().CreateDefaultConfig();
+            defaultConfig = new TConfig();
         }
 
         protected void RegisterConfig<TValue>(Bindable<TValue> bindable, string propertyName)
