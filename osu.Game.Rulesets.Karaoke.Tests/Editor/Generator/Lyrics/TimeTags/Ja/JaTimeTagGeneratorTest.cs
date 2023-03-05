@@ -21,11 +21,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
             CheckCanGenerate(text, canGenerate, config);
         }
 
-        [TestCase("か", new[] { "[0,start]:" }, false)]
-        [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
-        public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
+        [TestCase("がんばって", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false)]
+        [TestCase("がんばって", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[4,start]:" }, true)]
+        public void TestGenerateWithCheckWhiteCheckん(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
-            var config = GeneratorConfig(x => x.CheckLineEndKeyUp = applyConfig);
+            var config = GeneratorConfig(x => x.Checkん.Value = applyConfig);
+            CheckGenerateResult(lyric, expectedTimeTags, config);
+        }
+
+        [TestCase("買って", new[] { "[0,start]:", "[2,start]:" }, false)]
+        [TestCase("買って", new[] { "[0,start]:", "[1,start]:", "[2,start]:" }, true)]
+        public void TestGenerateWithCheckっ(string lyric, string[] expectedTimeTags, bool applyConfig)
+        {
+            var config = GeneratorConfig(x => x.Checkっ.Value = applyConfig);
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
 
@@ -33,7 +41,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         [TestCase(" ", new[] { "[0,start]:" }, true)]
         public void TestGenerateWithCheckBlankLine(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
-            var config = GeneratorConfig(x => x.CheckBlankLine = applyConfig);
+            var config = GeneratorConfig(x => x.CheckBlankLine.Value = applyConfig);
+            CheckGenerateResult(lyric, expectedTimeTags, config);
+        }
+
+        [TestCase("か", new[] { "[0,start]:" }, false)]
+        [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
+        public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
+        {
+            var config = GeneratorConfig(x => x.CheckLineEndKeyUp.Value = applyConfig);
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
 
@@ -41,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         [TestCase("か     ", new[] { "[0,start]:", "[1,start]:" }, true)]
         public void TestGenerateWithCheckWhiteSpace(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
-            var config = GeneratorConfig(x => x.CheckWhiteSpace = applyConfig);
+            var config = GeneratorConfig(x => x.CheckWhiteSpace.Value = applyConfig);
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
 
@@ -51,8 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         {
             var config = GeneratorConfig(x =>
             {
-                x.CheckWhiteSpace = true;
-                x.CheckWhiteSpaceKeyUp = applyConfig;
+                x.CheckWhiteSpace.Value = true;
+                x.CheckWhiteSpaceKeyUp.Value = applyConfig;
             });
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
@@ -67,9 +83,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         {
             var config = GeneratorConfig(x =>
             {
-                x.CheckWhiteSpace = true;
-                x.CheckWhiteSpaceAlphabet = applyConfig;
-                x.CheckWhiteSpaceKeyUp = keyUp;
+                x.CheckWhiteSpace.Value = true;
+                x.CheckWhiteSpaceAlphabet.Value = applyConfig;
+                x.CheckWhiteSpaceKeyUp.Value = keyUp;
             });
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
@@ -84,9 +100,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         {
             var config = GeneratorConfig(x =>
             {
-                x.CheckWhiteSpace = true;
-                x.CheckWhiteSpaceDigit = applyConfig;
-                x.CheckWhiteSpaceKeyUp = keyUp;
+                x.CheckWhiteSpace.Value = true;
+                x.CheckWhiteSpaceDigit.Value = applyConfig;
+                x.CheckWhiteSpaceKeyUp.Value = keyUp;
             });
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
@@ -98,26 +114,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Ja
         {
             var config = GeneratorConfig(x =>
             {
-                x.CheckWhiteSpace = true;
-                x.CheckWhiteSpaceAsciiSymbol = applyConfig;
-                x.CheckWhiteSpaceKeyUp = keyUp;
+                x.CheckWhiteSpace.Value = true;
+                x.CheckWhiteSpaceAsciiSymbol.Value = applyConfig;
+                x.CheckWhiteSpaceKeyUp.Value = keyUp;
             });
-            CheckGenerateResult(lyric, expectedTimeTags, config);
-        }
-
-        [TestCase("がんばって", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false)]
-        [TestCase("がんばって", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[4,start]:" }, true)]
-        public void TestGenerateWithCheckWhiteCheckん(string lyric, string[] expectedTimeTags, bool applyConfig)
-        {
-            var config = GeneratorConfig(x => x.Checkん = applyConfig);
-            CheckGenerateResult(lyric, expectedTimeTags, config);
-        }
-
-        [TestCase("買って", new[] { "[0,start]:", "[2,start]:" }, false)]
-        [TestCase("買って", new[] { "[0,start]:", "[1,start]:", "[2,start]:" }, true)]
-        public void TestGenerateWithCheckっ(string lyric, string[] expectedTimeTags, bool applyConfig)
-        {
-            var config = GeneratorConfig(x => x.Checkっ = applyConfig);
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
 

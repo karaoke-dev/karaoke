@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                if (Config.CheckBlankLine)
+                if (Config.CheckBlankLine.Value)
                     timeTags.Add(new TimeTag(new TextIndex(0)));
 
                 return timeTags.ToArray();
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
             // create tag at start of lyric
             timeTags.Add(new TimeTag(new TextIndex(0)));
 
-            if (Config.CheckLineEndKeyUp)
+            if (Config.CheckLineEndKeyUp.Value)
                 timeTags.Add(new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End)));
 
             TimeTagLogic(item, timeTags);

@@ -46,29 +46,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja
                 char c = text[i];
                 char pc = text[i - 1];
 
-                if (CharUtils.IsSpacing(c) && Config.CheckWhiteSpace)
+                if (CharUtils.IsSpacing(c) && Config.CheckWhiteSpace.Value)
                 {
                     // ignore continuous white space.
                     if (CharUtils.IsSpacing(pc))
                         continue;
 
-                    var timeTag = Config.CheckWhiteSpaceKeyUp
+                    var timeTag = Config.CheckWhiteSpaceKeyUp.Value
                         ? new TimeTag(new TextIndex(i - 1, TextIndex.IndexState.End))
                         : new TimeTag(new TextIndex(i));
 
                     if (CharUtils.IsLatin(pc))
                     {
-                        if (Config.CheckWhiteSpaceAlphabet)
+                        if (Config.CheckWhiteSpaceAlphabet.Value)
                             yield return timeTag;
                     }
                     else if (char.IsDigit(pc))
                     {
-                        if (Config.CheckWhiteSpaceDigit)
+                        if (Config.CheckWhiteSpaceDigit.Value)
                             yield return timeTag;
                     }
                     else if (CharUtils.IsAsciiSymbol(pc))
                     {
-                        if (Config.CheckWhiteSpaceAsciiSymbol)
+                        if (Config.CheckWhiteSpaceAsciiSymbol.Value)
                             yield return timeTag;
                     }
                     else
@@ -112,13 +112,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja
                             break;
 
                         case 'ん':
-                            if (Config.Checkん)
+                            if (Config.Checkん.Value)
                                 yield return new TimeTag(new TextIndex(i));
 
                             break;
 
                         case 'っ':
-                            if (Config.Checkっ)
+                            if (Config.Checkっ.Value)
                                 yield return new TimeTag(new TextIndex(i));
 
                             break;
