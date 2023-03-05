@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja
 {
-    public class JaRomajiTagGeneratorConfig : RomajiTagGeneratorConfig, IHasConfig
+    public class JaRomajiTagGeneratorConfig : RomajiTagGeneratorConfig
     {
         /// <summary>
         /// Generate romaji as uppercase.

@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
 {
-    public abstract class TimeTagGeneratorConfig
+    public abstract class TimeTagGeneratorConfig : IHasConfig
     {
         /// <summary>
         /// Will create a <see cref="TimeTag"/> at the first of the lyric if only contains spacing in the <see cref="Lyric"/>.

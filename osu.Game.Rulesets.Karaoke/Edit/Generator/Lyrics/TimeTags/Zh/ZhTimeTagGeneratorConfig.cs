@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh
 {
-    public class ZhTimeTagGeneratorConfig : TimeTagGeneratorConfig, IHasConfig
+    public class ZhTimeTagGeneratorConfig : TimeTagGeneratorConfig
     {
         public ZhTimeTagGeneratorConfig CreateDefaultConfig() => new();
     }

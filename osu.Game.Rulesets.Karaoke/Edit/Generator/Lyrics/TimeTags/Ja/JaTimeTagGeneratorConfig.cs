@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja
 {
-    public class JaTimeTagGeneratorConfig : TimeTagGeneratorConfig, IHasConfig
+    public class JaTimeTagGeneratorConfig : TimeTagGeneratorConfig
     {
         /// <summary>
         /// Add the <see cref="TimeTag"/> if spacing is next of the alphabet.
