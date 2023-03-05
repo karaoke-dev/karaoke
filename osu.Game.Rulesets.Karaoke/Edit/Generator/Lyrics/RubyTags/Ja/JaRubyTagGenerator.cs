@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja
                 // Convert to Hiragana as default.
                 string hiragana = JpStringUtils.ToHiragana(katakana);
 
-                if (!Config.EnableDuplicatedRuby)
+                if (!Config.EnableDuplicatedRuby.Value)
                 {
                     // Not add duplicated ruby if same as parent.
                     string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja
                 // Make tag
                 tags.Add(new RubyTag
                 {
-                    Text = Config.RubyAsKatakana ? katakana : hiragana,
+                    Text = Config.RubyAsKatakana.Value ? katakana : hiragana,
                     StartIndex = offsetAtt.StartOffset,
                     EndIndex = offsetAtt.EndOffset
                 });
