@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -135,10 +137,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyri
                 };
             }
 
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider)
+            [BackgroundDependencyLoader(true)]
+            private void load([CanBeNull] OverlayColourProvider colourProvider)
             {
-                background.Colour = colourProvider.Background3;
+                background.Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125");
             }
 
             public string Text
@@ -168,8 +170,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyri
                 });
             }
 
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider)
+            [BackgroundDependencyLoader(true)]
+            private void load([CanBeNull] OverlayColourProvider colourProvider)
             {
                 Masking = true;
                 CornerRadius = 15;
@@ -178,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyri
                     new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = colourProvider.Background3
+                        Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125")
                     },
                     new Container
                     {
