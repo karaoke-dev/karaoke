@@ -12,7 +12,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Configs;
 
 [TestFixture]
-public partial class TestSceneBeatmapGeneratorConfigDialog : OsuTestScene
+public partial class TestSceneBeatmapGeneratorConfigPopover : OsuTestScene
 {
     [BackgroundDependencyLoader]
     private void load()
@@ -21,7 +21,7 @@ public partial class TestSceneBeatmapGeneratorConfigDialog : OsuTestScene
         Dependencies.Cache(config);
     }
 
-    [TestCase(typeof(PageGeneratorConfigDialog), TestName = nameof(PageGeneratorConfigDialog))]
+    [TestCase(typeof(PageGeneratorConfigPopover), TestName = nameof(PageGeneratorConfigPopover))]
     public void TestGenerate(Type configType)
     {
         AddStep("Show dialog", () =>
