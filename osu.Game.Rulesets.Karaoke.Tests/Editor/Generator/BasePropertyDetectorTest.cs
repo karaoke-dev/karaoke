@@ -15,6 +15,8 @@ public abstract class BasePropertyDetectorTest<TDetector, TItem, TProperty, TCon
     protected static TConfig GeneratorConfig(Action<TConfig>? action = null)
     {
         var config = new TConfig();
+        GeneratorConfigHelper.ClearValue(config);
+
         action?.Invoke(config);
         return config;
     }
@@ -22,6 +24,7 @@ public abstract class BasePropertyDetectorTest<TDetector, TItem, TProperty, TCon
     protected static TConfig GeneratorDefaultConfig(Action<TConfig>? action = null)
     {
         var config = new TConfig();
+
         action?.Invoke(config);
         return config;
     }
