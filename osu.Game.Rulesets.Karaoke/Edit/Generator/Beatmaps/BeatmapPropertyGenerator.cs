@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps
     /// <typeparam name="TProperty"></typeparam>
     /// <typeparam name="TConfig"></typeparam>
     public abstract class BeatmapPropertyGenerator<TProperty, TConfig> : PropertyGenerator<KaraokeBeatmap, TProperty, TConfig>
-        where TConfig : IHasConfig, new()
+        where TConfig : GeneratorConfig, new()
     {
         protected BeatmapPropertyGenerator(TConfig config)
             : base(config)

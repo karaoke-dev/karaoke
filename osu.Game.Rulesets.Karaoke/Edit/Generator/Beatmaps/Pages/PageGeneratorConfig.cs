@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 
-public class PageGeneratorConfig : IHasConfig
+public class PageGeneratorConfig : GeneratorConfig
 {
     public double MinTime { get; set; }
 

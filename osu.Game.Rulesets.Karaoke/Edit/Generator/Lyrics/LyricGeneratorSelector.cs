@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 {
     public abstract class LyricGeneratorSelector<TProperty, TBaseConfig> : PropertyGenerator<Lyric, TProperty>
+        where TBaseConfig : GeneratorConfig
     {
         private Dictionary<CultureInfo, Lazy<PropertyGenerator<Lyric, TProperty>>> generator { get; } = new();
 
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
 
         protected void RegisterGenerator<TGenerator, TConfig>(CultureInfo info)
             where TGenerator : LyricPropertyGenerator<TProperty, TConfig>
-            where TConfig : TBaseConfig, IHasConfig, new()
+            where TConfig : TBaseConfig, new()
         {
             generator.Add(info, new Lazy<PropertyGenerator<Lyric, TProperty>>(() =>
             {

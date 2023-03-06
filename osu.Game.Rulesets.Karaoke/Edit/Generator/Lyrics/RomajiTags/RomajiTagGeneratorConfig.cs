@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags
 {
-    public abstract class RomajiTagGeneratorConfig : IHasConfig
+    public abstract class RomajiTagGeneratorConfig : GeneratorConfig
     {
     }
 }

@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric
 {
-    public class ReferenceLyricDetectorConfig : IHasConfig
+    public class ReferenceLyricDetectorConfig : GeneratorConfig
     {
         public bool IgnorePrefixAndPostfixSymbol { get; set; }
 
