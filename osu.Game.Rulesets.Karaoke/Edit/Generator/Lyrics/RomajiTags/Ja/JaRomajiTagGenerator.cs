@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja
 
                 // Convert to romaji.
                 string romaji = JpStringUtils.ToRomaji(katakana);
-                if (Config.Uppercase)
+                if (Config.Uppercase.Value)
                     romaji = romaji.ToUpper();
 
                 // Make tag

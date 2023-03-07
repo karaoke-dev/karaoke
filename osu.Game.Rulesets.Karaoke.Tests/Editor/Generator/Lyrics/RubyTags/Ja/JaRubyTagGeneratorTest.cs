@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags.Ja
         [TestCase("ハナビ", new string[] { })]
         public void TestGenerateWithRubyAsKatakana(string text, string[] expectedRubies)
         {
-            var config = GeneratorConfig(x => x.RubyAsKatakana = true);
+            var config = GeneratorConfig(x => x.RubyAsKatakana.Value = true);
             CheckGenerateResult(text, expectedRubies, config);
         }
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RubyTags.Ja
         [TestCase("ハナビ", new[] { "[0,3]:はなび" })]
         public void TestGenerateWithEnableDuplicatedRuby(string text, string[] expectedRubies)
         {
-            var config = GeneratorConfig(x => x.EnableDuplicatedRuby = true);
+            var config = GeneratorConfig(x => x.EnableDuplicatedRuby.Value = true);
             CheckGenerateResult(text, expectedRubies, config);
         }
     }

@@ -40,7 +40,7 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
 
         performPageInfoChanged(pageInfo =>
         {
-            if (config.ClearExistPages)
+            if (config.ClearExistPages.Value)
                 pageInfo.Pages.Clear();
 
             pageInfo.Pages.AddRange(pages);

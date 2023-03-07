@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags.Zh
         [TestCase("拉~拉~拉~", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[5,end]:" })]
         public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags)
         {
-            var config = GeneratorConfig(x => x.CheckLineEndKeyUp = true);
+            var config = GeneratorConfig(x => x.CheckLineEndKeyUp.Value = true);
             CheckGenerateResult(lyric, expectedTimeTags, config);
         }
     }

@@ -10,18 +10,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator;
 public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TConfig>
     : BasePropertyGeneratorTest<TGenerator, TItem, TProperty>
     where TGenerator : PropertyGenerator<TItem, TProperty>
-    where TConfig : IHasConfig<TConfig>, new()
+    where TConfig : GeneratorConfig, new()
 {
     protected static TConfig GeneratorConfig(Action<TConfig>? action = null)
     {
         var config = new TConfig();
+        GeneratorConfigHelper.ClearValue(config);
+
         action?.Invoke(config);
         return config;
     }
 
     protected static TConfig GeneratorDefaultConfig(Action<TConfig>? action = null)
     {
-        var config = new TConfig().CreateDefaultConfig();
+        var config = new TConfig();
+
         action?.Invoke(config);
         return config;
     }

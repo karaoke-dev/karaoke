@@ -1,22 +1,27 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 
-public class PageGeneratorConfig : IHasConfig<PageGeneratorConfig>
+public class PageGeneratorConfig : GeneratorConfig
 {
-    public double MinTime { get; set; }
-
-    public double MaxTime { get; set; }
-
-    public bool ClearExistPages { get; set; }
-
-    public PageGeneratorConfig CreateDefaultConfig() => new()
+    [ConfigSource("Min time", "Min interval between pages.")]
+    public Bindable<double> MinTime { get; } = new BindableDouble(CheckBeatmapPageInfo.MIN_INTERVAL)
     {
-        MinTime = CheckBeatmapPageInfo.MIN_INTERVAL,
-        MaxTime = CheckBeatmapPageInfo.MAX_INTERVAL,
-        ClearExistPages = false
+        MinValue = CheckBeatmapPageInfo.MIN_INTERVAL,
+        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL
     };
+
+    [ConfigSource("Max time", "Max interval between pages.")]
+    public Bindable<double> MaxTime { get; } = new BindableDouble(CheckBeatmapPageInfo.MAX_INTERVAL)
+    {
+        MinValue = CheckBeatmapPageInfo.MIN_INTERVAL,
+        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL
+    };
+
+    [ConfigSource("Clear the exist page.", "Clear the exist page after generated.")]
+    public Bindable<bool> ClearExistPages { get; } = new BindableBool();
 }

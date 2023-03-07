@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract partial class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig<TConfig>, new()
+    public abstract partial class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : GeneratorConfig, new()
     {
         private readonly TConfig defaultConfig;
         private readonly Bindable<TConfig> current;
@@ -25,19 +25,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
         protected GeneratorConfigSection(Bindable<TConfig> current)
         {
             this.current = current;
-            defaultConfig = new TConfig().CreateDefaultConfig();
+            defaultConfig = new TConfig();
         }
 
         protected void RegisterConfig<TValue>(Bindable<TValue> bindable, string propertyName)
         {
             // set default value
-            var defaultValue = getConfigValue<TValue>(defaultConfig, propertyName);
+            var defaultValue = getConfigValue<TValue>(defaultConfig, propertyName).Value;
             bindable.Default = defaultValue;
 
             // set current value
             current.BindValueChanged(e =>
             {
-                var currentValue = getConfigValue<TValue>(e.NewValue, propertyName);
+                var currentValue = getConfigValue<TValue>(e.NewValue, propertyName).Value;
                 if (bindable.Value != null && EqualityComparer<TValue>.Default.Equals(currentValue, bindable.Value))
                     return;
 
@@ -73,11 +73,20 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
             });
         }
 
-        private TValue getConfigValue<TValue>(TConfig config, string propertyName)
-            => (TValue)config.GetType().GetProperty(propertyName)?.GetValue(config);
+        private Bindable<TValue> getConfigValue<TValue>(TConfig config, string propertyName)
+            => (Bindable<TValue>)config.GetType().GetProperty(propertyName)?.GetValue(config);
 
         private void setConfigValue(string propertyName, object value)
-            => current.Value.GetType().GetProperty(propertyName)?.SetValue(current.Value, value);
+        {
+            var currentConfig = current.Value;
+
+            var property = current.Value.GetType().GetProperty(propertyName)!;
+            object propertyInstance = property.GetValue(currentConfig, null)!;
+
+            // set the default value to the value.
+            var propertyType = propertyInstance.GetType();
+            propertyType.GetProperty(nameof(Bindable<object>.Value))!.SetValue(propertyInstance, value);
+        }
     }
 
     public abstract partial class GeneratorConfigSection : Container

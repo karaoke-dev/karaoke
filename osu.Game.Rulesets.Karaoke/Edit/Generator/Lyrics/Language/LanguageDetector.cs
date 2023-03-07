@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Localisation;
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
         public LanguageDetector(LanguageDetectorConfig config)
             : base(config)
         {
-            var targetLanguages = config.AcceptLanguages.ToList();
+            var targetLanguages = config.AcceptLanguages.Value ?? Array.Empty<CultureInfo>();
 
             if (targetLanguages.Any())
             {

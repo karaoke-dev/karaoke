@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
@@ -10,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags
 {
     public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseLyricGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
-        where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, IHasConfig<TConfig>, new()
+        where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, new()
     {
         protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
         {

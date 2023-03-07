@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
 {
     public abstract class RubyTagGenerator<TConfig> : LyricPropertyGenerator<RubyTag[], TConfig>
-        where TConfig : RubyTagGeneratorConfig, IHasConfig<TConfig>, new()
+        where TConfig : RubyTagGeneratorConfig, new()
     {
         protected RubyTagGenerator(TConfig config)
             : base(config)
