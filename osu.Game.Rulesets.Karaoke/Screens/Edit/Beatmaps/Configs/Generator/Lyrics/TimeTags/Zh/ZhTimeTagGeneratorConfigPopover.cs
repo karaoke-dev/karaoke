@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.TimeTags.Zh
 {
-    public partial class ZhTimeTagGeneratorConfigPopover : GeneratorConfigPopover<ZhTimeTagGeneratorConfig>
+    public partial class ZhTimeTagGeneratorConfigPopover : LegacyGeneratorConfigPopover<ZhTimeTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig;
 

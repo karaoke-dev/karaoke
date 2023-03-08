@@ -15,11 +15,11 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator
 {
-    public abstract partial class GeneratorConfigPopover<TConfig> : OsuPopover where TConfig : GeneratorConfig, new()
+    public abstract partial class LegacyGeneratorConfigPopover<TConfig> : OsuPopover where TConfig : GeneratorConfig, new()
     {
         private readonly Bindable<TConfig> bindableConfig = new();
 
-        protected GeneratorConfigPopover()
+        protected LegacyGeneratorConfigPopover()
         {
             Child = new OsuScrollContainer
             {

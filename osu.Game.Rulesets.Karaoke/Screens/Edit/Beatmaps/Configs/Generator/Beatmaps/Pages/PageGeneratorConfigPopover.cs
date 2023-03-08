@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Beatmaps.Pages
 {
-    public partial class PageGeneratorConfigPopover : GeneratorConfigPopover<PageGeneratorConfig>
+    public partial class PageGeneratorConfigPopover : LegacyGeneratorConfigPopover<PageGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig;
 
