@@ -41,9 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Time tag generator
             SetDefault(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefaultConfig<JaTimeTagGeneratorConfig>());
             SetDefault(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefaultConfig<ZhTimeTagGeneratorConfig>());
-
-            // Language detection
-            SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
         }
 
         protected static T CreateDefaultConfig<T>() where T : GeneratorConfig, new() => new();
