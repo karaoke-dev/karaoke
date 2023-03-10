@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
             protected partial class ReferenceLyricAutoGenerateConfigButton : ConfigButton
             {
                 public override Popover GetPopover()
-                    => new ReferenceLyricDetectorConfigPopover();
+                    => new GeneratorConfigPopover(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig);
             }
         }
     }

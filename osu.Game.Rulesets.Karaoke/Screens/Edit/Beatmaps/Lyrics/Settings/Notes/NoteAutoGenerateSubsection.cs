@@ -5,10 +5,10 @@
 
 using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
         protected partial class NoteAutoGenerateConfigButton : ConfigButton
         {
             public override Popover GetPopover()
-                => new NoteGeneratorConfigPopover();
+                => new GeneratorConfigPopover(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
         }
     }
 }
