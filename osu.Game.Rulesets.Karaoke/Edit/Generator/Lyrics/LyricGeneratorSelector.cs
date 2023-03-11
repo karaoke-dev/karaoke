@@ -30,10 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
             {
                 var generatorSetting = GetGeneratorConfigSetting(info);
                 var config = generatorConfigManager.Get<TConfig>(generatorSetting);
-                if (Activator.CreateInstance(typeof(TGenerator), config) is not PropertyGenerator<Lyric, TProperty> generator)
+                if (Activator.CreateInstance(typeof(TGenerator), config) is not PropertyGenerator<Lyric, TProperty> propertyGenerator)
                     throw new InvalidCastException();
 
-                return generator;
+                return propertyGenerator;
             }));
         }
 
@@ -44,10 +44,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
             if (item.Language == null)
                 throw new GeneratorNotSupportedException();
 
-            if (!this.generator.TryGetValue(item.Language, out var generator))
+            if (!generator.TryGetValue(item.Language, out var propertyGenerator))
                 throw new GeneratorNotSupportedException();
 
-            return generator.Value.Generate(item);
+            return propertyGenerator.Value.Generate(item);
         }
 
         protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
@@ -58,10 +58,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
             if (string.IsNullOrWhiteSpace(item.Text))
                 return "Should have the text in the lyric";
 
-            if (!this.generator.TryGetValue(item.Language, out var generator))
+            if (!generator.TryGetValue(item.Language, out var propertyGenerator))
                 return "Sorry, the language of lyric is not supported yet.";
 
-            return generator.Value.GetInvalidMessage(item);
+            return propertyGenerator.Value.GetInvalidMessage(item);
         }
     }
 }
