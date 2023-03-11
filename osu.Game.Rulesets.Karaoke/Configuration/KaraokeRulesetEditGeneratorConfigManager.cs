@@ -70,6 +70,12 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                 _ => throw new NotSupportedException()
             };
 
+        public TValue Get<TValue>() where TValue : GeneratorConfig, new()
+        {
+            var lookup = GetSettingByType<TValue>();
+            return Get<TValue>(lookup);
+        }
+
         public GeneratorConfig GetGeneratorConfig(KaraokeRulesetEditGeneratorSetting lookup)
         {
             if (!ConfigStore.TryGetValue(lookup, out IBindable? obj))
