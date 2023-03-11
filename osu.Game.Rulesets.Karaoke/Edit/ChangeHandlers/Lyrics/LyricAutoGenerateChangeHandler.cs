@@ -202,11 +202,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 case Type t when t == typeof(Lyric):
                     var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
-                    var referenceLyricDetectorConfig = generatorConfigManager.Get<ReferenceLyricDetectorConfig>(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig);
+                    var referenceLyricDetectorConfig = generatorConfigManager.Get<ReferenceLyricDetectorConfig>();
                     return (PropertyDetector<Lyric, T>)(object)new ReferenceLyricDetector(lyrics, referenceLyricDetectorConfig);
 
                 case Type t when t == typeof(CultureInfo):
-                    var languageDetectorConfig = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
+                    var languageDetectorConfig = generatorConfigManager.Get<LanguageDetectorConfig>();
                     return (PropertyDetector<Lyric, T>)(object)new LanguageDetector(languageDetectorConfig);
 
                 default:
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     return (PropertyGenerator<Lyric, TProperty>)(object)new TimeTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(Note[]):
-                    var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
+                    var config = generatorConfigManager.Get<NoteGeneratorConfig>();
                     return (PropertyGenerator<Lyric, TProperty>)(object)new NoteGenerator(config);
 
                 default:
