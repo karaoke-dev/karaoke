@@ -48,7 +48,7 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
     }
 
     private PageGeneratorConfig getGeneratorConfig()
-        => generatorConfigManager.Get<PageGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig);
+        => generatorConfigManager.Get<PageGeneratorConfig>();
 
     public void Add(Page page)
     {
