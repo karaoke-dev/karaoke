@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.TimeTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
 {
@@ -36,13 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
                     setting switch
                     {
                         KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig => "Japanese",
-                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
-                    };
-
-                protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
-                    setting switch
-                    {
-                        KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig => new JaTimeTagGeneratorConfigPopover(),
                         _ => throw new ArgumentOutOfRangeException(nameof(setting))
                     };
             }

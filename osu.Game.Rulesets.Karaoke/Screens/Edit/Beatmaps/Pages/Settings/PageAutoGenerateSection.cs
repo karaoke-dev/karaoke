@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
@@ -37,7 +36,7 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
         protected partial class PageAutoGenerateConfigButton : ConfigButton
         {
             public override Popover GetPopover()
-                => new PageGeneratorConfigPopover();
+                => new GeneratorConfigPopover(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig);
         }
 
         private partial class PageAutoGenerateButton : EditorSectionButton

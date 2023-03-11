@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.TimeTags.Ja;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Configs.Generator.Lyrics.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
@@ -59,14 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
                     {
                         KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => "Japanese",
                         KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => "Chinese",
-                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
-                    };
-
-                protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
-                    setting switch
-                    {
-                        KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => new JaTimeTagGeneratorConfigPopover(),
-                        KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => new ZhTimeTagGeneratorConfigPopover(),
                         _ => throw new ArgumentOutOfRangeException(nameof(setting))
                     };
             }

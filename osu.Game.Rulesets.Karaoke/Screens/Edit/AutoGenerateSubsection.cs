@@ -107,19 +107,17 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
             Action = this.ShowPopover;
         }
 
-        public override Popover GetPopover()
+        public sealed override Popover GetPopover()
         {
             if (selectedSetting == null)
                 return createSelectionPopover();
 
-            return GetPopoverBySettingType(selectedSetting.Value);
+            return new GeneratorConfigPopover(selectedSetting.Value);
         }
 
         protected abstract IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings { get; }
 
         protected abstract string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting);
-
-        protected abstract Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting);
 
         private Popover createSelectionPopover()
             => new OsuPopover
