@@ -24,29 +24,51 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Beatmap page
-            SetDefault(KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig, CreateDefaultConfig<PageGeneratorConfig>());
+            SetDefault<PageGeneratorConfig>();
 
             // Language detection
-            SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
+            SetDefault<ReferenceLyricDetectorConfig>();
 
             // Language detection
-            SetDefault(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, CreateDefaultConfig<LanguageDetectorConfig>());
+            SetDefault<LanguageDetectorConfig>();
 
             // Note generator
-            SetDefault(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig, CreateDefaultConfig<NoteGeneratorConfig>());
+            SetDefault<NoteGeneratorConfig>();
 
             // Romaji generator
-            SetDefault(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, CreateDefaultConfig<JaRomajiTagGeneratorConfig>());
+            SetDefault<JaRomajiTagGeneratorConfig>();
 
             // Ruby generator
-            SetDefault(KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig, CreateDefaultConfig<JaRubyTagGeneratorConfig>());
+            SetDefault<JaRubyTagGeneratorConfig>();
 
             // Time tag generator
-            SetDefault(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefaultConfig<JaTimeTagGeneratorConfig>());
-            SetDefault(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefaultConfig<ZhTimeTagGeneratorConfig>());
+            SetDefault<JaTimeTagGeneratorConfig>();
+            SetDefault<ZhTimeTagGeneratorConfig>();
+        }
+
+        protected void SetDefault<T>() where T : GeneratorConfig, new()
+        {
+            var defaultValue = CreateDefaultConfig<T>();
+            var setting = GetSettingByType<T>();
+
+            SetDefault(setting, defaultValue);
         }
 
         protected static T CreateDefaultConfig<T>() where T : GeneratorConfig, new() => new();
+
+        protected static KaraokeRulesetEditGeneratorSetting GetSettingByType<TValue>() =>
+            typeof(TValue) switch
+            {
+                Type t when t == typeof(PageGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig,
+                Type t when t == typeof(ReferenceLyricDetectorConfig) => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig,
+                Type t when t == typeof(LanguageDetectorConfig) => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig,
+                Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
+                Type t when t == typeof(JaRomajiTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig,
+                Type t when t == typeof(JaRubyTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
+                Type t when t == typeof(JaTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
+                Type t when t == typeof(ZhTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
+                _ => throw new NotSupportedException()
+            };
 
         public GeneratorConfig GetGeneratorConfig(KaraokeRulesetEditGeneratorSetting lookup)
         {
