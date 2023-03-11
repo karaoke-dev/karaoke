@@ -28,16 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
         {
             generator.Add(info, new Lazy<PropertyGenerator<Lyric, TProperty>>(() =>
             {
-                var generatorSetting = GetGeneratorConfigSetting(info);
-                var config = generatorConfigManager.Get<TConfig>(generatorSetting);
+                var config = generatorConfigManager.Get<TConfig>();
                 if (Activator.CreateInstance(typeof(TGenerator), config) is not PropertyGenerator<Lyric, TProperty> propertyGenerator)
                     throw new InvalidCastException();
 
                 return propertyGenerator;
             }));
         }
-
-        protected abstract KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info);
 
         protected override TProperty GenerateFromItem(Lyric item)
         {

@@ -16,8 +16,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags
             RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(17));
             RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
         }
-
-        protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info)
-            => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig;
     }
 }

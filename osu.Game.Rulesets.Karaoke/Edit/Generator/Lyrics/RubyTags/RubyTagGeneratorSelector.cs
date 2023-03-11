@@ -16,8 +16,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
             RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(17));
             RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
         }
-
-        protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info)
-            => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig;
     }
 }
