@@ -20,9 +20,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
         private LabelledSwitchButton scorable;
         private LabelledSingerList singerList;
 
+        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
         public KaraokeSetupSection()
             : base(new KaraokeRuleset().RulesetInfo)
         {
+            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
         }
 
         [BackgroundDependencyLoader]

@@ -37,14 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
 
         private static void attachShaders(ShaderManager shaderManager, IEnumerable<ICustomizedShader> shaders)
         {
+            // TODO: StepShader should not inherit from ICustomizedShader
             foreach (var shader in shaders)
             {
                 switch (shader)
                 {
-                    case InternalShader internalShader:
-                        shaderManager.AttachShader(internalShader);
-                        break;
-
                     case StepShader stepShader:
                         attachShaders(shaderManager, stepShader.StepShaders.ToArray());
                         break;
@@ -53,7 +50,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
                         throw new InvalidCastException("shader cannot be null.");
 
                     default:
-                        throw new InvalidCastException($"{shader.GetType()} cannot attach shader.");
+                        shaderManager.AttachShader(shader);
+                        break;
                 }
             }
         }

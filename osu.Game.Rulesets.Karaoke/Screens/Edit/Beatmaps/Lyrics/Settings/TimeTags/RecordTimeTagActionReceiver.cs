@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
         {
             var caretPosition = lyricCaretState.CaretPosition;
             if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
-                throw new NotSupportedException(nameof(caretPosition));
+                throw new NotSupportedException(caretPosition?.GetType().Name ?? "(null)");
 
             var currentTimeTag = timeTagCaretPosition.TimeTag;
 
