@@ -6,45 +6,44 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
+
+public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricLanguageChangeHandler>
 {
-    public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricLanguageChangeHandler>
+    [Test]
+    public void TestSetLanguageToJapanese()
     {
-        [Test]
-        public void TestSetLanguageToJapanese()
+        var language = new CultureInfo("ja");
+        PrepareHitObject(new Lyric());
+
+        TriggerHandlerChanged(c => c.SetLanguage(language));
+
+        AssertSelectedHitObject(h =>
         {
-            var language = new CultureInfo("ja");
-            PrepareHitObject(new Lyric());
+            Assert.AreEqual(language, h.Language);
+        });
+    }
 
-            TriggerHandlerChanged(c => c.SetLanguage(language));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(language, h.Language);
-            });
-        }
-
-        [Test]
-        public void TestSetLanguageToNull()
+    [Test]
+    public void TestSetLanguageToNull()
+    {
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "???"
-            });
+            Text = "???"
+        });
 
-            TriggerHandlerChanged(c => c.SetLanguage(null));
+        TriggerHandlerChanged(c => c.SetLanguage(null));
 
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsNull(h.Language);
-            });
-        }
-
-        [Test]
-        public void TestSetLanguageWithReferenceLyric()
+        AssertSelectedHitObject(h =>
         {
-            PrepareLyricWithSyncConfig(new Lyric());
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.SetLanguage(new CultureInfo("ja")));
-        }
+            Assert.IsNull(h.Language);
+        });
+    }
+
+    [Test]
+    public void TestSetLanguageWithReferenceLyric()
+    {
+        PrepareLyricWithSyncConfig(new Lyric());
+        TriggerHandlerChangedWithChangeForbiddenException(c => c.SetLanguage(new CultureInfo("ja")));
     }
 }

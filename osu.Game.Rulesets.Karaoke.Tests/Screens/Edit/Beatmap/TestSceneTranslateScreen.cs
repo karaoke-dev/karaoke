@@ -12,44 +12,43 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
+
+[TestFixture]
+public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<TranslateScreen>
 {
-    [TestFixture]
-    public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<TranslateScreen>
+    protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+    protected override TranslateScreen CreateEditorScreen() => new();
+
+    protected override KaraokeBeatmap CreateBeatmap()
     {
-        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+        var karaokeBeatmap = base.CreateBeatmap();
 
-        protected override TranslateScreen CreateEditorScreen() => new();
-
-        protected override KaraokeBeatmap CreateBeatmap()
+        karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
         {
-            var karaokeBeatmap = base.CreateBeatmap();
+            new("zh-TW"),
+            new("en-US"),
+            new("ja-JP")
+        };
 
-            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
-            {
-                new("zh-TW"),
-                new("en-US"),
-                new("ja-JP")
-            };
+        return karaokeBeatmap;
+    }
 
-            return karaokeBeatmap;
-        }
+    private DialogOverlay dialogOverlay = null!;
+    private LyricsProvider lyricsProvider = null!;
 
-        private DialogOverlay dialogOverlay = null!;
-        private LyricsProvider lyricsProvider = null!;
-
-        [BackgroundDependencyLoader]
-        private void load()
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        base.Content.AddRange(new Drawable[]
         {
-            base.Content.AddRange(new Drawable[]
-            {
-                Content,
-                dialogOverlay = new DialogOverlay(),
-                lyricsProvider = new LyricsProvider()
-            });
+            Content,
+            dialogOverlay = new DialogOverlay(),
+            lyricsProvider = new LyricsProvider()
+        });
 
-            Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
-            Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-        }
+        Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
+        Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
     }
 }

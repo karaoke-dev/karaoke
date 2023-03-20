@@ -7,107 +7,106 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes;
+
+public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<NotesChangeHandler, Note>
 {
-    public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<NotesChangeHandler, Note>
+    [Test]
+    public void TestSplit()
     {
-        [Test]
-        public void TestSplit()
+        PrepareHitObject(new Note
         {
-            PrepareHitObject(new Note
-            {
-                Text = "カラオケ",
-                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000)
-            });
+            Text = "カラオケ",
+            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000)
+        });
 
-            TriggerHandlerChanged(c => c.Split());
+        TriggerHandlerChanged(c => c.Split());
 
-            AssertHitObjects(notes =>
-            {
-                var actualNotes = notes.ToArray();
-                Assert.AreEqual(2, actualNotes.Length);
-
-                var firstNote = actualNotes[0];
-                var secondNote = actualNotes[1];
-
-                Assert.AreSame(firstNote.ReferenceLyric, secondNote.ReferenceLyric);
-
-                Assert.AreEqual("カラオケ", firstNote.Text);
-                Assert.AreEqual(1000, firstNote.StartTime);
-                Assert.AreEqual(500, firstNote.Duration);
-
-                Assert.AreEqual("カラオケ", secondNote.Text);
-                Assert.AreEqual(1500, secondNote.StartTime);
-                Assert.AreEqual(500, secondNote.Duration);
-            });
-        }
-
-        [Test]
-        public void TestCombine()
+        AssertHitObjects(notes =>
         {
-            var lyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000);
+            var actualNotes = notes.ToArray();
+            Assert.AreEqual(2, actualNotes.Length);
 
-            // note that lyric and notes should in the selection.
-            PrepareHitObject(lyric);
-            PrepareHitObjects(new[]
-            {
-                new Note
-                {
-                    Text = "カラ",
-                    RubyText = "から",
-                    ReferenceLyric = lyric,
-                    ReferenceTimeTagIndex = 0
-                },
-                new Note
-                {
-                    Text = "オケ",
-                    RubyText = "おけ",
-                    ReferenceLyric = lyric,
-                    ReferenceTimeTagIndex = 0
-                }
-            });
+            var firstNote = actualNotes[0];
+            var secondNote = actualNotes[1];
 
-            TriggerHandlerChanged(c => c.Combine());
+            Assert.AreSame(firstNote.ReferenceLyric, secondNote.ReferenceLyric);
 
-            AssertHitObjects(notes =>
-            {
-                var actualNotes = notes.ToArray();
-                Assert.AreEqual(1, actualNotes.Length);
+            Assert.AreEqual("カラオケ", firstNote.Text);
+            Assert.AreEqual(1000, firstNote.StartTime);
+            Assert.AreEqual(500, firstNote.Duration);
 
-                var combinedNote = actualNotes.First();
-                Assert.AreEqual("カラ", combinedNote.Text);
-                Assert.AreEqual("から", combinedNote.RubyText);
-                Assert.AreEqual(1000, combinedNote.StartTime);
-                Assert.AreEqual(1000, combinedNote.Duration);
-            });
-        }
+            Assert.AreEqual("カラオケ", secondNote.Text);
+            Assert.AreEqual(1500, secondNote.StartTime);
+            Assert.AreEqual(500, secondNote.Duration);
+        });
+    }
 
-        [Test]
-        public void TestClear()
+    [Test]
+    public void TestCombine()
+    {
+        var lyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000);
+
+        // note that lyric and notes should in the selection.
+        PrepareHitObject(lyric);
+        PrepareHitObjects(new[]
         {
-            var lyric = new Lyric();
-
-            // note that lyric and notes should in the selection.
-            PrepareHitObject(lyric);
-            PrepareHitObjects(new[]
+            new Note
             {
-                new Note
-                {
-                    Text = "カラ",
-                    RubyText = "から",
-                    ReferenceLyric = lyric,
-                },
-                new Note
-                {
-                    Text = "オケ",
-                    RubyText = "おけ",
-                    ReferenceLyric = lyric,
-                }
-            }, false);
+                Text = "カラ",
+                RubyText = "から",
+                ReferenceLyric = lyric,
+                ReferenceTimeTagIndex = 0
+            },
+            new Note
+            {
+                Text = "オケ",
+                RubyText = "おけ",
+                ReferenceLyric = lyric,
+                ReferenceTimeTagIndex = 0
+            }
+        });
 
-            TriggerHandlerChanged(c => c.Clear());
+        TriggerHandlerChanged(c => c.Combine());
 
-            AssertHitObjects(Assert.IsEmpty);
-        }
+        AssertHitObjects(notes =>
+        {
+            var actualNotes = notes.ToArray();
+            Assert.AreEqual(1, actualNotes.Length);
+
+            var combinedNote = actualNotes.First();
+            Assert.AreEqual("カラ", combinedNote.Text);
+            Assert.AreEqual("から", combinedNote.RubyText);
+            Assert.AreEqual(1000, combinedNote.StartTime);
+            Assert.AreEqual(1000, combinedNote.Duration);
+        });
+    }
+
+    [Test]
+    public void TestClear()
+    {
+        var lyric = new Lyric();
+
+        // note that lyric and notes should in the selection.
+        PrepareHitObject(lyric);
+        PrepareHitObjects(new[]
+        {
+            new Note
+            {
+                Text = "カラ",
+                RubyText = "から",
+                ReferenceLyric = lyric,
+            },
+            new Note
+            {
+                Text = "オケ",
+                RubyText = "おけ",
+                ReferenceLyric = lyric,
+            }
+        }, false);
+
+        TriggerHandlerChanged(c => c.Clear());
+
+        AssertHitObjects(Assert.IsEmpty);
     }
 }

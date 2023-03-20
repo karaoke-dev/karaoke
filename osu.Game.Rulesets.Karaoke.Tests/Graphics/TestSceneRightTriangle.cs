@@ -12,46 +12,45 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
+namespace osu.Game.Rulesets.Karaoke.Tests.Graphics;
+
+public partial class TestSceneRightTriangle : OsuTestScene
 {
-    public partial class TestSceneRightTriangle : OsuTestScene
+    private RightTriangle rightTriangle = null!;
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
     {
-        private RightTriangle rightTriangle = null!;
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        Child = new Container
         {
-            Child = new Container
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            AutoSizeAxes = Axes.Both,
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                AutoSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                new Box
                 {
-                    new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colours.Gray4,
-                    },
-                    rightTriangle = new RightTriangle
-                    {
-                        Size = new Vector2(100),
-                        Colour = colours.Yellow
-                    }
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = colours.Gray4,
+                },
+                rightTriangle = new RightTriangle
+                {
+                    Size = new Vector2(100),
+                    Colour = colours.Yellow
                 }
-            };
-        }
-
-        [Test]
-        public void TestRightAngleDirections()
-        {
-            foreach (var direction in Enum.GetValues<TriangleRightAngleDirection>())
-            {
-                AddStep($"Test direction {direction}", () =>
-                {
-                    rightTriangle.RightAngleDirection = direction;
-                });
             }
+        };
+    }
+
+    [Test]
+    public void TestRightAngleDirections()
+    {
+        foreach (var direction in Enum.GetValues<TriangleRightAngleDirection>())
+        {
+            AddStep($"Test direction {direction}", () =>
+            {
+                rightTriangle.RightAngleDirection = direction;
+            });
         }
     }
 }

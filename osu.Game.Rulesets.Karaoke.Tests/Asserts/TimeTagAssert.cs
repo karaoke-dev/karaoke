@@ -5,24 +5,23 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
+namespace osu.Game.Rulesets.Karaoke.Tests.Asserts;
+
+public class TimeTagAssert : Assert
 {
-    public class TimeTagAssert : Assert
+    public static void ArePropertyEqual(IList<TimeTag> expected, IList<TimeTag> actual)
     {
-        public static void ArePropertyEqual(IList<TimeTag> expected, IList<TimeTag> actual)
-        {
-            AreEqual(expected.Count, actual.Count);
+        AreEqual(expected.Count, actual.Count);
 
-            for (int i = 0; i < expected.Count; i++)
-            {
-                ArePropertyEqual(expected[i], actual[i]);
-            }
-        }
-
-        public static void ArePropertyEqual(TimeTag expect, TimeTag actually)
+        for (int i = 0; i < expected.Count; i++)
         {
-            AreEqual(expect.Index, actually.Index);
-            AreEqual(expect.Time, actually.Time);
+            ArePropertyEqual(expected[i], actual[i]);
         }
+    }
+
+    public static void ArePropertyEqual(TimeTag expect, TimeTag actually)
+    {
+        AreEqual(expect.Index, actually.Index);
+        AreEqual(expect.Time, actually.Time);
     }
 }

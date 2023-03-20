@@ -11,42 +11,41 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens;
+
+public partial class TestManageFontPreview : OsuTestScene
 {
-    public partial class TestManageFontPreview : OsuTestScene
+    private readonly NowPlayingOverlay np;
+
+    public TestManageFontPreview()
     {
-        private readonly NowPlayingOverlay np;
+        Clock = new FramedClock();
+        Clock.ProcessFrame();
 
-        public TestManageFontPreview()
+        Add(np = new NowPlayingOverlay
         {
-            Clock = new FramedClock();
-            Clock.ProcessFrame();
+            Origin = Anchor.TopRight,
+            Anchor = Anchor.TopRight,
+        });
+    }
 
-            Add(np = new NowPlayingOverlay
-            {
-                Origin = Anchor.TopRight,
-                Anchor = Anchor.TopRight,
-            });
-        }
+    [BackgroundDependencyLoader]
+    private void load(GameHost host)
+    {
+        var resources = new KaraokeRuleset().CreateResourceStore();
+        var textureStore = new TextureStore(host.Renderer, host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
+        Dependencies.CacheAs(textureStore);
 
-        [BackgroundDependencyLoader]
-        private void load(GameHost host)
+        Add(new ManageFontPreview
         {
-            var resources = new KaraokeRuleset().CreateResourceStore();
-            var textureStore = new TextureStore(host.Renderer, host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
-            Dependencies.CacheAs(textureStore);
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+        });
+    }
 
-            Add(new ManageFontPreview
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-            });
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            np.ToggleVisibility();
-        }
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        np.ToggleVisibility();
     }
 }

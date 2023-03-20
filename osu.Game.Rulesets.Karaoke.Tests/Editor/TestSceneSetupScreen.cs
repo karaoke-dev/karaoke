@@ -11,45 +11,44 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Setup;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor;
+
+[TestFixture]
+public partial class TestSceneSetupScreen : EditorClockTestScene
 {
-    [TestFixture]
-    public partial class TestSceneSetupScreen : EditorClockTestScene
+    [Cached(typeof(EditorBeatmap))]
+    [Cached(typeof(IBeatSnapProvider))]
+    private readonly EditorBeatmap editorBeatmap;
+
+    [Cached]
+    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
+
+    public TestSceneSetupScreen()
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
-
-        [Cached]
-        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
-
-        public TestSceneSetupScreen()
+        editorBeatmap = new EditorBeatmap(new KaraokeBeatmap
         {
-            editorBeatmap = new EditorBeatmap(new KaraokeBeatmap
+            BeatmapInfo =
             {
-                BeatmapInfo =
-                {
-                    Ruleset = new KaraokeRuleset().RulesetInfo,
-                },
-            });
-        }
+                Ruleset = new KaraokeRuleset().RulesetInfo,
+            },
+        });
+    }
 
-        [Test]
-        public void TestKaraoke() => runForRuleset(new KaraokeRuleset().RulesetInfo);
+    [Test]
+    public void TestKaraoke() => runForRuleset(new KaraokeRuleset().RulesetInfo);
 
-        private void runForRuleset(RulesetInfo rulesetInfo)
+    private void runForRuleset(RulesetInfo rulesetInfo)
+    {
+        AddStep("create screen", () =>
         {
-            AddStep("create screen", () =>
+            editorBeatmap.BeatmapInfo.Ruleset = rulesetInfo;
+
+            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+
+            Child = new SetupScreen
             {
-                editorBeatmap.BeatmapInfo.Ruleset = rulesetInfo;
-
-                Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-
-                Child = new SetupScreen
-                {
-                    State = { Value = Visibility.Visible },
-                };
-            });
-        }
+                State = { Value = Visibility.Visible },
+            };
+        });
     }
 }

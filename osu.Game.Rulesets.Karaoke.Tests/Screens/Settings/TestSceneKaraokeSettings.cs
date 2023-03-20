@@ -4,11 +4,10 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Settings;
+
+[TestFixture]
+public partial class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>
 {
-    [TestFixture]
-    public partial class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>
-    {
-        protected override KaraokeSettings CreateScreen() => new();
-    }
+    protected override KaraokeSettings CreateScreen() => new();
 }

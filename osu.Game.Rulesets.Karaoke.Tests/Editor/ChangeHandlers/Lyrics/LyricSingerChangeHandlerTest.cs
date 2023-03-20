@@ -8,162 +8,161 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
+
+public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricSingerChangeHandler>
 {
-    public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricSingerChangeHandler>
+    [Test]
+    public void TestAdd()
     {
-        [Test]
-        public void TestAdd()
+        var singer = new Singer(1)
         {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            PrepareHitObject(new Lyric());
+            Name = "Singer1",
+        };
+        PrepareHitObject(new Lyric());
 
+        TriggerHandlerChanged(c => c.Add(singer));
+
+        AssertSelectedHitObject(h =>
+        {
+            var singers = h.Singers;
+            Assert.AreEqual(1, singers.Count);
+            Assert.AreEqual(singer.ID, singers.FirstOrDefault());
+        });
+    }
+
+    [Test]
+    public void TestAddRange()
+    {
+        var singer = new Singer(1)
+        {
+            Name = "Singer1",
+        };
+        PrepareHitObject(new Lyric());
+
+        TriggerHandlerChanged(c => c.AddRange(new[] { singer }));
+
+        AssertSelectedHitObject(h =>
+        {
+            var singers = h.Singers;
+            Assert.AreEqual(1, singers.Count);
+            Assert.AreEqual(singer.ID, singers.FirstOrDefault());
+        });
+    }
+
+    [Test]
+    public void TestRemove()
+    {
+        var singer = new Singer(1)
+        {
+            Name = "Singer1",
+        };
+        var anotherSinger = new Singer(2)
+        {
+            Name = "Another singer",
+        };
+        PrepareHitObject(new Lyric
+        {
+            Singers = new[]
+            {
+                singer.ID,
+                anotherSinger.ID,
+            }
+        });
+
+        TriggerHandlerChanged(c => c.Remove(singer));
+
+        AssertSelectedHitObject(h =>
+        {
+            var singers = h.Singers;
+
+            // should not contains removed singer.
+            Assert.IsFalse(singers.Contains(singer.ID));
+
+            // should only contain remain singer.
+            Assert.AreEqual(1, singers.Count);
+            Assert.IsTrue(singers.Contains(anotherSinger.ID));
+        });
+    }
+
+    [Test]
+    public void TestRemoveRange()
+    {
+        var singer = new Singer(1)
+        {
+            Name = "Singer1",
+        };
+        var anotherSinger = new Singer(2)
+        {
+            Name = "Another singer",
+        };
+        PrepareHitObject(new Lyric
+        {
+            Singers = new[]
+            {
+                singer.ID,
+                anotherSinger.ID,
+            }
+        });
+
+        TriggerHandlerChanged(c => c.RemoveRange(new[] { singer }));
+
+        AssertSelectedHitObject(h =>
+        {
+            var singers = h.Singers;
+
+            // should not contains removed singer.
+            Assert.IsFalse(singers.Contains(singer.ID));
+
+            // should only contain remain singer.
+            Assert.AreEqual(1, singers.Count);
+            Assert.IsTrue(singers.Contains(anotherSinger.ID));
+        });
+    }
+
+    [Test]
+    public void TestClear()
+    {
+        var singer = new Singer(1)
+        {
+            Name = "Singer1",
+        };
+        PrepareHitObject(new Lyric
+        {
+            Singers = new[]
+            {
+                singer.ID,
+            }
+        });
+
+        TriggerHandlerChanged(c => c.Clear());
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsEmpty(h.Singers);
+        });
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void TestWithReferenceLyric(bool syncSinger)
+    {
+        var singer = new Singer(1)
+        {
+            Name = "Singer1",
+        };
+        PrepareLyricWithSyncConfig(new Lyric(), new SyncLyricConfig
+        {
+            SyncSingerProperty = syncSinger
+        });
+
+        if (syncSinger)
+        {
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(singer));
+        }
+        else
+        {
             TriggerHandlerChanged(c => c.Add(singer));
-
-            AssertSelectedHitObject(h =>
-            {
-                var singers = h.Singers;
-                Assert.AreEqual(1, singers.Count);
-                Assert.AreEqual(singer.ID, singers.FirstOrDefault());
-            });
-        }
-
-        [Test]
-        public void TestAddRange()
-        {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            PrepareHitObject(new Lyric());
-
-            TriggerHandlerChanged(c => c.AddRange(new[] { singer }));
-
-            AssertSelectedHitObject(h =>
-            {
-                var singers = h.Singers;
-                Assert.AreEqual(1, singers.Count);
-                Assert.AreEqual(singer.ID, singers.FirstOrDefault());
-            });
-        }
-
-        [Test]
-        public void TestRemove()
-        {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            var anotherSinger = new Singer(2)
-            {
-                Name = "Another singer",
-            };
-            PrepareHitObject(new Lyric
-            {
-                Singers = new[]
-                {
-                    singer.ID,
-                    anotherSinger.ID,
-                }
-            });
-
-            TriggerHandlerChanged(c => c.Remove(singer));
-
-            AssertSelectedHitObject(h =>
-            {
-                var singers = h.Singers;
-
-                // should not contains removed singer.
-                Assert.IsFalse(singers.Contains(singer.ID));
-
-                // should only contain remain singer.
-                Assert.AreEqual(1, singers.Count);
-                Assert.IsTrue(singers.Contains(anotherSinger.ID));
-            });
-        }
-
-        [Test]
-        public void TestRemoveRange()
-        {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            var anotherSinger = new Singer(2)
-            {
-                Name = "Another singer",
-            };
-            PrepareHitObject(new Lyric
-            {
-                Singers = new[]
-                {
-                    singer.ID,
-                    anotherSinger.ID,
-                }
-            });
-
-            TriggerHandlerChanged(c => c.RemoveRange(new[] { singer }));
-
-            AssertSelectedHitObject(h =>
-            {
-                var singers = h.Singers;
-
-                // should not contains removed singer.
-                Assert.IsFalse(singers.Contains(singer.ID));
-
-                // should only contain remain singer.
-                Assert.AreEqual(1, singers.Count);
-                Assert.IsTrue(singers.Contains(anotherSinger.ID));
-            });
-        }
-
-        [Test]
-        public void TestClear()
-        {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            PrepareHitObject(new Lyric
-            {
-                Singers = new[]
-                {
-                    singer.ID,
-                }
-            });
-
-            TriggerHandlerChanged(c => c.Clear());
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsEmpty(h.Singers);
-            });
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void TestWithReferenceLyric(bool syncSinger)
-        {
-            var singer = new Singer(1)
-            {
-                Name = "Singer1",
-            };
-            PrepareLyricWithSyncConfig(new Lyric(), new SyncLyricConfig
-            {
-                SyncSingerProperty = syncSinger
-            });
-
-            if (syncSinger)
-            {
-                TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(singer));
-            }
-            else
-            {
-                TriggerHandlerChanged(c => c.Add(singer));
-            }
         }
     }
 }

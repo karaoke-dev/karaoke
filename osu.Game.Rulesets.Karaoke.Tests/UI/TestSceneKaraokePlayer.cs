@@ -6,13 +6,12 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.UI
-{
-    [TestFixture]
-    public partial class TestSceneKaraokePlayer : PlayerTestScene
-    {
-        protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
+namespace osu.Game.Rulesets.Karaoke.Tests.UI;
 
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-    }
+[TestFixture]
+public partial class TestSceneKaraokePlayer : PlayerTestScene
+{
+    protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
+
+    protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 }

@@ -7,36 +7,35 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricText;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+[TestFixture]
+public class CheckLyricTextTest : HitObjectCheckTest<Lyric, CheckLyricText>
 {
-    [TestFixture]
-    public class CheckLyricTextTest : HitObjectCheckTest<Lyric, CheckLyricText>
+    [TestCase("karaoke")]
+    [TestCase("k")] // not limit min size for now.
+    [TestCase("カラオケ")] // not limit language.
+    public void TestCheck(string text)
     {
-        [TestCase("karaoke")]
-        [TestCase("k")] // not limit min size for now.
-        [TestCase("カラオケ")] // not limit language.
-        public void TestCheck(string text)
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Text = text
-            };
+            Text = text
+        };
 
-            AssertOk(lyric);
-        }
+        AssertOk(lyric);
+    }
 
-        [TestCase(" ")] // but should not be empty or white space.
-        [TestCase("　")] // but should not be empty or white space.
-        [TestCase("")]
-        [TestCase(null)]
-        public void TestCheckNoText(string text)
+    [TestCase(" ")] // but should not be empty or white space.
+    [TestCase("　")] // but should not be empty or white space.
+    [TestCase("")]
+    [TestCase(null)]
+    public void TestCheckNoText(string text)
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Text = text
-            };
+            Text = text
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricNoText>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricNoText>(lyric);
     }
 }

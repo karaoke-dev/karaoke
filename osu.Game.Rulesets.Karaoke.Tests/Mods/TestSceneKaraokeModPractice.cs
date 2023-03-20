@@ -8,26 +8,25 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
-{
-    public partial class TestSceneKaraokeModPractice : KaraokeModTestScene
-    {
-        [Test]
-        public void TestAllPanelExist() => CreateModTest(new ModTestData
-        {
-            Mod = new KaraokeModPractice(),
-            Autoplay = false,
-            Beatmap = new TestKaraokeBeatmap(new RulesetInfo()),
-            PassCondition = () =>
-            {
-                // just need to check has setting button display area.
-                var skinnableTargetContainers = Player.HUDOverlay.OfType<ISerialisableDrawableContainer>().FirstOrDefault();
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-                // todo: because setting buttons display created from skin transform , so might not able to get from here.
-                var hud = skinnableTargetContainers?.Components.OfType<SettingButtonsDisplay>().FirstOrDefault();
-                return true;
-                //return hud != null;
-            }
-        });
-    }
+public partial class TestSceneKaraokeModPractice : KaraokeModTestScene
+{
+    [Test]
+    public void TestAllPanelExist() => CreateModTest(new ModTestData
+    {
+        Mod = new KaraokeModPractice(),
+        Autoplay = false,
+        Beatmap = new TestKaraokeBeatmap(new RulesetInfo()),
+        PassCondition = () =>
+        {
+            // just need to check has setting button display area.
+            var skinnableTargetContainers = Player.HUDOverlay.OfType<ISerialisableDrawableContainer>().FirstOrDefault();
+
+            // todo: because setting buttons display created from skin transform , so might not able to get from here.
+            var hud = skinnableTargetContainers?.Components.OfType<SettingButtonsDisplay>().FirstOrDefault();
+            return true;
+            //return hud != null;
+        }
+    });
 }

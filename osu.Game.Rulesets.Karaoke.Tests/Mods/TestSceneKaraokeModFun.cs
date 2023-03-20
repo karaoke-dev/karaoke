@@ -5,26 +5,25 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
-{
-    public partial class TestSceneKaraokeModFun : KaraokeModTestScene
-    {
-        [Test]
-        public void TestSnowMod() => CreateModTest(new ModTestData
-        {
-            Mod = new KaraokeModSnow(),
-            Autoplay = false,
-            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () => true
-        });
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-        [Test]
-        public void TestWindowsUpdateMod() => CreateModTest(new ModTestData
-        {
-            Mod = new KaraokeModWindowsUpdate(),
-            Autoplay = false,
-            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () => true
-        });
-    }
+public partial class TestSceneKaraokeModFun : KaraokeModTestScene
+{
+    [Test]
+    public void TestSnowMod() => CreateModTest(new ModTestData
+    {
+        Mod = new KaraokeModSnow(),
+        Autoplay = false,
+        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        PassCondition = () => true
+    });
+
+    [Test]
+    public void TestWindowsUpdateMod() => CreateModTest(new ModTestData
+    {
+        Mod = new KaraokeModWindowsUpdate(),
+        Autoplay = false,
+        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        PassCondition = () => true
+    });
 }

@@ -15,92 +15,91 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+/// <summary>
+/// A test scene for skinnable karaoke components.
+/// </summary>
+public abstract partial class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
 {
-    /// <summary>
-    /// A test scene for skinnable karaoke components.
-    /// </summary>
-    public abstract partial class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
+    protected const double START_TIME = 1000000000;
+    protected const double DURATION = 1000000000;
+
+    protected const int COLUMNS = 9;
+
+    [Cached(typeof(IScrollingInfo))]
+    private readonly TestScrollingInfo scrollingInfo = new();
+
+    [Cached(typeof(INotePositionInfo))]
+    private readonly PreviewNotePositionInfo notePositionInfo = new();
+
+    protected KaraokeSkinnableColumnTestScene()
     {
-        protected const double START_TIME = 1000000000;
-        protected const double DURATION = 1000000000;
+        scrollingInfo.Direction.Value = ScrollingDirection.Left;
 
-        protected const int COLUMNS = 9;
-
-        [Cached(typeof(IScrollingInfo))]
-        private readonly TestScrollingInfo scrollingInfo = new();
-
-        [Cached(typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new();
-
-        protected KaraokeSkinnableColumnTestScene()
+        Add(new Box
         {
-            scrollingInfo.Direction.Value = ScrollingDirection.Left;
+            RelativeSizeAxes = Axes.Both,
+            Colour = Color4.SlateGray.Opacity(0.2f),
+            Depth = 1
+        });
+    }
 
-            Add(new Box
-            {
-                RelativeSizeAxes = Axes.Both,
-                Colour = Color4.SlateGray.Opacity(0.2f),
-                Depth = 1
-            });
-        }
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        // Cache session because karaoke input manager need it.
+        var config = Dependencies.Get<KaraokeRulesetConfigManager>();
+        var session = new KaraokeSessionStatics(config, null);
 
-        [BackgroundDependencyLoader]
-        private void load()
+        Dependencies.Cache(session);
+    }
+
+    [Test]
+    public void TestScrollingDown()
+    {
+        AddStep("change direction to left", () => scrollingInfo.Direction.Value = ScrollingDirection.Left);
+    }
+
+    [Test]
+    public void TestScrollingUp()
+    {
+        AddStep("change direction to right", () => scrollingInfo.Direction.Value = ScrollingDirection.Right);
+    }
+
+    private class TestScrollingInfo : IScrollingInfo
+    {
+        public readonly Bindable<ScrollingDirection> Direction = new();
+
+        IBindable<ScrollingDirection> IScrollingInfo.Direction => Direction;
+        IBindable<double> IScrollingInfo.TimeRange { get; } = new Bindable<double>(1000);
+        IScrollAlgorithm IScrollingInfo.Algorithm { get; } = new ZeroScrollAlgorithm();
+    }
+
+    private class ZeroScrollAlgorithm : IScrollAlgorithm
+    {
+        public double GetDisplayStartTime(double originTime, float offset, double timeRange, float scrollLength)
+            => double.MinValue;
+
+        public float GetLength(double startTime, double endTime, double timeRange, float scrollLength)
+            => scrollLength;
+
+        public float PositionAt(double time, double currentTime, double timeRange, float scrollLength, double? originTime = null)
+            => (float)((time - START_TIME) / timeRange) * scrollLength;
+
+        public double TimeAt(float position, double currentTime, double timeRange, float scrollLength)
+            => 0;
+
+        public void Reset()
         {
-            // Cache session because karaoke input manager need it.
-            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-            var session = new KaraokeSessionStatics(config, null);
-
-            Dependencies.Cache(session);
         }
+    }
 
-        [Test]
-        public void TestScrollingDown()
-        {
-            AddStep("change direction to left", () => scrollingInfo.Direction.Value = ScrollingDirection.Left);
-        }
+    private class PreviewNotePositionInfo : INotePositionInfo
+    {
+        public IBindable<NotePositionCalculator> Position { get; } =
+            new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
 
-        [Test]
-        public void TestScrollingUp()
-        {
-            AddStep("change direction to right", () => scrollingInfo.Direction.Value = ScrollingDirection.Right);
-        }
-
-        private class TestScrollingInfo : IScrollingInfo
-        {
-            public readonly Bindable<ScrollingDirection> Direction = new();
-
-            IBindable<ScrollingDirection> IScrollingInfo.Direction => Direction;
-            IBindable<double> IScrollingInfo.TimeRange { get; } = new Bindable<double>(1000);
-            IScrollAlgorithm IScrollingInfo.Algorithm { get; } = new ZeroScrollAlgorithm();
-        }
-
-        private class ZeroScrollAlgorithm : IScrollAlgorithm
-        {
-            public double GetDisplayStartTime(double originTime, float offset, double timeRange, float scrollLength)
-                => double.MinValue;
-
-            public float GetLength(double startTime, double endTime, double timeRange, float scrollLength)
-                => scrollLength;
-
-            public float PositionAt(double time, double currentTime, double timeRange, float scrollLength, double? originTime = null)
-                => (float)((time - START_TIME) / timeRange) * scrollLength;
-
-            public double TimeAt(float position, double currentTime, double timeRange, float scrollLength)
-                => 0;
-
-            public void Reset()
-            {
-            }
-        }
-
-        private class PreviewNotePositionInfo : INotePositionInfo
-        {
-            public IBindable<NotePositionCalculator> Position { get; } =
-                new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
-
-            public NotePositionCalculator Calculator => Position.Value;
-        }
+        public NotePositionCalculator Calculator => Position.Value;
     }
 }

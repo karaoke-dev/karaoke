@@ -7,97 +7,96 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
+
+public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTranslateChangeHandler>
 {
-    public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTranslateChangeHandler>
+    [Test]
+    public void TestUpdateTranslateWithNewLanguage()
     {
-        [Test]
-        public void TestUpdateTranslateWithNewLanguage()
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-            });
+            Text = "カラオケ",
+        });
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
+        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
 
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(1, h.Translates.Count);
-                Assert.AreEqual("からおけ", h.Translates[new CultureInfo(17)]);
-            });
-        }
-
-        [Test]
-        public void TestUpdateTranslateWithExistLanguage()
+        AssertSelectedHitObject(h =>
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Translates = new Dictionary<CultureInfo, string>
-                {
-                    { new CultureInfo(17), "からおけ" }
-                }
-            });
+            Assert.AreEqual(1, h.Translates.Count);
+            Assert.AreEqual("からおけ", h.Translates[new CultureInfo(17)]);
+        });
+    }
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "karaoke"));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(1, h.Translates.Count);
-                Assert.AreEqual("karaoke", h.Translates[new CultureInfo(17)]);
-            });
-        }
-
-        [Test]
-        public void TestUpdateTranslateWithEmptyText()
+    [Test]
+    public void TestUpdateTranslateWithExistLanguage()
+    {
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
+            Text = "カラオケ",
+            Translates = new Dictionary<CultureInfo, string>
             {
-                Text = "カラオケ",
-                Translates = new Dictionary<CultureInfo, string>
-                {
-                    { new CultureInfo(17), "からおけ" }
-                }
-            });
+                { new CultureInfo(17), "からおけ" }
+            }
+        });
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
+        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "karaoke"));
 
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsEmpty(h.Translates);
-            });
-        }
-
-        [Test]
-        public void TestUpdateTranslateWithNullText()
+        AssertSelectedHitObject(h =>
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Translates = new Dictionary<CultureInfo, string>
-                {
-                    { new CultureInfo(17), "からおけ" }
-                }
-            });
+            Assert.AreEqual(1, h.Translates.Count);
+            Assert.AreEqual("karaoke", h.Translates[new CultureInfo(17)]);
+        });
+    }
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), ""));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsEmpty(h.Translates);
-            });
-        }
-
-        [Test]
-        public void TestWithReferenceLyric()
+    [Test]
+    public void TestUpdateTranslateWithEmptyText()
+    {
+        PrepareHitObject(new Lyric
         {
-            PrepareLyricWithSyncConfig(new Lyric
+            Text = "カラオケ",
+            Translates = new Dictionary<CultureInfo, string>
             {
-                Text = "カラオケ",
-            });
+                { new CultureInfo(17), "からおけ" }
+            }
+        });
 
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
-        }
+        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsEmpty(h.Translates);
+        });
+    }
+
+    [Test]
+    public void TestUpdateTranslateWithNullText()
+    {
+        PrepareHitObject(new Lyric
+        {
+            Text = "カラオケ",
+            Translates = new Dictionary<CultureInfo, string>
+            {
+                { new CultureInfo(17), "からおけ" }
+            }
+        });
+
+        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), ""));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsEmpty(h.Translates);
+        });
+    }
+
+    [Test]
+    public void TestWithReferenceLyric()
+    {
+        PrepareLyricWithSyncConfig(new Lyric
+        {
+            Text = "カラオケ",
+        });
+
+        TriggerHandlerChangedWithChangeForbiddenException(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
     }
 }

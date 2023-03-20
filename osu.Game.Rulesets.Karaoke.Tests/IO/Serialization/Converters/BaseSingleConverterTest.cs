@@ -5,26 +5,25 @@ using System;
 using Newtonsoft.Json;
 using osu.Game.IO.Serialization;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
+
+public abstract class BaseSingleConverterTest<TConverter> where TConverter : JsonConverter, new()
 {
-    public abstract class BaseSingleConverterTest<TConverter> where TConverter : JsonConverter, new()
+    protected JsonSerializerSettings CreateSettings()
     {
-        protected JsonSerializerSettings CreateSettings()
+        var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+        globalSetting.Formatting = Formatting.None; // do not change new line in testing.
+        globalSetting.Converters.Add(new TConverter());
+
+        var converters = CreateExtraConverts();
+
+        foreach (var converter in converters)
         {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            globalSetting.Formatting = Formatting.None; // do not change new line in testing.
-            globalSetting.Converters.Add(new TConverter());
-
-            var converters = CreateExtraConverts();
-
-            foreach (var converter in converters)
-            {
-                globalSetting.Converters.Add(converter);
-            }
-
-            return globalSetting;
+            globalSetting.Converters.Add(converter);
         }
 
-        protected virtual JsonConverter[] CreateExtraConverts() => Array.Empty<JsonConverter>();
+        return globalSetting;
     }
+
+    protected virtual JsonConverter[] CreateExtraConverts() => Array.Empty<JsonConverter>();
 }

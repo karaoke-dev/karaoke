@@ -7,224 +7,223 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
+
+public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRubyTagsChangeHandler>
 {
-    public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRubyTagsChangeHandler>
+    [Test]
+    public void TestAdd()
     {
-        [Test]
-        public void TestAdd()
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "風",
-                Language = new CultureInfo(17)
-            });
+            Text = "風",
+            Language = new CultureInfo(17)
+        });
 
-            TriggerHandlerChanged(c => c.Add(new RubyTag
+        TriggerHandlerChanged(c => c.Add(new RubyTag
+        {
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "かぜ",
+        }));
+
+        AssertSelectedHitObject(h =>
+        {
+            var rubyTags = h.RubyTags;
+            Assert.AreEqual(1, rubyTags.Count);
+            Assert.AreEqual("かぜ", rubyTags[0].Text);
+        });
+    }
+
+    [Test]
+    public void TestAddRange()
+    {
+        PrepareHitObject(new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17)
+        });
+
+        TriggerHandlerChanged(c => c.AddRange(new[]
+        {
+            new RubyTag
             {
                 StartIndex = 0,
                 EndIndex = 1,
                 Text = "かぜ",
-            }));
+            }
+        }));
 
-            AssertSelectedHitObject(h =>
-            {
-                var rubyTags = h.RubyTags;
-                Assert.AreEqual(1, rubyTags.Count);
-                Assert.AreEqual("かぜ", rubyTags[0].Text);
-            });
-        }
-
-        [Test]
-        public void TestAddRange()
+        AssertSelectedHitObject(h =>
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "風",
-                Language = new CultureInfo(17)
-            });
+            var rubyTags = h.RubyTags;
+            Assert.AreEqual(1, rubyTags.Count);
+            Assert.AreEqual("かぜ", rubyTags[0].Text);
+        });
+    }
 
-            TriggerHandlerChanged(c => c.AddRange(new[]
+    [Test]
+    public void TestRemove()
+    {
+        var removedTag = new RubyTag
+        {
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "かぜ",
+        };
+
+        PrepareHitObject(new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17),
+            RubyTags = new List<RubyTag>
             {
-                new RubyTag
+                removedTag
+            }
+        });
+
+        TriggerHandlerChanged(c => c.Remove(removedTag));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsEmpty(h.RubyTags);
+        });
+    }
+
+    [Test]
+    public void TestRemoveRange()
+    {
+        var removedTag = new RubyTag
+        {
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "か",
+        };
+
+        PrepareHitObject(new Lyric
+        {
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+            RubyTags = new List<RubyTag>
+            {
+                removedTag,
+                new()
                 {
-                    StartIndex = 0,
-                    EndIndex = 1,
-                    Text = "かぜ",
+                    StartIndex = 1,
+                    EndIndex = 2,
+                    Text = "ら",
                 }
-            }));
+            }
+        });
 
-            AssertSelectedHitObject(h =>
-            {
-                var rubyTags = h.RubyTags;
-                Assert.AreEqual(1, rubyTags.Count);
-                Assert.AreEqual("かぜ", rubyTags[0].Text);
-            });
-        }
+        TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
 
-        [Test]
-        public void TestRemove()
+        AssertSelectedHitObject(h =>
         {
-            var removedTag = new RubyTag
-            {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "かぜ",
-            };
+            Assert.AreEqual(1, h.RubyTags.Count);
+        });
+    }
 
-            PrepareHitObject(new Lyric
-            {
-                Text = "風",
-                Language = new CultureInfo(17),
-                RubyTags = new List<RubyTag>
-                {
-                    removedTag
-                }
-            });
-
-            TriggerHandlerChanged(c => c.Remove(removedTag));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.IsEmpty(h.RubyTags);
-            });
-        }
-
-        [Test]
-        public void TestRemoveRange()
+    [Test]
+    public void TestSetIndex()
+    {
+        var targetTag = new RubyTag
         {
-            var removedTag = new RubyTag
-            {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "か",
-            };
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "か",
+        };
 
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Language = new CultureInfo(17),
-                RubyTags = new List<RubyTag>
-                {
-                    removedTag,
-                    new()
-                    {
-                        StartIndex = 1,
-                        EndIndex = 2,
-                        Text = "ら",
-                    }
-                }
-            });
-
-            TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(1, h.RubyTags.Count);
-            });
-        }
-
-        [Test]
-        public void TestSetIndex()
+        PrepareHitObject(new Lyric
         {
-            var targetTag = new RubyTag
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+            RubyTags = new List<RubyTag>
             {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "か",
-            };
+                targetTag
+            }
+        });
 
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Language = new CultureInfo(17),
-                RubyTags = new List<RubyTag>
-                {
-                    targetTag
-                }
-            });
+        TriggerHandlerChanged(c => c.SetIndex(targetTag, 1, 2));
 
-            TriggerHandlerChanged(c => c.SetIndex(targetTag, 1, 2));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(1, targetTag.StartIndex);
-                Assert.AreEqual(2, targetTag.EndIndex);
-            });
-        }
-
-        [Test]
-        public void TestShiftingIndex()
+        AssertSelectedHitObject(h =>
         {
-            var targetTag = new RubyTag
-            {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "か",
-            };
+            Assert.AreEqual(1, targetTag.StartIndex);
+            Assert.AreEqual(2, targetTag.EndIndex);
+        });
+    }
 
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Language = new CultureInfo(17),
-                RubyTags = new List<RubyTag>
-                {
-                    targetTag
-                }
-            });
-
-            TriggerHandlerChanged(c => c.ShiftingIndex(new[] { targetTag }, 1));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(1, targetTag.StartIndex);
-                Assert.AreEqual(2, targetTag.EndIndex);
-            });
-        }
-
-        [Test]
-        public void TestSetText()
+    [Test]
+    public void TestShiftingIndex()
+    {
+        var targetTag = new RubyTag
         {
-            var targetTag = new RubyTag
-            {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "か",
-            };
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "か",
+        };
 
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Language = new CultureInfo(17),
-                RubyTags = new List<RubyTag>
-                {
-                    targetTag
-                }
-            });
-
-            TriggerHandlerChanged(c => c.SetText(targetTag, "からおけ"));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual("からおけ", targetTag.Text);
-            });
-        }
-
-        [Test]
-        public void TestWithReferenceLyric()
+        PrepareHitObject(new Lyric
         {
-            PrepareLyricWithSyncConfig(new Lyric
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+            RubyTags = new List<RubyTag>
             {
-                Text = "風",
-                Language = new CultureInfo(17)
-            });
+                targetTag
+            }
+        });
 
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RubyTag
+        TriggerHandlerChanged(c => c.ShiftingIndex(new[] { targetTag }, 1));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual(1, targetTag.StartIndex);
+            Assert.AreEqual(2, targetTag.EndIndex);
+        });
+    }
+
+    [Test]
+    public void TestSetText()
+    {
+        var targetTag = new RubyTag
+        {
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "か",
+        };
+
+        PrepareHitObject(new Lyric
+        {
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+            RubyTags = new List<RubyTag>
             {
-                StartIndex = 0,
-                EndIndex = 1,
-                Text = "かぜ",
-            }));
-        }
+                targetTag
+            }
+        });
+
+        TriggerHandlerChanged(c => c.SetText(targetTag, "からおけ"));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual("からおけ", targetTag.Text);
+        });
+    }
+
+    [Test]
+    public void TestWithReferenceLyric()
+    {
+        PrepareLyricWithSyncConfig(new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17)
+        });
+
+        TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RubyTag
+        {
+            StartIndex = 0,
+            EndIndex = 1,
+            Text = "かぜ",
+        }));
     }
 }

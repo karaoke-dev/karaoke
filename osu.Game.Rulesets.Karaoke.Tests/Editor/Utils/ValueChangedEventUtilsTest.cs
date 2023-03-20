@@ -9,82 +9,81 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils;
+
+public class ValueChangedEventUtilsTest
 {
-    public class ValueChangedEventUtilsTest
+    [Test]
+    public void TestLyricChangedWithSameLyric()
     {
-        [Test]
-        public void TestLyricChangedWithSameLyric()
+        var lyric1 = new Lyric
         {
-            var lyric1 = new Lyric
-            {
-                Text = "lyric 1"
-            };
+            Text = "lyric 1"
+        };
 
-            var oldCaret = new ClickingCaretPosition(lyric1);
-            var newCaret = new ClickingCaretPosition(lyric1);
+        var oldCaret = new ClickingCaretPosition(lyric1);
+        var newCaret = new ClickingCaretPosition(lyric1);
 
-            Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
-        }
+        Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+    }
 
-        [Test]
-        public void TestLyricChangedWithDifferentLyric()
+    [Test]
+    public void TestLyricChangedWithDifferentLyric()
+    {
+        var lyric1 = new Lyric
         {
-            var lyric1 = new Lyric
-            {
-                Text = "lyric 1"
-            };
+            Text = "lyric 1"
+        };
 
-            var lyric2 = new Lyric
-            {
-                Text = "lyric 2"
-            };
-
-            var oldCaret = new ClickingCaretPosition(lyric1);
-            var newCaret = new ClickingCaretPosition(lyric2);
-
-            Assert.IsTrue(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
-        }
-
-        [Test]
-        public void TestLyricChangedWithSameLyricButDifferentCaretPosition()
+        var lyric2 = new Lyric
         {
-            var lyric1 = new Lyric
-            {
-                Text = "lyric 1"
-            };
+            Text = "lyric 2"
+        };
 
-            var oldCaret = new ClickingCaretPosition(lyric1);
-            var newCaret = new TimeTagCaretPosition(lyric1, new TimeTag(new TextIndex(1)));
+        var oldCaret = new ClickingCaretPosition(lyric1);
+        var newCaret = new ClickingCaretPosition(lyric2);
 
-            Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
-        }
+        Assert.IsTrue(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+    }
 
-        [Test]
-        public void TestEditModeChangedWithDefaultValue()
+    [Test]
+    public void TestLyricChangedWithSameLyricButDifferentCaretPosition()
+    {
+        var lyric1 = new Lyric
         {
-            var oldMode = default(ModeWithSubMode);
-            var newMode = new ModeWithSubMode
-            {
-                Mode = LyricEditorMode.View
-            };
+            Text = "lyric 1"
+        };
 
-            Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
-        }
+        var oldCaret = new ClickingCaretPosition(lyric1);
+        var newCaret = new TimeTagCaretPosition(lyric1, new TimeTag(new TextIndex(1)));
 
-        [Test]
-        public void TestEditModeChanged()
+        Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+    }
+
+    [Test]
+    public void TestEditModeChangedWithDefaultValue()
+    {
+        var oldMode = default(ModeWithSubMode);
+        var newMode = new ModeWithSubMode
         {
-            var oldMode = new ModeWithSubMode
-            {
-                Mode = LyricEditorMode.View
-            };
-            var newMode = new ModeWithSubMode
-            {
-                Mode = LyricEditorMode.View
-            };
+            Mode = LyricEditorMode.View
+        };
 
-            Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
-        }
+        Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
+    }
+
+    [Test]
+    public void TestEditModeChanged()
+    {
+        var oldMode = new ModeWithSubMode
+        {
+            Mode = LyricEditorMode.View
+        };
+        var newMode = new ModeWithSubMode
+        {
+            Mode = LyricEditorMode.View
+        };
+
+        Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
     }
 }

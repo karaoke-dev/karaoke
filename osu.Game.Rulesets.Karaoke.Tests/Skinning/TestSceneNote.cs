@@ -11,31 +11,30 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+public partial class TestSceneNote : KaraokeHitObjectTestScene
 {
-    public partial class TestSceneNote : KaraokeHitObjectTestScene
+    public TestSceneNote()
     {
-        public TestSceneNote()
+        AddToggleStep("toggle hitting", v =>
         {
-            AddToggleStep("toggle hitting", v =>
+            foreach (var holdNote in CreatedDrawables.SelectMany(d => d.ChildrenOfType<DrawableNote>()))
             {
-                foreach (var holdNote in CreatedDrawables.SelectMany(d => d.ChildrenOfType<DrawableNote>()))
-                {
-                    ((Bindable<bool>)holdNote.IsHitting).Value = v;
-                }
-            });
-        }
+                ((Bindable<bool>)holdNote.IsHitting).Value = v;
+            }
+        });
+    }
 
-        protected override DrawableHitObject CreateHitObject()
+    protected override DrawableHitObject CreateHitObject()
+    {
+        var note = new Note
         {
-            var note = new Note
-            {
-                Text = "カラオケ",
-                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 100, 800),
-            };
-            note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
+            Text = "カラオケ",
+            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 100, 800),
+        };
+        note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
-            return new DrawableNote(note);
-        }
+        return new DrawableNote(note);
     }
 }

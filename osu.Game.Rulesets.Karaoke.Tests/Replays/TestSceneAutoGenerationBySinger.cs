@@ -12,57 +12,56 @@ using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Replays
+namespace osu.Game.Rulesets.Karaoke.Tests.Replays;
+
+public partial class TestSceneAutoGenerationBySinger : OsuTestScene
 {
-    public partial class TestSceneAutoGenerationBySinger : OsuTestScene
+    [Test]
+    public void TestSingDemoSong()
     {
-        [Test]
-        public void TestSingDemoSong()
+        var beatmap = new KaraokeBeatmap();
+
+        var data = TestResources.OpenTrackResource("demo");
+        var generated = new KaraokeAutoGeneratorBySinger(beatmap, data).Generate();
+
+        // Get generated frame and compare frame
+        var expected = getCompareResultFromName("demo");
+        var actual = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
+
+        // Check total frames.
+        Assert.AreEqual(expected.Count, actual.Count, $"Replay frame should have {expected.Count}.");
+
+        // Compare generated frame with result;
+        for (int i = 0; i < expected.Count; i++)
         {
-            var beatmap = new KaraokeBeatmap();
+            Assert.AreEqual(expected[i].Time, actual[i].Time);
+            Assert.AreEqual(expected[i].Sound, actual[i].Sound);
 
-            var data = TestResources.OpenTrackResource("demo");
-            var generated = new KaraokeAutoGeneratorBySinger(beatmap, data).Generate();
+            if (!expected[i].Sound)
+                continue;
 
-            // Get generated frame and compare frame
-            var expected = getCompareResultFromName("demo");
-            var actual = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
-
-            // Check total frames.
-            Assert.AreEqual(expected.Count, actual.Count, $"Replay frame should have {expected.Count}.");
-
-            // Compare generated frame with result;
-            for (int i = 0; i < expected.Count; i++)
-            {
-                Assert.AreEqual(expected[i].Time, actual[i].Time);
-                Assert.AreEqual(expected[i].Sound, actual[i].Sound);
-
-                if (!expected[i].Sound)
-                    continue;
-
-                float convertedScale = beatmap.PitchToScale(expected[i].Pitch);
-                Assert.AreEqual(convertedScale, actual[i].Scale);
-            }
+            float convertedScale = beatmap.PitchToScale(expected[i].Pitch);
+            Assert.AreEqual(convertedScale, actual[i].Scale);
         }
+    }
 
-        private static IReadOnlyList<TestKaraokeReplayFrame> getCompareResultFromName(string name)
+    private static IReadOnlyList<TestKaraokeReplayFrame> getCompareResultFromName(string name)
+    {
+        var data = TestResources.OpenResource($"Testing/Track/{name}.json");
+
+        using (var reader = new StreamReader(data))
         {
-            var data = TestResources.OpenResource($"Testing/Track/{name}.json");
-
-            using (var reader = new StreamReader(data))
-            {
-                string str = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<TestKaraokeReplayFrame[]>(str) ?? Array.Empty<TestKaraokeReplayFrame>();
-            }
+            string str = reader.ReadToEnd();
+            return JsonConvert.DeserializeObject<TestKaraokeReplayFrame[]>(str) ?? Array.Empty<TestKaraokeReplayFrame>();
         }
+    }
 
-        private struct TestKaraokeReplayFrame
-        {
-            public double Time { get; set; }
+    private struct TestKaraokeReplayFrame
+    {
+        public double Time { get; set; }
 
-            public float Pitch { get; set; }
+        public float Pitch { get; set; }
 
-            public bool Sound { get; set; }
-        }
+        public bool Sound { get; set; }
     }
 }

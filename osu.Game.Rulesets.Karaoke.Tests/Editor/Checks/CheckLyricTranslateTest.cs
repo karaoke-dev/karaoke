@@ -9,41 +9,40 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTranslate;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTranslate>
 {
-    public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTranslate>
+    [TestCase("translate")]
+    [TestCase("k")] // not limit min size for now.
+    [TestCase("翻譯")] // not limit language.
+    public void TestCheck(string text)
     {
-        [TestCase("translate")]
-        [TestCase("k")] // not limit min size for now.
-        [TestCase("翻譯")] // not limit language.
-        public void TestCheck(string text)
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
+            Translates = new Dictionary<CultureInfo, string>
             {
-                Translates = new Dictionary<CultureInfo, string>
-                {
-                    { new CultureInfo("Ja-jp"), text }
-                }
-            };
+                { new CultureInfo("Ja-jp"), text }
+            }
+        };
 
-            AssertOk(lyric);
-        }
+        AssertOk(lyric);
+    }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")] // but should not be empty or white space.
-        [TestCase("　")] // but should not be empty or white space.
-        public void TestCheckTranslationNoText(string text)
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase(" ")] // but should not be empty or white space.
+    [TestCase("　")] // but should not be empty or white space.
+    public void TestCheckTranslationNoText(string text)
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
+            Translates = new Dictionary<CultureInfo, string>
             {
-                Translates = new Dictionary<CultureInfo, string>
-                {
-                    { new CultureInfo("Ja-jp"), text }
-                }
-            };
+                { new CultureInfo("Ja-jp"), text }
+            }
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricTranslationNoText>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricTranslationNoText>(lyric);
     }
 }

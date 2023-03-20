@@ -7,33 +7,32 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricSinger;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+[TestFixture]
+public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
 {
-    [TestFixture]
-    public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
+    [TestCase(new[] { 1, 2, 3 })]
+    [TestCase(new[] { 1 })]
+    [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
+    public void TestCheck(int[] singers)
     {
-        [TestCase(new[] { 1, 2, 3 })]
-        [TestCase(new[] { 1 })]
-        [TestCase(new[] { 100 })] // although singer is not exist, but should not check in this test case.
-        public void TestCheck(int[] singers)
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Singers = singers
-            };
+            Singers = singers
+        };
 
-            AssertOk(lyric);
-        }
+        AssertOk(lyric);
+    }
 
-        [TestCase(new int[] { })]
-        public void TestCheckNoSinger(int[] singers)
+    [TestCase(new int[] { })]
+    public void TestCheckNoSinger(int[] singers)
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Singers = singers
-            };
+            Singers = singers
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);
     }
 }

@@ -7,26 +7,25 @@ using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
-{
-    public partial class TestSceneKaraokeModDisableNote : KaraokeModTestScene
-    {
-        [Test]
-        public void TestCheckNoteExistInPlayfield() => CreateModTest(new ModTestData
-        {
-            Mod = new KaraokeModDisableNote(),
-            Autoplay = true,
-            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () =>
-            {
-                var lyricPlayfield = Player.GetLyricPlayfield();
-                var notePlayfield = Player.GetNotePlayfield();
-                if (lyricPlayfield == null || notePlayfield == null)
-                    return false;
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-                // check has no note in playfield
-                return lyricPlayfield.AllHitObjects.Any() && notePlayfield.Alpha == 0f;
-            }
-        });
-    }
+public partial class TestSceneKaraokeModDisableNote : KaraokeModTestScene
+{
+    [Test]
+    public void TestCheckNoteExistInPlayfield() => CreateModTest(new ModTestData
+    {
+        Mod = new KaraokeModDisableNote(),
+        Autoplay = true,
+        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        PassCondition = () =>
+        {
+            var lyricPlayfield = Player.GetLyricPlayfield();
+            var notePlayfield = Player.GetNotePlayfield();
+            if (lyricPlayfield == null || notePlayfield == null)
+                return false;
+
+            // check has no note in playfield
+            return lyricPlayfield.AllHitObjects.Any() && notePlayfield.Alpha == 0f;
+        }
+    });
 }

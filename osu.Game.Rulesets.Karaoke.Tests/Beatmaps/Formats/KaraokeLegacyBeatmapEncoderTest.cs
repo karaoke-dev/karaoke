@@ -10,76 +10,75 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats;
+
+[TestFixture]
+public class KaraokeLegacyBeatmapEncoderTest
 {
-    [TestFixture]
-    public class KaraokeLegacyBeatmapEncoderTest
+    [Test]
+    public void TestEncodeBeatmapLyric()
     {
-        [Test]
-        public void TestEncodeBeatmapLyric()
+        // Because encoder is not fully implemented, so just test not crash during encoding.
+        const int start_time = 1000;
+        const int duration = 2500;
+
+        var beatmap = new Beatmap
         {
-            // Because encoder is not fully implemented, so just test not crash during encoding.
-            const int start_time = 1000;
-            const int duration = 2500;
-
-            var beatmap = new Beatmap
+            HitObjects = new List<HitObject>
             {
-                HitObjects = new List<HitObject>
+                new Lyric
                 {
-                    new Lyric
+                    StartTime = start_time,
+                    Duration = duration,
+                    Text = "カラオケ！",
+                    TimeTags = new List<TimeTag>
                     {
-                        StartTime = start_time,
-                        Duration = duration,
-                        Text = "カラオケ！",
-                        TimeTags = new List<TimeTag>
+                        new(new TextIndex(0), start_time + 500),
+                        new(new TextIndex(1), start_time + 600),
+                        new(new TextIndex(2), start_time + 1000),
+                        new(new TextIndex(3), start_time + 1500),
+                        new(new TextIndex(4), start_time + 2000),
+                    },
+                    RubyTags = new[]
+                    {
+                        new RubyTag
                         {
-                            new(new TextIndex(0), start_time + 500),
-                            new(new TextIndex(1), start_time + 600),
-                            new(new TextIndex(2), start_time + 1000),
-                            new(new TextIndex(3), start_time + 1500),
-                            new(new TextIndex(4), start_time + 2000),
+                            StartIndex = 0,
+                            EndIndex = 1,
+                            Text = "か"
                         },
-                        RubyTags = new[]
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 0,
-                                EndIndex = 1,
-                                Text = "か"
-                            },
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "お"
-                            }
-                        },
-                        RomajiTags = new[]
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "お"
+                        }
+                    },
+                    RomajiTags = new[]
+                    {
+                        new RomajiTag
                         {
-                            new RomajiTag
-                            {
-                                StartIndex = 1,
-                                EndIndex = 2,
-                                Text = "ra"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 3,
-                                EndIndex = 4,
-                                Text = "ke"
-                            }
+                            StartIndex = 1,
+                            EndIndex = 2,
+                            Text = "ra"
                         },
-                    }
+                        new RomajiTag
+                        {
+                            StartIndex = 3,
+                            EndIndex = 4,
+                            Text = "ke"
+                        }
+                    },
                 }
-            };
-
-            using (var ms = new MemoryStream())
-            using (var sw = new StreamWriter(ms))
-            {
-                var encoder = new KaraokeLegacyBeatmapEncoder();
-                string encodeResult = encoder.Encode(beatmap);
-                sw.WriteLine(encodeResult);
             }
+        };
+
+        using (var ms = new MemoryStream())
+        using (var sw = new StreamWriter(ms))
+        {
+            var encoder = new KaraokeLegacyBeatmapEncoder();
+            string encodeResult = encoder.Encode(beatmap);
+            sw.WriteLine(encodeResult);
         }
     }
 }

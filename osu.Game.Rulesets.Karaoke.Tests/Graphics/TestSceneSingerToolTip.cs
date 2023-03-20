@@ -8,72 +8,71 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
-{
-    [TestFixture]
-    public partial class TestSceneSingerToolTip : OsuTestScene
-    {
-        private SingerToolTip toolTip = null!;
+namespace osu.Game.Rulesets.Karaoke.Tests.Graphics;
 
-        [SetUp]
-        public void SetUp() => Schedule(() =>
+[TestFixture]
+public partial class TestSceneSingerToolTip : OsuTestScene
+{
+    private SingerToolTip toolTip = null!;
+
+    [SetUp]
+    public void SetUp() => Schedule(() =>
+    {
+        Child = toolTip = new SingerToolTip
         {
-            Child = toolTip = new SingerToolTip
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            };
-            toolTip.Show();
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre
+        };
+        toolTip.Show();
+    });
+
+    [Test]
+    public void TestDisplayToolTip()
+    {
+        setTooltip("Test normal singer", singer => { singer.Name = "Normal singer"; });
+
+        setTooltip("Test singer with description", singer =>
+        {
+            singer.Name = "Singer with description";
+            singer.Description = "International superstar vocaloid Hatsune Miku.";
         });
 
-        [Test]
-        public void TestDisplayToolTip()
+        setTooltip("Test singer with large description", singer =>
         {
-            setTooltip("Test normal singer", singer => { singer.Name = "Normal singer"; });
+            singer.Name = "Singer with large description";
+            singer.Description =
+                "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
+        });
 
-            setTooltip("Test singer with description", singer =>
-            {
-                singer.Name = "Singer with description";
-                singer.Description = "International superstar vocaloid Hatsune Miku.";
-            });
-
-            setTooltip("Test singer with large description", singer =>
-            {
-                singer.Name = "Singer with large description";
-                singer.Description =
-                    "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
-            });
-
-            setTooltip("Test singer with english name", singer =>
-            {
-                singer.Name = "Singer with English name";
-                singer.EnglishName = "Hatsune Miku";
-            });
-
-            setTooltip("Test singer with romaji name", singer =>
-            {
-                singer.Name = "Singer with Romaji name";
-                singer.RomajiName = "Hatsune Miku";
-            });
-
-            setTooltip("Test singer with large context", singer =>
-            {
-                singer.Name = "Singer with Romaji name large large large large large large large large large";
-                singer.RomajiName = "Hatsune Miku large large large large large large large large large";
-                singer.EnglishName = "Hatsune Miku large large large large large large large large large";
-                singer.Description =
-                    "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
-            });
-        }
-
-        private void setTooltip(string testName, Action<Singer> callBack)
+        setTooltip("Test singer with english name", singer =>
         {
-            AddStep(testName, () =>
-            {
-                var singer = new Singer(1);
-                callBack(singer);
-                toolTip.SetContent(singer);
-            });
-        }
+            singer.Name = "Singer with English name";
+            singer.EnglishName = "Hatsune Miku";
+        });
+
+        setTooltip("Test singer with romaji name", singer =>
+        {
+            singer.Name = "Singer with Romaji name";
+            singer.RomajiName = "Hatsune Miku";
+        });
+
+        setTooltip("Test singer with large context", singer =>
+        {
+            singer.Name = "Singer with Romaji name large large large large large large large large large";
+            singer.RomajiName = "Hatsune Miku large large large large large large large large large";
+            singer.EnglishName = "Hatsune Miku large large large large large large large large large";
+            singer.Description =
+                "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
+        });
+    }
+
+    private void setTooltip(string testName, Action<Singer> callBack)
+    {
+        AddStep(testName, () =>
+        {
+            var singer = new Singer(1);
+            callBack(singer);
+            toolTip.SetContent(singer);
+        });
     }
 }

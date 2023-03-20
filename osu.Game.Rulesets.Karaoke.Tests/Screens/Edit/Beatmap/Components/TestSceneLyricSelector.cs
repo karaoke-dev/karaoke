@@ -13,35 +13,34 @@ using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Components
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Components;
+
+public partial class TestSceneLyricSelector : OsuManualInputManagerTestScene
 {
-    public partial class TestSceneLyricSelector : OsuManualInputManagerTestScene
+    [Cached(typeof(EditorBeatmap))]
+    private readonly EditorBeatmap editorBeatmap;
+
+    public TestSceneLyricSelector()
     {
-        [Cached(typeof(EditorBeatmap))]
-        private readonly EditorBeatmap editorBeatmap;
+        var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
+        var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+        editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+    }
 
-        public TestSceneLyricSelector()
+    [Test]
+    public void TestAllFiles()
+    {
+        AddStep("show the selector", () =>
         {
-            var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
-            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
-            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
-        }
-
-        [Test]
-        public void TestAllFiles()
-        {
-            AddStep("show the selector", () =>
+            var language = new Bindable<Lyric?>();
+            Child = new LyricSelector
             {
-                var language = new Bindable<Lyric?>();
-                Child = new LyricSelector
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Size = new Vector2(0.5f, 0.8f),
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Current = language
-                };
-            });
-        }
+                RelativeSizeAxes = Axes.Both,
+                Size = new Vector2(0.5f, 0.8f),
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Current = language
+            };
+        });
     }
 }

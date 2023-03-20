@@ -5,21 +5,20 @@ using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Objects
+namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
+
+public class TimeTagTest
 {
-    public class TimeTagTest
+    [TestCase]
+    public void TestClone()
     {
-        [TestCase]
-        public void TestClone()
-        {
-            var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000);
+        var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000);
 
-            var clonedTimeTag = timeTag.DeepClone();
+        var clonedTimeTag = timeTag.DeepClone();
 
-            Assert.AreEqual(clonedTimeTag.Index, timeTag.Index);
+        Assert.AreEqual(clonedTimeTag.Index, timeTag.Index);
 
-            Assert.AreNotSame(clonedTimeTag.TimeBindable, timeTag.TimeBindable);
-            Assert.AreEqual(clonedTimeTag.Time, timeTag.Time);
-        }
+        Assert.AreNotSame(clonedTimeTag.TimeBindable, timeTag.TimeBindable);
+        Assert.AreEqual(clonedTimeTag.Time, timeTag.Time);
     }
 }

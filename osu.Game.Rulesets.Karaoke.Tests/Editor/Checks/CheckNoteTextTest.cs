@@ -8,48 +8,47 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckNoteText;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
 {
-    public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
+    [Test]
+    public void TestCheck()
     {
-        [Test]
-        public void TestCheck()
+        var note = new Note
         {
-            var note = new Note
-            {
-                Text = "karaoke",
-                RubyText = null, // ruby text should be null or having the value.
-            };
+            Text = "karaoke",
+            RubyText = null, // ruby text should be null or having the value.
+        };
 
-            AssertOk(new HitObject[] { note });
-        }
+        AssertOk(new HitObject[] { note });
+    }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")] // but should not be empty or white space.
-        [TestCase("　")] // but should not be empty or white space.
-        public void TestCheckNoText(string text)
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase(" ")] // but should not be empty or white space.
+    [TestCase("　")] // but should not be empty or white space.
+    public void TestCheckNoText(string text)
+    {
+        var note = new Note
         {
-            var note = new Note
-            {
-                Text = text
-            };
+            Text = text
+        };
 
-            AssertNotOk<NoteIssue, IssueTemplateNoteNoText>(note);
-        }
+        AssertNotOk<NoteIssue, IssueTemplateNoteNoText>(note);
+    }
 
-        [TestCase("")]
-        [TestCase(" ")] // but should not be empty or white space.
-        [TestCase("　")] // but should not be empty or white space.
-        public void TestCheckNoRubyText(string? rubyText)
+    [TestCase("")]
+    [TestCase(" ")] // but should not be empty or white space.
+    [TestCase("　")] // but should not be empty or white space.
+    public void TestCheckNoRubyText(string? rubyText)
+    {
+        var note = new Note
         {
-            var note = new Note
-            {
-                Text = "karaoke",
-                RubyText = rubyText
-            };
+            Text = "karaoke",
+            RubyText = rubyText
+        };
 
-            AssertNotOk<NoteIssue, IssueTemplateNoteNoRubyText>(note);
-        }
+        AssertNotOk<NoteIssue, IssueTemplateNoteNoRubyText>(note);
     }
 }

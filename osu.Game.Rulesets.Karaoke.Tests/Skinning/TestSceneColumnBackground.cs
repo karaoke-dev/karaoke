@@ -8,43 +8,42 @@ using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+public partial class TestSceneColumnBackground : KaraokeSkinnableColumnTestScene
 {
-    public partial class TestSceneColumnBackground : KaraokeSkinnableColumnTestScene
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        [BackgroundDependencyLoader]
-        private void load()
+        SetContents(_ => new FillFlowContainer
         {
-            SetContents(_ => new FillFlowContainer
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.Both,
+            Size = new Vector2(0.8f),
+            Direction = FillDirection.Vertical,
+            Spacing = new Vector2(20),
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                RelativeSizeAxes = Axes.Both,
-                Size = new Vector2(0.8f),
-                Direction = FillDirection.Vertical,
-                Spacing = new Vector2(20),
-                Children = new Drawable[]
+                new NotePlayfieldTestContainer(0)
                 {
-                    new NotePlayfieldTestContainer(0)
+                    RelativeSizeAxes = Axes.Both,
+                    Height = 0.5f,
+                    Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(0))
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Height = 0.5f,
-                        Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(0))
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        }
-                    },
-                    new NotePlayfieldTestContainer(1)
+                        RelativeSizeAxes = Axes.Both
+                    }
+                },
+                new NotePlayfieldTestContainer(1)
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Height = 0.5f,
+                    Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(1))
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Height = 0.5f,
-                        Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(1))
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        }
+                        RelativeSizeAxes = Axes.Both
                     }
                 }
-            });
-        }
+            }
+        });
     }
 }

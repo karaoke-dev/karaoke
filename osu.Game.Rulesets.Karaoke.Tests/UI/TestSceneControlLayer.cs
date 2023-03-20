@@ -9,32 +9,31 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.UI
+namespace osu.Game.Rulesets.Karaoke.Tests.UI;
+
+[TestFixture]
+public partial class TestSceneControlLayer : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneControlLayer : OsuTestScene
+    public SettingOverlayContainer SettingOverlayContainer { get; set; } = null!;
+
+    protected override Ruleset CreateRuleset() => new KaraokeRuleset();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        public SettingOverlayContainer SettingOverlayContainer { get; set; } = null!;
+        var config = Dependencies.Get<KaraokeRulesetConfigManager>();
+        Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
-        protected override Ruleset CreateRuleset() => new KaraokeRuleset();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        // Cannot work now because it need extra BDL in child
+        Add(new Container
         {
-            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-            Dependencies.Cache(new KaraokeSessionStatics(config, null));
-
-            // Cannot work now because it need extra BDL in child
-            Add(new Container
+            RelativeSizeAxes = Axes.Both,
+            Child = SettingOverlayContainer = new SettingOverlayContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = SettingOverlayContainer = new SettingOverlayContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                }
-            });
+            }
+        });
 
-            AddStep("Toggle setting", SettingOverlayContainer.ToggleGeneralSettingsOverlay);
-        }
+        AddStep("Toggle setting", SettingOverlayContainer.ToggleGeneralSettingsOverlay);
     }
 }

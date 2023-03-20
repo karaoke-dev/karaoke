@@ -13,43 +13,42 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
+
+public abstract partial class BeatmapEditorScreenTestScene<T> : EditorClockTestScene where T : BeatmapEditorScreen
 {
-    public abstract partial class BeatmapEditorScreenTestScene<T> : EditorClockTestScene where T : BeatmapEditorScreen
+    [Cached(typeof(EditorBeatmap))]
+    [Cached(typeof(IBeatSnapProvider))]
+    private readonly EditorBeatmap editorBeatmap;
+
+    [Cached]
+    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
+
+    protected BeatmapEditorScreenTestScene()
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
+        editorBeatmap = new EditorBeatmap(CreateBeatmap());
+    }
 
-        [Cached]
-        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
+    protected override void LoadComplete()
+    {
+        editorBeatmap.BeatmapInfo.Ruleset = new KaraokeRuleset().RulesetInfo;
 
-        protected BeatmapEditorScreenTestScene()
+        Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+
+        Child = CreateEditorScreen().With(x =>
         {
-            editorBeatmap = new EditorBeatmap(CreateBeatmap());
-        }
+            x.State.Value = Visibility.Visible;
+        });
+    }
 
-        protected override void LoadComplete()
-        {
-            editorBeatmap.BeatmapInfo.Ruleset = new KaraokeRuleset().RulesetInfo;
+    protected abstract T CreateEditorScreen();
 
-            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+    protected virtual KaraokeBeatmap CreateBeatmap()
+    {
+        var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
+        if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
+            throw new ArgumentNullException(nameof(karaokeBeatmap));
 
-            Child = CreateEditorScreen().With(x =>
-            {
-                x.State.Value = Visibility.Visible;
-            });
-        }
-
-        protected abstract T CreateEditorScreen();
-
-        protected virtual KaraokeBeatmap CreateBeatmap()
-        {
-            var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
-            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
-                throw new ArgumentNullException(nameof(karaokeBeatmap));
-
-            return karaokeBeatmap;
-        }
+        return karaokeBeatmap;
     }
 }

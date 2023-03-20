@@ -8,41 +8,40 @@ using osu.Game.Scoring;
 using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
+namespace osu.Game.Rulesets.Karaoke.Tests.Ranking;
+
+public partial class TestSceneStatisticsPanel : OsuTestScene
 {
-    public partial class TestSceneStatisticsPanel : OsuTestScene
+    [Test]
+    public void TestScoreWithStatistics()
     {
-        [Test]
-        public void TestScoreWithStatistics()
+        var score = new TestKaraokeScoreInfo
         {
-            var score = new TestKaraokeScoreInfo
-            {
-                HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
-            };
+            HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
+        };
 
-            loadPanel(score);
-        }
-
-        [Test]
-        public void TestScoreWithoutStatistics()
-        {
-            loadPanel(new TestKaraokeScoreInfo());
-        }
-
-        [Test]
-        public void TestNullScore()
-        {
-            loadPanel(null);
-        }
-
-        private void loadPanel(ScoreInfo? score) => AddStep("load panel", () =>
-        {
-            Child = new StatisticsPanel
-            {
-                RelativeSizeAxes = Axes.Both,
-                State = { Value = Visibility.Visible },
-                Score = { Value = score }
-            };
-        });
+        loadPanel(score);
     }
+
+    [Test]
+    public void TestScoreWithoutStatistics()
+    {
+        loadPanel(new TestKaraokeScoreInfo());
+    }
+
+    [Test]
+    public void TestNullScore()
+    {
+        loadPanel(null);
+    }
+
+    private void loadPanel(ScoreInfo? score) => AddStep("load panel", () =>
+    {
+        Child = new StatisticsPanel
+        {
+            RelativeSizeAxes = Axes.Both,
+            State = { Value = Visibility.Visible },
+            Score = { Value = score }
+        };
+    });
 }

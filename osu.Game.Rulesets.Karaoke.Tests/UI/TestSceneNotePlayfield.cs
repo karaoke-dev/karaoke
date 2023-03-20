@@ -23,164 +23,163 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.UI
+namespace osu.Game.Rulesets.Karaoke.Tests.UI;
+
+[TestFixture]
+public partial class TestSceneNotePlayfield : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneNotePlayfield : OsuTestScene
+    public const int COLUMNS = 9;
+
+    [Cached(typeof(IReadOnlyList<Mod>))]
+    private IReadOnlyList<Mod> mods { get; set; } = Array.Empty<Mod>();
+
+    [Cached(typeof(INotePositionInfo))]
+    private readonly PreviewNotePositionInfo notePositionInfo = new();
+
+    private readonly List<NotePlayfield> notePlayfields = new();
+
+    protected override Ruleset CreateRuleset() => new KaraokeRuleset();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        public const int COLUMNS = 9;
+        var config = Dependencies.Get<KaraokeRulesetConfigManager>();
+        Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
-        [Cached(typeof(IReadOnlyList<Mod>))]
-        private IReadOnlyList<Mod> mods { get; set; } = Array.Empty<Mod>();
-
-        [Cached(typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new();
-
-        private readonly List<NotePlayfield> notePlayfields = new();
-
-        protected override Ruleset CreateRuleset() => new KaraokeRuleset();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        Child = new GridContainer
         {
-            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-            Dependencies.Cache(new KaraokeSessionStatics(config, null));
-
-            Child = new GridContainer
+            RelativeSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Content = new[]
             {
-                RelativeSizeAxes = Axes.Both,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Content = new[]
+                new[]
                 {
-                    new[]
-                    {
-                        createColumn(ScrollingDirection.Left, COLUMNS),
-                    },
-                    new[]
-                    {
-                        createColumn(ScrollingDirection.Right, COLUMNS)
-                    }
+                    createColumn(ScrollingDirection.Left, COLUMNS),
+                },
+                new[]
+                {
+                    createColumn(ScrollingDirection.Right, COLUMNS)
                 }
+            }
+        };
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        AddStep("note", () =>
+        {
+            createBar(true);
+            createNote();
+            createBar(true, 3000);
+        });
+        AddStep("multi note", () =>
+        {
+            createBar(true);
+            createNote(2000, 100, -4);
+            createNote(2100, 100, -3);
+            createNote(2200, 100, -2);
+            createNote(2300, 100, -1);
+            createNote(2400, 100);
+            createNote(2500, 100, 1);
+            createNote(2600, 100, 2);
+            createNote(2700, 100, 3);
+            createNote(2800, 100, 4);
+            createBar(true, 2900);
+        });
+        AddStep("scoring", () =>
+        {
+            createBar(true);
+            createNote(2000, 100, 4, true);
+            createNote(2100, 100, 3, true);
+            createNote(2200, 100, 2, true);
+            createNote(2300, 100, 1, true);
+            createNote(2400, 100, 0, true);
+            createNote(2500, 100, -1, true);
+            createNote(2600, 100, -2, true);
+            createNote(2700, 100, -3, true);
+            createNote(2800, 100, -4, true);
+            createBar(true, 2900);
+        });
+        AddStep("bar", () => createBar(false));
+        AddStep("major bar", () => createBar(true));
+    }
+
+    private void createNote(double increaseTime = 2000, double duration = 1000, int tone = 0, bool scoring = false)
+    {
+        notePlayfields.ForEach(x =>
+        {
+            var note = new Note
+            {
+                Text = "Here",
+                Display = true,
+                Tone = new Tone { Scale = tone },
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Here", Time.Current + increaseTime, duration),
+                ReferenceTimeTagIndex = 0
             };
-        }
+            note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
-        protected override void LoadComplete()
+            x.Add(new DrawableNote(note));
+        });
+
+        if (scoring)
+            createScoringPath(increaseTime, duration, tone);
+    }
+
+    private void createScoringPath(double increaseTime = 2000, double duration = 1000, int scale = 0)
+    {
+        notePlayfields.ForEach(x =>
         {
-            base.LoadComplete();
+            // Start frame
+            x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime, scale));
 
-            AddStep("note", () =>
-            {
-                createBar(true);
-                createNote();
-                createBar(true, 3000);
-            });
-            AddStep("multi note", () =>
-            {
-                createBar(true);
-                createNote(2000, 100, -4);
-                createNote(2100, 100, -3);
-                createNote(2200, 100, -2);
-                createNote(2300, 100, -1);
-                createNote(2400, 100);
-                createNote(2500, 100, 1);
-                createNote(2600, 100, 2);
-                createNote(2700, 100, 3);
-                createNote(2800, 100, 4);
-                createBar(true, 2900);
-            });
-            AddStep("scoring", () =>
-            {
-                createBar(true);
-                createNote(2000, 100, 4, true);
-                createNote(2100, 100, 3, true);
-                createNote(2200, 100, 2, true);
-                createNote(2300, 100, 1, true);
-                createNote(2400, 100, 0, true);
-                createNote(2500, 100, -1, true);
-                createNote(2600, 100, -2, true);
-                createNote(2700, 100, -3, true);
-                createNote(2800, 100, -4, true);
-                createBar(true, 2900);
-            });
-            AddStep("bar", () => createBar(false));
-            AddStep("major bar", () => createBar(true));
-        }
+            // End frame
+            x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 2, scale));
 
-        private void createNote(double increaseTime = 2000, double duration = 1000, int tone = 0, bool scoring = false)
+            // Stop point
+            x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 1));
+        });
+    }
+
+    private void createBar(bool isMajor, double increaseTime = 2000)
+    {
+        notePlayfields.ForEach(x =>
         {
-            notePlayfields.ForEach(x =>
-            {
-                var note = new Note
-                {
-                    Text = "Here",
-                    Display = true,
-                    Tone = new Tone { Scale = tone },
-                    ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Here", Time.Current + increaseTime, duration),
-                    ReferenceTimeTagIndex = 0
-                };
-                note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
+            var bar = new BarLine { StartTime = Time.Current + increaseTime, Major = isMajor };
+            bar.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
-                x.Add(new DrawableNote(note));
-            });
+            x.Add(bar);
+        });
+    }
 
-            if (scoring)
-                createScoringPath(increaseTime, duration, tone);
-        }
-
-        private void createScoringPath(double increaseTime = 2000, double duration = 1000, int scale = 0)
+    private Drawable createColumn(ScrollingDirection direction, int column)
+    {
+        var playfield = new NotePlayfield(column)
         {
-            notePlayfields.ForEach(x =>
-            {
-                // Start frame
-                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime, scale));
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+        };
 
-                // End frame
-                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 2, scale));
+        notePlayfields.Add(playfield);
 
-                // Stop point
-                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 1));
-            });
-        }
-
-        private void createBar(bool isMajor, double increaseTime = 2000)
+        return new ScrollingTestContainer(direction)
         {
-            notePlayfields.ForEach(x =>
-            {
-                var bar = new BarLine { StartTime = Time.Current + increaseTime, Major = isMajor };
-                bar.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Padding = new MarginPadding(20),
+            RelativeSizeAxes = Axes.Both,
+            TimeRange = 2000,
+            Child = playfield
+        };
+    }
 
-                x.Add(bar);
-            });
-        }
+    private class PreviewNotePositionInfo : INotePositionInfo
+    {
+        public IBindable<NotePositionCalculator> Position { get; } =
+            new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
 
-        private Drawable createColumn(ScrollingDirection direction, int column)
-        {
-            var playfield = new NotePlayfield(column)
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-            };
-
-            notePlayfields.Add(playfield);
-
-            return new ScrollingTestContainer(direction)
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Padding = new MarginPadding(20),
-                RelativeSizeAxes = Axes.Both,
-                TimeRange = 2000,
-                Child = playfield
-            };
-        }
-
-        private class PreviewNotePositionInfo : INotePositionInfo
-        {
-            public IBindable<NotePositionCalculator> Position { get; } =
-                new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
-
-            public NotePositionCalculator Calculator => Position.Value;
-        }
+        public NotePositionCalculator Calculator => Position.Value;
     }
 }

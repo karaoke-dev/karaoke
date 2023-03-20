@@ -15,88 +15,87 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor;
+
+[TestFixture]
+public partial class TestSceneLayoutToolTip : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneLayoutToolTip : OsuTestScene
+    private readonly ISkin skin = new TestingSkin(null);
+    private LayoutToolTip toolTip = null!;
+
+    [SetUp]
+    public void SetUp() => Schedule(() =>
     {
-        private readonly ISkin skin = new TestingSkin(null);
-        private LayoutToolTip toolTip = null!;
-
-        [SetUp]
-        public void SetUp() => Schedule(() =>
+        Child = new SkinProvidingContainer(skin)
         {
-            Child = new SkinProvidingContainer(skin)
+            RelativeSizeAxes = Axes.Both,
+            Child = toolTip = new LayoutToolTip
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = toolTip = new LayoutToolTip
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
-                }
-            };
-            toolTip.Show();
-        });
-
-        [Test]
-        public void TestDisplayToolTip()
-        {
-            var layouts = skin.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
-            if (layouts == null)
-                return;
-
-            foreach ((int key, string value) in layouts)
-            {
-                setTooltip($"Test lyric with layout {value}", lyric =>
-                {
-                    // todo: should change mapping group id from the lyric.
-                });
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre
             }
-        }
+        };
+        toolTip.Show();
+    });
 
-        private void setTooltip(string testName, Action<Lyric> callBack)
+    [Test]
+    public void TestDisplayToolTip()
+    {
+        var layouts = skin.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
+        if (layouts == null)
+            return;
+
+        foreach ((int key, string value) in layouts)
         {
-            AddStep(testName, () =>
+            setTooltip($"Test lyric with layout {value}", lyric =>
             {
-                var singer = new Lyric
-                {
-                    Text = "karaoke!"
-                };
-                callBack.Invoke(singer);
-                toolTip.SetContent(singer);
+                // todo: should change mapping group id from the lyric.
             });
         }
+    }
 
-        /// <summary>
-        /// todo: it's a tricky way to create ruleset's own skin class.
-        /// should use generic skin like <see cref="LegacySkin"/> eventually.
-        /// </summary>
-        public class TestingSkin : KaraokeSkin
+    private void setTooltip(string testName, Action<Lyric> callBack)
+    {
+        AddStep(testName, () =>
         {
-            internal static readonly Guid DEFAULT_SKIN = new("FEC5A291-5709-11EC-9F10-0800200C9A66");
-
-            public static SkinInfo CreateInfo() => new()
+            var singer = new Lyric
             {
-                ID = DEFAULT_SKIN,
-                Name = "karaoke! (default skin)",
-                Creator = "team karaoke!",
-                Protected = true,
-                InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo()
+                Text = "karaoke!"
             };
+            callBack.Invoke(singer);
+            toolTip.SetContent(singer);
+        });
+    }
 
-            public TestingSkin(IStorageResourceProvider? resources)
-                : this(CreateInfo(), resources)
-            {
-            }
+    /// <summary>
+    /// todo: it's a tricky way to create ruleset's own skin class.
+    /// should use generic skin like <see cref="LegacySkin"/> eventually.
+    /// </summary>
+    public class TestingSkin : KaraokeSkin
+    {
+        internal static readonly Guid DEFAULT_SKIN = new("FEC5A291-5709-11EC-9F10-0800200C9A66");
 
-            [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
-            public TestingSkin(SkinInfo skin, IStorageResourceProvider? resources)
-                : base(skin, resources)
-            {
-                DefaultElement[ElementType.LyricFontInfo] = LyricFontInfo.CreateDefault();
-                DefaultElement[ElementType.LyricStyle] = LyricStyle.CreateDefault();
-                DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
-            }
+        public static SkinInfo CreateInfo() => new()
+        {
+            ID = DEFAULT_SKIN,
+            Name = "karaoke! (default skin)",
+            Creator = "team karaoke!",
+            Protected = true,
+            InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo()
+        };
+
+        public TestingSkin(IStorageResourceProvider? resources)
+            : this(CreateInfo(), resources)
+        {
+        }
+
+        [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
+        public TestingSkin(SkinInfo skin, IStorageResourceProvider? resources)
+            : base(skin, resources)
+        {
+            DefaultElement[ElementType.LyricFontInfo] = LyricFontInfo.CreateDefault();
+            DefaultElement[ElementType.LyricStyle] = LyricStyle.CreateDefault();
+            DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
         }
     }
 }

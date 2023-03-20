@@ -15,56 +15,55 @@ using osu.Game.Scoring;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
+namespace osu.Game.Rulesets.Karaoke.Tests.Ranking;
+
+public partial class TestSceneBeatmapMetadataGraph : OsuTestScene
 {
-    public partial class TestSceneBeatmapMetadataGraph : OsuTestScene
+    [Test]
+    public void TestBeatmapMetadataGraph()
     {
-        [Test]
-        public void TestBeatmapMetadataGraph()
-        {
-            var ruleset = new KaraokeRuleset().RulesetInfo;
-            var originBeatmap = new TestKaraokeBeatmap(ruleset);
-            if (new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
-                throw new InvalidCastException(nameof(karaokeBeatmap));
+        var ruleset = new KaraokeRuleset().RulesetInfo;
+        var originBeatmap = new TestKaraokeBeatmap(ruleset);
+        if (new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
+            throw new InvalidCastException(nameof(karaokeBeatmap));
 
-            karaokeBeatmap.SingerInfo = createSingerInfo();
-            createTest(new ScoreInfo(), karaokeBeatmap);
-        }
+        karaokeBeatmap.SingerInfo = createSingerInfo();
+        createTest(new ScoreInfo(), karaokeBeatmap);
+    }
 
-        private void createTest(ScoreInfo score, IBeatmap beatmap) => AddStep("create test", () =>
+    private void createTest(ScoreInfo score, IBeatmap beatmap) => AddStep("create test", () =>
+    {
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4Extensions.FromHex("#333")
-                },
-                new BeatmapMetadataGraph(beatmap)
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Size = new Vector2(600, 200)
-                }
-            };
-        });
-
-        private static SingerInfo createSingerInfo()
-        {
-            var singerInfo = new SingerInfo();
-
-            for (int i = 0; i < 10; i++)
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4Extensions.FromHex("#333")
+            },
+            new BeatmapMetadataGraph(beatmap)
             {
-                int singerIndex = i;
-                singerInfo.AddSinger(s =>
-                {
-                    s.Name = $"Singer{singerIndex}";
-                    s.RomajiName = $"[Romaji]Singer{singerIndex}";
-                    s.EnglishName = $"[English]Singer{singerIndex}";
-                });
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Size = new Vector2(600, 200)
             }
+        };
+    });
 
-            return singerInfo;
+    private static SingerInfo createSingerInfo()
+    {
+        var singerInfo = new SingerInfo();
+
+        for (int i = 0; i < 10; i++)
+        {
+            int singerIndex = i;
+            singerInfo.AddSinger(s =>
+            {
+                s.Name = $"Singer{singerIndex}";
+                s.RomajiName = $"[Romaji]Singer{singerIndex}";
+                s.EnglishName = $"[English]Singer{singerIndex}";
+            });
         }
+
+        return singerInfo;
     }
 }

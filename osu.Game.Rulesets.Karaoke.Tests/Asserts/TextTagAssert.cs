@@ -5,26 +5,25 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
+namespace osu.Game.Rulesets.Karaoke.Tests.Asserts;
+
+public class TextTagAssert : Assert
 {
-    public class TextTagAssert : Assert
+    public static void ArePropertyEqual<T>(IList<T> expected, IList<T> actual) where T : ITextTag
     {
-        public static void ArePropertyEqual<T>(IList<T> expected, IList<T> actual) where T : ITextTag
-        {
-            AreEqual(expected.Count, actual.Count);
+        AreEqual(expected.Count, actual.Count);
 
-            for (int i = 0; i < expected.Count; i++)
-            {
-                ArePropertyEqual(expected[i], actual[i]);
-                ArePropertyEqual(expected[i], actual[i]);
-            }
-        }
-
-        public static void ArePropertyEqual<T>(T expected, T actual) where T : ITextTag
+        for (int i = 0; i < expected.Count; i++)
         {
-            AreEqual(expected.Text, actual.Text);
-            AreEqual(expected.StartIndex, actual.StartIndex);
-            AreEqual(expected.EndIndex, actual.EndIndex);
+            ArePropertyEqual(expected[i], actual[i]);
+            ArePropertyEqual(expected[i], actual[i]);
         }
+    }
+
+    public static void ArePropertyEqual<T>(T expected, T actual) where T : ITextTag
+    {
+        AreEqual(expected.Text, actual.Text);
+        AreEqual(expected.StartIndex, actual.StartIndex);
+        AreEqual(expected.EndIndex, actual.EndIndex);
     }
 }
