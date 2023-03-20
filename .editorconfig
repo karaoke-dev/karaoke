@@ -192,7 +192,7 @@ csharp_style_prefer_range_operator = false:silent
 csharp_style_prefer_switch_expression = false:none
 
 #Style - C# 10 features
-csharp_style_namespace_declarations = file_scoped:none
+csharp_style_namespace_declarations = file_scoped:suggestion
 
 [*.{yaml,yml}]
 insert_final_newline = true
