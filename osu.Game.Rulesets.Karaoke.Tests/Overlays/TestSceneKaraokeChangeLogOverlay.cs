@@ -5,29 +5,28 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
+namespace osu.Game.Rulesets.Karaoke.Tests.Overlays;
+
+[TestFixture]
+public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
+    private TestChangelogOverlay changelog = null!;
+
+    [SetUp]
+    public void SetUp() => Schedule(() => { Child = changelog = new TestChangelogOverlay(); });
+
+    [Test]
+    public void ShowWithNoFetch()
     {
-        private TestChangelogOverlay changelog = null!;
+        AddStep(@"Show", () => changelog.Show());
+        AddAssert(@"listing displayed", () => changelog.Current.Value == null);
+    }
 
-        [SetUp]
-        public void SetUp() => Schedule(() => { Child = changelog = new TestChangelogOverlay(); });
-
-        [Test]
-        public void ShowWithNoFetch()
+    private partial class TestChangelogOverlay : KaraokeChangelogOverlay
+    {
+        public TestChangelogOverlay()
+            : base("karaoke-dev")
         {
-            AddStep(@"Show", () => changelog.Show());
-            AddAssert(@"listing displayed", () => changelog.Current.Value == null);
-        }
-
-        private partial class TestChangelogOverlay : KaraokeChangelogOverlay
-        {
-            public TestChangelogOverlay()
-                : base("karaoke-dev")
-            {
-            }
         }
     }
 }

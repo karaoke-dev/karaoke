@@ -6,27 +6,26 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.RomajiTags;
+
+public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseLyricGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
+    where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, new()
 {
-    public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseLyricGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
-        where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, new()
+    protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
     {
-        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            CheckCanGenerate(lyric, canGenerate, config);
-        }
+        var lyric = new Lyric { Text = text };
+        CheckCanGenerate(lyric, canGenerate, config);
+    }
 
-        protected void CheckGenerateResult(string text, string[] expectedRubies, TConfig config)
-        {
-            var expected = TestCaseTagHelper.ParseRomajiTags(expectedRubies);
-            var lyric = new Lyric { Text = text };
-            CheckGenerateResult(lyric, expected, config);
-        }
+    protected void CheckGenerateResult(string text, string[] expectedRubies, TConfig config)
+    {
+        var expected = TestCaseTagHelper.ParseRomajiTags(expectedRubies);
+        var lyric = new Lyric { Text = text };
+        CheckGenerateResult(lyric, expected, config);
+    }
 
-        protected override void AssertEqual(RomajiTag[] expected, RomajiTag[] actual)
-        {
-            TextTagAssert.ArePropertyEqual(expected, actual);
-        }
+    protected override void AssertEqual(RomajiTag[] expected, RomajiTag[] actual)
+    {
+        TextTagAssert.ArePropertyEqual(expected, actual);
     }
 }

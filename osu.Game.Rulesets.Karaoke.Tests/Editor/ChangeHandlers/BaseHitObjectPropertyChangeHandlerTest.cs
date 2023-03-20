@@ -5,14 +5,13 @@ using System;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers;
+
+public abstract partial class BaseHitObjectPropertyChangeHandlerTest<TChangeHandler, THitObject> : BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject>
+    where TChangeHandler : HitObjectPropertyChangeHandler<THitObject>, new() where THitObject : HitObject
 {
-    public abstract partial class BaseHitObjectPropertyChangeHandlerTest<TChangeHandler, THitObject> : BaseHitObjectChangeHandlerTest<TChangeHandler, THitObject>
-        where TChangeHandler : HitObjectPropertyChangeHandler<THitObject>, new() where THitObject : HitObject
+    protected void TriggerHandlerChangedWithChangeForbiddenException(Action<TChangeHandler> c)
     {
-        protected void TriggerHandlerChangedWithChangeForbiddenException(Action<TChangeHandler> c)
-        {
-            TriggerHandlerChangedWithException<HitObjectPropertyChangeHandler<THitObject>.ChangeForbiddenException>(c);
-        }
+        TriggerHandlerChangedWithException<HitObjectPropertyChangeHandler<THitObject>.ChangeForbiddenException>(c);
     }
 }

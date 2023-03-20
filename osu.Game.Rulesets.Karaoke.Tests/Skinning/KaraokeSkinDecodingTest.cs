@@ -8,36 +8,35 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+public class KaraokeSkinDecodingTest
 {
-    public class KaraokeSkinDecodingTest
+    [Test]
+    public void TestKaraokeSkinDefaultValue()
     {
-        [Test]
-        public void TestKaraokeSkinDefaultValue()
+        var storage = TestResources.CreateSkinStorageResourceProvider();
+        var skin = new KaraokeSkin(new SkinInfo { Name = "special-skin" }, storage);
+
+        var testingLyric = new Lyric();
+        var testingNote = new Note
         {
-            var storage = TestResources.CreateSkinStorageResourceProvider();
-            var skin = new KaraokeSkin(new SkinInfo { Name = "special-skin" }, storage);
+            ReferenceLyric = testingLyric
+        };
 
-            var testingLyric = new Lyric();
-            var testingNote = new Note
-            {
-                ReferenceLyric = testingLyric
-            };
+        // try to get default value from the skin.
+        var defaultLyricFontInfo = skin.GetConfig<Lyric, LyricFontInfo>(testingLyric)!.Value;
+        var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(testingLyric)!.Value;
+        var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote)!.Value;
 
-            // try to get default value from the skin.
-            var defaultLyricFontInfo = skin.GetConfig<Lyric, LyricFontInfo>(testingLyric)!.Value;
-            var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(testingLyric)!.Value;
-            var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote)!.Value;
+        // should be able to get the default value.
+        Assert.IsNotNull(defaultLyricFontInfo);
+        Assert.IsNotNull(defaultLyricStyle);
+        Assert.IsNotNull(defaultNoteStyle);
 
-            // should be able to get the default value.
-            Assert.IsNotNull(defaultLyricFontInfo);
-            Assert.IsNotNull(defaultLyricStyle);
-            Assert.IsNotNull(defaultNoteStyle);
-
-            // Check the content
-            Assert.IsNotNull(defaultLyricFontInfo.Name, "Default lyric config");
-            Assert.IsNotNull(defaultLyricStyle.Name, "Default lyric style");
-            Assert.IsNotNull(defaultNoteStyle.Name, "Default note style");
-        }
+        // Check the content
+        Assert.IsNotNull(defaultLyricFontInfo.Name, "Default lyric config");
+        Assert.IsNotNull(defaultLyricStyle.Name, "Default lyric style");
+        Assert.IsNotNull(defaultNoteStyle.Name, "Default note style");
     }
 }

@@ -5,11 +5,10 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin;
+
+[TestFixture]
+public partial class TestSceneStyleScreen : KaraokeSkinEditorScreenTestScene<StyleScreen>
 {
-    [TestFixture]
-    public partial class TestSceneStyleScreen : KaraokeSkinEditorScreenTestScene<StyleScreen>
-    {
-        protected override StyleScreen CreateEditorScreen(KaraokeSkin karaokeSkin) => new(karaokeSkin);
-    }
+    protected override StyleScreen CreateEditorScreen(KaraokeSkin karaokeSkin) => new(karaokeSkin);
 }

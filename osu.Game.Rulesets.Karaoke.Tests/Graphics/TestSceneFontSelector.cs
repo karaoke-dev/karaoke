@@ -11,45 +11,44 @@ using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
+namespace osu.Game.Rulesets.Karaoke.Tests.Graphics;
+
+public partial class TestSceneFontSelector : OsuManualInputManagerTestScene
 {
-    public partial class TestSceneFontSelector : OsuManualInputManagerTestScene
+    protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+    private FontManager fontManager = null!;
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
-
-        private FontManager fontManager = null!;
-
-        [BackgroundDependencyLoader]
-        private void load()
+        base.Content.AddRange(new Drawable[]
         {
-            base.Content.AddRange(new Drawable[]
-            {
-                Content,
-                fontManager = new FontManager(),
-            });
+            Content,
+            fontManager = new FontManager(),
+        });
 
-            Dependencies.Cache(fontManager);
-        }
+        Dependencies.Cache(fontManager);
+    }
 
-        [Test]
-        public void TestAllFiles()
+    [Test]
+    public void TestAllFiles()
+    {
+        AddStep("create", () =>
         {
-            AddStep("create", () =>
+            var language = new BindableFontUsage
             {
-                var language = new BindableFontUsage
-                {
-                    MinFontSize = 32,
-                    MaxFontSize = 72
-                };
-                Child = new FontSelector
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Size = new Vector2(0.6f, 0.8f),
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Current = language
-                };
-            });
-        }
+                MinFontSize = 32,
+                MaxFontSize = 72
+            };
+            Child = new FontSelector
+            {
+                RelativeSizeAxes = Axes.Both,
+                Size = new Vector2(0.6f, 0.8f),
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Current = language
+            };
+        });
     }
 }

@@ -21,87 +21,86 @@ using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Tests.Visual;
 using osuTK.Input;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
-{
-    [TestFixture]
-    public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
-    {
-        protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
+namespace osu.Game.Rulesets.Karaoke.Tests.Ranking;
 
-        private static TestResultsScreen createResultsScreen() => new(new TestKaraokeScoreInfo
+[TestFixture]
+public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
+{
+    protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
+
+    private static TestResultsScreen createResultsScreen() => new(new TestKaraokeScoreInfo
+    {
+        HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
+    });
+
+    [Test]
+    public void TestShowStatisticsAndClickOtherPanel()
+    {
+        TestResultsScreen screen = null!;
+
+        AddStep("load results", () => Child = new TestResultsContainer(screen = createResultsScreen()));
+        AddUntilStep("wait for loaded", () => screen.IsLoaded);
+
+        ScorePanel expandedPanel = null!;
+        ScorePanel contractedPanel = null!;
+
+        AddStep("click expanded panel then contracted panel", () =>
         {
-            HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
+            expandedPanel = this.ChildrenOfType<ScorePanel>().Single(p => p.State == PanelState.Expanded);
+            InputManager.MoveMouseTo(expandedPanel);
+            InputManager.Click(MouseButton.Left);
+
+            contractedPanel = this.ChildrenOfType<ScorePanel>().First(p => p.State == PanelState.Contracted && p.ScreenSpaceDrawQuad.TopLeft.X > screen.ScreenSpaceDrawQuad.TopLeft.X);
+            InputManager.MoveMouseTo(contractedPanel);
+            InputManager.Click(MouseButton.Left);
         });
 
-        [Test]
-        public void TestShowStatisticsAndClickOtherPanel()
+        AddAssert("statistics shown", () => this.ChildrenOfType<StatisticsPanel>().Single().State.Value == Visibility.Visible);
+
+        AddAssert("contracted panel still contracted", () => contractedPanel.State == PanelState.Contracted);
+        AddAssert("expanded panel still expanded", () => expandedPanel.State == PanelState.Expanded);
+    }
+
+    private partial class TestResultsContainer : Container
+    {
+        [Cached(typeof(Player))]
+        private readonly Player player = new TestPlayer();
+
+        public TestResultsContainer(IScreen screen)
         {
-            TestResultsScreen screen = null!;
+            RelativeSizeAxes = Axes.Both;
+            OsuScreenStack stack;
 
-            AddStep("load results", () => Child = new TestResultsContainer(screen = createResultsScreen()));
-            AddUntilStep("wait for loaded", () => screen.IsLoaded);
-
-            ScorePanel expandedPanel = null!;
-            ScorePanel contractedPanel = null!;
-
-            AddStep("click expanded panel then contracted panel", () =>
+            InternalChild = stack = new OsuScreenStack
             {
-                expandedPanel = this.ChildrenOfType<ScorePanel>().Single(p => p.State == PanelState.Expanded);
-                InputManager.MoveMouseTo(expandedPanel);
-                InputManager.Click(MouseButton.Left);
+                RelativeSizeAxes = Axes.Both,
+            };
 
-                contractedPanel = this.ChildrenOfType<ScorePanel>().First(p => p.State == PanelState.Contracted && p.ScreenSpaceDrawQuad.TopLeft.X > screen.ScreenSpaceDrawQuad.TopLeft.X);
-                InputManager.MoveMouseTo(contractedPanel);
-                InputManager.Click(MouseButton.Left);
-            });
+            stack.Push(screen);
+        }
+    }
 
-            AddAssert("statistics shown", () => this.ChildrenOfType<StatisticsPanel>().Single().State.Value == Visibility.Visible);
-
-            AddAssert("contracted panel still contracted", () => contractedPanel.State == PanelState.Contracted);
-            AddAssert("expanded panel still expanded", () => expandedPanel.State == PanelState.Expanded);
+    private partial class TestResultsScreen : ResultsScreen
+    {
+        public TestResultsScreen(ScoreInfo score)
+            : base(score, true)
+        {
         }
 
-        private partial class TestResultsContainer : Container
+        protected override APIRequest? FetchScores(Action<IEnumerable<ScoreInfo>> scoresCallback)
         {
-            [Cached(typeof(Player))]
-            private readonly Player player = new TestPlayer();
+            var scores = new List<ScoreInfo>();
 
-            public TestResultsContainer(IScreen screen)
+            for (int i = 0; i < 20; i++)
             {
-                RelativeSizeAxes = Axes.Both;
-                OsuScreenStack stack;
-
-                InternalChild = stack = new OsuScreenStack
-                {
-                    RelativeSizeAxes = Axes.Both,
-                };
-
-                stack.Push(screen);
-            }
-        }
-
-        private partial class TestResultsScreen : ResultsScreen
-        {
-            public TestResultsScreen(ScoreInfo score)
-                : base(score, true)
-            {
+                var score = new TestKaraokeScoreInfo();
+                score.TotalScore += 10 - i;
+                scores.Add(score);
             }
 
-            protected override APIRequest? FetchScores(Action<IEnumerable<ScoreInfo>> scoresCallback)
-            {
-                var scores = new List<ScoreInfo>();
+            scoresCallback.Invoke(scores);
 
-                for (int i = 0; i < 20; i++)
-                {
-                    var score = new TestKaraokeScoreInfo();
-                    score.TotalScore += 10 - i;
-                    scores.Add(score);
-                }
-
-                scoresCallback.Invoke(scores);
-
-                return null;
-            }
+            return null;
         }
     }
 }

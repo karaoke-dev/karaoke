@@ -4,15 +4,14 @@
 using osu.Game.Rulesets.Mods;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
-{
-    public abstract partial class KaraokeModPerfectTestScene : ModPerfectTestScene
-    {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-        protected KaraokeModPerfectTestScene(ModPerfect mod)
-            : base(mod)
-        {
-        }
+public abstract partial class KaraokeModPerfectTestScene : ModPerfectTestScene
+{
+    protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
+    protected KaraokeModPerfectTestScene(ModPerfect mod)
+        : base(mod)
+    {
     }
 }

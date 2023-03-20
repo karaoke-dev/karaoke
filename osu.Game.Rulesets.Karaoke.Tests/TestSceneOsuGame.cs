@@ -7,23 +7,22 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Tests.Visual;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
-{
-    public partial class TestSceneOsuGame : OsuTestScene
-    {
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Children = new Drawable[]
-            {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Black,
-                },
-            };
+namespace osu.Game.Rulesets.Karaoke.Tests;
 
-            AddGame(new OsuGame());
-        }
+public partial class TestSceneOsuGame : OsuTestScene
+{
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        Children = new Drawable[]
+        {
+            new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4.Black,
+            },
+        };
+
+        AddGame(new OsuGame());
     }
 }

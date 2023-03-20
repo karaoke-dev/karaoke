@@ -3,10 +3,9 @@
 
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
+
+public abstract partial class KaraokeModTestScene : ModTestScene
 {
-    public abstract partial class KaraokeModTestScene : ModTestScene
-    {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-    }
+    protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 }

@@ -5,22 +5,21 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
-{
-    public partial class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
-    {
-        public TestSceneKaraokeModPerfect()
-            : base(new KaraokeModPerfect())
-        {
-        }
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-        // TODO : test case = false will be added after scoring system is implemented.
-        [Ignore("Scoring should judgement by note, not lyric.")]
-        public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new Lyric
-        {
-            StartTime = 1000,
-            Duration = 1000,
-            Text = "カラオケ!",
-        }), shouldMiss);
+public partial class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
+{
+    public TestSceneKaraokeModPerfect()
+        : base(new KaraokeModPerfect())
+    {
     }
+
+    // TODO : test case = false will be added after scoring system is implemented.
+    [Ignore("Scoring should judgement by note, not lyric.")]
+    public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new Lyric
+    {
+        StartTime = 1000,
+        Duration = 1000,
+        Text = "カラオケ!",
+    }), shouldMiss);
 }

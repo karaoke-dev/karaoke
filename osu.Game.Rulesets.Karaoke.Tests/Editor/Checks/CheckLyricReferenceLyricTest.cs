@@ -9,71 +9,70 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricReferenceLyric;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyricReferenceLyric>
 {
-    public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyricReferenceLyric>
+    [Test]
+    public void TestCheck()
     {
-        [Test]
-        public void TestCheck()
+        var referencedLyric = new Lyric();
+        var lyric = new Lyric
         {
-            var referencedLyric = new Lyric();
-            var lyric = new Lyric
-            {
-                ReferenceLyric = referencedLyric,
-                ReferenceLyricConfig = new ReferenceLyricConfig(),
-            };
+            ReferenceLyric = referencedLyric,
+            ReferenceLyricConfig = new ReferenceLyricConfig(),
+        };
 
-            AssertOk(new HitObject[] { referencedLyric, lyric });
-        }
+        AssertOk(new HitObject[] { referencedLyric, lyric });
+    }
 
-        [Test]
-        public void TestCheckSelfReference()
+    [Test]
+    public void TestCheckSelfReference()
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                ReferenceLyricConfig = new ReferenceLyricConfig(),
-            };
+            ReferenceLyricConfig = new ReferenceLyricConfig(),
+        };
 
-            lyric.ReferenceLyric = lyric;
+        lyric.ReferenceLyric = lyric;
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricSelfReference>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricSelfReference>(lyric);
+    }
 
-        [Test]
-        public void TestCheckInvalidReferenceLyric()
+    [Test]
+    public void TestCheckInvalidReferenceLyric()
+    {
+        var referencedLyric = new Lyric();
+        var lyric = new Lyric
         {
-            var referencedLyric = new Lyric();
-            var lyric = new Lyric
-            {
-                ReferenceLyric = referencedLyric,
-                ReferenceLyricConfig = new ReferenceLyricConfig(),
-            };
+            ReferenceLyric = referencedLyric,
+            ReferenceLyricConfig = new ReferenceLyricConfig(),
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricInvalidReferenceLyric>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricInvalidReferenceLyric>(lyric);
+    }
 
-        [Test]
-        public void TestCheckNullReferenceLyricConfig()
+    [Test]
+    public void TestCheckNullReferenceLyricConfig()
+    {
+        var referencedLyric = new Lyric();
+        var lyric = new Lyric
         {
-            var referencedLyric = new Lyric();
-            var lyric = new Lyric
-            {
-                ReferenceLyric = referencedLyric,
-            };
+            ReferenceLyric = referencedLyric,
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
+    }
 
-        [Test]
-        public void TestCheckHasReferenceLyricConfigIfNoReferenceLyric()
+    [Test]
+    public void TestCheckHasReferenceLyricConfigIfNoReferenceLyric()
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                ReferenceLyric = null,
-                ReferenceLyricConfig = new ReferenceLyricConfig(),
-            };
+            ReferenceLyric = null,
+            ReferenceLyricConfig = new ReferenceLyricConfig(),
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric>(lyric);
     }
 }

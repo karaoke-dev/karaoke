@@ -5,64 +5,63 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
+
+public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTextChangeHandler>
 {
-    public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTextChangeHandler>
+    [Test]
+    public void TestInsertText()
     {
-        [Test]
-        public void TestInsertText()
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラ"
-            });
+            Text = "カラ"
+        });
 
-            TriggerHandlerChanged(c => c.InsertText(2, "オケ"));
+        TriggerHandlerChanged(c => c.InsertText(2, "オケ"));
 
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual("カラオケ", h.Text);
-            });
-        }
-
-        [Test]
-        public void TestDeleteLyricText()
+        AssertSelectedHitObject(h =>
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ"
-            });
+            Assert.AreEqual("カラオケ", h.Text);
+        });
+    }
 
-            TriggerHandlerChanged(c => c.DeleteLyricText(4));
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual("カラオ", h.Text);
-            });
-        }
-
-        [Test]
-        public void TestDeleteAllLyricText()
+    [Test]
+    public void TestDeleteLyricText()
+    {
+        PrepareHitObject(new Lyric
         {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カ"
-            });
+            Text = "カラオケ"
+        });
 
-            TriggerHandlerChanged(c => c.DeleteLyricText(1));
+        TriggerHandlerChanged(c => c.DeleteLyricText(4));
 
-            AssertHitObjects(Assert.IsEmpty);
-        }
-
-        [Test]
-        public void TestWithReferenceLyric()
+        AssertSelectedHitObject(h =>
         {
-            PrepareLyricWithSyncConfig(new Lyric
-            {
-                Text = "カラ"
-            });
+            Assert.AreEqual("カラオ", h.Text);
+        });
+    }
 
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.InsertText(2, "オケ"));
-        }
+    [Test]
+    public void TestDeleteAllLyricText()
+    {
+        PrepareHitObject(new Lyric
+        {
+            Text = "カ"
+        });
+
+        TriggerHandlerChanged(c => c.DeleteLyricText(1));
+
+        AssertHitObjects(Assert.IsEmpty);
+    }
+
+    [Test]
+    public void TestWithReferenceLyric()
+    {
+        PrepareLyricWithSyncConfig(new Lyric
+        {
+            Text = "カラ"
+        });
+
+        TriggerHandlerChangedWithChangeForbiddenException(c => c.InsertText(2, "オケ"));
     }
 }

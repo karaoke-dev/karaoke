@@ -5,12 +5,11 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps;
+
+public abstract class BaseBeatmapDetectorTest<TDetector, TObject, TConfig>
+    : BasePropertyDetectorTest<TDetector, KaraokeBeatmap, TObject, TConfig>
+    where TDetector : BeatmapPropertyDetector<TObject, TConfig>
+    where TConfig : GeneratorConfig, new()
 {
-    public abstract class BaseBeatmapDetectorTest<TDetector, TObject, TConfig>
-        : BasePropertyDetectorTest<TDetector, KaraokeBeatmap, TObject, TConfig>
-        where TDetector : BeatmapPropertyDetector<TObject, TConfig>
-        where TConfig : GeneratorConfig, new()
-    {
-    }
 }

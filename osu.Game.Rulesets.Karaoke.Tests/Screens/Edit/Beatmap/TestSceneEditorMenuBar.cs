@@ -16,70 +16,69 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap
-{
-    [TestFixture]
-    public partial class TestSceneEditorMenuBar : OsuTestScene
-    {
-        [Cached]
-        private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Aquamarine);
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
 
-        [BackgroundDependencyLoader]
-        private void load()
+[TestFixture]
+public partial class TestSceneEditorMenuBar : OsuTestScene
+{
+    [Cached]
+    private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Aquamarine);
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        var lyricEditorConfig = new KaraokeRulesetLyricEditorConfigManager();
+        Add(new Container
         {
-            var lyricEditorConfig = new KaraokeRulesetLyricEditorConfigManager();
-            Add(new Container
+            Anchor = Anchor.TopCentre,
+            Origin = Anchor.TopCentre,
+            RelativeSizeAxes = Axes.X,
+            Height = 50,
+            Y = 50,
+            Child = new EditorMenuBar
             {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                RelativeSizeAxes = Axes.X,
-                Height = 50,
-                Y = 50,
-                Child = new EditorMenuBar
+                RelativeSizeAxes = Axes.Both,
+                Items = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Items = new[]
+                    new MenuItem("File")
                     {
-                        new MenuItem("File")
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new ImportLyricMenu(null, "Import from text", null),
-                                new ImportLyricMenu(null, "Import from .lrc file", null),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
-                                new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
-                                new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
-                            }
-                        },
-                        new LyricEditorModeMenu(new Bindable<LyricEditorMode>(), "Mode"),
-                        new MenuItem("View")
+                            new ImportLyricMenu(null, "Import from text", null),
+                            new ImportLyricMenu(null, "Import from .lrc file", null),
+                            new EditorMenuItemSpacer(),
+                            new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
+                            new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
+                            new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
+                        }
+                    },
+                    new LyricEditorModeMenu(new Bindable<LyricEditorMode>(), "Mode"),
+                    new MenuItem("View")
+                    {
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),
-                                new AutoFocusToEditLyricMenu(lyricEditorConfig, "Auto focus to edit lyric"),
-                            }
-                        },
-                        new MenuItem("Config")
+                            new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),
+                            new AutoFocusToEditLyricMenu(lyricEditorConfig, "Auto focus to edit lyric"),
+                        }
+                    },
+                    new MenuItem("Config")
+                    {
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu("Auto-generator"),
-                                new LockStateMenu(lyricEditorConfig, "Lock"),
-                            }
-                        },
-                        new MenuItem("Tools")
+                            new EditorMenuItem("Lyric editor"),
+                            new GeneratorConfigMenu("Auto-generator"),
+                            new LockStateMenu(lyricEditorConfig, "Lock"),
+                        }
+                    },
+                    new MenuItem("Tools")
+                    {
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new KaraokeSkinEditorMenu(null, null, "Skin editor"),
-                            }
-                        },
-                    }
+                            new KaraokeSkinEditorMenu(null, null, "Skin editor"),
+                        }
+                    },
                 }
-            });
-        }
+            }
+        });
     }
 }

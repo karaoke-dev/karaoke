@@ -6,33 +6,32 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.TimeTags;
+
+public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseLyricGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
+    where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
 {
-    public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseLyricGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
-        where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
+    protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
     {
-        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            CheckCanGenerate(lyric, canGenerate, config);
-        }
+        var lyric = new Lyric { Text = text };
+        CheckCanGenerate(lyric, canGenerate, config);
+    }
 
-        protected void CheckGenerateResult(string text, string[] expectedTimeTags, TConfig config)
-        {
-            var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var lyric = new Lyric { Text = text };
-            CheckGenerateResult(lyric, expected, config);
-        }
+    protected void CheckGenerateResult(string text, string[] expectedTimeTags, TConfig config)
+    {
+        var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
+        var lyric = new Lyric { Text = text };
+        CheckGenerateResult(lyric, expected, config);
+    }
 
-        protected void CheckGenerateResult(Lyric lyric, string[] expectedTimeTags, TConfig config)
-        {
-            var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            CheckGenerateResult(lyric, expected, config);
-        }
+    protected void CheckGenerateResult(Lyric lyric, string[] expectedTimeTags, TConfig config)
+    {
+        var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
+        CheckGenerateResult(lyric, expected, config);
+    }
 
-        protected override void AssertEqual(TimeTag[] expected, TimeTag[] actual)
-        {
-            TimeTagAssert.ArePropertyEqual(expected, actual);
-        }
+    protected override void AssertEqual(TimeTag[] expected, TimeTag[] actual)
+    {
+        TimeTagAssert.ArePropertyEqual(expected, actual);
     }
 }

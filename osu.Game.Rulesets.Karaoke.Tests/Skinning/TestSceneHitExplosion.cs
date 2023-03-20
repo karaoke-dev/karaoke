@@ -13,46 +13,45 @@ using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+[TestFixture]
+public partial class TestSceneHitExplosion : KaraokeSkinnableColumnTestScene
 {
-    [TestFixture]
-    public partial class TestSceneHitExplosion : KaraokeSkinnableColumnTestScene
+    public TestSceneHitExplosion()
     {
-        public TestSceneHitExplosion()
+        int runCount = 0;
+
+        AddRepeatStep("explode", () =>
         {
-            int runCount = 0;
+            runCount++;
 
-            AddRepeatStep("explode", () =>
+            if (runCount % 15 > 12)
+                return;
+
+            CreatedDrawables.OfType<Container>().ForEach(c =>
             {
-                runCount++;
-
-                if (runCount % 15 > 12)
-                    return;
-
-                CreatedDrawables.OfType<Container>().ForEach(c =>
-                {
-                    var colour = runCount / 15 % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
-                    c.Add(new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion),
-                        _ => new DefaultHitExplosion(colour, runCount % 6 != 0)
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                        }));
-                });
-            }, 100);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            SetContents(_ => new NotePlayfieldTestContainer(0)
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                RelativePositionAxes = Axes.Y,
-                Y = -0.25f,
-                Size = new Vector2(DefaultHitExplosion.EXPLOSION_SIZE, DefaultColumnBackground.COLUMN_HEIGHT),
+                var colour = runCount / 15 % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
+                c.Add(new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion),
+                    _ => new DefaultHitExplosion(colour, runCount % 6 != 0)
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    }));
             });
-        }
+        }, 100);
+    }
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        SetContents(_ => new NotePlayfieldTestContainer(0)
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativePositionAxes = Axes.Y,
+            Y = -0.25f,
+            Size = new Vector2(DefaultHitExplosion.EXPLOSION_SIZE, DefaultColumnBackground.COLUMN_HEIGHT),
+        });
     }
 }

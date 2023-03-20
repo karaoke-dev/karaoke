@@ -16,54 +16,53 @@ using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin;
+
+public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeSkinEditorScreen
 {
-    public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockTestScene where T : KaraokeSkinEditorScreen
+    [Cached(typeof(EditorBeatmap))]
+    [Cached(typeof(IBeatSnapProvider))]
+    private readonly EditorBeatmap editorBeatmap;
+
+    [Cached]
+    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);
+
+    private readonly KaraokeBeatmapSkin karaokeSkin = new TestKaraokeBeatmapSkin();
+
+    protected KaraokeSkinEditorScreenTestScene()
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
+        // todo: skin editor might not need the editor beatmap.
+        editorBeatmap = new EditorBeatmap(createBeatmap());
+    }
 
-        [Cached]
-        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);
-
-        private readonly KaraokeBeatmapSkin karaokeSkin = new TestKaraokeBeatmapSkin();
-
-        protected KaraokeSkinEditorScreenTestScene()
+    protected override void LoadComplete()
+    {
+        Child = new SkinProvidingContainer(karaokeSkin)
         {
-            // todo: skin editor might not need the editor beatmap.
-            editorBeatmap = new EditorBeatmap(createBeatmap());
-        }
-
-        protected override void LoadComplete()
-        {
-            Child = new SkinProvidingContainer(karaokeSkin)
+            RelativeSizeAxes = Axes.Both,
+            Child = CreateEditorScreen(karaokeSkin).With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = CreateEditorScreen(karaokeSkin).With(x =>
-                {
-                    x.State.Value = Visibility.Visible;
-                })
-            };
-        }
+                x.State.Value = Visibility.Visible;
+            })
+        };
+    }
 
-        protected abstract T CreateEditorScreen(KaraokeSkin karaokeSkin);
+    protected abstract T CreateEditorScreen(KaraokeSkin karaokeSkin);
 
-        protected class TestKaraokeBeatmapSkin : KaraokeBeatmapSkin
+    protected class TestKaraokeBeatmapSkin : KaraokeBeatmapSkin
+    {
+        public TestKaraokeBeatmapSkin()
+            : base(new SkinInfo(), TestResources.CreateSkinStorageResourceProvider())
         {
-            public TestKaraokeBeatmapSkin()
-                : base(new SkinInfo(), TestResources.CreateSkinStorageResourceProvider())
-            {
-            }
         }
+    }
 
-        private KaraokeBeatmap createBeatmap()
-        {
-            var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
-            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
-                throw new ArgumentNullException(nameof(karaokeBeatmap));
+    private KaraokeBeatmap createBeatmap()
+    {
+        var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
+        if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
+            throw new ArgumentNullException(nameof(karaokeBeatmap));
 
-            return karaokeBeatmap;
-        }
+        return karaokeBeatmap;
     }
 }

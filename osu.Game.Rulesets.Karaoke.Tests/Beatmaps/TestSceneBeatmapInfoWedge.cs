@@ -11,63 +11,62 @@ using osu.Game.Screens.Select;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+
+[TestFixture]
+public partial class TestSceneBeatmapInfoWedge : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneBeatmapInfoWedge : OsuTestScene
+    private TestBeatmapInfoWedge infoWedge = null!;
+
+    protected override void LoadComplete()
     {
-        private TestBeatmapInfoWedge infoWedge = null!;
+        base.LoadComplete();
 
-        protected override void LoadComplete()
+        Add(infoWedge = new TestBeatmapInfoWedge
         {
-            base.LoadComplete();
+            Size = new Vector2(0.5f, 245),
+            RelativeSizeAxes = Axes.X,
+            Margin = new MarginPadding { Top = 20 }
+        });
 
-            Add(infoWedge = new TestBeatmapInfoWedge
-            {
-                Size = new Vector2(0.5f, 245),
-                RelativeSizeAxes = Axes.X,
-                Margin = new MarginPadding { Top = 20 }
-            });
-
-            AddStep("show", () =>
-            {
-                infoWedge.Show();
-                infoWedge.Beatmap = Beatmap.Value;
-            });
-        }
-
-        [TestCase("karaoke-file-samples")]
-        [TestCase("karaoke-file-samples-without-note")]
-        [TestCase("karaoke-note-samples")]
-        [TestCase("karaoke-translate-samples")]
-        public void TestNullBeatmap(string fileName)
+        AddStep("show", () =>
         {
-            using (var resStream = TestResources.OpenBeatmapResource(fileName))
-            using (var stream = new LineBufferedReader(resStream))
-            {
-                var decoder = Decoder.GetDecoder<Beatmap>(stream);
-                var beatmap = decoder.Decode(stream);
-                selectBeatmap(beatmap, fileName);
-            }
-        }
+            infoWedge.Show();
+            infoWedge.Beatmap = Beatmap.Value;
+        });
+    }
 
-        private void selectBeatmap(IBeatmap b, string fileName)
+    [TestCase("karaoke-file-samples")]
+    [TestCase("karaoke-file-samples-without-note")]
+    [TestCase("karaoke-note-samples")]
+    [TestCase("karaoke-translate-samples")]
+    public void TestNullBeatmap(string fileName)
+    {
+        using (var resStream = TestResources.OpenBeatmapResource(fileName))
+        using (var stream = new LineBufferedReader(resStream))
         {
-            BeatmapInfoWedge.WedgeInfoText infoBefore = null!;
-
-            string title = string.IsNullOrEmpty(b.Metadata.Title) ? fileName : b.Metadata.Title;
-            AddStep($"select {title} beatmap", () =>
-            {
-                infoBefore = infoWedge.Info;
-                infoWedge.Beatmap = Beatmap.Value = CreateWorkingBeatmap(b);
-            });
-
-            AddUntilStep("wait for async load", () => infoWedge.Info != infoBefore);
+            var decoder = Decoder.GetDecoder<Beatmap>(stream);
+            var beatmap = decoder.Decode(stream);
+            selectBeatmap(beatmap, fileName);
         }
+    }
 
-        private partial class TestBeatmapInfoWedge : BeatmapInfoWedge
+    private void selectBeatmap(IBeatmap b, string fileName)
+    {
+        BeatmapInfoWedge.WedgeInfoText infoBefore = null!;
+
+        string title = string.IsNullOrEmpty(b.Metadata.Title) ? fileName : b.Metadata.Title;
+        AddStep($"select {title} beatmap", () =>
         {
-            public new WedgeInfoText Info => base.Info;
-        }
+            infoBefore = infoWedge.Info;
+            infoWedge.Beatmap = Beatmap.Value = CreateWorkingBeatmap(b);
+        });
+
+        AddUntilStep("wait for async load", () => infoWedge.Info != infoBefore);
+    }
+
+    private partial class TestBeatmapInfoWedge : BeatmapInfoWedge
+    {
+        public new WedgeInfoText Info => base.Info;
     }
 }

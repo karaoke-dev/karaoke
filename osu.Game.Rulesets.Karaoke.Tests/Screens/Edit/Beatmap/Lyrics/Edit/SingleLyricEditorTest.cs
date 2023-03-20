@@ -6,15 +6,14 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Edit
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Edit;
+
+public class SingleLyricEditorTest
 {
-    public class SingleLyricEditorTest
+    [Test]
+    public void TestLockMessage()
     {
-        [Test]
-        public void TestLockMessage()
-        {
-            var lyric = new Lyric();
-            Assert.IsNull(InteractableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View));
-        }
+        var lyric = new Lyric();
+        Assert.IsNull(InteractableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View));
     }
 }

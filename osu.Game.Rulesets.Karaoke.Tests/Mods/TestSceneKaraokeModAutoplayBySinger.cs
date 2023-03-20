@@ -5,17 +5,16 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Mods
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
+
+public partial class TestSceneKaraokeModAutoplayBySinger : KaraokeModTestScene
 {
-    public partial class TestSceneKaraokeModAutoplayBySinger : KaraokeModTestScene
+    [Ignore("mod auto-play will cause crash")]
+    public void TestMod() => CreateModTest(new ModTestData
     {
-        [Ignore("mod auto-play will cause crash")]
-        public void TestMod() => CreateModTest(new ModTestData
-        {
-            Mod = new KaraokeModAutoplayBySinger(),
-            Autoplay = true,
-            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () => true
-        });
-    }
+        Mod = new KaraokeModAutoplayBySinger(),
+        Autoplay = true,
+        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        PassCondition = () => true
+    });
 }

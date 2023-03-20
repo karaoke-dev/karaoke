@@ -8,50 +8,49 @@ using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
+
+public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
 {
-    public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
+    [TestCase(1, 2, "ルビ", "[1,2]:ルビ")]
+    [TestCase(1, 1, "ルビ", "[1,1]:ルビ")]
+    [TestCase(-1, -2, "ルビ", "[-1,-2]:ルビ")] // Should not check ruby is out of range in here.
+    [TestCase(1, 2, "::[][]", "[1,2]:::[][]")]
+    [TestCase(1, 2, "", "[1,2]:")]
+    public void TestSerialize(int startIndex, int endIndex, string text, string json)
     {
-        [TestCase(1, 2, "ルビ", "[1,2]:ルビ")]
-        [TestCase(1, 1, "ルビ", "[1,1]:ルビ")]
-        [TestCase(-1, -2, "ルビ", "[-1,-2]:ルビ")] // Should not check ruby is out of range in here.
-        [TestCase(1, 2, "::[][]", "[1,2]:::[][]")]
-        [TestCase(1, 2, "", "[1,2]:")]
-        public void TestSerialize(int startIndex, int endIndex, string text, string json)
+        var rubyTag = new RubyTag
         {
-            var rubyTag = new RubyTag
-            {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                Text = text
-            };
+            StartIndex = startIndex,
+            EndIndex = endIndex,
+            Text = text
+        };
 
-            string expected = $"\"{json}\"";
-            string actual = JsonConvert.SerializeObject(rubyTag, CreateSettings());
-            Assert.AreEqual(expected, actual);
-        }
+        string expected = $"\"{json}\"";
+        string actual = JsonConvert.SerializeObject(rubyTag, CreateSettings());
+        Assert.AreEqual(expected, actual);
+    }
 
-        [TestCase("[1,2]:ルビ", 1, 2, "ルビ")]
-        [TestCase("[1,1]:ルビ", 1, 1, "ルビ")]
-        [TestCase("[-1,-2]:ルビ", -1, -2, "ルビ")] // Should not check ruby is out of range in here.
-        [TestCase("[1,2]:::[][]", 1, 2, "::[][]")]
-        [TestCase("[1,2]:", 1, 2, null)] // todo: expected value should be string.empty.
-        [TestCase("[1,2]:null", 1, 2, "null")]
-        [TestCase("", 0, 0, "")] // Test deal with format is not right below.
-        [TestCase("[1,2]", 0, 0, "")]
-        [TestCase("[1,]", 0, 0, "")]
-        [TestCase("[,1]", 0, 0, "")]
-        [TestCase("[]", 0, 0, "")]
-        public void TestDeserialize(string json, int startIndex, int endIndex, string text)
+    [TestCase("[1,2]:ルビ", 1, 2, "ルビ")]
+    [TestCase("[1,1]:ルビ", 1, 1, "ルビ")]
+    [TestCase("[-1,-2]:ルビ", -1, -2, "ルビ")] // Should not check ruby is out of range in here.
+    [TestCase("[1,2]:::[][]", 1, 2, "::[][]")]
+    [TestCase("[1,2]:", 1, 2, null)] // todo: expected value should be string.empty.
+    [TestCase("[1,2]:null", 1, 2, "null")]
+    [TestCase("", 0, 0, "")] // Test deal with format is not right below.
+    [TestCase("[1,2]", 0, 0, "")]
+    [TestCase("[1,]", 0, 0, "")]
+    [TestCase("[,1]", 0, 0, "")]
+    [TestCase("[]", 0, 0, "")]
+    public void TestDeserialize(string json, int startIndex, int endIndex, string text)
+    {
+        var expected = new RubyTag
         {
-            var expected = new RubyTag
-            {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                Text = text
-            };
-            var actual = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings()) ?? throw new InvalidCastException();
-            TextTagAssert.ArePropertyEqual(expected, actual);
-        }
+            StartIndex = startIndex,
+            EndIndex = endIndex,
+            Text = text
+        };
+        var actual = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings()) ?? throw new InvalidCastException();
+        TextTagAssert.ArePropertyEqual(expected, actual);
     }
 }

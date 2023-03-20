@@ -7,22 +7,21 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
-{
-    public class LockStateUtilsTest
-    {
-        [TestCase(new[] { LockState.Full, LockState.Partial, LockState.None }, 1)]
-        [TestCase(new LockState[] { }, 0)]
-        public void TestFindUnlockObjects(LockState[] lockStates, int? expected)
-        {
-            var lyrics = lockStates.Select(x => new Lyric
-            {
-                Text = "karaoke",
-                Lock = x
-            });
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils;
 
-            int actual = LockStateUtils.FindUnlockObjects(lyrics).Length;
-            Assert.AreEqual(expected, actual);
-        }
+public class LockStateUtilsTest
+{
+    [TestCase(new[] { LockState.Full, LockState.Partial, LockState.None }, 1)]
+    [TestCase(new LockState[] { }, 0)]
+    public void TestFindUnlockObjects(LockState[] lockStates, int? expected)
+    {
+        var lyrics = lockStates.Select(x => new Lyric
+        {
+            Text = "karaoke",
+            Lock = x
+        });
+
+        int actual = LockStateUtils.FindUnlockObjects(lyrics).Length;
+        Assert.AreEqual(expected, actual);
     }
 }

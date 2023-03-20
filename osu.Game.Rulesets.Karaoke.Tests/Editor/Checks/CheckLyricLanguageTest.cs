@@ -8,31 +8,30 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricLanguage;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
+
+public class CheckLyricLanguageTest : HitObjectCheckTest<Lyric, CheckLyricLanguage>
 {
-    public class CheckLyricLanguageTest : HitObjectCheckTest<Lyric, CheckLyricLanguage>
+    [TestCase("Ja-jp")]
+    [TestCase("")] // should not have issue if CultureInfo accept it.
+    public void TestCheck(string language)
     {
-        [TestCase("Ja-jp")]
-        [TestCase("")] // should not have issue if CultureInfo accept it.
-        public void TestCheck(string language)
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Language = new CultureInfo(language),
-            };
+            Language = new CultureInfo(language),
+        };
 
-            AssertOk(lyric);
-        }
+        AssertOk(lyric);
+    }
 
-        [TestCase(null)]
-        public void TestCheckNotFillLanguage(string? language)
+    [TestCase(null)]
+    public void TestCheckNotFillLanguage(string? language)
+    {
+        var lyric = new Lyric
         {
-            var lyric = new Lyric
-            {
-                Language = language != null ? new CultureInfo(language) : null,
-            };
+            Language = language != null ? new CultureInfo(language) : null,
+        };
 
-            AssertNotOk<LyricIssue, IssueTemplateLyricNotFillLanguage>(lyric);
-        }
+        AssertNotOk<LyricIssue, IssueTemplateLyricNotFillLanguage>(lyric);
     }
 }

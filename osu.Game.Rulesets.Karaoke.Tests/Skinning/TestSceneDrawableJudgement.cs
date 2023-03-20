@@ -10,21 +10,20 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
+
+public partial class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
 {
-    public partial class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
+    public TestSceneDrawableJudgement()
     {
-        public TestSceneDrawableJudgement()
+        foreach (var result in Enum.GetValues<HitResult>().Skip(1))
         {
-            foreach (var result in Enum.GetValues<HitResult>().Skip(1))
-            {
-                AddStep("Show " + result.GetDescription(), () => SetContents(_ =>
-                    new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, null)
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                    }));
-            }
+            AddStep("Show " + result.GetDescription(), () => SetContents(_ =>
+                new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, null)
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                }));
         }
     }
 }

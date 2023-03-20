@@ -9,25 +9,24 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
+namespace osu.Game.Rulesets.Karaoke.Tests.Graphics;
+
+public partial class TestSceneLanguageSelector : OsuManualInputManagerTestScene
 {
-    public partial class TestSceneLanguageSelector : OsuManualInputManagerTestScene
+    [Test]
+    public void TestAllLanguages()
     {
-        [Test]
-        public void TestAllLanguages()
+        AddStep("show the selector", () =>
         {
-            AddStep("show the selector", () =>
+            var language = new Bindable<CultureInfo>(new CultureInfo("ja"));
+            Child = new LanguageSelector
             {
-                var language = new Bindable<CultureInfo>(new CultureInfo("ja"));
-                Child = new LanguageSelector
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Size = new Vector2(0.5f, 0.8f),
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Current = language
-                };
-            });
-        }
+                RelativeSizeAxes = Axes.Both,
+                Size = new Vector2(0.5f, 0.8f),
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Current = language
+            };
+        });
     }
 }

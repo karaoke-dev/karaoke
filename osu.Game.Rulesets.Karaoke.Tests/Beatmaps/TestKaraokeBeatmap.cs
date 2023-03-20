@@ -7,31 +7,30 @@ using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+
+public class TestKaraokeBeatmap : Beatmap
 {
-    public class TestKaraokeBeatmap : Beatmap
+    public TestKaraokeBeatmap(RulesetInfo ruleset)
     {
-        public TestKaraokeBeatmap(RulesetInfo ruleset)
-        {
-            var baseBeatmap = createTestBeatmap();
+        var baseBeatmap = createTestBeatmap();
 
-            BeatmapInfo = baseBeatmap.BeatmapInfo;
-            ControlPointInfo = baseBeatmap.ControlPointInfo;
-            Breaks = baseBeatmap.Breaks;
-            HitObjects = baseBeatmap.HitObjects;
+        BeatmapInfo = baseBeatmap.BeatmapInfo;
+        ControlPointInfo = baseBeatmap.ControlPointInfo;
+        Breaks = baseBeatmap.Breaks;
+        HitObjects = baseBeatmap.HitObjects;
 
-            BeatmapInfo.Ruleset = ruleset;
+        BeatmapInfo.Ruleset = ruleset;
 
-            Debug.Assert(BeatmapInfo.BeatmapSet != null);
+        Debug.Assert(BeatmapInfo.BeatmapSet != null);
 
-            BeatmapInfo.BeatmapSet.Beatmaps.Add(BeatmapInfo);
-        }
+        BeatmapInfo.BeatmapSet.Beatmaps.Add(BeatmapInfo);
+    }
 
-        private static Beatmap createTestBeatmap()
-        {
-            using (var stream = TestResources.OpenBeatmapResource("karaoke-file-samples"))
-            using (var reader = new LineBufferedReader(stream))
-                return Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
-        }
+    private static Beatmap createTestBeatmap()
+    {
+        using (var stream = TestResources.OpenBeatmapResource("karaoke-file-samples"))
+        using (var reader = new LineBufferedReader(stream))
+            return Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
     }
 }

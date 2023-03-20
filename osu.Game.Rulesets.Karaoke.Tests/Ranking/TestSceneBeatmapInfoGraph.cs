@@ -12,34 +12,33 @@ using osu.Game.Scoring;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
-{
-    public partial class TestSceneBeatmapInfoGraph : OsuTestScene
-    {
-        [Test]
-        public void TestBeatmapInfoGraph()
-        {
-            var ruleset = new KaraokeRuleset().RulesetInfo;
-            var beatmap = new TestKaraokeBeatmap(ruleset);
-            createTest(new ScoreInfo(), beatmap);
-        }
+namespace osu.Game.Rulesets.Karaoke.Tests.Ranking;
 
-        private void createTest(ScoreInfo score, IBeatmap beatmap) => AddStep("create test", () =>
-        {
-            Children = new Drawable[]
-            {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4Extensions.FromHex("#333")
-                },
-                new BeatmapInfoGraph(beatmap)
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Size = new Vector2(600, 130)
-                }
-            };
-        });
+public partial class TestSceneBeatmapInfoGraph : OsuTestScene
+{
+    [Test]
+    public void TestBeatmapInfoGraph()
+    {
+        var ruleset = new KaraokeRuleset().RulesetInfo;
+        var beatmap = new TestKaraokeBeatmap(ruleset);
+        createTest(new ScoreInfo(), beatmap);
     }
+
+    private void createTest(ScoreInfo score, IBeatmap beatmap) => AddStep("create test", () =>
+    {
+        Children = new Drawable[]
+        {
+            new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4Extensions.FromHex("#333")
+            },
+            new BeatmapInfoGraph(beatmap)
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Size = new Vector2(600, 130)
+            }
+        };
+    });
 }

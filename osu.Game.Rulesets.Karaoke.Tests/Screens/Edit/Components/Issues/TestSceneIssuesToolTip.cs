@@ -7,36 +7,35 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues;
+
+[TestFixture]
+public partial class TestSceneIssuesToolTip : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneIssuesToolTip : OsuTestScene
+    private IssuesToolTip toolTip = null!;
+
+    [SetUp]
+    public void SetUp() => Schedule(() =>
     {
-        private IssuesToolTip toolTip = null!;
-
-        [SetUp]
-        public void SetUp() => Schedule(() =>
+        Child = toolTip = new IssuesToolTip
         {
-            Child = toolTip = new IssuesToolTip
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            };
-            toolTip.Show();
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre
+        };
+        toolTip.Show();
+    });
+
+    [Test]
+    public void TestValidLyric()
+    {
+        setTooltip("valid lyric");
+    }
+
+    private void setTooltip(string testName, params Issue[] issues)
+    {
+        AddStep(testName, () =>
+        {
+            toolTip.SetContent(issues);
         });
-
-        [Test]
-        public void TestValidLyric()
-        {
-            setTooltip("valid lyric");
-        }
-
-        private void setTooltip(string testName, params Issue[] issues)
-        {
-            AddStep(testName, () =>
-            {
-                toolTip.SetContent(issues);
-            });
-        }
     }
 }

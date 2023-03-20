@@ -9,27 +9,26 @@ using osu.Game.Tests.Visual;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.UI
+namespace osu.Game.Rulesets.Karaoke.Tests.UI;
+
+[TestFixture]
+public partial class TestSceneRulesetIcon : OsuTestScene
 {
-    [TestFixture]
-    public partial class TestSceneRulesetIcon : OsuTestScene
+    public TestSceneRulesetIcon()
     {
-        public TestSceneRulesetIcon()
+        Child = new ConstrainedIconContainer
         {
-            Child = new ConstrainedIconContainer
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Icon = new KaraokeRuleset().CreateIcon(),
+            EdgeEffect = new EdgeEffectParameters
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Icon = new KaraokeRuleset().CreateIcon(),
-                EdgeEffect = new EdgeEffectParameters
-                {
-                    Type = EdgeEffectType.Glow,
-                    Colour = new Color4(255, 194, 224, 100),
-                    Radius = 15,
-                    Roundness = 15,
-                },
-                Size = new Vector2(40)
-            };
-        }
+                Type = EdgeEffectType.Glow,
+                Colour = new Color4(255, 194, 224, 100),
+                Radius = 15,
+                Roundness = 15,
+            },
+            Size = new Vector2(40)
+        };
     }
 }
