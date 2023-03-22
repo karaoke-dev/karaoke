@@ -9,6 +9,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public abstract class StageInfo
 {
+    public IEnumerable<IStageElement> GetStageElements(KaraokeHitObject hitObject) =>
+        hitObject switch
+        {
+            Lyric lyric => GetLyricStageElements(lyric),
+            Note note => GetNoteStageElements(note),
+            _ => Array.Empty<IStageElement>()
+        };
+
     // todo: very not sure should be better to return the applier or style/layout data.
     public IEnumerable<object> GetStageAppliers(KaraokeHitObject hitObject)
     {
@@ -21,14 +29,6 @@ public abstract class StageInfo
             _ => Array.Empty<object>()
         };
     }
-
-    protected IEnumerable<IStageElement> GetStageElements(KaraokeHitObject hitObject) =>
-        hitObject switch
-        {
-            Lyric lyric => GetLyricStageElements(lyric),
-            Note note => GetNoteStageElements(note),
-            _ => Array.Empty<IStageElement>()
-        };
 
     #region Stage element
 
