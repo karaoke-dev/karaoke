@@ -30,6 +30,8 @@ public abstract class StageInfo
             _ => Array.Empty<IStageElement>()
         };
 
+    #region Stage element
+
     protected abstract IEnumerable<IStageElement> GetLyricStageElements(Lyric lyric);
 
     protected abstract IEnumerable<IStageElement> GetNoteStageElements(Note note);
@@ -37,4 +39,6 @@ public abstract class StageInfo
     protected abstract IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<IStageElement> elements);
 
     protected abstract IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<IStageElement> elements);
+
+    #endregion
 }
