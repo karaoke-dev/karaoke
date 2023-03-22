@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -55,6 +56,11 @@ public class ClassicStageInfo : StageInfo
     protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<IStageElement> elements)
     {
         throw new System.NotImplementedException();
+    }
+
+    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+    {
+        return LyricTimingInfo.GetStartAndEndTime(lyric);
     }
 
     #endregion

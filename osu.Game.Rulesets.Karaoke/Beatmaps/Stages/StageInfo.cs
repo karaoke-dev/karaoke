@@ -30,6 +30,13 @@ public abstract class StageInfo
         };
     }
 
+    public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
+        hitObject switch
+        {
+            Lyric lyric => GetStartAndEndTime(lyric),
+            _ => throw new InvalidOperationException()
+        };
+
     #region Stage element
 
     protected abstract IEnumerable<IStageElement> GetLyricStageElements(Lyric lyric);
@@ -39,6 +46,8 @@ public abstract class StageInfo
     protected abstract IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<IStageElement> elements);
 
     protected abstract IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<IStageElement> elements);
+
+    protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 
     #endregion
 }
