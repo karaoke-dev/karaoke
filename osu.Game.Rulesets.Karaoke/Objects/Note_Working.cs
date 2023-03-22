@@ -16,6 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 public partial class Note
 {
     [JsonIgnore]
+    public HitObjectValidator<NoteInvalidation> Validator { get; } = new();
+
+    [JsonIgnore]
     public readonly Bindable<int?> PageIndexBindable = new();
 
     /// <summary>
