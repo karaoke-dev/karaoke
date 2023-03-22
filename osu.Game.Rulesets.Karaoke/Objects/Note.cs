@@ -107,10 +107,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             {
                 referenceLyricId = value;
 
-                if (referenceLyricId != ReferenceLyric?.ID)
-                {
-                    ReferenceLyric = null;
-                }
+                if (referenceLyricId == ReferenceLyric?.ID)
+                    return;
+
+                // should trying to reload the reference lyric.
+                ReferenceLyric = null;
+                Validator.Invalidate(NoteInvalidation.ReferenceLyric);
             }
         }
 
