@@ -10,6 +10,8 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
@@ -110,6 +112,26 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
         PerformBeatmapChanged(beatmap =>
         {
             action(beatmap.PageInfo);
+
+            // todo: need to consider the undo/redo cases.
+            markWorkingPropertyAsInvalid();
         });
+    }
+
+    private void markWorkingPropertyAsInvalid()
+    {
+        foreach (var hitObject in KaraokeBeatmap.HitObjects)
+        {
+            switch (hitObject)
+            {
+                case Lyric lyric:
+                    lyric.WorkingPropertyValidator.Invalidate(LyricWorkingProperty.Page);
+                    break;
+
+                case Note note:
+                    note.WorkingPropertyValidator.Invalidate(NoteWorkingProperty.Page);
+                    break;
+            }
+        }
     }
 }
