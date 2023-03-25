@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public interface ILockChangeHandler
+    public interface ILockChangeHandler : IHitObjectPropertyChangeHandler
     {
         void Lock(LockState lockState);
 
