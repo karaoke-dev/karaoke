@@ -4,11 +4,11 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
+namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
-public class HitObjectValidatorTest
+public class HitObjectWorkingPropertyValidatorTest
 {
     [TestCase(default, new[] { TestEnum.Enum0, TestEnum.Enum1, TestEnum.Enum2 })]
     [TestCase(TestEnum.Enum0, new[] { TestEnum.Enum1, TestEnum.Enum2 })]
@@ -18,7 +18,7 @@ public class HitObjectValidatorTest
     [TestCase(TestEnum.Enum0 | TestEnum.Enum0, new[] { TestEnum.Enum1, TestEnum.Enum2 })] // Test edge case.
     public void TestInvalidate(TestEnum invalidFlags, TestEnum[] expectedValue)
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
         validator.ValidateAll();
 
         // check the value.
@@ -43,7 +43,7 @@ public class HitObjectValidatorTest
     [TestCase(TestEnum.Enum0 | TestEnum.Enum0)] // Test edge case.
     public void TestInvalidateAll(TestEnum defaultFlags)
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
         validator.Validate(defaultFlags);
 
         // check the value.
@@ -61,7 +61,7 @@ public class HitObjectValidatorTest
     [TestCase(TestEnum.Enum2 | TestEnum.Enum2, new[] { TestEnum.Enum2 })] // Test edge case.
     public void TestValidate(TestEnum validateFlags, TestEnum[] expectedValue)
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
 
         // check the value.
         validator.Validate(validateFlags);
@@ -85,7 +85,7 @@ public class HitObjectValidatorTest
     [TestCase(TestEnum.Enum0 | TestEnum.Enum0)] // Test edge case.
     public void TestValidateAll(TestEnum validateFlags)
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
 
         // check the value.
         validator.ValidateAll();
@@ -104,7 +104,7 @@ public class HitObjectValidatorTest
     [TestCase(TestEnum.Enum2 | TestEnum.Enum2, TestEnum.Enum2, true)] // Test edge case.
     public void TestIsValid(TestEnum validateFlags, TestEnum validFlag, bool expectedValue)
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
 
         // check the value.
         validator.Validate(validateFlags);
@@ -114,7 +114,7 @@ public class HitObjectValidatorTest
     [Test]
     public void TestGetAllValidFlags()
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
 
         // Should be possible to get all tags.
         validator.ValidateAll();
@@ -128,7 +128,7 @@ public class HitObjectValidatorTest
     [Test]
     public void TestGetAllInvalidFlags()
     {
-        var validator = new HitObjectValidator<TestEnum>();
+        var validator = new HitObjectWorkingPropertyValidator<TestEnum>();
 
         // Should be possible to get all tags.
         validator.ValidateAll();

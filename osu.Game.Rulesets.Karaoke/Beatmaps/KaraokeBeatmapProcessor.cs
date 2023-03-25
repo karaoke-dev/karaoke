@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
@@ -52,16 +53,16 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private void applyInvalidProperty(Lyric lyric, LyricInvalidation flag)
+        private void applyInvalidProperty(Lyric lyric, LyricWorkingProperty flag)
         {
             switch (flag)
             {
-                case LyricInvalidation.Page:
+                case LyricWorkingProperty.Page:
                     var pageInfo = Beatmap.PageInfo;
                     lyric.PageIndex = pageInfo.GetPageIndexAt(lyric.LyricStartTime);
                     break;
 
-                case LyricInvalidation.ReferenceLyric:
+                case LyricWorkingProperty.ReferenceLyric:
                     if (lyric.ReferenceLyric != null || lyric.ReferenceLyricId == null)
                         return;
 
@@ -73,16 +74,16 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private void applyInvalidProperty(Note note, NoteInvalidation flag)
+        private void applyInvalidProperty(Note note, NoteWorkingProperty flag)
         {
             switch (flag)
             {
-                case NoteInvalidation.Page:
+                case NoteWorkingProperty.Page:
                     var pageInfo = Beatmap.PageInfo;
                     note.PageIndex = pageInfo.GetPageIndexAt(note.StartTime);
                     break;
 
-                case NoteInvalidation.ReferenceLyric:
+                case NoteWorkingProperty.ReferenceLyric:
                     if (note.ReferenceLyric != null || note.ReferenceLyricId == null)
                         return;
 

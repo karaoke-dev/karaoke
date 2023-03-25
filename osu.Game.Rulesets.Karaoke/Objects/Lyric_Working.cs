@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 public partial class Lyric
 {
     [JsonIgnore]
-    public HitObjectValidator<LyricInvalidation> Validator { get; } = new();
+    public HitObjectWorkingPropertyValidator<LyricWorkingProperty> Validator { get; } = new();
 
     [JsonIgnore]
     public double LyricStartTime { get; private set; }

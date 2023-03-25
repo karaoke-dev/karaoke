@@ -3,21 +3,21 @@
 
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Objects;
+namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 /// <summary>
-/// Specifies which properties in the <see cref="Lyric"/> are being invalidated.
+/// Specifies which properties in the <see cref="Note"/> are being invalidated.
 /// </summary>
 [Flags]
-public enum LyricInvalidation
+public enum NoteWorkingProperty
 {
     /// <summary>
-    /// <see cref="Lyric.PageIndex"/> is being invalidated.
+    /// <see cref="Note.PageIndex"/> is being invalidated.
     /// </summary>
     Page = 1,
 
     /// <summary>
-    /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
+    /// <see cref="Note.ReferenceLyric"/> is being invalidated.
     /// </summary>
     ReferenceLyric = 1 << 1,
 }

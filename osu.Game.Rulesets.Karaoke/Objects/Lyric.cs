@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
@@ -183,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     return;
 
                 // should trying to reload the reference lyric.
-                Validator.Invalidate(LyricInvalidation.ReferenceLyric);
+                Validator.Invalidate(LyricWorkingProperty.ReferenceLyric);
             }
         }
 

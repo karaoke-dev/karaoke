@@ -4,9 +4,9 @@
 using System;
 using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.Objects;
+namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 
-public class HitObjectValidator<T> where T : struct, Enum
+public class HitObjectWorkingPropertyValidator<T> where T : struct, Enum
 {
     private int value;
 
