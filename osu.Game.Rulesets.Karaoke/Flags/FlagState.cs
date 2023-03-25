@@ -8,30 +8,43 @@ namespace osu.Game.Rulesets.Karaoke.Flags;
 
 public class FlagState<TFlag> where TFlag : struct, Enum
 {
+    #region Public interface
+
     private int value;
 
-    public void Invalidate(TFlag flags)
+    public bool Invalidate(TFlag flags)
     {
+        if (!CanInvalidate(flags))
+            return false;
+
         value &= ~Convert.ToInt32(flags);
+
+        return true;
     }
 
     public void InvalidateAll()
     {
-        value = 0;
+        foreach (TFlag flag in Enum.GetValues(typeof(TFlag)))
+        {
+            Invalidate(flag);
+        }
     }
 
-    public void Validate(TFlag flags)
+    public bool Validate(TFlag flags)
     {
+        if (!CanValidate(flags))
+            return false;
+
         value |= Convert.ToInt32(flags);
+
+        return true;
     }
 
     public void ValidateAll()
     {
-        InvalidateAll();
-
-        foreach (int flag in Enum.GetValues(typeof(TFlag)))
+        foreach (TFlag flag in Enum.GetValues(typeof(TFlag)))
         {
-            value |= flag;
+            Validate(flag);
         }
     }
 
@@ -45,4 +58,10 @@ public class FlagState<TFlag> where TFlag : struct, Enum
 
     public TFlag[] GetAllInvalidFlags()
         => Enum.GetValues<TFlag>().Where(x => !IsValid(x)).ToArray();
+
+    #endregion
+
+    protected virtual bool CanInvalidate(TFlag flags) => true;
+
+    protected virtual bool CanValidate(TFlag flags) => true;
 }
