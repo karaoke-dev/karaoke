@@ -5,7 +5,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using J2N.Collections.Generic.Extensions;
 using NUnit.Framework;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
