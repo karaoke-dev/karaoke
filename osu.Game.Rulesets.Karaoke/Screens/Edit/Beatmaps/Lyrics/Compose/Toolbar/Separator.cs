@@ -14,12 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
-        private readonly Box barline;
+        private readonly Box barLine;
 
         public Separator()
         {
             Size = new Vector2(3, SpecialActionToolbar.HEIGHT);
-            InternalChild = barline = new Box
+            InternalChild = barLine = new Box
             {
                 RelativeSizeAxes = Axes.Both,
             };
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
         {
             bindableMode.BindValueChanged(x =>
             {
-                barline.Colour = colourProvider.Background1(state.Mode);
+                barLine.Colour = colourProvider.Background1(state.Mode);
             }, true);
         }
     }

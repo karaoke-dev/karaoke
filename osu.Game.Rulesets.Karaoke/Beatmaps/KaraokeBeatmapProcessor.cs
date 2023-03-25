@@ -57,8 +57,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             switch (flag)
             {
                 case LyricInvalidation.Page:
-                    var pageIndo = Beatmap.PageInfo;
-                    lyric.PageIndex = pageIndo.GetPageIndexAt(lyric.LyricStartTime);
+                    var pageInfo = Beatmap.PageInfo;
+                    lyric.PageIndex = pageInfo.GetPageIndexAt(lyric.LyricStartTime);
                     break;
 
                 case LyricInvalidation.ReferenceLyric:
@@ -78,8 +78,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             switch (flag)
             {
                 case NoteInvalidation.Page:
-                    var pageIndo = Beatmap.PageInfo;
-                    note.PageIndex = pageIndo.GetPageIndexAt(note.StartTime);
+                    var pageInfo = Beatmap.PageInfo;
+                    note.PageIndex = pageInfo.GetPageIndexAt(note.StartTime);
                     break;
 
                 case NoteInvalidation.ReferenceLyric:
