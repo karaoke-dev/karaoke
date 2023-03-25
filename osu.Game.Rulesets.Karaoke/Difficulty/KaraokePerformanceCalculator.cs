@@ -78,18 +78,32 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
             difficultyValue *= 1.0 + 0.1 * Math.Min(1.0, totalHits / 1500.0);
 
-            if (scaledScore <= 500000)
-                difficultyValue = 0;
-            else if (scaledScore <= 600000)
-                difficultyValue *= (scaledScore - 500000) / 100000 * 0.3;
-            else if (scaledScore <= 700000)
-                difficultyValue *= 0.3 + (scaledScore - 600000) / 100000 * 0.25;
-            else if (scaledScore <= 800000)
-                difficultyValue *= 0.55 + (scaledScore - 700000) / 100000 * 0.20;
-            else if (scaledScore <= 900000)
-                difficultyValue *= 0.75 + (scaledScore - 800000) / 100000 * 0.15;
-            else
-                difficultyValue *= 0.90 + (scaledScore - 900000) / 100000 * 0.1;
+            switch (scaledScore)
+            {
+                case <= 500000:
+                    difficultyValue = 0;
+                    break;
+
+                case <= 600000:
+                    difficultyValue *= (scaledScore - 500000) / 100000 * 0.3;
+                    break;
+
+                case <= 700000:
+                    difficultyValue *= 0.3 + (scaledScore - 600000) / 100000 * 0.25;
+                    break;
+
+                case <= 800000:
+                    difficultyValue *= 0.55 + (scaledScore - 700000) / 100000 * 0.20;
+                    break;
+
+                case <= 900000:
+                    difficultyValue *= 0.75 + (scaledScore - 800000) / 100000 * 0.15;
+                    break;
+
+                default:
+                    difficultyValue *= 0.90 + (scaledScore - 900000) / 100000 * 0.1;
+                    break;
+            }
 
             return difficultyValue;
         }
