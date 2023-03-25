@@ -31,7 +31,7 @@ public partial class PagesSection : EditorSection
 
         protected override DrawableTimingInfoItem CreateTimingInfoDrawable(Page item) => new DrawablePage(item);
 
-        protected override EditorSectionButton? CreateCreateNewItemButton() => new CreateNewPageButton();
+        protected override EditorSectionButton CreateCreateNewItemButton() => new CreateNewPageButton();
 
         private partial class DrawablePage : DrawableTimingInfoItem
         {
