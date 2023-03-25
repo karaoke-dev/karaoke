@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             Lock(LockState.None);
         }
 
-        protected override bool IsWritePropertyLocked(KaraokeHitObject hitObject)
+        protected sealed override bool IsWritePropertyLocked(KaraokeHitObject hitObject)
         {
             return hitObject switch
             {
