@@ -27,6 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected abstract bool IsWritePropertyLocked(THitObject hitObject);
 
+        public virtual bool IsSelectionsLocked()
+            => beatmap.SelectedHitObjects.OfType<THitObject>().Any(IsWritePropertyLocked);
+
         public class ChangeForbiddenException : InvalidOperationException
         {
             public ChangeForbiddenException()

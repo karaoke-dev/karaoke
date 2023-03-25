@@ -5,5 +5,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 
 public interface IHitObjectPropertyChangeHandler
 {
-    
+    bool IsSelectionsLocked();
 }
