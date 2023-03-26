@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
@@ -106,12 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-
-                if (referenceLyricId == ReferenceLyric?.ID)
-                    return;
-
-                // should trying to reload the reference lyric.
-                Validator.Invalidate(NoteInvalidation.ReferenceLyric);
+                WorkingPropertyValidator.Invalidate(NoteWorkingProperty.ReferenceLyric);
             }
         }
 
@@ -128,6 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             initInternalBindingEvent();
             initReferenceLyricEvent();
+            initWorkingPropertyValidator();
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();

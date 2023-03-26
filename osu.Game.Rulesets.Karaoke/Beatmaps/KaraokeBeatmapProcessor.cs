@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
@@ -32,19 +33,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 switch (hitObject)
                 {
                     case Lyric lyric:
-                        foreach (var flag in lyric.Validator.GetAllInvalidFlags())
+                        foreach (var flag in lyric.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(lyric, flag);
-                            lyric.Validator.Validate(flag);
                         }
 
                         break;
 
                     case Note note:
-                        foreach (var flag in note.Validator.GetAllInvalidFlags())
+                        foreach (var flag in note.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(note, flag);
-                            note.Validator.Validate(flag);
                         }
 
                         break;
@@ -52,20 +51,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private void applyInvalidProperty(Lyric lyric, LyricInvalidation flag)
+        private void applyInvalidProperty(Lyric lyric, LyricWorkingProperty flag)
         {
             switch (flag)
             {
-                case LyricInvalidation.Page:
+                case LyricWorkingProperty.Page:
                     var pageInfo = Beatmap.PageInfo;
                     lyric.PageIndex = pageInfo.GetPageIndexAt(lyric.LyricStartTime);
                     break;
 
-                case LyricInvalidation.ReferenceLyric:
-                    if (lyric.ReferenceLyric != null || lyric.ReferenceLyricId == null)
-                        return;
-
-                    lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId.Value);
+                case LyricWorkingProperty.ReferenceLyric:
+                    lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId);
                     break;
 
                 default:
@@ -73,20 +69,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private void applyInvalidProperty(Note note, NoteInvalidation flag)
+        private void applyInvalidProperty(Note note, NoteWorkingProperty flag)
         {
             switch (flag)
             {
-                case NoteInvalidation.Page:
+                case NoteWorkingProperty.Page:
                     var pageInfo = Beatmap.PageInfo;
                     note.PageIndex = pageInfo.GetPageIndexAt(note.StartTime);
                     break;
 
-                case NoteInvalidation.ReferenceLyric:
-                    if (note.ReferenceLyric != null || note.ReferenceLyricId == null)
-                        return;
-
-                    note.ReferenceLyric = findLyricById(note.ReferenceLyricId.Value);
+                case NoteWorkingProperty.ReferenceLyric:
+                    note.ReferenceLyric = findLyricById(note.ReferenceLyricId);
                     break;
 
                 default:
@@ -94,8 +87,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private Lyric findLyricById(int id) =>
-            Beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+        private Lyric? findLyricById(int? id) =>
+            id == null ? null : Beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
         public override void PostProcess()
         {

@@ -16,8 +16,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// </summary>
 public partial class Note
 {
+    private void initWorkingPropertyValidator()
+    {
+        WorkingPropertyValidator = new NoteWorkingPropertyValidator(this);
+    }
+
     [JsonIgnore]
-    public HitObjectValidator<NoteInvalidation> Validator { get; } = new();
+    public NoteWorkingPropertyValidator WorkingPropertyValidator { get; private set; } = null!;
 
     [JsonIgnore]
     public readonly Bindable<int?> PageIndexBindable = new();
@@ -29,7 +34,11 @@ public partial class Note
     public int? PageIndex
     {
         get => PageIndexBindable.Value;
-        set => PageIndexBindable.Value = value;
+        set
+        {
+            PageIndexBindable.Value = value;
+            WorkingPropertyValidator.Validate(NoteWorkingProperty.Page);
+        }
     }
 
     /// <summary>
@@ -78,11 +87,7 @@ public partial class Note
         set
         {
             ReferenceLyricBindable.Value = value;
-
-            if (value?.ID != ReferenceLyricId)
-            {
-                throw new InvalidWorkingPropertyAssignException();
-            }
+            WorkingPropertyValidator.Validate(NoteWorkingProperty.ReferenceLyric);
         }
     }
 
