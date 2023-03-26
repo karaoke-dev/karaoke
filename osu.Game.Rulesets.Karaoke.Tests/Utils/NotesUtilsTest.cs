@@ -21,9 +21,11 @@ public class NotesUtilsTest
     [TestCase(new double[] { 1000, 5000 }, 1, null, null)]
     public void TestSplitNoteTime(double[] time, double percentage, double[]? firstTime, double[]? secondTime)
     {
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", time[0], time[1]);
         var note = new Note
         {
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", time[0], time[1]),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
         };
 
         if (firstTime != null && secondTime != null)
@@ -47,15 +49,16 @@ public class NotesUtilsTest
     {
         const double percentage = 0.3;
 
-        var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", 1000, 2000);
-        lyric.Singers = new[] { 0 };
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", 1000, 2000);
+        referencedLyric.Singers = new[] { 0 };
 
         var note = new Note
         {
             Text = "ka",
             Display = false,
             Tone = new Tone(-1, true),
-            ReferenceLyric = lyric,
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceTimeTagIndex = 0
         };
 
@@ -88,11 +91,12 @@ public class NotesUtilsTest
     [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })] // it's ok to combine if duration is 0.
     public void TestCombineNoteTime(double[] firstOffset, double[] secondOffset, double[] expectedOffset)
     {
-        var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", 1000, 5000);
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", 1000, 5000);
 
         var firstNote = new Note
         {
-            ReferenceLyric = lyric,
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             StartTimeOffset = firstOffset[0],
             EndTimeOffset = firstOffset[1],
             ReferenceTimeTagIndex = 0,
@@ -100,7 +104,8 @@ public class NotesUtilsTest
 
         var secondNote = new Note
         {
-            ReferenceLyric = lyric,
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             StartTimeOffset = secondOffset[0],
             EndTimeOffset = secondOffset[1],
             ReferenceTimeTagIndex = 0,

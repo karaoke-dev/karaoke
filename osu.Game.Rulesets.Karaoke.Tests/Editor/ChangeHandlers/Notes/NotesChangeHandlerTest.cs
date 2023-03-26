@@ -14,10 +14,13 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
     [Test]
     public void TestSplit()
     {
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "カラオケ", 1000, 1000);
+
         PrepareHitObject(new Note
         {
             Text = "カラオケ",
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000)
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         });
 
         TriggerHandlerChanged(c => c.Split());
@@ -45,24 +48,26 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
     [Test]
     public void TestCombine()
     {
-        var lyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000);
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "カラオケ", 1000, 1000);
 
         // note that lyric and notes should in the selection.
-        PrepareHitObject(lyric);
+        PrepareHitObject(referencedLyric);
         PrepareHitObjects(new[]
         {
             new Note
             {
                 Text = "カラ",
                 RubyText = "から",
-                ReferenceLyric = lyric,
+                ReferenceLyricId = referencedLyric.ID,
+                ReferenceLyric = referencedLyric,
                 ReferenceTimeTagIndex = 0
             },
             new Note
             {
                 Text = "オケ",
                 RubyText = "おけ",
-                ReferenceLyric = lyric,
+                ReferenceLyricId = referencedLyric.ID,
+                ReferenceLyric = referencedLyric,
                 ReferenceTimeTagIndex = 0
             }
         });
@@ -85,23 +90,25 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
     [Test]
     public void TestClear()
     {
-        var lyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
 
         // note that lyric and notes should in the selection.
-        PrepareHitObject(lyric);
+        PrepareHitObject(referencedLyric);
         PrepareHitObjects(new[]
         {
             new Note
             {
                 Text = "カラ",
                 RubyText = "から",
-                ReferenceLyric = lyric,
+                ReferenceLyricId = referencedLyric.ID,
+                ReferenceLyric = referencedLyric,
             },
             new Note
             {
                 Text = "オケ",
                 RubyText = "おけ",
-                ReferenceLyric = lyric,
+                ReferenceLyricId = referencedLyric.ID,
+                ReferenceLyric = referencedLyric,
             }
         }, false);
 

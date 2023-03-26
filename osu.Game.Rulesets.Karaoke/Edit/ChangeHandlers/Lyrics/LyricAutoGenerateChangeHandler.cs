@@ -137,10 +137,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     var referenceLyricDetector = createLyricDetector<Lyric>();
                     PerformOnSelection(lyric =>
                     {
-                        var detectedLanguage = referenceLyricDetector.Detect(lyric);
-                        lyric.ReferenceLyric = detectedLanguage;
+                        var referencedLyric = referenceLyricDetector.Detect(lyric);
+                        lyric.ReferenceLyricId = referencedLyric.ID;
 
-                        if (lyric.ReferenceLyric != null && lyric.ReferenceLyricConfig is not SyncLyricConfig)
+                        // technically this property should be assigned by beatmap processor, but should be OK to assign here for testing purpose.
+                        lyric.ReferenceLyric = referencedLyric;
+
+                        if (lyric.ReferenceLyricId != null && lyric.ReferenceLyricConfig is not SyncLyricConfig)
                             lyric.ReferenceLyricConfig = new SyncLyricConfig();
                     });
                     break;

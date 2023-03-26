@@ -19,7 +19,7 @@ public class LyricTest
     [TestCase]
     public void TestClone()
     {
-        var referencedLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
 
         var lyric = new Lyric
         {
@@ -38,6 +38,7 @@ public class LyricTest
             Language = new CultureInfo("ja-JP"),
             Order = 1,
             Lock = LockState.None,
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new ReferenceLyricConfig
             {
@@ -106,6 +107,7 @@ public class LyricTest
     {
         var referencedLyric = new Lyric
         {
+            ID = 2,
             Text = "karaoke",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か" }),
@@ -120,6 +122,7 @@ public class LyricTest
 
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig(),
         };
@@ -136,10 +139,11 @@ public class LyricTest
     [Test]
     public void TestReferenceLyricPropertyChanged()
     {
-        var referencedLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
 
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig(),
         };
@@ -175,6 +179,7 @@ public class LyricTest
 
         var referencedLyric = new Lyric
         {
+            ID = 2,
             Text = "karaoke",
             TimeTags = new[] { timeTag },
             RubyTags = new[] { rubyTag },
@@ -189,6 +194,7 @@ public class LyricTest
 
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig(),
         };
@@ -232,6 +238,7 @@ public class LyricTest
 
         var referencedLyric = new Lyric
         {
+            ID = 2,
             Text = "karaoke",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か" }),
@@ -246,6 +253,7 @@ public class LyricTest
 
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = config
         };
@@ -263,49 +271,6 @@ public class LyricTest
         Assert.AreEqual(referencedLyric.Singers, lyric.Singers);
     }
 
-    [Test]
-    public void TestReferenceLyricAffectedByReferenceLyricId()
-    {
-        var lyric = new Lyric
-        {
-            ReferenceLyric = new Lyric
-            {
-                ID = 2,
-            },
-        };
-        Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
-
-        // Should not affect the reference lyric if reference lyric id is the same.
-        lyric.ReferenceLyricId = 2;
-        Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
-
-        // Should clear the reference lyric if id changed.
-        lyric.ReferenceLyricId = 3;
-        Assert.IsNull(lyric.ReferenceLyric);
-    }
-
-    [Test]
-    public void TestReferenceLyricIdAffectedByReferenceLyric()
-    {
-        var lyric = new Lyric
-        {
-            ReferenceLyric = new Lyric
-            {
-                ID = 2,
-            },
-            ReferenceLyricId = 2,
-        };
-        Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
-
-        // Should change the reference lyric id if reference lyric changed.
-        lyric.ReferenceLyric = new Lyric { ID = 3 };
-        Assert.AreEqual(lyric.ReferenceLyric.ID, lyric.ReferenceLyricId);
-
-        // Should clear the reference lyric id if remove the reference lyric.
-        lyric.ReferenceLyric = null;
-        Assert.IsNull(lyric.ReferenceLyricId);
-    }
-
     #endregion
 
     #region MyRegion
@@ -319,7 +284,9 @@ public class LyricTest
         lyric.Lock = LockState.Partial;
         Assert.AreEqual(1, lyric.LyricPropertyWritableVersion.Value);
 
-        lyric.ReferenceLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
+        lyric.ReferenceLyricId = referencedLyric.ID;
+        lyric.ReferenceLyric = referencedLyric;
         Assert.AreEqual(2, lyric.LyricPropertyWritableVersion.Value);
 
         lyric.ReferenceLyricConfig = new SyncLyricConfig();

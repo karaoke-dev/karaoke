@@ -18,15 +18,16 @@ public class KaraokeBeatmapSkinDecodingTest
         var storage = TestResources.CreateSkinStorageResourceProvider();
         var skin = new KaraokeBeatmapSkin(new SkinInfo { Name = "special-skin" }, storage);
 
-        var testingLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
         var testingNote = new Note
         {
-            ReferenceLyric = testingLyric
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         };
 
         // try to get default value from the skin.
-        var defaultLyricFontInfo = skin.GetConfig<Lyric, LyricFontInfo>(testingLyric)!.Value;
-        var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(testingLyric)!.Value;
+        var defaultLyricFontInfo = skin.GetConfig<Lyric, LyricFontInfo>(referencedLyric)!.Value;
+        var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(referencedLyric)!.Value;
         var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote)!.Value;
 
         // should be able to get the default value.

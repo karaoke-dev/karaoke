@@ -16,9 +16,10 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheck()
     {
-        var referencedLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
@@ -34,6 +35,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
             ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
 
+        lyric.ReferenceLyricId = lyric.ID;
         lyric.ReferenceLyric = lyric;
 
         AssertNotOk<LyricIssue, IssueTemplateLyricSelfReference>(lyric);
@@ -42,9 +44,10 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheckInvalidReferenceLyric()
     {
-        var referencedLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
@@ -55,9 +58,10 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheckNullReferenceLyricConfig()
     {
-        var referencedLyric = new Lyric();
+        var referencedLyric = new Lyric { ID = 2 };
         var lyric = new Lyric
         {
+            ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
         };
 

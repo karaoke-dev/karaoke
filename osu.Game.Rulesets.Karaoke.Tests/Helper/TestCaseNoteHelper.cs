@@ -9,10 +9,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 public static class TestCaseNoteHelper
 {
-    public static Lyric CreateLyricForNote(string text, double startTime, double duration)
+    public static Lyric CreateLyricForNote(int id, string text, double startTime, double duration)
     {
         return new Lyric
         {
+            ID = id,
             Text = text,
             TimeTags = new List<TimeTag>
             {

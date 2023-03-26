@@ -4,6 +4,7 @@
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 
@@ -77,7 +78,7 @@ public partial class Lyric
 
             if (value?.ID != ReferenceLyricId)
             {
-                ReferenceLyricId = value?.ID;
+                throw new InvalidWorkingPropertyAssignException();
             }
         }
     }

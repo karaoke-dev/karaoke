@@ -21,13 +21,16 @@ public partial class TestSceneAutoGeneration : OsuTestScene
         // |  -  |
         // |     |
 
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "karaoke!", 1000, 50);
+
         var beatmap = new KaraokeBeatmap();
         beatmap.HitObjects.Add(new Note
         {
             Text = "karaoke!",
             Display = true,
             Tone = new Tone(0, true),
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 50)
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -46,13 +49,16 @@ public partial class TestSceneAutoGeneration : OsuTestScene
         // | *** |
         // |     |
 
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "karaoke!", 1000, 1000);
+
         var beatmap = new KaraokeBeatmap();
         beatmap.HitObjects.Add(new Note
         {
             Text = "karaoke!",
             Display = true,
             Tone = new Tone(0, true),
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 1000)
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -71,20 +77,25 @@ public partial class TestSceneAutoGeneration : OsuTestScene
         // |    - |
         // | -    |
 
+        var firstReferencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "karaoke!", 1000, 50);
+        var secondReferencedLyric = TestCaseNoteHelper.CreateLyricForNote(3, "karaoke!", 1050, 50);
+
         var beatmap = new KaraokeBeatmap();
         beatmap.HitObjects.Add(new Note
         {
             Text = "kara",
             Display = true,
             Tone = new Tone(0, true),
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 50)
+            ReferenceLyricId = firstReferencedLyric.ID,
+            ReferenceLyric = firstReferencedLyric
         });
         beatmap.HitObjects.Add(new Note
         {
             Text = "oke!",
             Display = true,
             Tone = new Tone(1, true),
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1050, 50)
+            ReferenceLyricId = secondReferencedLyric.ID,
+            ReferenceLyric = secondReferencedLyric
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();

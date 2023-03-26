@@ -57,9 +57,11 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
     [Test]
     public void TestLyricConverterWithSyncConfig()
     {
+        var referencedLyric = new Lyric { ID = 0 };
         var lyric = new Lyric
         {
-            ReferenceLyric = new Lyric(),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig()
         };
 
@@ -72,9 +74,11 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
     [Test]
     public void TestLyricConverterWithReferenceConfig()
     {
+        var referencedLyric = new Lyric { ID = 0 };
         var lyric = new Lyric
         {
-            ReferenceLyric = new Lyric(),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new ReferenceLyricConfig()
         };
 

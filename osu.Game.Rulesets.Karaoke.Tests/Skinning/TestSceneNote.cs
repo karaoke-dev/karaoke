@@ -28,10 +28,12 @@ public partial class TestSceneNote : KaraokeHitObjectTestScene
 
     protected override DrawableHitObject CreateHitObject()
     {
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "カラオケ", 100, 800);
         var note = new Note
         {
             Text = "カラオケ",
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 100, 800),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
         };
         note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

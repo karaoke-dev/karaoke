@@ -111,12 +111,14 @@ public partial class TestSceneNotePlayfield : OsuTestScene
     {
         notePlayfields.ForEach(x =>
         {
+            var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Here", Time.Current + increaseTime, duration);
             var note = new Note
             {
                 Text = "Here",
                 Display = true,
                 Tone = new Tone { Scale = tone },
-                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Here", Time.Current + increaseTime, duration),
+                ReferenceLyricId = referencedLyric.ID,
+                ReferenceLyric = referencedLyric,
                 ReferenceTimeTagIndex = 0
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
