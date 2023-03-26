@@ -10,7 +10,8 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
-    public abstract partial class HitObjectPropertyChangeHandler<THitObject> : HitObjectChangeHandler<THitObject> where THitObject : HitObject
+    public abstract partial class HitObjectPropertyChangeHandler<THitObject> : HitObjectChangeHandler<THitObject>, IHitObjectPropertyChangeHandler
+        where THitObject : HitObject
     {
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         }
 
         protected abstract bool IsWritePropertyLocked(THitObject hitObject);
+
+        public virtual bool IsSelectionsLocked()
+            => beatmap.SelectedHitObjects.OfType<THitObject>().Any(IsWritePropertyLocked);
 
         public class ChangeForbiddenException : InvalidOperationException
         {

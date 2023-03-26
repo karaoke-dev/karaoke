@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
-        protected override bool IsWritePropertyLocked(Note note)
+        protected sealed override bool IsWritePropertyLocked(Note note)
             => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Note.Text), nameof(Note.RubyText), nameof(Note.Display));
     }
 }

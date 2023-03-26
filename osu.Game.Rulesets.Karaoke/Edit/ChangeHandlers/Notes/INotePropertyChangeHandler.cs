@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
-    public interface INotePropertyChangeHandler
+    public interface INotePropertyChangeHandler : IHitObjectPropertyChangeHandler
     {
         void ChangeText(string text);
 

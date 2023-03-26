@@ -3,8 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricPropertyChangeHandler
+    public interface ILyricPropertyChangeHandler : IHitObjectPropertyChangeHandler
     {
-        bool IsSelectionsLocked();
     }
 }
