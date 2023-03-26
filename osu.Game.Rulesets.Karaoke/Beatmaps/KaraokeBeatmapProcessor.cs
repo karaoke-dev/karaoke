@@ -36,7 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                         foreach (var flag in lyric.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(lyric, flag);
-                            lyric.WorkingPropertyValidator.Validate(flag);
                         }
 
                         break;
@@ -45,7 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                         foreach (var flag in note.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(note, flag);
-                            note.WorkingPropertyValidator.Validate(flag);
                         }
 
                         break;
@@ -63,10 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     break;
 
                 case LyricWorkingProperty.ReferenceLyric:
-                    if (lyric.ReferenceLyric != null || lyric.ReferenceLyricId == null)
-                        return;
-
-                    lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId.Value);
+                    lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId);
                     break;
 
                 default:
@@ -84,10 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     break;
 
                 case NoteWorkingProperty.ReferenceLyric:
-                    if (note.ReferenceLyric != null || note.ReferenceLyricId == null)
-                        return;
-
-                    note.ReferenceLyric = findLyricById(note.ReferenceLyricId.Value);
+                    note.ReferenceLyric = findLyricById(note.ReferenceLyricId);
                     break;
 
                 default:
@@ -95,8 +87,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         }
 
-        private Lyric findLyricById(int id) =>
-            Beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+        private Lyric? findLyricById(int? id) =>
+            id == null ? null : Beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
         public override void PostProcess()
         {
