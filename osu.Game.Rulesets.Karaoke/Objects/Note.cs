@@ -107,12 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-
-                if (referenceLyricId == ReferenceLyric?.ID)
-                    return;
-
-                // should trying to reload the reference lyric.
-                Validator.Invalidate(NoteWorkingProperty.ReferenceLyric);
+                WorkingPropertyValidator.Invalidate(NoteWorkingProperty.ReferenceLyric);
             }
         }
 
@@ -129,6 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             initInternalBindingEvent();
             initReferenceLyricEvent();
+            initWorkingPropertyValidator();
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();

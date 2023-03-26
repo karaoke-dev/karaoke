@@ -14,8 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// </summary>
 public partial class Lyric
 {
+    private void initWorkingPropertyValidator()
+    {
+        WorkingPropertyValidator = new LyricWorkingPropertyValidator(this);
+    }
+
     [JsonIgnore]
-    public HitObjectWorkingPropertyValidator<LyricWorkingProperty> Validator { get; } = new();
+    public LyricWorkingPropertyValidator WorkingPropertyValidator { get; private set; } = null!;
 
     [JsonIgnore]
     public double LyricStartTime { get; private set; }
@@ -58,7 +63,11 @@ public partial class Lyric
     public int? PageIndex
     {
         get => PageIndexBindable.Value;
-        set => PageIndexBindable.Value = value;
+        set
+        {
+            PageIndexBindable.Value = value;
+            WorkingPropertyValidator.Validate(LyricWorkingProperty.Page);
+        }
     }
 
     [JsonIgnore]
@@ -75,11 +84,7 @@ public partial class Lyric
         set
         {
             ReferenceLyricBindable.Value = value;
-
-            if (value?.ID != ReferenceLyricId)
-            {
-                throw new InvalidWorkingPropertyAssignException();
-            }
+            WorkingPropertyValidator.Validate(LyricWorkingProperty.ReferenceLyric);
         }
     }
 }

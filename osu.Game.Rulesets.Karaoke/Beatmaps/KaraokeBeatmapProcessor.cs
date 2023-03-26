@@ -33,19 +33,19 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 switch (hitObject)
                 {
                     case Lyric lyric:
-                        foreach (var flag in lyric.Validator.GetAllInvalidFlags())
+                        foreach (var flag in lyric.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(lyric, flag);
-                            lyric.Validator.Validate(flag);
+                            lyric.WorkingPropertyValidator.Validate(flag);
                         }
 
                         break;
 
                     case Note note:
-                        foreach (var flag in note.Validator.GetAllInvalidFlags())
+                        foreach (var flag in note.WorkingPropertyValidator.GetAllInvalidFlags())
                         {
                             applyInvalidProperty(note, flag);
-                            note.Validator.Validate(flag);
+                            note.WorkingPropertyValidator.Validate(flag);
                         }
 
                         break;
