@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
         /// Will add the <see cref="TimeTag"/> if meet the spacing.
         /// </summary>
         [ConfigCategory(CATEGORY_CHECK_WHITE_SPACE)]
-        [ConfigSource( "Check white space", "Check white space")]
+        [ConfigSource("Check white space", "Check white space")]
         public Bindable<bool> CheckWhiteSpace { get; } = new BindableBool();
 
         /// <summary>

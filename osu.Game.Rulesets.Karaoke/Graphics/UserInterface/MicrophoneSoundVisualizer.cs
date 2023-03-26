@@ -316,7 +316,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 maxDecibelMarker.Colour = colours.Red;
             }
 
-            private float calculatePosition(float decibel)
+            private static float calculatePosition(float decibel)
                 => decibel / max_decibel * var_width;
         }
 

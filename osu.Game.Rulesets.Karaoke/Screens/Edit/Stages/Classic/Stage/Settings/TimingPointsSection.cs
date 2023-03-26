@@ -31,7 +31,7 @@ public partial class TimingPointsSection : EditorSection
 
         protected override DrawableTimingInfoItem CreateTimingInfoDrawable(ClassicLyricTimingPoint item) => new DrawableTimingPoint(item);
 
-        protected override EditorSectionButton? CreateCreateNewItemButton() => new CreateNewTimingPointButton();
+        protected override EditorSectionButton CreateCreateNewItemButton() => new CreateNewTimingPointButton();
 
         private partial class DrawableTimingPoint : DrawableTimingInfoItem
         {

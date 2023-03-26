@@ -31,11 +31,18 @@ public class CheckBeatmapNoteInfo : CheckBeatmapProperty<NoteInfo, Note>
 
     protected override IEnumerable<Issue> CheckProperty(NoteInfo property)
     {
-        if (property.Columns < MIN_COLUMNS)
-            yield return new IssueTemplateColumnNotEnough(this).Create();
+        switch (property.Columns)
+        {
+            case < MIN_COLUMNS:
+                yield return new IssueTemplateColumnNotEnough(this).Create();
 
-        if (property.Columns > MAX_COLUMNS)
-            yield return new IssueTemplateColumnExceed(this).Create();
+                break;
+
+            case > MAX_COLUMNS:
+                yield return new IssueTemplateColumnExceed(this).Create();
+
+                break;
+        }
     }
 
     protected override IEnumerable<Issue> CheckHitObject(NoteInfo property, Note hitObject)

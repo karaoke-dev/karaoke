@@ -112,24 +112,13 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
                 : base(value)
             {
                 // todo: copied from OsuTabItem.
-                switch (value)
+                Text.Text = value switch
                 {
-                    case IHasDescription hasDescription:
-                        Text.Text = hasDescription.GetDescription();
-                        break;
-
-                    case Enum e:
-                        Text.Text = e.GetLocalisableDescription();
-                        break;
-
-                    case LocalisableString l:
-                        Text.Text = l;
-                        break;
-
-                    default:
-                        Text.Text = value?.ToString() ?? string.Empty;
-                        break;
-                }
+                    IHasDescription hasDescription => hasDescription.GetDescription(),
+                    Enum e => e.GetLocalisableDescription(),
+                    LocalisableString l => l,
+                    _ => value?.ToString() ?? string.Empty
+                };
             }
         }
     }

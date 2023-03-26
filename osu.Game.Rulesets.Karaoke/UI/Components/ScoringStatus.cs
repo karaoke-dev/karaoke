@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                     icon.Icon = scorable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
                     icon.Colour = scorable ? Color4.Red : Color4.LightGray;
 
-                    string text = GetScoringStatusText(statusMode).ToString();
+                    string text = getScoringStatusText(statusMode).ToString();
                     var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
 
                     messageText.Clear();
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
         }
 
-        protected virtual LocalisableString GetScoringStatusText(ScoringStatusMode statusMode)
+        private static LocalisableString getScoringStatusText(ScoringStatusMode statusMode)
         {
             return statusMode switch
             {
