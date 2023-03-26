@@ -137,9 +137,11 @@ public class HitObjectWritableUtilsTest
         test(new Note());
 
         // test with reference lyric.
+        var referencedLyric = new Lyric { ID = 2 };
         test(new Note
         {
-            ReferenceLyric = new Lyric(),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
         });
 
         static void test(Note note)

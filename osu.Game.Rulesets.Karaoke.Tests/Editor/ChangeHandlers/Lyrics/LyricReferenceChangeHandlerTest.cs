@@ -13,23 +13,23 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestUpdateReferenceLyric()
     {
-        var lyric = new Lyric
+        var referencedLyric = new Lyric
         {
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(lyric, false);
+        PrepareHitObject(referencedLyric, false);
 
         PrepareHitObject(new Lyric
         {
             Text = "I need the reference lyric."
         });
 
-        TriggerHandlerChanged(c => c.UpdateReferenceLyric(lyric));
+        TriggerHandlerChanged(c => c.UpdateReferenceLyric(referencedLyric));
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(lyric, h.ReferenceLyric);
+            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
             Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
         });
     }
@@ -37,7 +37,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestSwitchToReferenceLyricConfig()
     {
-        var lyric = new Lyric
+        var referencedLyric = new Lyric
         {
             Text = "Referenced lyric"
         };
@@ -45,14 +45,15 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(new Lyric
         {
             Text = "Lyric",
-            ReferenceLyric = lyric
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         });
 
         TriggerHandlerChanged(c => c.SwitchToReferenceLyricConfig());
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(lyric, h.ReferenceLyric);
+            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
             Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
         });
     }
@@ -60,7 +61,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestSwitchToSyncLyricConfig()
     {
-        var lyric = new Lyric
+        var referencedLyric = new Lyric
         {
             Text = "Referenced lyric"
         };
@@ -68,14 +69,15 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(new Lyric
         {
             Text = "Lyric",
-            ReferenceLyric = lyric
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric
         });
 
         TriggerHandlerChanged(c => c.SwitchToSyncLyricConfig());
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(lyric, h.ReferenceLyric);
+            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
             Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
         });
     }
@@ -83,7 +85,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestAdjustLyricConfig()
     {
-        var lyric = new Lyric
+        var referencedLyric = new Lyric
         {
             Text = "Referenced lyric"
         };
@@ -91,7 +93,8 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(new Lyric
         {
             Text = "Lyric",
-            ReferenceLyric = lyric,
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig(),
         });
 

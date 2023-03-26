@@ -13,6 +13,7 @@ public class NoteTest
     [TestCase]
     public void TestClone()
     {
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "ノート", 1000, 1000);
         var note = new Note
         {
             Text = "ノート",
@@ -20,7 +21,8 @@ public class NoteTest
             Display = true,
             StartTimeOffset = 100,
             EndTimeOffset = -100,
-            ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("ノート", 1000, 1000),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceTimeTagIndex = 0,
         };
 
@@ -71,15 +73,16 @@ public class NoteTest
         const double first_time_tag_time = 1000;
         const double second_time_tag_time = 3000;
         const double duration = second_time_tag_time - first_time_tag_time;
-        var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", first_time_tag_time, duration);
-        note.ReferenceLyric = lyric;
+        var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", first_time_tag_time, duration);
+        note.ReferenceLyricId = referencedLyric.ID;
+        note.ReferenceLyric = referencedLyric;
 
         // Should have calculated time.
         Assert.AreEqual(first_time_tag_time, note.StartTime);
         Assert.AreEqual(duration, note.Duration);
 
         const double time_tag_offset_time = 500;
-        lyric.TimeTags.ForEach(x => x.Time += time_tag_offset_time);
+        referencedLyric.TimeTags.ForEach(x => x.Time += time_tag_offset_time);
 
         // Should change the time if time-tag time has been changed.
         Assert.AreEqual(first_time_tag_time + time_tag_offset_time, note.StartTime);
@@ -113,53 +116,11 @@ public class NoteTest
         Assert.AreEqual(first_time_tag_time + time_tag_offset_time + note_start_offset_time, note.StartTime);
         Assert.AreEqual(0, note.Duration);
 
+        note.ReferenceLyricId = null;
         note.ReferenceLyric = null;
 
         // time will be zero if lyric has been removed.
         Assert.AreEqual(0, note.StartTime);
         Assert.AreEqual(0, note.Duration);
-    }
-
-    [Test]
-    public void TestReferenceLyricAffectedByReferenceLyricId()
-    {
-        var note = new Note
-        {
-            ReferenceLyric = new Lyric
-            {
-                ID = 2,
-            },
-        };
-        Assert.AreEqual(note.ReferenceLyric.ID, note.ReferenceLyricId);
-
-        // Should not affect the reference lyric if reference lyric id is the same.
-        note.ReferenceLyricId = 2;
-        Assert.AreEqual(note.ReferenceLyric.ID, note.ReferenceLyricId);
-
-        // Should clear the reference lyric if id changed.
-        note.ReferenceLyricId = 3;
-        Assert.IsNull(note.ReferenceLyric);
-    }
-
-    [Test]
-    public void TestReferenceLyricIdAffectedByReferenceLyric()
-    {
-        var note = new Note
-        {
-            ReferenceLyric = new Lyric
-            {
-                ID = 2,
-            },
-            ReferenceLyricId = 2,
-        };
-        Assert.AreEqual(note.ReferenceLyric.ID, note.ReferenceLyricId);
-
-        // Should change the reference lyric id if reference lyric changed.
-        note.ReferenceLyric = new Lyric { ID = 3 };
-        Assert.AreEqual(note.ReferenceLyric.ID, note.ReferenceLyricId);
-
-        // Should clear the reference lyric id if remove the reference lyric.
-        note.ReferenceLyric = null;
-        Assert.IsNull(note.ReferenceLyricId);
     }
 }

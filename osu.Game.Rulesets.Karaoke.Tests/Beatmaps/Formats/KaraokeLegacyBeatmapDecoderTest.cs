@@ -137,7 +137,7 @@ public class KaraokeLegacyBeatmapDecoderTest
     [TestCase(0.3, 1, null)] // start + duration should not exceed 1
     public void TestSliceNoteTime(double startPercentage, double durationPercentage, double[]? expected)
     {
-        var lyric = new Lyric
+        var referencedLyric = new Lyric
         {
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:4000" }),
         };
@@ -145,7 +145,8 @@ public class KaraokeLegacyBeatmapDecoderTest
         // start time will be 1000, and duration will be 3000.
         var note = new Note
         {
-            ReferenceLyric = lyric,
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceTimeTagIndex = 0
         };
 

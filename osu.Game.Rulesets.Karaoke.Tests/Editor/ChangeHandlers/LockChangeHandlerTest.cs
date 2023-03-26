@@ -60,10 +60,13 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
     [Test]
     public void TestLockToReferenceLyric()
     {
+        var referencedLyric = new Lyric { ID = 2 };
+
         PrepareHitObject(new Lyric
         {
             Text = "カラオケ",
-            ReferenceLyric = new Lyric(),
+            ReferenceLyricId = referencedLyric.ID,
+            ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new SyncLyricConfig(),
         });
 
