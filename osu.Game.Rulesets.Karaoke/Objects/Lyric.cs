@@ -183,7 +183,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     return;
 
                 // should trying to reload the reference lyric.
-                ReferenceLyric = null;
                 Validator.Invalidate(LyricInvalidation.ReferenceLyric);
             }
         }
