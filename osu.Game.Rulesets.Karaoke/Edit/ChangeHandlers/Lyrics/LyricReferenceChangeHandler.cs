@@ -24,9 +24,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (referenceLyric?.ReferenceLyric != null)
                     throw new InvalidOperationException($"{nameof(referenceLyric)} should not contains another reference lyric.");
 
+                lyric.ReferenceLyricId = referenceLyric?.ID;
+
+                // technically this property should be assigned by beatmap processor, but should be OK to assign here for testing purpose.
                 lyric.ReferenceLyric = referenceLyric;
 
-                if (lyric.ReferenceLyric == null)
+                if (lyric.ReferenceLyricId == null)
                 {
                     lyric.ReferenceLyricConfig = null;
                 }

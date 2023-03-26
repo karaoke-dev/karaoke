@@ -62,6 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes
                     {
                         Text = text,
                         RubyText = ruby,
+                        ReferenceLyricId = item.ID,
+                        // technically this property should be assigned by beatmap processor, but should be OK to assign here for testing purpose.
                         ReferenceLyric = item,
                         ReferenceTimeTagIndex = timeTagIndex
                     });
