@@ -84,7 +84,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
         var lyricStyle = LyricStyle.CreateDefault();
 
         const string expected =
-            "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#CCA532\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#5932CC\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
+            "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#CCA532\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#5932CC\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
         string actual = JsonConvert.SerializeObject(lyricStyle, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -93,7 +93,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
     public void TestLyricStyleDeserializer()
     {
         const string json =
-            "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#CCA532\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#5932CC\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
+            "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#CCA532\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#5932CC\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
 
         var expected = LyricStyle.CreateDefault();
         var actual = (LyricStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
