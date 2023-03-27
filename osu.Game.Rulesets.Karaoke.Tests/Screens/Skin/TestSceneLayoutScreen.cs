@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Skin;
 
 [TestFixture]
+[Ignore("Shader broken.")]
 public partial class TestSceneLayoutScreen : KaraokeSkinEditorScreenTestScene<LayoutScreen>
 {
     protected override LayoutScreen CreateEditorScreen(KaraokeSkin karaokeSkin) => new(karaokeSkin);
