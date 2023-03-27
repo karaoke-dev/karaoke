@@ -11,6 +11,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
@@ -82,6 +83,16 @@ public partial class BeatmapPropertyChangeHandler : Component
         finally
         {
             changingCache.Validate();
+        }
+    }
+
+    // todo: before having better solution to handle the undo/redo with better performance, we should use this to method to force invalidate all hit-object's working property.
+    protected void InvalidateAllHitObjectWorkingProperty<TWorkingProperty>(TWorkingProperty property)
+        where TWorkingProperty : struct, Enum
+    {
+        foreach (var hitObject in KaraokeBeatmap.HitObjects.OfType<IHasWorkingProperty<TWorkingProperty>>())
+        {
+            hitObject.InvalidateWorkingProperty(property);
         }
     }
 }

@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-                WorkingPropertyValidator.Invalidate(LyricWorkingProperty.ReferenceLyric);
+                InvalidateWorkingProperty(LyricWorkingProperty.ReferenceLyric);
             }
         }
 
@@ -207,9 +207,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Lyric()
         {
+            workingPropertyValidator = new LyricWorkingPropertyValidator(this);
+
             initInternalBindingEvent();
             initReferenceLyricEvent();
-            initWorkingPropertyValidator();
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();

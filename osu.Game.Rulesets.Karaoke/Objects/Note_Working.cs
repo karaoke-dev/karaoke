@@ -6,6 +6,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
@@ -14,15 +15,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Note
+public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
 {
-    private void initWorkingPropertyValidator()
-    {
-        WorkingPropertyValidator = new NoteWorkingPropertyValidator(this);
-    }
-
     [JsonIgnore]
-    public NoteWorkingPropertyValidator WorkingPropertyValidator { get; private set; } = null!;
+    private readonly NoteWorkingPropertyValidator workingPropertyValidator;
+
+    public bool InvalidateWorkingProperty(NoteWorkingProperty workingProperty)
+        => workingPropertyValidator.Invalidate(workingProperty);
+
+    private bool validateWorkingProperty(NoteWorkingProperty workingProperty)
+        => workingPropertyValidator.Validate(workingProperty);
+
+    public NoteWorkingProperty[] GetAllInvalidWorkingProperties()
+        => workingPropertyValidator.GetAllInvalidFlags();
 
     [JsonIgnore]
     public readonly Bindable<int?> PageIndexBindable = new();
@@ -37,7 +42,7 @@ public partial class Note
         set
         {
             PageIndexBindable.Value = value;
-            WorkingPropertyValidator.Validate(NoteWorkingProperty.Page);
+            validateWorkingProperty(NoteWorkingProperty.Page);
         }
     }
 
@@ -87,7 +92,7 @@ public partial class Note
         set
         {
             ReferenceLyricBindable.Value = value;
-            WorkingPropertyValidator.Validate(NoteWorkingProperty.ReferenceLyric);
+            validateWorkingProperty(NoteWorkingProperty.ReferenceLyric);
         }
     }
 

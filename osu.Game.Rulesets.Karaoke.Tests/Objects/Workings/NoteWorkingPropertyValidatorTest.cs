@@ -9,9 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
 public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty>
 {
-    protected override HitObjectWorkingPropertyValidator<Note, NoteWorkingProperty> GetValidatorFromHitObject(Note hitObject)
-        => hitObject.WorkingPropertyValidator;
-
     [Test]
     public void TestPage()
     {
