@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-                WorkingPropertyValidator.Invalidate(NoteWorkingProperty.ReferenceLyric);
+                InvalidateWorkingProperty(NoteWorkingProperty.ReferenceLyric);
             }
         }
 
@@ -122,9 +122,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Note()
         {
+            workingPropertyValidator = new NoteWorkingPropertyValidator(this);
+
             initInternalBindingEvent();
             initReferenceLyricEvent();
-            initWorkingPropertyValidator();
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();

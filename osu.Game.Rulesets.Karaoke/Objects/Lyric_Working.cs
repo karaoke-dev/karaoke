@@ -4,6 +4,7 @@
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
@@ -12,15 +13,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Lyric
+public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
 {
-    private void initWorkingPropertyValidator()
-    {
-        WorkingPropertyValidator = new LyricWorkingPropertyValidator(this);
-    }
-
     [JsonIgnore]
-    public LyricWorkingPropertyValidator WorkingPropertyValidator { get; private set; } = null!;
+    private readonly LyricWorkingPropertyValidator workingPropertyValidator;
+
+    public bool InvalidateWorkingProperty(LyricWorkingProperty workingProperty)
+        => workingPropertyValidator.Invalidate(workingProperty);
+
+    private bool validateWorkingProperty(LyricWorkingProperty workingProperty)
+        => workingPropertyValidator.Validate(workingProperty);
+
+    public LyricWorkingProperty[] GetAllInvalidWorkingProperties()
+        => workingPropertyValidator.GetAllInvalidFlags();
 
     [JsonIgnore]
     public double LyricStartTime { get; private set; }
@@ -66,7 +71,7 @@ public partial class Lyric
         set
         {
             PageIndexBindable.Value = value;
-            WorkingPropertyValidator.Validate(LyricWorkingProperty.Page);
+            validateWorkingProperty(LyricWorkingProperty.Page);
         }
     }
 
@@ -84,7 +89,7 @@ public partial class Lyric
         set
         {
             ReferenceLyricBindable.Value = value;
-            WorkingPropertyValidator.Validate(LyricWorkingProperty.ReferenceLyric);
+            validateWorkingProperty(LyricWorkingProperty.ReferenceLyric);
         }
     }
 }
