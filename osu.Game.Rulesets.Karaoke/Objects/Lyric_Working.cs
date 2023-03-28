@@ -21,7 +21,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
     public bool InvalidateWorkingProperty(LyricWorkingProperty workingProperty)
         => workingPropertyValidator.Invalidate(workingProperty);
 
-    private bool validateWorkingProperty(LyricWorkingProperty workingProperty)
+    private void validateWorkingProperty(LyricWorkingProperty workingProperty)
         => workingPropertyValidator.Validate(workingProperty);
 
     public LyricWorkingProperty[] GetAllInvalidWorkingProperties()
@@ -43,14 +43,29 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
     public override double StartTime
     {
         get => base.StartTime;
-        set => base.StartTime = value;
+        set
+        {
+            base.StartTime = value;
+            validateWorkingProperty(LyricWorkingProperty.StartTime);
+        }
     }
+
+    [JsonIgnore]
+    public readonly Bindable<double> DurationBindable = new BindableDouble();
 
     /// <summary>
     /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
     /// </summary>
     [JsonIgnore]
-    public double Duration { get; set; }
+    public double Duration
+    {
+        get => DurationBindable.Value;
+        set
+        {
+            DurationBindable.Value = value;
+            validateWorkingProperty(LyricWorkingProperty.Duration);
+        }
+    }
 
     /// <summary>
     /// The time at which the HitObject end.
