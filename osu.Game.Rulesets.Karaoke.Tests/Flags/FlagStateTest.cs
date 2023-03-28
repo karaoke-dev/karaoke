@@ -139,6 +139,39 @@ public class FlagStateTest
         Assert.AreEqual(Enum.GetValues<TestEnum>(), validator.GetAllInvalidFlags());
     }
 
+    [Test]
+    public void TestGetAllValidFlagsWithAndCondition()
+    {
+        var validator = new FlagState<TestAndEnum>();
+
+        validator.Validate(TestAndEnum.Enum0);
+        Assert.AreEqual(new[] { TestAndEnum.Enum0 }, validator.GetAllValidFlags());
+
+        validator.Validate(TestAndEnum.Enum0 | TestAndEnum.Enum1);
+        Assert.AreEqual(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }, validator.GetAllValidFlags());
+        Assert.AreEqual(Enum.GetValues<TestAndEnum>(), validator.GetAllValidFlags());
+
+        validator.ValidateAll();
+        Assert.AreEqual(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }, validator.GetAllValidFlags());
+        Assert.AreEqual(Enum.GetValues<TestAndEnum>(), validator.GetAllValidFlags());
+    }
+
+    [Test]
+    public void TestGetAllInvalidFlagsWithAndCondition()
+    {
+        var validator = new FlagState<TestAndEnum>();
+        validator.ValidateAll();
+
+        validator.Invalidate(TestAndEnum.Enum0);
+        Assert.AreEqual(new[] { TestAndEnum.Enum1 }, validator.GetAllValidFlags());
+
+        validator.Invalidate(TestAndEnum.Enum1);
+        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
+
+        validator.InvalidateAll();
+        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
+    }
+
     [Flags]
     public enum TestEnum
     {
@@ -147,5 +180,15 @@ public class FlagStateTest
         Enum1 = 1 << 1,
 
         Enum2 = 1 << 2,
+    }
+
+    [Flags]
+    public enum TestAndEnum
+    {
+        Enum0 = 1,
+
+        Enum1 = 1 << 1,
+
+        Enum0And1 = Enum0 | Enum1,
     }
 }
