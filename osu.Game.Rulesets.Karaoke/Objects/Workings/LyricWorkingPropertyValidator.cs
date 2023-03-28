@@ -15,6 +15,9 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool CanCheckWorkingPropertySync(Lyric hitObject, LyricWorkingProperty flags) =>
         flags switch
         {
+            LyricWorkingProperty.StartTime => false,
+            LyricWorkingProperty.Duration => false,
+            LyricWorkingProperty.Timing => false,
             LyricWorkingProperty.Page => false, // there's no way to check working page is sync to the page info.
             LyricWorkingProperty.ReferenceLyric => true,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
@@ -23,6 +26,9 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool NeedToSyncWorkingProperty(Lyric hitObject, LyricWorkingProperty flags) =>
         flags switch
         {
+            LyricWorkingProperty.StartTime => false,
+            LyricWorkingProperty.Duration => false,
+            LyricWorkingProperty.Timing => false,
             LyricWorkingProperty.Page => false,
             LyricWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID != hitObject.ReferenceLyricId,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)

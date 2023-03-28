@@ -9,6 +9,7 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
@@ -120,6 +121,8 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
         performStageInfoChanged(stageInfo =>
         {
             action(stageInfo.LyricTimingInfo);
+
+            InvalidateAllHitObjectWorkingProperty(LyricWorkingProperty.Timing);
         });
     }
 }
