@@ -10,6 +10,49 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Lyric, LyricWorkingProperty>
 {
     [Test]
+    public void TestStartTime()
+    {
+        var lyric = new Lyric();
+
+        // should be invalid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.StartTime, false);
+
+        // state is valid because assign the property.
+        Assert.DoesNotThrow(() => lyric.StartTime = 1000);
+        AssetIsValid(lyric, LyricWorkingProperty.StartTime, true);
+    }
+
+    [Test]
+    public void TestDuration()
+    {
+        var lyric = new Lyric();
+
+        // should be invalid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.Duration, false);
+
+        // state is valid because assign the property.
+        Assert.DoesNotThrow(() => lyric.Duration = 1000);
+        AssetIsValid(lyric, LyricWorkingProperty.Duration, true);
+    }
+
+    [Test]
+    public void TestTiming()
+    {
+        var lyric = new Lyric();
+
+        // should be invalid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
+
+        // state is still invalid because not assign all timing properties.
+        Assert.DoesNotThrow(() => lyric.StartTime = 1000);
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
+
+        // ok, should be valid now.
+        Assert.DoesNotThrow(() => lyric.Duration = 1000);
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
+    }
+
+    [Test]
     public void TestPage()
     {
         var lyric = new Lyric();
