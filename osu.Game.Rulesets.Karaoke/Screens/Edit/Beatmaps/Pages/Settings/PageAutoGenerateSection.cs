@@ -57,7 +57,7 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
                 {
                     bool canGenerate = beatmapPagesChangeHandler.CanGenerate();
 
-                    if (canGenerate)
+                    if (!canGenerate)
                     {
                         dialogOverlay.Push(new OkPopupDialog
                         {
