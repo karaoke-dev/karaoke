@@ -38,10 +38,10 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     }
 
     protected sealed override bool CanInvalidate(TFlag flags)
-        => CanCheckWorkingPropertySync(hitObject, flags) || NeedToSyncWorkingProperty(hitObject, flags);
+        => !CanCheckWorkingPropertySync(hitObject, flags) || NeedToSyncWorkingProperty(hitObject, flags);
 
     protected sealed override bool CanValidate(TFlag flags)
-        => CanCheckWorkingPropertySync(hitObject, flags) || !NeedToSyncWorkingProperty(hitObject, flags);
+        => !CanCheckWorkingPropertySync(hitObject, flags) || !NeedToSyncWorkingProperty(hitObject, flags);
 
     protected abstract bool CanCheckWorkingPropertySync(THitObject hitObject, TFlag flags);
 
