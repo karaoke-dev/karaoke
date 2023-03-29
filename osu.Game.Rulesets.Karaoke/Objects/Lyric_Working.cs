@@ -21,8 +21,8 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
     public bool InvalidateWorkingProperty(LyricWorkingProperty workingProperty)
         => workingPropertyValidator.Invalidate(workingProperty);
 
-    private void validateWorkingProperty(LyricWorkingProperty workingProperty)
-        => workingPropertyValidator.Validate(workingProperty);
+    private void updateStateByWorkingProperty(LyricWorkingProperty workingProperty)
+        => workingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
 
     public LyricWorkingProperty[] GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
@@ -46,7 +46,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         set
         {
             base.StartTime = value;
-            validateWorkingProperty(LyricWorkingProperty.StartTime);
+            updateStateByWorkingProperty(LyricWorkingProperty.StartTime);
         }
     }
 
@@ -63,7 +63,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         set
         {
             DurationBindable.Value = value;
-            validateWorkingProperty(LyricWorkingProperty.Duration);
+            updateStateByWorkingProperty(LyricWorkingProperty.Duration);
         }
     }
 
@@ -86,7 +86,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         set
         {
             PageIndexBindable.Value = value;
-            validateWorkingProperty(LyricWorkingProperty.Page);
+            updateStateByWorkingProperty(LyricWorkingProperty.Page);
         }
     }
 
@@ -104,7 +104,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         set
         {
             ReferenceLyricBindable.Value = value;
-            validateWorkingProperty(LyricWorkingProperty.ReferenceLyric);
+            updateStateByWorkingProperty(LyricWorkingProperty.ReferenceLyric);
         }
     }
 }

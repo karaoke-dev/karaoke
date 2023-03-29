@@ -28,14 +28,15 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     /// <summary>
     /// This method is called after assign the working property changed in the <typeparamref name="THitObject"/> by <see cref="KaraokeBeatmapProcessor"/>.
     /// We should make sure that the working property is same as data property.
+    /// Note that this property should only called inside the <typeparamref name="THitObject"/>
     /// </summary>
     /// <param name="flag"></param>
-    public new bool Validate(TFlag flag)
+    public bool UpdateStateByWorkingProperty(TFlag flag)
     {
         if (!CanValidate(flag))
             throw new InvalidWorkingPropertyAssignException();
 
-        return base.Validate(flag);
+        return Validate(flag);
     }
 
     protected sealed override bool CanInvalidate(TFlag flags)

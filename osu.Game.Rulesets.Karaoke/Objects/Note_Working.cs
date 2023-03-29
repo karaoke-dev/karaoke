@@ -23,8 +23,8 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
     public bool InvalidateWorkingProperty(NoteWorkingProperty workingProperty)
         => workingPropertyValidator.Invalidate(workingProperty);
 
-    private bool validateWorkingProperty(NoteWorkingProperty workingProperty)
-        => workingPropertyValidator.Validate(workingProperty);
+    private void updateStateByWorkingProperty(NoteWorkingProperty workingProperty)
+        => workingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
 
     public NoteWorkingProperty[] GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
@@ -42,7 +42,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
         set
         {
             PageIndexBindable.Value = value;
-            validateWorkingProperty(NoteWorkingProperty.Page);
+            updateStateByWorkingProperty(NoteWorkingProperty.Page);
         }
     }
 
@@ -92,7 +92,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
         set
         {
             ReferenceLyricBindable.Value = value;
-            validateWorkingProperty(NoteWorkingProperty.ReferenceLyric);
+            updateStateByWorkingProperty(NoteWorkingProperty.ReferenceLyric);
         }
     }
 
