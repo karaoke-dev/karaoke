@@ -153,14 +153,14 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         });
     }
 
-    protected void PrepareHitObject(HitObject hitObject, bool selected = true)
-        => PrepareHitObjects(new[] { hitObject }, selected);
+    protected void PrepareHitObject(Func<HitObject> hitObject, bool selected = true)
+        => PrepareHitObjects(() => new[] { hitObject() }, selected);
 
-    protected void PrepareHitObjects(IEnumerable<HitObject> selectedHitObjects, bool selected = true)
+    protected void PrepareHitObjects(Func<IEnumerable<HitObject>> selectedHitObjects, bool selected = true)
     {
         AddStep("Prepare testing hit objects", () =>
         {
-            var hitobjects = selectedHitObjects.ToList();
+            var hitobjects = selectedHitObjects().ToList();
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
 
             editorBeatmap.AddRange(hitobjects);
