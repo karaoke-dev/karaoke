@@ -32,6 +32,20 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         });
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
+        // should be invalid if change the reference lyric id.
+        Assert.DoesNotThrow(() =>
+        {
+            note.ReferenceLyricId = 1;
+        });
+        AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
+
+        // should be valid again if change the id back.
+        Assert.DoesNotThrow(() =>
+        {
+            note.ReferenceLyricId = null;
+        });
+        AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
+
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {
