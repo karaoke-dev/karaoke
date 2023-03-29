@@ -14,6 +14,13 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
     where THitObject : KaraokeHitObject, IHasWorkingProperty<TFlag>, new()
 {
     [Test]
+    public void ChecnInitialState([Values] TFlag flag)
+    {
+        // should be valid on the first load.
+        AssetIsValid(new THitObject(), flag, true);
+    }
+
+    [Test]
     public void RunAllInvalidateTest([Values] TFlag flag)
     {
         // run this test case just make sure that all working property are checked.

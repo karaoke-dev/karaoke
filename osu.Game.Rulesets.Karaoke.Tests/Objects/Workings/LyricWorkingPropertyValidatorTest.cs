@@ -14,9 +14,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be valid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.StartTime, true);
-
         // state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.StartTime = 1000);
         AssetIsValid(lyric, LyricWorkingProperty.StartTime, true);
@@ -27,9 +24,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be valid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Duration, true);
-
         // state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.Duration = 1000);
         AssetIsValid(lyric, LyricWorkingProperty.Duration, true);
@@ -39,9 +33,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     public void TestTiming()
     {
         var lyric = new Lyric();
-
-        // should be valid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
 
         // state is still valid because not assign all timing properties.
         Assert.DoesNotThrow(() => lyric.StartTime = 1000);
@@ -57,9 +48,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be valid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Page, true);
-
         // page state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.PageIndex = 1);
         AssetIsValid(lyric, LyricWorkingProperty.Page, true);
@@ -69,9 +57,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     public void TestReferenceLyric()
     {
         var lyric = new Lyric();
-
-        // should be valid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
