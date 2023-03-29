@@ -90,6 +90,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         {
             SingersBindable.Clear();
             SingersBindable.AddRange(value);
+            updateStateByWorkingProperty(LyricWorkingProperty.Singers);
         }
     }
 

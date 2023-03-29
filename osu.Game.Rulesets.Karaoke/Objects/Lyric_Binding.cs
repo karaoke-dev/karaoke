@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
@@ -93,6 +94,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 }
 
                 void invalidate() => romajiTagsVersion.Value++;
+            };
+
+            SingerIdsBindable.CollectionChanged += (_, _) =>
+            {
+                updateStateByDataProperty(LyricWorkingProperty.Singers);
             };
 
             LockBindable.ValueChanged += e =>
