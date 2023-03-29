@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
     {
+        private void updateStateByDataProperty(LyricWorkingProperty workingProperty)
+            => workingPropertyValidator.UpdateStateByDataProperty(workingProperty);
+
         /// <summary>
         /// Primary key.
         /// </summary>
@@ -179,7 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-                InvalidateWorkingProperty(LyricWorkingProperty.ReferenceLyric);
+                updateStateByDataProperty(LyricWorkingProperty.ReferenceLyric);
             }
         }
 
