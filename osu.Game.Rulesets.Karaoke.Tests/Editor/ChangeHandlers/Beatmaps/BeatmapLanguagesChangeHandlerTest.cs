@@ -71,7 +71,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
             };
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Translates = new Dictionary<CultureInfo, string>
             {

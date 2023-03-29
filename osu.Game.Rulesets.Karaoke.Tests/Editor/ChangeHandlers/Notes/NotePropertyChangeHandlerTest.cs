@@ -14,7 +14,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestChangeText()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
         });
@@ -30,7 +30,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestChangeRubyText()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             RubyText = "からおけ",
         });
@@ -46,7 +46,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestChangeDisplayStateToVisible()
     {
-        PrepareHitObject(new Note());
+        PrepareHitObject(() => new Note());
 
         TriggerHandlerChanged(c => c.ChangeDisplayState(true));
 
@@ -59,7 +59,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestChangeDisplayStateToNonVisible()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Display = true,
             Tone = new Tone(3)
@@ -78,7 +78,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Ignore("Waiting to implement the lock rules.")]
     public void TestWithReferenceLyric()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
             ReferenceLyric = new Lyric
@@ -94,7 +94,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestOffsetTone()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Display = true,
             Tone = new Tone(3)
@@ -112,7 +112,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestOffsetToneWithZeroValue()
     {
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Display = true,
             Tone = new Tone(3)

@@ -14,7 +14,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     public void TestSetLanguageToJapanese()
     {
         var language = new CultureInfo("ja");
-        PrepareHitObject(new Lyric());
+        PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c => c.SetLanguage(language));
 
@@ -27,7 +27,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestSetLanguageToNull()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "???"
         });

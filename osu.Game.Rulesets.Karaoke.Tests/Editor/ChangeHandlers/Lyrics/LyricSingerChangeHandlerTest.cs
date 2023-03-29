@@ -19,7 +19,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         {
             Name = "Singer1",
         };
-        PrepareHitObject(new Lyric());
+        PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c => c.Add(singer));
 
@@ -38,7 +38,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         {
             Name = "Singer1",
         };
-        PrepareHitObject(new Lyric());
+        PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c => c.AddRange(new[] { singer }));
 
@@ -61,7 +61,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         {
             Name = "Another singer",
         };
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Singers = new[]
             {
@@ -96,7 +96,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         {
             Name = "Another singer",
         };
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Singers = new[]
             {
@@ -127,7 +127,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         {
             Name = "Singer1",
         };
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Singers = new[]
             {

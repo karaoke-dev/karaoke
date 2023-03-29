@@ -12,7 +12,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     [Test]
     public void TestInsertText()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラ"
         });
@@ -28,7 +28,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     [Test]
     public void TestDeleteLyricText()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         });
@@ -44,7 +44,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     [Test]
     public void TestDeleteAllLyricText()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カ"
         });

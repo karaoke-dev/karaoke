@@ -205,11 +205,11 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             karaokeBeatmap.StageInfos.Add(classicStageInfo);
         });
 
-        Lyric lyric1;
-        Lyric lyric2;
+        Lyric lyric1 = null!;
+        Lyric lyric2 = null!;
 
-        PrepareHitObject(lyric1 = new Lyric { ID = 1 });
-        PrepareHitObject(lyric2 = new Lyric { ID = 2 }, false);
+        PrepareHitObject(() => lyric1 = new Lyric { ID = 1 });
+        PrepareHitObject(() => lyric2 = new Lyric { ID = 2 }, false);
 
         TriggerHandlerChanged(c =>
         {
@@ -232,11 +232,11 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
     {
         ClassicLyricTimingPoint timingPoint = null!;
 
-        Lyric lyric1;
-        Lyric lyric2;
+        Lyric lyric1 = null!;
+        Lyric lyric2 = null!;
 
-        PrepareHitObject(lyric1 = new Lyric { ID = 1 });
-        PrepareHitObject(lyric2 = new Lyric { ID = 2 }, false);
+        PrepareHitObject(() => lyric1 = new Lyric { ID = 1 });
+        PrepareHitObject(() => lyric2 = new Lyric { ID = 2 }, false);
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {

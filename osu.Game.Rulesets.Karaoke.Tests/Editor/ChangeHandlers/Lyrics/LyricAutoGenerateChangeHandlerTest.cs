@@ -24,12 +24,12 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestDetectReferenceLyric()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         }, false);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         });
@@ -46,12 +46,12 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestDetectReferenceLyricWithNonSupportedLyric()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         }, false);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "???"
         });
@@ -66,7 +66,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestDetectLanguage()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         });
@@ -82,7 +82,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestDetectLanguageWithNonSupportedLyric()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "???"
         });
@@ -102,7 +102,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateRubyTags()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "風",
             Language = new CultureInfo(17)
@@ -121,7 +121,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateRubyTagsWithNonSupportedLyric()
     {
-        PrepareHitObjects(new[]
+        PrepareHitObjects(() => new[]
         {
             new Lyric
             {
@@ -148,7 +148,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateRomajiTags()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "風",
             Language = new CultureInfo(17)
@@ -167,7 +167,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateRomajiTagsWithNonSupportedLyric()
     {
-        PrepareHitObjects(new[]
+        PrepareHitObjects(() => new[]
         {
             new Lyric
             {
@@ -194,7 +194,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateTimeTags()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Language = new CultureInfo(17)
@@ -211,7 +211,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateTimeTagsWithNonSupportedLyric()
     {
-        PrepareHitObjects(new[]
+        PrepareHitObjects(() => new[]
         {
             new Lyric
             {
@@ -238,7 +238,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateNotes()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -268,7 +268,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     [Test]
     public void TestAutoGenerateNotesWithNonSupportedLyric()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
@@ -296,7 +296,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     {
         if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
         {
-            PrepareHitObject(new Lyric
+            PrepareHitObject(() => new Lyric
             {
                 Text = "karaoke"
             }, false);
@@ -332,7 +332,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     {
         if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
         {
-            PrepareHitObject(new Lyric
+            PrepareHitObject(() => new Lyric
             {
                 Text = "karaoke"
             }, false);
@@ -369,7 +369,7 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
     {
         if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
         {
-            PrepareHitObject(new Lyric
+            PrepareHitObject(() => new Lyric
             {
                 Text = "karaoke"
             }, false);

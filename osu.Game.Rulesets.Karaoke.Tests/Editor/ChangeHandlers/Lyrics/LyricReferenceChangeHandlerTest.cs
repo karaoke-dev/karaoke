@@ -18,9 +18,9 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(referencedLyric, false);
+        PrepareHitObject(() => referencedLyric, false);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "I need the reference lyric."
         });
@@ -42,7 +42,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "Lyric",
             ReferenceLyricId = referencedLyric.ID,
@@ -66,7 +66,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "Lyric",
             ReferenceLyricId = referencedLyric.ID,
@@ -90,7 +90,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "Lyric",
             ReferenceLyricId = referencedLyric.ID,
@@ -120,7 +120,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
             Text = "Referenced lyric"
         };
 
-        PrepareHitObject(lyric, false);
+        PrepareHitObject(() => lyric, false);
         PrepareLyricWithSyncConfig(new Lyric());
 
         // should not block the reference language change.
