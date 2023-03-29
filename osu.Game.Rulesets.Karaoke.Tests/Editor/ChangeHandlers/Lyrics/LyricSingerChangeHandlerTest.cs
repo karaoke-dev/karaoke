@@ -25,7 +25,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
             Assert.AreEqual(1, singers.Count);
             Assert.AreEqual(singer.ID, singers.FirstOrDefault());
         });
@@ -44,7 +44,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
             Assert.AreEqual(1, singers.Count);
             Assert.AreEqual(singer.ID, singers.FirstOrDefault());
         });
@@ -63,7 +63,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         };
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
                 anotherSinger.ID,
@@ -74,7 +74,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
 
             // should not contains removed singer.
             Assert.IsFalse(singers.Contains(singer.ID));
@@ -98,7 +98,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         };
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
                 anotherSinger.ID,
@@ -109,7 +109,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
 
             // should not contains removed singer.
             Assert.IsFalse(singers.Contains(singer.ID));
@@ -129,7 +129,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         };
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
             }
@@ -139,7 +139,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Singers);
+            Assert.IsEmpty(h.SingerIds);
         });
     }
 

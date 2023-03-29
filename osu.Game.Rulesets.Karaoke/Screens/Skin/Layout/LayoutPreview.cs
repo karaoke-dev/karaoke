@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 manager.PreviewSingers.BindValueChanged(v =>
                 {
                     if (Child is PreviewDrawableLyric lyric)
-                        lyric.HitObject.Singers = v.NewValue;
+                        lyric.HitObject.SingerIds = v.NewValue;
                 }, true);
 
                 manager.EditLayout.BindValueChanged(v =>

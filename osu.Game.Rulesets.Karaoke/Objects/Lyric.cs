@@ -107,18 +107,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly BindableList<int> SingersBindable = new();
+        public readonly BindableList<int> SingerIdsBindable = new();
 
         /// <summary>
         /// Singers
         /// </summary>
-        public IList<int> Singers
+        public IList<int> SingerIds
         {
-            get => SingersBindable;
+            get => SingerIdsBindable;
             set
             {
-                SingersBindable.Clear();
-                SingersBindable.AddRange(value);
+                SingerIdsBindable.Clear();
+                SingerIdsBindable.AddRange(value);
             }
         }
 

@@ -118,17 +118,17 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = "karaoke!",
-            Singers = singerIndexes
+            SingerIds = singerIndexes
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
 
-        Assert.AreEqual(expectedFirstSingerIndexes, firstLyric.Singers);
-        Assert.AreEqual(expectedSecondSingerIndexes, secondLyric.Singers);
+        Assert.AreEqual(expectedFirstSingerIndexes, firstLyric.SingerIds);
+        Assert.AreEqual(expectedSecondSingerIndexes, secondLyric.SingerIds);
 
         // also should check is not same object as origin lyric for safety purpose.
-        Assert.AreNotSame(lyric.Singers, firstLyric.Singers);
-        Assert.AreNotSame(lyric.Singers, secondLyric.Singers);
+        Assert.AreNotSame(lyric.SingerIds, firstLyric.SingerIds);
+        Assert.AreNotSame(lyric.SingerIds, secondLyric.SingerIds);
     }
 
     [TestCase(1, 1, 1)]
@@ -279,12 +279,12 @@ public class LyricsUtilsTest
     [TestCase(new[] { 1 }, new[] { -2 }, new[] { 1, -2 })] // deal with id not right case.
     public void TestCombineLyricSinger(int[] firstSingerIndexes, int[] secondSingerIndexes, int[] expected)
     {
-        var lyric1 = new Lyric { Singers = firstSingerIndexes };
-        var lyric2 = new Lyric { Singers = secondSingerIndexes };
+        var lyric1 = new Lyric { SingerIds = firstSingerIndexes };
+        var lyric2 = new Lyric { SingerIds = secondSingerIndexes };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
 
-        var actual = combineLyric.Singers;
+        var actual = combineLyric.SingerIds;
         Assert.AreEqual(expected, actual);
     }
 

@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
                     yield return nameof(Lyric.EndTime);
 
                     if (syncLyricConfig.SyncSingerProperty)
-                        yield return nameof(Lyric.Singers);
+                        yield return nameof(Lyric.SingerIds);
 
                     yield return nameof(Lyric.Translates);
                     yield return nameof(Lyric.Language);

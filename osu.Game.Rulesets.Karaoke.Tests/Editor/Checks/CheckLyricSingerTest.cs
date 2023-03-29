@@ -19,7 +19,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            Singers = singers
+            SingerIds = singers
         };
 
         AssertOk(lyric);
@@ -30,7 +30,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            Singers = singers
+            SingerIds = singers
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);

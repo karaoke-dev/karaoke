@@ -88,7 +88,7 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
             {
                 new Lyric
                 {
-                    Singers = { firstSinger.ID }
+                    SingerIds = { firstSinger.ID }
                 }
             };
         });
@@ -106,7 +106,7 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
             Assert.AreEqual(1, secondSinger.ID);
             Assert.AreEqual(1, secondSinger.Order);
 
-            var lyrics = karaokeBeatmap.HitObjects.OfType<Lyric>().Where(x => x.Singers.Contains(firstSinger.ID));
+            var lyrics = karaokeBeatmap.HitObjects.OfType<Lyric>().Where(x => x.SingerIds.Contains(firstSinger.ID));
             Assert.IsEmpty(lyrics);
         });
     }

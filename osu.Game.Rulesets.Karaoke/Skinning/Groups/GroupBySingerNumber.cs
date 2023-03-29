@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
             if (SingerNumber == 0)
                 return false;
 
-            return hitObject.Singers.Count == SingerNumber;
+            return hitObject.SingerIds.Count == SingerNumber;
         }
     }
 }

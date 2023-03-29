@@ -252,7 +252,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             ArgumentNullException.ThrowIfNull(lyric);
             ArgumentNullException.ThrowIfNull(singer);
 
-            return lyric.Singers.Contains(singer.ID);
+            return lyric.SingerIds.Contains(singer.ID);
         }
 
         public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
@@ -260,7 +260,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             ArgumentNullException.ThrowIfNull(singers);
 
             var singerIds = singers.Select(x => x.ID);
-            return lyric.Singers.All(x => singerIds.Contains(x));
+            return lyric.SingerIds.All(x => singerIds.Contains(x));
         }
 
         #endregion

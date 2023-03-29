@@ -46,7 +46,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         TextTagAssert.ArePropertyEqual(expected.RomajiTags, actual.RomajiTags);
         Assert.AreEqual(expected.StartTime, actual.StartTime);
         Assert.AreEqual(expected.Duration, actual.Duration);
-        Assert.AreEqual(expected.Singers, actual.Singers);
+        Assert.AreEqual(expected.SingerIds, actual.SingerIds);
         Assert.AreEqual(expected.Translates, actual.Translates);
         Assert.AreEqual(expected.Language, actual.Language);
         Assert.AreEqual(expected.Lock, actual.Lock);

@@ -50,7 +50,7 @@ public class NotesUtilsTest
         const double percentage = 0.3;
 
         var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", 1000, 2000);
-        referencedLyric.Singers = new[] { 0 };
+        referencedLyric.SingerIds = new[] { 0 };
 
         var note = new Note
         {
@@ -83,7 +83,7 @@ public class NotesUtilsTest
             Assert.AreEqual(expect.ReferenceLyric, actual.ReferenceLyric);
             Assert.AreEqual(expect.ReferenceTimeTagIndex, actual.ReferenceTimeTagIndex);
 
-            Assert.AreEqual(expect.ReferenceLyric?.Singers, actual.ReferenceLyric?.Singers);
+            Assert.AreEqual(expect.ReferenceLyric?.SingerIds, actual.ReferenceLyric?.SingerIds);
         }
     }
 

@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                lyric.Singers.Add(singer.ID);
+                lyric.SingerIds.Add(singer.ID);
             });
         }
 
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 // should convert to array because enumerable might change while deleting.
                 foreach (var singer in singers.ToArray())
                 {
-                    lyric.Singers.Add(singer.ID);
+                    lyric.SingerIds.Add(singer.ID);
                 }
             });
         }
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                lyric.Singers.Remove(singer.ID);
+                lyric.SingerIds.Remove(singer.ID);
             });
         }
 
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 // should convert to array because enumerable might change while deleting.
                 foreach (var singer in singers.ToArray())
                 {
-                    lyric.Singers.Remove(singer.ID);
+                    lyric.SingerIds.Remove(singer.ID);
                 }
             });
         }
@@ -55,11 +55,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                lyric.Singers.Clear();
+                lyric.SingerIds.Clear();
             });
         }
 
         protected override bool IsWritePropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Singers));
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.SingerIds));
     }
 }

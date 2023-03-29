@@ -222,12 +222,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 // todo: start-time, end-time and offset.
 
                 // singers.
-                bindListValueChange(e, l => l.SingersBindable, (lyric, config) =>
+                bindListValueChange(e, l => l.SingerIdsBindable, (lyric, config) =>
                 {
                     if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncSingerProperty)
                         return;
 
-                    Singers = lyric.Singers;
+                    SingerIds = lyric.SingerIds;
                 });
 
                 // translates.
