@@ -1,7 +1,10 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using J2N.Collections.Generic;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -41,6 +44,79 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // ok, should be valid now.
         Assert.DoesNotThrow(() => lyric.Duration = 1000);
         AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
+    }
+
+    [Test]
+    public void TestSingers()
+    {
+        var lyric = new Lyric();
+
+        // should be valid if singer is empty.
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int>());
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should be invalid if assign the singer.
+        Assert.DoesNotThrow(() => lyric.SingerIds.Add(1));
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, false);
+
+        // should be valid again if remove the singer
+        Assert.DoesNotThrow(() => lyric.SingerIds.Remove(1));
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should be matched if include all singers
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(1), Array.Empty<SingerState>() },
+            { new Singer(2), Array.Empty<SingerState>() },
+            { new Singer(3), Array.Empty<SingerState>() }
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should be matched if include all singers
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(1), new SingerState[] { new(2, 1), new(3, 1) } },
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should works even id is not by order.
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(3), Array.Empty<SingerState>() },
+            { new Singer(2), Array.Empty<SingerState>() },
+            { new Singer(1), Array.Empty<SingerState>() }
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should works even id is not by order.
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 3, 2, 1 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(1), Array.Empty<SingerState>() },
+            { new Singer(2), Array.Empty<SingerState>() },
+            { new Singer(3), Array.Empty<SingerState>() }
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should works if id is duplicated
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 1, 1 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(1), Array.Empty<SingerState>() },
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
+
+        // should works if id is duplicated
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1 });
+        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        {
+            { new Singer(1), Array.Empty<SingerState>() },
+            { new Singer(1), Array.Empty<SingerState>() },
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
     }
 
     [Test]

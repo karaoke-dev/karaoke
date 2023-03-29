@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
         public LyricTimelineSelectionBlueprint(Lyric item)
             : base(item)
         {
-            singersBindable = Item.SingersBindable.GetBoundCopy();
+            singersBindable = Item.SingerIdsBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
             static bool lyricInCurrentSinger(Lyric lyric, Singer singer)
             {
                 if (singer == DefaultLyricPlacementColumn.DefaultSinger)
-                    return !lyric.Singers.Any();
+                    return !lyric.SingerIds.Any();
 
                 return LyricUtils.ContainsSinger(lyric, singer);
             }

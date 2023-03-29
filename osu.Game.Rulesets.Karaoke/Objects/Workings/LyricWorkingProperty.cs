@@ -27,12 +27,17 @@ public enum LyricWorkingProperty
     Timing = StartTime | Duration,
 
     /// <summary>
+    /// <see cref="Lyric.Singers"/> is being invalidated.
+    /// </summary>
+    Singers = 1 << 2,
+
+    /// <summary>
     /// <see cref="Lyric.PageIndex"/> is being invalidated.
     /// </summary>
-    Page = 1 << 2,
+    Page = 1 << 3,
 
     /// <summary>
     /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
     /// </summary>
-    ReferenceLyric = 1 << 3,
+    ReferenceLyric = 1 << 4,
 }

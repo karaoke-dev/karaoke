@@ -101,8 +101,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
             var singers = new List<int>();
-            singers.AddRangeWithNullCheck(firstLyric.Singers);
-            singers.AddRangeWithNullCheck(secondLyric.Singers);
+            singers.AddRangeWithNullCheck(firstLyric.SingerIds);
+            singers.AddRangeWithNullCheck(secondLyric.SingerIds);
 
             bool sameLanguage = EqualityComparer<CultureInfo?>.Default.Equals(firstLyric.Language, secondLyric.Language);
             var language = sameLanguage ? firstLyric.Language : null;
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 RomajiTags = romajiTags.ToArray(),
                 StartTime = startTime,
                 Duration = endTime - startTime,
-                Singers = singers.Distinct().ToArray(),
+                SingerIds = singers.Distinct().ToArray(),
                 Language = language,
             };
         }

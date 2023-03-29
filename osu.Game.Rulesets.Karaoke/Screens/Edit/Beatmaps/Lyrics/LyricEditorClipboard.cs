@@ -292,8 +292,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
                     return false;
 
                 case LyricEditorMode.Singer:
-                    saveObjectToTheClipboardContent(lyric.Singers);
-                    var singers = getMatchedSinges(lyric.Singers);
+                    saveObjectToTheClipboardContent(lyric.SingerIds);
+                    var singers = getMatchedSinges(lyric.SingerIds);
                     copyObjectToClipboard(singers);
                     return true;
 

@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
         public SingerInfo(Lyric lyric)
         {
             this.lyric = lyric;
-            singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
+            singerIndexesBindable = lyric.SingerIdsBindable.GetBoundCopy();
 
             AutoSizeAxes = Axes.Both;
 

@@ -7,6 +7,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types
 {
     public interface IHasSingers
     {
-        IList<int> Singers { get; }
+        IList<int> SingerIds { get; }
     }
 }

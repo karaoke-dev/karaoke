@@ -89,11 +89,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singer
 
             // should bind from lyric.
             // singer index might be able to change from other place like singer editor.
-            singerIndexes.BindTo(lyric.SingersBindable);
+            singerIndexes.BindTo(lyric.SingerIdsBindable);
         }
 
         protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Singers));
+            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds));
 
         protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
             lockLyricPropertyBy switch

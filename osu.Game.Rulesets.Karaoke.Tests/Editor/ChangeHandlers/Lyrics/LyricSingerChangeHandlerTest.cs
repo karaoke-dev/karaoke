@@ -15,17 +15,21 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [Test]
     public void TestAdd()
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+        });
         PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c => c.Add(singer));
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
             Assert.AreEqual(1, singers.Count);
             Assert.AreEqual(singer.ID, singers.FirstOrDefault());
         });
@@ -34,17 +38,21 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [Test]
     public void TestAddRange()
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+        });
         PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c => c.AddRange(new[] { singer }));
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
             Assert.AreEqual(1, singers.Count);
             Assert.AreEqual(singer.ID, singers.FirstOrDefault());
         });
@@ -53,17 +61,23 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [Test]
     public void TestRemove()
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        Singer anotherSinger = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
-        var anotherSinger = new Singer(2)
-        {
-            Name = "Another singer",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+
+            anotherSinger = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Another singer";
+            });
+        });
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
                 anotherSinger.ID,
@@ -74,7 +88,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
 
             // should not contains removed singer.
             Assert.IsFalse(singers.Contains(singer.ID));
@@ -88,17 +102,23 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [Test]
     public void TestRemoveRange()
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        Singer anotherSinger = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
-        var anotherSinger = new Singer(2)
-        {
-            Name = "Another singer",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+
+            anotherSinger = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Another singer";
+            });
+        });
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
                 anotherSinger.ID,
@@ -109,7 +129,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            var singers = h.Singers;
+            var singers = h.SingerIds;
 
             // should not contains removed singer.
             Assert.IsFalse(singers.Contains(singer.ID));
@@ -123,13 +143,17 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [Test]
     public void TestClear()
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+        });
         PrepareHitObject(() => new Lyric
         {
-            Singers = new[]
+            SingerIds = new[]
             {
                 singer.ID,
             }
@@ -139,7 +163,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Singers);
+            Assert.IsEmpty(h.SingerIds);
         });
     }
 
@@ -147,10 +171,14 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
     [TestCase(false)]
     public void TestWithReferenceLyric(bool syncSinger)
     {
-        var singer = new Singer(1)
+        Singer singer = null!;
+        SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            Name = "Singer1",
-        };
+            singer = karaokeBeatmap.SingerInfo.AddSinger(s =>
+            {
+                s.Name = "Singer1";
+            });
+        });
         PrepareLyricWithSyncConfig(new Lyric(), new SyncLyricConfig
         {
             SyncSingerProperty = syncSinger

@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
                 nameof(Lyric.RomajiTags) => lockState > LockState.None,
                 nameof(Lyric.StartTime) => lockState > LockState.Partial,
                 nameof(Lyric.Duration) => lockState > LockState.Partial,
-                nameof(Lyric.Singers) => lockState > LockState.Partial,
+                nameof(Lyric.SingerIds) => lockState > LockState.Partial,
                 nameof(Lyric.Translates) => lockState > LockState.Partial,
                 nameof(Lyric.Language) => lockState > LockState.Partial,
                 nameof(Lyric.Order) => false, // order can always be changed.
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
                     nameof(Lyric.RomajiTags) => true,
                     nameof(Lyric.StartTime) => false,
                     nameof(Lyric.Duration) => false,
-                    nameof(Lyric.Singers) => syncLyricConfig.SyncSingerProperty,
+                    nameof(Lyric.SingerIds) => syncLyricConfig.SyncSingerProperty,
                     nameof(Lyric.Translates) => true,
                     nameof(Lyric.Language) => true,
                     nameof(Lyric.Order) => true,

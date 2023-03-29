@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             lyricPieces.Add(new DefaultLyricPiece(HitObject));
             ApplySkin(CurrentSkin, false);
 
-            singersBindable.BindTo(HitObject.SingersBindable);
+            singersBindable.BindTo(HitObject.SingerIdsBindable);
             translateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.OnFree();
 
-            singersBindable.UnbindFrom(HitObject.SingersBindable);
+            singersBindable.UnbindFrom(HitObject.SingerIdsBindable);
             translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 

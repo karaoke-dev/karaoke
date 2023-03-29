@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
             // should clear removed singer ids in singer editor.
             Lyrics.ForEach(x =>
             {
-                x.Singers.Remove(singer.ID);
+                x.SingerIds.Remove(singer.ID);
             });
         }
 

@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -68,6 +69,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     // start time and duration should be set by other condition.
                     break;
 
+                case LyricWorkingProperty.Singers:
+                    lyric.Singers = getSingerInfo().GetSingerByIds(lyric.SingerIds.ToArray());
+                    break;
+
                 case LyricWorkingProperty.Page:
                     var pageInfo = Beatmap.PageInfo;
                     lyric.PageIndex = pageInfo.GetPageIndexAt(lyric.LyricStartTime);
@@ -111,6 +116,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        private SingerInfo getSingerInfo()
+            => Beatmap.SingerInfo;
 
         // todo: should use better way to get the correct stage.
         private StageInfo? getWorkingStage()

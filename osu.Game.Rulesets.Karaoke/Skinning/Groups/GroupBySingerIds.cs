@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
 
         protected override bool InTheGroup(Lyric hitObject)
         {
-            return SingerIds.Any(x => hitObject.Singers.Contains(x));
+            return SingerIds.Any(x => hitObject.SingerIds.Contains(x));
         }
     }
 }
