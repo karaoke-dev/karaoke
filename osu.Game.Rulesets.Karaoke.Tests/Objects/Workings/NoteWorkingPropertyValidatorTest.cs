@@ -14,8 +14,8 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
     {
         var note = new Note();
 
-        // should be invalid on the first load.
-        AssetIsValid(note, NoteWorkingProperty.Page, false);
+        // should be valid on the first load.
+        AssetIsValid(note, NoteWorkingProperty.Page, true);
 
         // page state is valid because assign the property.
         Assert.DoesNotThrow(() => note.PageIndex = 1);
@@ -27,8 +27,8 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
     {
         var note = new Note();
 
-        // should be invalid on the first load.
-        AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
+        // should be valid on the first load.
+        AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>

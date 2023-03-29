@@ -14,8 +14,8 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be invalid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.StartTime, false);
+        // should be valid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.StartTime, true);
 
         // state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.StartTime = 1000);
@@ -27,8 +27,8 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be invalid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Duration, false);
+        // should be valid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.Duration, true);
 
         // state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.Duration = 1000);
@@ -40,12 +40,12 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be invalid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
+        // should be valid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
 
-        // state is still invalid because not assign all timing properties.
+        // state is still valid because not assign all timing properties.
         Assert.DoesNotThrow(() => lyric.StartTime = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
 
         // ok, should be valid now.
         Assert.DoesNotThrow(() => lyric.Duration = 1000);
@@ -57,8 +57,8 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be invalid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.Page, false);
+        // should be valid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.Page, true);
 
         // page state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.PageIndex = 1);
@@ -70,8 +70,8 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // should be invalid on the first load.
-        AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
+        // should be valid on the first load.
+        AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>

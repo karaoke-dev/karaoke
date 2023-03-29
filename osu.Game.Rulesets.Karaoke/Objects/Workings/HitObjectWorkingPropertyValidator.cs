@@ -22,6 +22,7 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     protected HitObjectWorkingPropertyValidator(THitObject hitObject)
     {
         this.hitObject = hitObject;
+        ValidateAll();
     }
 
     /// <summary>
