@@ -16,7 +16,7 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
     {
         var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "カラオケ", 1000, 1000);
 
-        PrepareHitObject(new Note
+        PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
             ReferenceLyricId = referencedLyric.ID,
@@ -51,8 +51,8 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
         var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "カラオケ", 1000, 1000);
 
         // note that lyric and notes should in the selection.
-        PrepareHitObject(referencedLyric);
-        PrepareHitObjects(new[]
+        PrepareHitObject(() => referencedLyric);
+        PrepareHitObjects(() => new[]
         {
             new Note
             {
@@ -93,8 +93,8 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
         var referencedLyric = new Lyric { ID = 2 };
 
         // note that lyric and notes should in the selection.
-        PrepareHitObject(referencedLyric);
-        PrepareHitObjects(new[]
+        PrepareHitObject(() => referencedLyric);
+        PrepareHitObjects(() => new[]
         {
             new Note
             {

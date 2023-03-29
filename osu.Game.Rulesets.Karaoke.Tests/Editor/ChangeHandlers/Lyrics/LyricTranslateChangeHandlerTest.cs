@@ -14,7 +14,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestUpdateTranslateWithNewLanguage()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
@@ -31,7 +31,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestUpdateTranslateWithExistLanguage()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>
@@ -52,7 +52,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestUpdateTranslateWithEmptyText()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>
@@ -72,7 +72,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     [Test]
     public void TestUpdateTranslateWithNullText()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>

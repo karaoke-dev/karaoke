@@ -115,7 +115,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
         });
 
-        PrepareHitObject(new Lyric());
+        PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c =>
         {
@@ -150,8 +150,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, unSelectedLyric);
         });
 
-        PrepareHitObject(lyric);
-        PrepareHitObject(unSelectedLyric, false);
+        PrepareHitObject(() => lyric);
+        PrepareHitObject(() => unSelectedLyric, false);
 
         TriggerHandlerChanged(c =>
         {
@@ -170,7 +170,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestOffsetMappingWithZeroValue()
     {
-        PrepareHitObject(new Lyric());
+        PrepareHitObject(() => new Lyric());
 
         // offset value should not be zero.
         TriggerHandlerChangedWithException<InvalidOperationException>(c => c.OffsetMapping(0));
@@ -193,7 +193,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
         });
 
-        PrepareHitObject(lyric);
+        PrepareHitObject(() => lyric);
 
         TriggerHandlerChanged(c =>
         {

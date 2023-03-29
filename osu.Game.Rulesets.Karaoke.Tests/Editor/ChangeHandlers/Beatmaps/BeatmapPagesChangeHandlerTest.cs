@@ -17,7 +17,7 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
     [Test]
     public void TestGeneratePage()
     {
-        PrepareHitObject(TestCaseTagHelper.ParseLyric("[1000,3000]:karaoke"), false);
+        PrepareHitObject(() => TestCaseTagHelper.ParseLyric("[1000,3000]:karaoke"), false);
 
         TriggerHandlerChanged(c => c.AutoGenerate());
 
@@ -36,7 +36,7 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
     public void TestGeneratePageWithInvalidCase()
     {
         // there's no time-info inside.
-        PrepareHitObject(new Lyric(), false);
+        PrepareHitObject(() => new Lyric(), false);
 
         TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate());
     }

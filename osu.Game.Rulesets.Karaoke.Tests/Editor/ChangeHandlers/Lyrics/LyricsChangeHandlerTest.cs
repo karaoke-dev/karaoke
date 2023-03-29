@@ -13,7 +13,7 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestSplit()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ"
         });
@@ -41,21 +41,21 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestCombine()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラ",
             ID = 0,
             Order = 1,
         }, false);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "オケ",
             ID = 1,
             Order = 2,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             ID = 2,
@@ -83,14 +83,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestCreateAtPosition()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 1,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             ID = 2,
@@ -121,14 +121,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestCreateAtLast()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 1,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             ID = 2,
@@ -175,14 +175,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestAddBelowToSelection()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 0,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "Last lyric",
             ID = 1,
@@ -208,14 +208,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestAddRangeBelowToSelection()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 0,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "Last lyric",
             ID = 1,
@@ -244,14 +244,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestRemove()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 1,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             ID = 2,
@@ -274,14 +274,14 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     [Test]
     public void TestChangeOrder()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             ID = 1,
             Order = 1,
         });
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             ID = 2,

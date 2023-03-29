@@ -14,7 +14,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
     [Test]
     public void TestAdd()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "風",
             Language = new CultureInfo(17)
@@ -38,7 +38,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
     [Test]
     public void TestAddRange()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "風",
             Language = new CultureInfo(17)
@@ -72,7 +72,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Text = "kaze",
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "風",
             Language = new CultureInfo(17),
@@ -100,7 +100,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Text = "ka",
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Language = new CultureInfo(17),
@@ -134,7 +134,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Text = "ka",
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Language = new CultureInfo(17),
@@ -163,7 +163,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Text = "ka",
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Language = new CultureInfo(17),
@@ -192,7 +192,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Text = "ka",
         };
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             Language = new CultureInfo(17),

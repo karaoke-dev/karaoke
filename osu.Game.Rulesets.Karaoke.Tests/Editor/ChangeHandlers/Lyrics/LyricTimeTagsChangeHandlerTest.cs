@@ -19,7 +19,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     public void TestSetTimeTagTime()
     {
         var timeTag = new TimeTag(new TextIndex(), 1000);
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -41,7 +41,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     {
         var timeTag = new TimeTag(new TextIndex());
         var timeTagWithTime = new TimeTag(new TextIndex(), 1000);
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -64,7 +64,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     public void TestClearTimeTagTime()
     {
         var timeTag = new TimeTag(new TextIndex(), 1000);
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -84,7 +84,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestClearAllTimeTagTime()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -106,7 +106,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestAdd()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
@@ -123,7 +123,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestAddRange()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
@@ -142,7 +142,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     {
         var removedTag = new TimeTag(new TextIndex(), 1000);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -164,7 +164,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     {
         var removedTag = new TimeTag(new TextIndex(), 1000);
 
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -184,7 +184,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestAddByPosition()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
@@ -204,7 +204,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestRemoveByPosition()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -231,7 +231,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [Test]
     public void TestRemoveByPositionCase2()
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -260,7 +260,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 3)]
     public void TestShifting(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -292,7 +292,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 0)]
     public void TestShiftingToFirst(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -321,7 +321,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 1)]
     public void TestShiftingToLast(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -350,7 +350,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 1)]
     public void TestShiftingWithNoDuplicatedTimeTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -380,7 +380,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 0)]
     public void TestShiftingWithOneTimeTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -409,7 +409,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 3)]
     public void TestShiftingWithSameTextTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
             TimeTags = new[]
@@ -441,7 +441,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(TextIndex.IndexState.End, ShiftingDirection.Right, ShiftingType.Index)]
     public void TestShiftingException(TextIndex.IndexState state, ShiftingDirection direction, ShiftingType type)
     {
-        PrepareHitObject(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "-",
             TimeTags = new[]
