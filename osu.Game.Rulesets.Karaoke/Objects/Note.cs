@@ -18,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public partial class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, IDeepCloneable<Note>
     {
+        private void updateStateByDataProperty(NoteWorkingProperty workingProperty)
+            => workingPropertyValidator.UpdateStateByDataProperty(workingProperty);
+
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new();
 
@@ -107,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set
             {
                 referenceLyricId = value;
-                InvalidateWorkingProperty(NoteWorkingProperty.ReferenceLyric);
+                updateStateByDataProperty(NoteWorkingProperty.ReferenceLyric);
             }
         }
 

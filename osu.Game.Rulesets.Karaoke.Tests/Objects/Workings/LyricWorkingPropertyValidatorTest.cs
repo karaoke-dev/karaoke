@@ -66,6 +66,20 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         });
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
+        // should be invalid if change the reference lyric id.
+        Assert.DoesNotThrow(() =>
+        {
+            lyric.ReferenceLyricId = 1;
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
+
+        // should be valid again if change the id back.
+        Assert.DoesNotThrow(() =>
+        {
+            lyric.ReferenceLyricId = null;
+        });
+        AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
+
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {

@@ -26,16 +26,34 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     }
 
     /// <summary>
-    /// This method is called after assign the working property changed in the <typeparamref name="THitObject"/> by <see cref="KaraokeBeatmapProcessor"/>.
+    /// This method is called after change the data property.
     /// We should make sure that the working property is same as data property.
+    /// Note that this property should only called inside the <typeparamref name="THitObject"/>
     /// </summary>
     /// <param name="flag"></param>
-    public new bool Validate(TFlag flag)
+    public bool UpdateStateByDataProperty(TFlag flag)
+    {
+        if (!CanInvalidate(flag))
+        {
+            // will caused if data property become same as working property again.
+            Validate(flag);
+        }
+
+        return Invalidate(flag);
+    }
+
+    /// <summary>
+    /// This method is called after assign the working property changed in the <typeparamref name="THitObject"/> by <see cref="KaraokeBeatmapProcessor"/>.
+    /// We should make sure that the working property is same as data property.
+    /// Note that this property should only called inside the <typeparamref name="THitObject"/>
+    /// </summary>
+    /// <param name="flag"></param>
+    public bool UpdateStateByWorkingProperty(TFlag flag)
     {
         if (!CanValidate(flag))
             throw new InvalidWorkingPropertyAssignException();
 
-        return base.Validate(flag);
+        return Validate(flag);
     }
 
     protected sealed override bool CanInvalidate(TFlag flags)
