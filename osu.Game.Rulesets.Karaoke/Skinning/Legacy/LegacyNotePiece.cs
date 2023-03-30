@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Animations;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
-        private readonly IBindableList<int> singer = new BindableList<int>();
+        private readonly IBindableDictionary<Singer, SingerState[]> singer = new BindableDictionary<Singer, SingerState[]>();
 
         public LegacyNotePiece()
         {

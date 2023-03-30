@@ -13,6 +13,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
@@ -43,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly Bindable<int> romajiMarginBindable = new();
         private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
-        private readonly IBindableList<int> singersBindable = new BindableList<int>();
+        private readonly IBindableDictionary<Singer, SingerState[]> singersBindable = new BindableDictionary<Singer, SingerState[]>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
         public event Action<DrawableLyric> OnLyricStart;
@@ -131,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             lyricPieces.Add(new DefaultLyricPiece(HitObject));
             ApplySkin(CurrentSkin, false);
 
-            singersBindable.BindTo(HitObject.SingerIdsBindable);
+            singersBindable.BindTo(HitObject.SingersBindable);
             translateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
@@ -139,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.OnFree();
 
-            singersBindable.UnbindFrom(HitObject.SingerIdsBindable);
+            singersBindable.UnbindFrom(HitObject.SingersBindable);
             translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 

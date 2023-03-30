@@ -1,32 +1,26 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
 {
     public partial class SingerInfo : Container
     {
-        private readonly Lyric lyric;
         private readonly SingerDisplay singerDisplay;
 
-        private readonly IBindableList<int> singerIndexesBindable;
+        private readonly IBindableDictionary<Singer, SingerState[]> singerIndexesBindable;
 
         public SingerInfo(Lyric lyric)
         {
-            this.lyric = lyric;
-            singerIndexesBindable = lyric.SingerIdsBindable.GetBoundCopy();
+            singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
 
             AutoSizeAxes = Axes.Both;
 
@@ -38,15 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load()
         {
             singerIndexesBindable.BindCollectionChanged((_, _) =>
             {
-                var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
-
-                // todo: should get the singer directly from the lyric eventually.
-                var singers = karaokeBeatmap.SingerInfo.GetAllSingers().Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();
-                singerDisplay.Current.Value = singers;
+                // todo: maybe should display the singer state also?
+                singerDisplay.Current.Value = singerIndexesBindable.Keys.ToArray();
             }, true);
         }
     }
