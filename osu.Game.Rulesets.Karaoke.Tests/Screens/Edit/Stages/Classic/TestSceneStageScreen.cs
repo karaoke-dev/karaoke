@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 
@@ -14,8 +15,7 @@ public partial class TestSceneStageScreen : ClassicStageScreenTestScene<StageScr
     [Test]
     public void TestSwitchCategoryAndEditMode()
     {
-        if (Child is not StageScreen stageScreen)
-            throw new InvalidOperationException();
+        var stageScreen = Children.OfType<StageScreen>().First();
 
         AddWaitStep("wait for editor to load", 5);
 
