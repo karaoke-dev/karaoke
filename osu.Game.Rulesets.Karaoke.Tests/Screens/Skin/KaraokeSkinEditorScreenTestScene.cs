@@ -40,10 +40,14 @@ public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockT
         Child = new SkinProvidingContainer(karaokeSkin)
         {
             RelativeSizeAxes = Axes.Both,
-            Child = CreateEditorScreen(karaokeSkin).With(x =>
+            Children = new Drawable[]
             {
-                x.State.Value = Visibility.Visible;
-            })
+                editorBeatmap,
+                CreateEditorScreen(karaokeSkin).With(x =>
+                {
+                    x.State.Value = Visibility.Visible;
+                })
+            }
         };
     }
 

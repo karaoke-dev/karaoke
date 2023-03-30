@@ -36,10 +36,14 @@ public abstract partial class ClassicStageScreenTestScene<T> : EditorClockTestSc
 
         Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
 
-        Child = CreateEditorScreen().With(x =>
+        Children = new Drawable[]
         {
-            x.State.Value = Visibility.Visible;
-        });
+            editorBeatmap,
+            CreateEditorScreen().With(x =>
+            {
+                x.State.Value = Visibility.Visible;
+            })
+        };
     }
 
     protected abstract T CreateEditorScreen();
