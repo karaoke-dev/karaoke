@@ -2,7 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using J2N.Collections.Generic;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 
@@ -29,6 +31,7 @@ public partial class Note
                 e.NewValue.TimeTagsVersion.ValueChanged += timeTagVersionChanged;
 
             syncStartTimeAndDurationFromTimeTag();
+            syncReferenceLyricSingers();
         };
 
         void timeTagVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
@@ -45,5 +48,10 @@ public partial class Note
 
         StartTimeBindable.Value = startTimeTag == null ? 0 : startTime + StartTimeOffset;
         DurationBindable.Value = endTimeTag == null ? 0 : Math.Max(duration - StartTimeOffset + EndTimeOffset, 0);
+    }
+
+    private void syncReferenceLyricSingers()
+    {
+        Singers = ReferenceLyricBindable.Value?.Singers ?? new Dictionary<Singer, SingerState[]>();
     }
 }
