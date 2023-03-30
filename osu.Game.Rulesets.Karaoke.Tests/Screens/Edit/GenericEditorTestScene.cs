@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Beatmaps;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -39,11 +40,15 @@ public abstract partial class GenericEditorTestScene<TEditor, TScreenMode> : Scr
     {
         Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
 
-        base.Content.AddRange(new Drawable[]
+        base.Content.Add(new EditorBeatmapDependencyContainer(editorBeatmap, new BindableBeatDivisor())
         {
-            editorBeatmap,
-            Content,
-            dialogOverlay = new DialogOverlay(),
+            RelativeSizeAxes = Axes.Both,
+            Children = new Drawable[]
+            {
+                editorBeatmap,
+                Content,
+                dialogOverlay = new DialogOverlay(),
+            },
         });
 
         Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
@@ -56,5 +61,27 @@ public abstract partial class GenericEditorTestScene<TEditor, TScreenMode> : Scr
             throw new ArgumentNullException(nameof(karaokeBeatmap));
 
         return karaokeBeatmap;
+    }
+
+    private partial class EditorBeatmapDependencyContainer : Container
+    {
+        [Cached]
+        private readonly EditorClock editorClock;
+
+        [Cached]
+        private readonly BindableBeatDivisor beatDivisor;
+
+        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        public EditorBeatmapDependencyContainer(IBeatmap beatmap, BindableBeatDivisor beatDivisor)
+        {
+            this.beatDivisor = beatDivisor;
+
+            InternalChildren = new Drawable[]
+            {
+                editorClock = new EditorClock(beatmap, beatDivisor),
+                Content,
+            };
+        }
     }
 }
