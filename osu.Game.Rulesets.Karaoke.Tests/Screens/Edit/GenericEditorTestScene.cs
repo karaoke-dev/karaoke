@@ -41,6 +41,7 @@ public abstract partial class GenericEditorTestScene<TEditor, TScreenMode> : Scr
 
         base.Content.AddRange(new Drawable[]
         {
+            editorBeatmap,
             Content,
             dialogOverlay = new DialogOverlay(),
         });
