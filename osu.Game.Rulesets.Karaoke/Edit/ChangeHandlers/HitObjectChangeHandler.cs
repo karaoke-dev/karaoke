@@ -20,11 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
     {
         private readonly Cached changingCache = new();
 
+        private bool triggerBeatmapSave = true;
+
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
-
-        [Resolved]
-        private IEditorChangeHandler? changeHandler { get; set; }
 
         protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
 
@@ -37,6 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         {
             if (beatmap.SelectedHitObjects.OfType<THitObject>().Count() != 1)
                 throw new InvalidOperationException($"Should be exactly one {nameof(THitObject)} being selected.");
+        }
+
+        // Can remove this method after as TransactionalCommitComponent injection for all rulesets(means customized ruleset is able to save/load beatmap).
+        // we can use changeHandler.TransactionActive to check if there's any active transaction.
+        // e.g. : changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive
+        protected void NotTriggerSaveStateOnThisChange()
+        {
+            triggerBeatmapSave = false;
         }
 
         protected virtual void PerformOnSelection(Action<THitObject> action)
@@ -55,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             try
             {
                 // todo: follow-up the discussion in the https://github.com/karaoke-dev/karaoke/pull/1669 after support the change handler for customized ruleset.
-                if (changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive)
+                if (triggerBeatmapSave)
                 {
                     // should trigger the UpdateState() in the editor beatmap only if there's no active state.
                     beatmap.PerformOnSelection(h =>
@@ -87,6 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             finally
             {
                 changingCache.Validate();
+                triggerBeatmapSave = true;
             }
         }
 

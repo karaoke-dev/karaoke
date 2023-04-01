@@ -53,6 +53,16 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         TriggerHandlerChanged(c => c.ShiftingTimeTagTime(new[] { timeTag, timeTagWithTime }, 2000));
 
+        // use this temp way to trigger transaction count increase.
+        AddStep("Prepare testing beatmap", () =>
+        {
+            var editorBeatmap = Dependencies.Get<EditorBeatmap>();
+            editorBeatmap.PerformOnSelection(h =>
+            {
+                editorBeatmap.Update(h);
+            });
+        });
+
         AssertSelectedHitObject(_ =>
         {
             Assert.AreEqual(null, timeTag.Time);
