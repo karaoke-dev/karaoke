@@ -12,6 +12,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -44,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
         public readonly IBindable<string> RubyTextBindable = new Bindable<string>();
-        public readonly IBindableList<int> SingersBindable = new BindableList<int>();
+        public readonly IBindableDictionary<Singer, SingerState[]> SingersBindable = new BindableDictionary<Singer, SingerState[]>();
         public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
         public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
 
@@ -98,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RubyTextBindable.BindTo(HitObject.RubyTextBindable);
             DisplayBindable.BindTo(HitObject.DisplayBindable);
             ToneBindable.BindTo(HitObject.ToneBindable);
-            SingersBindable.BindTo(HitObject.ReferenceLyric.SingerIdsBindable);
+            SingersBindable.BindTo(HitObject.SingersBindable);
         }
 
         protected override void OnFree()
@@ -109,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RubyTextBindable.UnbindFrom(HitObject.RubyTextBindable);
             DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
             ToneBindable.UnbindFrom(HitObject.ToneBindable);
-            SingersBindable.UnbindFrom(HitObject.ReferenceLyric.SingerIdsBindable);
+            SingersBindable.UnbindFrom(HitObject.SingersBindable);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)

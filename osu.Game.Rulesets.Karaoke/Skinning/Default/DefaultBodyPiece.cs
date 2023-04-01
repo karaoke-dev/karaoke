@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Layout;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Drawables;
 using osuTK.Graphics;
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
         private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
-        private readonly IBindableList<int> singer = new BindableList<int>();
+        private readonly IBindableDictionary<Singer, SingerState[]> singer = new BindableDictionary<Singer, SingerState[]>();
 
         protected Drawable Background { get; private set; } = null!;
         protected Drawable Foreground { get; private set; } = null!;
