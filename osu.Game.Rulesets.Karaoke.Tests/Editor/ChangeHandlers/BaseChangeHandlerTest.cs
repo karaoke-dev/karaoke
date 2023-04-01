@@ -216,8 +216,6 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
 
     protected void AssertWorkingPropertyInHitObjectValid()
     {
-        // todo: will open this check once we are able to trigger `UpdateState()` in the change handler.
-        /*
         AddWaitStep("Waiting for working property being re-filled in the beatmap processor.", 1);
         AddAssert("Check if working property in the hit object is valid", () =>
         {
@@ -230,7 +228,6 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
                 _ => throw new NotSupportedException()
             });
         });
-        */
     }
 
     private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
