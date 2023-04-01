@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 lyric.SingerIds.Add(singer.ID);
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 
@@ -28,6 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 {
                     lyric.SingerIds.Add(singer.ID);
                 }
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 
@@ -36,6 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 lyric.SingerIds.Remove(singer.ID);
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 
@@ -48,6 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 {
                     lyric.SingerIds.Remove(singer.ID);
                 }
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 
@@ -56,6 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 lyric.SingerIds.Clear();
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 

@@ -160,6 +160,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             }
         }
 
+        protected void TriggerHitObjectUpdate<T>(T hitObject) where T : HitObject
+        {
+            beatmap.Update(hitObject);
+        }
+
         public class AddOrRemoveForbiddenException : Exception
         {
             public AddOrRemoveForbiddenException()
