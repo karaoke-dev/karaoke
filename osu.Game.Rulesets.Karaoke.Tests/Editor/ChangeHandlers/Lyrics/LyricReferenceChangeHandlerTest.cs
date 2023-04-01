@@ -15,6 +15,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var referencedLyric = new Lyric
         {
+            ID = 1,
             Text = "Referenced lyric"
         };
 
@@ -22,6 +23,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
 
         PrepareHitObject(() => new Lyric
         {
+            ID = 2,
             Text = "I need the reference lyric."
         });
 
