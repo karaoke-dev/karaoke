@@ -132,16 +132,16 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
 
     protected void AssertEditorBeatmap(Action<EditorBeatmap> assert)
     {
-        AddAssert("Is result matched", () =>
+        AddStep("Is result matched", () =>
         {
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
             assert(editorBeatmap);
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            return IsTransactionOnlyTriggerOnce();
         });
+
+        // even if there's no property changed in the lyric editor, should still trigger the change handler.
+        // because every change handler call should cause one undo step.
+        // also, technically should not call the change handler if there's no possible to change the properties.
+        AssertTransactionOnlyTriggerOnce();
     }
 
     protected void AssertKaraokeBeatmap(Action<KaraokeBeatmap> assert)
@@ -185,21 +185,24 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
 
     protected void AssertHitObjects<THitObject>(Action<IEnumerable<THitObject>> assert) where THitObject : HitObject
     {
-        AddAssert("Is result matched", () =>
+        AddStep("Is result matched", () =>
         {
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
             assert(editorBeatmap.HitObjects.OfType<THitObject>());
-
-            // even if there's no property changed in the lyric editor, should still trigger the change handler.
-            // because every change handler call should cause one undo step.
-            // also, technically should not call the change handler if there's no possible to change the properties.
-            return IsTransactionOnlyTriggerOnce();
         });
+
+        // even if there's no property changed in the lyric editor, should still trigger the change handler.
+        // because every change handler call should cause one undo step.
+        // also, technically should not call the change handler if there's no possible to change the properties.
+        AssertTransactionOnlyTriggerOnce();
     }
 
-    protected bool IsTransactionOnlyTriggerOnce()
+    protected void AssertTransactionOnlyTriggerOnce()
     {
-        return transactionCount == 1;
+        AddStep("Transaction should be only triggered once.", () =>
+        {
+            Assert.AreEqual(1, transactionCount);
+        });
     }
 
     private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
