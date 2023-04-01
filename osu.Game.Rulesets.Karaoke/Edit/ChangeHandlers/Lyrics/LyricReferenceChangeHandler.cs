@@ -26,9 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
                 lyric.ReferenceLyricId = referenceLyric?.ID;
 
-                // technically this property should be assigned by beatmap processor, but should be OK to assign here for testing purpose.
-                lyric.ReferenceLyric = referenceLyric;
-
                 if (lyric.ReferenceLyricId == null)
                 {
                     lyric.ReferenceLyricConfig = null;
@@ -38,6 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     // todo: not really sure should use sync config if lyric text are similar.
                     lyric.ReferenceLyricConfig = new ReferenceLyricConfig();
                 }
+
+                TriggerHitObjectUpdate(lyric);
             });
         }
 

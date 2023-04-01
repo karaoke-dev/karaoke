@@ -30,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         public void ShiftingTimeTagTime(IEnumerable<TimeTag> timeTags, double offset)
         {
             CheckExactlySelectedOneHitObject();
+            NotTriggerSaveStateOnThisChange();
 
             PerformOnSelection(lyric =>
             {

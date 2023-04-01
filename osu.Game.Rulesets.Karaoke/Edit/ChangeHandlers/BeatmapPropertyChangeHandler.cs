@@ -94,5 +94,7 @@ public partial class BeatmapPropertyChangeHandler : Component
         {
             hitObject.InvalidateWorkingProperty(property);
         }
+
+        beatmap.UpdateAllHitObjects();
     }
 }
