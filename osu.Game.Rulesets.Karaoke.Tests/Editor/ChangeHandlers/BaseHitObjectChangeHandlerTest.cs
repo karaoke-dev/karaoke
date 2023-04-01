@@ -47,5 +47,9 @@ public abstract partial class BaseHitObjectChangeHandlerTest<TChangeHandler, THi
         // because every change handler call should cause one undo step.
         // also, technically should not call the change handler if there's no possible to change the properties.
         AssertTransactionOnlyTriggerOnce();
+
+        // We should make sure that if the working property is changed by the change handler.
+        // Should trigger the beatmap editor to run the beatmap processor to re-fill the working property.
+        AssertWorkingPropertyInHitObjectValid();
     }
 }

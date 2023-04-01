@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -142,6 +143,10 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         // because every change handler call should cause one undo step.
         // also, technically should not call the change handler if there's no possible to change the properties.
         AssertTransactionOnlyTriggerOnce();
+
+        // We should make sure that if the working property is changed by the change handler.
+        // Should trigger the beatmap editor to run the beatmap processor to re-fill the working property.
+        AssertWorkingPropertyInHitObjectValid();
     }
 
     protected void AssertKaraokeBeatmap(Action<KaraokeBeatmap> assert)
@@ -195,6 +200,10 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         // because every change handler call should cause one undo step.
         // also, technically should not call the change handler if there's no possible to change the properties.
         AssertTransactionOnlyTriggerOnce();
+
+        // We should make sure that if the working property is changed by the change handler.
+        // Should trigger the beatmap editor to run the beatmap processor to re-fill the working property.
+        AssertWorkingPropertyInHitObjectValid();
     }
 
     protected void AssertTransactionOnlyTriggerOnce()
@@ -203,6 +212,25 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         {
             Assert.AreEqual(1, transactionCount);
         });
+    }
+
+    protected void AssertWorkingPropertyInHitObjectValid()
+    {
+        // todo: will open this check once we are able to trigger `UpdateState()` in the change handler.
+        /*
+        AddWaitStep("Waiting for working property being re-filled in the beatmap processor.", 1);
+        AddAssert("Check if working property in the hit object is valid", () =>
+        {
+            var editorBeatmap = Dependencies.Get<EditorBeatmap>();
+
+            return editorBeatmap.HitObjects.OfType<KaraokeHitObject>().All(hitObject => hitObject switch
+            {
+                Lyric lyric => lyric.GetAllInvalidWorkingProperties().Length == 0,
+                Note note => note.GetAllInvalidWorkingProperties().Length == 0,
+                _ => throw new NotSupportedException()
+            });
+        });
+        */
     }
 
     private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
