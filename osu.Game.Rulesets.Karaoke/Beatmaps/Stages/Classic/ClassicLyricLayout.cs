@@ -9,32 +9,11 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
-public class ClassicLyricLayout : IStageElement, IComparable<ClassicLyricLayout>
+public class ClassicLyricLayout : StageElement, IComparable<ClassicLyricLayout>
 {
-    private readonly Bindable<int> orderVersion = new();
-
-    public IBindable<int> OrderVersion => orderVersion;
-
     public ClassicLyricLayout(int id)
+        : base(id)
     {
-        ID = id;
-    }
-
-    /// <summary>
-    /// Index of the element.
-    /// </summary>
-    public int ID { get; protected set; }
-
-    [JsonIgnore]
-    public readonly Bindable<string> NameBindable = new();
-
-    /// <summary>
-    /// Name of the element.
-    /// </summary>
-    public string Name
-    {
-        get => NameBindable.Value;
-        set => NameBindable.Value = value;
     }
 
     [JsonIgnore]
@@ -49,7 +28,7 @@ public class ClassicLyricLayout : IStageElement, IComparable<ClassicLyricLayout>
         set
         {
             AlignmentBindable.Value = value;
-            orderVersion.Value++;
+            TriggerOrderVersionChanged();
         }
     }
 
@@ -65,7 +44,7 @@ public class ClassicLyricLayout : IStageElement, IComparable<ClassicLyricLayout>
         set
         {
             HorizontalMarginBindable.Value = value;
-            orderVersion.Value++;
+            TriggerOrderVersionChanged();
         }
     }
 
@@ -82,7 +61,7 @@ public class ClassicLyricLayout : IStageElement, IComparable<ClassicLyricLayout>
         set
         {
             LineBindable.Value = value;
-            orderVersion.Value++;
+            TriggerOrderVersionChanged();
         }
     }
 

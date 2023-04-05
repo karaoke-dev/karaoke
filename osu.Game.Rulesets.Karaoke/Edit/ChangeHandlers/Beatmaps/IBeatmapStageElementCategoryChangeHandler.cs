@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public interface IBeatmapStageElementCategoryChangeHandler<TStageElement>
-    where TStageElement : IStageElement
+    where TStageElement : StageElement
 {
     void AddElement(Action<TStageElement>? action = null);
 

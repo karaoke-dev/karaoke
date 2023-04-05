@@ -36,24 +36,24 @@ public class ClassicStageInfo : StageInfo
 
     #region Stage element
 
-    protected override IEnumerable<IStageElement> GetLyricStageElements(Lyric lyric)
+    protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return StyleCategory.GetElementByItem(lyric);
         yield return LyricLayoutCategory.GetElementByItem(lyric);
     }
 
-    protected override IEnumerable<IStageElement> GetNoteStageElements(Note note)
+    protected override IEnumerable<StageElement> GetNoteStageElements(Note note)
     {
         // todo: should check the real-time mapping result.
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<IStageElement> elements)
+    protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
     {
         throw new NotImplementedException();
     }
 
-    protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<IStageElement> elements)
+    protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
     {
         throw new NotImplementedException();
     }
