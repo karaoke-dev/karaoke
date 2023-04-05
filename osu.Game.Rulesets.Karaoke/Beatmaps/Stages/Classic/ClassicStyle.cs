@@ -9,32 +9,11 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
-public class ClassicStyle : IStageElement, IComparable<ClassicStyle>
+public class ClassicStyle : StageElement, IComparable<ClassicStyle>
 {
-    private readonly Bindable<int> orderVersion = new();
-
-    public IBindable<int> OrderVersion => orderVersion;
-
     public ClassicStyle(int id)
+        : base(id)
     {
-        ID = id;
-    }
-
-    /// <summary>
-    /// Index of the element.
-    /// </summary>
-    public int ID { get; protected set; }
-
-    [JsonIgnore]
-    public readonly Bindable<string> NameBindable = new();
-
-    /// <summary>
-    /// Name of the element.
-    /// </summary>
-    public string Name
-    {
-        get => NameBindable.Value;
-        set => NameBindable.Value = value;
     }
 
     [JsonIgnore]
