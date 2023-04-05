@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         /// Create a new glyph store.
         /// </summary>
         /// <param name="store">The store to provide font resources.</param>
-        /// <param name="assetName">The base name of thße font.</param>
+        /// <param name="assetName">The base name of the font.</param>
         public TtfGlyphStore(ResourceStore<byte[]> store, string assetName = null)
         {
             Store = new ResourceStore<byte[]>(store);
