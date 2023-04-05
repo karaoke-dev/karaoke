@@ -50,12 +50,12 @@ public class ClassicStageInfo : StageInfo
 
     protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<IStageElement> elements)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<IStageElement> elements)
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
