@@ -59,18 +59,17 @@ public class LrcDecoderTest
 
     private static Beatmap decodeLrcLine(string line)
     {
-        using (var stream = new MemoryStream())
-        using (var writer = new StreamWriter(stream))
-        using (var reader = new LineBufferedReader(stream))
-        {
-            // Create stream
-            writer.Write(line);
-            writer.Flush();
-            stream.Position = 0;
+        using var stream = new MemoryStream();
+        using var writer = new StreamWriter(stream);
+        using var reader = new LineBufferedReader(stream);
 
-            // Create karaoke note decoder
-            var decoder = new LrcDecoder();
-            return decoder.Decode(reader);
-        }
+        // Create stream
+        writer.Write(line);
+        writer.Flush();
+        stream.Position = 0;
+
+        // Create karaoke note decoder
+        var decoder = new LrcDecoder();
+        return decoder.Decode(reader);
     }
 }

@@ -49,11 +49,9 @@ public partial class TestSceneAutoGenerationBySinger : OsuTestScene
     {
         var data = TestResources.OpenResource($"Testing/Track/{name}.json");
 
-        using (var reader = new StreamReader(data))
-        {
-            string str = reader.ReadToEnd();
-            return JsonConvert.DeserializeObject<TestKaraokeReplayFrame[]>(str) ?? Array.Empty<TestKaraokeReplayFrame>();
-        }
+        using var reader = new StreamReader(data);
+        string str = reader.ReadToEnd();
+        return JsonConvert.DeserializeObject<TestKaraokeReplayFrame[]>(str) ?? Array.Empty<TestKaraokeReplayFrame>();
     }
 
     private struct TestKaraokeReplayFrame

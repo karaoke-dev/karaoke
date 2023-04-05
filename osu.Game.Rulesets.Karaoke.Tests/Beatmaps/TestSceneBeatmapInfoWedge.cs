@@ -42,13 +42,12 @@ public partial class TestSceneBeatmapInfoWedge : OsuTestScene
     [TestCase("karaoke-translate-samples")]
     public void TestNullBeatmap(string fileName)
     {
-        using (var resStream = TestResources.OpenBeatmapResource(fileName))
-        using (var stream = new LineBufferedReader(resStream))
-        {
-            var decoder = Decoder.GetDecoder<Beatmap>(stream);
-            var beatmap = decoder.Decode(stream);
-            selectBeatmap(beatmap, fileName);
-        }
+        using var resStream = TestResources.OpenBeatmapResource(fileName);
+        using var stream = new LineBufferedReader(resStream);
+
+        var decoder = Decoder.GetDecoder<Beatmap>(stream);
+        var beatmap = decoder.Decode(stream);
+        selectBeatmap(beatmap, fileName);
     }
 
     private void selectBeatmap(IBeatmap b, string fileName)

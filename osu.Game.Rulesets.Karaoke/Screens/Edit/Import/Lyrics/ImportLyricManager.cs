@@ -41,30 +41,28 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
             var set = beatmap.Value.BeatmapSetInfo;
             var oldFile = set.Files.FirstOrDefault(f => f.Filename == backup_lrc_name);
 
-            using (var stream = info.OpenRead())
-            {
-                // todo : make a backup if has new lyric file.
-                /*
-                if (oldFile != null)
-                    beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
-                else
-                    beatmaps.AddFile(set, stream, backup_lrc_name);
-                */
+            using var stream = info.OpenRead();
 
-                // Import and replace all the file.
-                using (var reader = new LineBufferedReader(stream))
-                {
-                    var decoder = new LrcDecoder();
-                    var lrcBeatmap = decoder.Decode(reader);
+            // todo : make a backup if has new lyric file.
+            /*
+            if (oldFile != null)
+                beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
+            else
+                beatmaps.AddFile(set, stream, backup_lrc_name);
+            */
 
-                    // remove all hit objects (note and lyric) from beatmap
-                    editorBeatmap.Clear();
+            // Import and replace all the file.
+            using var reader = new LineBufferedReader(stream);
 
-                    // then re-add the lyric.
-                    var lyrics = lrcBeatmap.HitObjects.OfType<Lyric>();
-                    editorBeatmap.AddRange(lyrics);
-                }
-            }
+            var decoder = new LrcDecoder();
+            var lrcBeatmap = decoder.Decode(reader);
+
+            // remove all hit objects (note and lyric) from beatmap
+            editorBeatmap.Clear();
+
+            // then re-add the lyric.
+            var lyrics = lrcBeatmap.HitObjects.OfType<Lyric>();
+            editorBeatmap.AddRange(lyrics);
         }
 
         public void AbortImport()

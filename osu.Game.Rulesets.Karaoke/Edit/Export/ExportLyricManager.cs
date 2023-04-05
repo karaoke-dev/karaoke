@@ -130,23 +130,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             public override void ExportModelTo(BeatmapSetInfo model, Stream outputStream)
             {
                 // base.ExportModelTo(model, outputStream);
-                using (var zipArchive = ZipArchive.Create())
+                using var zipArchive = ZipArchive.Create();
+
+                foreach (INamedFileUsage file in model.Files)
                 {
-                    foreach (INamedFileUsage file in model.Files)
-                    {
-                        // do not export other osu beatmap.
-                        if (file.Filename.EndsWith(".osu", StringComparison.Ordinal))
-                            continue;
+                    // do not export other osu beatmap.
+                    if (file.Filename.EndsWith(".osu", StringComparison.Ordinal))
+                        continue;
 
-                        zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()));
-                    }
-
-                    // add the json file.
-                    using var jsonBeatmapStream = getJsonBeatmapStream();
-                    zipArchive.AddEntry(filename, jsonBeatmapStream);
-
-                    zipArchive.SaveTo(outputStream);
+                    zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()));
                 }
+
+                // add the json file.
+                using var jsonBeatmapStream = getJsonBeatmapStream();
+                zipArchive.AddEntry(filename, jsonBeatmapStream);
+                zipArchive.SaveTo(outputStream);
             }
 
             private Stream getJsonBeatmapStream()

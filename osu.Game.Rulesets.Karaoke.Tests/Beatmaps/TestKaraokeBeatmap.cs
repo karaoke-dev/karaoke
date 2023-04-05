@@ -29,8 +29,9 @@ public class TestKaraokeBeatmap : Beatmap
 
     private static Beatmap createTestBeatmap()
     {
-        using (var stream = TestResources.OpenBeatmapResource("karaoke-file-samples"))
-        using (var reader = new LineBufferedReader(stream))
-            return Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
+        using var stream = TestResources.OpenBeatmapResource("karaoke-file-samples");
+        using var reader = new LineBufferedReader(stream);
+
+        return Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
     }
 }

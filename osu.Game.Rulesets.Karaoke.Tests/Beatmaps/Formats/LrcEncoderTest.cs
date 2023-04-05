@@ -33,27 +33,25 @@ public class LrcEncoderTest
 
     private static Beatmap decode(string filename, out Beatmap encoded)
     {
-        using (var stream = TestResources.OpenLrcResource(filename))
-        using (var sr = new LineBufferedReader(stream))
-        {
-            // Read file and decode to file
-            var legacyDecoded = new LrcDecoder().Decode(sr);
+        using var stream = TestResources.OpenLrcResource(filename);
+        using var sr = new LineBufferedReader(stream);
 
-            using (var ms = new MemoryStream())
-            using (var sw = new StreamWriter(ms))
-            using (var sr2 = new LineBufferedReader(ms))
-            {
-                // Then encode file to stream
-                string encodeResult = new LrcEncoder().Encode(legacyDecoded);
-                sw.WriteLine(encodeResult);
-                sw.Flush();
+        // Read file and decode to file
+        var legacyDecoded = new LrcDecoder().Decode(sr);
 
-                ms.Position = 0;
+        using var ms = new MemoryStream();
+        using var sw = new StreamWriter(ms);
+        using var sr2 = new LineBufferedReader(ms);
 
-                encoded = new LrcDecoder().Decode(sr2);
-                return legacyDecoded;
-            }
-        }
+        // Then encode file to stream
+        string encodeResult = new LrcEncoder().Encode(legacyDecoded);
+        sw.WriteLine(encodeResult);
+        sw.Flush();
+
+        ms.Position = 0;
+
+        encoded = new LrcDecoder().Decode(sr2);
+        return legacyDecoded;
     }
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, new double[] { 1100, 2000, 2100, 3000 })]

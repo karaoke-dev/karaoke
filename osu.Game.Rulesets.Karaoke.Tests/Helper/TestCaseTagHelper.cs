@@ -165,19 +165,18 @@ public static class TestCaseTagHelper
         if (string.IsNullOrEmpty(str))
             return new Lyric();
 
-        using (var stream = new MemoryStream())
-        using (var writer = new StreamWriter(stream))
-        using (var reader = new LineBufferedReader(stream))
-        {
-            // Create stream
-            writer.Write(str);
-            writer.Flush();
-            stream.Position = 0;
+        using var stream = new MemoryStream();
+        using var writer = new StreamWriter(stream);
+        using var reader = new LineBufferedReader(stream);
 
-            // Create karaoke note decoder
-            var decoder = new LrcDecoder();
-            return decoder.Decode(reader).HitObjects.OfType<Lyric>().First();
-        }
+        // Create stream
+        writer.Write(str);
+        writer.Flush();
+        stream.Position = 0;
+
+        // Create karaoke note decoder
+        var decoder = new LrcDecoder();
+        return decoder.Decode(reader).HitObjects.OfType<Lyric>().First();
     }
 
     /// <summary>
