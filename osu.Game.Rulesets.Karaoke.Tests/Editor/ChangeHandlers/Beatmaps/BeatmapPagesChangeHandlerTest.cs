@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
@@ -135,6 +137,16 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         {
             Assert.AreEqual(1000, firstPage.Time);
             Assert.AreEqual(0, secondPage.Time);
+        });
+    }
+
+    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
+    {
+        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
+        {
+            karaokeBeatmap.PageInfo = new PageInfo();
+
+            action(karaokeBeatmap);
         });
     }
 }

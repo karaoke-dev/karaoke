@@ -1,9 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -108,6 +110,16 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
 
             var lyrics = karaokeBeatmap.HitObjects.OfType<Lyric>().Where(x => x.SingerIds.Contains(firstSinger.ID));
             Assert.IsEmpty(lyrics);
+        });
+    }
+
+    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
+    {
+        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
+        {
+            karaokeBeatmap.SingerInfo = new SingerInfo();
+
+            action(karaokeBeatmap);
         });
     }
 }
