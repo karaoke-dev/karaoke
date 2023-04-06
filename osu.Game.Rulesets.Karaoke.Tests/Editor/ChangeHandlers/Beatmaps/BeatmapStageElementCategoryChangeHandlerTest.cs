@@ -7,23 +7,23 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHandlerTest<BeatmapStageElementCategoryChangeHandlerTest.TestBeatmapStageElementCategoryChangeHandler>
 {
     protected override TestBeatmapStageElementCategoryChangeHandler CreateChangeHandler()
-        => new(x => x.OfType<ClassicStageInfo>().First().LyricLayoutCategory);
+        => new(x => x.OfType<TestStageinfo>().First().Category);
 
     [Test]
     public void TestAddElement()
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            karaokeBeatmap.StageInfos.Add(new ClassicStageInfo());
+            karaokeBeatmap.StageInfos.Add(new TestStageinfo());
         });
 
         TriggerHandlerChanged(c =>
@@ -46,19 +46,19 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestEditElement()
     {
-        ClassicLyricLayout lyricLayout = null!;
+        TestStageElement element = null!;
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
+            var stageInfo = new TestStageinfo();
+            element = stageInfo.Category.AddElement();
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         TriggerHandlerChanged(c =>
         {
-            c.EditElement(lyricLayout.ID, x =>
+            c.EditElement(element.ID, x =>
             {
                 x.Name = "Edit Element 1";
             });
@@ -76,19 +76,19 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestRemoveElement()
     {
-        ClassicLyricLayout lyricLayout = null!;
+        TestStageElement element = null!;
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
+            var stageInfo = new TestStageinfo();
+            element = stageInfo.Category.AddElement();
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         TriggerHandlerChanged(c =>
         {
-            c.RemoveElement(lyricLayout);
+            c.RemoveElement(element);
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
@@ -102,12 +102,12 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestAddToMapping()
     {
-        ClassicLyricLayout lyricLayout = null!;
+        TestStageElement element = null!;
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
+            var stageInfo = new TestStageinfo();
+            element = stageInfo.Category.AddElement();
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
@@ -116,7 +116,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         TriggerHandlerChanged(c =>
         {
-            c.AddToMapping(lyricLayout);
+            c.AddToMapping(element);
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
@@ -135,13 +135,13 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 1");
-            stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 2");
+            var stageInfo = new TestStageinfo();
+            var element = stageInfo.Category.AddElement(x => x.Name = "Element 1");
+            stageInfo.Category.AddElement(x => x.Name = "Element 2");
 
             // Add to Mapping
-            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
-            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, unSelectedLyric);
+            stageInfo.Category.AddToMapping(element, lyric);
+            stageInfo.Category.AddToMapping(element, unSelectedLyric);
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
@@ -158,8 +158,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         {
             var category = getStageCategory(karaokeBeatmap);
 
-            Assert.AreEqual("Layout 2", category.GetElementByItem(lyric).Name);
-            Assert.AreEqual("Layout 1", category.GetElementByItem(unSelectedLyric).Name); // should not change the id if lyric is not selected.
+            Assert.AreEqual("Element 2", category.GetElementByItem(lyric).Name);
+            Assert.AreEqual("Element 1", category.GetElementByItem(unSelectedLyric).Name); // should not change the id if lyric is not selected.
         });
     }
 
@@ -179,11 +179,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
+            var stageInfo = new TestStageinfo();
+            var element = stageInfo.Category.AddElement();
 
             // Add to Mapping
-            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
+            stageInfo.Category.AddToMapping(element, lyric);
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
@@ -208,11 +208,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new ClassicStageInfo();
-            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
+            var stageInfo = new TestStageinfo();
+            var element = stageInfo.Category.AddElement();
 
             // Add to Mapping
-            stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, new Lyric());
+            stageInfo.Category.AddToMapping(element, new Lyric());
 
             karaokeBeatmap.StageInfos.Add(stageInfo);
         });
@@ -230,16 +230,73 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         });
     }
 
-    private static ClassicLyricLayoutCategory getStageCategory(KaraokeBeatmap beatmap)
+    private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
     {
-        return beatmap.StageInfos.OfType<ClassicStageInfo>().First().LyricLayoutCategory;
+        return beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
     }
 
-    public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<ClassicLyricLayout, Lyric>
+    public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
-        public TestBeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<ClassicLyricLayout, Lyric>> stageCategoryAction)
+        public TestBeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TestStageElement, Lyric>> stageCategoryAction)
             : base(stageCategoryAction)
         {
+        }
+    }
+
+    private class TestStageinfo : StageInfo
+    {
+        #region Category
+
+        /// <summary>
+        /// Category to save the <see cref="Lyric"/>'s and <see cref="Note"/>'s style.
+        /// </summary>
+        public TestCategory Category { get; } = new();
+
+        #endregion
+
+        protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override IEnumerable<StageElement> GetNoteStageElements(Note note)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private class TestCategory : StageElementCategory<TestStageElement, Lyric>
+    {
+        protected override TestStageElement CreateElement(int id) => new(id);
+    }
+
+    public class TestStageElement : StageElement, IComparable<TestStageElement>
+    {
+        public TestStageElement(int id)
+            : base(id)
+        {
+        }
+
+        public int CompareTo(TestStageElement? other)
+        {
+            return ComparableUtils.CompareByProperty(this, other,
+                x => x.Name,
+                x => x.ID);
         }
     }
 }
