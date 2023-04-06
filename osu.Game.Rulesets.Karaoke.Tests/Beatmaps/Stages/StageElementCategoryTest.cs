@@ -37,9 +37,9 @@ public class StageElementCategoryTest
     public void TestEditElement()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
+        var element = category.AddElement();
 
-        int id = category.AvailableElements[0].ID;
+        int id = element.ID;
         category.EditElement(id, x =>
         {
             x.Name = "Element 1";
@@ -54,12 +54,9 @@ public class StageElementCategoryTest
     public void TestRemoveElement()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
-        category.AddElement();
 
-        var defaultElement = category.DefaultElement;
-        var element1 = category.AvailableElements[0];
-        var element2 = category.AvailableElements[1];
+        var element1 = category.AddElement();
+        var element2 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
         var lyric2 = new Lyric { ID = 2 };
         var lyric3 = new Lyric { ID = 3 };
@@ -72,6 +69,7 @@ public class StageElementCategoryTest
         category.RemoveElement(element1);
 
         // Should have only one element.
+        var defaultElement = category.DefaultElement;
         Assert.AreEqual(1, category.AvailableElements.Count);
 
         // Should get the default element because mapping has been removed.
@@ -84,11 +82,9 @@ public class StageElementCategoryTest
     public void TestClearElements()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
-        category.AddElement();
 
-        var element1 = category.AvailableElements[0];
-        var element2 = category.AvailableElements[1];
+        var element1 = category.AddElement();
+        var element2 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
         var lyric2 = new Lyric { ID = 2 };
         var lyric3 = new Lyric { ID = 3 };
@@ -113,11 +109,9 @@ public class StageElementCategoryTest
     public void TestAddToMapping()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
-        category.AddElement();
 
-        var element1 = category.AvailableElements[0];
-        var element2 = category.AvailableElements[1];
+        var element1 = category.AddElement();
+        var element2 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
         var lyric2 = new Lyric { ID = 2 };
         var lyric3 = new Lyric { ID = 3 };
@@ -136,9 +130,8 @@ public class StageElementCategoryTest
     public void TestRemoveHitObjectFromMapping()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
 
-        var element1 = category.AvailableElements[0];
+        var element1 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
 
         category.AddToMapping(element1, lyric1);
@@ -153,9 +146,8 @@ public class StageElementCategoryTest
     public void TestRemoveElementFromMapping()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
 
-        var element1 = category.AvailableElements[0];
+        var element1 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
 
         category.AddToMapping(element1, lyric1);
@@ -170,10 +162,8 @@ public class StageElementCategoryTest
     public void TestClearUnusedMapping()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
 
-        var defaultElement = category.DefaultElement;
-        var element1 = category.AvailableElements[0];
+        var element1 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
         var lyric2 = new Lyric { ID = 2 };
         var lyric3 = new Lyric { ID = 3 };
@@ -188,7 +178,10 @@ public class StageElementCategoryTest
         // Should get the matched element.
         Assert.AreEqual(element1, category.GetElementByItem(lyric1));
         Assert.AreEqual(element1, category.GetElementByItem(lyric2));
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric3)); // should get the default element because lyric3 is clear in the mapping.
+
+        // should get the default element because lyric3 is clear in the mapping.
+        var defaultElement = category.DefaultElement;
+        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric3));
     }
 
     #endregion
@@ -199,10 +192,8 @@ public class StageElementCategoryTest
     public void TestGetElementByItem()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
 
-        var defaultElement = category.DefaultElement;
-        var element1 = category.AvailableElements[0];
+        var element1 = category.AddElement();
         var lyric1 = new Lyric { ID = 1 };
         var lyric2 = new Lyric { ID = 2 };
 
@@ -210,17 +201,19 @@ public class StageElementCategoryTest
 
         // Should get the matched element.
         Assert.AreEqual(element1, category.GetElementByItem(lyric1));
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2)); // Should get the default element because it's not in the mapping list.
+
+        // Should get the default element because it's not in the mapping list.
+        var defaultElement = category.DefaultElement;
+        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2));
     }
 
     [Test]
     public void TestGetElementOrder()
     {
         var category = new TestStageElementCategory();
-        category.AddElement();
+        var element = category.AddElement();
 
-        var existElement = category.AvailableElements.First();
-        int? existElementOrder = category.GetElementOrder(existElement);
+        int? existElementOrder = category.GetElementOrder(element);
         Assert.AreEqual(1, existElementOrder);
 
         var notExistElement = new TestStageElement(-1);
