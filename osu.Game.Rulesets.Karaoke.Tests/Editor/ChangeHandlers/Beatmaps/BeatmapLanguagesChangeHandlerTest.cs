@@ -1,9 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -85,6 +87,16 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
         {
             Assert.AreEqual(false, c.IsLanguageContainsTranslate(new CultureInfo("Ja-jp")));
             Assert.AreEqual(true, c.IsLanguageContainsTranslate(new CultureInfo("zh-TW")));
+        });
+    }
+
+    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
+    {
+        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
+        {
+            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>();
+
+            action(karaokeBeatmap);
         });
     }
 }

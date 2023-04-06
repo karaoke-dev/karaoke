@@ -21,11 +21,6 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestAddElement()
     {
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
-        {
-            karaokeBeatmap.StageInfos.Add(new TestStageinfo());
-        });
-
         TriggerHandlerChanged(c =>
         {
             c.AddElement(x =>
@@ -50,10 +45,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            element = stageInfo.Category.AddElement();
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            var category = getStageCategory(karaokeBeatmap);
+            element = category.AddElement();
         });
 
         TriggerHandlerChanged(c =>
@@ -80,10 +73,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            element = stageInfo.Category.AddElement();
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            var category = getStageCategory(karaokeBeatmap);
+            element = category.AddElement();
         });
 
         TriggerHandlerChanged(c =>
@@ -106,10 +97,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            element = stageInfo.Category.AddElement();
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            var category = getStageCategory(karaokeBeatmap);
+            element = category.AddElement();
         });
 
         PrepareHitObject(() => new Lyric());
@@ -135,15 +124,13 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            var element = stageInfo.Category.AddElement(x => x.Name = "Element 1");
-            stageInfo.Category.AddElement(x => x.Name = "Element 2");
+            var category = getStageCategory(karaokeBeatmap);
+            var element = category.AddElement(x => x.Name = "Element 1");
+            category.AddElement(x => x.Name = "Element 2");
 
             // Add to Mapping
-            stageInfo.Category.AddToMapping(element, lyric);
-            stageInfo.Category.AddToMapping(element, unSelectedLyric);
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            category.AddToMapping(element, lyric);
+            category.AddToMapping(element, unSelectedLyric);
         });
 
         PrepareHitObject(() => lyric);
@@ -179,13 +166,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            var element = stageInfo.Category.AddElement();
+            var category = getStageCategory(karaokeBeatmap);
+            var element = category.AddElement();
 
             // Add to Mapping
-            stageInfo.Category.AddToMapping(element, lyric);
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            category.AddToMapping(element, lyric);
         });
 
         PrepareHitObject(() => lyric);
@@ -208,13 +193,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
-            var element = stageInfo.Category.AddElement();
+            var category = getStageCategory(karaokeBeatmap);
+            var element = category.AddElement();
 
             // Add to Mapping
-            stageInfo.Category.AddToMapping(element, new Lyric());
-
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            category.AddToMapping(element, new Lyric());
         });
 
         TriggerHandlerChanged(c =>
@@ -227,6 +210,19 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             var category = getStageCategory(karaokeBeatmap);
 
             Assert.IsEmpty(category.Mappings);
+        });
+    }
+
+    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
+    {
+        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
+        {
+            karaokeBeatmap.StageInfos = new List<StageInfo>
+            {
+                new TestStageinfo(),
+            };
+
+            action(karaokeBeatmap);
         });
     }
 
