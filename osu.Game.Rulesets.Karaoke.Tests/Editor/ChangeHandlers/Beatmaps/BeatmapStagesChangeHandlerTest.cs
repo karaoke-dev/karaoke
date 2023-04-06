@@ -39,10 +39,12 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
+            var stageInfo = new ClassicStageInfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
-                new ClassicStageInfo()
+                stageInfo
             };
+            karaokeBeatmap.CurrentStageInfo = stageInfo;
         });
 
         TriggerHandlerChanged(c =>

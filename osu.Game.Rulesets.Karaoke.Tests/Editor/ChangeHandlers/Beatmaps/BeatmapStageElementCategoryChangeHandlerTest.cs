@@ -217,10 +217,12 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     {
         base.SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
+            var stageInfo = new TestStageinfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
-                new TestStageinfo(),
+                stageInfo
             };
+            karaokeBeatmap.CurrentStageInfo = stageInfo;
 
             action(karaokeBeatmap);
         });
