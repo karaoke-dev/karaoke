@@ -9,7 +9,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Testing;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -72,13 +71,11 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
             editorBeatmap.Clear();
             editorBeatmap.SelectedHitObjects.Clear();
-
-            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
-            karaokeBeatmap.AvailableTranslates.Clear();
-            karaokeBeatmap.SingerInfo = new SingerInfo();
-            karaokeBeatmap.PageInfo = new PageInfo();
-            karaokeBeatmap.StageInfos.Clear();
         });
+
+        // Should set-up karaoke beatmap before testing.
+        // still able to call the SetUpKaraokeBeatmap or SetUpEditorBeatmap in the test case.
+        SetUpKaraokeBeatmap(_ => { });
     }
 
     protected virtual bool IncludeAutoGenerator => false;
@@ -104,7 +101,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         });
     }
 
-    protected void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
+    protected virtual void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
     {
         SetUpEditorBeatmap(editorBeatmap =>
         {
