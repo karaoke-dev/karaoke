@@ -85,13 +85,15 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     protected abstract TStageElement CreateElement(int id);
 
-    public void AddElement(Action<TStageElement>? action = null)
+    public TStageElement AddElement(Action<TStageElement>? action = null)
     {
         int id = getNewElementId();
         var element = CreateElement(id);
 
         action?.Invoke(element);
         AvailableElements.Add(element);
+
+        return element;
 
         int getNewElementId()
         {

@@ -51,10 +51,9 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement();
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
 
-            lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         TriggerHandlerChanged(c =>
@@ -82,10 +81,9 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement();
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
 
-            lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         TriggerHandlerChanged(c =>
@@ -109,10 +107,9 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement();
-            karaokeBeatmap.StageInfos.Add(stageInfo);
+            lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
 
-            lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         PrepareHitObject(() => new Lyric());
@@ -139,15 +136,14 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 1");
+            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 1");
             stageInfo.LyricLayoutCategory.AddElement(x => x.Name = "Layout 2");
-            karaokeBeatmap.StageInfos.Add(stageInfo);
-
-            var lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
 
             // Add to Mapping
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, unSelectedLyric);
+
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         PrepareHitObject(() => lyric);
@@ -184,13 +180,12 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement();
-            karaokeBeatmap.StageInfos.Add(stageInfo);
-
-            var lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
 
             // Add to Mapping
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, lyric);
+
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         PrepareHitObject(() => lyric);
@@ -214,13 +209,12 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
             var stageInfo = new ClassicStageInfo();
-            stageInfo.LyricLayoutCategory.AddElement();
-            karaokeBeatmap.StageInfos.Add(stageInfo);
-
-            var lyricLayout = stageInfo.LyricLayoutCategory.AvailableElements.First();
+            var lyricLayout = stageInfo.LyricLayoutCategory.AddElement();
 
             // Add to Mapping
             stageInfo.LyricLayoutCategory.AddToMapping(lyricLayout, new Lyric());
+
+            karaokeBeatmap.StageInfos.Add(stageInfo);
         });
 
         TriggerHandlerChanged(c =>
