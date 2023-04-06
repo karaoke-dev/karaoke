@@ -81,6 +81,35 @@ public class StageElementCategoryTest
     }
 
     [Test]
+    public void TestClearElements()
+    {
+        var category = new TestStageElementCategory();
+        category.AddElement();
+        category.AddElement();
+
+        var element1 = category.AvailableElements[0];
+        var element2 = category.AvailableElements[1];
+        var lyric1 = new Lyric { ID = 1 };
+        var lyric2 = new Lyric { ID = 2 };
+        var lyric3 = new Lyric { ID = 3 };
+
+        category.AddToMapping(element1, lyric1);
+        category.AddToMapping(element1, lyric2);
+        category.AddToMapping(element2, lyric3);
+
+        // Clear all elements.
+        category.ClearElements();
+
+        // Should clear everything.
+        Assert.AreEqual(0, category.AvailableElements.Count);
+        Assert.AreEqual(0, category.Mappings.Count);
+
+        // should get the default element.
+        var defaultElement = category.DefaultElement;
+        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric1));
+    }
+
+    [Test]
     public void TestAddToMapping()
     {
         var category = new TestStageElementCategory();

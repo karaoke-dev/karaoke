@@ -120,6 +120,12 @@ public abstract class StageElementCategory<TStageElement, THitObject>
         AvailableElements.Remove(element);
     }
 
+    public void ClearElements()
+    {
+        Mappings.Clear();
+        AvailableElements.Clear();
+    }
+
     public void AddToMapping(TStageElement element, THitObject hitObject)
     {
         int key = hitObject.ID;
