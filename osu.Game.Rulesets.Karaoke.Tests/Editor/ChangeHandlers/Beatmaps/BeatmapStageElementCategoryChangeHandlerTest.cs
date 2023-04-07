@@ -227,9 +227,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     }
 
     private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
-    {
-        return beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
-    }
+        => beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
 
     public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
