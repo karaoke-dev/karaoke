@@ -15,8 +15,9 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
     protected override bool CanCheckWorkingPropertySync(Note hitObject, NoteWorkingProperty flags) =>
         flags switch
         {
-            NoteWorkingProperty.Page => false, // there's no way to check working page is sync to the page info.
+            NoteWorkingProperty.Page => false,
             NoteWorkingProperty.ReferenceLyric => true,
+            NoteWorkingProperty.StageElements => false,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
         };
 
@@ -25,6 +26,7 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
         {
             NoteWorkingProperty.Page => false,
             NoteWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID != hitObject.ReferenceLyricId,
+            NoteWorkingProperty.StageElements => false,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
         };
 }
