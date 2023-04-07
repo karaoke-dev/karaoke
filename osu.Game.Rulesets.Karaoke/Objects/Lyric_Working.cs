@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -126,6 +127,27 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
         {
             ReferenceLyricBindable.Value = value;
             updateStateByWorkingProperty(LyricWorkingProperty.ReferenceLyric);
+        }
+    }
+
+    [JsonIgnore]
+    public readonly BindableList<StageElement> StageElementsBindable = new();
+
+    /// <summary>
+    /// Stage elements.
+    /// Will save all the elements that related to the lyric.
+    /// The element might include something like style or layout info.
+    /// </summary>
+    [JsonIgnore]
+    public IList<StageElement> StageElements
+    {
+        get => StageElementsBindable;
+        set
+        {
+            StageElementsBindable.Clear();
+            StageElementsBindable.AddRange(value);
+
+            updateStateByWorkingProperty(LyricWorkingProperty.StageElements);
         }
     }
 }

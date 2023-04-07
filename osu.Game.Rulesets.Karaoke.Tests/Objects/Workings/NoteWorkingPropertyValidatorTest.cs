@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -65,5 +67,15 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = new Lyric { ID = 3 });
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = null);
+    }
+
+    [Test]
+    public void TestStageElements()
+    {
+        var note = new Note();
+
+        // page state is valid because assign the property.
+        Assert.DoesNotThrow(() => note.StageElements = new BindableList<StageElement>());
+        AssetIsValid(note, NoteWorkingProperty.StageElements, true);
     }
 }

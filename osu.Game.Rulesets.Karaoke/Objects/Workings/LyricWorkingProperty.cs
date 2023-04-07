@@ -40,4 +40,9 @@ public enum LyricWorkingProperty
     /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
     /// </summary>
     ReferenceLyric = 1 << 4,
+
+    /// <summary>
+    /// <see cref="Lyric.StageElements"/> is being invalidated.
+    /// </summary>
+    StageElements = 1 << 5,
 }

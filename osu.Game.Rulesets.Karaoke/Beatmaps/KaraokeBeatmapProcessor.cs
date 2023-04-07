@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -82,6 +84,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     lyric.ReferenceLyric = findLyricById(lyric.ReferenceLyricId);
                     break;
 
+                case LyricWorkingProperty.StageElements:
+                    lyric.StageElements = getStageElements();
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -97,6 +103,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 (double? startTime, double? endTime) = getWorkingStage()?.GetStartAndEndTime(lyric) ?? new Tuple<double?, double?>(null, null);
                 return endTime - startTime ?? 0;
             }
+
+            IList<StageElement> getStageElements()
+                => getWorkingStage()?.GetStageElements(lyric).ToList() ?? new List<StageElement>();
         }
 
         private void applyInvalidProperty(Note note, NoteWorkingProperty flag)
@@ -112,9 +121,16 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     note.ReferenceLyric = findLyricById(note.ReferenceLyricId);
                     break;
 
+                case NoteWorkingProperty.StageElements:
+                    note.StageElements = getStageElements();
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            IList<StageElement> getStageElements()
+                => getWorkingStage()?.GetStageElements(note).ToList() ?? new List<StageElement>();
         }
 
         private SingerInfo getSingerInfo()

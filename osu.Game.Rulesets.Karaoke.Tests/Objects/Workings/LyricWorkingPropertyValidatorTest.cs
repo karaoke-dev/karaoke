@@ -4,7 +4,9 @@
 using System;
 using J2N.Collections.Generic;
 using NUnit.Framework;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -175,5 +177,15 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = new Lyric { ID = 3 });
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = null);
+    }
+
+    [Test]
+    public void TestStageElements()
+    {
+        var lyric = new Lyric();
+
+        // state is valid because assign the property.
+        Assert.DoesNotThrow(() => lyric.StageElements = new BindableList<StageElement>());
+        AssetIsValid(lyric, LyricWorkingProperty.StageElements, true);
     }
 }
