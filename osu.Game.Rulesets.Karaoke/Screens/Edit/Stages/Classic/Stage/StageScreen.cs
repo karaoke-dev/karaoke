@@ -33,8 +33,19 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     [Resolved, AllowNull]
     private EditorBeatmap editorBeatmap { get; set; }
 
-    public ClassicStageInfo StageInfo => EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap).GetStageInfo<ClassicStageInfo>()
-                                         ?? throw new InvalidOperationException();
+    public ClassicStageInfo StageInfo
+    {
+        get
+        {
+            // we should make sure that current stage info is classic stage info.
+            // otherwise, we might not able to see the edit result in the editor.
+            var currentStageInfo = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap).CurrentStageInfo;
+            if (currentStageInfo is not ClassicStageInfo classicStageInfo)
+                throw new NotSupportedException();
+
+            return classicStageInfo;
+        }
+    }
 
     public StageScreen()
         : base(ClassicStageEditorScreenMode.Stage)

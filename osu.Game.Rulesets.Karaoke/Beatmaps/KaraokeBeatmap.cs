@@ -33,8 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public bool Scorable { get; set; }
 
-        public TStageInfo? GetStageInfo<TStageInfo>() => StageInfos.OfType<TStageInfo>().FirstOrDefault();
-
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = SingerInfo.GetAllSingers().Count();
