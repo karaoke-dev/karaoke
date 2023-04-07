@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -21,6 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         public PageInfo PageInfo { get; set; } = new();
 
         public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
+
+        /// <summary>
+        /// This property will not be null after <see cref="KaraokeBeatmapProcessor.PreProcess"/> is called.
+        /// </summary>
+        [JsonIgnore]
+        public StageInfo CurrentStageInfo { get; set; } = null!;
 
         public NoteInfo NoteInfo { get; set; } = new();
 
