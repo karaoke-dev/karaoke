@@ -137,18 +137,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
             assert(editorBeatmap);
         });
 
-        // even if there's no property changed in the lyric editor, should still trigger the change handler.
-        // because every change handler call should cause one undo step.
-        // also, technically should not call the change handler if there's no possible to change the properties.
-        AssertTransactionOnlyTriggerOnce();
-
-        // We should make sure that the stage info is in the latest state.
-        // Should trigger the beatmap editor to run the beatmap processor if not the latest.
-        AssertCalculatedPropertyInStageInfoValid();
-
-        // We should make sure that if the working property is changed by the change handler.
-        // Should trigger the beatmap editor to run the beatmap processor to re-fill the working property.
-        AssertWorkingPropertyInHitObjectValid();
+        AssertStatus();
     }
 
     protected void AssertKaraokeBeatmap(Action<KaraokeBeatmap> assert)
@@ -198,6 +187,11 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
             assert(editorBeatmap.HitObjects.OfType<THitObject>());
         });
 
+        AssertStatus();
+    }
+
+    protected void AssertStatus()
+    {
         // even if there's no property changed in the lyric editor, should still trigger the change handler.
         // because every change handler call should cause one undo step.
         // also, technically should not call the change handler if there's no possible to change the properties.
