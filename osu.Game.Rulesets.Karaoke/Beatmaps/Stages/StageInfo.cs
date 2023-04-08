@@ -3,28 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public abstract class StageInfo
 {
-    #region Init
-
-    /// <summary>
-    /// Should call this method on the <see cref="KaraokeBeatmapProcessor"/> before the <see cref="KaraokeBeatmapProcessor.PreProcess()"/>
-    /// And note that this method is for "patching" the property from the beatmap to the stage.
-    /// So should not keep the reference of the beatmap.
-    /// </summary>
-    /// <param name="beatmap"></param>
-    public virtual void ReloadBeatmap(IBeatmap beatmap)
-    {
-        // for the case that we need to get the properties from the beatmap.
-    }
-
-    #endregion
-
     public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
         {

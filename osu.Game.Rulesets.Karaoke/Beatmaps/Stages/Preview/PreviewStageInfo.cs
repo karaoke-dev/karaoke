@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
-public class PreviewStageInfo : StageInfo
+public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 {
     #region Category
 
@@ -34,11 +36,34 @@ public class PreviewStageInfo : StageInfo
 
     #endregion
 
-    #region Init
+    #region Validation
 
-    // todo: make the method more generic for those stages that need the beatmap.
-    public override void ReloadBeatmap(IBeatmap beatmap)
+    private bool calcualtedPropertyIsUpdated;
+
+    /// <summary>
+    /// Mark the stage info's calculated property as invalidate.
+    /// </summary>
+    /// <returns></returns>
+    public void TriggerRecalculate()
     {
+        calcualtedPropertyIsUpdated = false;
+    }
+
+    /// <summary>
+    /// Check if the stage info's calculated property is calculated and the value is the latest.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsUpdated() => calcualtedPropertyIsUpdated;
+
+    /// <summary>
+    /// If the calculated property is not updated, then re-calculate the property inside the stage info in the <see cref="KaraokeBeatmapProcessor"/>
+    /// </summary>
+    /// <param name="beatmap"></param>
+    public void ValidateCalculatedProperty(IBeatmap beatmap)
+    {
+        if (IsUpdated())
+            return;
+
         var calculator = new PreviewStageTimingCalculator(beatmap);
 
         // also, clear all mapping in the layout and re-create one.
@@ -54,7 +79,13 @@ public class PreviewStageInfo : StageInfo
                 x.Timings = calculator.CalculateTimings(lyric);
             });
             layoutCategory.AddToMapping(element, lyric);
+
+            // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
+            lyric.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
+            lyric.InvalidateWorkingProperty(LyricWorkingProperty.StageElements);
         }
+
+        calcualtedPropertyIsUpdated = true;
     }
 
     #endregion

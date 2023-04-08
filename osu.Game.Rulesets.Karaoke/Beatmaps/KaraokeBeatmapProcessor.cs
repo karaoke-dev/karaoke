@@ -6,6 +6,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -34,7 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             // trying to load the first stage or create a default one.
             beatmap.CurrentStageInfo ??= getWorkingStage() ?? createDefaultWorkingStage();
 
-            beatmap.CurrentStageInfo.ReloadBeatmap(beatmap);
+            if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
+                calculatedProperty.ValidateCalculatedProperty(beatmap);
 
             StageInfo? getWorkingStage()
                 => Beatmap.StageInfos.FirstOrDefault();
@@ -44,7 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         private void applyInvalidProperty(KaraokeBeatmap beatmap)
         {
-            foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>())
+            // should convert to array here because validate the working property might change the start-time and the end time.
+            // which will cause got the wrong item in the array.
+            foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
             {
                 hitObject.ValidateWorkingProperty(beatmap);
             }
