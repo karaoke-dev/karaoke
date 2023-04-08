@@ -46,7 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         private void applyInvalidProperty(KaraokeBeatmap beatmap)
         {
-            foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>())
+            // should convert to array here because validate the working property might change the start-time and the end time.
+            // which will cause got the wrong item in the array.
+            foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
             {
                 hitObject.ValidateWorkingProperty(beatmap);
             }
