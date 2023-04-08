@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -32,6 +33,45 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
 
     public NoteWorkingProperty[] GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
+
+    public void ValidateWorkingProperty(KaraokeBeatmap beatmap)
+    {
+        foreach (var flag in GetAllInvalidWorkingProperties())
+        {
+            switch (flag)
+            {
+                case NoteWorkingProperty.Page:
+                    PageIndex = getPageIndex(beatmap, StartTime);
+                    break;
+
+                case NoteWorkingProperty.ReferenceLyric:
+                    ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
+                    break;
+
+                case NoteWorkingProperty.StageElements:
+                    StageElements = getStageElements(beatmap, this);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)
+            => beatmap.PageInfo.GetPageIndexAt(startTime);
+
+        static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
+            id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+
+        static IList<StageElement> getStageElements(KaraokeBeatmap beatmap, Note note)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            return stageInfo.GetStageElements(note).ToList();
+        }
+    }
 
     [JsonIgnore]
     public readonly Bindable<int?> PageIndexBindable = new();
