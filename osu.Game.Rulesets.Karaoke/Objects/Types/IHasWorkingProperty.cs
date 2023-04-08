@@ -2,12 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
-public interface IHasWorkingProperty<TWorkingProperty> where TWorkingProperty : struct, Enum
+public interface IHasWorkingProperty<TWorkingProperty> : IHasWorkingProperty
+    where TWorkingProperty : struct, Enum
 {
     bool InvalidateWorkingProperty(TWorkingProperty workingProperty);
 
     TWorkingProperty[] GetAllInvalidWorkingProperties();
+}
+
+public interface IHasWorkingProperty
+{
+    void ValidateWorkingProperty(KaraokeBeatmap beatmap);
 }

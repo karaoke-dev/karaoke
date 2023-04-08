@@ -1,9 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -30,6 +33,84 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
 
     public LyricWorkingProperty[] GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
+
+    public void ValidateWorkingProperty(KaraokeBeatmap beatmap)
+    {
+        foreach (var flag in GetAllInvalidWorkingProperties())
+        {
+            switch (flag)
+            {
+                case LyricWorkingProperty.StartTime:
+                    StartTime = getStartTime(beatmap, this);
+                    break;
+
+                case LyricWorkingProperty.Duration:
+                    Duration = getDuration(beatmap, this);
+                    break;
+
+                case LyricWorkingProperty.Timing:
+                    // start time and duration should be set by other condition.
+                    break;
+
+                case LyricWorkingProperty.Singers:
+                    Singers = getSingers(beatmap, SingerIds);
+                    break;
+
+                case LyricWorkingProperty.Page:
+                    PageIndex = getPageIndex(beatmap, LyricStartTime);
+                    break;
+
+                case LyricWorkingProperty.ReferenceLyric:
+                    ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
+                    break;
+
+                case LyricWorkingProperty.StageElements:
+                    StageElements = getStageElements(beatmap, this);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        static double getStartTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            (double? startTime, double? _) = stageInfo.GetStartAndEndTime(lyric);
+            return startTime ?? 0;
+        }
+
+        static double getDuration(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            (double? startTime, double? endTime) = stageInfo.GetStartAndEndTime(lyric);
+            return endTime - startTime ?? 0;
+        }
+
+        static IDictionary<Singer, SingerState[]> getSingers(KaraokeBeatmap beatmap, IEnumerable<int> singerIds)
+            => beatmap.SingerInfo.GetSingerByIds(singerIds.ToArray());
+
+        static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)
+            => beatmap.PageInfo.GetPageIndexAt(startTime);
+
+        static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
+            id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+
+        static IList<StageElement> getStageElements(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            return stageInfo.GetStageElements(lyric).ToList();
+        }
+    }
 
     [JsonIgnore]
     public double LyricStartTime { get; private set; }
