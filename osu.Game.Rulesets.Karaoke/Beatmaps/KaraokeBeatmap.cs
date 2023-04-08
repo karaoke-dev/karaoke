@@ -27,13 +27,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         /// This property will not be null after <see cref="KaraokeBeatmapProcessor.PreProcess"/> is called.
         /// </summary>
         [JsonIgnore]
-        public StageInfo CurrentStageInfo { get; set; } = null!;
+        public StageInfo? CurrentStageInfo { get; set; }
 
         public NoteInfo NoteInfo { get; set; } = new();
 
         public bool Scorable { get; set; }
-
-        public TStageInfo? GetStageInfo<TStageInfo>() => StageInfos.OfType<TStageInfo>().FirstOrDefault();
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {

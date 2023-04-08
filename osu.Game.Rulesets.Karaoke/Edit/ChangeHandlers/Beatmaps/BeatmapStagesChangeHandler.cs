@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
@@ -31,6 +32,17 @@ public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, 
                 throw new InvalidOperationException($"There's no {nameof(TStageInfo)} in the beatmap.");
 
             beatmap.StageInfos.Remove(stage);
+
+            // Should clear the current stage info if stage is removed.
+            // Beatmap processor will load the suitable stage info.
+            if (beatmap.CurrentStageInfo == stage)
+            {
+                beatmap.CurrentStageInfo = null!;
+
+                // todo: should invalidate the working stage element processor also.
+                InvalidateAllHitObjectWorkingProperty(LyricWorkingProperty.StageElements);
+                InvalidateAllHitObjectWorkingProperty(NoteWorkingProperty.StageElements);
+            }
         });
     }
 

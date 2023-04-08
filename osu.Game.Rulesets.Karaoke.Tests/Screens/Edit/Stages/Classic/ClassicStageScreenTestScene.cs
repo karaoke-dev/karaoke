@@ -15,7 +15,9 @@ public abstract partial class ClassicStageScreenTestScene<T> : GenericEditorScre
         var karaokeBeatmap = base.CreateBeatmap();
 
         // add classic stage info for testing purpose.
-        karaokeBeatmap.StageInfos.Add(new ClassicStageInfo());
+        var stageInfo = new ClassicStageInfo();
+        karaokeBeatmap.StageInfos.Add(stageInfo);
+        karaokeBeatmap.CurrentStageInfo = stageInfo;
 
         return karaokeBeatmap;
     }

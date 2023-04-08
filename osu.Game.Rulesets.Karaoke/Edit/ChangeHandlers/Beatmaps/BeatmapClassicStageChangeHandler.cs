@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -108,12 +107,11 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
     {
         PerformBeatmapChanged(beatmap =>
         {
-            var stage = getStageInfo(beatmap);
-            action(stage);
-        });
+            if (beatmap.CurrentStageInfo is not ClassicStageInfo classicStageInfo)
+                throw new NotSupportedException($"Current stage info in the beatmap should be {nameof(ClassicStageInfo)}");
 
-        ClassicStageInfo getStageInfo(KaraokeBeatmap beatmap)
-            => beatmap.StageInfos.OfType<ClassicStageInfo>().First();
+            action(classicStageInfo);
+        });
     }
 
     private void performTimingInfoChanged(Action<ClassicLyricTimingInfo> action)

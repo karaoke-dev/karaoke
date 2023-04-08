@@ -256,10 +256,12 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
     {
         base.SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
+            var stageInfo = new ClassicStageInfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
-                new ClassicStageInfo()
+                stageInfo
             };
+            karaokeBeatmap.CurrentStageInfo = stageInfo;
 
             action(karaokeBeatmap);
         });

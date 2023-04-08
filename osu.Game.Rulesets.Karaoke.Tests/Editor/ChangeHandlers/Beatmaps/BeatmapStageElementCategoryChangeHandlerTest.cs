@@ -217,19 +217,19 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     {
         base.SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
+            var stageInfo = new TestStageinfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
-                new TestStageinfo(),
+                stageInfo
             };
+            karaokeBeatmap.CurrentStageInfo = stageInfo;
 
             action(karaokeBeatmap);
         });
     }
 
     private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
-    {
-        return beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
-    }
+        => beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
 
     public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
