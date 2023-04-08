@@ -49,7 +49,7 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
         var lyricTimingInfos = item.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo
         {
             StartTime = x.LyricStartTime,
-            EndTime = x.EndTime,
+            EndTime = x.LyricEndTime,
         }).OrderBy(x => x).ToList();
 
         if (lyricTimingInfos.Count == 0)
