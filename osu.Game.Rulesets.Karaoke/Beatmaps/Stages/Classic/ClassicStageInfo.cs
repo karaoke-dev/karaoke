@@ -20,7 +20,7 @@ public class ClassicStageInfo : StageInfo
     /// The definition for the <see cref="Lyric"/>.
     /// Like the line height or font size.
     /// </summary>
-    public ClassicLyricLayoutDefinition LyricLayoutDefinition { get; set; } = new();
+    public ClassicStageDefinition StageDefinition { get; set; } = new();
 
     /// <summary>
     /// Category to save the <see cref="Lyric"/>'s layout.

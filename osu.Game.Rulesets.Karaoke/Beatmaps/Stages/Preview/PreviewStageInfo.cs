@@ -26,7 +26,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     /// The definition for the <see cref="Lyric"/>.
     /// Like how many lyrics can in the playfield at the same time.
     /// </summary>
-    public PreviewLyricLayoutDefinition LyricLayoutDefinition { get; set; } = new();
+    public PreviewStageDefinition StageDefinition { get; set; } = new();
 
     /// <summary>
     /// Category to save the <see cref="Lyric"/>'s layout.

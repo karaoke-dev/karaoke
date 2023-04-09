@@ -28,13 +28,13 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
     {
         var beatmap = createTestingBeatmap(Array.Empty<Lyric>(), stage =>
         {
-            stage.LyricLayoutDefinition.LineHeight = MIN_ROW_HEIGHT - 1;
+            stage.StageDefinition.LineHeight = MIN_ROW_HEIGHT - 1;
         });
         AssertNotOk<IssueTemplateInvalidRowHeight>(getContext(beatmap));
 
         var beatmap2 = createTestingBeatmap(Array.Empty<Lyric>(), stage =>
         {
-            stage.LyricLayoutDefinition.LineHeight = MAX_ROW_HEIGHT + 1;
+            stage.StageDefinition.LineHeight = MAX_ROW_HEIGHT + 1;
         });
         AssertNotOk<IssueTemplateInvalidRowHeight>(getContext(beatmap2));
     }
@@ -218,7 +218,7 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
         // add two elements to prevent no element error.
         stageInfo.LyricLayoutCategory.AddElement(x => x.Line = MIN_LINE_SIZE);
         stageInfo.LyricLayoutCategory.AddElement(x => x.Line = MIN_LINE_SIZE);
-        stageInfo.LyricLayoutDefinition.LineHeight = MIN_ROW_HEIGHT;
+        stageInfo.StageDefinition.LineHeight = MIN_ROW_HEIGHT;
 
         // add default timing info to prevent the error.
         stageInfo.LyricTimingInfo.AddTimingPoint(x => x.Time = 0);

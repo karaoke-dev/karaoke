@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
-public class PreviewLyricLayoutDefinition
+public class PreviewStageDefinition : StageDefinition
 {
     public int LinesOfLyric { get; set; } = 5;
 

@@ -47,13 +47,13 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
     {
         var issues = new List<Issue>();
 
-        issues.AddRange(checkLyricLayoutDefinition(stageInfo.LyricLayoutDefinition));
+        issues.AddRange(checkLyricLayoutDefinition(stageInfo.StageDefinition));
         issues.AddRange(checkLyricTimingInfo(stageInfo.LyricTimingInfo, hitObjects.OfType<Lyric>().ToArray()));
 
         return issues;
     }
 
-    private IEnumerable<Issue> checkLyricLayoutDefinition(ClassicLyricLayoutDefinition layoutDefinition)
+    private IEnumerable<Issue> checkLyricLayoutDefinition(ClassicStageDefinition layoutDefinition)
     {
         if (layoutDefinition.LineHeight is < MIN_ROW_HEIGHT or > MAX_ROW_HEIGHT)
             yield return new IssueTemplateInvalidRowHeight(this).Create();

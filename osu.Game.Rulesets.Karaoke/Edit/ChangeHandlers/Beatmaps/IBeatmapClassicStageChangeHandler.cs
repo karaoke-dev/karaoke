@@ -11,7 +11,7 @@ public interface IBeatmapClassicStageChangeHandler
 {
     #region Layout definition
 
-    void EditLayoutDefinition(Action<ClassicLyricLayoutDefinition> action);
+    void EditLayoutDefinition(Action<ClassicStageDefinition> action);
 
     #endregion
 
