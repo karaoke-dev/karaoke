@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
-public class ClassicLyricLayoutDefinition
+public class ClassicStageDefinition : StageDefinition
 {
     public double LineHeight { get; set; }
 }

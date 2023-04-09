@@ -20,11 +20,11 @@ public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHan
 
     #region Layout definition
 
-    public void EditLayoutDefinition(Action<ClassicLyricLayoutDefinition> action)
+    public void EditLayoutDefinition(Action<ClassicStageDefinition> action)
     {
         performStageInfoChanged(x =>
         {
-            action(x.LyricLayoutDefinition);
+            action(x.StageDefinition);
         });
     }
 

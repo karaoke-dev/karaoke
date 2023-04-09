@@ -34,7 +34,7 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
             Assert.IsNotNull(classicStageInfo);
 
             // assert definition.
-            var definition = classicStageInfo.LyricLayoutDefinition;
+            var definition = classicStageInfo.StageDefinition;
             Assert.AreEqual(12, definition.LineHeight);
         });
     }
