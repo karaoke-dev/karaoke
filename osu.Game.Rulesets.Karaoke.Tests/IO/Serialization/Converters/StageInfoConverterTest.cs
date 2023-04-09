@@ -24,7 +24,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     }
 
     [Test]
-    [Ignore("Will fix this issue until able to save/load the customized beatmap.")]
+    [Ignore("todo: need to implement the serializer for the ClassicLyricTimingInfo")]
     public void TestClassicStageInfoDeserializer()
     {
         const string json = "{\"$type\":\"classic\",\"style_category\":{},\"stage_definition\":{},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[],\"mappings\":{}}}";
