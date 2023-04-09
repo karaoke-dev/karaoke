@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
@@ -9,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
@@ -33,7 +35,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         {
             // current stage info will be null if not select any mod or first load.
             // trying to load the first stage or create a default one.
-            beatmap.CurrentStageInfo ??= getWorkingStage() ?? createDefaultWorkingStage();
+            if (beatmap.CurrentStageInfo == null)
+            {
+                beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
+
+                // should invalidate the working property here because the stage info is changed.
+                beatmap.HitObjects.OfType<IHasWorkingProperty<LyricWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(LyricWorkingProperty.StageElements));
+                beatmap.HitObjects.OfType<IHasWorkingProperty<NoteWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.StageElements));
+            }
 
             if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
                 calculatedProperty.ValidateCalculatedProperty(beatmap);
