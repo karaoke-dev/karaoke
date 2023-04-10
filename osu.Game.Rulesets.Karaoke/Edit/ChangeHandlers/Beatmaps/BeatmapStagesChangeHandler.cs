@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
@@ -38,10 +37,6 @@ public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, 
             if (beatmap.CurrentStageInfo == stage)
             {
                 beatmap.CurrentStageInfo = null!;
-
-                // todo: should invalidate the working stage element processor also.
-                InvalidateAllHitObjectWorkingProperty(LyricWorkingProperty.StageElements);
-                InvalidateAllHitObjectWorkingProperty(NoteWorkingProperty.StageElements);
             }
         });
     }

@@ -93,7 +93,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         return baseDependencies;
     }
 
-    protected void SetUpEditorBeatmap(Action<EditorBeatmap> action)
+    protected virtual void SetUpEditorBeatmap(Action<EditorBeatmap> action)
     {
         AddStep("Prepare testing beatmap", () =>
         {

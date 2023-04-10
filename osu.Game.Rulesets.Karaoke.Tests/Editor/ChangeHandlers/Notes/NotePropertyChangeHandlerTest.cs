@@ -6,16 +6,20 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes;
 
 public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<NotePropertyChangeHandler, Note>
 {
+    private const int referenced_lyric_id = 1;
+
     [Test]
     public void TestChangeText()
     {
         PrepareHitObject(() => new Note
         {
+            ReferenceLyricId = referenced_lyric_id,
             Text = "カラオケ",
         });
 
@@ -32,6 +36,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     {
         PrepareHitObject(() => new Note
         {
+            ReferenceLyricId = referenced_lyric_id,
             RubyText = "からおけ",
         });
 
@@ -46,7 +51,10 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     [Test]
     public void TestChangeDisplayStateToVisible()
     {
-        PrepareHitObject(() => new Note());
+        PrepareHitObject(() => new Note
+        {
+            ReferenceLyricId = referenced_lyric_id,
+        });
 
         TriggerHandlerChanged(c => c.ChangeDisplayState(true));
 
@@ -61,6 +69,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     {
         PrepareHitObject(() => new Note
         {
+            ReferenceLyricId = referenced_lyric_id,
             Display = true,
             Tone = new Tone(3)
         });
@@ -96,6 +105,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     {
         PrepareHitObject(() => new Note
         {
+            ReferenceLyricId = referenced_lyric_id,
             Display = true,
             Tone = new Tone(3)
         });
@@ -114,11 +124,26 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
     {
         PrepareHitObject(() => new Note
         {
+            ReferenceLyricId = referenced_lyric_id,
             Display = true,
             Tone = new Tone(3)
         });
 
         // offset value should not be zero.
         TriggerHandlerChangedWithException<InvalidOperationException>(c => c.OffsetTone(new Tone()));
+    }
+
+    protected override void SetUpEditorBeatmap(Action<EditorBeatmap> action)
+    {
+        base.SetUpEditorBeatmap(editorBeatmap =>
+        {
+            action(editorBeatmap);
+
+            editorBeatmap.Add(new Lyric
+            {
+                ID = referenced_lyric_id,
+                Text = "Referenced lyric"
+            });
+        });
     }
 }
