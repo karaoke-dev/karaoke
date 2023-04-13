@@ -22,7 +22,7 @@ public enum NoteWorkingProperty
     ReferenceLyric = 1 << 1,
 
     /// <summary>
-    /// <see cref="Note.StageElements"/> is being invalidated.
+    /// <see cref="Note.EffectApplier"/> is being invalidated.
     /// </summary>
-    StageElements = 1 << 2,
+    EffectApplier = 1 << 2,
 }

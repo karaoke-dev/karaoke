@@ -10,7 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -48,8 +48,8 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
                     ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
                     break;
 
-                case NoteWorkingProperty.StageElements:
-                    StageElements = getStageElements(beatmap, this);
+                case NoteWorkingProperty.EffectApplier:
+                    EffectApplier = getStageEffectApplier(beatmap, this);
                     break;
 
                 default:
@@ -63,13 +63,13 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
         static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
-        static IList<StageElement> getStageElements(KaraokeBeatmap beatmap, Note note)
+        static StageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
         {
             var stageInfo = beatmap.CurrentStageInfo;
             if (stageInfo == null)
                 throw new InvalidCastException();
 
-            return stageInfo.GetStageElements(note).ToList();
+            return stageInfo.GetStageAppliers(note);
         }
     }
 
@@ -158,23 +158,22 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
     }
 
     [JsonIgnore]
-    public readonly BindableList<StageElement> StageElementsBindable = new();
+    public readonly Bindable<StageEffectApplier> EffectApplierBindable = new();
 
     /// <summary>
     /// Stage elements.
-    /// Will save all the elements that related to the note.
+    /// Will save all the elements that related to the lyric.
     /// The element might include something like style or layout info.
     /// </summary>
     [JsonIgnore]
-    public IList<StageElement> StageElements
+    public StageEffectApplier EffectApplier
     {
-        get => StageElementsBindable;
+        get => EffectApplierBindable.Value;
         set
         {
-            StageElementsBindable.Clear();
-            StageElementsBindable.AddRange(value);
+            EffectApplierBindable.Value = value;
 
-            updateStateByWorkingProperty(NoteWorkingProperty.StageElements);
+            updateStateByWorkingProperty(NoteWorkingProperty.EffectApplier);
         }
     }
 

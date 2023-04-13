@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Stages;
+using osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
@@ -82,7 +84,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
             // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
             lyric.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-            lyric.InvalidateWorkingProperty(LyricWorkingProperty.StageElements);
+            lyric.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
         }
 
         calcualtedPropertyIsUpdated = true;
@@ -104,14 +106,14 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+    protected override LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
     {
-        throw new NotImplementedException();
+        return new LyricPreviewStageEffectApplier(elements, StageDefinition);
     }
 
-    protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+    protected override NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
     {
-        throw new NotImplementedException();
+        return new NotePreviewStageEffectApplier(elements, StageDefinition);
     }
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
