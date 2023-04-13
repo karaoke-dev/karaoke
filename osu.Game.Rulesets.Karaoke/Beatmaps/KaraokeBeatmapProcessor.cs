@@ -40,8 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
 
                 // should invalidate the working property here because the stage info is changed.
-                beatmap.HitObjects.OfType<IHasWorkingProperty<LyricWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(LyricWorkingProperty.StageElements));
-                beatmap.HitObjects.OfType<IHasWorkingProperty<NoteWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.StageElements));
+                beatmap.HitObjects.OfType<IHasWorkingProperty<LyricWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier));
+                beatmap.HitObjects.OfType<IHasWorkingProperty<NoteWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
             }
 
             if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)

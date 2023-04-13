@@ -84,7 +84,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
             // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
             lyric.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-            lyric.InvalidateWorkingProperty(LyricWorkingProperty.StageElements);
+            lyric.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
         }
 
         calcualtedPropertyIsUpdated = true;

@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
@@ -180,12 +181,12 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     }
 
     [Test]
-    public void TestStageElements()
+    public void TestEffectApplier()
     {
         var lyric = new Lyric();
 
         // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.StageElements = new BindableList<StageElement>());
-        AssetIsValid(lyric, LyricWorkingProperty.StageElements, true);
+        Assert.DoesNotThrow(() => lyric.EffectApplier = new LyricClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
+        AssetIsValid(lyric, LyricWorkingProperty.EffectApplier, true);
     }
 }
