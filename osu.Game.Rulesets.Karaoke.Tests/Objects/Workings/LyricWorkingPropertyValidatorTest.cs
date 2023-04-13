@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using J2N.Collections.Generic;
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -67,7 +67,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should be matched if include all singers
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(1), Array.Empty<SingerState>() },
             { new Singer(2), Array.Empty<SingerState>() },
@@ -77,7 +77,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should be matched if include all singers
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(1), new SingerState[] { new(2, 1), new(3, 1) } },
         });
@@ -85,7 +85,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should works even id is not by order.
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(3), Array.Empty<SingerState>() },
             { new Singer(2), Array.Empty<SingerState>() },
