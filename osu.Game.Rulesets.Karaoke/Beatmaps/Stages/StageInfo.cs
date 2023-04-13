@@ -10,17 +10,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public abstract class StageInfo
 {
-    public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
-        hitObject switch
-        {
-            Lyric lyric => GetLyricStageElements(lyric),
-            Note note => GetNoteStageElements(note),
-            _ => Array.Empty<StageElement>()
-        };
-
     public StageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
     {
-        var elements = GetStageElements(hitObject);
+        var elements = getStageElements(hitObject);
 
         return hitObject switch
         {
@@ -29,6 +21,14 @@ public abstract class StageInfo
             _ => throw new InvalidOperationException()
         };
     }
+
+    private IEnumerable<StageElement> getStageElements(KaraokeHitObject hitObject) =>
+        hitObject switch
+        {
+            Lyric lyric => GetLyricStageElements(lyric),
+            Note note => GetNoteStageElements(note),
+            _ => Array.Empty<StageElement>()
+        };
 
     public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
         hitObject switch
