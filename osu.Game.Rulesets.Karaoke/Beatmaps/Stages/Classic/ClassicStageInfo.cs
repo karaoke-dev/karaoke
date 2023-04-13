@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Stages;
+using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
@@ -48,14 +50,14 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IEnumerable<object> ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+    protected override LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
     {
-        throw new NotImplementedException();
+        return new LyricClassicStageEffectApplier(elements, StageDefinition);
     }
 
-    protected override IEnumerable<object> ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+    protected override NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
     {
-        throw new NotImplementedException();
+        return new NoteClassicStageEffectApplier(elements, StageDefinition);
     }
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
