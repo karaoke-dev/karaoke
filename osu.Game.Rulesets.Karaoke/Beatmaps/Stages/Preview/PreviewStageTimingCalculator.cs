@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -9,26 +10,59 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 public class PreviewStageTimingCalculator
 {
-    public PreviewStageTimingCalculator(IBeatmap beatmap)
+    private readonly int numberOfLyrics;
+    private readonly Lyric[] orderedLyrics;
+
+    public PreviewStageTimingCalculator(IBeatmap beatmap, int numberOfLyrics)
     {
-        // todo: calculate all timing points.
+        orderedLyrics = beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.LyricStartTime).ToArray();
+        this.numberOfLyrics = numberOfLyrics;
     }
 
     public double CalculateStartTime(Lyric lyric)
     {
-        // todo : do something.
-        return 0;
+        var matchedLyrics = getRelatedLyrics(lyric, numberOfLyrics + 1).ToArray();
+
+        // if true, means those lyrics show at the screening at the beginning.
+        bool showAtBeginning = matchedLyrics.Length <= numberOfLyrics;
+        return showAtBeginning ? 0 : matchedLyrics.Min(x => x.LyricEndTime);
     }
 
     public double CalculateEndTime(Lyric lyric)
     {
-        // todo : do something.
-        return 0;
+        return lyric.LyricEndTime;
     }
 
+    /// <summary>
+    /// Calculate the line and the timing the lyric should move-up.
+    /// </summary>
+    /// <param name="lyric"></param>
+    /// <returns>The value should start from 0</returns>
     public IDictionary<int, double> CalculateTimings(Lyric lyric)
     {
-        // todo : do something.
-        return new Dictionary<int, double>();
+        var matchedLyrics = getRelatedLyrics(lyric, numberOfLyrics).ToArray();
+        var dictionary = new Dictionary<int, double>();
+
+        // Should not include the current lyric.
+        for (int i = 0; i < matchedLyrics.Length - 1; i++)
+        {
+            // line should start from zero.
+            int line = matchedLyrics.Length - i - 2;
+            double time = matchedLyrics[i].LyricEndTime;
+
+            dictionary.Add(line, time);
+        }
+
+        return dictionary;
     }
+
+    /// <summary>
+    /// will take the current lyric and the previous n lyrics.
+    /// note that the order should be p3, p2, p1, p0, current.
+    /// </summary>
+    /// <param name="lyric"></param>
+    /// <param name="take">if the number is 5, means will get p3, p2, p1, p0 and current</param>
+    /// <returns></returns>
+    private IEnumerable<Lyric> getRelatedLyrics(Lyric lyric, int take)
+        => orderedLyrics.Reverse().SkipWhile(x => x != lyric).Take(take).Reverse().ToArray();
 }
