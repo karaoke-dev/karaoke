@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 
-public class LyricClassicStageEffectApplier : LyricStageEffectApplier
+public class LyricClassicStageEffectApplier : LyricStageEffectApplier<ClassicStageDefinition>
 {
     public LyricClassicStageEffectApplier(IEnumerable<StageElement> elements, ClassicStageDefinition definition)
         : base(elements, definition)

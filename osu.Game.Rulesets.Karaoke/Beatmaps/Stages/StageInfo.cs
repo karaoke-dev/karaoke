@@ -43,9 +43,9 @@ public abstract class StageInfo
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
 
-    protected abstract LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements);
+    protected abstract IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements);
 
-    protected abstract NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements);
+    protected abstract IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements);
 
     protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 

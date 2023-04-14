@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 
-public class NotePreviewStageEffectApplier : NoteStageEffectApplier
+public class NotePreviewStageEffectApplier : NoteStageEffectApplier<PreviewStageDefinition>
 {
     public NotePreviewStageEffectApplier(IEnumerable<StageElement> elements, PreviewStageDefinition definition)
         : base(elements, definition)

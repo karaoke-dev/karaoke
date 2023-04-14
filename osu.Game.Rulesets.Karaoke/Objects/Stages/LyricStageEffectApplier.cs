@@ -7,9 +7,10 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages;
 
-public abstract class LyricStageEffectApplier : StageEffectApplier<DrawableLyric>
+public abstract class LyricStageEffectApplier<TStageDefinition> : StageEffectApplier<TStageDefinition, DrawableLyric>
+    where TStageDefinition : StageDefinition
 {
-    protected LyricStageEffectApplier(IEnumerable<StageElement> elements, StageDefinition definition)
+    protected LyricStageEffectApplier(IEnumerable<StageElement> elements, TStageDefinition definition)
         : base(elements, definition)
     {
     }

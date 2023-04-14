@@ -261,12 +261,12 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             throw new NotImplementedException();
         }
 
-        protected override LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+        protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
         {
             throw new NotImplementedException();
         }
 
-        protected override NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+        protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
         {
             throw new NotImplementedException();
         }

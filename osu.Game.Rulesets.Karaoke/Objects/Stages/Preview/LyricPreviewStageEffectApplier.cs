@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 
-public class LyricPreviewStageEffectApplier : LyricStageEffectApplier
+public class LyricPreviewStageEffectApplier : LyricStageEffectApplier<PreviewStageDefinition>
 {
     public LyricPreviewStageEffectApplier(IEnumerable<StageElement> elements, PreviewStageDefinition definition)
         : base(elements, definition)
