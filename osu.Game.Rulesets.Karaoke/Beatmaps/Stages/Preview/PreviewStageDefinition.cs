@@ -74,7 +74,7 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// Maximum of lyrics in the stage.
     /// </summary>
-    public int LinesOfLyric { get; set; } = 5;
+    public int NumberOfLyrics { get; set; } = 5;
 
     /// <summary>
     /// The height for the single lyric.
