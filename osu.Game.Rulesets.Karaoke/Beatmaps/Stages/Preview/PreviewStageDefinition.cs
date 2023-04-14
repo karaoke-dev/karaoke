@@ -31,7 +31,7 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// The offset position for the lyric showing to the screen or hiding from the screen.
     /// </summary>
-    public double FadingOffsetPosition { get; set; } = 64;
+    public float FadingOffsetPosition { get; set; } = 64;
 
     /// <summary>
     /// Fade-in easing for the lyric showing to the screen.
@@ -42,6 +42,16 @@ public class PreviewStageDefinition : StageDefinition
     /// Fade-out easing for the lyric hiding from the screen.
     /// </summary>
     public Easing FadeOutEasing { get; set; } = Easing.InCirc;
+
+    /// <summary>
+    /// Easing for the lyric move to the start position.
+    /// </summary>
+    public Easing MovingInEasing { get; set; } = Easing.InCirc;
+
+    /// <summary>
+    /// Easing for the lyric move out to the end position.
+    /// </summary>
+    public Easing MoveOutEasing { get; set; } = Easing.InCirc;
 
     #endregion
 
@@ -84,17 +94,17 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// The duration for the time moving up.
     /// </summary>
-    public double LineMovingTime { get; set; } = 100;
+    public double LineMovingTime { get; set; } = 350;
 
     /// <summary>
     /// The easing for the time moving up.
     /// </summary>
-    public Easing LineMovingEasing { get; set; } = Easing.InCirc;
+    public Easing LineMovingEasing { get; set; } = Easing.OutCirc;
 
     /// <summary>
     /// If the first lyric is moved-up, the offset for the second lyric to be moved-up.
     /// </summary>
-    public double LineMovingOffset { get; set; } = 100;
+    public double LineMovingOffsetTime { get; set; } = 50;
 
     #endregion
 }
