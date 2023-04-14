@@ -63,7 +63,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
-        static StageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
+        static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
         {
             var stageInfo = beatmap.CurrentStageInfo;
             if (stageInfo == null)
@@ -158,7 +158,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
     }
 
     [JsonIgnore]
-    public readonly Bindable<StageEffectApplier> EffectApplierBindable = new();
+    public readonly Bindable<IStageEffectApplier> EffectApplierBindable = new();
 
     /// <summary>
     /// Stage elements.
@@ -166,7 +166,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
     /// The element might include something like style or layout info.
     /// </summary>
     [JsonIgnore]
-    public StageEffectApplier EffectApplier
+    public IStageEffectApplier EffectApplier
     {
         get => EffectApplierBindable.Value;
         set

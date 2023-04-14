@@ -7,5 +7,5 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
 public interface IHasEffectApplier
 {
-    StageEffectApplier EffectApplier { get; }
+    IStageEffectApplier EffectApplier { get; }
 }

@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public abstract class StageInfo
 {
-    public StageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
+    public IStageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
     {
         var elements = getStageElements(hitObject);
 
