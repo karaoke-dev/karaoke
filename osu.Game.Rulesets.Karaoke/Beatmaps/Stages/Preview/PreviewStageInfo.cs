@@ -11,6 +11,8 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.UI.Stages;
+using osu.Game.Rulesets.Karaoke.UI.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
@@ -93,6 +95,11 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     #endregion
 
     #region Stage element
+
+    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
+    {
+        return new PlayfieldPreviewStageApplier(StageDefinition);
+    }
 
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {

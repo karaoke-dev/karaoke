@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
+using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
@@ -250,6 +251,11 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         public TestCategory Category { get; } = new();
 
         #endregion
+
+        protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
+        {
+            throw new NotImplementedException();
+        }
 
         protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
         {
