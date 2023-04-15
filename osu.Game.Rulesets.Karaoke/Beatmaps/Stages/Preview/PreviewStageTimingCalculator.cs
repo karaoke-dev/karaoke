@@ -11,12 +11,18 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 public class PreviewStageTimingCalculator
 {
     private readonly Lyric[] orderedLyrics;
+
+    // lyrics in the stage.
     private readonly int numberOfLyrics;
+
+    // offset time in the Lyrics arrangement.
+    private readonly double lineMovingOffsetTime;
 
     public PreviewStageTimingCalculator(IBeatmap beatmap, PreviewStageDefinition definition)
     {
         orderedLyrics = beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.LyricStartTime).ToArray();
         numberOfLyrics = definition.NumberOfLyrics;
+        lineMovingOffsetTime = definition.LineMovingOffsetTime;
     }
 
     public double CalculateStartTime(Lyric lyric)
@@ -25,7 +31,7 @@ public class PreviewStageTimingCalculator
 
         // if true, means those lyrics show at the screening at the beginning.
         bool showAtBeginning = matchedLyrics.Length <= numberOfLyrics;
-        return showAtBeginning ? 0 : matchedLyrics.Min(x => x.LyricEndTime);
+        return showAtBeginning ? 0 : matchedLyrics.Min(x => x.LyricEndTime) + numberOfLyrics * lineMovingOffsetTime;
     }
 
     public double CalculateEndTime(Lyric lyric)
@@ -48,7 +54,7 @@ public class PreviewStageTimingCalculator
         {
             // line should start from zero.
             int line = matchedLyrics.Length - i - 2;
-            double time = matchedLyrics[i].LyricEndTime;
+            double time = matchedLyrics[i].LyricEndTime + line * lineMovingOffsetTime;
 
             dictionary.Add(line, time);
         }

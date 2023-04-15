@@ -20,13 +20,21 @@ public class PreviewStageTimingCalculatorTest
     private const int lyric_4_id = 4;
     private const int lyric_5_id = 5;
 
+    // lyrics in the stage.
     private const int number_of_lyrics = 4;
+
+    // offset time in the fade in/out
+    private const double fading_time = 10;
+
+    // offset time in the Lyrics arrangement.
+    private const double line_moving_time = 20;
+    private const double line_moving_offset_time = 30;
 
     [TestCase(lyric_1_id, 0)]
     [TestCase(lyric_2_id, 0)]
     [TestCase(lyric_3_id, 0)]
     [TestCase(lyric_4_id, 0)]
-    [TestCase(lyric_5_id, 2000)] // it's the time first lyric should be disappeared.
+    [TestCase(lyric_5_id, 2000 + line_moving_offset_time * 4)] // it's the time first lyric should be disappeared.
     public void TestGetStartTime(int lyricId, double expected)
     {
         var beatmap = createBeatmap();
@@ -54,9 +62,9 @@ public class PreviewStageTimingCalculatorTest
 
     [TestCase(lyric_1_id, new string[] { })]
     [TestCase(lyric_2_id, new[] { "0:2000" })]
-    [TestCase(lyric_3_id, new[] { "1:2000", "0:3000" })]
-    [TestCase(lyric_4_id, new[] { "2:2000", "1:3000", "0:4000" })]
-    [TestCase(lyric_5_id, new[] { "2:3000", "1:4000", "0:5000" })]
+    [TestCase(lyric_3_id, new[] { "1:2030", "0:3000" })]
+    [TestCase(lyric_4_id, new[] { "2:2060", "1:3030", "0:4000" })]
+    [TestCase(lyric_5_id, new[] { "2:3060", "1:4030", "0:5000" })]
     public void TestGetTiming(int lyricId, string[] timing)
     {
         var beatmap = createBeatmap();
@@ -76,6 +84,9 @@ public class PreviewStageTimingCalculatorTest
         var definition = new PreviewStageDefinition
         {
             NumberOfLyrics = number_of_lyrics,
+            FadingTime = fading_time,
+            LineMovingTime = line_moving_time,
+            LineMovingOffsetTime = line_moving_offset_time,
         };
 
         return new PreviewStageTimingCalculator(beatmap, definition);
