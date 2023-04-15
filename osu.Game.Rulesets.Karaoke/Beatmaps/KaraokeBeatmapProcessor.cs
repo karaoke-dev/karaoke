@@ -4,11 +4,9 @@
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Patterns;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -61,19 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             {
                 hitObject.ValidateWorkingProperty(beatmap);
             }
-        }
-
-        public override void PostProcess()
-        {
-            base.PostProcess();
-
-            var lyrics = Beatmap.HitObjects.OfType<Lyric>().ToList();
-
-            if (!lyrics.Any())
-                return;
-
-            var pattern = new LegacyLyricTimeGenerator();
-            pattern.Generate(lyrics);
         }
     }
 }
