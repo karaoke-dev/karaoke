@@ -35,7 +35,7 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
 
         drawable.ClearTransforms();
 
-        var transform = drawable.FadeOut();
+        var transform = drawable.FadeOut().Then();
 
         foreach (var element in elements)
         {
@@ -55,15 +55,13 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
 
         drawable.ClearTransforms();
 
-        var transform = drawable.Delay(0);
+        var transform = drawable.Delay(0).Then();
 
         foreach (var element in elements)
         {
             // todo: not very sure how to combine the transform.
             UpdateStartTimeStateTransforms(transform, element);
         }
-
-        drawable.FadeIn();
     }
 
     /// <summary>
@@ -79,7 +77,7 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
 
         drawable.ClearTransforms();
 
-        var transform = drawable.Delay(0);
+        var transform = drawable.Delay(0).Then();
 
         foreach (var element in elements)
         {
@@ -87,7 +85,7 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
             UpdateHitStateTransforms(transform, state, element);
         }
 
-        drawable.FadeOut();
+        transform.Then().FadeOut();
     }
 
     protected abstract void UpdateInitialTransforms(TransformSequence<TDrawableHitObject> transformSequence, StageElement element);
