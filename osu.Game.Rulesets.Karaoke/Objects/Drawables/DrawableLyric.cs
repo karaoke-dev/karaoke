@@ -20,7 +20,6 @@ using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Skinning;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
@@ -67,7 +66,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         [BackgroundDependencyLoader(true)]
         private void load([CanBeNull] KaraokeSessionStatics session)
         {
-            Scale = new Vector2(2);
             AutoSizeAxes = Axes.Both;
 
             AddInternal(lyricPieces = new Container<DefaultLyricPiece>
