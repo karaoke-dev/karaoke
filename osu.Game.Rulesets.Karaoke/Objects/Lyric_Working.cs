@@ -41,6 +41,10 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
         {
             switch (flag)
             {
+                case LyricWorkingProperty.PreemptTime:
+                    PreemptTime = getPreemptTime(beatmap, this);
+                    break;
+
                 case LyricWorkingProperty.StartTime:
                     StartTime = getStartTime(beatmap, this);
                     break;
@@ -72,6 +76,16 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        static double getPreemptTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            double preemptTime = stageInfo.GetPreemptTime(lyric);
+            return preemptTime;
         }
 
         static double getStartTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
@@ -121,6 +135,22 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
 
     [JsonIgnore]
     public double LyricDuration => LyricEndTime - LyricStartTime;
+
+    private double preemptTime;
+
+    /// <summary>
+    /// Lyric's preempt time is created from <see cref="StageInfo"/> and should not be saved.
+    /// </summary>
+    [JsonIgnore]
+    public double PreemptTime
+    {
+        get => preemptTime;
+        set
+        {
+            preemptTime = value;
+            updateStateByWorkingProperty(LyricWorkingProperty.PreemptTime);
+        }
+    }
 
     /// <summary>
     /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.

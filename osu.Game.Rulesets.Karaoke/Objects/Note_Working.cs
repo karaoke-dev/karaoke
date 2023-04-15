@@ -10,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -40,6 +41,10 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         {
             switch (flag)
             {
+                case NoteWorkingProperty.PreemptTime:
+                    PreemptTime = getPreemptTime(beatmap, this);
+                    break;
+
                 case NoteWorkingProperty.Page:
                     PageIndex = getPageIndex(beatmap, StartTime);
                     break;
@@ -55,6 +60,16 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        static double getPreemptTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            double preemptTime = stageInfo.GetPreemptTime(lyric);
+            return preemptTime;
         }
 
         static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)
@@ -87,6 +102,22 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         {
             PageIndexBindable.Value = value;
             updateStateByWorkingProperty(NoteWorkingProperty.Page);
+        }
+    }
+
+    private double preemptTime;
+
+    /// <summary>
+    /// Note's preempt time is created from <see cref="StageInfo"/> and should not be saved.
+    /// </summary>
+    [JsonIgnore]
+    public double PreemptTime
+    {
+        get => preemptTime;
+        set
+        {
+            preemptTime = value;
+            updateStateByWorkingProperty(NoteWorkingProperty.PreemptTime);
         }
     }
 

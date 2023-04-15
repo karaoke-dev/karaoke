@@ -14,6 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty>
 {
     [Test]
+    public void TestPreemptTime()
+    {
+        var note = new Note();
+
+        // page state is valid because assign the property.
+        Assert.DoesNotThrow(() => note.PreemptTime = 300);
+        AssetIsValid(note, NoteWorkingProperty.PreemptTime, true);
+    }
+
+    [Test]
     public void TestPage()
     {
         var note = new Note();
