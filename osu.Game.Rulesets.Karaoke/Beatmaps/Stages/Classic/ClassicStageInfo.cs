@@ -60,6 +60,18 @@ public class ClassicStageInfo : StageInfo
         return new NoteClassicStageEffectApplier(elements, StageDefinition);
     }
 
+    protected override double GetPreemptTime(Lyric lyric)
+    {
+        // todo: should have the time if having loading effect with duration.
+        return 0;
+    }
+
+    protected override double GetPreemptTime(Note note)
+    {
+        // todo: should have the time if having loading effect with duration.
+        return 0;
+    }
+
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {
         return LyricTimingInfo.GetStartAndEndTime(lyric);

@@ -116,6 +116,17 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         return new NotePreviewStageEffectApplier(elements, StageDefinition);
     }
 
+    protected override double GetPreemptTime(Lyric lyric)
+    {
+        return StageDefinition.FadingTime;
+    }
+
+    protected override double GetPreemptTime(Note note)
+    {
+        // todo: should have the time if having loading effect with duration.
+        return 0;
+    }
+
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {
         var element = layoutCategory.GetElementByItem(lyric);

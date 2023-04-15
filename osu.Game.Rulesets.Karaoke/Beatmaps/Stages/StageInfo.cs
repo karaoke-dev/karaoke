@@ -30,6 +30,14 @@ public abstract class StageInfo
             _ => Array.Empty<StageElement>()
         };
 
+    public double GetPreemptTime(KaraokeHitObject hitObject) =>
+        hitObject switch
+        {
+            Lyric lyric => GetPreemptTime(lyric),
+            Note note => GetPreemptTime(note),
+            _ => throw new InvalidOperationException()
+        };
+
     public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
         hitObject switch
         {
@@ -46,6 +54,10 @@ public abstract class StageInfo
     protected abstract IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements);
 
     protected abstract IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements);
+
+    protected abstract double GetPreemptTime(Lyric lyric);
+
+    protected abstract double GetPreemptTime(Note note);
 
     protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 
