@@ -36,22 +36,22 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// Fade-in easing for the lyric showing to the screen.
     /// </summary>
-    public Easing FadeInEasing { get; set; } = Easing.InCirc;
+    public Easing FadeInEasing { get; set; } = Easing.OutCirc;
 
     /// <summary>
     /// Fade-out easing for the lyric hiding from the screen.
     /// </summary>
-    public Easing FadeOutEasing { get; set; } = Easing.InCirc;
+    public Easing FadeOutEasing { get; set; } = Easing.OutCirc;
 
     /// <summary>
     /// Easing for the lyric move to the start position.
     /// </summary>
-    public Easing MovingInEasing { get; set; } = Easing.InCirc;
+    public Easing MovingInEasing { get; set; } = Easing.OutCirc;
 
     /// <summary>
     /// Easing for the lyric move out to the end position.
     /// </summary>
-    public Easing MoveOutEasing { get; set; } = Easing.InCirc;
+    public Easing MoveOutEasing { get; set; } = Easing.OutCirc;
 
     #endregion
 
@@ -60,22 +60,17 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// The alpha for the lyric that is not active.
     /// </summary>
-    public float InactiveAlpha { get; set; } = 0.5f;
+    public float InactiveAlpha { get; set; } = 0.3f;
 
     /// <summary>
     /// Time for the inactive state to the active stage.
     /// </summary>
-    public double ActiveTime { get; set; }
+    public double ActiveTime { get; set; } = 350;
 
     /// <summary>
     /// The alpha easing for the inactive to the active state.
     /// </summary>
-    public Easing ActiveEasing { get; set; } = Easing.InCirc;
-
-    /// <summary>
-    /// The alpha easing for the active to the inactive state.
-    /// </summary>
-    public Easing InactiveEasing { get; set; } = Easing.InCirc;
+    public Easing ActiveEasing { get; set; } = Easing.OutCirc;
 
     #endregion
 
@@ -94,7 +89,7 @@ public class PreviewStageDefinition : StageDefinition
     /// <summary>
     /// The duration for the time moving up.
     /// </summary>
-    public double LineMovingTime { get; set; } = 350;
+    public double LineMovingTime { get; set; } = 500;
 
     /// <summary>
     /// The easing for the time moving up.
