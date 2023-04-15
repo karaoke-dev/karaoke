@@ -150,7 +150,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             updateFontStyle();
             updateLyricFontInfo();
-            updateLayout();
         }
 
         private void updateFontStyle()
@@ -175,18 +174,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             var lyricFontInfo = CurrentSkin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.Value;
             lyricFontInfo?.ApplyTo(this);
-        }
-
-        private void updateLayout()
-        {
-            if (CurrentSkin == null)
-                return;
-
-            if (HitObject == null)
-                return;
-
-            var layout = CurrentSkin.GetConfig<Lyric, LyricLayout>(HitObject)?.Value;
-            layout?.ApplyTo(this);
         }
 
         private void applyTranslate()
