@@ -15,6 +15,9 @@ public class PreviewStageTimingCalculator
     // lyrics in the stage.
     private readonly int numberOfLyrics;
 
+    // offset time in the fade in/out
+    private readonly double fadingTime;
+
     // offset time in the Lyrics arrangement.
     private readonly double lineMovingOffsetTime;
 
@@ -22,6 +25,7 @@ public class PreviewStageTimingCalculator
     {
         orderedLyrics = beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.LyricStartTime).ToArray();
         numberOfLyrics = definition.NumberOfLyrics;
+        fadingTime = definition.FadingTime;
         lineMovingOffsetTime = definition.LineMovingOffsetTime;
     }
 
@@ -31,7 +35,14 @@ public class PreviewStageTimingCalculator
 
         // if true, means those lyrics show at the screening at the beginning.
         bool showAtBeginning = matchedLyrics.Length <= numberOfLyrics;
-        return showAtBeginning ? 0 : matchedLyrics.Min(x => x.LyricEndTime) + numberOfLyrics * lineMovingOffsetTime;
+
+        if (showAtBeginning)
+        {
+            return 0;
+        }
+
+        double startEffectTime = matchedLyrics.Min(x => x.LyricEndTime) + numberOfLyrics * lineMovingOffsetTime;
+        return startEffectTime + fadingTime;
     }
 
     public double CalculateEndTime(Lyric lyric)
