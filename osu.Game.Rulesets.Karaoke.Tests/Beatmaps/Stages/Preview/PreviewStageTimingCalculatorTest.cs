@@ -34,7 +34,7 @@ public class PreviewStageTimingCalculatorTest
     [TestCase(lyric_2_id, 0)]
     [TestCase(lyric_3_id, 0)]
     [TestCase(lyric_4_id, 0)]
-    [TestCase(lyric_5_id, 2000 + line_moving_offset_time * 4)] // it's the time first lyric should be disappeared.
+    [TestCase(lyric_5_id, 2000 + line_moving_offset_time * 4 + fading_time)] // it's the time first lyric should be disappeared.
     public void TestGetStartTime(int lyricId, double expected)
     {
         var beatmap = createBeatmap();
