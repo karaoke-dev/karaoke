@@ -66,7 +66,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         if (IsUpdated())
             return;
 
-        var calculator = new PreviewStageTimingCalculator(beatmap, StageDefinition.NumberOfLyrics);
+        var calculator = new PreviewStageTimingCalculator(beatmap, StageDefinition);
 
         // also, clear all mapping in the layout and re-create one.
         layoutCategory.ClearElements();

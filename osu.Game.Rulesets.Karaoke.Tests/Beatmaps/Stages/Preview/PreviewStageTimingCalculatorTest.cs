@@ -32,7 +32,7 @@ public class PreviewStageTimingCalculatorTest
         var beatmap = createBeatmap();
         var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
 
-        var calculator = new PreviewStageTimingCalculator(beatmap, number_of_lyrics);
+        var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateStartTime(lyric);
         Assert.AreEqual(expected, actual);
     }
@@ -47,7 +47,7 @@ public class PreviewStageTimingCalculatorTest
         var beatmap = createBeatmap();
         var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
 
-        var calculator = new PreviewStageTimingCalculator(beatmap, number_of_lyrics);
+        var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateEndTime(lyric);
         Assert.AreEqual(expected, actual);
     }
@@ -62,7 +62,7 @@ public class PreviewStageTimingCalculatorTest
         var beatmap = createBeatmap();
         var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
 
-        var calculator = new PreviewStageTimingCalculator(beatmap, number_of_lyrics);
+        var calculator = createCalculator(beatmap);
         var expected = convertKeyToDictionary(timing);
         var actual = calculator.CalculateTimings(lyric);
         Assert.AreEqual(expected, actual);
@@ -70,6 +70,16 @@ public class PreviewStageTimingCalculatorTest
 
     private static IDictionary<int, double> convertKeyToDictionary(IEnumerable<string> values)
         => values.ToDictionary(k => int.Parse(k.Split(':').First()), v => double.Parse(v.Split(':').Last()));
+
+    private PreviewStageTimingCalculator createCalculator(IBeatmap beatmap)
+    {
+        var definition = new PreviewStageDefinition
+        {
+            NumberOfLyrics = number_of_lyrics,
+        };
+
+        return new PreviewStageTimingCalculator(beatmap, definition);
+    }
 
     private IBeatmap createBeatmap()
     {

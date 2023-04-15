@@ -10,13 +10,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 public class PreviewStageTimingCalculator
 {
-    private readonly int numberOfLyrics;
     private readonly Lyric[] orderedLyrics;
+    private readonly int numberOfLyrics;
 
-    public PreviewStageTimingCalculator(IBeatmap beatmap, int numberOfLyrics)
+    public PreviewStageTimingCalculator(IBeatmap beatmap, PreviewStageDefinition definition)
     {
         orderedLyrics = beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.LyricStartTime).ToArray();
-        this.numberOfLyrics = numberOfLyrics;
+        numberOfLyrics = definition.NumberOfLyrics;
     }
 
     public double CalculateStartTime(Lyric lyric)
