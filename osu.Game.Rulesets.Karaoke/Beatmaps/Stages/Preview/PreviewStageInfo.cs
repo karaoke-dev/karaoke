@@ -106,12 +106,12 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+    protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
     {
         return new LyricPreviewStageEffectApplier(elements, StageDefinition);
     }
 
-    protected override NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+    protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
     {
         return new NotePreviewStageEffectApplier(elements, StageDefinition);
     }

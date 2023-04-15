@@ -50,12 +50,12 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override LyricStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
+    protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
     {
         return new LyricClassicStageEffectApplier(elements, StageDefinition);
     }
 
-    protected override NoteStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
+    protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
     {
         return new NoteClassicStageEffectApplier(elements, StageDefinition);
     }

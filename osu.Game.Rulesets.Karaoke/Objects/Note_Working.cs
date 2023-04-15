@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
+public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffectApplier
 {
     [JsonIgnore]
     private readonly NoteWorkingPropertyValidator workingPropertyValidator;
@@ -63,7 +63,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
         static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
-        static StageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
+        static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
         {
             var stageInfo = beatmap.CurrentStageInfo;
             if (stageInfo == null)
@@ -158,7 +158,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
     }
 
     [JsonIgnore]
-    public readonly Bindable<StageEffectApplier> EffectApplierBindable = new();
+    public readonly Bindable<IStageEffectApplier> EffectApplierBindable = new();
 
     /// <summary>
     /// Stage elements.
@@ -166,7 +166,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>
     /// The element might include something like style or layout info.
     /// </summary>
     [JsonIgnore]
-    public StageEffectApplier EffectApplier
+    public IStageEffectApplier EffectApplier
     {
         get => EffectApplierBindable.Value;
         set

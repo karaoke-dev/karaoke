@@ -2,15 +2,33 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Framework.Graphics.Transforms;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 
-public class NoteClassicStageEffectApplier : NoteStageEffectApplier
+public class NoteClassicStageEffectApplier : NoteStageEffectApplier<ClassicStageDefinition>
 {
     public NoteClassicStageEffectApplier(IEnumerable<StageElement> elements, ClassicStageDefinition definition)
         : base(elements, definition)
     {
+    }
+
+    protected override void UpdateInitialTransforms(TransformSequence<DrawableNote> transformSequence, StageElement element)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void UpdateStartTimeStateTransforms(TransformSequence<DrawableNote> transformSequence, StageElement element)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void UpdateHitStateTransforms(TransformSequence<DrawableNote> transformSequence, ArmedState state, StageElement element)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -3,12 +3,14 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages;
 
-public abstract class NoteStageEffectApplier : StageEffectApplier
+public abstract class NoteStageEffectApplier<TStageDefinition> : StageEffectApplier<TStageDefinition, DrawableNote>
+    where TStageDefinition : StageDefinition
 {
-    protected NoteStageEffectApplier(IEnumerable<StageElement> elements, StageDefinition definition)
+    protected NoteStageEffectApplier(IEnumerable<StageElement> elements, TStageDefinition definition)
         : base(elements, definition)
     {
     }
