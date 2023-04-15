@@ -7,5 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
 public interface IHasEffectApplier
 {
+    double PreemptTime { get; }
+
     IStageEffectApplier EffectApplier { get; }
 }

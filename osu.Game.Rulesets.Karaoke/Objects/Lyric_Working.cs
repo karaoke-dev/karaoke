@@ -10,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -40,6 +41,10 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
         {
             switch (flag)
             {
+                case LyricWorkingProperty.PreemptTime:
+                    PreemptTime = getPreemptTime(beatmap, this);
+                    break;
+
                 case LyricWorkingProperty.StartTime:
                     StartTime = getStartTime(beatmap, this);
                     break;
@@ -71,6 +76,16 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        static double getPreemptTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
+        {
+            var stageInfo = beatmap.CurrentStageInfo;
+            if (stageInfo == null)
+                throw new InvalidCastException();
+
+            double preemptTime = stageInfo.GetPreemptTime(lyric);
+            return preemptTime;
         }
 
         static double getStartTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
@@ -121,8 +136,24 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     [JsonIgnore]
     public double LyricDuration => LyricEndTime - LyricStartTime;
 
+    private double preemptTime;
+
     /// <summary>
-    /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
+    /// Lyric's preempt time is created from <see cref="StageInfo"/> and should not be saved.
+    /// </summary>
+    [JsonIgnore]
+    public double PreemptTime
+    {
+        get => preemptTime;
+        set
+        {
+            preemptTime = value;
+            updateStateByWorkingProperty(LyricWorkingProperty.PreemptTime);
+        }
+    }
+
+    /// <summary>
+    /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.
     /// </summary>
     [JsonIgnore]
     public override double StartTime
@@ -139,7 +170,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     public readonly Bindable<double> DurationBindable = new BindableDouble();
 
     /// <summary>
-    /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
+    /// Lyric's duration is created from <see cref="StageInfo"/> and should not be saved.
     /// </summary>
     [JsonIgnore]
     public double Duration
