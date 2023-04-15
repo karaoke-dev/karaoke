@@ -10,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -122,7 +123,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     public double LyricDuration => LyricEndTime - LyricStartTime;
 
     /// <summary>
-    /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
+    /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.
     /// </summary>
     [JsonIgnore]
     public override double StartTime
@@ -139,7 +140,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     public readonly Bindable<double> DurationBindable = new BindableDouble();
 
     /// <summary>
-    /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
+    /// Lyric's duration is created from <see cref="StageInfo"/> and should not be saved.
     /// </summary>
     [JsonIgnore]
     public double Duration
