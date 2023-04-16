@@ -16,16 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Lyric, LyricWorkingProperty>
 {
     [Test]
-    public void TestPreemptTime()
-    {
-        var lyric = new Lyric();
-
-        // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.PreemptTime = 300);
-        AssetIsValid(lyric, LyricWorkingProperty.PreemptTime, true);
-    }
-
-    [Test]
     public void TestStartTime()
     {
         var lyric = new Lyric();
