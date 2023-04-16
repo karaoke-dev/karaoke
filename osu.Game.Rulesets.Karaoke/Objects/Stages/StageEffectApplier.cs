@@ -18,7 +18,8 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
     private readonly StageElement[] elements;
 
     protected readonly TStageDefinition Definition;
-    public readonly double PreemptTime;
+
+    public double PreemptTime { get; }
 
     protected StageEffectApplier(IEnumerable<StageElement> elements, TStageDefinition definition)
     {

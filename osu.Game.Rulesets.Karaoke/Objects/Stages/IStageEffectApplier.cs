@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Stages;
 
 public interface IStageEffectApplier
 {
+    double PreemptTime { get; }
+
     void UpdateInitialTransforms(DrawableHitObject drawableHitObject);
 
     void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject);
