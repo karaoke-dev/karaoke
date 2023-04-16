@@ -16,7 +16,6 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
@@ -29,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
-        public Playfield LyricPlayfield { get; }
+        public LyricPlayfield LyricPlayfield { get; }
 
         public ScrollingNotePlayfield NotePlayfield { get; }
 
@@ -92,11 +91,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
             lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
         }
 
-        protected virtual Playfield CreateLyricPlayfield()
-            => new LyricPlayfield();
+        protected virtual LyricPlayfield CreateLyricPlayfield() => new();
 
-        protected virtual ScrollingNotePlayfield CreateNotePlayfield(int columns)
-            => new NotePlayfield(columns);
+        protected virtual ScrollingNotePlayfield CreateNotePlayfield(int columns) => new NotePlayfield(columns);
 
         #region Pooling support
 

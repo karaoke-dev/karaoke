@@ -5,11 +5,15 @@ using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
+using osu.Game.Rulesets.Karaoke.UI.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
 public abstract class StageInfo
 {
+    public IPlayfieldStageApplier GetPlayfieldStageApplier()
+        => CreatePlayfieldStageApplier();
+
     public IStageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
     {
         var elements = getStageElements(hitObject);
@@ -46,6 +50,8 @@ public abstract class StageInfo
         };
 
     #region Stage element
+
+    protected abstract IPlayfieldStageApplier CreatePlayfieldStageApplier();
 
     protected abstract IEnumerable<StageElement> GetLyricStageElements(Lyric lyric);
 

@@ -16,7 +16,7 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
 {
     private readonly IEnumerable<StageElement> elements;
 
-    public readonly TStageDefinition Definition;
+    protected readonly TStageDefinition Definition;
 
     protected StageEffectApplier(IEnumerable<StageElement> elements, TStageDefinition definition)
     {

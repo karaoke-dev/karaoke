@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.UI.Stages;
+using osu.Game.Rulesets.Karaoke.UI.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
@@ -37,6 +39,11 @@ public class ClassicStageInfo : StageInfo
     #endregion
 
     #region Stage element
+
+    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
+    {
+        return new PlayfieldClassicStageApplier(StageDefinition);
+    }
 
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
