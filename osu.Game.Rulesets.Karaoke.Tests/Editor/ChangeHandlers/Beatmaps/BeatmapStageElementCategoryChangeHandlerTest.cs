@@ -277,16 +277,6 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             throw new NotImplementedException();
         }
 
-        protected override double GetPreemptTime(Lyric lyric)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override double GetPreemptTime(Note note)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
         {
             throw new NotImplementedException();

@@ -15,7 +15,6 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
     protected override bool CanCheckWorkingPropertySync(Note hitObject, NoteWorkingProperty flags) =>
         flags switch
         {
-            NoteWorkingProperty.PreemptTime => false,
             NoteWorkingProperty.Page => false,
             NoteWorkingProperty.ReferenceLyric => true,
             NoteWorkingProperty.EffectApplier => false,
@@ -25,7 +24,6 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
     protected override bool NeedToSyncWorkingProperty(Note hitObject, NoteWorkingProperty flags) =>
         flags switch
         {
-            NoteWorkingProperty.PreemptTime => false,
             NoteWorkingProperty.Page => false,
             NoteWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID != hitObject.ReferenceLyricId,
             NoteWorkingProperty.EffectApplier => false,
