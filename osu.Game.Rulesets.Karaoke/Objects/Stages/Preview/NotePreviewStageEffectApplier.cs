@@ -17,6 +17,12 @@ public class NotePreviewStageEffectApplier : NoteStageEffectApplier<PreviewStage
     {
     }
 
+    protected override double GetPreemptTime(IEnumerable<StageElement> elements)
+    {
+        // todo: implementation needed.
+        return 0;
+    }
+
     protected override void UpdateInitialTransforms(TransformSequence<DrawableNote> transformSequence, StageElement element)
     {
         throw new System.NotImplementedException();

@@ -20,6 +20,11 @@ public class LyricPreviewStageEffectApplier : LyricStageEffectApplier<PreviewSta
     {
     }
 
+    protected override double GetPreemptTime(IEnumerable<StageElement> elements)
+    {
+        return Definition.FadingTime;
+    }
+
     protected override void UpdateInitialTransforms(TransformSequence<DrawableLyric> transformSequence, StageElement element)
     {
         switch (element)

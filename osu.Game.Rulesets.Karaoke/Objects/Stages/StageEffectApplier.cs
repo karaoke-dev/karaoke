@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
@@ -14,14 +15,17 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
     where TStageDefinition : StageDefinition
     where TDrawableHitObject : DrawableHitObject
 {
-    private readonly IEnumerable<StageElement> elements;
+    private readonly StageElement[] elements;
 
     protected readonly TStageDefinition Definition;
+    public readonly double PreemptTime;
 
     protected StageEffectApplier(IEnumerable<StageElement> elements, TStageDefinition definition)
     {
-        this.elements = elements;
+        this.elements = elements.ToArray();
         Definition = definition;
+
+        PreemptTime = GetPreemptTime(this.elements);
     }
 
     /// <summary>
@@ -87,6 +91,8 @@ public abstract class StageEffectApplier<TStageDefinition, TDrawableHitObject> :
 
         transform.Then().FadeOut();
     }
+
+    protected abstract double GetPreemptTime(IEnumerable<StageElement> elements);
 
     protected abstract void UpdateInitialTransforms(TransformSequence<TDrawableHitObject> transformSequence, StageElement element);
 
