@@ -14,6 +14,11 @@ public class PlayfieldPreviewStageApplier : PlayfieldStageApplier<PreviewStageDe
     {
     }
 
+    protected override void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield)
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override void UpdateLyricPlayfieldArrangement(TransformSequence<LyricPlayfield> transformSequence, bool displayNotePlayfield)
     {
         throw new System.NotImplementedException();
