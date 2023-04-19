@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 
 public partial class StageEditorEditModeSection : EditModeSection<StageEditorEditMode>
 {
-    [OpenTabletDriver.Plugin.DependencyInjection.Resolved, AllowNull]
+    [Resolved, AllowNull]
     private IStageEditorStateProvider stageEditorStateProvider { get; set; }
 
     private readonly StageEditorEditCategory category;
