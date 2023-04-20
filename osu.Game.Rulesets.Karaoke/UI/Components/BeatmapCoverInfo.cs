@@ -14,10 +14,11 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Resources.Localisation.Web;
+using osu.Game.Rulesets.Karaoke.UI.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components;
 
-public partial class BeatmapCoverInfo : CompositeDrawable
+public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
 {
     public BeatmapCoverInfo()
     {
