@@ -54,9 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(OsuColour colours)
         {
-            indexRangeBackground.Colour = colour.Pink;
+            indexRangeBackground.Colour = colours.Pink;
         }
 
         protected override void OnSelected()

@@ -319,13 +319,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 }
 
                 [BackgroundDependencyLoader]
-                private void load(OsuColour colour)
+                private void load(OsuColour colours)
                 {
                     box.Colour = fontFormat switch
                     {
-                        FontFormat.Internal => colour.Gray7,
-                        FontFormat.Fnt => colour.Pink,
-                        FontFormat.Ttf => colour.Blue,
+                        FontFormat.Internal => colours.Gray7,
+                        FontFormat.Fnt => colours.Pink,
+                        FontFormat.Ttf => colours.Blue,
                         _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
                     };
 

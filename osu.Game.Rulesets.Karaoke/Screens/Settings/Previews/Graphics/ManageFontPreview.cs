@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
         private FillFlowContainer<GenerateRowContainer> textContainer;
 
         [BackgroundDependencyLoader]
-        private void load(TextureStore textures, OsuColour colour)
+        private void load(TextureStore textures, OsuColour colours)
         {
             Children = new Drawable[]
             {
@@ -59,13 +59,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
                     Masking = true,
                     CornerRadius = 15,
                     BorderThickness = 10f,
-                    BorderColour = colour.Gray6,
+                    BorderColour = colours.Gray6,
                     Children = new Drawable[]
                     {
                         new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = colour.Gray3,
+                            Colour = colours.Gray3,
                         },
                         textContainer = new FillFlowContainer<GenerateRowContainer>
                         {

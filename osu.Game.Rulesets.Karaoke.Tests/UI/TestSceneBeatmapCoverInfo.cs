@@ -2,9 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -13,9 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI;
 
 public partial class TestSceneBeatmapCoverInfo : OsuTestScene
 {
-    [Cached]
-    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);
-
     private readonly BeatmapCoverInfo beatmapCoverInfo;
 
     public TestSceneBeatmapCoverInfo()

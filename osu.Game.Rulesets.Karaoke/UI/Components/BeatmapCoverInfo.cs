@@ -13,7 +13,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Overlays;
 using osu.Game.Resources.Localisation.Web;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components;
@@ -27,7 +26,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable
     }
 
     [BackgroundDependencyLoader]
-    private void load(IBindable<WorkingBeatmap> beatmap, OverlayColourProvider colourProvider)
+    private void load(IBindable<WorkingBeatmap> beatmap, OsuColour colours)
     {
         var metadata = beatmap.Value.Metadata;
 
@@ -39,7 +38,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable
             },
             new Box
             {
-                Colour = colourProvider.Background6,
+                Colour = colours.Gray1,
                 Alpha = 0.6f,
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.BottomCentre,
@@ -81,7 +80,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable
                     {
                         d.AutoSizeAxes = Axes.Both;
                         d.Margin = new MarginPadding { Top = 2 };
-                        d.AddText("mapped by ", t => t.Colour = colourProvider.Content2);
+                        d.AddText("mapped by ", t => t.Colour = colours.GrayB);
                         d.AddUserLink(metadata.Author);
                     }),
                 }

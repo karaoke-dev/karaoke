@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colour)
+        private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colours)
         {
             AddInternal(new Box
             {
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Component
                 Height = timeline_height,
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
-                Colour = colour.Gray3,
+                Colour = colours.Gray3,
             });
 
             BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);

@@ -227,9 +227,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colour)
+            private void load(OsuColour colours)
             {
-                background.Colour = colour.Yellow;
+                background.Colour = colours.Yellow;
             }
 
             protected override void OnFocus(FocusEvent e)

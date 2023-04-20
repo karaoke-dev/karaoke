@@ -84,11 +84,11 @@ public abstract partial class SectionTimingInfoItemsEditor<TItem> : SectionItems
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(OsuColour colours)
         {
-            background.Colour = colour.YellowLight;
-            spriteText.Colour = colour.YellowDarker;
-            deleteIconButton.IconColour = colour.YellowDarker;
+            background.Colour = colours.YellowLight;
+            spriteText.Colour = colours.YellowDarker;
+            deleteIconButton.IconColour = colours.YellowDarker;
         }
     }
 }

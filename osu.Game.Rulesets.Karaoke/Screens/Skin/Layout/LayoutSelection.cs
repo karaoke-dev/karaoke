@@ -122,9 +122,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colour)
+            private void load(OsuColour colours)
             {
-                cornerContainer.BorderColour = colour.Yellow;
+                cornerContainer.BorderColour = colours.Yellow;
             }
 
             public Lyric Lyric
