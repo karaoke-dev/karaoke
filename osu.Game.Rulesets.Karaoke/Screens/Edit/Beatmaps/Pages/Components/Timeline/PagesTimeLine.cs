@@ -21,7 +21,7 @@ public partial class PagesTimeLine : EditableTimeline
     private EditorBeatmap beatmap { get; set; }
 
     [BackgroundDependencyLoader]
-    private void load(OsuColour colour, IPageStateProvider pageStateProvider)
+    private void load(OsuColour colours, IPageStateProvider pageStateProvider)
     {
         AddInternal(new Box
         {
@@ -31,7 +31,7 @@ public partial class PagesTimeLine : EditableTimeline
             Height = TIMELINE_HEIGHT,
             Anchor = Anchor.CentreLeft,
             Origin = Anchor.CentreLeft,
-            Colour = colour.Gray3,
+            Colour = colours.Gray3,
         });
 
         BindableZoom.BindTo(pageStateProvider.BindableZoom);

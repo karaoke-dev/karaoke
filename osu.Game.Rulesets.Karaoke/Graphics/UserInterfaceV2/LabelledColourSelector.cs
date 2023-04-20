@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colour)
+            private void load(OsuColour colours)
             {
                 AutoSizeAxes = Axes.Y;
                 RelativeSizeAxes = Axes.X;
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                             CornerRadius = 10,
                             Masking = true,
                             BorderThickness = 2f,
-                            BorderColour = colour.Gray5,
+                            BorderColour = colours.Gray5,
                             Children = new Drawable[]
                             {
                                 fill = new Box
