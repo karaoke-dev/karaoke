@@ -10,9 +10,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;
@@ -83,6 +85,18 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                     Text = "ke"
                 }
             },
+            EffectApplier = new LyricPreviewStageEffectApplier(new[]
+            {
+                new PreviewLyricLayout(1)
+                {
+                    StartTime = startTime,
+                    EndTime = startTime + duration,
+                    Timings = new Dictionary<int, double>
+                    {
+                        { 0, startTime }
+                    }
+                }
+            }, new PreviewStageDefinition())
         };
 
         lyric.Translates.Add(cultureInfo, "karaoke");
