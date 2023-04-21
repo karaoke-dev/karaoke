@@ -59,7 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.MicrophoneDevice, string.Empty);
 
             // Font
-            SetDefault(KaraokeRulesetSetting.LyricScale, 2, 1, 4, 0.01);
             SetDefault(KaraokeRulesetSetting.MainFont, new FontUsage("Torus", 48, "Bold"), 48f, 48f);
             SetDefault(KaraokeRulesetSetting.RubyFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
             SetDefault(KaraokeRulesetSetting.RubyMargin, 5, 0, 20);
@@ -161,7 +160,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         MicrophoneDevice,
 
         // Font
-        LyricScale,
         MainFont,
         RubyFont,
         RubyMargin,
