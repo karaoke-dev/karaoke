@@ -3,22 +3,13 @@
 
 #nullable disable
 
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public partial class KaraokeEditorPlayfield : KaraokePlayfield
     {
-        public KaraokeEditorPlayfield()
-        {
-            LyricPlayfield.Anchor = LyricPlayfield.Origin = Anchor.BottomCentre;
-            LyricPlayfield.Margin = new MarginPadding { Top = 150, Bottom = -100 };
-            LyricPlayfield.Scale = new Vector2(0.7f);
-        }
-
         protected override ScrollingNotePlayfield CreateNotePlayfield(int columns)
             => new EditorNotePlayfield(columns);
     }
