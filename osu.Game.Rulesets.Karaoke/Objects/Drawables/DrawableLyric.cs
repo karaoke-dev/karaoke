@@ -58,8 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableLyric([CanBeNull] Lyric hitObject)
             : base(hitObject)
         {
-            // todo: it's a reservable size, should be removed eventually.
-            Padding = new MarginPadding(30);
         }
 
         [BackgroundDependencyLoader(true)]
