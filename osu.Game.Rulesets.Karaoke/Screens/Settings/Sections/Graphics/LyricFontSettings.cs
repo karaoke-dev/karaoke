@@ -25,13 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics
         {
             Children = new Drawable[]
             {
-                new SettingsSlider<double>
-                {
-                    LabelText = "Overall scale",
-                    Current = Config.GetBindable<double>(KaraokeRulesetSetting.LyricScale),
-                    KeyboardStep = 0.01f,
-                    DisplayAsPercentage = true
-                },
                 new SettingsFont
                 {
                     LabelText = "Default main font",
