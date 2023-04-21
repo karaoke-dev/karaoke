@@ -45,6 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
         private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
 
+        public new KaraokeBeatmap Beatmap => base.Beatmap as KaraokeBeatmap;
+
         protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
@@ -70,6 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader]
         private void load()
         {
+            // todo: use better way to assign the stage info.
+            // also, should monitor the stage info change.
+            updatePlayfieldArrangement(Beatmap.CurrentStageInfo);
+
             // TODO : it should be moved into NotePlayfield
             new BarLineGenerator<BarLine>(Beatmap).BarLines.ForEach(bar => base.Playfield.Add(bar));
 
