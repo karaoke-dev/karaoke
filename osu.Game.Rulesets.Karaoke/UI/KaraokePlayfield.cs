@@ -7,7 +7,6 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -49,16 +48,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 x.RelativeSizeAxes = Axes.Both;
             }));
 
-            AddInternal(new Container
+            AddInternal(NotePlayfield = CreateNotePlayfield(9).With(x =>
             {
-                Padding = new MarginPadding(50),
-                RelativeSizeAxes = Axes.Both,
-                Child = NotePlayfield = CreateNotePlayfield(9).With(x =>
-                {
-                    x.Alpha = 0;
-                    x.RelativeSizeAxes = Axes.X;
-                })
-            });
+                x.RelativeSizeAxes = Axes.X;
+            }));
 
             AddNested(LyricPlayfield);
             AddNested(NotePlayfield);

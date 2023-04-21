@@ -18,9 +18,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Skinning;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
@@ -60,14 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableLyric([CanBeNull] Lyric hitObject)
             : base(hitObject)
         {
-            // todo: it's a reservable size, should be removed eventually.
-            Padding = new MarginPadding(30);
         }
 
         [BackgroundDependencyLoader(true)]
         private void load([CanBeNull] KaraokeSessionStatics session)
         {
-            Scale = new Vector2(2);
             AutoSizeAxes = Axes.Both;
 
             AddInternal(lyricPieces = new Container<DefaultLyricPiece>
@@ -150,7 +145,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             updateFontStyle();
             updateLyricFontInfo();
-            updateLayout();
         }
 
         private void updateFontStyle()
@@ -175,18 +169,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             var lyricFontInfo = CurrentSkin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.Value;
             lyricFontInfo?.ApplyTo(this);
-        }
-
-        private void updateLayout()
-        {
-            if (CurrentSkin == null)
-                return;
-
-            if (HitObject == null)
-                return;
-
-            var layout = CurrentSkin.GetConfig<Lyric, LyricLayout>(HitObject)?.Value;
-            layout?.ApplyTo(this);
         }
 
         private void applyTranslate()
@@ -229,14 +211,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.UpdateInitialTransforms();
 
             lyricPieces.ForEach(x => x.RefreshStateTransforms());
-        }
-
-        protected override void UpdateHitStateTransforms(ArmedState state)
-        {
-            base.UpdateHitStateTransforms(state);
-
-            const float fade_out_time = 500;
-            this.FadeOut(fade_out_time);
         }
 
         public void ApplyToLyricPieces(Action<DefaultLyricPiece> action)

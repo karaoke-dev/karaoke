@@ -5,6 +5,7 @@
 
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
@@ -16,8 +17,43 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
         }
 
-        protected sealed override double InitialLifetimeOffset => HitObject.TimePreempt;
+        protected sealed override double InitialLifetimeOffset
+        {
+            get
+            {
+                if (HitObject is IHasEffectApplier hitObjectWithEffectApplier)
+                {
+                    return hitObjectWithEffectApplier.EffectApplier.PreemptTime;
+                }
+
+                return base.InitialLifetimeOffset;
+            }
+        }
 
         protected override JudgementResult CreateResult(Judgement judgement) => new KaraokeJudgementResult(HitObject, judgement);
+
+        protected override void UpdateInitialTransforms()
+        {
+            if (HitObject is IHasEffectApplier hitObjectWithEffectApplier)
+            {
+                hitObjectWithEffectApplier.EffectApplier.UpdateInitialTransforms(this);
+            }
+        }
+
+        protected override void UpdateStartTimeStateTransforms()
+        {
+            if (HitObject is IHasEffectApplier hitObjectWithEffectApplier)
+            {
+                hitObjectWithEffectApplier.EffectApplier.UpdateStartTimeStateTransforms(this);
+            }
+        }
+
+        protected override void UpdateHitStateTransforms(ArmedState state)
+        {
+            if (HitObject is IHasEffectApplier hitObjectWithEffectApplier)
+            {
+                hitObjectWithEffectApplier.EffectApplier.UpdateHitStateTransforms(this, state);
+            }
+        }
     }
 }

@@ -71,12 +71,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 // Manually set to reduce the number of future alive objects to a bare minimum.
                 LifetimeEnd = Lyric.EndTime;
-                LifetimeStart = HitObject.StartTime - Lyric.TimePreempt;
+                LifetimeStart = HitObject.StartTime - Lyric.EffectApplier.PreemptTime;
             }
 
             protected Lyric Lyric => (Lyric)HitObject;
 
-            protected override double InitialLifetimeOffset => Lyric.TimePreempt;
+            protected override double InitialLifetimeOffset => Lyric.EffectApplier.PreemptTime;
         }
     }
 }
