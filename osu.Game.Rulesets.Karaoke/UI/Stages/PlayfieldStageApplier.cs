@@ -23,13 +23,16 @@ public abstract class PlayfieldStageApplier<TStageDefinition> : IPlayfieldStageA
         var lyricPlayfield = playfield.LyricPlayfield;
         var notePlayfield = playfield.NotePlayfield;
 
+        playfield.ClearTransforms();
         lyricPlayfield.ClearTransforms();
         notePlayfield.ClearTransforms();
 
         // Note that we should handle the fade-in effect in here.
+        var playfieldTransformSequence = playfield.FadeOut().Then();
         var lyricPlayfieldTransformSequence = lyricPlayfield.FadeOut().Then();
         var notePlayfieldTransformSequence = notePlayfield.FadeOut().Then();
 
+        UpdatePlayfieldArrangement(playfieldTransformSequence, displayNotePlayfield);
         UpdateLyricPlayfieldArrangement(lyricPlayfieldTransformSequence, displayNotePlayfield);
 
         if (displayNotePlayfield)
@@ -37,6 +40,8 @@ public abstract class PlayfieldStageApplier<TStageDefinition> : IPlayfieldStageA
             UpdateNotePlayfieldArrangement(notePlayfieldTransformSequence);
         }
     }
+
+    protected abstract void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield);
 
     protected abstract void UpdateLyricPlayfieldArrangement(TransformSequence<LyricPlayfield> transformSequence, bool displayNotePlayfield);
 
