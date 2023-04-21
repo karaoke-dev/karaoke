@@ -21,10 +21,10 @@ public class PlayfieldPreviewStageApplier : PlayfieldStageApplier<PreviewStageDe
     {
         transformSequence.TransformAddStageComponent(new BeatmapCoverInfo
         {
-            Size = new Vector2(displayNotePlayfield ? 200 : 400),
+            Size = new Vector2(displayNotePlayfield ? 200 : 380),
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            X = displayNotePlayfield ? -350 : -250,
+            X = displayNotePlayfield ? -350 : -270,
             Y = displayNotePlayfield ? 100 : 0,
         }).FadeIn(300);
     }
