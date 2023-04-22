@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault<PageGeneratorConfig>();
 
             // Classic stage.
+            SetDefault<ClassicLyricLayoutCategoryGeneratorConfig>();
             SetDefault<ClassicLyricTimingInfoGeneratorConfig>();
 
             // Language detection
@@ -64,6 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             typeof(TValue) switch
             {
                 Type t when t == typeof(PageGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig,
+                Type t when t == typeof(ClassicLyricLayoutCategoryGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicLyricLayoutCategoryGeneratorConfig,
                 Type t when t == typeof(ClassicLyricTimingInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicLyricTimingInfoGeneratorConfig,
                 Type t when t == typeof(ReferenceLyricDetectorConfig) => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig,
                 Type t when t == typeof(LanguageDetectorConfig) => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig,
@@ -100,6 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         BeatmapPageGeneratorConfig,
 
         // Classic stage.
+        ClassicLyricLayoutCategoryGeneratorConfig,
         ClassicLyricTimingInfoGeneratorConfig,
 
         // Reference lyric detection.
