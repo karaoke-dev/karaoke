@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapStagesChangeHandler>
 {
+    protected override bool IncludeAutoGenerator => true;
+
     [Test]
     public void TestAddStageInfoToBeatmap()
     {
