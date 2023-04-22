@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
@@ -12,8 +11,8 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages.Classic;
 
-public class ClassicLyricTimingInfoGeneratorTest
-    : BaseBeatmapGeneratorTest<ClassicLyricTimingInfoGenerator, ClassicLyricTimingInfo, ClassicLyricTimingInfoGeneratorConfig>
+public class ClassicLyricLayoutCategoryGeneratorTest
+    : BaseLyricStageElementCategoryGeneratorTest<ClassicLyricLayoutCategoryGenerator, ClassicLyricLayoutCategory, ClassicLyricLayout, ClassicLyricLayoutCategoryGeneratorConfig>
 {
     [Test]
     public void TestCanGenerate()
@@ -61,22 +60,13 @@ public class ClassicLyricTimingInfoGeneratorTest
             }
         };
 
-        var expected = new ClassicLyricTimingInfo();
-        var timing1 = expected.AddTimingPoint(x => x.Time = 0); // should show the lyric at screen when loaded.
-        expected.AddToMapping(timing1, lyric1); // show
-        expected.AddToMapping(timing1, lyric2); // show
-
-        var timing2 = expected.AddTimingPoint(x => x.Time = 3000); // it's time to hide lyric1 and show lyric3.
-        expected.AddToMapping(timing2, lyric1); // hide
-        expected.AddToMapping(timing2, lyric3); // show
-
-        var timing3 = expected.AddTimingPoint(x => x.Time = 6000); // it's time to hide lyric2 and show lyric4.
-        expected.AddToMapping(timing3, lyric2); // hide
-        expected.AddToMapping(timing3, lyric4); // show
-
-        var timing4 = expected.AddTimingPoint(x => x.Time = 12000); // it's time to hide lyric3 and lyric4.
-        expected.AddToMapping(timing4, lyric3); // hide
-        expected.AddToMapping(timing4, lyric4); // hide
+        var expected = new ClassicLyricLayoutCategory();
+        var layout1 = expected.AddElement();
+        var layout2 = expected.AddElement();
+        expected.AddToMapping(layout1, lyric1);
+        expected.AddToMapping(layout2, lyric2);
+        expected.AddToMapping(layout1, lyric3);
+        expected.AddToMapping(layout2, lyric4);
 
         CheckGenerateResult(beatmap, expected, config);
     }
@@ -103,31 +93,49 @@ public class ClassicLyricTimingInfoGeneratorTest
             }
         };
 
-        var expected = new ClassicLyricTimingInfo();
-        var timing1 = expected.AddTimingPoint(x => x.Time = 0);
-        expected.AddToMapping(timing1, lyric1); // show
-        expected.AddToMapping(timing1, lyric2); // show
-        expected.AddToMapping(timing1, lyric3); // show
-
-        var timing2 = expected.AddTimingPoint(x => x.Time = 3000);
-        expected.AddToMapping(timing2, lyric1); // hide
-        expected.AddToMapping(timing2, lyric4); // show
-
-        var timing3 = expected.AddTimingPoint(x => x.Time = 6000);
-        expected.AddToMapping(timing3, lyric2); // hide
-        expected.AddToMapping(timing3, lyric5); // show
-
-        var timing4 = expected.AddTimingPoint(x => x.Time = 12000);
-        expected.AddToMapping(timing4, lyric3); // hide
-        expected.AddToMapping(timing4, lyric4); // hide
-        expected.AddToMapping(timing4, lyric5); // hide
+        var expected = new ClassicLyricLayoutCategory();
+        var layout1 = expected.AddElement();
+        var layout2 = expected.AddElement();
+        var layout3 = expected.AddElement();
+        expected.AddToMapping(layout1, lyric1);
+        expected.AddToMapping(layout2, lyric2);
+        expected.AddToMapping(layout3, lyric3);
+        expected.AddToMapping(layout1, lyric4);
+        expected.AddToMapping(layout2, lyric5);
 
         CheckGenerateResult(beatmap, expected, config);
     }
 
-    protected override void AssertEqual(ClassicLyricTimingInfo expected, ClassicLyricTimingInfo actual)
+    [Test]
+    public void TestGenerateWithNotMapping()
     {
-        Assert.AreEqual(expected.Timings.Select(x => x.Time), actual.Timings.Select(x => x.Time));
-        Assert.AreEqual(expected.Mappings, actual.Mappings);
+        var config = GeneratorDefaultConfig(x => x.ApplyMappingToTheLyric.Value = false);
+
+        var lyric1 = TestCaseTagHelper.ParseLyric("[1000,3000]:lyric1", 1);
+        var lyric2 = TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2", 2);
+        var lyric3 = TestCaseTagHelper.ParseLyric("[7000,9000]:lyric3", 3);
+        var lyric4 = TestCaseTagHelper.ParseLyric("[10000,12000]:lyric4", 4);
+        var beatmap = new KaraokeBeatmap
+        {
+            HitObjects = new List<KaraokeHitObject>
+            {
+                lyric1,
+                lyric2,
+                lyric3,
+                lyric4,
+            }
+        };
+
+        var expected = new ClassicLyricLayoutCategory();
+        expected.AddElement();
+        expected.AddElement();
+
+        CheckGenerateResult(beatmap, expected, config);
+    }
+
+    protected override void AssertEqual(ClassicLyricLayout expected, ClassicLyricLayout actual)
+    {
+        // we did not care about the default value that generator created.
+        Assert.AreEqual(expected.ID, actual.ID);
     }
 }
