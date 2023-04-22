@@ -13,13 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 /// </summary>
 /// <typeparam name="TItem">The item that want to generate the property.</typeparam>
 /// <typeparam name="TProperty">The property in the item that will be generated.</typeparam>
-/// <typeparam name="TSelectorProperty">Will get the generator by this property.</typeparam>
 /// <typeparam name="TBaseConfig">The config.</typeparam>
-public abstract class GeneratorSelector<TItem, TProperty, TSelectorProperty, TBaseConfig> : PropertyGenerator<TItem, TProperty>
-    where TSelectorProperty : notnull
+public abstract class GeneratorSelector<TItem, TProperty, TBaseConfig> : PropertyGenerator<TItem, TProperty>
     where TBaseConfig : GeneratorConfig
 {
-    private Dictionary<TSelectorProperty, Lazy<PropertyGenerator<TItem, TProperty>>> generators { get; } = new();
+    private Dictionary<Func<TItem, bool>, Lazy<PropertyGenerator<TItem, TProperty>>> generators { get; } = new();
 
     private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
@@ -28,7 +26,7 @@ public abstract class GeneratorSelector<TItem, TProperty, TSelectorProperty, TBa
         this.generatorConfigManager = generatorConfigManager;
     }
 
-    protected void RegisterGenerator<TGenerator, TConfig>(TSelectorProperty selector)
+    protected void RegisterGenerator<TGenerator, TConfig>(Func<TItem, bool> selector)
         where TGenerator : PropertyGenerator<TItem, TProperty>
         where TConfig : TBaseConfig, new()
     {
@@ -42,15 +40,18 @@ public abstract class GeneratorSelector<TItem, TProperty, TSelectorProperty, TBa
         }));
     }
 
-    protected bool TryGetGenerator(TSelectorProperty selector, [MaybeNullWhen(false)] out PropertyGenerator<TItem, TProperty> generator)
+    protected bool TryGetGenerator(TItem item, [MaybeNullWhen(false)] out PropertyGenerator<TItem, TProperty> generator)
     {
-        if (!generators.TryGetValue(selector, out var propertyGenerator))
+        foreach (var (func, propertyGenerator) in generators)
         {
-            generator = null;
-            return false;
+            if (!func(item))
+                continue;
+
+            generator = propertyGenerator.Value;
+            return true;
         }
 
-        generator = propertyGenerator.Value;
-        return true;
+        generator = null;
+        return false;
     }
 }
