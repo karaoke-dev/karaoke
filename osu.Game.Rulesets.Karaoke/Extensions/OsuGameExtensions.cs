@@ -22,10 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         }
 
         private static Container? getBasePlacementContainer(this OsuGame game)
-            => game.Children[4] as Container;
+            => game.Children[3] as Container;
 
         public static Container? GetChangelogPlacementContainer(this OsuGame game)
-            => game.getBasePlacementContainer()?.Children[0] as Container;
+        {
+            // will place the container with same location like WikiOverlay.
+            return game.getBasePlacementContainer()?.Children[0] as Container;
+        }
 
         public static SettingsOverlay? GetSettingsOverlay(this OsuGame game)
             => game.getBasePlacementContainer()?.ChildrenOfType<SettingsOverlay>().FirstOrDefault();
