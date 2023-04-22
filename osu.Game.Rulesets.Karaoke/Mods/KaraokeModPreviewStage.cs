@@ -4,6 +4,7 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 
@@ -20,5 +21,11 @@ public class KaraokeModPreviewStage : ModStage<PreviewStageInfo>
         throw new System.NotImplementedException();
     }
 
-    protected override PreviewStageInfo CreateStageInfo(KaraokeBeatmap beatmap) => new();
+    protected override PreviewStageInfo CreateStageInfo(KaraokeBeatmap beatmap)
+    {
+        var config = new PreviewStageInfoGeneratorConfig();
+        var generator = new PreviewStageInfoGenerator(config);
+
+        return (PreviewStageInfo)generator.Generate(beatmap);
+    }
 }
