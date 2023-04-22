@@ -33,13 +33,13 @@ public class ClassicLyricTimingInfoTest
     public void TestRemoveTimingPoint()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var timingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
 
         // Test remove timing point.
-        timingInfo.RemoveTimingPoint(timingInfo.Timings[0]);
+        timingInfo.RemoveTimingPoint(timingPoint);
 
         Assert.IsEmpty(timingInfo.Timings);
     }
@@ -48,7 +48,7 @@ public class ClassicLyricTimingInfoTest
     public void TestAddToMapping()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
@@ -57,7 +57,6 @@ public class ClassicLyricTimingInfoTest
             x.Time = 2000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         // Test add to mapping.
@@ -72,7 +71,7 @@ public class ClassicLyricTimingInfoTest
     public void TestRemoveFromMapping()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
@@ -81,7 +80,6 @@ public class ClassicLyricTimingInfoTest
             x.Time = 2000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
@@ -99,7 +97,7 @@ public class ClassicLyricTimingInfoTest
     public void TestClearTimingPointFromMapping()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
@@ -108,7 +106,6 @@ public class ClassicLyricTimingInfoTest
             x.Time = 2000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
@@ -126,7 +123,7 @@ public class ClassicLyricTimingInfoTest
     public void TestClearLyricFromMapping()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
@@ -135,7 +132,6 @@ public class ClassicLyricTimingInfoTest
             x.Time = 2000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
@@ -172,12 +168,11 @@ public class ClassicLyricTimingInfoTest
     public void TestGetLyricTimingPoints()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
@@ -199,11 +194,11 @@ public class ClassicLyricTimingInfoTest
 
         foreach (double time in times)
         {
-            timingInfo.AddTimingPoint(x =>
+            var timingPoint = timingInfo.AddTimingPoint(x =>
             {
                 x.Time = time;
             });
-            timingInfo.AddToMapping(timingInfo.Timings.Last(), lyric);
+            timingInfo.AddToMapping(timingPoint, lyric);
         }
 
         // Test get timing info.
@@ -216,12 +211,11 @@ public class ClassicLyricTimingInfoTest
     public void TestGetMatchedLyricIds()
     {
         var timingInfo = new ClassicLyricTimingInfo();
-        timingInfo.AddTimingPoint(x =>
+        var mappingTimingPoint = timingInfo.AddTimingPoint(x =>
         {
             x.Time = 1000;
         });
 
-        var mappingTimingPoint = timingInfo.Timings[0];
         var lyric = new Lyric();
 
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
