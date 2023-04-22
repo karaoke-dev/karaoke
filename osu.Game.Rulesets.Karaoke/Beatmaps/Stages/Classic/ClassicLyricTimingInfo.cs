@@ -86,13 +86,15 @@ public class ClassicLyricTimingInfo
 
     #region Edit
 
-    public void AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null)
+    public ClassicLyricTimingPoint AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null)
     {
         int id = getNewTimingPointId();
         var timingPoint = new ClassicLyricTimingPoint(id);
 
         action?.Invoke(timingPoint);
         Timings.Add(timingPoint);
+
+        return timingPoint;
 
         int getNewTimingPointId()
         {

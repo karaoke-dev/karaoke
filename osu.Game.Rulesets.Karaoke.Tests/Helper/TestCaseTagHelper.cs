@@ -124,8 +124,9 @@ public static class TestCaseTagHelper
     /// [1000,3000]:karaoke
     /// </example>
     /// <param name="str">Lyric string format</param>
+    /// <param name="id">Id if needed</param>
     /// <returns><see cref="Lyric"/>Lyric object</returns>
-    public static Lyric ParseLyric(string? str)
+    public static Lyric ParseLyric(string str, int? id = null)
     {
         if (string.IsNullOrEmpty(str))
             return new Lyric();
@@ -141,6 +142,7 @@ public static class TestCaseTagHelper
 
         return new Lyric
         {
+            ID = id ?? default,
             StartTime = startTime,
             Duration = endTime - startTime,
             Text = text,
@@ -214,8 +216,8 @@ public static class TestCaseTagHelper
     public static TimeTag[] ParseTimeTags(IEnumerable<string?> strings)
         => strings.Select(ParseTimeTag).ToArray();
 
-    public static Lyric[] ParseLyrics(IEnumerable<string?> strings)
-        => strings.Select(ParseLyric).ToArray();
+    public static Lyric[] ParseLyrics(IEnumerable<string> strings)
+        => strings.Select((str, index) => ParseLyric(str, index)).ToArray();
 
     public static Singer[] ParseSingers(IEnumerable<string?> strings)
         => strings.Select(ParseSinger).ToArray();

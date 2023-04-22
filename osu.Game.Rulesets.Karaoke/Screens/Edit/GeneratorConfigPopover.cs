@@ -76,11 +76,17 @@ public partial class GeneratorConfigPopover : OsuPopover
     {
         return value switch
         {
-            BindableNumber<double> bNumber => new LabelledSliderBar<double>
+            BindableNumber<double> bDouble => new LabelledSliderBar<double>
             {
                 Label = attribute.Label,
                 Description = attribute.Description,
-                Current = bNumber,
+                Current = bDouble,
+            },
+            BindableNumber<int> bInt => new LabelledSliderBar<int>
+            {
+                Label = attribute.Label,
+                Description = attribute.Description,
+                Current = bInt,
             },
             Bindable<bool> bBool => new LabelledSwitchButton
             {

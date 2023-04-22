@@ -104,10 +104,9 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
         var beatmap = createTestingBeatmap(hasHitObjectsInBeatmap ? lyrics : null, timingInfos =>
         {
             timingInfos.Timings.Clear();
-            timingInfos.AddTimingPoint(x => x.Time = 0);
+            var timingPoint = timingInfos.AddTimingPoint(x => x.Time = 0);
             timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
 
-            var timingPoint = timingInfos.Timings.First();
             var lyric = new Lyric { ID = 1 };
 
             // should have error because lyric is not in the beatmap.

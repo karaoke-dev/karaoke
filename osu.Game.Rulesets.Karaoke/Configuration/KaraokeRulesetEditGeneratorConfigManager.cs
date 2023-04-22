@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Beatmap page
             SetDefault<PageGeneratorConfig>();
+
+            // Classic stage.
+            SetDefault<ClassicLyricTimingInfoGeneratorConfig>();
 
             // Language detection
             SetDefault<ReferenceLyricDetectorConfig>();
@@ -60,6 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             typeof(TValue) switch
             {
                 Type t when t == typeof(PageGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig,
+                Type t when t == typeof(ClassicLyricTimingInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicLyricTimingInfoGeneratorConfig,
                 Type t when t == typeof(ReferenceLyricDetectorConfig) => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig,
                 Type t when t == typeof(LanguageDetectorConfig) => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig,
                 Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
@@ -93,6 +98,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
     {
         // Beatmap
         BeatmapPageGeneratorConfig,
+
+        // Classic stage.
+        ClassicLyricTimingInfoGeneratorConfig,
 
         // Reference lyric detection.
         ReferenceLyricDetectorConfig,
