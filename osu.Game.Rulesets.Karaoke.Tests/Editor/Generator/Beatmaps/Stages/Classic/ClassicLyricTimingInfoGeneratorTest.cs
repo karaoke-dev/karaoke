@@ -18,7 +18,7 @@ public class ClassicLyricTimingInfoGeneratorTest
     [Test]
     public void TestCanGenerate()
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap
         {
             HitObjects = new List<KaraokeHitObject>
@@ -36,7 +36,7 @@ public class ClassicLyricTimingInfoGeneratorTest
     [Test]
     public void TestCanGenerateWithNonLyricBeatmap()
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
         var beatmap = new KaraokeBeatmap();
         CheckCanGenerate(beatmap, false, config);
     }
@@ -44,7 +44,7 @@ public class ClassicLyricTimingInfoGeneratorTest
     [Test]
     public void TestGenerate()
     {
-        var config = GeneratorConfig();
+        var config = GeneratorDefaultConfig();
 
         var lyric1 = TestCaseTagHelper.ParseLyric("[1000,3000]:lyric1", 1);
         var lyric2 = TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2", 2);
@@ -84,7 +84,7 @@ public class ClassicLyricTimingInfoGeneratorTest
     [Test]
     public void TestGenerateWithThreeLyrics()
     {
-        var config = GeneratorConfig(x => x.LyricRowAmount.Value = 3);
+        var config = GeneratorDefaultConfig(x => x.LyricRowAmount.Value = 3);
 
         var lyric1 = TestCaseTagHelper.ParseLyric("[1000,3000]:lyric1", 1);
         var lyric2 = TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2", 2);
