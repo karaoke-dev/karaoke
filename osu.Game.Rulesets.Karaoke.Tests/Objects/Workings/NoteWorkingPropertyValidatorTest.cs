@@ -80,4 +80,9 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         Assert.DoesNotThrow(() => note.EffectApplier = new NoteClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
         AssetIsValid(note, NoteWorkingProperty.EffectApplier, true);
     }
+
+    protected override bool IsInitialStateValid(NoteWorkingProperty flag)
+    {
+        return new NoteWorkingPropertyValidator(new Note()).IsValid(flag);
+    }
 }

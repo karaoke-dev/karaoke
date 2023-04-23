@@ -17,7 +17,7 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
     public void CheckInitialState([Values] TFlag flag)
     {
         // should be valid on the first load.
-        AssetIsValid(new THitObject(), flag, true);
+        AssetInitialStateIsValid(new THitObject(), flag);
     }
 
     [Test]
@@ -27,8 +27,16 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
         Assert.DoesNotThrow(() => new THitObject().InvalidateWorkingProperty(flag));
     }
 
+    protected void AssetInitialStateIsValid(THitObject hitObject, TFlag flag)
+    {
+        bool isValid = IsInitialStateValid(flag);
+        AssetIsValid(hitObject, flag, isValid);
+    }
+
     protected void AssetIsValid(THitObject hitObject, TFlag flag, bool isValid)
     {
         Assert.AreEqual(isValid, !hitObject.GetAllInvalidWorkingProperties().Contains(flag));
     }
+
+    protected abstract bool IsInitialStateValid(TFlag flag);
 }

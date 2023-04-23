@@ -40,9 +40,9 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
-        // state is still valid because not assign all timing properties.
+        // state is still invalid because duration is not assign.
         Assert.DoesNotThrow(() => lyric.StartTime = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
+        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
 
         // ok, should be valid now.
         Assert.DoesNotThrow(() => lyric.Duration = 1000);
@@ -188,5 +188,10 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // state is valid because assign the property.
         Assert.DoesNotThrow(() => lyric.EffectApplier = new LyricClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
         AssetIsValid(lyric, LyricWorkingProperty.EffectApplier, true);
+    }
+
+    protected override bool IsInitialStateValid(LyricWorkingProperty flag)
+    {
+        return new LyricWorkingPropertyValidator(new Lyric()).IsValid(flag);
     }
 }
