@@ -14,7 +14,7 @@ public class JaRomajiTagGeneratorTest : BaseRomajiTagGeneratorTest<JaRomajiTagGe
     [TestCase(null, false)]
     public void TestCanGenerate(string text, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanGenerate(text, canGenerate, config);
     }
 
@@ -23,7 +23,7 @@ public class JaRomajiTagGeneratorTest : BaseRomajiTagGeneratorTest<JaRomajiTagGe
     [TestCase("枯れた世界に輝く", new[] { "[0,3]:kareta", "[3,6]:sekaini", "[6,8]:kagayaku" })]
     public void TestGenerate(string text, string[] expectedRomajies)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckGenerateResult(text, expectedRomajies, config);
     }
 
@@ -31,7 +31,7 @@ public class JaRomajiTagGeneratorTest : BaseRomajiTagGeneratorTest<JaRomajiTagGe
     [TestCase("はなび", new[] { "[0,3]:HANABI" })]
     public void TestGenerateWithUppercase(string text, string[] expectedRomajies)
     {
-        var config = GeneratorConfig(x => x.Uppercase.Value = true);
+        var config = GeneratorEmptyConfig(x => x.Uppercase.Value = true);
         CheckGenerateResult(text, expectedRomajies, config);
     }
 }

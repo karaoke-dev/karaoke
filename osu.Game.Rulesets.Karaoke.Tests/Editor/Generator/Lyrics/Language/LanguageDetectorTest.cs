@@ -18,7 +18,7 @@ public class LanguageDetectorTest : BaseLyricDetectorTest<LanguageDetector, Cult
     public void TestCanDetect(string text, bool canDetect)
     {
         var lyric = new Lyric { Text = text };
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanDetect(lyric, canDetect, config);
     }
 
@@ -30,7 +30,7 @@ public class LanguageDetectorTest : BaseLyricDetectorTest<LanguageDetector, Cult
     public void TestDetect(string text, string language)
     {
         var lyric = new Lyric { Text = text };
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         var expected = new CultureInfo(language);
         CheckDetectResult(lyric, expected, config);
     }
