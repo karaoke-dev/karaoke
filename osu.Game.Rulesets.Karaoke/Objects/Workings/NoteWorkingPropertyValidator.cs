@@ -12,7 +12,7 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
     {
     }
 
-    protected override bool CanCheckWorkingPropertySync(NoteWorkingProperty flags) =>
+    protected override bool HasDataProperty(NoteWorkingProperty flags) =>
         flags switch
         {
             NoteWorkingProperty.Page => false,
@@ -21,12 +21,12 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
         };
 
-    protected override bool NeedToSyncWorkingProperty(Note hitObject, NoteWorkingProperty flags) =>
+    protected override bool IsWorkingPropertySynced(Note hitObject, NoteWorkingProperty flags) =>
         flags switch
         {
-            NoteWorkingProperty.Page => false,
-            NoteWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID != hitObject.ReferenceLyricId,
-            NoteWorkingProperty.EffectApplier => false,
+            NoteWorkingProperty.Page => true,
+            NoteWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID == hitObject.ReferenceLyricId,
+            NoteWorkingProperty.EffectApplier => true,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
         };
 }

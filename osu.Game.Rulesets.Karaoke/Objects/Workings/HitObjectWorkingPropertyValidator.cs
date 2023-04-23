@@ -35,7 +35,7 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     {
         foreach (TFlag flag in Enum.GetValues(typeof(TFlag)))
         {
-            if (CanCheckWorkingPropertySync(flag))
+            if (HasDataProperty(flag))
                 continue;
 
             Invalidate(flag);
@@ -74,12 +74,12 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     }
 
     protected sealed override bool CanInvalidate(TFlag flags)
-        => !CanCheckWorkingPropertySync(flags) || NeedToSyncWorkingProperty(hitObject, flags);
+        => !HasDataProperty(flags) || !IsWorkingPropertySynced(hitObject, flags);
 
     protected sealed override bool CanValidate(TFlag flags)
-        => !CanCheckWorkingPropertySync(flags) || !NeedToSyncWorkingProperty(hitObject, flags);
+        => !HasDataProperty(flags) || IsWorkingPropertySynced(hitObject, flags);
 
-    protected abstract bool CanCheckWorkingPropertySync(TFlag flags);
+    protected abstract bool HasDataProperty(TFlag flags);
 
-    protected abstract bool NeedToSyncWorkingProperty(THitObject hitObject, TFlag flags);
+    protected abstract bool IsWorkingPropertySynced(THitObject hitObject, TFlag flags);
 }
