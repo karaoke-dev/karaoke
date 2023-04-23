@@ -17,7 +17,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase(null, false)]
     public void TestCanGenerate(string text, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanGenerate(text, canGenerate, config);
     }
 
@@ -25,7 +25,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("がんばって", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[4,start]:" }, true)]
     public void TestGenerateWithCheckWhiteCheckん(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x => x.Checkん.Value = applyConfig);
+        var config = GeneratorEmptyConfig(x => x.Checkん.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
@@ -33,7 +33,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("買って", new[] { "[0,start]:", "[1,start]:", "[2,start]:" }, true)]
     public void TestGenerateWithCheckっ(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x => x.Checkっ.Value = applyConfig);
+        var config = GeneratorEmptyConfig(x => x.Checkっ.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
@@ -41,7 +41,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase(" ", new[] { "[0,start]:" }, true)]
     public void TestGenerateWithCheckBlankLine(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x => x.CheckBlankLine.Value = applyConfig);
+        var config = GeneratorEmptyConfig(x => x.CheckBlankLine.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
@@ -49,7 +49,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
     public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x => x.CheckLineEndKeyUp.Value = applyConfig);
+        var config = GeneratorEmptyConfig(x => x.CheckLineEndKeyUp.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
@@ -57,7 +57,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("か     ", new[] { "[0,start]:", "[1,start]:" }, true)]
     public void TestGenerateWithCheckWhiteSpace(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x => x.CheckWhiteSpace.Value = applyConfig);
+        var config = GeneratorEmptyConfig(x => x.CheckWhiteSpace.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
@@ -65,7 +65,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("か ", new[] { "[0,start]:", "[0,end]:" }, true)]
     public void TestGenerateWithCheckWhiteSpaceKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
-        var config = GeneratorConfig(x =>
+        var config = GeneratorEmptyConfig(x =>
         {
             x.CheckWhiteSpace.Value = true;
             x.CheckWhiteSpaceKeyUp.Value = applyConfig;
@@ -81,7 +81,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
     public void TestGenerateWithCheckWhiteSpaceAlphabet(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
-        var config = GeneratorConfig(x =>
+        var config = GeneratorEmptyConfig(x =>
         {
             x.CheckWhiteSpace.Value = true;
             x.CheckWhiteSpaceAlphabet.Value = applyConfig;
@@ -98,7 +98,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("０　１　２", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
     public void TestGenerateWithCheckWhiteSpaceDigit(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
-        var config = GeneratorConfig(x =>
+        var config = GeneratorEmptyConfig(x =>
         {
             x.CheckWhiteSpace.Value = true;
             x.CheckWhiteSpaceDigit.Value = applyConfig;
@@ -112,7 +112,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [TestCase("!　!　!", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
     public void TestGenerateWitCheckWhiteSpaceAsciiSymbol(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
-        var config = GeneratorConfig(x =>
+        var config = GeneratorEmptyConfig(x =>
         {
             x.CheckWhiteSpace.Value = true;
             x.CheckWhiteSpaceAsciiSymbol.Value = applyConfig;
@@ -124,7 +124,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     [Test]
     public void TestGenerateWithRubyLyric()
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         var lyric = new Lyric
         {
             Text = "明日いっしょに遊びましょう！",

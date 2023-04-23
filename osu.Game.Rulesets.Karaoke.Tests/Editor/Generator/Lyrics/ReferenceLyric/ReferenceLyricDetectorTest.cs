@@ -30,7 +30,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
             },
             detectedLyric
         };
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanDetect(lyrics, detectedLyric, canDetect, config);
     }
 
@@ -60,7 +60,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
             },
             detectedLyric
         };
-        var config = GeneratorConfig(x => x.IgnorePrefixAndPostfixSymbol.Value = true);
+        var config = GeneratorEmptyConfig(x => x.IgnorePrefixAndPostfixSymbol.Value = true);
         CheckCanDetect(lyrics, detectedLyric, canDetect, config);
     }
 
@@ -78,7 +78,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
             Order = 2
         };
 
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
 
         // first lyric cannot referenced by second lyric.
         CheckDetectResult(new[] { firstLyric, secondLyric }, firstLyric, null, config);

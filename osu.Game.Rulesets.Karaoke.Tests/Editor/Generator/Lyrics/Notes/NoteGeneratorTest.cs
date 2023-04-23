@@ -21,7 +21,7 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
     [TestCase(new string[] { }, false)]
     public void TestCanGenerate(string[] timeTags, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         var lyric = new Lyric
         {
             Text = "カラオケ",
@@ -36,7 +36,7 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
     [TestCase(new[] { "[0,start]:1000", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if time is duplicated.
     public void TestGenerate(string[] timeTags, string[] expectedNotes)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         var lyric = new Lyric
         {
             Text = "カラオケ",

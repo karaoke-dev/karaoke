@@ -16,7 +16,7 @@ public class ZhTimeTagGeneratorTest : BaseTimeTagGeneratorTest<ZhTimeTagGenerato
     [TestCase(null, false)]
     public void TestCanGenerate(string text, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanGenerate(text, canGenerate, config);
     }
 
@@ -25,7 +25,7 @@ public class ZhTimeTagGeneratorTest : BaseTimeTagGeneratorTest<ZhTimeTagGenerato
     [TestCase("拉~拉~拉~", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[5,end]:" })]
     public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags)
     {
-        var config = GeneratorConfig(x => x.CheckLineEndKeyUp.Value = true);
+        var config = GeneratorEmptyConfig(x => x.CheckLineEndKeyUp.Value = true);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 }

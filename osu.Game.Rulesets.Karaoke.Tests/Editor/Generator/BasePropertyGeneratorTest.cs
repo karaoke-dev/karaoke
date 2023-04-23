@@ -12,7 +12,7 @@ public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TC
     where TGenerator : PropertyGenerator<TItem, TProperty>
     where TConfig : GeneratorConfig, new()
 {
-    protected static TConfig GeneratorConfig(Action<TConfig>? action = null)
+    protected static TConfig GeneratorEmptyConfig(Action<TConfig>? action = null)
     {
         var config = new TConfig();
         GeneratorConfigHelper.ClearValue(config);

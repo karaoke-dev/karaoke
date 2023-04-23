@@ -15,7 +15,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
     [TestCase(null, false)]
     public void TestCanGenerate(string text, bool canGenerate)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckCanGenerate(text, canGenerate, config);
     }
 
@@ -23,7 +23,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
     [TestCase("はなび", new string[] { })]
     public void TestGenerate(string text, string[] expectedRubies)
     {
-        var config = GeneratorConfig();
+        var config = GeneratorEmptyConfig();
         CheckGenerateResult(text, expectedRubies, config);
     }
 
@@ -31,7 +31,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
     [TestCase("ハナビ", new string[] { })]
     public void TestGenerateWithRubyAsKatakana(string text, string[] expectedRubies)
     {
-        var config = GeneratorConfig(x => x.RubyAsKatakana.Value = true);
+        var config = GeneratorEmptyConfig(x => x.RubyAsKatakana.Value = true);
         CheckGenerateResult(text, expectedRubies, config);
     }
 
@@ -39,7 +39,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
     [TestCase("ハナビ", new[] { "[0,3]:はなび" })]
     public void TestGenerateWithEnableDuplicatedRuby(string text, string[] expectedRubies)
     {
-        var config = GeneratorConfig(x => x.EnableDuplicatedRuby.Value = true);
+        var config = GeneratorEmptyConfig(x => x.EnableDuplicatedRuby.Value = true);
         CheckGenerateResult(text, expectedRubies, config);
     }
 }
