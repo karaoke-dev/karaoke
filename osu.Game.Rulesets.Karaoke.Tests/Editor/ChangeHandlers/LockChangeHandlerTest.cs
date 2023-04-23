@@ -14,15 +14,19 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
     [Test]
     public void TestLock()
     {
-        PrepareHitObject(() => new Lyric
+        var referencedLyric = new Lyric
         {
+            ID = 1,
             Text = "カラオケ",
             Lock = LockState.None,
-        });
+        };
+
+        PrepareHitObject(() => referencedLyric);
 
         PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
+            ReferenceLyricId = referencedLyric.ID
         });
 
         TriggerHandlerChanged(c => c.Lock(LockState.Full));
@@ -37,15 +41,19 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
     [Test]
     public void TestUnlock()
     {
-        PrepareHitObject(() => new Lyric
+        var referencedLyric = new Lyric
         {
+            ID = 1,
             Text = "カラオケ",
             Lock = LockState.Full,
-        });
+        };
+
+        PrepareHitObject(() => referencedLyric);
 
         PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
+            ReferenceLyricId = referencedLyric.ID
         });
 
         TriggerHandlerChanged(c => c.Unlock());
@@ -61,6 +69,7 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
     public void TestLockToReferenceLyric()
     {
         var referencedLyric = new Lyric { ID = 2 };
+        PrepareHitObject(() => referencedLyric, false);
 
         PrepareHitObject(() => new Lyric
         {
