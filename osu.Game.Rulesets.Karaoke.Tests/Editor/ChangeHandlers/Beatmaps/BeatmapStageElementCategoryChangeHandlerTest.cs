@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
@@ -259,27 +260,27 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
         protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
         {
-            throw new NotImplementedException();
+            return Array.Empty<StageElement>();
         }
 
         protected override IEnumerable<StageElement> GetNoteStageElements(Note note)
         {
-            throw new NotImplementedException();
+            return Array.Empty<StageElement>();
         }
 
         protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
         {
-            throw new NotImplementedException();
+            return new TestApplier();
         }
 
         protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
         {
-            throw new NotImplementedException();
+            return new TestApplier();
         }
 
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
         {
-            throw new NotImplementedException();
+            return new Tuple<double?, double?>(lyric.LyricStartTime, lyric.LyricEndTime);
         }
     }
 
@@ -300,6 +301,26 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
             return ComparableUtils.CompareByProperty(this, other,
                 x => x.Name,
                 x => x.ID);
+        }
+    }
+
+    private class TestApplier : IStageEffectApplier
+    {
+        public double PreemptTime { get; } = 0;
+
+        public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateHitStateTransforms(DrawableHitObject drawableHitObject, ArmedState state)
+        {
+            throw new NotImplementedException();
         }
     }
 }
