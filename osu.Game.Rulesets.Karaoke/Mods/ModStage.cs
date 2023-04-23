@@ -36,12 +36,12 @@ public abstract class ModStage<TStageInfo> : Mod, IApplicableToBeatmap
         // use the matched stage info as current stage info.
         // trying to create a new one if has no matched stage info.
         // it's ok to like it as null if is not able to create the default one, beatmap processor will handle that.
-        karaokeBeatmap.CurrentStageInfo = matchedStageInfo ?? CreateStageInfo(beatmap)!;
+        karaokeBeatmap.CurrentStageInfo = matchedStageInfo ?? CreateStageInfo(karaokeBeatmap)!;
     }
 
     protected abstract void ApplyToCurrentStageInfo(TStageInfo stageInfo);
 
-    protected virtual TStageInfo? CreateStageInfo(IBeatmap beatmap)
+    protected virtual TStageInfo? CreateStageInfo(KaraokeBeatmap beatmap)
     {
         return null;
     }

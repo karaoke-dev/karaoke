@@ -8,6 +8,7 @@ using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
@@ -30,6 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Classic stage.
             SetDefault<ClassicLyricLayoutCategoryGeneratorConfig>();
             SetDefault<ClassicLyricTimingInfoGeneratorConfig>();
+            SetDefault<ClassicStageInfoGeneratorConfig>();
+
+            // Preview stage.
+            SetDefault<PreviewStageInfoGeneratorConfig>();
 
             // Language detection
             SetDefault<ReferenceLyricDetectorConfig>();
@@ -67,6 +72,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                 Type t when t == typeof(PageGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.BeatmapPageGeneratorConfig,
                 Type t when t == typeof(ClassicLyricLayoutCategoryGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicLyricLayoutCategoryGeneratorConfig,
                 Type t when t == typeof(ClassicLyricTimingInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicLyricTimingInfoGeneratorConfig,
+                Type t when t == typeof(ClassicStageInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ClassicStageInfoGeneratorConfig,
+                Type t when t == typeof(PreviewStageInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.PreviewStageInfoGeneratorConfig,
                 Type t when t == typeof(ReferenceLyricDetectorConfig) => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig,
                 Type t when t == typeof(LanguageDetectorConfig) => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig,
                 Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
@@ -104,6 +111,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Classic stage.
         ClassicLyricLayoutCategoryGeneratorConfig,
         ClassicLyricTimingInfoGeneratorConfig,
+        ClassicStageInfoGeneratorConfig,
+
+        // Preview stage.
+        PreviewStageInfoGeneratorConfig,
 
         // Reference lyric detection.
         ReferenceLyricDetectorConfig,

@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -16,16 +17,21 @@ public class PlayfieldClassicStageApplier : PlayfieldStageApplier<ClassicStageDe
 
     protected override void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield)
     {
-        throw new System.NotImplementedException();
+        // there's no need to do anything here.
     }
 
     protected override void UpdateLyricPlayfieldArrangement(TransformSequence<LyricPlayfield> transformSequence, bool displayNotePlayfield)
     {
-        throw new System.NotImplementedException();
+        // todo: adjust the lyric playfield size if contains note playfield.
     }
 
     protected override void UpdateNotePlayfieldArrangement(TransformSequence<ScrollingNotePlayfield> transformSequence)
     {
-        throw new System.NotImplementedException();
+        transformSequence.TransformTo(nameof(LyricPlayfield.Anchor), Anchor.Centre)
+                         .TransformTo(nameof(LyricPlayfield.Origin), Anchor.Centre)
+                         .MoveToY(-200)
+                         .TransformTo(nameof(LyricPlayfield.Padding), new MarginPadding(50))
+                         .Then()
+                         .FadeIn(100);
     }
 }

@@ -2,8 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Localisation;
-using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 
@@ -20,8 +21,11 @@ public class KaraokeModClassicStage : ModStage<ClassicStageInfo>
         throw new System.NotImplementedException();
     }
 
-    protected override ClassicStageInfo CreateStageInfo(IBeatmap beatmap)
+    protected override ClassicStageInfo CreateStageInfo(KaraokeBeatmap beatmap)
     {
-        throw new System.NotImplementedException();
+        var config = new ClassicStageInfoGeneratorConfig();
+        var generator = new ClassicStageInfoGenerator(config);
+
+        return (ClassicStageInfo)generator.Generate(beatmap);
     }
 }
