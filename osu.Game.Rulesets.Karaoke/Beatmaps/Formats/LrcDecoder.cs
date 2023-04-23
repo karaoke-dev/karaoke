@@ -36,18 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
                 var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
 
-                double? startTime = lrcTimeTags.Select(x => x.Time).Min();
-                double? endTime = lrcTimeTags.Select(x => x.Time).Max();
-                double? duration = endTime - startTime;
-
                 var lyric = new Lyric
                 {
                     ID = output.HitObjects.Count, // id is star from zero.
                     Order = output.HitObjects.Count + 1, // should create default order.
                     Text = lrcLyric.Text,
-                    // Start time and end time should be re-assigned
-                    StartTime = startTime ?? 0,
-                    Duration = duration ?? 0,
                     TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
                     RubyTags = lrcRubies
                 };

@@ -202,6 +202,16 @@ public class ClassicLyricTimingInfo
         return new Tuple<double?, double?>(matchedStartTime, matchedEndTime);
     }
 
+    public double? GetStartTime()
+    {
+        return Timings.Any() ? Timings.Min(x => x.Time) : default(double?);
+    }
+
+    public double? GetEndTime()
+    {
+        return Timings.Any() ? Timings.Max(x => x.Time) : default(double?);
+    }
+
     public IEnumerable<int> GetMatchedLyricIds(ClassicLyricTimingPoint point)
     {
         return Mappings.Where(x => x.Value.Contains(point.ID)).Select(x => x.Key);

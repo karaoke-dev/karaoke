@@ -28,7 +28,7 @@ public class ClassicLyricLayoutCategoryGeneratorConfig : GeneratorConfig
     /// Adjust the <see cref="ClassicLyricLayout.HorizontalMargin"/> in the <see cref="ClassicLyricLayout"/>
     /// </summary>
     [ConfigSource("Horizontal margin", "The margin between lyric and the border of the playfield.")]
-    public BindableFloat HorizontalMargin { get; } = new(50)
+    public BindableFloat HorizontalMargin { get; } = new()
     {
         MinValue = 32,
         MaxValue = 100

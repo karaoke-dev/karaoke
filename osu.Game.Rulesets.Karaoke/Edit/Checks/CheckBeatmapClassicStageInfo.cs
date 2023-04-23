@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
 public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageInfo>
 {
-    public const double MIN_ROW_HEIGHT = 30;
-    public const double MAX_ROW_HEIGHT = 200;
+    public const float MIN_ROW_HEIGHT = 30;
+    public const float MAX_ROW_HEIGHT = 200;
 
     public const int MIN_LINE_SIZE = 0;
     public const int MAX_LINE_SIZE = 4;

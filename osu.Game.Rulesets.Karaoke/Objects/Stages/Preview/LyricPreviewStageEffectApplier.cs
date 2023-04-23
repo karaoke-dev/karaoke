@@ -46,8 +46,8 @@ public class LyricPreviewStageEffectApplier : LyricStageEffectApplier<PreviewSta
     {
         float initialPosition = getStartPosition(Definition, layout) + Definition.FadingOffsetPosition;
         float startPosition = getStartPosition(Definition, layout);
-        float alpha = getAlpha(layout, Definition);
-        double duration = fadeInDuration(layout, Definition);
+        float alpha = getAlpha(Definition, layout);
+        double duration = fadeInDuration(Definition, layout);
 
         transformSequence.MoveToY(initialPosition).Then()
                          .MoveToY(startPosition, duration, Definition.MovingInEasing)
@@ -63,7 +63,7 @@ public class LyricPreviewStageEffectApplier : LyricStageEffectApplier<PreviewSta
             return definition.LyricHeight * layout.Timings.Count;
         }
 
-        static float getAlpha(PreviewLyricLayout layout, PreviewStageDefinition definition)
+        static float getAlpha(PreviewStageDefinition definition, PreviewLyricLayout layout)
         {
             if (layout.Timings.Any())
             {
@@ -73,7 +73,7 @@ public class LyricPreviewStageEffectApplier : LyricStageEffectApplier<PreviewSta
             return 1;
         }
 
-        static double fadeInDuration(PreviewLyricLayout layout, PreviewStageDefinition definition)
+        static double fadeInDuration(PreviewStageDefinition definition, PreviewLyricLayout layout)
         {
             if (layout.StartTime != 0)
             {

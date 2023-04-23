@@ -58,23 +58,23 @@ public class ClassicLyricLayoutCategoryGenerator : BeatmapPropertyGenerator<Clas
         switch (amount)
         {
             case 4:
-                yield return addElementWithLine(category, 4, ClassicLyricLayoutAlignment.Left);
-                yield return addElementWithLine(category, 3, ClassicLyricLayoutAlignment.Right);
-                yield return addElementWithLine(category, 2, ClassicLyricLayoutAlignment.Left);
-                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Right);
+                yield return addElementWithLine(category, 3, ClassicLyricLayoutAlignment.Left);
+                yield return addElementWithLine(category, 2, ClassicLyricLayoutAlignment.Right);
+                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Left);
+                yield return addElementWithLine(category, 0, ClassicLyricLayoutAlignment.Right);
 
                 yield break;
 
             case 3:
-                yield return addElementWithLine(category, 3, ClassicLyricLayoutAlignment.Left);
-                yield return addElementWithLine(category, 2, ClassicLyricLayoutAlignment.Center);
-                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Right);
+                yield return addElementWithLine(category, 2, ClassicLyricLayoutAlignment.Left);
+                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Center);
+                yield return addElementWithLine(category, 0, ClassicLyricLayoutAlignment.Right);
 
                 yield break;
 
             case 2:
-                yield return addElementWithLine(category, 2, ClassicLyricLayoutAlignment.Left);
-                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Right);
+                yield return addElementWithLine(category, 1, ClassicLyricLayoutAlignment.Left);
+                yield return addElementWithLine(category, 0, ClassicLyricLayoutAlignment.Right);
 
                 yield break;
 
