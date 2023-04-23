@@ -22,7 +22,24 @@ public abstract class HitObjectWorkingPropertyValidator<THitObject, TFlag> : Fla
     protected HitObjectWorkingPropertyValidator(THitObject hitObject)
     {
         this.hitObject = hitObject;
+
         ValidateAll();
+        invalidateCannotCheckSyncProperties();
+    }
+
+    /// <summary>
+    /// We need to invalidate the properties that can't check working property sync.
+    /// For able to apply the value in the <see cref="KaraokeBeatmapProcessor"/>
+    /// </summary>
+    private void invalidateCannotCheckSyncProperties()
+    {
+        foreach (TFlag flag in Enum.GetValues(typeof(TFlag)))
+        {
+            if (CanCheckWorkingPropertySync(flag))
+                continue;
+
+            Invalidate(flag);
+        }
     }
 
     /// <summary>
