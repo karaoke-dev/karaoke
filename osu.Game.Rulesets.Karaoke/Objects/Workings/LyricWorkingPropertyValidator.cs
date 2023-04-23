@@ -14,7 +14,7 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     {
     }
 
-    protected override bool CanCheckWorkingPropertySync(Lyric hitObject, LyricWorkingProperty flags) =>
+    protected override bool CanCheckWorkingPropertySync(LyricWorkingProperty flags) =>
         flags switch
         {
             LyricWorkingProperty.StartTime => false,

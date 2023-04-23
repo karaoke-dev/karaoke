@@ -12,7 +12,7 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
     {
     }
 
-    protected override bool CanCheckWorkingPropertySync(Note hitObject, NoteWorkingProperty flags) =>
+    protected override bool CanCheckWorkingPropertySync(NoteWorkingProperty flags) =>
         flags switch
         {
             NoteWorkingProperty.Page => false,
