@@ -208,6 +208,38 @@ public class ClassicLyricTimingInfoTest
     }
 
     [Test]
+    public void TestGetStartTime()
+    {
+        var timingInfo = new ClassicLyricTimingInfo();
+
+        Assert.AreEqual(null, timingInfo.GetStartTime());
+
+        // Test add timing point.
+        timingInfo.AddTimingPoint(x =>
+        {
+            x.Time = 1000;
+        });
+
+        Assert.AreEqual(1000, timingInfo.GetStartTime());
+    }
+
+    [Test]
+    public void TestGetEndTime()
+    {
+        var timingInfo = new ClassicLyricTimingInfo();
+
+        Assert.AreEqual(null, timingInfo.GetEndTime());
+
+        // Test add timing point.
+        timingInfo.AddTimingPoint(x =>
+        {
+            x.Time = 1000;
+        });
+
+        Assert.AreEqual(1000, timingInfo.GetEndTime());
+    }
+
+    [Test]
     public void TestGetMatchedLyricIds()
     {
         var timingInfo = new ClassicLyricTimingInfo();
