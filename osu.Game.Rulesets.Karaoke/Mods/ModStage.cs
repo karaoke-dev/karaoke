@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 
-public abstract class ModStage<TStageInfo> : Mod, IApplicableToBeatmap
+public abstract class ModStage<TStageInfo> : Mod, IApplicableAfterBeatmapConversion
     where TStageInfo : StageInfo
 {
     public sealed override ModType Type => ModType.System;
