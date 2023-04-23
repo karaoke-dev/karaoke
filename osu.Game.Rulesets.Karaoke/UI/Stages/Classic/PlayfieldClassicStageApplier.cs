@@ -17,12 +17,13 @@ public class PlayfieldClassicStageApplier : PlayfieldStageApplier<ClassicStageDe
 
     protected override void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield)
     {
-        // there's no need to do anything here.
+        transformSequence.FadeIn(300);
     }
 
     protected override void UpdateLyricPlayfieldArrangement(TransformSequence<LyricPlayfield> transformSequence, bool displayNotePlayfield)
     {
         // todo: adjust the lyric playfield size if contains note playfield.
+        transformSequence.FadeIn(100);
     }
 
     protected override void UpdateNotePlayfieldArrangement(TransformSequence<ScrollingNotePlayfield> transformSequence)
