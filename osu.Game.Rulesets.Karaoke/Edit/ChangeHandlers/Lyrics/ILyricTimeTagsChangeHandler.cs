@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricTimeTagsChangeHandler : ILyricListPropertyChangeHandler<TimeTag>
+    public interface ILyricTimeTagsChangeHandler : ILyricListPropertyChangeHandler<TimeTag>, ILyricPropertyAutoGenerateChangeHandler
     {
         void SetTimeTagTime(TimeTag timeTag, double time);
 
