@@ -16,14 +16,14 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
     protected override bool IncludeAutoGenerator => true;
 
     [Test]
-    public void TestAddStageInfoToBeatmap()
+    public void TestAutoGenerate()
     {
         PrepareHitObject(() => new Lyric(), false);
         PrepareHitObject(() => new Lyric(), false);
 
         TriggerHandlerChanged(c =>
         {
-            c.AddStageInfoToBeatmap<ClassicStageInfo>();
+            c.AutoGenerate<ClassicStageInfo>();
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
@@ -36,12 +36,12 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
         // Should not add the same stage again.
         TriggerHandlerChangedWithException<InvalidOperationException>(c =>
         {
-            c.AddStageInfoToBeatmap<ClassicStageInfo>();
+            c.AutoGenerate<ClassicStageInfo>();
         });
     }
 
     [Test]
-    public void TestRemoveStageInfoFromBeatmap()
+    public void TestRemove()
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
@@ -55,7 +55,7 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
 
         TriggerHandlerChanged(c =>
         {
-            c.RemoveStageInfoFromBeatmap<ClassicStageInfo>();
+            c.Remove<ClassicStageInfo>();
         });
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
@@ -67,7 +67,7 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
         // Should not remove if there's no matched stage info type.
         TriggerHandlerChangedWithException<InvalidOperationException>(c =>
         {
-            c.RemoveStageInfoFromBeatmap<ClassicStageInfo>();
+            c.Remove<ClassicStageInfo>();
         });
     }
 }
