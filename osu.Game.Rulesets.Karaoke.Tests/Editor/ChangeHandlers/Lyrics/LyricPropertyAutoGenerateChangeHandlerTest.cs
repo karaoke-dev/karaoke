@@ -10,21 +10,31 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
-public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricAutoGenerateChangeHandler>
+/// <summary>
+/// This test is focus on make sure that:
+/// If the <see cref="Lyric.ReferenceLyric"/> in the <see cref="Lyric"/> is not empty.
+/// <see cref="ILyricPropertyAutoGenerateChangeHandler"/> should be able to change the property.
+/// </summary>
+/// <typeparam name="TChangeHandler"></typeparam>
+[TestFixture(typeof(LyricReferenceChangeHandler))]
+[TestFixture(typeof(LyricLanguageChangeHandler))]
+[TestFixture(typeof(LyricRubyTagsChangeHandler))]
+[TestFixture(typeof(LyricRomajiTagsChangeHandler))]
+[TestFixture(typeof(LyricTimeTagsChangeHandler))]
+[TestFixture(typeof(LyricNotesChangeHandler))]
+public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> : LyricPropertyChangeHandlerTest<TChangeHandler>
+    where TChangeHandler : LyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler, new()
 {
     protected override bool IncludeAutoGenerator => true;
 
     # region With reference lyric
 
-    [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
-    [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-    public void TestCanGenerateWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
+    [Test]
+    public void TestCanGenerateWithReferenceLyric()
     {
-        if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
+
+        if (lyricReferenceChangeHandler)
         {
             PrepareHitObject(() => new Lyric
             {
@@ -48,19 +58,16 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
 
         TriggerHandlerChanged(c =>
         {
-            Assert.AreEqual(canGenerate, c.CanGenerate(autoGenerateProperty));
+            Assert.AreEqual(lyricReferenceChangeHandler, c.CanGenerate());
         });
     }
 
-    [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
-    [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-    public void TestGeneratorNotSupportedLyricsWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
+    [Test]
+    public void TestGeneratorNotSupportedLyricsWithReferenceLyric()
     {
-        if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
+
+        if (lyricReferenceChangeHandler)
         {
             PrepareHitObject(() => new Lyric
             {
@@ -84,20 +91,17 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
 
         TriggerHandlerChanged(c =>
         {
-            bool hasNotSupportedLyrics = c.GetGeneratorNotSupportedLyrics(autoGenerateProperty).Any();
-            Assert.AreEqual(canGenerate, !hasNotSupportedLyrics);
+            bool hasNotSupportedLyrics = c.GetGeneratorNotSupportedLyrics().Any();
+            Assert.AreEqual(lyricReferenceChangeHandler, !hasNotSupportedLyrics);
         });
     }
 
-    [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
-    [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
-    [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
-    public void TestAutoGenerate(LyricAutoGenerateProperty autoGenerateProperty, bool canGenerate)
+    [Test]
+    public void TestAutoGenerate()
     {
-        if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
+
+        if (lyricReferenceChangeHandler)
         {
             PrepareHitObject(() => new Lyric
             {
@@ -119,15 +123,18 @@ public partial class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHan
             }
         });
 
-        if (canGenerate)
+        if (lyricReferenceChangeHandler)
         {
-            TriggerHandlerChanged(c => c.AutoGenerate(autoGenerateProperty));
+            TriggerHandlerChanged(c => c.AutoGenerate());
         }
         else
         {
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate(autoGenerateProperty));
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate());
         }
     }
+
+    private bool isLyricReferenceChangeHandler()
+        => typeof(TChangeHandler) == typeof(LyricReferenceChangeHandler);
 
     #endregion
 }
