@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -17,7 +18,28 @@ public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, 
     [Resolved, AllowNull]
     private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
 
-    public void AddStageInfoToBeatmap<TStageInfo>() where TStageInfo : StageInfo, new()
+    bool IAutoGenerateChangeHandler<StageInfo>.CanGenerate<TStageInfo>()
+        => CanGenerate<TStageInfo>();
+
+    public bool CanGenerate<TStageInfo>() where TStageInfo : StageInfo
+    {
+        return GetGeneratorNotSupportedMessage<TStageInfo>() == null;
+    }
+
+    public LocalisableString? GetGeneratorNotSupportedMessage<TStageInfo>() where TStageInfo : StageInfo
+    {
+        var stage = getStageInfo<TStageInfo>(KaraokeBeatmap);
+        if (stage != null)
+            return $"{nameof(TStageInfo)} already exist in the beatmap.";
+
+        var generator = new StageInfoGeneratorSelector<TStageInfo>(generatorConfigManager);
+        return generator.GetInvalidMessage(KaraokeBeatmap);
+    }
+
+    void IAutoGenerateChangeHandler<StageInfo>.AutoGenerate<TStageInfo>()
+        => AutoGenerate<TStageInfo>();
+
+    public void AutoGenerate<TStageInfo>() where TStageInfo : StageInfo
     {
         PerformBeatmapChanged(beatmap =>
         {
@@ -32,7 +54,7 @@ public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, 
         });
     }
 
-    public void RemoveStageInfoFromBeatmap<TStageInfo>() where TStageInfo : StageInfo, new()
+    public void Remove<TStageInfo>() where TStageInfo : StageInfo
     {
         PerformBeatmapChanged(beatmap =>
         {
