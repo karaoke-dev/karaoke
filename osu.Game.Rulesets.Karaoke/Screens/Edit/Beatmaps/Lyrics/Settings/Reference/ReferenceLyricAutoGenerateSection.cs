@@ -13,13 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
         protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
             => new ReferenceLyricAutoGenerateSubsection();
 
-        private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
+        private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricReferenceChangeHandler>
         {
-            public ReferenceLyricAutoGenerateSubsection()
-                : base(LyricAutoGenerateProperty.DetectReferenceLyric)
-            {
-            }
-
             protected override DescriptionFormat CreateInvalidDescriptionFormat()
                 => new()
                 {

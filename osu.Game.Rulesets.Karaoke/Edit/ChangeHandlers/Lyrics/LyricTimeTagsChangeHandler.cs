@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -13,6 +15,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, ILyricTimeTagsChangeHandler
     {
+        #region Auto-Generate
+
+        public bool CanGenerate()
+        {
+            var generator = GetSelector<TimeTag[], TimeTagGeneratorConfig>();
+            return CanGenerate(generator);
+        }
+
+        public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics()
+        {
+            var generator = GetSelector<TimeTag[], TimeTagGeneratorConfig>();
+            return GetInvalidMessageFromGenerator(generator);
+        }
+
+        public void AutoGenerate()
+        {
+            var generator = GetSelector<TimeTag[], TimeTagGeneratorConfig>();
+
+            PerformOnSelection(lyric =>
+            {
+                lyric.TimeTags = generator.Generate(lyric);
+            });
+        }
+
+        #endregion
+
         public void SetTimeTagTime(TimeTag timeTag, double time)
         {
             CheckExactlySelectedOneHitObject();

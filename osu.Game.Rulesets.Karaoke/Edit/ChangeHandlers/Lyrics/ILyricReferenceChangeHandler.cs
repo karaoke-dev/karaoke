@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricReferenceChangeHandler : ILyricPropertyChangeHandler
+    public interface ILyricReferenceChangeHandler : ILyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler
     {
         void UpdateReferenceLyric(Lyric? referenceLyric);
 

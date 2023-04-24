@@ -15,14 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
         protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
             => new TimeTageAutoGenerateSubsection();
 
-        private partial class TimeTageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
+        private partial class TimeTageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricTimeTagsChangeHandler>
         {
             private const string language_mode = "LANGUAGE_MODE";
-
-            public TimeTageAutoGenerateSubsection()
-                : base(LyricAutoGenerateProperty.AutoGenerateTimeTags)
-            {
-            }
 
             protected override DescriptionFormat CreateInvalidDescriptionFormat()
                 => new()

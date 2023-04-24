@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapPagesChangeHandler
 {
+    #region Auto-Generate
+
     [Resolved, AllowNull]
     private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
 
@@ -50,6 +52,8 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
 
     private PageGeneratorConfig getGeneratorConfig()
         => generatorConfigManager.Get<PageGeneratorConfig>();
+
+    #endregion
 
     public void Add(Page page)
     {

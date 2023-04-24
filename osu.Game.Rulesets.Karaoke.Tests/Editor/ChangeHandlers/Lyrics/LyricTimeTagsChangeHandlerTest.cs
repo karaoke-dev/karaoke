@@ -2,11 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
@@ -15,6 +17,52 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
 public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTimeTagsChangeHandler>
 {
+    protected override bool IncludeAutoGenerator => true;
+
+    #region TimeTag
+
+    [Test]
+    public void TestAutoGenerateTimeTags()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            Language = new CultureInfo(17)
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate());
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual(5, h.TimeTags.Count);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateTimeTagsWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "カラオケ",
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+                Language = new CultureInfo(17)
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate());
+    }
+
+    #endregion
+
     [Test]
     public void TestSetTimeTagTime()
     {

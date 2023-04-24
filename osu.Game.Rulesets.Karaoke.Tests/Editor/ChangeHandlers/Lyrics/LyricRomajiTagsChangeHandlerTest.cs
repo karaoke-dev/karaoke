@@ -5,12 +5,61 @@ using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
 public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRomajiTagsChangeHandler>
 {
+    protected override bool IncludeAutoGenerator => true;
+
+    #region Auto-Generate
+
+    [Test]
+    public void TestAutoGenerateRomajiTags()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17)
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate());
+
+        AssertSelectedHitObject(h =>
+        {
+            var romajiTags = h.RomajiTags;
+            Assert.AreEqual(1, romajiTags.Count);
+            Assert.AreEqual("kaze", romajiTags[0].Text);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateRomajiTagsWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "風",
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+                Language = new CultureInfo(17)
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate());
+    }
+
+    #endregion
+
     [Test]
     public void TestAdd()
     {
