@@ -7,14 +7,20 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapStagesChangeHandler>
 {
+    protected override bool IncludeAutoGenerator => true;
+
     [Test]
     public void TestAddStageInfoToBeatmap()
     {
+        PrepareHitObject(() => new Lyric(), false);
+        PrepareHitObject(() => new Lyric(), false);
+
         TriggerHandlerChanged(c =>
         {
             c.AddStageInfoToBeatmap<ClassicStageInfo>();

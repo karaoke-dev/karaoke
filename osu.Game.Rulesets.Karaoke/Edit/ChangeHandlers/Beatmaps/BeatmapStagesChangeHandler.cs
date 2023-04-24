@@ -2,14 +2,21 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapStagesChangeHandler
 {
+    [Resolved, AllowNull]
+    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+
     public void AddStageInfoToBeatmap<TStageInfo>() where TStageInfo : StageInfo, new()
     {
         PerformBeatmapChanged(beatmap =>
@@ -18,7 +25,10 @@ public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, 
             if (stage != null)
                 throw new InvalidOperationException($"{nameof(TStageInfo)} already exist in the beatmap.");
 
-            beatmap.StageInfos.Add(new TStageInfo());
+            var generator = new StageInfoGeneratorSelector<TStageInfo>(generatorConfigManager);
+            var stageInfo = generator.Generate(beatmap);
+
+            beatmap.StageInfos.Add(stageInfo);
         });
     }
 
