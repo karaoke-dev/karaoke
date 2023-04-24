@@ -13,13 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
         protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
             => new RubyTagAutoGenerateSubsection();
 
-        private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
+        private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRubyTagsChangeHandler>
         {
-            public RubyTagAutoGenerateSubsection()
-                : base(LyricAutoGenerateProperty.AutoGenerateRubyTags)
-            {
-            }
-
             protected override ConfigButton CreateConfigButton()
                 => new RubyTagAutoGenerateConfigButton();
 

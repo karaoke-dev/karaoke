@@ -13,13 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
         protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
             => new RomajiTagAutoGenerateSubsection();
 
-        private partial class RomajiTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
+        private partial class RomajiTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRomajiTagsChangeHandler>
         {
-            public RomajiTagAutoGenerateSubsection()
-                : base(LyricAutoGenerateProperty.AutoGenerateRomajiTags)
-            {
-            }
-
             protected override ConfigButton CreateConfigButton()
                 => new RomajiTagAutoGenerateConfigButton();
 

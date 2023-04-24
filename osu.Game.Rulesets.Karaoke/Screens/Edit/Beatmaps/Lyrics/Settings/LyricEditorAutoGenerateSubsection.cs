@@ -12,17 +12,11 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 {
-    public abstract partial class LyricEditorAutoGenerateSubsection : AutoGenerateSubsection
+    public abstract partial class LyricEditorAutoGenerateSubsection<TChangeHandler> : AutoGenerateSubsection
+        where TChangeHandler : ILyricPropertyAutoGenerateChangeHandler
     {
-        private readonly LyricAutoGenerateProperty autoGenerateProperty;
-
-        protected LyricEditorAutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
-        {
-            this.autoGenerateProperty = autoGenerateProperty;
-        }
-
         protected override EditorSectionButton CreateGenerateButton()
-            => new AutoGenerateButton(autoGenerateProperty);
+            => new AutoGenerateButton();
 
         protected sealed override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
             => new LyricEditorDescriptionTextFlowContainer();
@@ -30,14 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
         private partial class AutoGenerateButton : SelectLyricButton
         {
             [Resolved, AllowNull]
-            private ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler { get; set; }
-
-            private readonly LyricAutoGenerateProperty autoGenerateProperty;
-
-            public AutoGenerateButton(LyricAutoGenerateProperty autoGenerateProperty)
-            {
-                this.autoGenerateProperty = autoGenerateProperty;
-            }
+            private TChangeHandler changeHandler { get; set; }
 
             protected override LocalisableString StandardText => "Generate";
 
@@ -45,12 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
 
             protected override IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
             {
-                return lyricAutoGenerateChangeHandler.GetGeneratorNotSupportedLyrics(autoGenerateProperty);
+                return changeHandler.GetGeneratorNotSupportedLyrics();
             }
 
             protected override void Apply()
             {
-                lyricAutoGenerateChangeHandler.AutoGenerate(autoGenerateProperty);
+                changeHandler.AutoGenerate();
             }
         }
     }
