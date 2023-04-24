@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaj
 
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
-        [Cached(typeof(ILyricAutoGenerateChangeHandler))]
-        private readonly LyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler;
-
         [Cached(typeof(ILyricRubyTagsChangeHandler))]
         private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
@@ -32,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaj
 
         public GenerateRubyRomajiStepScreen()
         {
-            AddInternal(lyricAutoGenerateChangeHandler = new LyricAutoGenerateChangeHandler());
             AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
             AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
         }
@@ -51,9 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaj
             base.LoadComplete();
 
             // Asking auto-generate ruby or romaji.
-            if (lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags))
+            if (lyricRubyTagsChangeHandler.CanGenerate())
                 AskForAutoGenerateRuby();
-            else if (lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags))
+            else if (lyricRomajiTagsChangeHandler.CanGenerate())
                 AskForAutoGenerateRomaji();
         }
 

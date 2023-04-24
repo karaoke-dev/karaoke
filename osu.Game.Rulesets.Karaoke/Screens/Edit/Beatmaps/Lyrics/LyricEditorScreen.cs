@@ -26,9 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
         [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
-        [Cached(typeof(ILyricAutoGenerateChangeHandler))]
-        private readonly LyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler;
-
         [Cached(typeof(ILyricTextChangeHandler))]
         private readonly LyricTextChangeHandler lyricTextChangeHandler;
 
@@ -71,7 +68,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
             : base(KaraokeBeatmapEditorScreenMode.Lyric)
         {
             AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
-            AddInternal(lyricAutoGenerateChangeHandler = new LyricAutoGenerateChangeHandler());
             AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
             AddInternal(lyricReferenceChangeHandler = new LyricReferenceChangeHandler());
             AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
