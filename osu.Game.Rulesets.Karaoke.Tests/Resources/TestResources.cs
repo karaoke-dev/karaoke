@@ -38,8 +38,6 @@ public static class TestResources
         return tempPath;
     }
 
-    public static Stream OpenNicoKaraResource(string name) => OpenResource($"Testing/NicoKara/{name}.nkmproj");
-
     public static Stream OpenTrackResource(string name) => OpenResource($"Testing/Track/{name}.mp3");
 
     public static Track OpenTrackInfo(AudioManager audioManager, string name) => audioManager.GetTrackStore(GetStore()).Get($"Resources/Testing/Track/{name}.mp3");
