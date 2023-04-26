@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization;
 
-[Ignore($"Test case already in the {nameof(KaraokeSkinElementConverterTest)}, {nameof(KaraokeSkinGroupConverterTest)}, and {nameof(KaraokeSkinMappingRoleConverterTest)}")]
+[Ignore($"Test case already in the {nameof(KaraokeSkinElementConverterTest)} and {nameof(KaraokeSkinGroupConverterTest)}")]
 public class SkinJsonSerializableExtensionsTest
 {
 }
