@@ -60,12 +60,8 @@ public class KaraokeBeatmapSkinDecodingTest
         var firstLyricLayout = skin.GetConfig<Lyric, LyricLayout>(firstLyric)!.Value;
         var secondLyricLayout = skin.GetConfig<Lyric, LyricLayout>(secondLyric)!.Value;
 
-        // should be able to get the default value.
-        Assert.IsNotNull(firstLyricLayout);
-        Assert.IsNotNull(secondLyricLayout);
-
-        // Check the content
-        Assert.IsNotNull(firstLyricLayout.Name, "下-1");
-        Assert.IsNotNull(secondLyricLayout.Name, "下-2");
+        // There's no default layout in the skin.
+        Assert.IsNull(firstLyricLayout);
+        Assert.IsNull(secondLyricLayout);
     }
 }
