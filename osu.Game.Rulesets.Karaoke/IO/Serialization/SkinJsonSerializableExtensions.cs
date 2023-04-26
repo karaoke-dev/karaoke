@@ -29,13 +29,5 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
             globalSetting.Converters.Add(new KaraokeSkinGroupConverter());
             return globalSetting;
         }
-
-        public static JsonSerializerSettings CreateSkinMappingGlobalSettings()
-        {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.Add(new KaraokeSkinMappingRoleConverter());
-            return globalSetting;
-        }
     }
 }

@@ -11,11 +11,9 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
-using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
-using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -27,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         public readonly IDictionary<ElementType, IList<IKaraokeSkinElement>> Elements = new Dictionary<ElementType, IList<IKaraokeSkinElement>>();
         public readonly List<IGroup> Groups = new();
-        public readonly List<IMappingRole> DefaultMappingRoles = new();
 
         public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider? resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
@@ -96,30 +93,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Logger.Error(ex, "Failed to load skin element.");
                 }
             });
-
-            SkinInfo.PerformRead(s =>
-            {
-                const string filename = "default-mapping-roles.json";
-
-                try
-                {
-                    string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
-                    if (string.IsNullOrEmpty(jsonContent))
-                        return;
-
-                    var globalSetting = SkinJsonSerializableExtensions.CreateSkinMappingGlobalSettings();
-                    var deserializedContent = JsonConvert.DeserializeObject<IMappingRole[]>(jsonContent, globalSetting);
-
-                    if (deserializedContent == null)
-                        return;
-
-                    DefaultMappingRoles.AddRange(deserializedContent);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex, "Failed to load skin element.");
-                }
-            });
         }
 
         public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
@@ -165,35 +138,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             Bindable<IDictionary<int, string>> getSelectionFromElementType(ElementType elementType)
                 => new(Elements[elementType].ToDictionary(k => k.ID, k => k.Name));
-        }
-
-        // todo: should move the logic outside if wants to support time-based roles.
-        // because it's impossible to get the current time in skin.
-        protected override IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
-        {
-            var type = KaraokeSkinElementConverter.GetElementType(elementType);
-            var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));
-
-            if (firstMatchedRole == null)
-                return base.GetElementByHitObjectAndElementType(hitObject, elementType);
-
-            int elementId = firstMatchedRole.ElementId;
-            var element = ToElement(type, elementId);
-            return element;
-        }
-
-        protected IKaraokeSkinElement ToElement(ElementType type, int id)
-        {
-            var elements = Elements[type];
-            if (elements == null)
-                throw new ArgumentNullException(nameof(elements));
-
-            var element = elements.FirstOrDefault(x => x.ID == id);
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-
-            // should make sure that must be able to found element from the skin.
-            return element;
         }
     }
 }
