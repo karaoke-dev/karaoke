@@ -152,6 +152,11 @@ namespace osu.Game.Rulesets.Karaoke
                     new KaraokeModFlashlight(),
                     new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
                 },
+                ModType.Conversion => new Mod[]
+                {
+                    new MultiMod(new KaraokeModPreviewStage(), new KaraokeModClassicStage()),
+                },
+
                 ModType.Automation => new Mod[]
                 {
                     new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
