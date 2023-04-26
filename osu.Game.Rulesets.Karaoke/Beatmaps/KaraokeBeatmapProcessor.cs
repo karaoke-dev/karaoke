@@ -7,6 +7,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -38,8 +39,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
 
                 // should invalidate the working property here because the stage info is changed.
-                beatmap.HitObjects.OfType<IHasWorkingProperty<LyricWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier));
-                beatmap.HitObjects.OfType<IHasWorkingProperty<NoteWorkingProperty>>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
+                beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
+                {
+                    x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
+                    x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+                });
+                beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
             }
 
             if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
