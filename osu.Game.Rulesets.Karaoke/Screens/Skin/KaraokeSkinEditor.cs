@@ -9,7 +9,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
-using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 using osu.Game.Skinning;
 
@@ -31,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin
             screenMode switch
             {
                 KaraokeSkinEditorScreenMode.Config => new ConfigScreen(skin),
-                KaraokeSkinEditorScreenMode.Layout => new LayoutScreen(skin),
                 KaraokeSkinEditorScreenMode.Style => new StyleScreen(skin),
                 _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
             };
