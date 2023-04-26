@@ -21,7 +21,6 @@
     <PackageReference Include="ppy.osu.Game" Version="2023.419.0" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
-    <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta18" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
@@ -57,7 +56,6 @@
     <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Common.dll" />
     <InputAssemblies Include="$(OutputPath)Lucene.Net.Analysis.Kuromoji.dll" />
     <InputAssemblies Include="$(OutputPath)J2N.dll" />
-    <InputAssemblies Include="$(OutputPath)NicoKaraParser.dll" />
     <InputAssemblies Include="$(OutputPath)SixLabors.Fonts.dll" />
     <InputAssemblies Include="$(OutputPath)SixLabors.ImageSharp.Drawing.dll" />
     <InputAssemblies Include="$(OutputPath)WanaKanaSharp.dll" />
