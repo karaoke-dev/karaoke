@@ -6,18 +6,24 @@ using System.ComponentModel;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
-    public class KaraokeLegacySkinTransformer : LegacySkinTransformer
+    /// <summary>
+    /// Not inherit the <see cref="LegacySkinTransformer"/> because:
+    /// 1. Karaoke ruleset does not have the legacy skin.
+    /// 2. There's not much logic in the <see cref="LegacySkinTransformer"/>
+    /// </summary>
+    public class KaraokeLegacySkinTransformer : KaraokeDefaultSkinTransformer
     {
         private readonly Lazy<bool> isLegacySkin;
         private readonly KaraokeBeatmapSkin karaokeSkin;
 
-        public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
-            : base(source)
+        public KaraokeLegacySkinTransformer(ISkin skin, IBeatmap beatmap)
+            : base(skin, beatmap)
         {
             // we should get config by default karaoke skin.
             // if has resource or texture, then try to get from legacy skin.

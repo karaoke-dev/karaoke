@@ -8,8 +8,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class KaraokeClassicSkinTransformer : KaraokeLegacySkinTransformer
     {
-        public KaraokeClassicSkinTransformer(ISkin source, IBeatmap beatmap)
-            : base(source, beatmap)
+        public KaraokeClassicSkinTransformer(ISkin skin, IBeatmap beatmap)
+            : base(skin, beatmap)
         {
         }
     }
