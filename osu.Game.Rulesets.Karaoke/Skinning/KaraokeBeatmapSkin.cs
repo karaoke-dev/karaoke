@@ -13,7 +13,6 @@ using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Karaoke.Skinning.Groups;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -24,7 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public class KaraokeBeatmapSkin : KaraokeSkin
     {
         public readonly IDictionary<ElementType, IList<IKaraokeSkinElement>> Elements = new Dictionary<ElementType, IList<IKaraokeSkinElement>>();
-        public readonly List<IGroup> Groups = new();
 
         public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider? resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
@@ -68,30 +66,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         ElementType.NoteStyle => "note-styles",
                         _ => throw new InvalidEnumArgumentException(nameof(elementType))
                     };
-            });
-
-            SkinInfo.PerformRead(s =>
-            {
-                const string filename = "groups.json";
-
-                try
-                {
-                    string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
-                    if (string.IsNullOrEmpty(jsonContent))
-                        return;
-
-                    var globalSetting = SkinJsonSerializableExtensions.CreateSkinGroupGlobalSettings();
-                    var deserializedContent = JsonConvert.DeserializeObject<IGroup[]>(jsonContent, globalSetting);
-
-                    if (deserializedContent == null)
-                        return;
-
-                    Groups.AddRange(deserializedContent);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex, "Failed to load skin element.");
-                }
             });
         }
 
