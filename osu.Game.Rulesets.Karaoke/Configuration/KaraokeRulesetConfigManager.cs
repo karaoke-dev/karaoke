@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 {
     public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSetting>
     {
-        public KaraokeRulesetConfigManager(SettingsStore settings, RulesetInfo ruleset, int? variant = null)
+        public KaraokeRulesetConfigManager(SettingsStore? settings, RulesetInfo ruleset, int? variant = null)
             : base(settings, ruleset, variant)
         {
         }
