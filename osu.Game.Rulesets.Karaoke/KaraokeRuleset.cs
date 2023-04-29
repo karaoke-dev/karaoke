@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
@@ -51,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke
     [ExcludeFromDynamicCompile]
     public partial class KaraokeRuleset : Ruleset
     {
-        public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
+        public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
         public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
@@ -208,13 +206,13 @@ namespace osu.Game.Rulesets.Karaoke
                 ArgonSkin => new KaraokeArgonSkinTransformer(skin, beatmap),
                 DefaultLegacySkin => new KaraokeClassicSkinTransformer(skin, beatmap),
                 LegacySkin => new KaraokeLegacySkinTransformer(skin, beatmap),
-                _ => null
+                _ => throw new InvalidOperationException(),
             };
         }
 
         public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
 
-        public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
+        public override IRulesetConfigManager CreateConfig(SettingsStore? settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
 
         public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
