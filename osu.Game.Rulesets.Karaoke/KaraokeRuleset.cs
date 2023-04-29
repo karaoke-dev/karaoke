@@ -198,7 +198,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string PlayingVerb => "Singing karaoke";
 
-        public override ISkin? CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
+        public override ISkin CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
         {
             return skin switch
             {
@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke
                 ArgonSkin => new KaraokeArgonSkinTransformer(skin, beatmap),
                 DefaultLegacySkin => new KaraokeClassicSkinTransformer(skin, beatmap),
                 LegacySkin => new KaraokeLegacySkinTransformer(skin, beatmap),
-                _ => null
+                _ => throw new InvalidOperationException(),
             };
         }
 
