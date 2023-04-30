@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singers;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
+
+public partial class SingerSettings : LyricEditorSettings
 {
-    public partial class SingerSettings : LyricEditorSettings
+    public override SettingsDirection Direction => SettingsDirection.Left;
+
+    public override float SettingsWidth => 300;
+
+    protected override IReadOnlyList<Drawable> CreateSections() => new[]
     {
-        public override SettingsDirection Direction => SettingsDirection.Left;
-
-        public override float SettingsWidth => 300;
-
-        protected override IReadOnlyList<Drawable> CreateSections() => new[]
-        {
-            new SingerEditSection(),
-        };
-    }
+        new SingerEditSection(),
+    };
 }

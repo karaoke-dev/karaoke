@@ -11,59 +11,58 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Beatmaps;
+
+public class KaraokeBeatmapProcessor : BeatmapProcessor
 {
-    public class KaraokeBeatmapProcessor : BeatmapProcessor
+    public new KaraokeBeatmap Beatmap => (KaraokeBeatmap)base.Beatmap;
+
+    public KaraokeBeatmapProcessor(IBeatmap beatmap)
+        : base(beatmap)
     {
-        public new KaraokeBeatmap Beatmap => (KaraokeBeatmap)base.Beatmap;
+    }
 
-        public KaraokeBeatmapProcessor(IBeatmap beatmap)
-            : base(beatmap)
+    public override void PreProcess()
+    {
+        applyStage(Beatmap);
+
+        base.PreProcess();
+        applyInvalidProperty(Beatmap);
+    }
+
+    private void applyStage(KaraokeBeatmap beatmap)
+    {
+        // current stage info will be null if not select any mod or first load.
+        // trying to load the first stage or create a default one.
+        if (beatmap.CurrentStageInfo == null)
         {
-        }
+            beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
 
-        public override void PreProcess()
-        {
-            applyStage(Beatmap);
-
-            base.PreProcess();
-            applyInvalidProperty(Beatmap);
-        }
-
-        private void applyStage(KaraokeBeatmap beatmap)
-        {
-            // current stage info will be null if not select any mod or first load.
-            // trying to load the first stage or create a default one.
-            if (beatmap.CurrentStageInfo == null)
+            // should invalidate the working property here because the stage info is changed.
+            beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
             {
-                beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
-
-                // should invalidate the working property here because the stage info is changed.
-                beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
-                {
-                    x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-                    x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
-                });
-                beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
-            }
-
-            if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
-                calculatedProperty.ValidateCalculatedProperty(beatmap);
-
-            StageInfo? getWorkingStage()
-                => Beatmap.StageInfos.FirstOrDefault();
-
-            StageInfo createDefaultWorkingStage() => new PreviewStageInfo();
+                x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
+                x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+            });
+            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
         }
 
-        private void applyInvalidProperty(KaraokeBeatmap beatmap)
+        if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
+            calculatedProperty.ValidateCalculatedProperty(beatmap);
+
+        StageInfo? getWorkingStage()
+            => Beatmap.StageInfos.FirstOrDefault();
+
+        StageInfo createDefaultWorkingStage() => new PreviewStageInfo();
+    }
+
+    private void applyInvalidProperty(KaraokeBeatmap beatmap)
+    {
+        // should convert to array here because validate the working property might change the start-time and the end time.
+        // which will cause got the wrong item in the array.
+        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
         {
-            // should convert to array here because validate the working property might change the start-time and the end time.
-            // which will cause got the wrong item in the array.
-            foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
-            {
-                hitObject.ValidateWorkingProperty(beatmap);
-            }
+            hitObject.ValidateWorkingProperty(beatmap);
         }
     }
 }

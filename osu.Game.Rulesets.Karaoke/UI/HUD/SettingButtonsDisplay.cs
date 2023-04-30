@@ -16,83 +16,82 @@ using osu.Game.Screens.Play;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
+
+public partial class SettingButtonsDisplay : CompositeDrawable, ISerialisableDrawable
 {
-    public partial class SettingButtonsDisplay : CompositeDrawable, ISerialisableDrawable
+    private readonly CornerBackground background;
+    private readonly FillFlowContainer<SettingButton> triggerButtons;
+
+    public bool UsesFixedAnchor { get; set; }
+
+    [SettingSource("Alpha", "The alpha value of this box")]
+    public BindableNumber<float> BoxAlpha { get; } = new(1)
     {
-        private readonly CornerBackground background;
-        private readonly FillFlowContainer<SettingButton> triggerButtons;
+        MinValue = 0,
+        MaxValue = 1,
+        Precision = 0.01f,
+    };
 
-        public bool UsesFixedAnchor { get; set; }
-
-        [SettingSource("Alpha", "The alpha value of this box")]
-        public BindableNumber<float> BoxAlpha { get; } = new(1)
+    public SettingButtonsDisplay()
+    {
+        AutoSizeAxes = Axes.Both;
+        InternalChildren = new Drawable[]
         {
-            MinValue = 0,
-            MaxValue = 1,
-            Precision = 0.01f,
+            background = new CornerBackground
+            {
+                RelativeSizeAxes = Axes.Both,
+            },
+            triggerButtons = new FillFlowContainer<SettingButton>
+            {
+                Anchor = Anchor.CentreRight,
+                Origin = Anchor.CentreRight,
+                AutoSizeAxes = Axes.Both,
+                Spacing = new Vector2(10),
+                Margin = new MarginPadding(10),
+                Direction = FillDirection.Vertical,
+                AlwaysPresent = true
+            },
         };
+    }
 
-        public SettingButtonsDisplay()
+    protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
+    {
+        // trying to change relative position in here.
+        if ((invalidation & Invalidation.MiscGeometry) != 0)
         {
-            AutoSizeAxes = Axes.Both;
-            InternalChildren = new Drawable[]
-            {
-                background = new CornerBackground
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
-                triggerButtons = new FillFlowContainer<SettingButton>
-                {
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-                    AutoSizeAxes = Axes.Both,
-                    Spacing = new Vector2(10),
-                    Margin = new MarginPadding(10),
-                    Direction = FillDirection.Vertical,
-                    AlwaysPresent = true
-                },
-            };
+            var overlayDirection = Anchor.HasFlagFast(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
+            settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
         }
 
-        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
+        return base.OnInvalidate(invalidation, source);
+    }
+
+    private SettingOverlayContainer settingOverlayContainer;
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours, HUDOverlay hud, Player player)
+    {
+        background.Colour = colours.ContextMenuGray;
+
+        var rulesetInfo = player.Ruleset.Value;
+        Schedule(() =>
         {
-            // trying to change relative position in here.
-            if ((invalidation & Invalidation.MiscGeometry) != 0)
+            hud.Add(new KaraokeControlInputManager(rulesetInfo)
             {
-                var overlayDirection = Anchor.HasFlagFast(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
-                settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
-            }
-
-            return base.OnInvalidate(invalidation, source);
-        }
-
-        private SettingOverlayContainer settingOverlayContainer;
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours, HUDOverlay hud, Player player)
-        {
-            background.Colour = colours.ContextMenuGray;
-
-            var rulesetInfo = player.Ruleset.Value;
-            Schedule(() =>
-            {
-                hud.Add(new KaraokeControlInputManager(rulesetInfo)
+                RelativeSizeAxes = Axes.Both,
+                Child = settingOverlayContainer = new SettingOverlayContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = settingOverlayContainer = new SettingOverlayContainer
+                    OnNewOverlayAdded = overlay =>
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        OnNewOverlayAdded = overlay =>
-                        {
-                            var button = overlay.CreateToggleButton();
-                            triggerButtons.Add(button);
-                        }
+                        var button = overlay.CreateToggleButton();
+                        triggerButtons.Add(button);
                     }
-                });
+                }
             });
+        });
 
-            BoxAlpha.BindValueChanged(alpha => triggerButtons.Alpha = alpha.NewValue, true);
-        }
+        BoxAlpha.BindValueChanged(alpha => triggerButtons.Alpha = alpha.NewValue, true);
     }
 }

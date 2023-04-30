@@ -9,18 +9,17 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
-{
-    /// <summary>
-    /// If click the lock icon in <see cref="LyricEditor"/>, will apply <see cref="LockState.Partial"/> or <see cref="LockState.Full"/>
-    /// </summary>
-    public class LockStateMenu : EnumMenu<LockState>
-    {
-        public LockStateMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
-            : base(config.GetBindable<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState), text)
-        {
-        }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 
-        protected override IEnumerable<LockState> ValidEnums => new[] { LockState.Partial, LockState.Full };
+/// <summary>
+/// If click the lock icon in <see cref="LyricEditor"/>, will apply <see cref="LockState.Partial"/> or <see cref="LockState.Full"/>
+/// </summary>
+public class LockStateMenu : EnumMenu<LockState>
+{
+    public LockStateMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
+        : base(config.GetBindable<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState), text)
+    {
     }
+
+    protected override IEnumerable<LockState> ValidEnums => new[] { LockState.Partial, LockState.Full };
 }

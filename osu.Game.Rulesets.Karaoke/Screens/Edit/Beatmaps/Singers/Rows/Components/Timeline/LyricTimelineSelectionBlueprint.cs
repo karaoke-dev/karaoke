@@ -9,34 +9,33 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline;
+
+public partial class LyricTimelineSelectionBlueprint : EditableLyricTimelineSelectionBlueprint
 {
-    public partial class LyricTimelineSelectionBlueprint : EditableLyricTimelineSelectionBlueprint
+    private readonly IBindableList<int> singersBindable;
+
+    public LyricTimelineSelectionBlueprint(Lyric item)
+        : base(item)
     {
-        private readonly IBindableList<int> singersBindable;
+        singersBindable = Item.SingerIdsBindable.GetBoundCopy();
+    }
 
-        public LyricTimelineSelectionBlueprint(Lyric item)
-            : base(item)
+    [BackgroundDependencyLoader]
+    private void load(SingerLyricTimeline timeline)
+    {
+        singersBindable.BindCollectionChanged((_, _) =>
         {
-            singersBindable = Item.SingerIdsBindable.GetBoundCopy();
-        }
+            // Check is lyric contains this singer, or default singer
+            Selectable = lyricInCurrentSinger(Item, timeline.Singer);
+        }, true);
 
-        [BackgroundDependencyLoader]
-        private void load(SingerLyricTimeline timeline)
+        static bool lyricInCurrentSinger(Lyric lyric, Singer singer)
         {
-            singersBindable.BindCollectionChanged((_, _) =>
-            {
-                // Check is lyric contains this singer, or default singer
-                Selectable = lyricInCurrentSinger(Item, timeline.Singer);
-            }, true);
+            if (singer == DefaultLyricPlacementColumn.DefaultSinger)
+                return !lyric.SingerIds.Any();
 
-            static bool lyricInCurrentSinger(Lyric lyric, Singer singer)
-            {
-                if (singer == DefaultLyricPlacementColumn.DefaultSinger)
-                    return !lyric.SingerIds.Any();
-
-                return LyricUtils.ContainsSinger(lyric, singer);
-            }
+            return LyricUtils.ContainsSinger(lyric, singer);
         }
     }
 }

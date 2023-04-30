@@ -3,12 +3,11 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
-{
-    public enum LanguageEditModeSpecialAction
-    {
-        AutoGenerate,
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
-        BatchSelect,
-    }
+public enum LanguageEditModeSpecialAction
+{
+    AutoGenerate,
+
+    BatchSelect,
 }

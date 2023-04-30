@@ -6,34 +6,33 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
+
+public partial class EditLyricDetailRow : DetailRow
 {
-    public partial class EditLyricDetailRow : DetailRow
+    public EditLyricDetailRow(Lyric lyric)
+        : base(lyric)
     {
-        public EditLyricDetailRow(Lyric lyric)
-            : base(lyric)
-        {
-        }
+    }
 
-        protected override Drawable CreateTimingInfo(Lyric lyric)
+    protected override Drawable CreateTimingInfo(Lyric lyric)
+    {
+        return new TimeTagInfo(lyric)
         {
-            return new TimeTagInfo(lyric)
-            {
-                Anchor = Anchor.CentreRight,
-                Origin = Anchor.CentreRight,
-                Margin = new MarginPadding { Right = 10 }
-            };
-        }
+            Anchor = Anchor.CentreRight,
+            Origin = Anchor.CentreRight,
+            Margin = new MarginPadding { Right = 10 }
+        };
+    }
 
-        protected override Drawable CreateContent(Lyric lyric)
+    protected override Drawable CreateContent(Lyric lyric)
+    {
+        return new ViewOnlyLyric(lyric)
         {
-            return new ViewOnlyLyric(lyric)
-            {
-                Anchor = Anchor.BottomLeft,
-                Origin = Anchor.BottomLeft,
-                Margin = new MarginPadding { Left = 10 },
-                RelativeSizeAxes = Axes.X,
-            };
-        }
+            Anchor = Anchor.BottomLeft,
+            Origin = Anchor.BottomLeft,
+            Margin = new MarginPadding { Left = 10 },
+            RelativeSizeAxes = Axes.X,
+        };
     }
 }

@@ -9,59 +9,58 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference;
+
+public partial class ReferenceLyricSection : LyricPropertySection
 {
-    public partial class ReferenceLyricSection : LyricPropertySection
+    protected override LocalisableString Title => "Reference lyric";
+
+    [Resolved, AllowNull]
+    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
+
+    private readonly LabelledReferenceLyricSelector labelledReferenceLyricSelector;
+
+    public ReferenceLyricSection()
     {
-        protected override LocalisableString Title => "Reference lyric";
-
-        [Resolved, AllowNull]
-        private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
-
-        private readonly LabelledReferenceLyricSelector labelledReferenceLyricSelector;
-
-        public ReferenceLyricSection()
+        Children = new[]
         {
-            Children = new[]
+            labelledReferenceLyricSelector = new LabelledReferenceLyricSelector
             {
-                labelledReferenceLyricSelector = new LabelledReferenceLyricSelector
-                {
-                    Label = "Referenced lyric",
-                    Description = "Select the similar lyric that want to reference or sync the property."
-                }
-            };
+                Label = "Referenced lyric",
+                Description = "Select the similar lyric that want to reference or sync the property."
+            }
+        };
 
-            labelledReferenceLyricSelector.Current.BindValueChanged(x =>
-            {
-                if (!IsRebinding)
-                    lyricReferenceChangeHandler.UpdateReferenceLyric(x.NewValue);
-            });
-        }
-
-        protected override void OnLyricChanged(Lyric? lyric)
+        labelledReferenceLyricSelector.Current.BindValueChanged(x =>
         {
-            if (lyric == null)
-                return;
-
-            labelledReferenceLyricSelector.Current = lyric.ReferenceLyricBindable;
-            labelledReferenceLyricSelector.IgnoredLyric = lyric;
-        }
-
-        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
-
-        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                // technically the property is always editable.
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
-
-        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                // technically the property is always editable.
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
+            if (!IsRebinding)
+                lyricReferenceChangeHandler.UpdateReferenceLyric(x.NewValue);
+        });
     }
+
+    protected override void OnLyricChanged(Lyric? lyric)
+    {
+        if (lyric == null)
+            return;
+
+        labelledReferenceLyricSelector.Current = lyric.ReferenceLyricBindable;
+        labelledReferenceLyricSelector.IgnoredLyric = lyric;
+    }
+
+    protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+        => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
+
+    protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            // technically the property is always editable.
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
+
+    protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            // technically the property is always editable.
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
 }

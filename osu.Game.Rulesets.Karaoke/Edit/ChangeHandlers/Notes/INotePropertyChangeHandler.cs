@@ -3,16 +3,15 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
+
+public interface INotePropertyChangeHandler : IHitObjectPropertyChangeHandler
 {
-    public interface INotePropertyChangeHandler : IHitObjectPropertyChangeHandler
-    {
-        void ChangeText(string text);
+    void ChangeText(string text);
 
-        void ChangeRubyText(string ruby);
+    void ChangeRubyText(string ruby);
 
-        void ChangeDisplayState(bool display);
+    void ChangeDisplayState(bool display);
 
-        void OffsetTone(Tone offset);
-    }
+    void OffsetTone(Tone offset);
 }

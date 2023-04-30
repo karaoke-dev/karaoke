@@ -4,24 +4,23 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricsChangeHandler
 {
-    public interface ILyricsChangeHandler
-    {
-        void Split(int index);
+    void Split(int index);
 
-        void Combine();
+    void Combine();
 
-        void CreateAtPosition();
+    void CreateAtPosition();
 
-        void CreateAtLast();
+    void CreateAtLast();
 
-        void AddBelowToSelection(Lyric newLyric);
+    void AddBelowToSelection(Lyric newLyric);
 
-        void AddRangeBelowToSelection(IEnumerable<Lyric> newLyrics);
+    void AddRangeBelowToSelection(IEnumerable<Lyric> newLyrics);
 
-        void Remove();
+    void Remove();
 
-        void ChangeOrder(int newOrder);
-    }
+    void ChangeOrder(int newOrder);
 }

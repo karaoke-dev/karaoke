@@ -7,34 +7,33 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar;
+
+/// <summary>
+/// Button with click effect.
+/// </summary>
+public abstract partial class ActionButton : ToolbarButton
 {
-    /// <summary>
-    /// Button with click effect.
-    /// </summary>
-    public abstract partial class ActionButton : ToolbarButton
+    [Resolved, AllowNull]
+    private OsuColour colours { get; set; }
+
+    protected void ToggleClickEffect()
     {
-        [Resolved, AllowNull]
-        private OsuColour colours { get; set; }
-
-        protected void ToggleClickEffect()
+        if (Enabled.Value)
         {
-            if (Enabled.Value)
-            {
-                IconContainer.FadeOut(100).Then().FadeIn();
-            }
-            else
-            {
-                IconContainer.FadeColour(colours.Red, 100).Then().FadeColour(Colour4.White);
-            }
+            IconContainer.FadeOut(100).Then().FadeIn();
         }
-
-        protected override bool OnClick(ClickEvent e)
+        else
         {
-            if (Enabled.Value)
-                ToggleClickEffect();
-
-            return base.OnClick(e);
+            IconContainer.FadeColour(colours.Red, 100).Then().FadeColour(Colour4.White);
         }
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (Enabled.Value)
+            ToggleClickEffect();
+
+        return base.OnClick(e);
     }
 }

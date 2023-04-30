@@ -9,27 +9,26 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.UI.Scrolling;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
+
+public partial class NoteConfigSection : EditorSection
 {
-    public partial class NoteConfigSection : EditorSection
+    protected override LocalisableString Title => "Config";
+
+    [BackgroundDependencyLoader]
+    private void load(IScrollingInfo scrollingInfo)
     {
-        protected override LocalisableString Title => "Config";
+        if (scrollingInfo.TimeRange is not BindableDouble bindableDouble)
+            return;
 
-        [BackgroundDependencyLoader]
-        private void load(IScrollingInfo scrollingInfo)
+        Children = new[]
         {
-            if (scrollingInfo.TimeRange is not BindableDouble bindableDouble)
-                return;
-
-            Children = new[]
+            new LabelledRealTimeSliderBar<double>
             {
-                new LabelledRealTimeSliderBar<double>
-                {
-                    Label = "Time range",
-                    Description = "Change time-range to zoom-in/zoom-out the notes.",
-                    Current = bindableDouble
-                }
-            };
-        }
+                Label = "Time range",
+                Description = "Change time-range to zoom-in/zoom-out the notes.",
+                Current = bindableDouble
+            }
+        };
     }
 }

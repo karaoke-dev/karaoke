@@ -9,24 +9,23 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Input;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections;
+
+public partial class ScoringSection : KaraokeSettingsSection
 {
-    public partial class ScoringSection : KaraokeSettingsSection
+    public override LocalisableString Header => "Scoring";
+
+    public override Drawable CreateIcon() => new SpriteIcon
     {
-        public override LocalisableString Header => "Scoring";
+        Icon = FontAwesome.Solid.Gamepad
+    };
 
-        public override Drawable CreateIcon() => new SpriteIcon
+    public ScoringSection()
+    {
+        Children = new Drawable[]
         {
-            Icon = FontAwesome.Solid.Gamepad
+            new MicrophoneSettings(),
+            new ScoringSettings(),
         };
-
-        public ScoringSection()
-        {
-            Children = new Drawable[]
-            {
-                new MicrophoneSettings(),
-                new ScoringSettings(),
-            };
-        }
     }
 }

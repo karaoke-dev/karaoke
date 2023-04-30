@@ -6,29 +6,28 @@ using System.Globalization;
 using System.Linq;
 using osu.Game.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Beatmaps;
+
+public static class KaraokeBeatmapExtension
 {
-    public static class KaraokeBeatmapExtension
+    public static bool IsScorable(this IBeatmap beatmap)
     {
-        public static bool IsScorable(this IBeatmap beatmap)
+        if (beatmap is not KaraokeBeatmap karaokeBeatmap)
         {
-            if (beatmap is not KaraokeBeatmap karaokeBeatmap)
-            {
-                // we should throw invalidate exception here but it will cause test case failed.
-                // because beatmap in the working beatmap in test case not always be karaoke beatmap class.
-                return false;
-            }
-
-            return karaokeBeatmap.Scorable;
+            // we should throw invalidate exception here but it will cause test case failed.
+            // because beatmap in the working beatmap in test case not always be karaoke beatmap class.
+            return false;
         }
 
-        public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
+        return karaokeBeatmap.Scorable;
+    }
 
-        public static bool AnyTranslate(this IBeatmap beatmap) => beatmap.AvailableTranslates().Any();
+    public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
 
-        public static float PitchToScale(this IBeatmap beatmap, float pitch)
-        {
-            return pitch / 20 - 7;
-        }
+    public static bool AnyTranslate(this IBeatmap beatmap) => beatmap.AvailableTranslates().Any();
+
+    public static float PitchToScale(this IBeatmap beatmap, float pitch)
+    {
+        return pitch / 20 - 7;
     }
 }

@@ -7,28 +7,27 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+
+public partial class UseAutoGenerateRomajiPopupDialog : PopupDialog
 {
-    public partial class UseAutoGenerateRomajiPopupDialog : PopupDialog
+    public UseAutoGenerateRomajiPopupDialog(Action<bool> okAction = null)
     {
-        public UseAutoGenerateRomajiPopupDialog(Action<bool> okAction = null)
+        Icon = FontAwesome.Solid.Globe;
+        HeaderText = "Auto generate romaji";
+        BodyText = "Would you like to use romaji generator to auto generate each lyric's romaji?";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Auto generate romaji";
-            BodyText = "Would you like to use romaji generator to auto generate each lyric's romaji?";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"Cancel",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"Cancel",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

@@ -8,38 +8,37 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+
+public class NoteEditorPreviewMenu : MenuItem
 {
-    public class NoteEditorPreviewMenu : MenuItem
+    private readonly KaraokeRulesetEditConfigManager config;
+
+    public NoteEditorPreviewMenu(KaraokeRulesetEditConfigManager config, string text)
+        : base(text)
     {
-        private readonly KaraokeRulesetEditConfigManager config;
+        this.config = config;
 
-        public NoteEditorPreviewMenu(KaraokeRulesetEditConfigManager config, string text)
-            : base(text)
+        Items = new[]
         {
-            this.config = config;
+            createToggleMenu("Display ruby", KaraokeRulesetEditSetting.DisplayRuby),
+            createToggleMenu("Display romaji", KaraokeRulesetEditSetting.DisplayRomaji),
+            createToggleMenu("Display translate", KaraokeRulesetEditSetting.DisplayTranslate),
+        };
+    }
 
-            Items = new[]
-            {
-                createToggleMenu("Display ruby", KaraokeRulesetEditSetting.DisplayRuby),
-                createToggleMenu("Display romaji", KaraokeRulesetEditSetting.DisplayRomaji),
-                createToggleMenu("Display translate", KaraokeRulesetEditSetting.DisplayTranslate),
-            };
-        }
+    private ToggleMenuItem createToggleMenu(string menu, KaraokeRulesetEditSetting setting)
+    {
+        var bindable = new Bindable<bool>();
+        var menuItem = new ToggleMenuItem(menu, MenuItemType.Standard, _ => bindable.Value = !bindable.Value);
 
-        private ToggleMenuItem createToggleMenu(string menu, KaraokeRulesetEditSetting setting)
+        // create bindable
+        bindable.BindValueChanged(e =>
         {
-            var bindable = new Bindable<bool>();
-            var menuItem = new ToggleMenuItem(menu, MenuItemType.Standard, _ => bindable.Value = !bindable.Value);
+            menuItem.State.Value = e.NewValue;
+        }, true);
+        config.BindWith(setting, bindable);
 
-            // create bindable
-            bindable.BindValueChanged(e =>
-            {
-                menuItem.State.Value = e.NewValue;
-            }, true);
-            config.BindWith(setting, bindable);
-
-            return menuItem;
-        }
+        return menuItem;
     }
 }

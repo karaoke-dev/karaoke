@@ -14,52 +14,51 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
+
+public partial class RecordTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
 {
-    public partial class RecordTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
+    [Resolved]
+    private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
+
+    [Resolved]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    [Resolved]
+    private EditorClock editorClock { get; set; }
+
+    public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
-        [Resolved]
-        private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
+        var caretPosition = lyricCaretState.CaretPosition;
+        if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
+            throw new NotSupportedException(nameof(caretPosition));
 
-        [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        var currentTimeTag = timeTagCaretPosition.TimeTag;
 
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        [Resolved]
-        private EditorClock editorClock { get; set; }
-
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
+        switch (e.Action)
         {
-            var caretPosition = lyricCaretState.CaretPosition;
-            if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
-                throw new NotSupportedException(nameof(caretPosition));
+            case KaraokeEditAction.ClearTime:
+                lyricTimeTagsChangeHandler.ClearTimeTagTime(currentTimeTag);
+                return true;
 
-            var currentTimeTag = timeTagCaretPosition.TimeTag;
+            case KaraokeEditAction.SetTime:
+                double currentTime = editorClock.CurrentTime;
+                lyricTimeTagsChangeHandler.SetTimeTagTime(currentTimeTag, currentTime);
 
-            switch (e.Action)
-            {
-                case KaraokeEditAction.ClearTime:
-                    lyricTimeTagsChangeHandler.ClearTimeTagTime(currentTimeTag);
-                    return true;
+                if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
+                    lyricCaretState.MoveCaret(MovingCaretAction.NextIndex);
 
-                case KaraokeEditAction.SetTime:
-                    double currentTime = editorClock.CurrentTime;
-                    lyricTimeTagsChangeHandler.SetTimeTagTime(currentTimeTag, currentTime);
+                return true;
 
-                    if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
-                        lyricCaretState.MoveCaret(MovingCaretAction.NextIndex);
-
-                    return true;
-
-                default:
-                    return false;
-            }
+            default:
+                return false;
         }
+    }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
-        {
-        }
+    public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
+    {
     }
 }

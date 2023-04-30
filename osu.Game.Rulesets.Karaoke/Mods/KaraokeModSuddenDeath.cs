@@ -3,9 +3,8 @@
 
 using osu.Game.Rulesets.Mods;
 
-namespace osu.Game.Rulesets.Karaoke.Mods
+namespace osu.Game.Rulesets.Karaoke.Mods;
+
+public class KaraokeModSuddenDeath : ModSuddenDeath
 {
-    public class KaraokeModSuddenDeath : ModSuddenDeath
-    {
-    }
 }

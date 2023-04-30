@@ -7,28 +7,27 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public partial class DeleteLyricDialog : PopupDialog
 {
-    public partial class DeleteLyricDialog : PopupDialog
+    public DeleteLyricDialog(Action<bool> okAction = null)
     {
-        public DeleteLyricDialog(Action<bool> okAction = null)
+        Icon = FontAwesome.Solid.Globe;
+        HeaderText = "Confirm deletion of";
+        BodyText = "lyric";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Confirm deletion of";
-            BodyText = "lyric";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"Yes. Go for it.",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"No! Abort mission!",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"Yes. Go for it.",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"No! Abort mission!",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

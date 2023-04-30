@@ -7,67 +7,66 @@ using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using osu.Game.Input.Bindings;
 
-namespace osu.Game.Rulesets.Karaoke
+namespace osu.Game.Rulesets.Karaoke;
+
+public partial class KaraokeControlInputManager : DatabasedKeyBindingContainer<KaraokeAction>
 {
-    public partial class KaraokeControlInputManager : DatabasedKeyBindingContainer<KaraokeAction>
+    public KaraokeControlInputManager(RulesetInfo ruleset)
+        : base(ruleset, 1, SimultaneousBindingMode.Unique)
     {
-        public KaraokeControlInputManager(RulesetInfo ruleset)
-            : base(ruleset, 1, SimultaneousBindingMode.Unique)
-        {
-        }
     }
+}
 
-    public enum KaraokeAction
-    {
-        [Description("First Lyric")]
-        FirstLyric,
+public enum KaraokeAction
+{
+    [Description("First Lyric")]
+    FirstLyric,
 
-        [Description("Previous BaseLyric")]
-        PreviousLyric,
+    [Description("Previous BaseLyric")]
+    PreviousLyric,
 
-        [Description("Next BaseLyric")]
-        NextLyric,
+    [Description("Next BaseLyric")]
+    NextLyric,
 
-        [Description("Play and pause")]
-        PlayAndPause,
+    [Description("Play and pause")]
+    PlayAndPause,
 
-        [Description("Open/Close adjustment")]
-        OpenPanel,
+    [Description("Open/Close adjustment")]
+    OpenPanel,
 
-        [Description("Increase Speed")]
-        IncreaseTempo,
+    [Description("Increase Speed")]
+    IncreaseTempo,
 
-        [Description("Decrease Speed")]
-        DecreaseTempo,
+    [Description("Decrease Speed")]
+    DecreaseTempo,
 
-        [Description("Reset Speed")]
-        ResetTempo,
+    [Description("Reset Speed")]
+    ResetTempo,
 
-        [Description("Increase pitch")]
-        IncreasePitch,
+    [Description("Increase pitch")]
+    IncreasePitch,
 
-        [Description("Decrease pitch")]
-        DecreasePitch,
+    [Description("Decrease pitch")]
+    DecreasePitch,
 
-        [Description("Reset pitch")]
-        ResetPitch,
+    [Description("Reset pitch")]
+    ResetPitch,
 
-        [Description("Increase vocal pitch")]
-        IncreaseVocalPitch,
+    [Description("Increase vocal pitch")]
+    IncreaseVocalPitch,
 
-        [Description("Decrease vocal pitch")]
-        DecreaseVocalPitch,
+    [Description("Decrease vocal pitch")]
+    DecreaseVocalPitch,
 
-        [Description("Reset vocal pitch")]
-        ResetVocalPitch,
+    [Description("Reset vocal pitch")]
+    ResetVocalPitch,
 
-        [Description("Increase scoring pitch")]
-        IncreaseScoringPitch,
+    [Description("Increase scoring pitch")]
+    IncreaseScoringPitch,
 
-        [Description("Decrease scoring pitch")]
-        DecreaseScoringPitch,
+    [Description("Decrease scoring pitch")]
+    DecreaseScoringPitch,
 
-        [Description("Reset scoring pitch")]
-        ResetScoringPitch,
-    }
+    [Description("Reset scoring pitch")]
+    ResetScoringPitch,
 }

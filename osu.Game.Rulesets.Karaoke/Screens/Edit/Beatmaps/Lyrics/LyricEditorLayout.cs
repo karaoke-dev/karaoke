@@ -3,13 +3,12 @@
 
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
-{
-    [Flags]
-    public enum LyricEditorLayout
-    {
-        Preview = 1,
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-        Detail = 1 << 1,
-    }
+[Flags]
+public enum LyricEditorLayout
+{
+    Preview = 1,
+
+    Detail = 1 << 1,
 }

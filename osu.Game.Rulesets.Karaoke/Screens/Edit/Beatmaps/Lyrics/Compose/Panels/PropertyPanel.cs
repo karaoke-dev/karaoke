@@ -5,18 +5,17 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels
-{
-    public partial class PropertyPanel : Panel
-    {
-        public PropertyPanel()
-        {
-            Width = 200;
-        }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels;
 
-        protected override IReadOnlyList<Drawable> CreateSections()
-        {
-            return Array.Empty<Drawable>();
-        }
+public partial class PropertyPanel : Panel
+{
+    public PropertyPanel()
+    {
+        Width = 200;
+    }
+
+    protected override IReadOnlyList<Drawable> CreateSections()
+    {
+        return Array.Empty<Drawable>();
     }
 }

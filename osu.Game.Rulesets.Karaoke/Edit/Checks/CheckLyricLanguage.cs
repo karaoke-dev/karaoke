@@ -6,32 +6,31 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
+
+public class CheckLyricLanguage : CheckHitObjectProperty<Lyric>
 {
-    public class CheckLyricLanguage : CheckHitObjectProperty<Lyric>
+    protected override string Description => "Lyric with invalid language.";
+
+    public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        protected override string Description => "Lyric with invalid language.";
+        new IssueTemplateLyricNotFillLanguage(this),
+    };
 
-        public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
-        {
-            new IssueTemplateLyricNotFillLanguage(this),
-        };
+    protected override IEnumerable<Issue> Check(Lyric lyric)
+    {
+        if (lyric.Language == null)
+            yield return new IssueTemplateLyricNotFillLanguage(this).Create(lyric);
+    }
 
-        protected override IEnumerable<Issue> Check(Lyric lyric)
+    public class IssueTemplateLyricNotFillLanguage : IssueTemplate
+    {
+        public IssueTemplateLyricNotFillLanguage(ICheck check)
+            : base(check, IssueType.Problem, "Lyric must have assign language.")
         {
-            if (lyric.Language == null)
-                yield return new IssueTemplateLyricNotFillLanguage(this).Create(lyric);
         }
 
-        public class IssueTemplateLyricNotFillLanguage : IssueTemplate
-        {
-            public IssueTemplateLyricNotFillLanguage(ICheck check)
-                : base(check, IssueType.Problem, "Lyric must have assign language.")
-            {
-            }
-
-            public Issue Create(Lyric lyric)
-                => new LyricIssue(lyric, this);
-        }
+        public Issue Create(Lyric lyric)
+            => new LyricIssue(lyric, this);
     }
 }

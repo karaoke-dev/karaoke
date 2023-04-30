@@ -6,23 +6,22 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+
+public partial class RomajiTagIssueSection : TextTagIssueSection
 {
-    public partial class RomajiTagIssueSection : TextTagIssueSection
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
+
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiTagIssueTable();
+
+    private partial class RomajiTagIssueTable : TextTagIssueTable<RomajiTag>
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
-
-        protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiTagIssueTable();
-
-        private partial class RomajiTagIssueTable : TextTagIssueTable<RomajiTag>
+        protected override Tuple<Lyric, RomajiTag> GetInvalidByIssue(Issue issue)
         {
-            protected override Tuple<Lyric, RomajiTag> GetInvalidByIssue(Issue issue)
-            {
-                if (issue is not LyricRomajiTagIssue romajiTagIssue)
-                    throw new InvalidCastException();
+            if (issue is not LyricRomajiTagIssue romajiTagIssue)
+                throw new InvalidCastException();
 
-                return new Tuple<Lyric, RomajiTag>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag);
-            }
+            return new Tuple<Lyric, RomajiTag>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag);
         }
     }
 }

@@ -5,13 +5,12 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
+
+public class LyricEditorPreferLayoutMenu : EnumMenu<LyricEditorLayout>
 {
-    public class LyricEditorPreferLayoutMenu : EnumMenu<LyricEditorLayout>
+    public LyricEditorPreferLayoutMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
+        : base(config.GetBindable<LyricEditorLayout>(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout), text)
     {
-        public LyricEditorPreferLayoutMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
-            : base(config.GetBindable<LyricEditorLayout>(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout), text)
-        {
-        }
     }
 }

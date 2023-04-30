@@ -10,56 +10,55 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
+namespace osu.Game.Rulesets.Karaoke.Graphics.Containers;
+
+public partial class MessageContainer : OsuTextFlowContainer
 {
-    public partial class MessageContainer : OsuTextFlowContainer
+    [Resolved]
+    private OsuColour colours { get; set; }
+
+    public MessageContainer(Action<SpriteText> defaultCreationParameters = null)
+        : base(defaultCreationParameters)
     {
-        [Resolved]
-        private OsuColour colours { get; set; }
+    }
 
-        public MessageContainer(Action<SpriteText> defaultCreationParameters = null)
-            : base(defaultCreationParameters)
+    public void AddSuccessParagraph(string text, Action<SpriteText> creationParameters = null)
+    {
+        NewParagraph();
+        AddIcon(FontAwesome.Solid.Check, icon =>
         {
-        }
+            icon.Colour = colours.Green;
+        });
+        AddText($" {text}", creationParameters);
+    }
 
-        public void AddSuccessParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddWarningParagraph(string text, Action<SpriteText> creationParameters = null)
+    {
+        NewParagraph();
+        AddIcon(FontAwesome.Solid.ExclamationTriangle, icon =>
         {
-            NewParagraph();
-            AddIcon(FontAwesome.Solid.Check, icon =>
-            {
-                icon.Colour = colours.Green;
-            });
-            AddText($" {text}", creationParameters);
-        }
+            icon.Colour = colours.Yellow;
+            icon.Scale = new Vector2(0.9f);
+        });
+        AddText($" {text}", creationParameters);
+    }
 
-        public void AddWarningParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddAlertParagraph(string text, Action<SpriteText> creationParameters = null)
+    {
+        NewParagraph();
+        AddIcon(FontAwesome.Solid.TimesCircle, icon =>
         {
-            NewParagraph();
-            AddIcon(FontAwesome.Solid.ExclamationTriangle, icon =>
-            {
-                icon.Colour = colours.Yellow;
-                icon.Scale = new Vector2(0.9f);
-            });
-            AddText($" {text}", creationParameters);
-        }
+            icon.Colour = colours.Red;
+        });
+        AddText($" {text}", creationParameters);
+    }
 
-        public void AddAlertParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddHighlightText(string text, Action<SpriteText> creationParameters = null)
+    {
+        AddText($" {text}", c =>
         {
-            NewParagraph();
-            AddIcon(FontAwesome.Solid.TimesCircle, icon =>
-            {
-                icon.Colour = colours.Red;
-            });
-            AddText($" {text}", creationParameters);
-        }
-
-        public void AddHighlightText(string text, Action<SpriteText> creationParameters = null)
-        {
-            AddText($" {text}", c =>
-            {
-                c.Colour = colours.Yellow;
-                creationParameters?.Invoke(c);
-            });
-        }
+            c.Colour = colours.Yellow;
+            creationParameters?.Invoke(c);
+        });
     }
 }

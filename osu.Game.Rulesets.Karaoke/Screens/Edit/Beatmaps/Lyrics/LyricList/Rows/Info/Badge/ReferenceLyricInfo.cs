@@ -9,51 +9,50 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
+
+public partial class ReferenceLyricInfo : SubInfo
 {
-    public partial class ReferenceLyricInfo : SubInfo
+    private readonly IBindable<Lyric?> bindableReferenceLyric;
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    public ReferenceLyricInfo(Lyric lyric)
+        : base(lyric)
     {
-        private readonly IBindable<Lyric?> bindableReferenceLyric;
+        bindableReferenceLyric = lyric.ReferenceLyricBindable.GetBoundCopy();
+    }
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        BadgeColour = colours.Red;
 
-        public ReferenceLyricInfo(Lyric lyric)
-            : base(lyric)
+        bindableReferenceLyric.BindValueChanged(e =>
         {
-            bindableReferenceLyric = lyric.ReferenceLyricBindable.GetBoundCopy();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            BadgeColour = colours.Red;
-
-            bindableReferenceLyric.BindValueChanged(e =>
+            if (e.NewValue == null)
             {
-                if (e.NewValue == null)
-                {
-                    Hide();
-                }
-                else
-                {
-                    Show();
-
-                    // note: there's no need to worry about referenced lyric change the order because there's no possible to change hhe order in reference lyric mode.
-                    BadgeText = $"Ref: #{e.NewValue.Order}";
-                }
-            }, true);
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            if (bindableReferenceLyric.Value != null)
-            {
-                lyricCaretState.MoveCaretToTargetPosition(bindableReferenceLyric.Value);
-                return true;
+                Hide();
             }
+            else
+            {
+                Show();
 
-            return base.OnClick(e);
+                // note: there's no need to worry about referenced lyric change the order because there's no possible to change hhe order in reference lyric mode.
+                BadgeText = $"Ref: #{e.NewValue.Order}";
+            }
+        }, true);
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (bindableReferenceLyric.Value != null)
+        {
+            lyricCaretState.MoveCaretToTargetPosition(bindableReferenceLyric.Value);
+            return true;
         }
+
+        return base.OnClick(e);
     }
 }

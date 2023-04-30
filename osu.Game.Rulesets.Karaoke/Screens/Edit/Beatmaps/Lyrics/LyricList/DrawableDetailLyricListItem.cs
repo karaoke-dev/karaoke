@@ -4,16 +4,15 @@
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
-{
-    public partial class DrawableDetailLyricListItem : DrawableLyricListItem
-    {
-        public DrawableDetailLyricListItem(Lyric item)
-            : base(item)
-        {
-        }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
 
-        protected override Row CreateEditRow(Lyric lyric)
-            => new EditLyricDetailRow(lyric);
+public partial class DrawableDetailLyricListItem : DrawableLyricListItem
+{
+    public DrawableDetailLyricListItem(Lyric item)
+        : base(item)
+    {
     }
+
+    protected override Row CreateEditRow(Lyric lyric)
+        => new EditLyricDetailRow(lyric);
 }

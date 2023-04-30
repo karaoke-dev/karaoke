@@ -13,84 +13,83 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+
+public partial class LabelledHueSelector : LabelledComponent<LabelledHueSelector.OsuHueSelector, float>
 {
-    public partial class LabelledHueSelector : LabelledComponent<LabelledHueSelector.OsuHueSelector, float>
+    public LabelledHueSelector()
+        : base(true)
     {
-        public LabelledHueSelector()
-            : base(true)
+    }
+
+    protected override OsuHueSelector CreateComponent()
+        => new();
+
+    private static EdgeEffectParameters createShadowParameters() => new()
+    {
+        Type = EdgeEffectType.Shadow,
+        Offset = new Vector2(0, 1),
+        Radius = 3,
+        Colour = Colour4.Black.Opacity(0.3f)
+    };
+
+    /// <summary>
+    /// Copied from <see cref="OsuHSVColourPicker"/>
+    /// </summary>
+    public partial class OsuHueSelector : HSVColourPicker.HueSelector, IHasCurrentValue<float>
+    {
+        private const float corner_radius = 10;
+        private const float control_border_thickness = 3;
+
+        public Bindable<float> Current
         {
+            get => Hue;
+            set
+            {
+                ArgumentNullException.ThrowIfNull(value);
+
+                Hue.UnbindBindings();
+                Hue.BindTo(value);
+            }
         }
 
-        protected override OsuHueSelector CreateComponent()
-            => new();
-
-        private static EdgeEffectParameters createShadowParameters() => new()
+        public OsuHueSelector()
         {
-            Type = EdgeEffectType.Shadow,
-            Offset = new Vector2(0, 1),
-            Radius = 3,
-            Colour = Colour4.Black.Opacity(0.3f)
-        };
+            SliderBar.CornerRadius = corner_radius;
+            SliderBar.Masking = true;
+        }
 
-        /// <summary>
-        /// Copied from <see cref="OsuHSVColourPicker"/>
-        /// </summary>
-        public partial class OsuHueSelector : HSVColourPicker.HueSelector, IHasCurrentValue<float>
+        protected override Drawable CreateSliderNub() => new SliderNub(this);
+
+        private partial class SliderNub : CompositeDrawable
         {
-            private const float corner_radius = 10;
-            private const float control_border_thickness = 3;
+            private readonly Bindable<float> hue;
+            private readonly Box fill;
 
-            public Bindable<float> Current
+            public SliderNub(OsuHueSelector osuHueSelector)
             {
-                get => Hue;
-                set
+                hue = osuHueSelector.Hue.GetBoundCopy();
+
+                InternalChild = new CircularContainer
                 {
-                    ArgumentNullException.ThrowIfNull(value);
-
-                    Hue.UnbindBindings();
-                    Hue.BindTo(value);
-                }
-            }
-
-            public OsuHueSelector()
-            {
-                SliderBar.CornerRadius = corner_radius;
-                SliderBar.Masking = true;
-            }
-
-            protected override Drawable CreateSliderNub() => new SliderNub(this);
-
-            private partial class SliderNub : CompositeDrawable
-            {
-                private readonly Bindable<float> hue;
-                private readonly Box fill;
-
-                public SliderNub(OsuHueSelector osuHueSelector)
-                {
-                    hue = osuHueSelector.Hue.GetBoundCopy();
-
-                    InternalChild = new CircularContainer
+                    Height = 35,
+                    Width = 10,
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    Masking = true,
+                    BorderColour = Colour4.White,
+                    BorderThickness = control_border_thickness,
+                    EdgeEffect = createShadowParameters(),
+                    Child = fill = new Box
                     {
-                        Height = 35,
-                        Width = 10,
-                        Origin = Anchor.Centre,
-                        Anchor = Anchor.Centre,
-                        Masking = true,
-                        BorderColour = Colour4.White,
-                        BorderThickness = control_border_thickness,
-                        EdgeEffect = createShadowParameters(),
-                        Child = fill = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        }
-                    };
-                }
+                        RelativeSizeAxes = Axes.Both
+                    }
+                };
+            }
 
-                protected override void LoadComplete()
-                {
-                    hue.BindValueChanged(h => fill.Colour = Colour4.FromHSV(h.NewValue, 1, 1), true);
-                }
+            protected override void LoadComplete()
+            {
+                hue.BindValueChanged(h => fill.Colour = Colour4.FromHSV(h.NewValue, 1, 1), true);
             }
         }
     }

@@ -5,17 +5,16 @@
 
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke
+namespace osu.Game.Rulesets.Karaoke;
+
+public class KaraokeSkinComponentLookup : GameplaySkinComponentLookup<KaraokeSkinComponents>
 {
-    public class KaraokeSkinComponentLookup : GameplaySkinComponentLookup<KaraokeSkinComponents>
+    public KaraokeSkinComponentLookup(KaraokeSkinComponents component)
+        : base(component)
     {
-        public KaraokeSkinComponentLookup(KaraokeSkinComponents component)
-            : base(component)
-        {
-        }
-
-        protected override string RulesetPrefix => KaraokeRuleset.SHORT_NAME;
-
-        protected override string ComponentName => Component.ToString().ToLower();
     }
+
+    protected override string RulesetPrefix => KaraokeRuleset.SHORT_NAME;
+
+    protected override string ComponentName => Component.ToString().ToLower();
 }

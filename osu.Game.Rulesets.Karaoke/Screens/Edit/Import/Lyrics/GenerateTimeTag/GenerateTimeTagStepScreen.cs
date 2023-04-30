@@ -12,68 +12,67 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
+
+public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
 {
-    public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
+    public override string Title => "Generate time tag";
+
+    public override string ShortTitle => "Generate time tag";
+
+    public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
+
+    public override IconUsage Icon => FontAwesome.Solid.Tag;
+
+    [Cached(typeof(ILyricTimeTagsChangeHandler))]
+    private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
+
+    public GenerateTimeTagStepScreen()
     {
-        public override string Title => "Generate time tag";
+        AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
+    }
 
-        public override string ShortTitle => "Generate time tag";
+    protected override TopNavigation CreateNavigation()
+        => new GenerateTimeTagNavigation(this);
 
-        public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
-
-        public override IconUsage Icon => FontAwesome.Solid.Tag;
-
-        [Cached(typeof(ILyricTimeTagsChangeHandler))]
-        private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
-
-        public GenerateTimeTagStepScreen()
+    protected override Drawable CreateContent()
+        => base.CreateContent().With(_ =>
         {
-            AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
-        }
+            SwitchLyricEditorMode(LyricEditorMode.EditTimeTag);
+        });
 
-        protected override TopNavigation CreateNavigation()
-            => new GenerateTimeTagNavigation(this);
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        AskForAutoGenerateTimeTag();
+    }
 
-        protected override Drawable CreateContent()
-            => base.CreateContent().With(_ =>
+    public override void Complete()
+    {
+        ScreenStack.Push(LyricImporterStep.Success);
+    }
+
+    internal void AskForAutoGenerateTimeTag()
+    {
+        var lyrics = Beatmap.Value.Beatmap.HitObjects.OfType<Lyric>();
+
+        if (LyricsUtils.HasTimedTimeTags(lyrics))
+        {
+            // do not touch user's lyric if already contains valid time-tag with time.
+            DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
             {
-                SwitchLyricEditorMode(LyricEditorMode.EditTimeTag);
-            });
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            AskForAutoGenerateTimeTag();
+                // do nothing if already contains valid tags.
+            }));
         }
-
-        public override void Complete()
+        else
         {
-            ScreenStack.Push(LyricImporterStep.Success);
-        }
-
-        internal void AskForAutoGenerateTimeTag()
-        {
-            var lyrics = Beatmap.Value.Beatmap.HitObjects.OfType<Lyric>();
-
-            if (LyricsUtils.HasTimedTimeTags(lyrics))
+            DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
             {
-                // do not touch user's lyric if already contains valid time-tag with time.
-                DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
-                {
-                    // do nothing if already contains valid tags.
-                }));
-            }
-            else
-            {
-                DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
-                {
-                    if (!ok)
-                        return;
+                if (!ok)
+                    return;
 
-                    PrepareAutoGenerate();
-                }));
-            }
+                PrepareAutoGenerate();
+            }));
         }
     }
 }

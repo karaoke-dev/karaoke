@@ -4,11 +4,10 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class FontUsageUtils
 {
-    public static class FontUsageUtils
-    {
-        public static FontInfo ToFontInfo(FontUsage fontUsage, FontFormat fontFormat)
-            => new(fontUsage.FontName, fontFormat);
-    }
+    public static FontInfo ToFontInfo(FontUsage fontUsage, FontFormat fontFormat)
+        => new(fontUsage.FontName, fontFormat);
 }

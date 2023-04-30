@@ -5,17 +5,16 @@
 
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin;
+
+public enum KaraokeSkinEditorScreenMode
 {
-    public enum KaraokeSkinEditorScreenMode
-    {
-        [Description("Config")]
-        Config,
+    [Description("Config")]
+    Config,
 
-        [Description("Style")]
-        Style,
+    [Description("Style")]
+    Style,
 
-        [Description("Layout")]
-        Layout,
-    }
+    [Description("Layout")]
+    Layout,
 }

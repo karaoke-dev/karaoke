@@ -20,209 +20,208 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Statistics
+namespace osu.Game.Rulesets.Karaoke.Statistics;
+
+public partial class BeatmapMetadataGraph : Container
 {
-    public partial class BeatmapMetadataGraph : Container
+    private const float spacing = 10;
+    private const float transition_duration = 250;
+
+    public BeatmapMetadataGraph(IBeatmap beatmap)
     {
-        private const float spacing = 10;
-        private const float transition_duration = 250;
+        Masking = true;
+        CornerRadius = 5;
 
-        public BeatmapMetadataGraph(IBeatmap beatmap)
+        var beatmapInfo = beatmap.BeatmapInfo;
+        var karaokeBeatmap = beatmap as KaraokeBeatmap;
+        InternalChildren = new Drawable[]
         {
-            Masking = true;
-            CornerRadius = 5;
-
-            var beatmapInfo = beatmap.BeatmapInfo;
-            var karaokeBeatmap = beatmap as KaraokeBeatmap;
-            InternalChildren = new Drawable[]
+            new Box
             {
-                new Box
+                Name = "Background",
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4.Black.Opacity(0.5f),
+            },
+            new OsuScrollContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                ScrollbarVisible = false,
+                Padding = new MarginPadding { Left = spacing / 2, Top = spacing / 2 },
+                Child = new FillFlowContainer
                 {
-                    Name = "Background",
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Black.Opacity(0.5f),
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    LayoutDuration = transition_duration,
+                    LayoutEasing = Easing.OutQuad,
+                    Spacing = new Vector2(spacing),
+                    Children = new MetadataSection[]
+                    {
+                        new TextMetadataSection("Description")
+                        {
+                            Text = beatmapInfo?.DifficultyName
+                        },
+                        new TextMetadataSection("Source")
+                        {
+                            Text = beatmapInfo?.Metadata.Source
+                        },
+                        new TextMetadataSection("Tags")
+                        {
+                            Text = beatmapInfo?.Metadata.Tags
+                        },
+                        new SingerMetadataSection("Singer")
+                        {
+                            Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray()
+                        }
+                    },
                 },
-                new OsuScrollContainer
+            },
+        };
+    }
+
+    private abstract partial class MetadataSection : Container
+    {
+        protected FillFlowContainer TextContainer { get; }
+
+        protected MetadataSection(string title)
+        {
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
+
+            InternalChild = TextContainer = new FillFlowContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Spacing = new Vector2(spacing / 2),
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    ScrollbarVisible = false,
-                    Padding = new MarginPadding { Left = spacing / 2, Top = spacing / 2 },
-                    Child = new FillFlowContainer
+                    new Container
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
-                        LayoutDuration = transition_duration,
-                        LayoutEasing = Easing.OutQuad,
-                        Spacing = new Vector2(spacing),
-                        Children = new MetadataSection[]
+                        Child = new OsuSpriteText
                         {
-                            new TextMetadataSection("Description")
-                            {
-                                Text = beatmapInfo?.DifficultyName
-                            },
-                            new TextMetadataSection("Source")
-                            {
-                                Text = beatmapInfo?.Metadata.Source
-                            },
-                            new TextMetadataSection("Tags")
-                            {
-                                Text = beatmapInfo?.Metadata.Tags
-                            },
-                            new SingerMetadataSection("Singer")
-                            {
-                                Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray()
-                            }
+                            Text = title,
+                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 14),
                         },
                     },
                 },
             };
         }
+    }
 
-        private abstract partial class MetadataSection : Container
+    private partial class TextMetadataSection : MetadataSection
+    {
+        private TextFlowContainer textFlow;
+
+        public TextMetadataSection(string title)
+            : base(title)
         {
-            protected FillFlowContainer TextContainer { get; }
+        }
 
-            protected MetadataSection(string title)
+        public string Text
+        {
+            set
             {
-                RelativeSizeAxes = Axes.X;
-                AutoSizeAxes = Axes.Y;
-
-                InternalChild = TextContainer = new FillFlowContainer
+                if (string.IsNullOrEmpty(value))
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Spacing = new Vector2(spacing / 2),
-                    Children = new Drawable[]
+                    this.FadeOut(transition_duration);
+                    return;
+                }
+
+                this.FadeIn(transition_duration);
+
+                setTextAsync(value);
+            }
+        }
+
+        private void setTextAsync(string text)
+        {
+            textFlow?.Expire();
+            TextContainer.Add(textFlow = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Colour = Color4.White.Opacity(0.75f),
+                Text = text
+            });
+        }
+    }
+
+    private partial class SingerMetadataSection : MetadataSection
+    {
+        private FillFlowContainer<SingerSpriteText> textFlow;
+
+        public SingerMetadataSection(string title)
+            : base(title)
+        {
+        }
+
+        public Singer[] Singers
+        {
+            set
+            {
+                if (value == null || !value.Any())
+                {
+                    this.FadeOut(transition_duration);
+                    return;
+                }
+
+                this.FadeIn(transition_duration);
+
+                setSingerAsync(value);
+            }
+        }
+
+        private void setSingerAsync(IEnumerable<Singer> singers)
+        {
+            textFlow?.Expire();
+            TextContainer.Add(textFlow = new FillFlowContainer<SingerSpriteText>
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Spacing = new Vector2(10),
+                Colour = Color4.White.Opacity(0.75f),
+            });
+
+            foreach (var singer in singers)
+            {
+                textFlow.Add(new SingerSpriteText
+                {
+                    Singer = singer
+                });
+            }
+        }
+
+        private partial class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
+        {
+            private Singer singer;
+            private readonly OsuSpriteText osuSpriteText;
+
+            public SingerSpriteText()
+            {
+                AutoSizeAxes = Axes.Both;
+                InternalChildren = new[]
+                {
+                    osuSpriteText = new OsuSpriteText
                     {
-                        new Container
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            AutoSizeAxes = Axes.Y,
-                            Child = new OsuSpriteText
-                            {
-                                Text = title,
-                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 14),
-                            },
-                        },
-                    },
+                        Font = OsuFont.GetFont(size: 14)
+                    }
                 };
             }
-        }
 
-        private partial class TextMetadataSection : MetadataSection
-        {
-            private TextFlowContainer textFlow;
-
-            public TextMetadataSection(string title)
-                : base(title)
+            public Singer Singer
             {
-            }
-
-            public string Text
-            {
+                get => singer;
                 set
                 {
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        this.FadeOut(transition_duration);
-                        return;
-                    }
-
-                    this.FadeIn(transition_duration);
-
-                    setTextAsync(value);
+                    singer = value;
+                    osuSpriteText.Text = singer?.Name ?? "Known singer";
                 }
             }
 
-            private void setTextAsync(string text)
-            {
-                textFlow?.Expire();
-                TextContainer.Add(textFlow = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Colour = Color4.White.Opacity(0.75f),
-                    Text = text
-                });
-            }
-        }
+            public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
-        private partial class SingerMetadataSection : MetadataSection
-        {
-            private FillFlowContainer<SingerSpriteText> textFlow;
-
-            public SingerMetadataSection(string title)
-                : base(title)
-            {
-            }
-
-            public Singer[] Singers
-            {
-                set
-                {
-                    if (value == null || !value.Any())
-                    {
-                        this.FadeOut(transition_duration);
-                        return;
-                    }
-
-                    this.FadeIn(transition_duration);
-
-                    setSingerAsync(value);
-                }
-            }
-
-            private void setSingerAsync(IEnumerable<Singer> singers)
-            {
-                textFlow?.Expire();
-                TextContainer.Add(textFlow = new FillFlowContainer<SingerSpriteText>
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Spacing = new Vector2(10),
-                    Colour = Color4.White.Opacity(0.75f),
-                });
-
-                foreach (var singer in singers)
-                {
-                    textFlow.Add(new SingerSpriteText
-                    {
-                        Singer = singer
-                    });
-                }
-            }
-
-            private partial class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
-            {
-                private Singer singer;
-                private readonly OsuSpriteText osuSpriteText;
-
-                public SingerSpriteText()
-                {
-                    AutoSizeAxes = Axes.Both;
-                    InternalChildren = new[]
-                    {
-                        osuSpriteText = new OsuSpriteText
-                        {
-                            Font = OsuFont.GetFont(size: 14)
-                        }
-                    };
-                }
-
-                public Singer Singer
-                {
-                    get => singer;
-                    set
-                    {
-                        singer = value;
-                        osuSpriteText.Text = singer?.Name ?? "Known singer";
-                    }
-                }
-
-                public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
-
-                public Singer TooltipContent => Singer;
-            }
+            public Singer TooltipContent => Singer;
         }
     }
 }

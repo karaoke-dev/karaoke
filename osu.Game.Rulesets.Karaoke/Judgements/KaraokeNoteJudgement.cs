@@ -3,27 +3,26 @@
 
 using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Rulesets.Karaoke.Judgements
+namespace osu.Game.Rulesets.Karaoke.Judgements;
+
+public class KaraokeNoteJudgement : KaraokeJudgement
 {
-    public class KaraokeNoteJudgement : KaraokeJudgement
+    public bool Scorable { get; set; }
+
+    protected override double HealthIncreaseFor(HitResult result)
     {
-        public bool Scorable { get; set; }
+        if (!Scorable)
+            return 0;
 
-        protected override double HealthIncreaseFor(HitResult result)
+        return result switch
         {
-            if (!Scorable)
-                return 0;
-
-            return result switch
-            {
-                HitResult.Miss => -0.125,
-                HitResult.Meh => 0.005,
-                HitResult.Ok => 0.010,
-                HitResult.Good => 0.035,
-                HitResult.Great => 0.055,
-                HitResult.Perfect => 0.065,
-                _ => 0
-            };
-        }
+            HitResult.Miss => -0.125,
+            HitResult.Meh => 0.005,
+            HitResult.Ok => 0.010,
+            HitResult.Good => 0.035,
+            HitResult.Great => 0.055,
+            HitResult.Perfect => 0.065,
+            _ => 0
+        };
     }
 }

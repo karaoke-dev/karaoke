@@ -7,20 +7,19 @@ using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
+
+public partial class TextingDeleteSubsection : SelectLyricButton
 {
-    public partial class TextingDeleteSubsection : SelectLyricButton
+    [Resolved]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
+    protected override LocalisableString StandardText => "Delete";
+
+    protected override LocalisableString SelectingText => "Cancel delete";
+
+    protected override void Apply()
     {
-        [Resolved]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
-
-        protected override LocalisableString StandardText => "Delete";
-
-        protected override LocalisableString SelectingText => "Cancel delete";
-
-        protected override void Apply()
-        {
-            lyricsChangeHandler.Remove();
-        }
+        lyricsChangeHandler.Remove();
     }
 }

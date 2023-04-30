@@ -5,24 +5,23 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Utils
+namespace osu.Game.Rulesets.Karaoke.Edit.Utils;
+
+public static class ValueChangedEventUtils
 {
-    public static class ValueChangedEventUtils
+    public static bool LyricChanged(ValueChangedEvent<ICaretPosition?> e)
     {
-        public static bool LyricChanged(ValueChangedEvent<ICaretPosition?> e)
-        {
-            var oldLyric = e.OldValue?.Lyric;
-            var newLyric = e.NewValue?.Lyric;
+        var oldLyric = e.OldValue?.Lyric;
+        var newLyric = e.NewValue?.Lyric;
 
-            return oldLyric != newLyric;
-        }
+        return oldLyric != newLyric;
+    }
 
-        public static bool EditModeChanged(ValueChangedEvent<ModeWithSubMode> e)
-        {
-            if (e.OldValue.Default ^ e.NewValue.Default)
-                return true;
+    public static bool EditModeChanged(ValueChangedEvent<ModeWithSubMode> e)
+    {
+        if (e.OldValue.Default ^ e.NewValue.Default)
+            return true;
 
-            return e.OldValue.Mode != e.NewValue.Mode;
-        }
+        return e.OldValue.Mode != e.NewValue.Mode;
     }
 }

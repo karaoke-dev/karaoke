@@ -7,44 +7,43 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Objects
+namespace osu.Game.Rulesets.Karaoke.Objects;
+
+public class TimeTag : IDeepCloneable<TimeTag>
 {
-    public class TimeTag : IDeepCloneable<TimeTag>
+    /// <summary>
+    /// Invoked when any property of this <see cref="RubyTag"/> is changed.
+    /// </summary>
+    public event Action? Changed;
+
+    public TimeTag(TextIndex index, double? time = null)
     {
-        /// <summary>
-        /// Invoked when any property of this <see cref="RubyTag"/> is changed.
-        /// </summary>
-        public event Action? Changed;
+        Index = index;
+        Time = time;
 
-        public TimeTag(TextIndex index, double? time = null)
-        {
-            Index = index;
-            Time = time;
+        TimeBindable.ValueChanged += _ => Changed?.Invoke();
+    }
 
-            TimeBindable.ValueChanged += _ => Changed?.Invoke();
-        }
+    /// <summary>
+    /// Time tag's index.
+    /// Notice that this index means index of characters.
+    /// </summary>
+    public TextIndex Index { get; }
 
-        /// <summary>
-        /// Time tag's index.
-        /// Notice that this index means index of characters.
-        /// </summary>
-        public TextIndex Index { get; }
+    [JsonIgnore]
+    public readonly Bindable<double?> TimeBindable = new();
 
-        [JsonIgnore]
-        public readonly Bindable<double?> TimeBindable = new();
+    /// <summary>
+    /// Time
+    /// </summary>
+    public double? Time
+    {
+        get => TimeBindable.Value;
+        set => TimeBindable.Value = value;
+    }
 
-        /// <summary>
-        /// Time
-        /// </summary>
-        public double? Time
-        {
-            get => TimeBindable.Value;
-            set => TimeBindable.Value = value;
-        }
-
-        public TimeTag DeepClone()
-        {
-            return new TimeTag(Index, Time);
-        }
+    public TimeTag DeepClone()
+    {
+        return new TimeTag(Index, Time);
     }
 }

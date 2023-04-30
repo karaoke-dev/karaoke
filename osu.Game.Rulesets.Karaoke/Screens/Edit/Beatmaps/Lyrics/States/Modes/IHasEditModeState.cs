@@ -4,14 +4,13 @@
 using System;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+
+public interface IHasEditModeState<T> where T : Enum
 {
-    public interface IHasEditModeState<T> where T : Enum
-    {
-        IBindable<T> BindableEditMode { get; }
+    IBindable<T> BindableEditMode { get; }
 
-        T EditMode => BindableEditMode.Value;
+    T EditMode => BindableEditMode.Value;
 
-        void ChangeEditMode(T mode);
-    }
+    void ChangeEditMode(T mode);
 }

@@ -15,93 +15,92 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
+
+public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
 {
-    public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
+    private readonly Container previewTextArea;
+    private readonly Container indexRangeBackground;
+
+    [Resolved]
+    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+
+    protected TextTagSelectionBlueprint(T item)
+        : base(item)
     {
-        private readonly Container previewTextArea;
-        private readonly Container indexRangeBackground;
-
-        [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
-
-        protected TextTagSelectionBlueprint(T item)
-            : base(item)
+        InternalChildren = new[]
         {
-            InternalChildren = new[]
+            previewTextArea = new Container
             {
-                previewTextArea = new Container
+                Alpha = 0,
+            },
+            indexRangeBackground = new Container
+            {
+                Masking = true,
+                BorderThickness = 3,
+                Alpha = 0,
+                BorderColour = Color4.White,
+                Children = new Drawable[]
                 {
-                    Alpha = 0,
-                },
-                indexRangeBackground = new Container
-                {
-                    Masking = true,
-                    BorderThickness = 3,
-                    Alpha = 0,
-                    BorderColour = Color4.White,
-                    Children = new Drawable[]
+                    new Box
                     {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0f,
-                            AlwaysPresent = true,
-                        },
-                    }
-                },
-            };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            indexRangeBackground.Colour = colours.Pink;
-        }
-
-        protected override void OnSelected()
-        {
-            indexRangeBackground.FadeIn(500);
-        }
-
-        protected override void OnDeselected()
-        {
-            indexRangeBackground.FadeOut(500);
-        }
-
-        protected void UpdatePositionAndSize()
-        {
-            // wait until lyric update ruby position.
-            ScheduleAfterChildren(() =>
-            {
-                var textTagRect = karaokeSpriteText.GetTextTagPosition(Item);
-
-                var startIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.StartIndex, false));
-                var endIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.EndIndex, true));
-
-                // update select position
-                updateDrawableRect(previewTextArea, textTagRect);
-
-                // update index range position.
-                var indexRangePosition = new Vector2(startIndexPosition.X, textTagRect.Y);
-                var indexRangeSize = new Vector2(endIndexPosition.X - startIndexPosition.X, textTagRect.Height);
-                updateDrawableRect(indexRangeBackground, new RectangleF(indexRangePosition, indexRangeSize));
-            });
-
-            static void updateDrawableRect(Drawable target, RectangleF rect)
-            {
-                target.X = rect.X;
-                target.Y = rect.Y;
-                target.Width = rect.Width;
-                target.Height = rect.Height;
-            }
-        }
-
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
-            => previewTextArea.ReceivePositionalInputAt(screenSpacePos);
-
-        public override Vector2 ScreenSpaceSelectionPoint => previewTextArea.ScreenSpaceDrawQuad.Centre;
-
-        public override Quad SelectionQuad => previewTextArea.ScreenSpaceDrawQuad;
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0f,
+                        AlwaysPresent = true,
+                    },
+                }
+            },
+        };
     }
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        indexRangeBackground.Colour = colours.Pink;
+    }
+
+    protected override void OnSelected()
+    {
+        indexRangeBackground.FadeIn(500);
+    }
+
+    protected override void OnDeselected()
+    {
+        indexRangeBackground.FadeOut(500);
+    }
+
+    protected void UpdatePositionAndSize()
+    {
+        // wait until lyric update ruby position.
+        ScheduleAfterChildren(() =>
+        {
+            var textTagRect = karaokeSpriteText.GetTextTagPosition(Item);
+
+            var startIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.StartIndex, false));
+            var endIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.EndIndex, true));
+
+            // update select position
+            updateDrawableRect(previewTextArea, textTagRect);
+
+            // update index range position.
+            var indexRangePosition = new Vector2(startIndexPosition.X, textTagRect.Y);
+            var indexRangeSize = new Vector2(endIndexPosition.X - startIndexPosition.X, textTagRect.Height);
+            updateDrawableRect(indexRangeBackground, new RectangleF(indexRangePosition, indexRangeSize));
+        });
+
+        static void updateDrawableRect(Drawable target, RectangleF rect)
+        {
+            target.X = rect.X;
+            target.Y = rect.Y;
+            target.Width = rect.Width;
+            target.Height = rect.Height;
+        }
+    }
+
+    public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
+        => previewTextArea.ReceivePositionalInputAt(screenSpacePos);
+
+    public override Vector2 ScreenSpaceSelectionPoint => previewTextArea.ScreenSpaceDrawQuad.Centre;
+
+    public override Quad SelectionQuad => previewTextArea.ScreenSpaceDrawQuad;
 }

@@ -14,57 +14,56 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+
+public partial class TranslateSettings : PlayerSettingsGroup
 {
-    public partial class TranslateSettings : PlayerSettingsGroup
+    private readonly PlayerCheckbox translateCheckBox;
+    private readonly OsuSpriteText translateText;
+    private readonly OsuDropdown<CultureInfo> translateDropDown;
+
+    public TranslateSettings()
+        : base("Translate")
     {
-        private readonly PlayerCheckbox translateCheckBox;
-        private readonly OsuSpriteText translateText;
-        private readonly OsuDropdown<CultureInfo> translateDropDown;
-
-        public TranslateSettings()
-            : base("Translate")
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            translateCheckBox = new PlayerCheckbox
             {
-                translateCheckBox = new PlayerCheckbox
-                {
-                    LabelText = "Translate"
-                },
-                translateText = new OsuSpriteText
-                {
-                    Text = "Translate language"
-                },
-                translateDropDown = new OsuDropdown<CultureInfo>
-                {
-                    RelativeSizeAxes = Axes.X,
-                },
-            };
-        }
+                LabelText = "Translate"
+            },
+            translateText = new OsuSpriteText
+            {
+                Text = "Translate language"
+            },
+            translateDropDown = new OsuDropdown<CultureInfo>
+            {
+                RelativeSizeAxes = Axes.X,
+            },
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session)
+    [BackgroundDependencyLoader]
+    private void load(IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session)
+    {
+        translateDropDown.Items = beatmap.Value.Beatmap.AvailableTranslates();
+
+        // Translate
+        translateCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.UseTranslate);
+        translateDropDown.Current = session.GetBindable<CultureInfo>(KaraokeRulesetSession.PreferLanguage);
+
+        // hidden dropdown if not translate
+        translateCheckBox.Current.BindValueChanged(value =>
         {
-            translateDropDown.Items = beatmap.Value.Beatmap.AvailableTranslates();
-
-            // Translate
-            translateCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.UseTranslate);
-            translateDropDown.Current = session.GetBindable<CultureInfo>(KaraokeRulesetSession.PreferLanguage);
-
-            // hidden dropdown if not translate
-            translateCheckBox.Current.BindValueChanged(value =>
+            if (value.NewValue)
             {
-                if (value.NewValue)
-                {
-                    translateText.Show();
-                    translateDropDown.Show();
-                }
-                else
-                {
-                    translateText.Hide();
-                    translateDropDown.Hide();
-                }
-            }, true);
-        }
+                translateText.Show();
+                translateDropDown.Show();
+            }
+            else
+            {
+                translateText.Hide();
+                translateDropDown.Hide();
+            }
+        }, true);
     }
 }

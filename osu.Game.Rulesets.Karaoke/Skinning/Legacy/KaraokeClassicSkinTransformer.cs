@@ -4,13 +4,12 @@
 using osu.Game.Beatmaps;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+
+public class KaraokeClassicSkinTransformer : KaraokeLegacySkinTransformer
 {
-    public class KaraokeClassicSkinTransformer : KaraokeLegacySkinTransformer
+    public KaraokeClassicSkinTransformer(ISkin skin, IBeatmap beatmap)
+        : base(skin, beatmap)
     {
-        public KaraokeClassicSkinTransformer(ISkin skin, IBeatmap beatmap)
-            : base(skin, beatmap)
-        {
-        }
     }
 }

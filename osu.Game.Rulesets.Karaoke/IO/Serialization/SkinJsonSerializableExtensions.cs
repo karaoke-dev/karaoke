@@ -6,20 +6,19 @@ using osu.Framework.IO.Serialization;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization;
+
+public static class SkinJsonSerializableExtensions
 {
-    public static class SkinJsonSerializableExtensions
+    public static JsonSerializerSettings CreateSkinElementGlobalSettings()
     {
-        public static JsonSerializerSettings CreateSkinElementGlobalSettings()
-        {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
-            globalSetting.Converters.Add(new KaraokeSkinElementConverter());
-            globalSetting.Converters.Add(new ShaderConverter());
-            globalSetting.Converters.Add(new Vector2Converter());
-            globalSetting.Converters.Add(new ColourConverter());
-            globalSetting.Converters.Add(new FontUsageConverter());
-            return globalSetting;
-        }
+        var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+        globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
+        globalSetting.Converters.Add(new KaraokeSkinElementConverter());
+        globalSetting.Converters.Add(new ShaderConverter());
+        globalSetting.Converters.Add(new Vector2Converter());
+        globalSetting.Converters.Add(new ColourConverter());
+        globalSetting.Converters.Add(new FontUsageConverter());
+        return globalSetting;
     }
 }

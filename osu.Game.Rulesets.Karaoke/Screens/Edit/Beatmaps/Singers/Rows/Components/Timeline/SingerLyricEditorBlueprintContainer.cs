@@ -16,61 +16,60 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline;
+
+public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBlueprintContainer<Lyric>
 {
-    public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBlueprintContainer<Lyric>
+    [BackgroundDependencyLoader]
+    private void load(ILyricsProvider lyricsProvider)
     {
+        Items.BindTo(lyricsProvider.BindableLyrics);
+    }
+
+    protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
+        => blueprints.OrderBy(b => b.Item.LyricStartTime);
+
+    protected override SelectionHandler<Lyric> CreateSelectionHandler()
+        => new SingerLyricSelectionHandler();
+
+    protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
+        => new LyricTimelineSelectionBlueprint(item);
+
+    protected partial class SingerLyricSelectionHandler : EditableTimelineSelectionHandler
+    {
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
+        [Resolved]
+        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+
+        [Resolved]
+        private BindableList<Lyric> selectedLyrics { get; set; }
+
         [BackgroundDependencyLoader]
-        private void load(ILyricsProvider lyricsProvider)
+        private void load()
         {
-            Items.BindTo(lyricsProvider.BindableLyrics);
+            SelectedItems.BindTo(selectedLyrics);
         }
 
-        protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
-            => blueprints.OrderBy(b => b.Item.LyricStartTime);
-
-        protected override SelectionHandler<Lyric> CreateSelectionHandler()
-            => new SingerLyricSelectionHandler();
-
-        protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
-            => new LyricTimelineSelectionBlueprint(item);
-
-        protected partial class SingerLyricSelectionHandler : EditableTimelineSelectionHandler
+        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
         {
-            [Resolved]
-            private EditorBeatmap beatmap { get; set; }
-
-            [Resolved]
-            private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
-
-            [Resolved]
-            private BindableList<Lyric> selectedLyrics { get; set; }
-
-            [BackgroundDependencyLoader]
-            private void load()
+            var contextMenu = new SingerContextMenu(beatmap, lyricSingerChangeHandler, string.Empty, () =>
             {
-                SelectedItems.BindTo(selectedLyrics);
-            }
-
-            protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
-            {
-                var contextMenu = new SingerContextMenu(beatmap, lyricSingerChangeHandler, string.Empty, () =>
-                {
-                    selectedLyrics.Clear();
-                });
-                return contextMenu.Items;
-            }
-
-            protected override void DeleteItems(IEnumerable<Lyric> items)
-            {
-                // todo : remove all in the same time.
-                foreach (var item in items)
-                {
-                    lyricSingerChangeHandler.Clear();
-                }
-
                 selectedLyrics.Clear();
+            });
+            return contextMenu.Items;
+        }
+
+        protected override void DeleteItems(IEnumerable<Lyric> items)
+        {
+            // todo : remove all in the same time.
+            foreach (var item in items)
+            {
+                lyricSingerChangeHandler.Clear();
             }
+
+            selectedLyrics.Clear();
         }
     }
 }

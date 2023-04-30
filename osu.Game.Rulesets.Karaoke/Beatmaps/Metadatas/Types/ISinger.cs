@@ -3,12 +3,11 @@
 
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types
-{
-    public interface ISinger : IHasOrder
-    {
-        int ID { get; }
+namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-        float Hue { get; }
-    }
+public interface ISinger : IHasOrder
+{
+    int ID { get; }
+
+    float Hue { get; }
 }

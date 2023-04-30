@@ -9,54 +9,53 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
+
+public partial class NotesChangeHandler : HitObjectsChangeHandler<Note>, INotesChangeHandler
 {
-    public partial class NotesChangeHandler : HitObjectsChangeHandler<Note>, INotesChangeHandler
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    public void Split(float percentage = 0.5f)
     {
-        [Resolved, AllowNull]
-        private EditorBeatmap beatmap { get; set; }
+        CheckExactlySelectedOneHitObject();
 
-        public void Split(float percentage = 0.5f)
+        PerformOnSelection(note =>
         {
-            CheckExactlySelectedOneHitObject();
+            var (firstNote, secondNote) = NotesUtils.SplitNote(note);
+            Add(firstNote);
+            Add(secondNote);
+            Remove(note);
+        });
+    }
 
-            PerformOnSelection(note =>
-            {
-                var (firstNote, secondNote) = NotesUtils.SplitNote(note);
-                Add(firstNote);
-                Add(secondNote);
-                Remove(note);
-            });
-        }
-
-        public void Combine()
+    public void Combine()
+    {
+        PerformOnSelection<Lyric>(lyric =>
         {
-            PerformOnSelection<Lyric>(lyric =>
+            var notes = beatmap.SelectedHitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
+
+            if (notes.Count < 2)
+                throw new InvalidOperationException($"Should have select at lest two {nameof(notes)}.");
+
+            var combinedNote = NotesUtils.CombineNote(notes[0], notes[1]);
+
+            for (int i = 2; i < notes.Count; i++)
             {
-                var notes = beatmap.SelectedHitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
+                combinedNote = NotesUtils.CombineNote(notes[i - 1], notes[i]);
+            }
 
-                if (notes.Count < 2)
-                    throw new InvalidOperationException($"Should have select at lest two {nameof(notes)}.");
+            RemoveRange(notes);
+            Add(combinedNote);
+        });
+    }
 
-                var combinedNote = NotesUtils.CombineNote(notes[0], notes[1]);
-
-                for (int i = 2; i < notes.Count; i++)
-                {
-                    combinedNote = NotesUtils.CombineNote(notes[i - 1], notes[i]);
-                }
-
-                RemoveRange(notes);
-                Add(combinedNote);
-            });
-        }
-
-        public void Clear()
+    public void Clear()
+    {
+        PerformOnSelection<Lyric>(lyric =>
         {
-            PerformOnSelection<Lyric>(lyric =>
-            {
-                var notes = beatmap.HitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
-                RemoveRange(notes);
-            });
-        }
+            var notes = beatmap.HitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
+            RemoveRange(notes);
+        });
     }
 }

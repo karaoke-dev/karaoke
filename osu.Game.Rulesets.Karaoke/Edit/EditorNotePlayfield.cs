@@ -13,84 +13,83 @@ using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit;
+
+public partial class EditorNotePlayfield : ScrollingNotePlayfield
 {
-    public partial class EditorNotePlayfield : ScrollingNotePlayfield
+    private readonly SingerVoiceVisualization singerVoiceVisualization;
+
+    public EditorNotePlayfield(int columns)
+        : base(columns)
     {
-        private readonly SingerVoiceVisualization singerVoiceVisualization;
-
-        public EditorNotePlayfield(int columns)
-            : base(columns)
+        BackgroundLayer.AddRange(new Drawable[]
         {
-            BackgroundLayer.AddRange(new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    Depth = 1,
-                    Name = "Background",
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Black,
-                    Alpha = 0.5f
-                },
-            });
-
-            HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization
-            {
-                Name = "Scoring Visualization",
+                Depth = 1,
+                Name = "Background",
                 RelativeSizeAxes = Axes.Both,
-                Alpha = 0.6f
-            });
-        }
+                Colour = Color4.Black,
+                Alpha = 0.5f
+            },
+        });
 
-        [BackgroundDependencyLoader(true)]
-        private void load()
+        HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization
         {
-            // todo : load data from scoring manager.
-        }
+            Name = "Scoring Visualization",
+            RelativeSizeAxes = Axes.Both,
+            Alpha = 0.6f
+        });
+    }
 
-        public partial class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
+    [BackgroundDependencyLoader(true)]
+    private void load()
+    {
+        // todo : load data from scoring manager.
+    }
+
+    public partial class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
+    {
+        protected override double GetTime(KeyValuePair<double, float?> frame) => frame.Key;
+
+        protected override float GetPosition(KeyValuePair<double, float?> frame) => frame.Value ?? 0;
+
+        private bool createNew = true;
+
+        private double minAvailableTime;
+
+        public void Add(KeyValuePair<double, float?> point)
         {
-            protected override double GetTime(KeyValuePair<double, float?> frame) => frame.Key;
+            // Start time should be largest and cannot be removed.
+            double startTime = point.Key;
+            if (startTime <= minAvailableTime)
+                throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
 
-            protected override float GetPosition(KeyValuePair<double, float?> frame) => frame.Value ?? 0;
+            minAvailableTime = startTime;
 
-            private bool createNew = true;
-
-            private double minAvailableTime;
-
-            public void Add(KeyValuePair<double, float?> point)
+            if (!point.Value.HasValue)
             {
-                // Start time should be largest and cannot be removed.
-                double startTime = point.Key;
-                if (startTime <= minAvailableTime)
-                    throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
-
-                minAvailableTime = startTime;
-
-                if (!point.Value.HasValue)
-                {
-                    // Next replay frame will create new path
-                    createNew = true;
-                    return;
-                }
-
-                if (createNew)
-                {
-                    createNew = false;
-
-                    CreateNew(point);
-                }
-                else
-                {
-                    Append(point);
-                }
+                // Next replay frame will create new path
+                createNew = true;
+                return;
             }
 
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
+            if (createNew)
             {
-                Colour = colours.GrayF;
+                createNew = false;
+
+                CreateNew(point);
             }
+            else
+            {
+                Append(point);
+            }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            Colour = colours.GrayF;
         }
     }
 }

@@ -9,32 +9,31 @@ using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics
-{
-    public partial class TransparentSettings : KaraokeSettingsSubsection
-    {
-        protected override LocalisableString Header => "Transparent";
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Graphics;
 
-        [BackgroundDependencyLoader]
-        private void load()
+public partial class TransparentSettings : KaraokeSettingsSubsection
+{
+    protected override LocalisableString Header => "Transparent";
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new SettingsSlider<double>
             {
-                new SettingsSlider<double>
-                {
-                    LabelText = "Lyric playfield alpha",
-                    Current = Config.GetBindable<double>(KaraokeRulesetSetting.LyricAlpha),
-                    KeyboardStep = 0.01f,
-                    DisplayAsPercentage = true
-                },
-                new SettingsSlider<double>
-                {
-                    LabelText = "Note playfield alpha",
-                    Current = Config.GetBindable<double>(KaraokeRulesetSetting.NoteAlpha),
-                    KeyboardStep = 0.01f,
-                    DisplayAsPercentage = true
-                },
-            };
-        }
+                LabelText = "Lyric playfield alpha",
+                Current = Config.GetBindable<double>(KaraokeRulesetSetting.LyricAlpha),
+                KeyboardStep = 0.01f,
+                DisplayAsPercentage = true
+            },
+            new SettingsSlider<double>
+            {
+                LabelText = "Note playfield alpha",
+                Current = Config.GetBindable<double>(KaraokeRulesetSetting.NoteAlpha),
+                KeyboardStep = 0.01f,
+                DisplayAsPercentage = true
+            },
+        };
     }
 }

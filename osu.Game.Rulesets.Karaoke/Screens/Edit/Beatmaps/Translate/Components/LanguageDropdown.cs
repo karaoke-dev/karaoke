@@ -8,11 +8,10 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+
+public partial class LanguageDropdown : OsuDropdown<CultureInfo>
 {
-    public partial class LanguageDropdown : OsuDropdown<CultureInfo>
-    {
-        protected override LocalisableString GenerateItemText(CultureInfo item)
-            => CultureInfoUtils.GetLanguageDisplayText(item);
-    }
+    protected override LocalisableString GenerateItemText(CultureInfo item)
+        => CultureInfoUtils.GetLanguageDisplayText(item);
 }

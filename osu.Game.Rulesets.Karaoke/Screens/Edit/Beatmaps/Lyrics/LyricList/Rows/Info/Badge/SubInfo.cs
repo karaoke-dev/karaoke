@@ -14,59 +14,58 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
+
+public abstract partial class SubInfo : Container
 {
-    public abstract partial class SubInfo : Container
+    private readonly Box box;
+    private readonly OsuSpriteText badgeText;
+
+    protected Lyric Lyric { get; }
+
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    protected SubInfo(Lyric lyric)
     {
-        private readonly Box box;
-        private readonly OsuSpriteText badgeText;
+        Lyric = lyric;
 
-        protected Lyric Lyric { get; }
-
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        protected SubInfo(Lyric lyric)
+        AutoSizeAxes = Axes.Both;
+        Masking = true;
+        CornerRadius = 3;
+        Children = new Drawable[]
         {
-            Lyric = lyric;
-
-            AutoSizeAxes = Axes.Both;
-            Masking = true;
-            CornerRadius = 3;
-            Children = new Drawable[]
+            box = new Box
             {
-                box = new Box
+                RelativeSizeAxes = Axes.Both
+            },
+            badgeText = new OsuSpriteText
+            {
+                Margin = new MarginPadding
                 {
-                    RelativeSizeAxes = Axes.Both
+                    Vertical = 2,
+                    Horizontal = 5
                 },
-                badgeText = new OsuSpriteText
-                {
-                    Margin = new MarginPadding
-                    {
-                        Vertical = 2,
-                        Horizontal = 5
-                    },
-                    Text = "Badge"
-                }
-            };
-        }
+                Text = "Badge"
+            }
+        };
+    }
 
-        protected LocalisableString BadgeText
-        {
-            get => badgeText.Text;
-            set => badgeText.Text = value;
-        }
+    protected LocalisableString BadgeText
+    {
+        get => badgeText.Text;
+        set => badgeText.Text = value;
+    }
 
-        protected ColourInfo BadgeColour
-        {
-            get => box.Colour;
-            set => box.Colour = value;
-        }
+    protected ColourInfo BadgeColour
+    {
+        get => box.Colour;
+        set => box.Colour = value;
+    }
 
-        protected override bool OnClick(ClickEvent e)
-        {
-            lyricCaretState.MoveCaretToTargetPosition(Lyric);
-            return base.OnClick(e);
-        }
+    protected override bool OnClick(ClickEvent e)
+    {
+        lyricCaretState.MoveCaretToTargetPosition(Lyric);
+        return base.OnClick(e);
     }
 }

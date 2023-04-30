@@ -4,16 +4,15 @@
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
-{
-    public class LyricRubyTagIssue : LyricIssue
-    {
-        public readonly RubyTag RubyTag;
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 
-        public LyricRubyTagIssue(Lyric lyric, IssueTemplate template, RubyTag rubyTag, params object[] args)
-            : base(lyric, template, args)
-        {
-            RubyTag = rubyTag;
-        }
+public class LyricRubyTagIssue : LyricIssue
+{
+    public readonly RubyTag RubyTag;
+
+    public LyricRubyTagIssue(Lyric lyric, IssueTemplate template, RubyTag rubyTag, params object[] args)
+        : base(lyric, template, args)
+    {
+        RubyTag = rubyTag;
     }
 }

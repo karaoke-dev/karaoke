@@ -13,40 +13,39 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 using osu.Game.Rulesets.Karaoke.UI;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
+
+public partial class NoteSettings : KaraokeSettingsSubsection
 {
-    public partial class NoteSettings : KaraokeSettingsSubsection
+    protected override LocalisableString Header => "Note";
+
+    public override SettingsSubsectionPreview CreatePreview() => new NotePlayfieldPreview();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override LocalisableString Header => "Note";
-
-        public override SettingsSubsectionPreview CreatePreview() => new NotePlayfieldPreview();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new SettingsEnumDropdown<KaraokeScrollingDirection>
             {
-                new SettingsEnumDropdown<KaraokeScrollingDirection>
-                {
-                    LabelText = "Scrolling direction",
-                    Current = Config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
-                },
-                new SettingsSlider<double, TimeSlider>
-                {
-                    LabelText = "Scroll speed",
-                    Current = Config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Display ruby text",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayNoteRubyText)
-                },
-            };
-        }
+                LabelText = "Scrolling direction",
+                Current = Config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
+            },
+            new SettingsSlider<double, TimeSlider>
+            {
+                LabelText = "Scroll speed",
+                Current = Config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
+            },
+            new SettingsCheckbox
+            {
+                LabelText = "Display ruby text",
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayNoteRubyText)
+            },
+        };
+    }
 
-        private partial class TimeSlider : RoundedSliderBar<double>
-        {
-            public override LocalisableString TooltipText => Current.Value.ToString("N0") + "ms";
-        }
+    private partial class TimeSlider : RoundedSliderBar<double>
+    {
+        public override LocalisableString TooltipText => Current.Value.ToString("N0") + "ms";
     }
 }

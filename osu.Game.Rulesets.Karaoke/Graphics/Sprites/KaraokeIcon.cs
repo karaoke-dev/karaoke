@@ -6,20 +6,19 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+
+public static class KaraokeIcon
 {
-    public static class KaraokeIcon
-    {
-        public static IconUsage Get(int icon) => new((char)icon, "osuFont");
+    public static IconUsage Get(int icon) => new((char)icon, "osuFont");
 
-        // ruleset icons in circles
-        public static IconUsage RulesetKaraoke => FontAwesome.Solid.PlayCircle;
+    // ruleset icons in circles
+    public static IconUsage RulesetKaraoke => FontAwesome.Solid.PlayCircle;
 
-        // mod icons
-        public static IconUsage ModDisableNote => FontAwesome.Solid.Eraser;
-        public static IconUsage ModHiddenNote => OsuIcon.ModHidden;
-        public static IconUsage ModHiddenRuby => FontAwesome.Solid.Gem;
-        public static IconUsage ModPractice => FontAwesome.Solid.Music;
-        public static IconUsage ModAutoPlayBySinger => FontAwesome.Solid.Music;
-    }
+    // mod icons
+    public static IconUsage ModDisableNote => FontAwesome.Solid.Eraser;
+    public static IconUsage ModHiddenNote => OsuIcon.ModHidden;
+    public static IconUsage ModHiddenRuby => FontAwesome.Solid.Gem;
+    public static IconUsage ModPractice => FontAwesome.Solid.Music;
+    public static IconUsage ModAutoPlayBySinger => FontAwesome.Solid.Music;
 }

@@ -6,11 +6,10 @@
 using System;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Utils
+namespace osu.Game.Rulesets.Karaoke.Edit.Utils;
+
+public static class ZoomableScrollContainerUtils
 {
-    public static class ZoomableScrollContainerUtils
-    {
-        public static float GetZoomLevelForVisibleMilliseconds(EditorClock editorClock, double milliseconds)
-            => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
-    }
+    public static float GetZoomLevelForVisibleMilliseconds(EditorClock editorClock, double milliseconds)
+        => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 }

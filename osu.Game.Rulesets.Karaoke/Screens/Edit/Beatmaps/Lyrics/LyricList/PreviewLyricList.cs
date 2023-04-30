@@ -5,30 +5,29 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
+
+public partial class PreviewLyricList : BaseLyricList
 {
-    public partial class PreviewLyricList : BaseLyricList
+    private readonly IBindable<float> bindableFontSize = new Bindable<float>();
+
+    public PreviewLyricList()
     {
-        private readonly IBindable<float> bindableFontSize = new Bindable<float>();
-
-        public PreviewLyricList()
+        bindableFontSize.BindValueChanged(e =>
         {
-            bindableFontSize.BindValueChanged(e =>
+            AdjustSkin(skin =>
             {
-                AdjustSkin(skin =>
-                {
-                    skin.FontSize = e.NewValue;
-                });
+                skin.FontSize = e.NewValue;
             });
-        }
+        });
+    }
 
-        protected override DrawableLyricList CreateDrawableLyricList()
-            => new DrawablePreviewLyricList();
+    protected override DrawableLyricList CreateDrawableLyricList()
+        => new DrawablePreviewLyricList();
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
-        {
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    {
+        lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
     }
 }

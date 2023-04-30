@@ -7,41 +7,40 @@ using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
+
+public class LanguageDetector : LyricPropertyDetector<CultureInfo?, LanguageDetectorConfig>
 {
-    public class LanguageDetector : LyricPropertyDetector<CultureInfo?, LanguageDetectorConfig>
+    private readonly LanguageDetection.LanguageDetector detector = new();
+
+    public LanguageDetector(LanguageDetectorConfig config)
+        : base(config)
     {
-        private readonly LanguageDetection.LanguageDetector detector = new();
+        var targetLanguages = config.AcceptLanguages.Value ?? Array.Empty<CultureInfo>();
 
-        public LanguageDetector(LanguageDetectorConfig config)
-            : base(config)
+        if (targetLanguages.Any())
         {
-            var targetLanguages = config.AcceptLanguages.Value ?? Array.Empty<CultureInfo>();
-
-            if (targetLanguages.Any())
-            {
-                detector.AddLanguages(targetLanguages.Select(x => x.Name).ToArray());
-            }
-            else
-            {
-                detector.AddAllLanguages();
-            }
+            detector.AddLanguages(targetLanguages.Select(x => x.Name).ToArray());
         }
-
-        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
+        else
         {
-            if (string.IsNullOrWhiteSpace(item.Text))
-                return "Lyric should not be empty.";
-
-            return null;
+            detector.AddAllLanguages();
         }
+    }
 
-        protected override CultureInfo? DetectFromItem(Lyric item)
-        {
-            var result = detector.DetectAll(item.Text);
-            string? languageCode = result.FirstOrDefault()?.Language;
+    protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
+    {
+        if (string.IsNullOrWhiteSpace(item.Text))
+            return "Lyric should not be empty.";
 
-            return languageCode == null ? null : new CultureInfo(languageCode);
-        }
+        return null;
+    }
+
+    protected override CultureInfo? DetectFromItem(Lyric item)
+    {
+        var result = detector.DetectAll(item.Text);
+        string? languageCode = result.FirstOrDefault()?.Language;
+
+        return languageCode == null ? null : new CultureInfo(languageCode);
     }
 }

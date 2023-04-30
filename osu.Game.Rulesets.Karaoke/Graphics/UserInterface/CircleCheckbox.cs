@@ -18,98 +18,97 @@ using osu.Game.Graphics.UserInterface;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+
+public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
 {
-    public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
+    private const float expanded_size = 24;
+
+    private readonly Circle background;
+    private readonly SpriteIcon border;
+    private readonly SpriteIcon selectedIcon;
+
+    private Sample sampleChecked;
+    private Sample sampleUnchecked;
+
+    /// <summary>
+    /// Whether to play sounds when the state changes as a result of user interaction.
+    /// </summary>
+    protected virtual bool PlaySoundsOnUserChange => true;
+
+    public CircleCheckbox()
     {
-        private const float expanded_size = 24;
+        Size = new Vector2(expanded_size);
 
-        private readonly Circle background;
-        private readonly SpriteIcon border;
-        private readonly SpriteIcon selectedIcon;
-
-        private Sample sampleChecked;
-        private Sample sampleUnchecked;
-
-        /// <summary>
-        /// Whether to play sounds when the state changes as a result of user interaction.
-        /// </summary>
-        protected virtual bool PlaySoundsOnUserChange => true;
-
-        public CircleCheckbox()
+        Children = new Drawable[]
         {
-            Size = new Vector2(expanded_size);
-
-            Children = new Drawable[]
+            background = new Circle
             {
-                background = new Circle
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.5f,
-                },
-                border = new SpriteIcon
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Icon = FontAwesome.Regular.Circle,
-                },
-                selectedIcon = new SpriteIcon
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    Icon = FontAwesome.Solid.Check,
-                    Scale = new Vector2(0),
-                },
-                new HoverSounds()
-            };
-
-            Current.DisabledChanged += disabled =>
+                RelativeSizeAxes = Axes.Both,
+                Alpha = 0.5f,
+            },
+            border = new SpriteIcon
             {
-                background.Alpha = disabled ? 0.2f : 0.5f;
-                border.Alpha = selectedIcon.Alpha = disabled ? 0.2f : 1;
-            };
-
-            Current.ValueChanged += e =>
+                RelativeSizeAxes = Axes.Both,
+                Icon = FontAwesome.Regular.Circle,
+            },
+            selectedIcon = new SpriteIcon
             {
-                selectedIcon.ScaleTo(e.NewValue ? 0.6f : 0, 200, Easing.OutElastic);
-            };
-        }
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.Both,
+                Icon = FontAwesome.Solid.Check,
+                Scale = new Vector2(0),
+            },
+            new HoverSounds()
+        };
 
-        [BackgroundDependencyLoader]
-        private void load(AudioManager audio)
+        Current.DisabledChanged += disabled =>
         {
-            sampleChecked = audio.Samples.Get(@"UI/check-on");
-            sampleUnchecked = audio.Samples.Get(@"UI/check-off");
-        }
+            background.Alpha = disabled ? 0.2f : 0.5f;
+            border.Alpha = selectedIcon.Alpha = disabled ? 0.2f : 1;
+        };
 
-        private Color4 accentColour;
-
-        public Color4 AccentColour
+        Current.ValueChanged += e =>
         {
-            get => accentColour;
-            set
-            {
-                accentColour = value;
-
-                background.Colour = AccentColour.Darken(1.5f);
-                border.Colour = AccentColour;
-                selectedIcon.Colour = AccentColour;
-            }
-        }
-
-        protected override void OnUserChange(bool value)
-        {
-            base.OnUserChange(value);
-
-            if (!PlaySoundsOnUserChange)
-                return;
-
-            if (value)
-                sampleChecked?.Play();
-            else
-                sampleUnchecked?.Play();
-        }
-
-        public LocalisableString TooltipText { get; set; }
+            selectedIcon.ScaleTo(e.NewValue ? 0.6f : 0, 200, Easing.OutElastic);
+        };
     }
+
+    [BackgroundDependencyLoader]
+    private void load(AudioManager audio)
+    {
+        sampleChecked = audio.Samples.Get(@"UI/check-on");
+        sampleUnchecked = audio.Samples.Get(@"UI/check-off");
+    }
+
+    private Color4 accentColour;
+
+    public Color4 AccentColour
+    {
+        get => accentColour;
+        set
+        {
+            accentColour = value;
+
+            background.Colour = AccentColour.Darken(1.5f);
+            border.Colour = AccentColour;
+            selectedIcon.Colour = AccentColour;
+        }
+    }
+
+    protected override void OnUserChange(bool value)
+    {
+        base.OnUserChange(value);
+
+        if (!PlaySoundsOnUserChange)
+            return;
+
+        if (value)
+            sampleChecked?.Play();
+        else
+            sampleUnchecked?.Play();
+    }
+
+    public LocalisableString TooltipText { get; set; }
 }

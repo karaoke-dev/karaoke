@@ -3,17 +3,16 @@
 
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Localisation
+namespace osu.Game.Rulesets.Karaoke.Localisation;
+
+public static class CommonStrings
 {
-    public static class CommonStrings
-    {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.Common";
+    private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.Common";
 
-        /// <summary>
-        /// "karaoke!"
-        /// </summary>
-        public static LocalisableString RulesetName => new TranslatableString(getKey(@"karaoke"), @"karaoke!");
+    /// <summary>
+    /// "karaoke!"
+    /// </summary>
+    public static LocalisableString RulesetName => new TranslatableString(getKey(@"karaoke"), @"karaoke!");
 
-        private static string getKey(string key) => $@"{prefix}:{key}";
-    }
+    private static string getKey(string key) => $@"{prefix}:{key}";
 }

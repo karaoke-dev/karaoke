@@ -9,47 +9,46 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
-{
-    public partial class SingerEditSection : CompositeDrawable
-    {
-        private SingerRearrangeableList singerContainers;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
-        [BackgroundDependencyLoader]
-        private void load(IBeatmapSingersChangeHandler beatmapSingersChangeHandler)
+public partial class SingerEditSection : CompositeDrawable
+{
+    private SingerRearrangeableList singerContainers;
+
+    [BackgroundDependencyLoader]
+    private void load(IBeatmapSingersChangeHandler beatmapSingersChangeHandler)
+    {
+        InternalChild = new GridContainer
         {
-            InternalChild = new GridContainer
+            RelativeSizeAxes = Axes.Both,
+            RowDimensions = new[]
             {
-                RelativeSizeAxes = Axes.Both,
-                RowDimensions = new[]
+                new Dimension(GridSizeMode.Absolute, 100),
+                new Dimension()
+            },
+            Content = new[]
+            {
+                new Drawable[]
                 {
-                    new Dimension(GridSizeMode.Absolute, 100),
-                    new Dimension()
+                    new DefaultLyricPlacementColumn
+                    {
+                        Name = "Default",
+                        RelativeSizeAxes = Axes.Both,
+                    }
                 },
-                Content = new[]
+                new Drawable[]
                 {
-                    new Drawable[]
+                    singerContainers = new SingerRearrangeableList
                     {
-                        new DefaultLyricPlacementColumn
-                        {
-                            Name = "Default",
-                            RelativeSizeAxes = Axes.Both,
-                        }
-                    },
-                    new Drawable[]
-                    {
-                        singerContainers = new SingerRearrangeableList
-                        {
-                            Name = "List of singer",
-                            RelativeSizeAxes = Axes.Both,
-                            DisplayBottomDrawable = true,
-                        }
+                        Name = "List of singer",
+                        RelativeSizeAxes = Axes.Both,
+                        DisplayBottomDrawable = true,
                     }
                 }
-            };
+            }
+        };
 
-            singerContainers.Items.BindTo(beatmapSingersChangeHandler.Singers);
-            singerContainers.OnOrderChanged += beatmapSingersChangeHandler.ChangeOrder;
-        }
+        singerContainers.Items.BindTo(beatmapSingersChangeHandler.Singers);
+        singerContainers.OnOrderChanged += beatmapSingersChangeHandler.ChangeOrder;
     }
 }

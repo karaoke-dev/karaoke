@@ -20,154 +20,153 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+
+public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
-    public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
+    [Cached]
+    private readonly InteractableKaraokeSpriteText karaokeSpriteText;
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
+    private readonly IBindable<int> bindableLyricPropertyWritableVersion;
+
+    private readonly Lyric lyric;
+    private LocalisableString? lockReason;
+
+    protected InteractableLyric(Lyric lyric)
     {
-        [Cached]
-        private readonly InteractableKaraokeSpriteText karaokeSpriteText;
+        this.lyric = lyric;
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
+        bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
-        protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<int> bindableLyricPropertyWritableVersion;
-
-        private readonly Lyric lyric;
-        private LocalisableString? lockReason;
-
-        protected InteractableLyric(Lyric lyric)
+        InternalChildren = new Drawable[]
         {
-            this.lyric = lyric;
+            new LyricLayer(lyric, karaokeSpriteText = new InteractableKaraokeSpriteText(lyric)),
+        };
 
-            bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
+        AddRangeInternal(CreateLayers(lyric));
 
-            InternalChildren = new Drawable[]
-            {
-                new LyricLayer(lyric, karaokeSpriteText = new InteractableKaraokeSpriteText(lyric)),
-            };
+        karaokeSpriteText.SizeChanged = () =>
+        {
+            Height = karaokeSpriteText.DrawHeight;
+        };
 
-            AddRangeInternal(CreateLayers(lyric));
+        BindableMode.BindValueChanged(x =>
+        {
+            triggerWritableVersionChanged();
+        });
 
-            karaokeSpriteText.SizeChanged = () =>
-            {
-                Height = karaokeSpriteText.DrawHeight;
-            };
+        bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
+        {
+            triggerWritableVersionChanged();
+        });
+    }
 
-            BindableMode.BindValueChanged(x =>
-            {
-                triggerWritableVersionChanged();
-            });
+    protected abstract IEnumerable<BaseLayer> CreateLayers(Lyric lyric);
 
-            bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
-            {
-                triggerWritableVersionChanged();
-            });
+    [BackgroundDependencyLoader]
+    private void load(EditorClock clock, ILyricEditorState state)
+    {
+        BindableMode.BindTo(state.BindableMode);
+
+        karaokeSpriteText.Clock = clock;
+    }
+
+    protected override bool OnMouseMove(MouseMoveEvent e)
+    {
+        if (!lyricCaretState.CaretEnabled)
+            return false;
+
+        float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+
+        switch (lyricCaretState.CaretPosition)
+        {
+            case CuttingCaretPosition:
+                int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
+                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, cuttingLyricStringIndex);
+                break;
+
+            case TypingCaretPosition:
+                int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
+                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, typingStringIndex);
+                break;
+
+            case NavigateCaretPosition:
+                lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
+                break;
+
+            case TimeTagIndexCaretPosition:
+                var textIndex = karaokeSpriteText.GetHoverIndex(position);
+                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, textIndex);
+                break;
+
+            case TimeTagCaretPosition:
+                var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
+                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
+                break;
         }
 
-        protected abstract IEnumerable<BaseLayer> CreateLayers(Lyric lyric);
+        return base.OnMouseMove(e);
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(EditorClock clock, ILyricEditorState state)
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+
+        if (!lyricCaretState.CaretEnabled)
+            return;
+
+        // lost hover caret and time-tag caret
+        lyricCaretState.ClearHoverCaretPosition();
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        return lyricCaretState.ConfirmHoverCaretPosition();
+    }
+
+    private void triggerWritableVersionChanged()
+    {
+        var loadReason = GetLyricPropertyLockedReason(lyric, BindableMode.Value);
+        lockReason = loadReason;
+
+        // adjust the style.
+        bool editable = lockReason == null;
+        InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
+    }
+
+    public LocalisableString TooltipText => lockReason ?? string.Empty;
+
+    public static LocalisableString? GetLyricPropertyLockedReason(Lyric lyric, LyricEditorMode mode)
+    {
+        var reasons = getLyricPropertyLockedReasons(lyric, mode);
+
+        return reasons switch
         {
-            BindableMode.BindTo(state.BindableMode);
+            LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
+            LockLyricPropertyBy.LockState => "This property is locked and not editable",
+            null => default(LocalisableString?),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
 
-            karaokeSpriteText.Clock = clock;
-        }
-
-        protected override bool OnMouseMove(MouseMoveEvent e)
+    private static LockLyricPropertyBy? getLyricPropertyLockedReasons(Lyric lyric, LyricEditorMode mode)
+    {
+        return mode switch
         {
-            if (!lyricCaretState.CaretEnabled)
-                return false;
-
-            float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-
-            switch (lyricCaretState.CaretPosition)
-            {
-                case CuttingCaretPosition:
-                    int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, cuttingLyricStringIndex);
-                    break;
-
-                case TypingCaretPosition:
-                    int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, typingStringIndex);
-                    break;
-
-                case NavigateCaretPosition:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
-                    break;
-
-                case TimeTagIndexCaretPosition:
-                    var textIndex = karaokeSpriteText.GetHoverIndex(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, textIndex);
-                    break;
-
-                case TimeTagCaretPosition:
-                    var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
-                    break;
-            }
-
-            return base.OnMouseMove(e);
-        }
-
-        protected override void OnHoverLost(HoverLostEvent e)
-        {
-            base.OnHoverLost(e);
-
-            if (!lyricCaretState.CaretEnabled)
-                return;
-
-            // lost hover caret and time-tag caret
-            lyricCaretState.ClearHoverCaretPosition();
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            return lyricCaretState.ConfirmHoverCaretPosition();
-        }
-
-        private void triggerWritableVersionChanged()
-        {
-            var loadReason = GetLyricPropertyLockedReason(lyric, BindableMode.Value);
-            lockReason = loadReason;
-
-            // adjust the style.
-            bool editable = lockReason == null;
-            InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
-        }
-
-        public LocalisableString TooltipText => lockReason ?? string.Empty;
-
-        public static LocalisableString? GetLyricPropertyLockedReason(Lyric lyric, LyricEditorMode mode)
-        {
-            var reasons = getLyricPropertyLockedReasons(lyric, mode);
-
-            return reasons switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
-                LockLyricPropertyBy.LockState => "This property is locked and not editable",
-                null => default(LocalisableString?),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private static LockLyricPropertyBy? getLyricPropertyLockedReasons(Lyric lyric, LyricEditorMode mode)
-        {
-            return mode switch
-            {
-                LyricEditorMode.View => null,
-                LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
-                LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
-                LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Language)),
-                LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags)),
-                LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RomajiTags)),
-                LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
-                LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
-                LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds)),
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
-            };
-        }
+            LyricEditorMode.View => null,
+            LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
+            LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
+            LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Language)),
+            LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags)),
+            LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RomajiTags)),
+            LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
+            LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
+            LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds)),
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+        };
     }
 }

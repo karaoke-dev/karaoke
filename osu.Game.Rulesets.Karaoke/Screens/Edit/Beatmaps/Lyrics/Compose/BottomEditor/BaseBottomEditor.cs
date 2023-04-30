@@ -9,66 +9,65 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor;
+
+public abstract partial class BaseBottomEditor : CompositeDrawable
 {
-    public abstract partial class BaseBottomEditor : CompositeDrawable
+    private const int info_part_spacing = 210;
+
+    public abstract float ContentHeight { get; }
+
+    [BackgroundDependencyLoader]
+    private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
     {
-        private const int info_part_spacing = 210;
+        Height = ContentHeight;
+        RelativeSizeAxes = Axes.X;
 
-        public abstract float ContentHeight { get; }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+        InternalChildren = new Drawable[]
         {
-            Height = ContentHeight;
-            RelativeSizeAxes = Axes.X;
-
-            InternalChildren = new Drawable[]
+            new Box
             {
-                new Box
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background5(state.Mode)
+            },
+            new GridContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                ColumnDimensions = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider.Background5(state.Mode)
+                    new Dimension(GridSizeMode.Absolute, info_part_spacing),
+                    new Dimension()
                 },
-                new GridContainer
+                Content = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    ColumnDimensions = new[]
+                    new[]
                     {
-                        new Dimension(GridSizeMode.Absolute, info_part_spacing),
-                        new Dimension()
-                    },
-                    Content = new[]
-                    {
-                        new[]
+                        CreateInfo().With(x =>
                         {
-                            CreateInfo().With(x =>
+                            x.RelativeSizeAxes = Axes.Both;
+                        }),
+                        new Container
+                        {
+                            Masking = true,
+                            RelativeSizeAxes = Axes.Both,
+                            Child = CreateContent().With(x =>
                             {
                                 x.RelativeSizeAxes = Axes.Both;
                             }),
-                            new Container
-                            {
-                                Masking = true,
-                                RelativeSizeAxes = Axes.Both,
-                                Child = CreateContent().With(x =>
-                                {
-                                    x.RelativeSizeAxes = Axes.Both;
-                                }),
-                            }
                         }
                     }
                 }
-            };
-        }
+            }
+        };
+    }
 
-        protected abstract Drawable CreateInfo();
+    protected abstract Drawable CreateInfo();
 
-        protected abstract Drawable CreateContent();
+    protected abstract Drawable CreateContent();
 
-        protected override bool OnDragStart(DragStartEvent e)
-        {
-            // prevent scroll container drag event.
-            return true;
-        }
+    protected override bool OnDragStart(DragStartEvent e)
+    {
+        // prevent scroll container drag event.
+        return true;
     }
 }

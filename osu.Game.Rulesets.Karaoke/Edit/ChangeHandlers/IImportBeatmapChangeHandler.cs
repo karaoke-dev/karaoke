@@ -3,10 +3,9 @@
 
 using osu.Game.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
+
+public interface IImportBeatmapChangeHandler
 {
-    public interface IImportBeatmapChangeHandler
-    {
-        void Import(IBeatmap newBeatmap);
-    }
+    void Import(IBeatmap newBeatmap);
 }

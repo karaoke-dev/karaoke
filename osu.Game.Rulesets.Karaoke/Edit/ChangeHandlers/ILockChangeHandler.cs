@@ -3,12 +3,11 @@
 
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
-{
-    public interface ILockChangeHandler : IHitObjectPropertyChangeHandler
-    {
-        void Lock(LockState lockState);
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 
-        void Unlock();
-    }
+public interface ILockChangeHandler : IHitObjectPropertyChangeHandler
+{
+    void Lock(LockState lockState);
+
+    void Unlock();
 }

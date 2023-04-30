@@ -4,16 +4,15 @@
 using System.Globalization;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+
+public interface IBeatmapLanguagesChangeHandler
 {
-    public interface IBeatmapLanguagesChangeHandler
-    {
-        IBindableList<CultureInfo> Languages { get; }
+    IBindableList<CultureInfo> Languages { get; }
 
-        void Add(CultureInfo culture);
+    void Add(CultureInfo culture);
 
-        void Remove(CultureInfo culture);
+    void Remove(CultureInfo culture);
 
-        bool IsLanguageContainsTranslate(CultureInfo cultureInfo);
-    }
+    bool IsLanguageContainsTranslate(CultureInfo cultureInfo);
 }

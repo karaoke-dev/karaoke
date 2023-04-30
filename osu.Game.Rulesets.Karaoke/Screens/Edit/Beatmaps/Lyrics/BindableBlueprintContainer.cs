@@ -12,105 +12,104 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public abstract partial class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
 {
-    public abstract partial class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
+    private BindableList<T> bindableList;
+
+    protected void RegisterBindable(BindableList<T> bindable)
     {
-        private BindableList<T> bindableList;
+        if (bindableList != null)
+            throw new InvalidOperationException("Already have bindable.");
 
-        protected void RegisterBindable(BindableList<T> bindable)
+        bindableList = bindable;
+
+        // Add time-tag into blueprint container
+        bindableList.BindCollectionChanged((_, args) =>
         {
-            if (bindableList != null)
-                throw new InvalidOperationException("Already have bindable.");
-
-            bindableList = bindable;
-
-            // Add time-tag into blueprint container
-            bindableList.BindCollectionChanged((_, args) =>
+            switch (args.Action)
             {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        Debug.Assert(args.NewItems != null);
+                case NotifyCollectionChangedAction.Add:
+                    Debug.Assert(args.NewItems != null);
 
-                        foreach (var obj in args.NewItems.OfType<T>())
-                            AddBlueprintFor(obj);
+                    foreach (var obj in args.NewItems.OfType<T>())
+                        AddBlueprintFor(obj);
 
-                        break;
+                    break;
 
-                    case NotifyCollectionChangedAction.Remove:
-                        Debug.Assert(args.OldItems != null);
+                case NotifyCollectionChangedAction.Remove:
+                    Debug.Assert(args.OldItems != null);
 
-                        foreach (var obj in args.OldItems.OfType<T>())
-                            RemoveBlueprintFor(obj);
+                    foreach (var obj in args.OldItems.OfType<T>())
+                        RemoveBlueprintFor(obj);
 
-                        break;
-                }
-            }, true);
-        }
-
-        protected override bool OnDragStart(DragStartEvent e)
-        {
-            if (!base.OnDragStart(e))
-                return false;
-
-            // should clear all selected text-tag if start selecting.
-            if (containsSelectionFromOtherBlueprintContainer())
-                DeselectAll();
-
-            return true;
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            if (!base.OnClick(e))
-                return false;
-
-            // should clear all selected text-tag if start selecting.
-            if (containsSelectionFromOtherBlueprintContainer())
-                DeselectAll();
-
-            return true;
-        }
-
-        protected override void SelectAll()
-        {
-            SelectedItems.AddRange(bindableList);
-        }
-
-        private bool containsSelectionFromOtherBlueprintContainer()
-        {
-            var items = SelectionBlueprints.Select(x => x.Item);
-
-            // check any selected items that is not in current blueprint container.
-            return SelectedItems.Any(x => !items.Contains(x));
-        }
-
-        public abstract partial class BindableSelectionHandler : SelectionHandler<T>
-        {
-            protected override void OnSelectionChanged()
-            {
-                base.OnSelectionChanged();
-
-                updateVisibility();
+                    break;
             }
+        }, true);
+    }
 
-            /// <summary>
-            /// Updates whether this <see cref="SelectionHandler{T}"/> is visible.
-            /// </summary>
-            private void updateVisibility()
-            {
-                bool visible = containsSelectionInCurrentBlueprintContainer();
-                SelectionBox.FadeTo(visible ? 1f : 0.0f);
-            }
+    protected override bool OnDragStart(DragStartEvent e)
+    {
+        if (!base.OnDragStart(e))
+            return false;
 
-            private bool containsSelectionInCurrentBlueprintContainer()
-            {
-                var items = SelectedBlueprints.Select(x => x.Item);
+        // should clear all selected text-tag if start selecting.
+        if (containsSelectionFromOtherBlueprintContainer())
+            DeselectAll();
 
-                // check any selected items that is in current blueprint container.
-                return SelectedItems.Any(x => items.Contains(x));
-            }
+        return true;
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (!base.OnClick(e))
+            return false;
+
+        // should clear all selected text-tag if start selecting.
+        if (containsSelectionFromOtherBlueprintContainer())
+            DeselectAll();
+
+        return true;
+    }
+
+    protected override void SelectAll()
+    {
+        SelectedItems.AddRange(bindableList);
+    }
+
+    private bool containsSelectionFromOtherBlueprintContainer()
+    {
+        var items = SelectionBlueprints.Select(x => x.Item);
+
+        // check any selected items that is not in current blueprint container.
+        return SelectedItems.Any(x => !items.Contains(x));
+    }
+
+    public abstract partial class BindableSelectionHandler : SelectionHandler<T>
+    {
+        protected override void OnSelectionChanged()
+        {
+            base.OnSelectionChanged();
+
+            updateVisibility();
+        }
+
+        /// <summary>
+        /// Updates whether this <see cref="SelectionHandler{T}"/> is visible.
+        /// </summary>
+        private void updateVisibility()
+        {
+            bool visible = containsSelectionInCurrentBlueprintContainer();
+            SelectionBox.FadeTo(visible ? 1f : 0.0f);
+        }
+
+        private bool containsSelectionInCurrentBlueprintContainer()
+        {
+            var items = SelectedBlueprints.Select(x => x.Item);
+
+            // check any selected items that is in current blueprint container.
+            return SelectedItems.Any(x => items.Contains(x));
         }
     }
 }

@@ -6,51 +6,50 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
+
+public partial class DetailLyricList : BaseLyricList
 {
-    public partial class DetailLyricList : BaseLyricList
+    public DetailLyricList()
     {
-        public DetailLyricList()
+        AdjustSkin(skin =>
         {
-            AdjustSkin(skin =>
-            {
-                skin.FontSize = 15;
-            });
-        }
+            skin.FontSize = 15;
+        });
+    }
 
-        protected override DrawableLyricList CreateDrawableLyricList()
-            => new DrawableDetailLyricList();
+    protected override DrawableLyricList CreateDrawableLyricList()
+        => new DrawableDetailLyricList();
 
-        protected override Drawable CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
+    protected override Drawable CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
+    {
+        bool containsHandler = mode == LyricEditorMode.Texting;
+
+        const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMING_WIDTH;
+        float timingWidth = containsHandler ? DrawableLyricListItem.HANDLER_WIDTH + timing_base_width : timing_base_width;
+        return new GridContainer
         {
-            bool containsHandler = mode == LyricEditorMode.Texting;
-
-            const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMING_WIDTH;
-            float timingWidth = containsHandler ? DrawableLyricListItem.HANDLER_WIDTH + timing_base_width : timing_base_width;
-            return new GridContainer
+            ColumnDimensions = new[]
             {
-                ColumnDimensions = new[]
+                new Dimension(GridSizeMode.Absolute, timingWidth),
+                new Dimension()
+            },
+            Content = new[]
+            {
+                new[]
                 {
-                    new Dimension(GridSizeMode.Absolute, timingWidth),
-                    new Dimension()
-                },
-                Content = new[]
-                {
-                    new[]
+                    new Box
                     {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = colourProvider.Background3(mode)
-                        },
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = colourProvider.Background4(mode)
-                        },
-                    }
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = colourProvider.Background3(mode)
+                    },
+                    new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = colourProvider.Background4(mode)
+                    },
                 }
-            };
-        }
+            }
+        };
     }
 }

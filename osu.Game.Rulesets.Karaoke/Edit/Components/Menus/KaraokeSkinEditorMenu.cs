@@ -8,18 +8,17 @@ using osu.Framework.Screens;
 using osu.Game.Rulesets.Karaoke.Screens.Skin;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
-{
-    public class KaraokeSkinEditorMenu : MenuItem
-    {
-        public KaraokeSkinEditorMenu(IScreen screen, ISkin skin, string text)
-            : base(text, () => openKaraokeSkin(screen, skin))
-        {
-        }
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 
-        private static void openKaraokeSkin(IScreen screen, ISkin skin)
-        {
-            screen?.Push(new KaraokeSkinEditor(skin));
-        }
+public class KaraokeSkinEditorMenu : MenuItem
+{
+    public KaraokeSkinEditorMenu(IScreen screen, ISkin skin, string text)
+        : base(text, () => openKaraokeSkin(screen, skin))
+    {
+    }
+
+    private static void openKaraokeSkin(IScreen screen, ISkin skin)
+    {
+        screen?.Push(new KaraokeSkinEditor(skin));
     }
 }

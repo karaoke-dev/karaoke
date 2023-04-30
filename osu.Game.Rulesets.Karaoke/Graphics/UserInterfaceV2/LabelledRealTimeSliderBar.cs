@@ -8,12 +8,11 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays.Settings;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+
+public partial class LabelledRealTimeSliderBar<TNumber> : LabelledSliderBar<TNumber>
+    where TNumber : struct, IEquatable<TNumber>, IComparable<TNumber>, IConvertible
 {
-    public partial class LabelledRealTimeSliderBar<TNumber> : LabelledSliderBar<TNumber>
-        where TNumber : struct, IEquatable<TNumber>, IComparable<TNumber>, IConvertible
-    {
-        protected override SettingsSlider<TNumber> CreateComponent()
-            => base.CreateComponent().With(x => x.TransferValueOnCommit = false);
-    }
+    protected override SettingsSlider<TNumber> CreateComponent()
+        => base.CreateComponent().With(x => x.TransferValueOnCommit = false);
 }

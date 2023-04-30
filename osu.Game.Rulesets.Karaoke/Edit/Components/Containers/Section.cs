@@ -10,43 +10,42 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+
+public abstract partial class Section : Container
 {
-    public abstract partial class Section : Container
+    protected const float SECTION_PADDING = 10;
+
+    protected const float SECTION_SPACING = 10;
+
+    private readonly FillFlowContainer flow;
+
+    protected override Container<Drawable> Content => flow;
+
+    protected abstract LocalisableString Title { get; }
+
+    protected Section()
     {
-        protected const float SECTION_PADDING = 10;
+        RelativeSizeAxes = Axes.X;
+        AutoSizeAxes = Axes.Y;
 
-        protected const float SECTION_SPACING = 10;
+        Padding = new MarginPadding(SECTION_PADDING);
 
-        private readonly FillFlowContainer flow;
-
-        protected override Container<Drawable> Content => flow;
-
-        protected abstract LocalisableString Title { get; }
-
-        protected Section()
+        InternalChildren = new Drawable[]
         {
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-
-            Padding = new MarginPadding(SECTION_PADDING);
-
-            InternalChildren = new Drawable[]
+            new OsuSpriteText
             {
-                new OsuSpriteText
-                {
-                    Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 18),
-                    Text = Title,
-                },
-                flow = new FillFlowContainer
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Spacing = new Vector2(SECTION_SPACING),
-                    Direction = FillDirection.Vertical,
-                    Margin = new MarginPadding { Top = 30 }
-                }
-            };
-        }
+                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 18),
+                Text = Title,
+            },
+            flow = new FillFlowContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Spacing = new Vector2(SECTION_SPACING),
+                Direction = FillDirection.Vertical,
+                Margin = new MarginPadding { Top = 30 }
+            }
+        };
     }
 }

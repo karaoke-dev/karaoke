@@ -12,59 +12,58 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
+
+public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
 {
-    public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
+    private Box dragAlert = null!;
+
+    public SingerRearrangeableListItem(ISinger item)
+        : base(item)
     {
-        private Box dragAlert = null!;
+    }
 
-        public SingerRearrangeableListItem(ISinger item)
-            : base(item)
+    protected override Drawable CreateContent()
+    {
+        return new Container
         {
-        }
-
-        protected override Drawable CreateContent()
-        {
-            return new Container
+            Masking = true,
+            CornerRadius = 5,
+            RelativeSizeAxes = Axes.X,
+            Height = 90,
+            Children = new Drawable[]
             {
-                Masking = true,
-                CornerRadius = 5,
-                RelativeSizeAxes = Axes.X,
-                Height = 90,
-                Children = new Drawable[]
+                dragAlert = new Box
                 {
-                    dragAlert = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Alpha = 0
-                    },
-                    new SingerLyricPlacementColumn(Model as Singer)
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                    }
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0
+                },
+                new SingerLyricPlacementColumn(Model as Singer)
+                {
+                    RelativeSizeAxes = Axes.Both,
                 }
-            };
-        }
+            }
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            dragAlert.Colour = colours.YellowDarker;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        dragAlert.Colour = colours.YellowDarker;
+    }
 
-        protected override bool OnDragStart(DragStartEvent e)
-        {
-            if (!base.OnDragStart(e))
-                return false;
+    protected override bool OnDragStart(DragStartEvent e)
+    {
+        if (!base.OnDragStart(e))
+            return false;
 
-            dragAlert.Show();
-            return true;
-        }
+        dragAlert.Show();
+        return true;
+    }
 
-        protected override void OnDragEnd(DragEndEvent e)
-        {
-            dragAlert.Hide();
-            base.OnDragEnd(e);
-        }
+    protected override void OnDragEnd(DragEndEvent e)
+    {
+        dragAlert.Hide();
+        base.OnDragEnd(e);
     }
 }

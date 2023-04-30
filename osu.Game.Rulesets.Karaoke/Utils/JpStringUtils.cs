@@ -4,23 +4,22 @@
 using WanaKanaSharp;
 using Zipangu;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class JpStringUtils
 {
-    public static class JpStringUtils
+    public static string ToHiragana(string text)
     {
-        public static string ToHiragana(string text)
-        {
-            return text.KatakanaToHiragana();
-        }
+        return text.KatakanaToHiragana();
+    }
 
-        public static string ToKatakana(string text)
-        {
-            return text.HiraganaToKatakana();
-        }
+    public static string ToKatakana(string text)
+    {
+        return text.HiraganaToKatakana();
+    }
 
-        public static string ToRomaji(string text)
-        {
-            return RomajiConverter.ToRomaji(text, false, null);
-        }
+    public static string ToRomaji(string text)
+    {
+        return RomajiConverter.ToRomaji(text, false, null);
     }
 }

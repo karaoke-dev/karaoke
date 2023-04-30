@@ -3,12 +3,11 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
-{
-    public interface IImportStateResolver
-    {
-        void Cancel();
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
-        void Finish();
-    }
+public interface IImportStateResolver
+{
+    void Cancel();
+
+    void Finish();
 }

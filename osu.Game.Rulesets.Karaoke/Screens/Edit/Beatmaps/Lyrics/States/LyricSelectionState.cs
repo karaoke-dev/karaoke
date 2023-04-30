@@ -12,114 +12,113 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+
+public partial class LyricSelectionState : Component, ILyricSelectionState
 {
-    public partial class LyricSelectionState : Component, ILyricSelectionState
+    public IBindable<bool> Selecting => selecting;
+
+    private readonly BindableDictionary<Lyric, LocalisableString> bindableDisableSelectingLyric = new();
+    private readonly BindableList<Lyric> bindableSelectedLyrics = new();
+
+    public IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric => bindableDisableSelectingLyric;
+
+    public IBindableList<Lyric> SelectedLyrics => bindableSelectedLyrics;
+
+    public Action<LyricEditorSelectingAction>? Action { get; set; }
+
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    private readonly BindableBool selecting = new();
+
+    public void StartSelecting()
     {
-        public IBindable<bool> Selecting => selecting;
+        if (selecting.Value)
+            throw new NotSupportedException("Selecting already started.");
 
-        private readonly BindableDictionary<Lyric, LocalisableString> bindableDisableSelectingLyric = new();
-        private readonly BindableList<Lyric> bindableSelectedLyrics = new();
+        selecting.Value = true;
+    }
 
-        public IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric => bindableDisableSelectingLyric;
+    public void EndSelecting(LyricEditorSelectingAction action)
+    {
+        if (!selecting.Value)
+            return;
 
-        public IBindableList<Lyric> SelectedLyrics => bindableSelectedLyrics;
+        // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
+        var selectedLyrics = bindableSelectedLyrics.ToArray();
+        beatmap.SelectedHitObjects.Clear();
+        beatmap.SelectedHitObjects.AddRange(selectedLyrics);
 
-        public Action<LyricEditorSelectingAction>? Action { get; set; }
+        Action?.Invoke(action);
 
-        [Resolved, AllowNull]
-        private EditorBeatmap beatmap { get; set; }
+        // after being applied, should clear the selection.
+        beatmap.SelectedHitObjects.Clear();
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
+        // should clear the selection after finish.
+        bindableSelectedLyrics.Clear();
 
-        private readonly BindableBool selecting = new();
+        // for able to check if still selecting, should make sure that every process step has been finished.
+        selecting.Value = false;
 
-        public void StartSelecting()
+        // should add selected lyric back.
+        lyricCaretState.SyncSelectedHitObjectWithCaret();
+    }
+
+    public void Select(Lyric lyric)
+    {
+        if (!selecting.Value)
+            throw new NotSupportedException("Should not add the lyric if not in the selecting state.");
+
+        if (bindableSelectedLyrics.Contains(lyric))
+            return;
+
+        if (bindableDisableSelectingLyric.ContainsKey(lyric))
+            return;
+
+        bindableSelectedLyrics.Add(lyric);
+    }
+
+    public void UnSelect(Lyric lyric)
+    {
+        if (!selecting.Value)
+            throw new NotSupportedException("Should not remove the lyric if not in the selecting state.");
+
+        bindableSelectedLyrics.Remove(lyric);
+    }
+
+    public void SelectAll()
+    {
+        if (!selecting.Value)
+            throw new NotSupportedException("Should not select the lyric if not in the selecting state.");
+
+        var lyrics = beatmap.HitObjects.OfType<Lyric>();
+
+        foreach (var lyric in lyrics)
         {
-            if (selecting.Value)
-                throw new NotSupportedException("Selecting already started.");
-
-            selecting.Value = true;
+            Select(lyric);
         }
+    }
 
-        public void EndSelecting(LyricEditorSelectingAction action)
-        {
-            if (!selecting.Value)
-                return;
+    public void UnSelectAll()
+    {
+        if (!selecting.Value)
+            throw new NotSupportedException("Should not clear the selected lyric if not in the selecting state.");
 
-            // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
-            var selectedLyrics = bindableSelectedLyrics.ToArray();
-            beatmap.SelectedHitObjects.Clear();
-            beatmap.SelectedHitObjects.AddRange(selectedLyrics);
+        bindableSelectedLyrics.Clear();
+    }
 
-            Action?.Invoke(action);
+    public void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics)
+    {
+        if (selecting.Value)
+            throw new NotSupportedException("Should not update the disable lyric list while selecting.");
 
-            // after being applied, should clear the selection.
-            beatmap.SelectedHitObjects.Clear();
+        bindableDisableSelectingLyric.Clear();
 
-            // should clear the selection after finish.
-            bindableSelectedLyrics.Clear();
-
-            // for able to check if still selecting, should make sure that every process step has been finished.
-            selecting.Value = false;
-
-            // should add selected lyric back.
-            lyricCaretState.SyncSelectedHitObjectWithCaret();
-        }
-
-        public void Select(Lyric lyric)
-        {
-            if (!selecting.Value)
-                throw new NotSupportedException("Should not add the lyric if not in the selecting state.");
-
-            if (bindableSelectedLyrics.Contains(lyric))
-                return;
-
-            if (bindableDisableSelectingLyric.ContainsKey(lyric))
-                return;
-
-            bindableSelectedLyrics.Add(lyric);
-        }
-
-        public void UnSelect(Lyric lyric)
-        {
-            if (!selecting.Value)
-                throw new NotSupportedException("Should not remove the lyric if not in the selecting state.");
-
-            bindableSelectedLyrics.Remove(lyric);
-        }
-
-        public void SelectAll()
-        {
-            if (!selecting.Value)
-                throw new NotSupportedException("Should not select the lyric if not in the selecting state.");
-
-            var lyrics = beatmap.HitObjects.OfType<Lyric>();
-
-            foreach (var lyric in lyrics)
-            {
-                Select(lyric);
-            }
-        }
-
-        public void UnSelectAll()
-        {
-            if (!selecting.Value)
-                throw new NotSupportedException("Should not clear the selected lyric if not in the selecting state.");
-
-            bindableSelectedLyrics.Clear();
-        }
-
-        public void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics)
-        {
-            if (selecting.Value)
-                throw new NotSupportedException("Should not update the disable lyric list while selecting.");
-
-            bindableDisableSelectingLyric.Clear();
-
-            foreach (var (lyric, reason) in disableLyrics)
-                bindableDisableSelectingLyric.Add(lyric, reason);
-        }
+        foreach (var (lyric, reason) in disableLyrics)
+            bindableDisableSelectingLyric.Add(lyric, reason);
     }
 }

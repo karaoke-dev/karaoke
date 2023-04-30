@@ -3,17 +3,16 @@
 
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Localisation
+namespace osu.Game.Rulesets.Karaoke.Localisation;
+
+public static class ChangelogStrings
 {
-    public static class ChangelogStrings
-    {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.ChangelogSection";
+    private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.ChangelogSection";
 
-        /// <summary>
-        /// "View current changelog"
-        /// </summary>
-        public static LocalisableString ViewCurrentChangelog => new TranslatableString(getKey(@"view_current_changelog"), @"View current changelog");
+    /// <summary>
+    /// "View current changelog"
+    /// </summary>
+    public static LocalisableString ViewCurrentChangelog => new TranslatableString(getKey(@"view_current_changelog"), @"View current changelog");
 
-        private static string getKey(string key) => $@"{prefix}:{key}";
-    }
+    private static string getKey(string key) => $@"{prefix}:{key}";
 }

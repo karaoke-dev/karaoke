@@ -11,40 +11,39 @@ using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+
+public partial class LayoutToolTip : BackgroundToolTip<Lyric>
 {
-    public partial class LayoutToolTip : BackgroundToolTip<Lyric>
+    private const float scale = 0.4f;
+
+    private readonly DrawableLayoutPreview preview;
+
+    [Resolved(canBeNull: true)]
+    private ISkinSource skinSource { get; set; }
+
+    public LayoutToolTip()
     {
-        private const float scale = 0.4f;
-
-        private readonly DrawableLayoutPreview preview;
-
-        [Resolved(canBeNull: true)]
-        private ISkinSource skinSource { get; set; }
-
-        public LayoutToolTip()
+        Child = preview = new DrawableLayoutPreview
         {
-            Child = preview = new DrawableLayoutPreview
-            {
-                Size = new Vector2(512 * scale, 384 * scale),
-            };
-        }
+            Size = new Vector2(512 * scale, 384 * scale),
+        };
+    }
 
-        private Lyric lastLyric;
+    private Lyric lastLyric;
 
-        public override void SetContent(Lyric lyric)
-        {
-            if (lyric == lastLyric)
-                return;
+    public override void SetContent(Lyric lyric)
+    {
+        if (lyric == lastLyric)
+            return;
 
-            lastLyric = lyric;
+        lastLyric = lyric;
 
-            // Get layout
-            var layout = skinSource?.GetConfig<Lyric, LyricLayout>(lyric).Value;
+        // Get layout
+        var layout = skinSource?.GetConfig<Lyric, LyricLayout>(lyric).Value;
 
-            // Display in content
-            preview.Layout = layout;
-            preview.Lyric = lyric;
-        }
+        // Display in content
+        preview.Layout = layout;
+        preview.Lyric = lyric;
     }
 }

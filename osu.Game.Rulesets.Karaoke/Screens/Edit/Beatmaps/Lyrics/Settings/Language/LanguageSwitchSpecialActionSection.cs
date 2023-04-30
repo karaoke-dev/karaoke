@@ -6,36 +6,35 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
+
+public partial class LanguageSwitchSpecialActionSection : SpecialActionSection<LanguageEditModeSpecialAction>
 {
-    public partial class LanguageSwitchSpecialActionSection : SpecialActionSection<LanguageEditModeSpecialAction>
+    protected override string SwitchActionTitle => "Special actions";
+    protected override string SwitchActionDescription => "Auto-generate or batch change the language by hands.";
+
+    [BackgroundDependencyLoader]
+    private void load(ILanguageModeState editNoteModeState)
     {
-        protected override string SwitchActionTitle => "Special actions";
-        protected override string SwitchActionDescription => "Auto-generate or batch change the language by hands.";
+        BindTo(editNoteModeState);
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(ILanguageModeState editNoteModeState)
+    protected override void UpdateActionArea(LanguageEditModeSpecialAction action)
+    {
+        RemoveAll(x => x is LanguageAutoGenerateSubsection or AssignLanguageSubsection, true);
+
+        switch (action)
         {
-            BindTo(editNoteModeState);
-        }
+            case LanguageEditModeSpecialAction.AutoGenerate:
+                Add(new LanguageAutoGenerateSubsection());
+                break;
 
-        protected override void UpdateActionArea(LanguageEditModeSpecialAction action)
-        {
-            RemoveAll(x => x is LanguageAutoGenerateSubsection or AssignLanguageSubsection, true);
+            case LanguageEditModeSpecialAction.BatchSelect:
+                Add(new AssignLanguageSubsection());
+                break;
 
-            switch (action)
-            {
-                case LanguageEditModeSpecialAction.AutoGenerate:
-                    Add(new LanguageAutoGenerateSubsection());
-                    break;
-
-                case LanguageEditModeSpecialAction.BatchSelect:
-                    Add(new AssignLanguageSubsection());
-                    break;
-
-                default:
-                    return;
-            }
+            default:
+                return;
         }
     }
 }

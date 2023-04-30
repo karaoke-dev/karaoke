@@ -3,12 +3,11 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition
-{
-    public interface ICaretPosition
-    {
-        public Lyric Lyric { get; }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-        public CaretGenerateType GenerateType { get; }
-    }
+public interface ICaretPosition
+{
+    public Lyric Lyric { get; }
+
+    public CaretGenerateType GenerateType { get; }
 }

@@ -4,12 +4,11 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels
-{
-    public partial class TogglePropertyPanelButton : LyricEditorConfigButton
-    {
-        protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels;
 
-        protected override IconUsage Icon => FontAwesome.Solid.FileImage;
-    }
+public partial class TogglePropertyPanelButton : LyricEditorConfigButton
+{
+    protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer;
+
+    protected override IconUsage Icon => FontAwesome.Solid.FileImage;
 }

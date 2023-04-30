@@ -17,93 +17,92 @@ using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+public partial class NoteStylePreview : Container
 {
-    public partial class NoteStylePreview : Container
+    private const int columns = 9;
+
+    [Cached(typeof(IScrollingInfo))]
+    private readonly PreviewScrollingInfo scrollingInfo = new();
+
+    [Cached(typeof(INotePositionInfo))]
+    private readonly PreviewNotePositionInfo positionCalculator = new();
+
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
     {
-        private const int columns = 9;
+        var config = Dependencies.Get<KaraokeRulesetConfigManager>();
+        var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+        dependencies.Cache(new KaraokeSessionStatics(config, null));
 
-        [Cached(typeof(IScrollingInfo))]
-        private readonly PreviewScrollingInfo scrollingInfo = new();
+        return dependencies;
+    }
 
-        [Cached(typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo positionCalculator = new();
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider, StyleManager manager)
+    {
+        Masking = true;
+        CornerRadius = 15;
+        FillMode = FillMode.Fit;
+        FillAspectRatio = 2f;
+        Children = new Drawable[]
         {
-            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            dependencies.Cache(new KaraokeSessionStatics(config, null));
-
-            return dependencies;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider, StyleManager manager)
-        {
-            Masking = true;
-            CornerRadius = 15;
-            FillMode = FillMode.Fit;
-            FillAspectRatio = 2f;
-            Children = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider.Background1,
-                },
-                new PreviewDrawableNoteArea
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
-                }
-            };
-        }
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background1,
+            },
+            new PreviewDrawableNoteArea
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre
+            }
+        };
+    }
 
-        public partial class PreviewDrawableNoteArea : NotePlayfield
+    public partial class PreviewDrawableNoteArea : NotePlayfield
+    {
+        public PreviewDrawableNoteArea()
+            : base(columns)
         {
-            public PreviewDrawableNoteArea()
-                : base(columns)
+        }
+    }
+
+    public class PreviewScrollingInfo : IScrollingInfo
+    {
+        public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>();
+
+        public IBindable<double> TimeRange { get; } = new BindableDouble();
+
+        public IScrollAlgorithm Algorithm { get; } = new ZeroScrollAlgorithm();
+
+        private class ZeroScrollAlgorithm : IScrollAlgorithm
+        {
+            protected const double START_TIME = 1000000000;
+
+            public double GetDisplayStartTime(double originTime, float offset, double timeRange, float scrollLength)
+                => double.MinValue;
+
+            public float GetLength(double startTime, double endTime, double timeRange, float scrollLength)
+                => scrollLength;
+
+            public float PositionAt(double time, double currentTime, double timeRange, float scrollLength, double? originTime = null)
+                => (float)((time - START_TIME) / timeRange) * scrollLength;
+
+            public double TimeAt(float position, double currentTime, double timeRange, float scrollLength)
+                => 0;
+
+            public void Reset()
             {
             }
         }
+    }
 
-        public class PreviewScrollingInfo : IScrollingInfo
-        {
-            public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>();
+    private class PreviewNotePositionInfo : INotePositionInfo
+    {
+        public IBindable<NotePositionCalculator> Position { get; } =
+            new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
 
-            public IBindable<double> TimeRange { get; } = new BindableDouble();
-
-            public IScrollAlgorithm Algorithm { get; } = new ZeroScrollAlgorithm();
-
-            private class ZeroScrollAlgorithm : IScrollAlgorithm
-            {
-                protected const double START_TIME = 1000000000;
-
-                public double GetDisplayStartTime(double originTime, float offset, double timeRange, float scrollLength)
-                    => double.MinValue;
-
-                public float GetLength(double startTime, double endTime, double timeRange, float scrollLength)
-                    => scrollLength;
-
-                public float PositionAt(double time, double currentTime, double timeRange, float scrollLength, double? originTime = null)
-                    => (float)((time - START_TIME) / timeRange) * scrollLength;
-
-                public double TimeAt(float position, double currentTime, double timeRange, float scrollLength)
-                    => 0;
-
-                public void Reset()
-                {
-                }
-            }
-        }
-
-        private class PreviewNotePositionInfo : INotePositionInfo
-        {
-            public IBindable<NotePositionCalculator> Position { get; } =
-                new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
-
-            public NotePositionCalculator Calculator => Position.Value;
-        }
+        public NotePositionCalculator Calculator => Position.Value;
     }
 }

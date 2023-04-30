@@ -3,16 +3,15 @@
 
 using System.Collections.Generic;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricListPropertyChangeHandler<in TItem> : ILyricPropertyChangeHandler
 {
-    public interface ILyricListPropertyChangeHandler<in TItem> : ILyricPropertyChangeHandler
-    {
-        void Add(TItem item);
+    void Add(TItem item);
 
-        void AddRange(IEnumerable<TItem> items);
+    void AddRange(IEnumerable<TItem> items);
 
-        void Remove(TItem item);
+    void Remove(TItem item);
 
-        void RemoveRange(IEnumerable<TItem> items);
-    }
+    void RemoveRange(IEnumerable<TItem> items);
 }

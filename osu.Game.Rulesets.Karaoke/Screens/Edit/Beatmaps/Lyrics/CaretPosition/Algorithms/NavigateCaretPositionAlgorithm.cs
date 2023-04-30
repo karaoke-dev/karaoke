@@ -5,61 +5,60 @@ using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
+
+public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCaretPosition>
 {
-    public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCaretPosition>
+    public NavigateCaretPositionAlgorithm(Lyric[] lyrics)
+        : base(lyrics)
     {
-        public NavigateCaretPositionAlgorithm(Lyric[] lyrics)
-            : base(lyrics)
-        {
-        }
-
-        protected override void Validate(NavigateCaretPosition input)
-        {
-            // there's no checking rules in this algorithm.
-        }
-
-        protected override bool PositionMovable(NavigateCaretPosition position)
-        {
-            return true;
-        }
-
-        protected override NavigateCaretPosition? MoveToPreviousLyric(NavigateCaretPosition currentPosition)
-        {
-            var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
-            if (lyric == null)
-                return null;
-
-            return new NavigateCaretPosition(lyric);
-        }
-
-        protected override NavigateCaretPosition? MoveToNextLyric(NavigateCaretPosition currentPosition)
-        {
-            var lyric = Lyrics.GetNext(currentPosition.Lyric);
-            if (lyric == null)
-                return null;
-
-            return new NavigateCaretPosition(lyric);
-        }
-
-        protected override NavigateCaretPosition? MoveToFirstLyric()
-        {
-            var lyric = Lyrics.FirstOrDefault();
-            if (lyric == null)
-                return null;
-
-            return new NavigateCaretPosition(lyric);
-        }
-
-        protected override NavigateCaretPosition? MoveToLastLyric()
-        {
-            var lyric = Lyrics.LastOrDefault();
-            if (lyric == null)
-                return null;
-
-            return new NavigateCaretPosition(lyric);
-        }
-
-        protected override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
     }
+
+    protected override void Validate(NavigateCaretPosition input)
+    {
+        // there's no checking rules in this algorithm.
+    }
+
+    protected override bool PositionMovable(NavigateCaretPosition position)
+    {
+        return true;
+    }
+
+    protected override NavigateCaretPosition? MoveToPreviousLyric(NavigateCaretPosition currentPosition)
+    {
+        var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
+        if (lyric == null)
+            return null;
+
+        return new NavigateCaretPosition(lyric);
+    }
+
+    protected override NavigateCaretPosition? MoveToNextLyric(NavigateCaretPosition currentPosition)
+    {
+        var lyric = Lyrics.GetNext(currentPosition.Lyric);
+        if (lyric == null)
+            return null;
+
+        return new NavigateCaretPosition(lyric);
+    }
+
+    protected override NavigateCaretPosition? MoveToFirstLyric()
+    {
+        var lyric = Lyrics.FirstOrDefault();
+        if (lyric == null)
+            return null;
+
+        return new NavigateCaretPosition(lyric);
+    }
+
+    protected override NavigateCaretPosition? MoveToLastLyric()
+    {
+        var lyric = Lyrics.LastOrDefault();
+        if (lyric == null)
+            return null;
+
+        return new NavigateCaretPosition(lyric);
+    }
+
+    protected override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
 }

@@ -11,70 +11,69 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Beatmaps;
+
+public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
 {
-    public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
+    public IList<CultureInfo> AvailableTranslates { get; set; } = new List<CultureInfo>();
+
+    public SingerInfo SingerInfo { get; set; } = new();
+
+    public PageInfo PageInfo { get; set; } = new();
+
+    public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
+
+    /// <summary>
+    /// This property will not be null after <see cref="KaraokeBeatmapProcessor.PreProcess"/> is called.
+    /// </summary>
+    [JsonIgnore]
+    public StageInfo? CurrentStageInfo { get; set; }
+
+    public NoteInfo NoteInfo { get; set; } = new();
+
+    public bool Scorable { get; set; }
+
+    public override IEnumerable<BeatmapStatistic> GetStatistics()
     {
-        public IList<CultureInfo> AvailableTranslates { get; set; } = new List<CultureInfo>();
+        int singers = SingerInfo.GetAllSingers().Count();
+        int lyrics = HitObjects.Count(s => s is Lyric);
 
-        public SingerInfo SingerInfo { get; set; } = new();
-
-        public PageInfo PageInfo { get; set; } = new();
-
-        public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
-
-        /// <summary>
-        /// This property will not be null after <see cref="KaraokeBeatmapProcessor.PreProcess"/> is called.
-        /// </summary>
-        [JsonIgnore]
-        public StageInfo? CurrentStageInfo { get; set; }
-
-        public NoteInfo NoteInfo { get; set; } = new();
-
-        public bool Scorable { get; set; }
-
-        public override IEnumerable<BeatmapStatistic> GetStatistics()
+        var defaultStatistic = new List<BeatmapStatistic>
         {
-            int singers = SingerInfo.GetAllSingers().Count();
-            int lyrics = HitObjects.Count(s => s is Lyric);
-
-            var defaultStatistic = new List<BeatmapStatistic>
+            new()
             {
-                new()
-                {
-                    Name = @"Singer",
-                    Content = singers.ToString(),
-                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User }
-                },
-                new()
-                {
-                    Name = @"Lyric",
-                    Content = lyrics.ToString(),
-                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.AlignLeft }
-                },
-            };
-
-            if (Scorable)
+                Name = @"Singer",
+                Content = singers.ToString(),
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User }
+            },
+            new()
             {
-                int notes = HitObjects.Count(s => s is Note { Display: true });
-                defaultStatistic.Add(new BeatmapStatistic
-                {
-                    Name = @"Note",
-                    Content = notes.ToString(),
-                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music }
-                });
-            }
-            else
-            {
-                defaultStatistic.Add(new BeatmapStatistic
-                {
-                    Name = @"This beatmap is not scorable.",
-                    Content = @"This beatmap is not scorable.",
-                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times }
-                });
-            }
+                Name = @"Lyric",
+                Content = lyrics.ToString(),
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.AlignLeft }
+            },
+        };
 
-            return defaultStatistic.ToArray();
+        if (Scorable)
+        {
+            int notes = HitObjects.Count(s => s is Note { Display: true });
+            defaultStatistic.Add(new BeatmapStatistic
+            {
+                Name = @"Note",
+                Content = notes.ToString(),
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music }
+            });
         }
+        else
+        {
+            defaultStatistic.Add(new BeatmapStatistic
+            {
+                Name = @"This beatmap is not scorable.",
+                Content = @"This beatmap is not scorable.",
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times }
+            });
+        }
+
+        return defaultStatistic.ToArray();
     }
 }

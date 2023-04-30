@@ -8,25 +8,24 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Mods
+namespace osu.Game.Rulesets.Karaoke.Mods;
+
+public class KaraokeModDisableNote : Mod, IApplicableToHitObject
 {
-    public class KaraokeModDisableNote : Mod, IApplicableToHitObject
+    public override string Name => "Disable note";
+
+    public override LocalisableString Description => "Disable note";
+    public override string Acronym => "DN";
+    public override double ScoreMultiplier => 0;
+    public override IconUsage? Icon => KaraokeIcon.ModDisableNote;
+    public override ModType Type => ModType.Fun;
+
+    public void ApplyToHitObject(HitObject hitObject)
     {
-        public override string Name => "Disable note";
-
-        public override LocalisableString Description => "Disable note";
-        public override string Acronym => "DN";
-        public override double ScoreMultiplier => 0;
-        public override IconUsage? Icon => KaraokeIcon.ModDisableNote;
-        public override ModType Type => ModType.Fun;
-
-        public void ApplyToHitObject(HitObject hitObject)
+        if (hitObject is Note note)
         {
-            if (hitObject is Note note)
-            {
-                // Disable all the note
-                note.Display = false;
-            }
+            // Disable all the note
+            note.Display = false;
         }
     }
 }

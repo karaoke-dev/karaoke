@@ -10,66 +10,65 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+
+public partial class LegacyHitExplosion : LegacyKaraokeColumnElement
 {
-    public partial class LegacyHitExplosion : LegacyKaraokeColumnElement
+    private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
+
+    private Drawable? explosion;
+
+    public LegacyHitExplosion()
     {
-        private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
-
-        private Drawable? explosion;
-
-        public LegacyHitExplosion()
-        {
-            RelativeSizeAxes = Axes.Both;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
-        {
-            string imageName = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionImage)?.Value
-                               ?? GetTextureName();
-
-            float explosionScale = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionScale)?.Value
-                                   ?? 1;
-
-            // Create a temporary animation to retrieve the number of frames, in an effort to calculate the intended frame length.
-            // This animation is discarded and re-queried with the appropriate frame length afterwards.
-            var tmp = skin.GetAnimation(imageName, true, false);
-            double frameLength = 0;
-            if (tmp is IFramedAnimation { FrameCount: > 0 } tmpAnimation)
-                frameLength = Math.Max(1000 / 60.0, 170.0 / tmpAnimation.FrameCount);
-
-            explosion = skin.GetAnimation(imageName, true, false, frameLength: frameLength).With(d =>
-            {
-                if (d == null)
-                    return;
-
-                d.Origin = Anchor.Centre;
-                d.Blending = BlendingParameters.Additive;
-                d.Scale = new Vector2(explosionScale);
-            });
-
-            if (explosion != null)
-                InternalChild = explosion;
-
-            direction.BindTo(scrollingInfo.Direction);
-            direction.BindValueChanged(onDirectionChanged, true);
-        }
-
-        private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
-        {
-            if (explosion != null)
-                explosion.Anchor = direction.NewValue == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            explosion?.FadeInFromZero(80)
-                     .Then().FadeOut(120);
-        }
-
-        public static string GetTextureName() => "karaoke-lighting";
+        RelativeSizeAxes = Axes.Both;
     }
+
+    [BackgroundDependencyLoader]
+    private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
+    {
+        string imageName = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionImage)?.Value
+                           ?? GetTextureName();
+
+        float explosionScale = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionScale)?.Value
+                               ?? 1;
+
+        // Create a temporary animation to retrieve the number of frames, in an effort to calculate the intended frame length.
+        // This animation is discarded and re-queried with the appropriate frame length afterwards.
+        var tmp = skin.GetAnimation(imageName, true, false);
+        double frameLength = 0;
+        if (tmp is IFramedAnimation { FrameCount: > 0 } tmpAnimation)
+            frameLength = Math.Max(1000 / 60.0, 170.0 / tmpAnimation.FrameCount);
+
+        explosion = skin.GetAnimation(imageName, true, false, frameLength: frameLength).With(d =>
+        {
+            if (d == null)
+                return;
+
+            d.Origin = Anchor.Centre;
+            d.Blending = BlendingParameters.Additive;
+            d.Scale = new Vector2(explosionScale);
+        });
+
+        if (explosion != null)
+            InternalChild = explosion;
+
+        direction.BindTo(scrollingInfo.Direction);
+        direction.BindValueChanged(onDirectionChanged, true);
+    }
+
+    private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
+    {
+        if (explosion != null)
+            explosion.Anchor = direction.NewValue == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        explosion?.FadeInFromZero(80)
+                 .Then().FadeOut(120);
+    }
+
+    public static string GetTextureName() => "karaoke-lighting";
 }

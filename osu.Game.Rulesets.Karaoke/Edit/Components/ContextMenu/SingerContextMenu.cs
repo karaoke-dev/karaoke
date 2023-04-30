@@ -13,37 +13,36 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
+
+public class SingerContextMenu : OsuMenuItem
 {
-    public class SingerContextMenu : OsuMenuItem
+    public SingerContextMenu(EditorBeatmap beatmap, ILyricSingerChangeHandler lyricSingerChangeHandler, string name, Action postProcess = null)
+        : base(name)
     {
-        public SingerContextMenu(EditorBeatmap beatmap, ILyricSingerChangeHandler lyricSingerChangeHandler, string name, Action postProcess = null)
-            : base(name)
+        var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>().ToArray();
+
+        // todo: should be able to support the sub-singer.
+        var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
+        var singers = karaokeBeatmap.SingerInfo.GetAllSingers();
+
+        Items = singers.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
         {
-            var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>().ToArray();
-
-            // todo: should be able to support the sub-singer.
-            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
-            var singers = karaokeBeatmap.SingerInfo.GetAllSingers();
-
-            Items = singers.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
+            // if only one lyric
+            if (allSingerInLyric(singer))
             {
-                // if only one lyric
-                if (allSingerInLyric(singer))
-                {
-                    lyricSingerChangeHandler.Remove(singer);
-                }
-                else
-                {
-                    lyricSingerChangeHandler.Add(singer);
-                }
+                lyricSingerChangeHandler.Remove(singer);
+            }
+            else
+            {
+                lyricSingerChangeHandler.Add(singer);
+            }
 
-                postProcess?.Invoke();
-            })).ToList();
+            postProcess?.Invoke();
+        })).ToList();
 
-            bool anySingerInLyric(Singer singer) => lyrics.Any(lyric => LyricUtils.ContainsSinger(lyric, singer));
+        bool anySingerInLyric(Singer singer) => lyrics.Any(lyric => LyricUtils.ContainsSinger(lyric, singer));
 
-            bool allSingerInLyric(Singer singer) => lyrics.All(lyric => LyricUtils.ContainsSinger(lyric, singer));
-        }
+        bool allSingerInLyric(Singer singer) => lyrics.All(lyric => LyricUtils.ContainsSinger(lyric, singer));
     }
 }

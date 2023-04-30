@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class RomajiTagsConverter : SortableJsonConverter<RomajiTag>
 {
-    public class RomajiTagsConverter : SortableJsonConverter<RomajiTag>
-    {
-        protected override IEnumerable<RomajiTag> GetSortedValue(IEnumerable<RomajiTag> objects)
-            => TextTagsUtils.Sort(objects);
-    }
+    protected override IEnumerable<RomajiTag> GetSortedValue(IEnumerable<RomajiTag> objects)
+        => TextTagsUtils.Sort(objects);
 }

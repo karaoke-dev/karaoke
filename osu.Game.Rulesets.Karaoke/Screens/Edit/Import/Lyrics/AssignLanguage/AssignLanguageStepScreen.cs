@@ -9,72 +9,71 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage;
+
+public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
 {
-    public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
+    public override string Title => "Language";
+
+    public override string ShortTitle => "Language";
+
+    public override LyricImporterStep Step => LyricImporterStep.AssignLanguage;
+
+    public override IconUsage Icon => FontAwesome.Solid.Globe;
+
+    [Cached(typeof(ILyricLanguageChangeHandler))]
+    private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
+
+    [Cached(typeof(ILyricRubyTagsChangeHandler))]
+    private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
+
+    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
+
+    public AssignLanguageStepScreen()
     {
-        public override string Title => "Language";
+        AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
+        AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
+        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
+    }
 
-        public override string ShortTitle => "Language";
+    protected override TopNavigation CreateNavigation()
+        => new AssignLanguageNavigation(this);
 
-        public override LyricImporterStep Step => LyricImporterStep.AssignLanguage;
-
-        public override IconUsage Icon => FontAwesome.Solid.Globe;
-
-        [Cached(typeof(ILyricLanguageChangeHandler))]
-        private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
-
-        [Cached(typeof(ILyricRubyTagsChangeHandler))]
-        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
-
-        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
-
-        public AssignLanguageStepScreen()
+    protected override Drawable CreateContent()
+        => base.CreateContent().With(_ =>
         {
-            AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
-            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
-        }
+            SwitchLyricEditorMode(LyricEditorMode.Language);
+        });
 
-        protected override TopNavigation CreateNavigation()
-            => new AssignLanguageNavigation(this);
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        AskForAutoAssignLanguage();
+    }
 
-        protected override Drawable CreateContent()
-            => base.CreateContent().With(_ =>
-            {
-                SwitchLyricEditorMode(LyricEditorMode.Language);
-            });
-
-        protected override void LoadComplete()
+    public override void Complete()
+    {
+        // Check is need to go to generate ruby/romaji step or just skip.
+        if (lyricRubyTagsChangeHandler.CanGenerate()
+            || lyricRomajiTagsChangeHandler.CanGenerate())
         {
-            base.LoadComplete();
-            AskForAutoAssignLanguage();
+            ScreenStack.Push(LyricImporterStep.GenerateRuby);
         }
-
-        public override void Complete()
+        else
         {
-            // Check is need to go to generate ruby/romaji step or just skip.
-            if (lyricRubyTagsChangeHandler.CanGenerate()
-                || lyricRomajiTagsChangeHandler.CanGenerate())
-            {
-                ScreenStack.Push(LyricImporterStep.GenerateRuby);
-            }
-            else
-            {
-                ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
-            }
+            ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
         }
+    }
 
-        internal void AskForAutoAssignLanguage()
+    internal void AskForAutoAssignLanguage()
+    {
+        DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
         {
-            DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
-            {
-                if (!ok)
-                    return;
+            if (!ok)
+                return;
 
-                PrepareAutoGenerate();
-            }));
-        }
+            PrepareAutoGenerate();
+        }));
     }
 }

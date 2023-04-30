@@ -5,21 +5,20 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
-{
-    /// <summary>
-    /// Will move into framework layer
-    /// </summary>
-    public static class BindableNumberExtension
-    {
-        public static void TriggerIncrease(this BindableInt bindableInt)
-        {
-            bindableInt.Value += bindableInt.Precision;
-        }
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
 
-        public static void TriggerDecrease(this BindableInt bindableInt)
-        {
-            bindableInt.Value -= bindableInt.Precision;
-        }
+/// <summary>
+/// Will move into framework layer
+/// </summary>
+public static class BindableNumberExtension
+{
+    public static void TriggerIncrease(this BindableInt bindableInt)
+    {
+        bindableInt.Value += bindableInt.Precision;
+    }
+
+    public static void TriggerDecrease(this BindableInt bindableInt)
+    {
+        bindableInt.Value -= bindableInt.Precision;
     }
 }

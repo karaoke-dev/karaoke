@@ -8,22 +8,21 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+
+/// <summary>
+/// Base change log content
+/// </summary>
+public abstract partial class ChangelogContent : FillFlowContainer
 {
-    /// <summary>
-    /// Base change log content
-    /// </summary>
-    public abstract partial class ChangelogContent : FillFlowContainer
+    public Action<APIChangelogBuild> BuildSelected;
+
+    protected void SelectBuild(APIChangelogBuild build) => BuildSelected?.Invoke(build);
+
+    protected ChangelogContent()
     {
-        public Action<APIChangelogBuild> BuildSelected;
-
-        protected void SelectBuild(APIChangelogBuild build) => BuildSelected?.Invoke(build);
-
-        protected ChangelogContent()
-        {
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-            Direction = FillDirection.Vertical;
-        }
+        RelativeSizeAxes = Axes.X;
+        AutoSizeAxes = Axes.Y;
+        Direction = FillDirection.Vertical;
     }
 }

@@ -12,93 +12,92 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+
+public partial class ClickablePlayerSliderBar : SettingsSlider<int>
 {
-    public partial class ClickablePlayerSliderBar : SettingsSlider<int>
+    protected const int BUTTON_SIZE = 25;
+    protected const int BUTTON_SPACING = 15;
+
+    private ClickableSliderBar bar => (ClickableSliderBar)Control;
+
+    protected override Drawable CreateControl() => new ClickableSliderBar
     {
-        protected const int BUTTON_SIZE = 25;
-        protected const int BUTTON_SPACING = 15;
+        Margin = new MarginPadding { Top = 5, Bottom = 5 },
+        RelativeSizeAxes = Axes.X
+    };
 
-        private ClickableSliderBar bar => (ClickableSliderBar)Control;
+    public ClickablePlayerSliderBar()
+    {
+        Padding = new MarginPadding { Left = BUTTON_SPACING * 2, Right = BUTTON_SPACING * 2 };
+    }
 
-        protected override Drawable CreateControl() => new ClickableSliderBar
+    public void ResetToDefaultValue() => bar.ResetToDefaultValue();
+
+    public void TriggerDecrease() => bar.TriggerDecrease();
+
+    public void TriggerIncrease() => bar.TriggerIncrease();
+
+    private partial class ClickableSliderBar : RoundedSliderBar<int>
+    {
+        private readonly ToolTipButton decreaseButton;
+        private readonly ToolTipButton increaseButton;
+
+        public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : string.Empty) + Current.Value.ToString("N0");
+
+        public ClickableSliderBar()
         {
-            Margin = new MarginPadding { Top = 5, Bottom = 5 },
-            RelativeSizeAxes = Axes.X
-        };
+            KeyboardStep = 1;
 
-        public ClickablePlayerSliderBar()
-        {
-            Padding = new MarginPadding { Left = BUTTON_SPACING * 2, Right = BUTTON_SPACING * 2 };
+            Add(decreaseButton = new ToolTipButton
+            {
+                Position = new Vector2(-BUTTON_SPACING, 0),
+                Origin = Anchor.CentreRight,
+                Anchor = Anchor.CentreLeft,
+                Width = BUTTON_SIZE,
+                Height = BUTTON_SIZE,
+                Text = "-",
+                TooltipText = "Decrease",
+                Action = () => Current.Value -= (int)KeyboardStep
+            });
+
+            Add(increaseButton = new ToolTipButton
+            {
+                Position = new Vector2(BUTTON_SPACING, 0),
+                Origin = Anchor.CentreLeft,
+                Anchor = Anchor.CentreRight,
+                Width = BUTTON_SIZE,
+                Height = BUTTON_SIZE,
+                Text = "+",
+                TooltipText = "Increase",
+                Action = () => Current.Value += (int)KeyboardStep
+            });
         }
 
-        public void ResetToDefaultValue() => bar.ResetToDefaultValue();
-
-        public void TriggerDecrease() => bar.TriggerDecrease();
-
-        public void TriggerIncrease() => bar.TriggerIncrease();
-
-        private partial class ClickableSliderBar : RoundedSliderBar<int>
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
         {
-            private readonly ToolTipButton decreaseButton;
-            private readonly ToolTipButton increaseButton;
-
-            public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : string.Empty) + Current.Value.ToString("N0");
-
-            public ClickableSliderBar()
-            {
-                KeyboardStep = 1;
-
-                Add(decreaseButton = new ToolTipButton
-                {
-                    Position = new Vector2(-BUTTON_SPACING, 0),
-                    Origin = Anchor.CentreRight,
-                    Anchor = Anchor.CentreLeft,
-                    Width = BUTTON_SIZE,
-                    Height = BUTTON_SIZE,
-                    Text = "-",
-                    TooltipText = "Decrease",
-                    Action = () => Current.Value -= (int)KeyboardStep
-                });
-
-                Add(increaseButton = new ToolTipButton
-                {
-                    Position = new Vector2(BUTTON_SPACING, 0),
-                    Origin = Anchor.CentreLeft,
-                    Anchor = Anchor.CentreRight,
-                    Width = BUTTON_SIZE,
-                    Height = BUTTON_SIZE,
-                    Text = "+",
-                    TooltipText = "Increase",
-                    Action = () => Current.Value += (int)KeyboardStep
-                });
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                AccentColour = colours.Yellow;
-                Nub.AccentColour = colours.Yellow;
-                Nub.GlowingAccentColour = colours.YellowLighter;
-                Nub.GlowColour = colours.YellowDarker;
-            }
-
-            public void ResetToDefaultValue() => Current.SetDefault();
-
-            public void TriggerDecrease() => decreaseButton.Action?.Invoke();
-
-            public void TriggerIncrease() => increaseButton.Action?.Invoke();
+            AccentColour = colours.Yellow;
+            Nub.AccentColour = colours.Yellow;
+            Nub.GlowingAccentColour = colours.YellowLighter;
+            Nub.GlowColour = colours.YellowDarker;
         }
 
-        private partial class ToolTipButton : OsuButton, IHasTooltip
-        {
-            public LocalisableString TooltipText { get; set; }
+        public void ResetToDefaultValue() => Current.SetDefault();
 
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                BackgroundColour = colours.Blue;
-            }
+        public void TriggerDecrease() => decreaseButton.Action?.Invoke();
+
+        public void TriggerIncrease() => increaseButton.Action?.Invoke();
+    }
+
+    private partial class ToolTipButton : OsuButton, IHasTooltip
+    {
+        public LocalisableString TooltipText { get; set; }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            BackgroundColour = colours.Blue;
         }
     }
 }

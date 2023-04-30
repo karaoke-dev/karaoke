@@ -10,30 +10,29 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.UI.Components;
+
+public partial class ScoringMarker : CompositeDrawable
 {
-    public partial class ScoringMarker : CompositeDrawable
+    private const float triangle_width = 20;
+    private const float triangle_height = 20;
+
+    public ScoringMarker()
     {
-        private const float triangle_width = 20;
-        private const float triangle_height = 20;
-
-        public ScoringMarker()
+        AutoSizeAxes = Axes.Both;
+        InternalChildren = new Drawable[]
         {
-            AutoSizeAxes = Axes.Both;
-            InternalChildren = new Drawable[]
+            new Triangle
             {
-                new Triangle
-                {
-                    Size = new Vector2(triangle_width, triangle_height),
-                    Rotation = 90
-                }
-            };
-        }
+                Size = new Vector2(triangle_width, triangle_height),
+                Rotation = 90
+            }
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            Colour = colours.Yellow;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        Colour = colours.Yellow;
     }
 }

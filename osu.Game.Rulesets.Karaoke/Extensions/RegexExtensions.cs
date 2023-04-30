@@ -4,16 +4,15 @@
 using System.Text.RegularExpressions;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Extensions
-{
-    public static class RegexExtensions
-    {
-        public static TType GetGroupValue<TType>(this Match match, string key, bool useDefaultValueIfEmpty = true)
-        {
-            string value = match.Groups[key].Value;
+namespace osu.Game.Rulesets.Karaoke.Extensions;
 
-            // if got empty value, should change to null.
-            return TypeUtils.ChangeType<TType>(string.IsNullOrEmpty(value) ? null : value)!;
-        }
+public static class RegexExtensions
+{
+    public static TType GetGroupValue<TType>(this Match match, string key, bool useDefaultValueIfEmpty = true)
+    {
+        string value = match.Groups[key].Value;
+
+        // if got empty value, should change to null.
+        return TypeUtils.ChangeType<TType>(string.IsNullOrEmpty(value) ? null : value)!;
     }
 }

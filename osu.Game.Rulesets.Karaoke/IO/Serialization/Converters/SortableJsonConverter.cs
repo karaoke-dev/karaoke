@@ -7,34 +7,33 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public abstract class SortableJsonConverter<TObject> : JsonConverter<IEnumerable<TObject>>
 {
-    public abstract class SortableJsonConverter<TObject> : JsonConverter<IEnumerable<TObject>>
+    public sealed override IEnumerable<TObject> ReadJson(JsonReader reader, Type objectType, IEnumerable<TObject>? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        public sealed override IEnumerable<TObject> ReadJson(JsonReader reader, Type objectType, IEnumerable<TObject>? existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            var obj = JArray.Load(reader);
-            var timeTags = obj.Select(x => serializer.Deserialize<TObject>(x.CreateReader())!);
-            return GetSortedValue(timeTags);
-        }
-
-        public override void WriteJson(JsonWriter writer, IEnumerable<TObject>? value, JsonSerializer serializer)
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            // see: https://stackoverflow.com/questions/3330989/order-of-serialized-fields-using-json-net
-            var sortedTimeTags = GetSortedValue(value);
-
-            writer.WriteStartArray();
-
-            foreach (var timeTag in sortedTimeTags)
-            {
-                serializer.Serialize(writer, timeTag);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        protected abstract IEnumerable<TObject> GetSortedValue(IEnumerable<TObject> objects);
+        var obj = JArray.Load(reader);
+        var timeTags = obj.Select(x => serializer.Deserialize<TObject>(x.CreateReader())!);
+        return GetSortedValue(timeTags);
     }
+
+    public override void WriteJson(JsonWriter writer, IEnumerable<TObject>? value, JsonSerializer serializer)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        // see: https://stackoverflow.com/questions/3330989/order-of-serialized-fields-using-json-net
+        var sortedTimeTags = GetSortedValue(value);
+
+        writer.WriteStartArray();
+
+        foreach (var timeTag in sortedTimeTags)
+        {
+            serializer.Serialize(writer, timeTag);
+        }
+
+        writer.WriteEndArray();
+    }
+
+    protected abstract IEnumerable<TObject> GetSortedValue(IEnumerable<TObject> objects);
 }

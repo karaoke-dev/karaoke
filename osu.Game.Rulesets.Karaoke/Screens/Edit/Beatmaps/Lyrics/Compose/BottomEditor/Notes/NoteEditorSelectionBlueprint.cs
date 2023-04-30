@@ -23,87 +23,86 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes;
+
+/// <summary>
+/// Copy from <see cref="NoteSelectionBlueprint"/>
+/// </summary>
+public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IHasPopover
 {
-    /// <summary>
-    /// Copy from <see cref="NoteSelectionBlueprint"/>
-    /// </summary>
-    public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IHasPopover
+    private readonly IBindable<double> timeRange = new BindableDouble();
+    private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
+
+    private float scrollLength => Parent.DrawWidth;
+
+    private bool axisInverted => direction.Value == ScrollingDirection.Right;
+
+    [Resolved]
+    private INotesChangeHandler notesChangeHandler { get; set; }
+
+    [Resolved]
+    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
+    [Resolved]
+    private IScrollingInfo scrollingInfo { get; set; }
+
+    [Resolved]
+    private INotePositionInfo notePositionInfo { get; set; }
+
+    [Resolved]
+    private IEditNoteModeState editNoteModeState { get; set; }
+
+    [Resolved]
+    private Playfield playfield { get; set; }
+
+    protected ScrollingHitObjectContainer HitObjectContainer => ((EditorNotePlayfield)playfield).HitObjectContainer;
+
+    public NoteEditorSelectionBlueprint(Note note)
+        : base(note)
     {
-        private readonly IBindable<double> timeRange = new BindableDouble();
-        private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
-
-        private float scrollLength => Parent.DrawWidth;
-
-        private bool axisInverted => direction.Value == ScrollingDirection.Right;
-
-        [Resolved]
-        private INotesChangeHandler notesChangeHandler { get; set; }
-
-        [Resolved]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
-
-        [Resolved]
-        private IScrollingInfo scrollingInfo { get; set; }
-
-        [Resolved]
-        private INotePositionInfo notePositionInfo { get; set; }
-
-        [Resolved]
-        private IEditNoteModeState editNoteModeState { get; set; }
-
-        [Resolved]
-        private Playfield playfield { get; set; }
-
-        protected ScrollingHitObjectContainer HitObjectContainer => ((EditorNotePlayfield)playfield).HitObjectContainer;
-
-        public NoteEditorSelectionBlueprint(Note note)
-            : base(note)
+        RelativeSizeAxes = Axes.None;
+        AddInternal(new EditBodyPiece
         {
-            RelativeSizeAxes = Axes.None;
-            AddInternal(new EditBodyPiece
-            {
-                RelativeSizeAxes = Axes.Both
-            });
-        }
+            RelativeSizeAxes = Axes.Both
+        });
+    }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            direction.BindTo(scrollingInfo.Direction);
-            timeRange.BindTo(scrollingInfo.TimeRange);
-        }
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        direction.BindTo(scrollingInfo.Direction);
+        timeRange.BindTo(scrollingInfo.TimeRange);
+    }
 
-        protected override void Update()
-        {
-            base.Update();
+    protected override void Update()
+    {
+        base.Update();
 
-            var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
-            Anchor = Origin = anchor;
+        var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
+        Anchor = Origin = anchor;
 
-            Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
-            Y += notePositionInfo.Calculator.YPositionAt(Item.Tone);
+        Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
+        Y += notePositionInfo.Calculator.YPositionAt(Item.Tone);
 
-            Width = HitObjectContainer.LengthAtTime(Item.StartTime, Item.EndTime);
-            Height = notePositionInfo.Calculator.ColumnHeight;
-        }
+        Width = HitObjectContainer.LengthAtTime(Item.StartTime, Item.EndTime);
+        Height = notePositionInfo.Calculator.ColumnHeight;
+    }
 
-        public override MenuItem[] ContextMenuItems => new MenuItem[]
-        {
-            new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notePropertyChangeHandler.ChangeDisplayState(!Item.Display)),
-            new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
-        };
+    public override MenuItem[] ContextMenuItems => new MenuItem[]
+    {
+        new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notePropertyChangeHandler.ChangeDisplayState(!Item.Display)),
+        new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
+    };
 
-        public Popover GetPopover() => new NoteEditPopover(Item);
+    public Popover GetPopover() => new NoteEditPopover(Item);
 
-        protected override bool OnClick(ClickEvent e)
-        {
-            // should only select current note before open the popover because note change handler will change property in all selected notes.
-            editNoteModeState.SelectedItems.Clear();
-            editNoteModeState.SelectedItems.Add(Item);
+    protected override bool OnClick(ClickEvent e)
+    {
+        // should only select current note before open the popover because note change handler will change property in all selected notes.
+        editNoteModeState.SelectedItems.Clear();
+        editNoteModeState.SelectedItems.Add(Item);
 
-            this.ShowPopover();
-            return base.OnClick(e);
-        }
+        this.ShowPopover();
+        return base.OnClick(e);
     }
 }

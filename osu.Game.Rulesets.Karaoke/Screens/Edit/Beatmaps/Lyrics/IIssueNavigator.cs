@@ -3,10 +3,9 @@
 
 using osu.Game.Rulesets.Edit.Checks.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public interface IIssueNavigator
 {
-    public interface IIssueNavigator
-    {
-        void Navigate(Issue issue);
-    }
+    void Navigate(Issue issue);
 }

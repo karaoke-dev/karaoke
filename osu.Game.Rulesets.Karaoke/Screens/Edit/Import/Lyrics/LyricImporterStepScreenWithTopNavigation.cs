@@ -6,36 +6,35 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public abstract partial class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
 {
-    public abstract partial class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
+    protected LyricImporterStepScreenWithTopNavigation()
     {
-        protected LyricImporterStepScreenWithTopNavigation()
+        InternalChild = new GridContainer
         {
-            InternalChild = new GridContainer
+            RelativeSizeAxes = Axes.Both,
+            RowDimensions = new[]
             {
-                RelativeSizeAxes = Axes.Both,
-                RowDimensions = new[]
+                new Dimension(GridSizeMode.Absolute, 40),
+                new Dimension()
+            },
+            Content = new[]
+            {
+                new Drawable[]
                 {
-                    new Dimension(GridSizeMode.Absolute, 40),
-                    new Dimension()
+                    CreateNavigation(),
                 },
-                Content = new[]
+                new[]
                 {
-                    new Drawable[]
-                    {
-                        CreateNavigation(),
-                    },
-                    new[]
-                    {
-                        CreateContent(),
-                    }
+                    CreateContent(),
                 }
-            };
-        }
-
-        protected abstract TopNavigation CreateNavigation();
-
-        protected abstract Drawable CreateContent();
+            }
+        };
     }
+
+    protected abstract TopNavigation CreateNavigation();
+
+    protected abstract Drawable CreateContent();
 }

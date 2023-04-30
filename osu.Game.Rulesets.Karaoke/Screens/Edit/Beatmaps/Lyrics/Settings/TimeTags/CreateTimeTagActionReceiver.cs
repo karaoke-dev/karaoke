@@ -12,93 +12,92 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
+
+public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
 {
-    public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
+    [Resolved]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
-        [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        var action = e.Action;
+        var caretPosition = lyricCaretState.CaretPosition;
 
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
+        return caretPosition switch
         {
-            var action = e.Action;
-            var caretPosition = lyricCaretState.CaretPosition;
+            TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
+            TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
+            _ => throw new NotSupportedException(nameof(caretPosition))
+        };
+    }
 
-            return caretPosition switch
-            {
-                TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
-                TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
-                _ => throw new NotSupportedException(nameof(caretPosition))
-            };
+    private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+    {
+        var index = timeTagIndexCaretPosition.Index;
+
+        switch (action)
+        {
+            case KaraokeEditAction.CreateTimeTag:
+                lyricTimeTagsChangeHandler.AddByPosition(index);
+                return true;
+
+            case KaraokeEditAction.RemoveTimeTag:
+                lyricTimeTagsChangeHandler.RemoveByPosition(index);
+                return true;
+
+            default:
+                return false;
         }
+    }
 
-        private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+    private bool processModifyTimeTagAction(TimeTagCaretPosition timeTagCaretPosition, KaraokeEditAction action)
+    {
+        switch (action)
         {
-            var index = timeTagIndexCaretPosition.Index;
+            case KaraokeEditAction.CreateTimeTag:
+                var index = timeTagCaretPosition.TimeTag.Index;
+                lyricTimeTagsChangeHandler.AddByPosition(index);
+                return true;
 
-            switch (action)
-            {
-                case KaraokeEditAction.CreateTimeTag:
-                    lyricTimeTagsChangeHandler.AddByPosition(index);
-                    return true;
+            case KaraokeEditAction.RemoveTimeTag:
+                var timeTag = timeTagCaretPosition.TimeTag;
+                bool movable = lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex);
+                lyricTimeTagsChangeHandler.Remove(timeTag);
 
-                case KaraokeEditAction.RemoveTimeTag:
-                    lyricTimeTagsChangeHandler.RemoveByPosition(index);
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        private bool processModifyTimeTagAction(TimeTagCaretPosition timeTagCaretPosition, KaraokeEditAction action)
-        {
-            switch (action)
-            {
-                case KaraokeEditAction.CreateTimeTag:
-                    var index = timeTagCaretPosition.TimeTag.Index;
-                    lyricTimeTagsChangeHandler.AddByPosition(index);
-                    return true;
-
-                case KaraokeEditAction.RemoveTimeTag:
-                    var timeTag = timeTagCaretPosition.TimeTag;
-                    bool movable = lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex);
-                    lyricTimeTagsChangeHandler.Remove(timeTag);
-
-                    if (!movable)
-                    {
-                        // Should make sure that hover to the first time-tag again if first time-tag has been removed.
-                        lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric);
-                    }
-
-                    return true;
-
-                default:
-                    var tuple = getTupleByAction(action);
-                    if (tuple == null)
-                        return false;
-
-                    var newTimeTag = lyricTimeTagsChangeHandler.Shifting(timeTagCaretPosition.TimeTag, tuple.Item1, tuple.Item2);
-                    lyricCaretState.MoveCaretToTargetPosition(timeTagCaretPosition.Lyric, newTimeTag);
-                    return true;
-            }
-
-            static Tuple<ShiftingDirection, ShiftingType> getTupleByAction(KaraokeEditAction action) =>
-                action switch
+                if (!movable)
                 {
-                    KaraokeEditAction.ShiftTheTimeTagLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.Index),
-                    KaraokeEditAction.ShiftTheTimeTagRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.Index),
-                    KaraokeEditAction.ShiftTheTimeTagStateLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.State),
-                    KaraokeEditAction.ShiftTheTimeTagStateRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.State),
-                    _ => null
-                };
+                    // Should make sure that hover to the first time-tag again if first time-tag has been removed.
+                    lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric);
+                }
+
+                return true;
+
+            default:
+                var tuple = getTupleByAction(action);
+                if (tuple == null)
+                    return false;
+
+                var newTimeTag = lyricTimeTagsChangeHandler.Shifting(timeTagCaretPosition.TimeTag, tuple.Item1, tuple.Item2);
+                lyricCaretState.MoveCaretToTargetPosition(timeTagCaretPosition.Lyric, newTimeTag);
+                return true;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
-        {
-        }
+        static Tuple<ShiftingDirection, ShiftingType> getTupleByAction(KaraokeEditAction action) =>
+            action switch
+            {
+                KaraokeEditAction.ShiftTheTimeTagLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.Index),
+                KaraokeEditAction.ShiftTheTimeTagRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.Index),
+                KaraokeEditAction.ShiftTheTimeTagStateLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.State),
+                KaraokeEditAction.ShiftTheTimeTagStateRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.State),
+                _ => null
+            };
+    }
+
+    public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
+    {
     }
 }

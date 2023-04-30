@@ -17,47 +17,46 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
+
+public partial class LanguageInfo : SubInfo, IHasPopover
 {
-    public partial class LanguageInfo : SubInfo, IHasPopover
+    private readonly Bindable<CultureInfo> languageBindable;
+
+    public LanguageInfo(Lyric lyric)
+        : base(lyric)
     {
-        private readonly Bindable<CultureInfo> languageBindable;
-
-        public LanguageInfo(Lyric lyric)
-            : base(lyric)
-        {
-            languageBindable = lyric.LanguageBindable.GetBoundCopy();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricLanguageChangeHandler lyricLanguageChangeHandler, ILyricSelectionState lyricSelectionState, OsuColour colours)
-        {
-            languageBindable.BindValueChanged(value =>
-            {
-                var language = value.NewValue;
-                updateBadgeText(language);
-
-                if (lyricSelectionState.Selecting.Value)
-                    return;
-
-                lyricLanguageChangeHandler.SetLanguage(language);
-            });
-            updateBadgeText(Lyric.Language);
-
-            BadgeColour = colours.BlueDarker;
-
-            void updateBadgeText(CultureInfo language)
-                => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            this.ShowPopover();
-
-            return base.OnClick(e);
-        }
-
-        public Popover GetPopover()
-            => new LanguageSelectorPopover(languageBindable);
+        languageBindable = lyric.LanguageBindable.GetBoundCopy();
     }
+
+    [BackgroundDependencyLoader]
+    private void load(ILyricLanguageChangeHandler lyricLanguageChangeHandler, ILyricSelectionState lyricSelectionState, OsuColour colours)
+    {
+        languageBindable.BindValueChanged(value =>
+        {
+            var language = value.NewValue;
+            updateBadgeText(language);
+
+            if (lyricSelectionState.Selecting.Value)
+                return;
+
+            lyricLanguageChangeHandler.SetLanguage(language);
+        });
+        updateBadgeText(Lyric.Language);
+
+        BadgeColour = colours.BlueDarker;
+
+        void updateBadgeText(CultureInfo language)
+            => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        this.ShowPopover();
+
+        return base.OnClick(e);
+    }
+
+    public Popover GetPopover()
+        => new LanguageSelectorPopover(languageBindable);
 }

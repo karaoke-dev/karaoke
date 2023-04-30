@@ -21,156 +21,155 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+[Cached(typeof(IImportStateResolver))]
+public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
 {
-    [Cached(typeof(IImportStateResolver))]
-    public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
+    private readonly LyricImporterWaveContainer waves;
+    private readonly Box background;
+
+    [Cached]
+    protected LyricImporterSubScreenStack ScreenStack { get; private set; }
+
+    private readonly BindableBeatDivisor beatDivisor = new();
+
+    private EditorBeatmap editorBeatmap;
+
+    private ImportLyricManager importManager;
+
+    private LyricsProvider lyricsProvider;
+
+    private DependencyContainer dependencies;
+
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+    // Hide the back button because we cannot show it only in the first step.
+    public override bool AllowBackButton => false;
+
+    public event Action<IBeatmap> OnImportFinished;
+
+    public LyricImporter()
     {
-        private readonly LyricImporterWaveContainer waves;
-        private readonly Box background;
-
-        [Cached]
-        protected LyricImporterSubScreenStack ScreenStack { get; private set; }
-
-        private readonly BindableBeatDivisor beatDivisor = new();
-
-        private EditorBeatmap editorBeatmap;
-
-        private ImportLyricManager importManager;
-
-        private LyricsProvider lyricsProvider;
-
-        private DependencyContainer dependencies;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-        // Hide the back button because we cannot show it only in the first step.
-        public override bool AllowBackButton => false;
-
-        public event Action<IBeatmap> OnImportFinished;
-
-        public LyricImporter()
+        InternalChild = waves = new LyricImporterWaveContainer
         {
-            InternalChild = waves = new LyricImporterWaveContainer
+            RelativeSizeAxes = Axes.Both,
+            Child = new PopoverContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = new PopoverContainer
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Children = new Drawable[]
+                    background = new Box
                     {
-                        background = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                        new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Padding = new MarginPadding { Top = Header.HEIGHT },
-                            Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
-                        },
-                        new Header(ScreenStack),
-                    }
+                        RelativeSizeAxes = Axes.Both,
+                    },
+                    new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Padding = new MarginPadding { Top = Header.HEIGHT },
+                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
+                    },
+                    new Header(ScreenStack),
                 }
-            };
+            }
+        };
 
-            ScreenStack.Push(LyricImporterStep.ImportLyric);
-        }
+        ScreenStack.Push(LyricImporterStep.ImportLyric);
+    }
 
-        protected override void LoadComplete()
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+        waves.Show();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider)
+    {
+        background.Colour = colourProvider.Background3;
+
+        // todo: remove caching of this and consume via editorBeatmap?
+        // follow how editor.cs do.
+        dependencies.Cache(beatDivisor);
+
+        // inject local editor beatmap handler because should not affect global beatmap data.
+        var playableBeatmap = new KaraokeBeatmap
         {
-            base.LoadComplete();
-            waves.Show();
+            BeatmapInfo =
+            {
+                Ruleset = new KaraokeRuleset().RulesetInfo,
+            },
+        };
+        AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
+        dependencies.CacheAs(editorBeatmap);
+
+        AddInternal(importManager = new ImportLyricManager());
+        dependencies.Cache(importManager);
+
+        AddInternal(lyricsProvider = new LyricsProvider());
+        dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
+
+        dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
+    }
+
+    public void Cancel()
+    {
+        this.Exit();
+    }
+
+    public void Finish()
+    {
+        this.Exit();
+        OnImportFinished?.Invoke(editorBeatmap);
+    }
+
+    public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+    {
+        if (e.Repeat)
+            return false;
+
+        switch (e.Action)
+        {
+            case GlobalAction.Back:
+                // as we don't want to display the back button, manual handling of exit action is required.
+                // follow how editor.cs does.
+                if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen screen)
+                    throw new InvalidOperationException("Screen stack should only contains step screen");
+
+                if (screen.Step != LyricImporterStep.ImportLyric)
+                {
+                    // the better UX behavior should be move to the previous step.
+                    // But it will not asking.
+                    return false;
+
+                    // todo: implement.
+                    // ScreenStack.Exit();
+                }
+
+                this.Exit();
+                return true;
+
+            default:
+                return false;
         }
+    }
+
+    public void OnReleased(KeyBindingReleaseEvent<GlobalAction> e)
+    {
+    }
+
+    private partial class LyricImporterWaveContainer : WaveContainer
+    {
+        protected override bool StartHidden => true;
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)
         {
-            background.Colour = colourProvider.Background3;
-
-            // todo: remove caching of this and consume via editorBeatmap?
-            // follow how editor.cs do.
-            dependencies.Cache(beatDivisor);
-
-            // inject local editor beatmap handler because should not affect global beatmap data.
-            var playableBeatmap = new KaraokeBeatmap
-            {
-                BeatmapInfo =
-                {
-                    Ruleset = new KaraokeRuleset().RulesetInfo,
-                },
-            };
-            AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
-            dependencies.CacheAs(editorBeatmap);
-
-            AddInternal(importManager = new ImportLyricManager());
-            dependencies.Cache(importManager);
-
-            AddInternal(lyricsProvider = new LyricsProvider());
-            dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-
-            dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
-        }
-
-        public void Cancel()
-        {
-            this.Exit();
-        }
-
-        public void Finish()
-        {
-            this.Exit();
-            OnImportFinished?.Invoke(editorBeatmap);
-        }
-
-        public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
-        {
-            if (e.Repeat)
-                return false;
-
-            switch (e.Action)
-            {
-                case GlobalAction.Back:
-                    // as we don't want to display the back button, manual handling of exit action is required.
-                    // follow how editor.cs does.
-                    if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen screen)
-                        throw new InvalidOperationException("Screen stack should only contains step screen");
-
-                    if (screen.Step != LyricImporterStep.ImportLyric)
-                    {
-                        // the better UX behavior should be move to the previous step.
-                        // But it will not asking.
-                        return false;
-
-                        // todo: implement.
-                        // ScreenStack.Exit();
-                    }
-
-                    this.Exit();
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        public void OnReleased(KeyBindingReleaseEvent<GlobalAction> e)
-        {
-        }
-
-        private partial class LyricImporterWaveContainer : WaveContainer
-        {
-            protected override bool StartHidden => true;
-
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider)
-            {
-                FirstWaveColour = colourProvider.Light4;
-                SecondWaveColour = colourProvider.Light3;
-                ThirdWaveColour = colourProvider.Dark4;
-                FourthWaveColour = colourProvider.Dark3;
-            }
+            FirstWaveColour = colourProvider.Light4;
+            SecondWaveColour = colourProvider.Light3;
+            ThirdWaveColour = colourProvider.Dark4;
+            FourthWaveColour = colourProvider.Dark3;
         }
     }
 }

@@ -4,19 +4,18 @@
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels
-{
-    public partial class InvalidPanel : Panel
-    {
-        public InvalidPanel()
-        {
-            Width = 200;
-        }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Panels;
 
-        protected override IReadOnlyList<Drawable> CreateSections() =>
-            new Drawable[]
-            {
-                new IssueSection()
-            };
+public partial class InvalidPanel : Panel
+{
+    public InvalidPanel()
+    {
+        Width = 200;
     }
+
+    protected override IReadOnlyList<Drawable> CreateSections() =>
+        new Drawable[]
+        {
+            new IssueSection()
+        };
 }

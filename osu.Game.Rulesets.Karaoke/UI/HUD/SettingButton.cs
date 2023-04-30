@@ -7,16 +7,15 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
-{
-    public partial class SettingButton : OsuButton, IHasTooltip
-    {
-        public LocalisableString TooltipText { get; set; }
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
 
-        public SettingButton()
-        {
-            Width = 90;
-            Height = 45;
-        }
+public partial class SettingButton : OsuButton, IHasTooltip
+{
+    public LocalisableString TooltipText { get; set; }
+
+    public SettingButton()
+    {
+        Width = 90;
+        Height = 45;
     }
 }

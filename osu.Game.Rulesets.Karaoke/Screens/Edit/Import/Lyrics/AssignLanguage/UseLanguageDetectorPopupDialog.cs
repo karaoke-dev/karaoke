@@ -7,28 +7,27 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage;
+
+public partial class UseLanguageDetectorPopupDialog : PopupDialog
 {
-    public partial class UseLanguageDetectorPopupDialog : PopupDialog
+    public UseLanguageDetectorPopupDialog(Action<bool> okAction = null)
     {
-        public UseLanguageDetectorPopupDialog(Action<bool> okAction = null)
+        Icon = FontAwesome.Solid.Globe;
+        HeaderText = "Language detector";
+        BodyText = "Would you like to use language detector to auto assign each lyric's language?";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Language detector";
-            BodyText = "Would you like to use language detector to auto assign each lyric's language?";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"Cancel",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"Cancel",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

@@ -9,43 +9,42 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+
+public partial class PitchSettings : PlayerSettingsGroup
 {
-    public partial class PitchSettings : PlayerSettingsGroup
+    private readonly ClickablePlayerSliderBar pitchSliderBar;
+    private readonly ClickablePlayerSliderBar vocalPitchSliderBar;
+    private readonly ClickablePlayerSliderBar scoringPitchSliderBar;
+
+    public PitchSettings()
+        : base("Pitch")
     {
-        private readonly ClickablePlayerSliderBar pitchSliderBar;
-        private readonly ClickablePlayerSliderBar vocalPitchSliderBar;
-        private readonly ClickablePlayerSliderBar scoringPitchSliderBar;
-
-        public PitchSettings()
-            : base("Pitch")
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new OsuSpriteText
             {
-                new OsuSpriteText
-                {
-                    Text = "Pitch:"
-                },
-                pitchSliderBar = new ClickablePlayerSliderBar(),
-                new OsuSpriteText
-                {
-                    Text = "Vocal pitch:"
-                },
-                vocalPitchSliderBar = new ClickablePlayerSliderBar(),
-                new OsuSpriteText
-                {
-                    Text = "Scoring pitch:"
-                },
-                scoringPitchSliderBar = new ClickablePlayerSliderBar()
-            };
-        }
+                Text = "Pitch:"
+            },
+            pitchSliderBar = new ClickablePlayerSliderBar(),
+            new OsuSpriteText
+            {
+                Text = "Vocal pitch:"
+            },
+            vocalPitchSliderBar = new ClickablePlayerSliderBar(),
+            new OsuSpriteText
+            {
+                Text = "Scoring pitch:"
+            },
+            scoringPitchSliderBar = new ClickablePlayerSliderBar()
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeSessionStatics session)
-        {
-            pitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
-            vocalPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
-            scoringPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.ScoringPitch);
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSessionStatics session)
+    {
+        pitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
+        vocalPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
+        scoringPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.ScoringPitch);
     }
 }

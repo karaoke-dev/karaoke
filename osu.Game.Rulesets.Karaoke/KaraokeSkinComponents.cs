@@ -3,14 +3,13 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke
+namespace osu.Game.Rulesets.Karaoke;
+
+public enum KaraokeSkinComponents
 {
-    public enum KaraokeSkinComponents
-    {
-        ColumnBackground,
-        StageBackground,
-        JudgementLine,
-        Note,
-        HitExplosion,
-    }
+    ColumnBackground,
+    StageBackground,
+    JudgementLine,
+    Note,
+    HitExplosion,
 }

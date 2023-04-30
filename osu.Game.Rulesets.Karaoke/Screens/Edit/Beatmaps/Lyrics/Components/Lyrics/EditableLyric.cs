@@ -13,52 +13,51 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+
+[Cached(typeof(IEditableLyricState))]
+public partial class EditableLyric : InteractableLyric, IEditableLyricState
 {
-    [Cached(typeof(IEditableLyricState))]
-    public partial class EditableLyric : InteractableLyric, IEditableLyricState
+    [Resolved, AllowNull]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    public EditableLyric(Lyric lyric)
+        : base(lyric)
     {
-        [Resolved, AllowNull]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+        CornerRadius = 5;
+        Padding = new MarginPadding { Bottom = 10 };
+    }
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        public EditableLyric(Lyric lyric)
-            : base(lyric)
+    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+    {
+        return new BaseLayer[]
         {
-            CornerRadius = 5;
-            Padding = new MarginPadding { Bottom = 10 };
-        }
+            new TimeTagLayer(lyric),
+            new CaretLayer(lyric),
+            new BlueprintLayer(lyric),
+        };
+    }
 
-        protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+    public void TriggerDisallowEditEffect()
+    {
+        InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
+    }
+
+    protected override bool OnDoubleClick(DoubleClickEvent e)
+    {
+        var position = lyricCaretState.CaretPosition;
+
+        switch (position)
         {
-            return new BaseLayer[]
-            {
-                new TimeTagLayer(lyric),
-                new CaretLayer(lyric),
-                new BlueprintLayer(lyric),
-            };
-        }
+            case CuttingCaretPosition cuttingCaretPosition:
+                lyricsChangeHandler.Split(cuttingCaretPosition.Index);
+                return true;
 
-        public void TriggerDisallowEditEffect()
-        {
-            InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
-        }
-
-        protected override bool OnDoubleClick(DoubleClickEvent e)
-        {
-            var position = lyricCaretState.CaretPosition;
-
-            switch (position)
-            {
-                case CuttingCaretPosition cuttingCaretPosition:
-                    lyricsChangeHandler.Split(cuttingCaretPosition.Index);
-                    return true;
-
-                default:
-                    return false;
-            }
+            default:
+                return false;
         }
     }
 }

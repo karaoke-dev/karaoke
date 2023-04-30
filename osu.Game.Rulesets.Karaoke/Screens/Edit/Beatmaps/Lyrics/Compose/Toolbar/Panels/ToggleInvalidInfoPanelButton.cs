@@ -4,12 +4,11 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels
-{
-    public partial class ToggleInvalidInfoPanelButton : LyricEditorConfigButton
-    {
-        protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels;
 
-        protected override IconUsage Icon => FontAwesome.Solid.ExclamationTriangle;
-    }
+public partial class ToggleInvalidInfoPanelButton : LyricEditorConfigButton
+{
+    protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer;
+
+    protected override IconUsage Icon => FontAwesome.Solid.ExclamationTriangle;
 }

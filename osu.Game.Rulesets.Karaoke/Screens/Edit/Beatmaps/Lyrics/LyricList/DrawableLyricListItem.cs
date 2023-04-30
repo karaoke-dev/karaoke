@@ -11,41 +11,40 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
+
+public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
 {
-    public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
+    public const float HANDLER_WIDTH = 22;
+
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+
+    protected DrawableLyricListItem(Lyric item)
+        : base(item)
     {
-        public const float HANDLER_WIDTH = 22;
-
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
-        protected DrawableLyricListItem(Lyric item)
-            : base(item)
+        bindableMode.BindValueChanged(e =>
         {
-            bindableMode.BindValueChanged(e =>
-            {
-                // Only draggable in edit mode.
-                ShowDragHandle.Value = e.NewValue == LyricEditorMode.Texting;
-            }, true);
+            // Only draggable in edit mode.
+            ShowDragHandle.Value = e.NewValue == LyricEditorMode.Texting;
+        }, true);
 
-            DragActive.BindValueChanged(e =>
-            {
-                // should mark object as selecting while dragging.
-                lyricCaretState.MoveCaretToTargetPosition(Model);
-            });
-        }
-
-        protected sealed override Drawable CreateContent() => CreateEditRow(Model);
-
-        protected abstract Row CreateEditRow(Lyric lyric);
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        DragActive.BindValueChanged(e =>
         {
-            bindableMode.BindTo(state.BindableMode);
-        }
+            // should mark object as selecting while dragging.
+            lyricCaretState.MoveCaretToTargetPosition(Model);
+        });
+    }
+
+    protected sealed override Drawable CreateContent() => CreateEditRow(Model);
+
+    protected abstract Row CreateEditRow(Lyric lyric);
+
+    [BackgroundDependencyLoader]
+    private void load(ILyricEditorState state)
+    {
+        bindableMode.BindTo(state.BindableMode);
     }
 }

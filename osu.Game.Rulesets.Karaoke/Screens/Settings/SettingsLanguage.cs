@@ -14,48 +14,47 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public partial class SettingsLanguage : SettingsItem<CultureInfo>
 {
-    public partial class SettingsLanguage : SettingsItem<CultureInfo>
+    protected override Drawable CreateControl() => new LanguageSelectionButton
     {
-        protected override Drawable CreateControl() => new LanguageSelectionButton
+        RelativeSizeAxes = Axes.X,
+    };
+
+    private partial class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
+    {
+        private readonly BindableWithCurrent<CultureInfo> current = new();
+
+        public Bindable<CultureInfo> Current
         {
-            RelativeSizeAxes = Axes.X,
-        };
-
-        private partial class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
-        {
-            private readonly BindableWithCurrent<CultureInfo> current = new();
-
-            public Bindable<CultureInfo> Current
-            {
-                get => current.Current;
-                set => current.Current = value;
-            }
-
-            public LanguageSelectionButton()
-            {
-                Height = 30;
-                Action = this.ShowPopover;
-
-                Current.BindValueChanged(e => Text = CultureInfoUtils.GetLanguageDisplayText(e.NewValue));
-            }
-
-            public Popover GetPopover()
-                => new LanguageSelectorPopover(Current);
+            get => current.Current;
+            set => current.Current = value;
         }
 
-        private partial class LanguageSelectorPopover : OsuPopover
+        public LanguageSelectionButton()
         {
-            public LanguageSelectorPopover(Bindable<CultureInfo> bindableCultureInfo)
+            Height = 30;
+            Action = this.ShowPopover;
+
+            Current.BindValueChanged(e => Text = CultureInfoUtils.GetLanguageDisplayText(e.NewValue));
+        }
+
+        public Popover GetPopover()
+            => new LanguageSelectorPopover(Current);
+    }
+
+    private partial class LanguageSelectorPopover : OsuPopover
+    {
+        public LanguageSelectorPopover(Bindable<CultureInfo> bindableCultureInfo)
+        {
+            Child = new LanguageSelector
             {
-                Child = new LanguageSelector
-                {
-                    Width = 400,
-                    Height = 600,
-                    Current = bindableCultureInfo
-                };
-            }
+                Width = 400,
+                Height = 600,
+                Current = bindableCultureInfo
+            };
         }
     }
 }

@@ -6,11 +6,10 @@
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit;
+
+public partial class KaraokeEditorPlayfield : KaraokePlayfield
 {
-    public partial class KaraokeEditorPlayfield : KaraokePlayfield
-    {
-        protected override ScrollingNotePlayfield CreateNotePlayfield(int columns)
-            => new EditorNotePlayfield(columns);
-    }
+    protected override ScrollingNotePlayfield CreateNotePlayfield(int columns)
+        => new EditorNotePlayfield(columns);
 }

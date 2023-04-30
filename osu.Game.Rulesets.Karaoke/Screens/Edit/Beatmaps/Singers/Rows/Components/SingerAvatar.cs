@@ -24,94 +24,93 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components;
+
+public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopover
 {
-    public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopover
+    private readonly string[] handledExtensions = { ".jpg", ".jpeg", ".png" };
+
+    public IEnumerable<string> HandledExtensions => handledExtensions;
+
+    private readonly Bindable<FileInfo> currentFile = new();
+
+    [Resolved]
+    private OsuGameBase game { get; set; }
+
+    [Resolved]
+    private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
+
+    private readonly Singer singer;
+
+    public SingerAvatar(Singer singer)
     {
-        private readonly string[] handledExtensions = { ".jpg", ".jpeg", ".png" };
+        this.singer = singer;
 
-        public IEnumerable<string> HandledExtensions => handledExtensions;
-
-        private readonly Bindable<FileInfo> currentFile = new();
-
-        [Resolved]
-        private OsuGameBase game { get; set; }
-
-        [Resolved]
-        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
-
-        private readonly Singer singer;
-
-        public SingerAvatar(Singer singer)
+        InternalChildren = new[]
         {
-            this.singer = singer;
-
-            InternalChildren = new[]
+            new DrawableSingerAvatar
             {
-                new DrawableSingerAvatar
+                RelativeSizeAxes = Axes.Both,
+                Singer = singer
+            }
+        };
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        this.ShowPopover();
+        return true;
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        game.RegisterImportHandler(this);
+        currentFile.BindValueChanged(onFileSelected);
+    }
+
+    private void onFileSelected(ValueChangedEvent<FileInfo> file)
+    {
+        if (file.NewValue == null)
+            return;
+
+        this.HidePopover();
+
+        beatmapSingersChangeHandler.ChangeSingerAvatar(singer, file.NewValue);
+    }
+
+    Task ICanAcceptFiles.Import(params string[] paths)
+    {
+        Schedule(() => currentFile.Value = new FileInfo(paths.First()));
+        return Task.CompletedTask;
+    }
+
+    Task ICanAcceptFiles.Import(ImportTask[] tasks, ImportParameters parameters) => throw new NotImplementedException();
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        if (game.IsNotNull())
+            game.UnregisterImportHandler(this);
+    }
+
+    public Popover GetPopover() => new FileChooserPopover(handledExtensions, currentFile);
+
+    private partial class FileChooserPopover : OsuPopover
+    {
+        public FileChooserPopover(string[] handledExtensions, Bindable<FileInfo> currentFile)
+        {
+            Child = new Container
+            {
+                Size = new Vector2(600, 400),
+                Child = new OsuFileSelector(currentFile.Value?.DirectoryName, handledExtensions)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Singer = singer
-                }
+                    CurrentFile = { BindTarget = currentFile }
+                },
             };
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            this.ShowPopover();
-            return true;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            game.RegisterImportHandler(this);
-            currentFile.BindValueChanged(onFileSelected);
-        }
-
-        private void onFileSelected(ValueChangedEvent<FileInfo> file)
-        {
-            if (file.NewValue == null)
-                return;
-
-            this.HidePopover();
-
-            beatmapSingersChangeHandler.ChangeSingerAvatar(singer, file.NewValue);
-        }
-
-        Task ICanAcceptFiles.Import(params string[] paths)
-        {
-            Schedule(() => currentFile.Value = new FileInfo(paths.First()));
-            return Task.CompletedTask;
-        }
-
-        Task ICanAcceptFiles.Import(ImportTask[] tasks, ImportParameters parameters) => throw new NotImplementedException();
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            if (game.IsNotNull())
-                game.UnregisterImportHandler(this);
-        }
-
-        public Popover GetPopover() => new FileChooserPopover(handledExtensions, currentFile);
-
-        private partial class FileChooserPopover : OsuPopover
-        {
-            public FileChooserPopover(string[] handledExtensions, Bindable<FileInfo> currentFile)
-            {
-                Child = new Container
-                {
-                    Size = new Vector2(600, 400),
-                    Child = new OsuFileSelector(currentFile.Value?.DirectoryName, handledExtensions)
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        CurrentFile = { BindTarget = currentFile }
-                    },
-                };
-            }
         }
     }
 }

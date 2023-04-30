@@ -11,28 +11,27 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
-{
-    public partial class TimeTagCreateConfigSection : EditorSection
-    {
-        protected override LocalisableString Title => "Config Tool";
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+public partial class TimeTagCreateConfigSection : EditorSection
+{
+    protected override LocalisableString Title => "Config Tool";
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    {
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new TimeTagCreateConfigSubsection
             {
-                new TimeTagCreateConfigSubsection
-                {
-                    Current = lyricEditorConfigManager.GetBindable<CreateTimeTagEditMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode)
-                },
-                new LabelledEnumDropdown<MovingTimeTagCaretMode>
-                {
-                    Label = "Create tag mode",
-                    Description = "Only create start/end time-tag or both.",
-                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode),
-                }
-            };
-        }
+                Current = lyricEditorConfigManager.GetBindable<CreateTimeTagEditMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode)
+            },
+            new LabelledEnumDropdown<MovingTimeTagCaretMode>
+            {
+                Label = "Create tag mode",
+                Description = "Only create start/end time-tag or both.",
+                Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode),
+            }
+        };
     }
 }

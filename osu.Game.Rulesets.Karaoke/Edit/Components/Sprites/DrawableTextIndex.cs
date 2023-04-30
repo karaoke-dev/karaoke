@@ -7,26 +7,25 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
+
+public partial class DrawableTextIndex : RightTriangle
 {
-    public partial class DrawableTextIndex : RightTriangle
+    private TextIndex.IndexState state;
+
+    public TextIndex.IndexState State
     {
-        private TextIndex.IndexState state;
-
-        public TextIndex.IndexState State
+        get => state;
+        set
         {
-            get => state;
-            set
-            {
-                state = value;
+            state = value;
 
-                RightAngleDirection = state switch
-                {
-                    TextIndex.IndexState.Start => TriangleRightAngleDirection.BottomLeft,
-                    TextIndex.IndexState.End => TriangleRightAngleDirection.BottomRight,
-                    _ => throw new ArgumentOutOfRangeException(nameof(value))
-                };
-            }
+            RightAngleDirection = state switch
+            {
+                TextIndex.IndexState.Start => TriangleRightAngleDirection.BottomLeft,
+                TextIndex.IndexState.End => TriangleRightAngleDirection.BottomRight,
+                _ => throw new ArgumentOutOfRangeException(nameof(value))
+            };
         }
     }
 }

@@ -3,26 +3,25 @@
 
 using osu.Game.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Configuration
+namespace osu.Game.Rulesets.Karaoke.Configuration;
+
+public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRulesetEditSetting>
 {
-    public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRulesetEditSetting>
+    protected override void InitialiseDefaults()
     {
-        protected override void InitialiseDefaults()
-        {
-            base.InitialiseDefaults();
+        base.InitialiseDefaults();
 
-            // Note editor
-            SetDefault(KaraokeRulesetEditSetting.DisplayRuby, true);
-            SetDefault(KaraokeRulesetEditSetting.DisplayRomaji, true);
-            SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
-        }
-    }
-
-    public enum KaraokeRulesetEditSetting
-    {
         // Note editor
-        DisplayRuby,
-        DisplayRomaji,
-        DisplayTranslate,
+        SetDefault(KaraokeRulesetEditSetting.DisplayRuby, true);
+        SetDefault(KaraokeRulesetEditSetting.DisplayRomaji, true);
+        SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
     }
+}
+
+public enum KaraokeRulesetEditSetting
+{
+    // Note editor
+    DisplayRuby,
+    DisplayRomaji,
+    DisplayTranslate,
 }

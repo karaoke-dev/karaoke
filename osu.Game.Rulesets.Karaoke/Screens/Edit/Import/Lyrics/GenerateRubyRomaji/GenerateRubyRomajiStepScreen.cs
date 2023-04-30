@@ -9,79 +9,78 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+
+public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
 {
-    public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
+    public override string Title => "Generate ruby";
+
+    public override string ShortTitle => "Generate ruby";
+
+    public override LyricImporterStep Step => LyricImporterStep.GenerateRuby;
+
+    public override IconUsage Icon => FontAwesome.Solid.Gem;
+
+    [Cached(typeof(ILyricRubyTagsChangeHandler))]
+    private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
+
+    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
+
+    public GenerateRubyRomajiStepScreen()
     {
-        public override string Title => "Generate ruby";
+        AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
+        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
+    }
 
-        public override string ShortTitle => "Generate ruby";
+    protected override TopNavigation CreateNavigation()
+        => new GenerateRubyRomajiNavigation(this);
 
-        public override LyricImporterStep Step => LyricImporterStep.GenerateRuby;
-
-        public override IconUsage Icon => FontAwesome.Solid.Gem;
-
-        [Cached(typeof(ILyricRubyTagsChangeHandler))]
-        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
-
-        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
-
-        public GenerateRubyRomajiStepScreen()
-        {
-            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
-        }
-
-        protected override TopNavigation CreateNavigation()
-            => new GenerateRubyRomajiNavigation(this);
-
-        protected override Drawable CreateContent()
-            => base.CreateContent().With(_ =>
-            {
-                SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
-            });
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            // Asking auto-generate ruby or romaji.
-            if (lyricRubyTagsChangeHandler.CanGenerate())
-                AskForAutoGenerateRuby();
-            else if (lyricRomajiTagsChangeHandler.CanGenerate())
-                AskForAutoGenerateRomaji();
-        }
-
-        public override void Complete()
-        {
-            ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
-        }
-
-        internal void AskForAutoGenerateRuby()
-        {
-            SwitchLyricEditorMode(LyricEditorMode.EditRuby);
-
-            DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
-            {
-                if (!ok)
-                    return;
-
-                PrepareAutoGenerate();
-            }));
-        }
-
-        internal void AskForAutoGenerateRomaji()
+    protected override Drawable CreateContent()
+        => base.CreateContent().With(_ =>
         {
             SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
+        });
 
-            DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
-            {
-                if (!ok)
-                    return;
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
-                PrepareAutoGenerate();
-            }));
-        }
+        // Asking auto-generate ruby or romaji.
+        if (lyricRubyTagsChangeHandler.CanGenerate())
+            AskForAutoGenerateRuby();
+        else if (lyricRomajiTagsChangeHandler.CanGenerate())
+            AskForAutoGenerateRomaji();
+    }
+
+    public override void Complete()
+    {
+        ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
+    }
+
+    internal void AskForAutoGenerateRuby()
+    {
+        SwitchLyricEditorMode(LyricEditorMode.EditRuby);
+
+        DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
+        {
+            if (!ok)
+                return;
+
+            PrepareAutoGenerate();
+        }));
+    }
+
+    internal void AskForAutoGenerateRomaji()
+    {
+        SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
+
+        DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
+        {
+            if (!ok)
+                return;
+
+            PrepareAutoGenerate();
+        }));
     }
 }

@@ -14,103 +14,102 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components;
+
+public partial class DrawableDragFile : Container
 {
-    public partial class DrawableDragFile : Container
+    private const float button_height = 50;
+    private const float button_vertical_margin = 15;
+
+    private OsuFileSelector fileSelector;
+    private TextFlowContainer currentFileText;
+
+    private RoundedButton importButton;
+
+    [BackgroundDependencyLoader(true)]
+    private void load(OsuColour colours)
     {
-        private const float button_height = 50;
-        private const float button_vertical_margin = 15;
-
-        private OsuFileSelector fileSelector;
-        private TextFlowContainer currentFileText;
-
-        private RoundedButton importButton;
-
-        [BackgroundDependencyLoader(true)]
-        private void load(OsuColour colours)
+        Masking = true;
+        CornerRadius = 10;
+        Children = new Drawable[]
         {
-            Masking = true;
-            CornerRadius = 10;
-            Children = new Drawable[]
+            new Box
             {
-                new Box
+                Colour = colours.GreySeaFoamDark,
+                RelativeSizeAxes = Axes.Both,
+            },
+            fileSelector = new OsuFileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
+            {
+                RelativeSizeAxes = Axes.Both,
+                Width = 0.6f
+            },
+            new Container
+            {
+                RelativeSizeAxes = Axes.Both,
+                Width = 0.4f,
+                Anchor = Anchor.TopRight,
+                Origin = Anchor.TopRight,
+                Children = new Drawable[]
                 {
-                    Colour = colours.GreySeaFoamDark,
-                    RelativeSizeAxes = Axes.Both,
-                },
-                fileSelector = new OsuFileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Width = 0.6f
-                },
-                new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Width = 0.4f,
-                    Anchor = Anchor.TopRight,
-                    Origin = Anchor.TopRight,
-                    Children = new Drawable[]
+                    new Box
                     {
-                        new Box
-                        {
-                            Colour = colours.GreySeaFoamDarker,
-                            RelativeSizeAxes = Axes.Both
-                        },
-                        new Container
+                        Colour = colours.GreySeaFoamDarker,
+                        RelativeSizeAxes = Axes.Both
+                    },
+                    new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Padding = new MarginPadding { Bottom = button_height + button_vertical_margin * 2 },
+                        Child = new OsuScrollContainer
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Padding = new MarginPadding { Bottom = button_height + button_vertical_margin * 2 },
-                            Child = new OsuScrollContainer
+                            Anchor = Anchor.TopCentre,
+                            Origin = Anchor.TopCentre,
+                            Child = currentFileText = new TextFlowContainer(t => t.Font = OsuFont.Default.With(size: 30))
                             {
-                                RelativeSizeAxes = Axes.Both,
-                                Anchor = Anchor.TopCentre,
-                                Origin = Anchor.TopCentre,
-                                Child = currentFileText = new TextFlowContainer(t => t.Font = OsuFont.Default.With(size: 30))
-                                {
-                                    AutoSizeAxes = Axes.Y,
-                                    RelativeSizeAxes = Axes.X,
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    TextAnchor = Anchor.Centre
-                                },
-                                ScrollContent =
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                }
+                                AutoSizeAxes = Axes.Y,
+                                RelativeSizeAxes = Axes.X,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                TextAnchor = Anchor.Centre
                             },
+                            ScrollContent =
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                            }
                         },
-                        importButton = new RoundedButton
-                        {
-                            Text = "Import",
-                            Anchor = Anchor.BottomCentre,
-                            Origin = Anchor.BottomCentre,
-                            RelativeSizeAxes = Axes.X,
-                            Height = button_height,
-                            Width = 0.9f,
-                            Margin = new MarginPadding { Vertical = button_vertical_margin },
-                            Action = () => Import?.Invoke(fileSelector.CurrentFile.Value?.FullName)
-                        }
+                    },
+                    importButton = new RoundedButton
+                    {
+                        Text = "Import",
+                        Anchor = Anchor.BottomCentre,
+                        Origin = Anchor.BottomCentre,
+                        RelativeSizeAxes = Axes.X,
+                        Height = button_height,
+                        Width = 0.9f,
+                        Margin = new MarginPadding { Vertical = button_vertical_margin },
+                        Action = () => Import?.Invoke(fileSelector.CurrentFile.Value?.FullName)
                     }
                 }
-            };
+            }
+        };
 
-            fileSelector.CurrentFile.BindValueChanged(fileChanged, true);
-            fileSelector.CurrentPath.BindValueChanged(directoryChanged);
-        }
-
-        private void fileChanged(ValueChangedEvent<FileInfo> selectedFile)
-        {
-            importButton.Enabled.Value = selectedFile.NewValue != null;
-            currentFileText.Text = selectedFile.NewValue?.Name ?? "Select a file or drag to import.";
-        }
-
-        private void directoryChanged(ValueChangedEvent<DirectoryInfo> _)
-        {
-            // this should probably be done by the selector itself, but let's do it here for now.
-            fileSelector.CurrentFile.Value = null;
-        }
-
-        public Action<string> Import { get; set; }
+        fileSelector.CurrentFile.BindValueChanged(fileChanged, true);
+        fileSelector.CurrentPath.BindValueChanged(directoryChanged);
     }
+
+    private void fileChanged(ValueChangedEvent<FileInfo> selectedFile)
+    {
+        importButton.Enabled.Value = selectedFile.NewValue != null;
+        currentFileText.Text = selectedFile.NewValue?.Name ?? "Select a file or drag to import.";
+    }
+
+    private void directoryChanged(ValueChangedEvent<DirectoryInfo> _)
+    {
+        // this should probably be done by the selector itself, but let's do it here for now.
+        fileSelector.CurrentFile.Value = null;
+    }
+
+    public Action<string> Import { get; set; }
 }

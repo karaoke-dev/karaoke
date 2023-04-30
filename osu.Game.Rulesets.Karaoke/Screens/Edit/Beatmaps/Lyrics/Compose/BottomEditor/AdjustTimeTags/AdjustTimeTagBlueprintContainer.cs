@@ -23,163 +23,162 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags;
+
+public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
 {
-    public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
+    [Resolved(CanBeNull = true)]
+    private AdjustTimeTagScrollContainer timeline { get; set; }
+
+    [Resolved]
+    private EditorClock editorClock { get; set; }
+
+    [Resolved]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+    [BackgroundDependencyLoader]
+    private void load(BindableList<TimeTag> timeTags)
     {
-        [Resolved(CanBeNull = true)]
-        private AdjustTimeTagScrollContainer timeline { get; set; }
+        // Add time-tag into blueprint container
+        RegisterBindable(timeTags);
+    }
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
+    protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
+        => blueprints.OrderBy(b => b.Item.Index);
 
+    protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
+    {
+        if (!base.ApplySnapResult(blueprints, result))
+            return false;
+
+        if (result.Time == null)
+            return false;
+
+        var timeTags = blueprints.OfType<AdjustTimeTagSelectionBlueprint>().Select(x => x.Item).ToArray();
+        var firstTimeTag = timeTags.FirstOrDefault();
+        if (firstTimeTag == null)
+            return false;
+
+        double offset = result.Time.Value - timeline.GetPreviewTime(firstTimeTag);
+        if (offset == 0)
+            return false;
+
+        lyricTimeTagsChangeHandler.ShiftingTimeTagTime(timeTags, offset);
+
+        return true;
+    }
+
+    protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
+        => new TimeTagEditorSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
+
+    protected override SelectionHandler<TimeTag> CreateSelectionHandler()
+        => new TimeTagEditorSelectionHandler();
+
+    protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
+        => new AdjustTimeTagSelectionBlueprint(item);
+
+    protected override DragBox CreateDragBox() => new TimelineDragBox();
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        base.OnClick(e);
+
+        // skip if already have selected blueprint.
+        if (ClickedBlueprint != null)
+            return true;
+
+        // navigation to target time.
+        var navigationTime = timeline.FindSnappedPositionAndTime(e.ScreenSpaceMousePosition);
+        if (navigationTime.Time == null)
+            return false;
+
+        editorClock.SeekSmoothlyTo(navigationTime.Time.Value);
+        return true;
+    }
+
+    protected partial class TimeTagEditorSelectionHandler : BindableSelectionHandler
+    {
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load(BindableList<TimeTag> timeTags)
+        private void load(ITimeTagModeState timeTagModeState)
         {
-            // Add time-tag into blueprint container
-            RegisterBindable(timeTags);
+            SelectedItems.BindTo(timeTagModeState.SelectedItems);
         }
 
-        protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
-            => blueprints.OrderBy(b => b.Item.Index);
+        // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+        public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;
 
-        protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
+        protected override void DeleteItems(IEnumerable<TimeTag> items)
         {
-            if (!base.ApplySnapResult(blueprints, result))
-                return false;
-
-            if (result.Time == null)
-                return false;
-
-            var timeTags = blueprints.OfType<AdjustTimeTagSelectionBlueprint>().Select(x => x.Item).ToArray();
-            var firstTimeTag = timeTags.FirstOrDefault();
-            if (firstTimeTag == null)
-                return false;
-
-            double offset = result.Time.Value - timeline.GetPreviewTime(firstTimeTag);
-            if (offset == 0)
-                return false;
-
-            lyricTimeTagsChangeHandler.ShiftingTimeTagTime(timeTags, offset);
-
-            return true;
+            lyricTimeTagsChangeHandler.RemoveRange(items);
         }
 
-        protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
-            => new TimeTagEditorSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
-
-        protected override SelectionHandler<TimeTag> CreateSelectionHandler()
-            => new TimeTagEditorSelectionHandler();
-
-        protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-            => new AdjustTimeTagSelectionBlueprint(item);
-
-        protected override DragBox CreateDragBox() => new TimelineDragBox();
-
-        protected override bool OnClick(ClickEvent e)
+        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)
         {
-            base.OnClick(e);
+            var timeTags = selection.Select(x => x.Item).ToArray();
 
-            // skip if already have selected blueprint.
-            if (ClickedBlueprint != null)
-                return true;
-
-            // navigation to target time.
-            var navigationTime = timeline.FindSnappedPositionAndTime(e.ScreenSpaceMousePosition);
-            if (navigationTime.Time == null)
-                return false;
-
-            editorClock.SeekSmoothlyTo(navigationTime.Time.Value);
-            return true;
-        }
-
-        protected partial class TimeTagEditorSelectionHandler : BindableSelectionHandler
-        {
-            [Resolved]
-            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-            [BackgroundDependencyLoader]
-            private void load(ITimeTagModeState timeTagModeState)
+            if (timeTags.Any(x => x.Time != null))
             {
-                SelectedItems.BindTo(timeTagModeState.SelectedItems);
-            }
-
-            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
-            public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;
-
-            protected override void DeleteItems(IEnumerable<TimeTag> items)
-            {
-                lyricTimeTagsChangeHandler.RemoveRange(items);
-            }
-
-            protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)
-            {
-                var timeTags = selection.Select(x => x.Item).ToArray();
-
-                if (timeTags.Any(x => x.Time != null))
+                return new[]
                 {
-                    return new[]
+                    new OsuMenuItem("Clear time", MenuItemType.Standard, () =>
                     {
-                        new OsuMenuItem("Clear time", MenuItemType.Standard, () =>
-                        {
-                            timeTags.ForEach(x => x.Time = null);
+                        timeTags.ForEach(x => x.Time = null);
 
-                            // todo : should re-calculate all preview position because some time-tag without position might be affected.
-                        })
-                    };
-                }
-
-                return base.GetContextMenuItemsForSelection(selection);
+                        // todo : should re-calculate all preview position because some time-tag without position might be affected.
+                    })
+                };
             }
+
+            return base.GetContextMenuItemsForSelection(selection);
+        }
+    }
+
+    private partial class TimelineDragBox : DragBox
+    {
+        public double MinTime { get; private set; }
+
+        public double MaxTime { get; private set; }
+
+        private double? startTime;
+
+        [Resolved]
+        private AdjustTimeTagScrollContainer timeline { get; set; }
+
+        protected override Drawable CreateBox() => new Box
+        {
+            RelativeSizeAxes = Axes.Y,
+            Alpha = 0.3f
+        };
+
+        public override void HandleDrag(MouseButtonEvent e)
+        {
+            startTime ??= timeline.TimeAtPosition(e.MouseDownPosition.X);
+            double endTime = timeline.TimeAtPosition(e.MousePosition.X);
+
+            MinTime = Math.Min(startTime.Value, endTime);
+            MaxTime = Math.Max(startTime.Value, endTime);
+
+            Box.X = timeline.PositionAtTime(MinTime);
+            Box.Width = timeline.PositionAtTime(MaxTime) - Box.X;
         }
 
-        private partial class TimelineDragBox : DragBox
+        public override void Hide()
         {
-            public double MinTime { get; private set; }
-
-            public double MaxTime { get; private set; }
-
-            private double? startTime;
-
-            [Resolved]
-            private AdjustTimeTagScrollContainer timeline { get; set; }
-
-            protected override Drawable CreateBox() => new Box
-            {
-                RelativeSizeAxes = Axes.Y,
-                Alpha = 0.3f
-            };
-
-            public override void HandleDrag(MouseButtonEvent e)
-            {
-                startTime ??= timeline.TimeAtPosition(e.MouseDownPosition.X);
-                double endTime = timeline.TimeAtPosition(e.MousePosition.X);
-
-                MinTime = Math.Min(startTime.Value, endTime);
-                MaxTime = Math.Max(startTime.Value, endTime);
-
-                Box.X = timeline.PositionAtTime(MinTime);
-                Box.Width = timeline.PositionAtTime(MaxTime) - Box.X;
-            }
-
-            public override void Hide()
-            {
-                base.Hide();
-                startTime = null;
-            }
+            base.Hide();
+            startTime = null;
         }
+    }
 
-        protected partial class TimeTagEditorSelectionBlueprintContainer : Container<SelectionBlueprint<TimeTag>>
+    protected partial class TimeTagEditorSelectionBlueprintContainer : Container<SelectionBlueprint<TimeTag>>
+    {
+        protected override Container<SelectionBlueprint<TimeTag>> Content { get; }
+
+        public TimeTagEditorSelectionBlueprintContainer()
         {
-            protected override Container<SelectionBlueprint<TimeTag>> Content { get; }
-
-            public TimeTagEditorSelectionBlueprintContainer()
-            {
-                AddInternal(new TimelinePart<SelectionBlueprint<TimeTag>>(Content = new TimeTagOrderedSelectionContainer { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
-            }
+            AddInternal(new TimelinePart<SelectionBlueprint<TimeTag>>(Content = new TimeTagOrderedSelectionContainer { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
         }
     }
 }

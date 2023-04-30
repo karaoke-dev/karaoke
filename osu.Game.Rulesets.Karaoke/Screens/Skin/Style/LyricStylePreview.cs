@@ -13,85 +13,84 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+internal partial class LyricStylePreview : Container
 {
-    internal partial class LyricStylePreview : Container
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider, StyleManager manager)
     {
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider, StyleManager manager)
+        Masking = true;
+        CornerRadius = 15;
+        FillMode = FillMode.Fit;
+        FillAspectRatio = 1.25f;
+        Children = new Drawable[]
         {
-            Masking = true;
-            CornerRadius = 15;
-            FillMode = FillMode.Fit;
-            FillAspectRatio = 1.25f;
-            Children = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider.Background1,
-                },
-                new PreviewDrawableLyricLine(createDefaultLyricLine())
-            };
-        }
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background1,
+            },
+            new PreviewDrawableLyricLine(createDefaultLyricLine())
+        };
+    }
 
-        private Lyric createDefaultLyricLine()
+    private Lyric createDefaultLyricLine()
+    {
+        double startTime = Time.Current;
+        const double duration = 1000000;
+
+        return new Lyric
         {
-            double startTime = Time.Current;
-            const double duration = 1000000;
-
-            return new Lyric
+            StartTime = startTime,
+            Duration = duration,
+            Text = "カラオケ！",
+            TimeTags = new List<TimeTag>
             {
-                StartTime = startTime,
-                Duration = duration,
-                Text = "カラオケ！",
-                TimeTags = new List<TimeTag>
+                new(new TextIndex(0), startTime + 500),
+                new(new TextIndex(1), startTime + 600),
+                new(new TextIndex(2), startTime + 1000),
+                new(new TextIndex(3), startTime + 1500),
+                new(new TextIndex(4), startTime + 2000),
+            },
+            RubyTags = new[]
+            {
+                new RubyTag
                 {
-                    new(new TextIndex(0), startTime + 500),
-                    new(new TextIndex(1), startTime + 600),
-                    new(new TextIndex(2), startTime + 1000),
-                    new(new TextIndex(3), startTime + 1500),
-                    new(new TextIndex(4), startTime + 2000),
+                    StartIndex = 0,
+                    EndIndex = 1,
+                    Text = "か"
                 },
-                RubyTags = new[]
+                new RubyTag
                 {
-                    new RubyTag
-                    {
-                        StartIndex = 0,
-                        EndIndex = 1,
-                        Text = "か"
-                    },
-                    new RubyTag
-                    {
-                        StartIndex = 2,
-                        EndIndex = 3,
-                        Text = "お"
-                    }
-                },
-                RomajiTags = new[]
-                {
-                    new RomajiTag
-                    {
-                        StartIndex = 1,
-                        EndIndex = 2,
-                        Text = "ra"
-                    },
-                    new RomajiTag
-                    {
-                        StartIndex = 3,
-                        EndIndex = 4,
-                        Text = "ke"
-                    }
+                    StartIndex = 2,
+                    EndIndex = 3,
+                    Text = "お"
                 }
-            };
-        }
-
-        private partial class PreviewDrawableLyricLine : DrawableLyric
-        {
-            public PreviewDrawableLyricLine(Lyric hitObject)
-                : base(hitObject)
+            },
+            RomajiTags = new[]
             {
+                new RomajiTag
+                {
+                    StartIndex = 1,
+                    EndIndex = 2,
+                    Text = "ra"
+                },
+                new RomajiTag
+                {
+                    StartIndex = 3,
+                    EndIndex = 4,
+                    Text = "ke"
+                }
             }
+        };
+    }
+
+    private partial class PreviewDrawableLyricLine : DrawableLyric
+    {
+        public PreviewDrawableLyricLine(Lyric hitObject)
+            : base(hitObject)
+        {
         }
     }
 }

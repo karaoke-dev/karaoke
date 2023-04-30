@@ -19,174 +19,173 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
+
+/// <summary>
+/// A component which displays a collection of singers in individual <see cref="SingerDisplay"/>s.
+/// </summary>
+public partial class SingerList : CompositeDrawable
 {
-    /// <summary>
-    /// A component which displays a collection of singers in individual <see cref="SingerDisplay"/>s.
-    /// </summary>
-    public partial class SingerList : CompositeDrawable
+    public BindableList<Singer> Singers { get; } = new();
+
+    private string singerNamePrefix = "Singer";
+
+    public string SingerNamePrefix
     {
-        public BindableList<Singer> Singers { get; } = new();
-
-        private string singerNamePrefix = "Singer";
-
-        public string SingerNamePrefix
+        get => singerNamePrefix;
+        set
         {
-            get => singerNamePrefix;
-            set
+            if (singerNamePrefix == value)
+                return;
+
+            singerNamePrefix = value;
+
+            if (IsLoaded)
+                reindexItems();
+        }
+    }
+
+    private FillFlowContainer singers;
+
+    private IEnumerable<SingerDisplay> singerDisplays => singers.OfType<SingerDisplay>();
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        RelativeSizeAxes = Axes.X;
+        AutoSizeAxes = Axes.Y;
+        AutoSizeDuration = fade_duration;
+        AutoSizeEasing = Easing.OutQuint;
+
+        InternalChild = singers = new FillFlowContainer
+        {
+            RelativeSizeAxes = Axes.X,
+            AutoSizeAxes = Axes.Y,
+            Spacing = new Vector2(10),
+            Direction = FillDirection.Full
+        };
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        Singers.BindCollectionChanged((_, args) =>
+        {
+            if (args.Action != NotifyCollectionChangedAction.Replace)
+                updateSingers();
+        }, true);
+        FinishTransforms(true);
+    }
+
+    private const int fade_duration = 200;
+
+    private void updateSingers()
+    {
+        singers.Clear();
+
+        for (int i = 0; i < Singers.Count; ++i)
+        {
+            // copy to avoid accesses to modified closure.
+            int singerIndex = i;
+            SingerDisplay display;
+
+            singers.Add(display = new SingerDisplay
             {
-                if (singerNamePrefix == value)
-                    return;
+                Current = { Value = Singers[singerIndex] }
+            });
 
-                singerNamePrefix = value;
-
-                if (IsLoaded)
-                    reindexItems();
-            }
+            // todo : might check does this like works because singer is object.
+            display.Current.BindValueChanged(singer => Singers[singerIndex] = singer.NewValue);
+            display.DeleteRequested += singerDeletionRequested;
         }
 
-        private FillFlowContainer singers;
-
-        private IEnumerable<SingerDisplay> singerDisplays => singers.OfType<SingerDisplay>();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        singers.Add(new AddSingerButton
         {
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-            AutoSizeDuration = fade_duration;
-            AutoSizeEasing = Easing.OutQuint;
+            // todo : use better way to create singer with right id.
+            Action = () => Singers.Add(new Singer
+            {
+                Name = "New singer"
+            })
+        });
 
-            InternalChild = singers = new FillFlowContainer
+        reindexItems();
+    }
+
+    // todo : might have dialog to ask should delete singer or not if contains lyric.
+    private void singerDeletionRequested(SingerDisplay display) => Singers.RemoveAt(singers.IndexOf(display));
+
+    private void reindexItems()
+    {
+        int index = 1;
+
+        foreach (var singerDisplay in singerDisplays)
+        {
+            // todo : might call singer manager to update singer id?
+            index += 1;
+        }
+    }
+
+    internal partial class AddSingerButton : CompositeDrawable
+    {
+        public Action Action
+        {
+            set => circularButton.Action = value;
+        }
+
+        private readonly OsuClickableContainer circularButton;
+
+        public AddSingerButton()
+        {
+            AutoSizeAxes = Axes.Y;
+            Width = 100;
+
+            InternalChild = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Spacing = new Vector2(10),
-                Direction = FillDirection.Full
+                Direction = FillDirection.Vertical,
+                Spacing = new Vector2(0, 10),
+                Children = new Drawable[]
+                {
+                    circularButton = new OsuClickableContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Height = 100,
+                        CornerRadius = 50,
+                        Masking = true,
+                        BorderThickness = 5,
+                        Children = new Drawable[]
+                        {
+                            new Box
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = Colour4.Transparent,
+                                AlwaysPresent = true
+                            },
+                            new SpriteIcon
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Size = new Vector2(20),
+                                Icon = FontAwesome.Solid.Plus
+                            }
+                        }
+                    },
+                    new OsuSpriteText
+                    {
+                        Anchor = Anchor.TopCentre,
+                        Origin = Anchor.TopCentre,
+                        Text = "New"
+                    }
+                }
             };
         }
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
         {
-            base.LoadComplete();
-
-            Singers.BindCollectionChanged((_, args) =>
-            {
-                if (args.Action != NotifyCollectionChangedAction.Replace)
-                    updateSingers();
-            }, true);
-            FinishTransforms(true);
-        }
-
-        private const int fade_duration = 200;
-
-        private void updateSingers()
-        {
-            singers.Clear();
-
-            for (int i = 0; i < Singers.Count; ++i)
-            {
-                // copy to avoid accesses to modified closure.
-                int singerIndex = i;
-                SingerDisplay display;
-
-                singers.Add(display = new SingerDisplay
-                {
-                    Current = { Value = Singers[singerIndex] }
-                });
-
-                // todo : might check does this like works because singer is object.
-                display.Current.BindValueChanged(singer => Singers[singerIndex] = singer.NewValue);
-                display.DeleteRequested += singerDeletionRequested;
-            }
-
-            singers.Add(new AddSingerButton
-            {
-                // todo : use better way to create singer with right id.
-                Action = () => Singers.Add(new Singer
-                {
-                    Name = "New singer"
-                })
-            });
-
-            reindexItems();
-        }
-
-        // todo : might have dialog to ask should delete singer or not if contains lyric.
-        private void singerDeletionRequested(SingerDisplay display) => Singers.RemoveAt(singers.IndexOf(display));
-
-        private void reindexItems()
-        {
-            int index = 1;
-
-            foreach (var singerDisplay in singerDisplays)
-            {
-                // todo : might call singer manager to update singer id?
-                index += 1;
-            }
-        }
-
-        internal partial class AddSingerButton : CompositeDrawable
-        {
-            public Action Action
-            {
-                set => circularButton.Action = value;
-            }
-
-            private readonly OsuClickableContainer circularButton;
-
-            public AddSingerButton()
-            {
-                AutoSizeAxes = Axes.Y;
-                Width = 100;
-
-                InternalChild = new FillFlowContainer
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
-                    Spacing = new Vector2(0, 10),
-                    Children = new Drawable[]
-                    {
-                        circularButton = new OsuClickableContainer
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            Height = 100,
-                            CornerRadius = 50,
-                            Masking = true,
-                            BorderThickness = 5,
-                            Children = new Drawable[]
-                            {
-                                new Box
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                    Colour = Colour4.Transparent,
-                                    AlwaysPresent = true
-                                },
-                                new SpriteIcon
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    Size = new Vector2(20),
-                                    Icon = FontAwesome.Solid.Plus
-                                }
-                            }
-                        },
-                        new OsuSpriteText
-                        {
-                            Anchor = Anchor.TopCentre,
-                            Origin = Anchor.TopCentre,
-                            Text = "New"
-                        }
-                    }
-                };
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                circularButton.BorderColour = colours.BlueDarker;
-            }
+            circularButton.BorderColour = colours.BlueDarker;
         }
     }
 }

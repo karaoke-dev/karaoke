@@ -3,18 +3,17 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
+
+public interface IIndexCaretPositionAlgorithm : ICaretPositionAlgorithm
 {
-    public interface IIndexCaretPositionAlgorithm : ICaretPositionAlgorithm
-    {
-        IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition);
+    IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition);
 
-        IIndexCaretPosition? MoveToNextIndex(IIndexCaretPosition currentPosition);
+    IIndexCaretPosition? MoveToNextIndex(IIndexCaretPosition currentPosition);
 
-        IIndexCaretPosition? MoveToFirstIndex(Lyric lyric);
+    IIndexCaretPosition? MoveToFirstIndex(Lyric lyric);
 
-        IIndexCaretPosition? MoveToLastIndex(Lyric lyric);
+    IIndexCaretPosition? MoveToLastIndex(Lyric lyric);
 
-        IIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index);
-    }
+    IIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index);
 }

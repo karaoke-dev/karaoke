@@ -6,15 +6,14 @@ using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing
-{
-    public class KaraokeDifficultyHitObject : DifficultyHitObject
-    {
-        public new Note BaseObject => (Note)base.BaseObject;
+namespace osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
 
-        public KaraokeDifficultyHitObject(HitObject hitObject, HitObject lastObject, double clockRate, List<DifficultyHitObject> objects, int index)
-            : base(hitObject, lastObject, clockRate, objects, index)
-        {
-        }
+public class KaraokeDifficultyHitObject : DifficultyHitObject
+{
+    public new Note BaseObject => (Note)base.BaseObject;
+
+    public KaraokeDifficultyHitObject(HitObject hitObject, HitObject lastObject, double clockRate, List<DifficultyHitObject> objects, int index)
+        : base(hitObject, lastObject, clockRate, objects, index)
+    {
     }
 }

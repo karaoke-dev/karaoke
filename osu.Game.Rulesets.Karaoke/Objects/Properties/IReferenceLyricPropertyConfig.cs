@@ -3,12 +3,11 @@
 
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Objects.Properties
-{
-    public interface IReferenceLyricPropertyConfig
-    {
-        double OffsetTime { get; set; }
+namespace osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-        public event Action? Changed;
-    }
+public interface IReferenceLyricPropertyConfig
+{
+    double OffsetTime { get; set; }
+
+    public event Action? Changed;
 }

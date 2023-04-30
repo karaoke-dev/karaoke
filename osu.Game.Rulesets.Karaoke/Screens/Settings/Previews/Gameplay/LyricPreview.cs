@@ -20,126 +20,125 @@ using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Timing;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
+
+public partial class LyricPreview : SettingsSubsectionPreview
 {
-    public partial class LyricPreview : SettingsSubsectionPreview
+    private readonly Bindable<FontUsage> mainFont = new();
+    private readonly Bindable<FontUsage> rubyFont = new();
+    private readonly Bindable<FontUsage> romajiFont = new();
+    private readonly Bindable<FontUsage> translateFont = new();
+    private readonly Bindable<CultureInfo> preferLanguage = new();
+
+    [Resolved]
+    private FontStore fontStore { get; set; }
+
+    private KaraokeLocalFontStore localFontStore;
+
+    private readonly DrawableLyric drawableLyric;
+
+    public LyricPreview()
     {
-        private readonly Bindable<FontUsage> mainFont = new();
-        private readonly Bindable<FontUsage> rubyFont = new();
-        private readonly Bindable<FontUsage> romajiFont = new();
-        private readonly Bindable<FontUsage> translateFont = new();
-        private readonly Bindable<CultureInfo> preferLanguage = new();
+        Size = new Vector2(0.7f, 0.5f);
 
-        [Resolved]
-        private FontStore fontStore { get; set; }
-
-        private KaraokeLocalFontStore localFontStore;
-
-        private readonly DrawableLyric drawableLyric;
-
-        public LyricPreview()
+        // todo : should add skin support.
+        Child = drawableLyric = new DrawableLyric(createPreviewLyric())
         {
-            Size = new Vector2(0.7f, 0.5f);
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Clock = new StopClock(0),
+        };
 
-            // todo : should add skin support.
-            Child = drawableLyric = new DrawableLyric(createPreviewLyric())
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Clock = new StopClock(0),
-            };
-
-            mainFont.BindValueChanged(e =>
-            {
-                addFont(e.NewValue);
-            });
-            rubyFont.BindValueChanged(e =>
-            {
-                addFont(e.NewValue);
-            });
-            romajiFont.BindValueChanged(e =>
-            {
-                addFont(e.NewValue);
-            });
-            translateFont.BindValueChanged(e =>
-            {
-                addFont(e.NewValue);
-            });
-            preferLanguage.BindValueChanged(e =>
-            {
-                drawableLyric.HitObject.Translates = createPreviewTranslate(e.NewValue);
-            });
-
-            void addFont(FontUsage fontUsage)
-                => localFontStore.AddFont(fontUsage);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager config)
+        mainFont.BindValueChanged(e =>
         {
-            // create local font store and import those files
-            localFontStore = new KaraokeLocalFontStore(fontManager, renderer);
-            fontStore.AddStore(localFontStore);
-
-            // fonts
-            config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
-            config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
-            config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFont);
-            config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
-            config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
-        }
-
-        protected override void Dispose(bool isDisposing)
+            addFont(e.NewValue);
+        });
+        rubyFont.BindValueChanged(e =>
         {
-            base.Dispose(isDisposing);
+            addFont(e.NewValue);
+        });
+        romajiFont.BindValueChanged(e =>
+        {
+            addFont(e.NewValue);
+        });
+        translateFont.BindValueChanged(e =>
+        {
+            addFont(e.NewValue);
+        });
+        preferLanguage.BindValueChanged(e =>
+        {
+            drawableLyric.HitObject.Translates = createPreviewTranslate(e.NewValue);
+        });
 
-            fontStore?.RemoveStore(localFontStore);
-        }
+        void addFont(FontUsage fontUsage)
+            => localFontStore.AddFont(fontUsage);
+    }
 
-        private Lyric createPreviewLyric()
-            => new()
+    [BackgroundDependencyLoader]
+    private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager config)
+    {
+        // create local font store and import those files
+        localFontStore = new KaraokeLocalFontStore(fontManager, renderer);
+        fontStore.AddStore(localFontStore);
+
+        // fonts
+        config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
+        config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
+        config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFont);
+        config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
+        config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
+    }
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        fontStore?.RemoveStore(localFontStore);
+    }
+
+    private Lyric createPreviewLyric()
+        => new()
+        {
+            Text = "カラオケ",
+            RubyTags = new[]
             {
-                Text = "カラオケ",
-                RubyTags = new[]
+                new RubyTag
                 {
-                    new RubyTag
-                    {
-                        StartIndex = 0,
-                        EndIndex = 1,
-                        Text = "か"
-                    },
-                    new RubyTag
-                    {
-                        StartIndex = 2,
-                        EndIndex = 3,
-                        Text = "お"
-                    }
+                    StartIndex = 0,
+                    EndIndex = 1,
+                    Text = "か"
                 },
-                RomajiTags = new[]
+                new RubyTag
                 {
-                    new RomajiTag
-                    {
-                        StartIndex = 0,
-                        EndIndex = 4,
-                        Text = "karaoke"
-                    },
+                    StartIndex = 2,
+                    EndIndex = 3,
+                    Text = "お"
+                }
+            },
+            RomajiTags = new[]
+            {
+                new RomajiTag
+                {
+                    StartIndex = 0,
+                    EndIndex = 4,
+                    Text = "karaoke"
                 },
-                HitWindows = new KaraokeLyricHitWindows(),
-            };
+            },
+            HitWindows = new KaraokeLyricHitWindows(),
+        };
 
-        private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
+    private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
+    {
+        string translate = cultureInfo.Name switch
         {
-            string translate = cultureInfo.Name switch
-            {
-                "ja" or "Ja-jp" => "カラオケ",
-                "zh-Hant" or "zh-TW" => "卡拉OK",
-                _ => "karaoke"
-            };
+            "ja" or "Ja-jp" => "カラオケ",
+            "zh-Hant" or "zh-TW" => "卡拉OK",
+            _ => "karaoke"
+        };
 
-            return new Dictionary<CultureInfo, string>
-            {
-                { cultureInfo, translate },
-            };
-        }
+        return new Dictionary<CultureInfo, string>
+        {
+            { cultureInfo, translate },
+        };
     }
 }

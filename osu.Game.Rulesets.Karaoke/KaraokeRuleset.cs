@@ -44,306 +44,305 @@ using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke
+namespace osu.Game.Rulesets.Karaoke;
+
+[ExcludeFromDynamicCompile]
+public partial class KaraokeRuleset : Ruleset
 {
-    [ExcludeFromDynamicCompile]
-    public partial class KaraokeRuleset : Ruleset
+    public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
+    public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
+    public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
+    public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
+
+    public override PerformanceCalculator CreatePerformanceCalculator() => new KaraokePerformanceCalculator();
+
+    public const string SHORT_NAME = "karaoke";
+
+    public const int GAMEPLAY_INPUT_VARIANT = 1;
+
+    public const int EDIT_INPUT_VARIANT = 2;
+
+    public override IEnumerable<int> AvailableVariants => new[] { GAMEPLAY_INPUT_VARIANT, EDIT_INPUT_VARIANT };
+
+    public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) =>
+        variant switch
+        {
+            0 =>
+                // Vocal
+                Array.Empty<KeyBinding>(),
+            GAMEPLAY_INPUT_VARIANT => new[]
+            {
+                // Basic control
+                new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
+                new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
+                new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
+                new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
+
+                // Panel
+                new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
+
+                // Advance control
+                new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
+                new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
+                new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
+                new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
+                new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
+                new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
+                new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
+                new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
+                new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
+                new KeyBinding(InputKey.R, KaraokeAction.IncreaseScoringPitch),
+                new KeyBinding(InputKey.F, KaraokeAction.DecreaseScoringPitch),
+                new KeyBinding(InputKey.V, KaraokeAction.ResetScoringPitch),
+            },
+            EDIT_INPUT_VARIANT => new[]
+            {
+                // moving
+                new KeyBinding(InputKey.Up, KaraokeEditAction.MoveToPreviousLyric),
+                new KeyBinding(InputKey.Down, KaraokeEditAction.MoveToNextLyric),
+                new KeyBinding(InputKey.PageUp, KaraokeEditAction.MoveToFirstLyric),
+                new KeyBinding(InputKey.PageDown, KaraokeEditAction.MoveToLastLyric),
+                new KeyBinding(InputKey.Left, KaraokeEditAction.MoveToPreviousIndex),
+                new KeyBinding(InputKey.Right, KaraokeEditAction.MoveToNextIndex),
+                new KeyBinding(new[] { InputKey.Alt, InputKey.Left }, KaraokeEditAction.MoveToFirstIndex),
+                new KeyBinding(new[] { InputKey.Alt, InputKey.Right }, KaraokeEditAction.MoveToLastIndex),
+
+                new KeyBinding(new[] { InputKey.Alt, InputKey.BracketLeft }, KaraokeEditAction.PreviousEditMode),
+                new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),
+
+                // Edit Ruby / romaji tag.
+                new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.EditTextTagReduceStartIndex),
+                new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseStartIndex),
+                new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditTextTagReduceEndIndex),
+                new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
+
+                // edit time-tag.
+                new KeyBinding(InputKey.N, KaraokeEditAction.CreateTimeTag),
+                new KeyBinding(InputKey.Delete, KaraokeEditAction.RemoveTimeTag),
+                new KeyBinding(new[] { InputKey.Z }, KaraokeEditAction.ShiftTheTimeTagLeft),
+                new KeyBinding(new[] { InputKey.X }, KaraokeEditAction.ShiftTheTimeTagRight),
+                new KeyBinding(new[] { InputKey.A }, KaraokeEditAction.ShiftTheTimeTagStateLeft),
+                new KeyBinding(new[] { InputKey.S }, KaraokeEditAction.ShiftTheTimeTagStateRight),
+                new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
+                new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
+            },
+            _ => Array.Empty<KeyBinding>()
+        };
+
+    public override LocalisableString GetVariantName(int variant)
+        => variant switch
+        {
+            GAMEPLAY_INPUT_VARIANT => "Gameplay",
+            EDIT_INPUT_VARIANT => "Composer",
+            _ => throw new ArgumentNullException(nameof(variant)),
+        };
+
+    public override IEnumerable<Mod> GetModsFor(ModType type) =>
+        type switch
+        {
+            ModType.DifficultyReduction => new Mod[]
+            {
+                new KaraokeModNoFail(),
+            },
+            ModType.DifficultyIncrease => new Mod[]
+            {
+                new KaraokeModHiddenNote(),
+                new KaraokeModFlashlight(),
+                new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
+            },
+            ModType.Conversion => new Mod[]
+            {
+                new MultiMod(new KaraokeModPreviewStage(), new KaraokeModClassicStage()),
+            },
+
+            ModType.Automation => new Mod[]
+            {
+                new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
+            },
+            ModType.Fun => new Mod[]
+            {
+                new KaraokeModPractice(),
+                new KaraokeModDisableNote(),
+                new KaraokeModSnow(),
+            },
+            _ => Array.Empty<Mod>()
+        };
+
+    public override Drawable CreateIcon() => new KaraokeIcon(this);
+
+    public override IResourceStore<byte[]> CreateResourceStore()
     {
-        public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
-        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
-        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
-        public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
+        var store = new ResourceStore<byte[]>();
 
-        public override PerformanceCalculator CreatePerformanceCalculator() => new KaraokePerformanceCalculator();
+        // add resource in the current dll.
+        store.AddStore(base.CreateResourceStore());
 
-        public const string SHORT_NAME = "karaoke";
+        // add resource dll, it only works in the local because the resource will be packed into main dll in the resource build.
+        store.AddStore(new DllResourceStore(KaraokeResources.ResourceAssembly));
 
-        public const int GAMEPLAY_INPUT_VARIANT = 1;
+        // add shader resource from font package.
+        store.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
 
-        public const int EDIT_INPUT_VARIANT = 2;
+        return store;
+    }
 
-        public override IEnumerable<int> AvailableVariants => new[] { GAMEPLAY_INPUT_VARIANT, EDIT_INPUT_VARIANT };
+    public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(RulesetInfo, beatmap);
 
-        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) =>
-            variant switch
-            {
-                0 =>
-                    // Vocal
-                    Array.Empty<KeyBinding>(),
-                GAMEPLAY_INPUT_VARIANT => new[]
-                {
-                    // Basic control
-                    new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
-                    new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
-                    new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
-                    new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
+    public override HitObjectComposer CreateHitObjectComposer() => new KaraokeHitObjectComposer(this);
 
-                    // Panel
-                    new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
+    public override IBeatmapVerifier CreateBeatmapVerifier() => new KaraokeBeatmapVerifier();
 
-                    // Advance control
-                    new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
-                    new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
-                    new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
-                    new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
-                    new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
-                    new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
-                    new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
-                    new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
-                    new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
-                    new KeyBinding(InputKey.R, KaraokeAction.IncreaseScoringPitch),
-                    new KeyBinding(InputKey.F, KaraokeAction.DecreaseScoringPitch),
-                    new KeyBinding(InputKey.V, KaraokeAction.ResetScoringPitch),
-                },
-                EDIT_INPUT_VARIANT => new[]
-                {
-                    // moving
-                    new KeyBinding(InputKey.Up, KaraokeEditAction.MoveToPreviousLyric),
-                    new KeyBinding(InputKey.Down, KaraokeEditAction.MoveToNextLyric),
-                    new KeyBinding(InputKey.PageUp, KaraokeEditAction.MoveToFirstLyric),
-                    new KeyBinding(InputKey.PageDown, KaraokeEditAction.MoveToLastLyric),
-                    new KeyBinding(InputKey.Left, KaraokeEditAction.MoveToPreviousIndex),
-                    new KeyBinding(InputKey.Right, KaraokeEditAction.MoveToNextIndex),
-                    new KeyBinding(new[] { InputKey.Alt, InputKey.Left }, KaraokeEditAction.MoveToFirstIndex),
-                    new KeyBinding(new[] { InputKey.Alt, InputKey.Right }, KaraokeEditAction.MoveToLastIndex),
+    public override string Description => "karaoke!";
 
-                    new KeyBinding(new[] { InputKey.Alt, InputKey.BracketLeft }, KaraokeEditAction.PreviousEditMode),
-                    new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),
+    public override string ShortName => "karaoke!";
 
-                    // Edit Ruby / romaji tag.
-                    new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.EditTextTagReduceStartIndex),
-                    new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseStartIndex),
-                    new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditTextTagReduceEndIndex),
-                    new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
+    public override string PlayingVerb => "Singing karaoke";
 
-                    // edit time-tag.
-                    new KeyBinding(InputKey.N, KaraokeEditAction.CreateTimeTag),
-                    new KeyBinding(InputKey.Delete, KaraokeEditAction.RemoveTimeTag),
-                    new KeyBinding(new[] { InputKey.Z }, KaraokeEditAction.ShiftTheTimeTagLeft),
-                    new KeyBinding(new[] { InputKey.X }, KaraokeEditAction.ShiftTheTimeTagRight),
-                    new KeyBinding(new[] { InputKey.A }, KaraokeEditAction.ShiftTheTimeTagStateLeft),
-                    new KeyBinding(new[] { InputKey.S }, KaraokeEditAction.ShiftTheTimeTagStateRight),
-                    new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
-                    new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
-                },
-                _ => Array.Empty<KeyBinding>()
-            };
-
-        public override LocalisableString GetVariantName(int variant)
-            => variant switch
-            {
-                GAMEPLAY_INPUT_VARIANT => "Gameplay",
-                EDIT_INPUT_VARIANT => "Composer",
-                _ => throw new ArgumentNullException(nameof(variant)),
-            };
-
-        public override IEnumerable<Mod> GetModsFor(ModType type) =>
-            type switch
-            {
-                ModType.DifficultyReduction => new Mod[]
-                {
-                    new KaraokeModNoFail(),
-                },
-                ModType.DifficultyIncrease => new Mod[]
-                {
-                    new KaraokeModHiddenNote(),
-                    new KaraokeModFlashlight(),
-                    new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
-                },
-                ModType.Conversion => new Mod[]
-                {
-                    new MultiMod(new KaraokeModPreviewStage(), new KaraokeModClassicStage()),
-                },
-
-                ModType.Automation => new Mod[]
-                {
-                    new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
-                },
-                ModType.Fun => new Mod[]
-                {
-                    new KaraokeModPractice(),
-                    new KaraokeModDisableNote(),
-                    new KaraokeModSnow(),
-                },
-                _ => Array.Empty<Mod>()
-            };
-
-        public override Drawable CreateIcon() => new KaraokeIcon(this);
-
-        public override IResourceStore<byte[]> CreateResourceStore()
+    public override ISkin CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
+    {
+        return skin switch
         {
-            var store = new ResourceStore<byte[]>();
+            TrianglesSkin => new KaraokeTrianglesSkinTransformer(skin, beatmap),
+            ArgonSkin => new KaraokeArgonSkinTransformer(skin, beatmap),
+            DefaultLegacySkin => new KaraokeClassicSkinTransformer(skin, beatmap),
+            LegacySkin => new KaraokeLegacySkinTransformer(skin, beatmap),
+            _ => throw new InvalidOperationException(),
+        };
+    }
 
-            // add resource in the current dll.
-            store.AddStore(base.CreateResourceStore());
+    public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
 
-            // add resource dll, it only works in the local because the resource will be packed into main dll in the resource build.
-            store.AddStore(new DllResourceStore(KaraokeResources.ResourceAssembly));
+    public override IRulesetConfigManager CreateConfig(SettingsStore? settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
 
-            // add shader resource from font package.
-            store.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
+    public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
-            return store;
-        }
-
-        public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(RulesetInfo, beatmap);
-
-        public override HitObjectComposer CreateHitObjectComposer() => new KaraokeHitObjectComposer(this);
-
-        public override IBeatmapVerifier CreateBeatmapVerifier() => new KaraokeBeatmapVerifier();
-
-        public override string Description => "karaoke!";
-
-        public override string ShortName => "karaoke!";
-
-        public override string PlayingVerb => "Singing karaoke";
-
-        public override ISkin CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
+    protected override IEnumerable<HitResult> GetValidHitResults()
+    {
+        return new[]
         {
-            return skin switch
-            {
-                TrianglesSkin => new KaraokeTrianglesSkinTransformer(skin, beatmap),
-                ArgonSkin => new KaraokeArgonSkinTransformer(skin, beatmap),
-                DefaultLegacySkin => new KaraokeClassicSkinTransformer(skin, beatmap),
-                LegacySkin => new KaraokeLegacySkinTransformer(skin, beatmap),
-                _ => throw new InvalidOperationException(),
-            };
-        }
+            HitResult.Great,
+            HitResult.Ok,
+            HitResult.Meh,
+        };
+    }
 
-        public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
-
-        public override IRulesetConfigManager CreateConfig(SettingsStore? settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
-
-        public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
-
-        protected override IEnumerable<HitResult> GetValidHitResults()
+    public override LocalisableString GetDisplayNameForHitResult(HitResult result)
+    {
+        return result switch
         {
-            return new[]
-            {
-                HitResult.Great,
-                HitResult.Ok,
-                HitResult.Meh,
-            };
-        }
+            HitResult.Great => "Great",
+            HitResult.Ok => "OK",
+            HitResult.Meh => "Meh",
+            _ => base.GetDisplayNameForHitResult(result)
+        };
+    }
 
-        public override LocalisableString GetDisplayNameForHitResult(HitResult result)
+    public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
+    {
+        const int fix_height = 560;
+        const int text_size = 14;
+        const int spacing = 15;
+        const int info_height = 200;
+
+        // Always display song info
+        var statistic = new List<StatisticRow>
         {
-            return result switch
+            new()
             {
-                HitResult.Great => "Great",
-                HitResult.Ok => "OK",
-                HitResult.Meh => "Meh",
-                _ => base.GetDisplayNameForHitResult(result)
-            };
-        }
-
-        public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
-        {
-            const int fix_height = 560;
-            const int text_size = 14;
-            const int spacing = 15;
-            const int info_height = 200;
-
-            // Always display song info
-            var statistic = new List<StatisticRow>
-            {
-                new()
+                Columns = new[]
                 {
-                    Columns = new[]
+                    new StatisticItem("Info", () => new BeatmapInfoGraph(playableBeatmap)
                     {
-                        new StatisticItem("Info", () => new BeatmapInfoGraph(playableBeatmap)
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            Height = info_height
-                        }, dimension: new Dimension(GridSizeMode.Relative, 0.6f)),
-                        new StatisticItem(string.Empty, Drawable.Empty, dimension: new Dimension(GridSizeMode.Absolute, 10)),
-                        new StatisticItem("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            Height = info_height
-                        }, dimension: new Dimension())
-                    }
+                        RelativeSizeAxes = Axes.X,
+                        Height = info_height
+                    }, dimension: new Dimension(GridSizeMode.Relative, 0.6f)),
+                    new StatisticItem(string.Empty, Drawable.Empty, dimension: new Dimension(GridSizeMode.Absolute, 10)),
+                    new StatisticItem("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Height = info_height
+                    }, dimension: new Dimension())
+                }
+            },
+        };
+
+        // Set component to remain height
+        const int remain_height = fix_height - text_size - spacing - info_height;
+
+        if (playableBeatmap.IsScorable())
+        {
+            statistic.Add(new StatisticRow
+            {
+                Columns = new[]
+                {
+                    new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Height = remain_height - text_size - spacing
+                    }),
+                }
+            });
+        }
+        else
+        {
+            statistic.Add(new StatisticRow
+            {
+                Columns = new[]
+                {
+                    new StatisticItem("Result", () => new NotScorableGraph
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Height = remain_height - text_size - spacing
+                    })
+                }
+            });
+        }
+
+        return statistic.ToArray();
+    }
+
+    public override RulesetSetupSection CreateEditorSetupSection() => new KaraokeSetupSection();
+
+    public KaraokeRuleset()
+    {
+        // It's a tricky way to let lazer to read karaoke testing beatmap
+        KaraokeLegacyBeatmapDecoder.Register();
+        KaraokeJsonBeatmapDecoder.Register();
+
+        // it's a tricky way for loading customized karaoke beatmap.
+        RulesetInfo.OnlineID = 111;
+    }
+
+    private partial class KaraokeIcon : CompositeDrawable
+    {
+        private readonly KaraokeRuleset ruleset;
+
+        public KaraokeIcon(KaraokeRuleset ruleset)
+        {
+            this.ruleset = ruleset;
+            AutoSizeAxes = Axes.Both;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IRenderer renderer)
+        {
+            InternalChildren = new Drawable[]
+            {
+                new Sprite
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Scale = new Vector2(0.9f),
+                    Texture = new TextureStore(renderer, new TextureLoaderStore(ruleset.CreateResourceStore()), false).Get("Textures/logo"),
+                },
+                new SpriteIcon
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Scale = new Vector2(45f),
+                    Icon = FontAwesome.Regular.Circle,
                 },
             };
-
-            // Set component to remain height
-            const int remain_height = fix_height - text_size - spacing - info_height;
-
-            if (playableBeatmap.IsScorable())
-            {
-                statistic.Add(new StatisticRow
-                {
-                    Columns = new[]
-                    {
-                        new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            Height = remain_height - text_size - spacing
-                        }),
-                    }
-                });
-            }
-            else
-            {
-                statistic.Add(new StatisticRow
-                {
-                    Columns = new[]
-                    {
-                        new StatisticItem("Result", () => new NotScorableGraph
-                        {
-                            RelativeSizeAxes = Axes.X,
-                            Height = remain_height - text_size - spacing
-                        })
-                    }
-                });
-            }
-
-            return statistic.ToArray();
-        }
-
-        public override RulesetSetupSection CreateEditorSetupSection() => new KaraokeSetupSection();
-
-        public KaraokeRuleset()
-        {
-            // It's a tricky way to let lazer to read karaoke testing beatmap
-            KaraokeLegacyBeatmapDecoder.Register();
-            KaraokeJsonBeatmapDecoder.Register();
-
-            // it's a tricky way for loading customized karaoke beatmap.
-            RulesetInfo.OnlineID = 111;
-        }
-
-        private partial class KaraokeIcon : CompositeDrawable
-        {
-            private readonly KaraokeRuleset ruleset;
-
-            public KaraokeIcon(KaraokeRuleset ruleset)
-            {
-                this.ruleset = ruleset;
-                AutoSizeAxes = Axes.Both;
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(IRenderer renderer)
-            {
-                InternalChildren = new Drawable[]
-                {
-                    new Sprite
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Scale = new Vector2(0.9f),
-                        Texture = new TextureStore(renderer, new TextureLoaderStore(ruleset.CreateResourceStore()), false).Get("Textures/logo"),
-                    },
-                    new SpriteIcon
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Scale = new Vector2(45f),
-                        Icon = FontAwesome.Regular.Circle,
-                    },
-                };
-            }
         }
     }
 }

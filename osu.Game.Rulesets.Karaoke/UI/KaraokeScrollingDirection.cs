@@ -5,11 +5,10 @@
 
 using osu.Game.Rulesets.UI.Scrolling;
 
-namespace osu.Game.Rulesets.Karaoke.UI
+namespace osu.Game.Rulesets.Karaoke.UI;
+
+public enum KaraokeScrollingDirection
 {
-    public enum KaraokeScrollingDirection
-    {
-        Left = ScrollingDirection.Left,
-        Right = ScrollingDirection.Right
-    }
+    Left = ScrollingDirection.Left,
+    Right = ScrollingDirection.Right
 }

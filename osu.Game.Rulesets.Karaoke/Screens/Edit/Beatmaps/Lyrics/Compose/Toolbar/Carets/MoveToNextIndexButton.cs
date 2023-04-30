@@ -4,17 +4,16 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets;
+
+public partial class MoveToNextIndexButton : MoveToCaretPositionButton
 {
-    public partial class MoveToNextIndexButton : MoveToCaretPositionButton
+    protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToNextIndex;
+
+    protected override MovingCaretAction AcceptAction => MovingCaretAction.NextIndex;
+
+    public MoveToNextIndexButton()
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.MoveToNextIndex;
-
-        protected override MovingCaretAction AcceptAction => MovingCaretAction.NextIndex;
-
-        public MoveToNextIndexButton()
-        {
-            SetIcon(FontAwesome.Solid.AngleRight);
-        }
+        SetIcon(FontAwesome.Solid.AngleRight);
     }
 }

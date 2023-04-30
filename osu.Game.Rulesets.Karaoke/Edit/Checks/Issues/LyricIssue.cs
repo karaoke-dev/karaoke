@@ -4,18 +4,17 @@
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
+
+public class LyricIssue : Issue
 {
-    public class LyricIssue : Issue
+    public Lyric Lyric;
+
+    public LyricIssue(Lyric lyric, IssueTemplate template, params object[] args)
+        : base(lyric, template, args)
     {
-        public Lyric Lyric;
+        Lyric = lyric;
 
-        public LyricIssue(Lyric lyric, IssueTemplate template, params object[] args)
-            : base(lyric, template, args)
-        {
-            Lyric = lyric;
-
-            Time = Lyric.LyricStartTime;
-        }
+        Time = Lyric.LyricStartTime;
     }
 }

@@ -10,25 +10,24 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Input
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Input;
+
+public partial class MicrophoneSettings : KaraokeSettingsSubsection
 {
-    public partial class MicrophoneSettings : KaraokeSettingsSubsection
+    protected override LocalisableString Header => "Microphone";
+
+    public override SettingsSubsectionPreview CreatePreview() => new MicrophoneDevicePreview();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override LocalisableString Header => "Microphone";
-
-        public override SettingsSubsectionPreview CreatePreview() => new MicrophoneDevicePreview();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new SettingsMicrophoneDeviceDropdown
             {
-                new SettingsMicrophoneDeviceDropdown
-                {
-                    LabelText = "Microphone devices",
-                    Current = Config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
-                },
-            };
-        }
+                LabelText = "Microphone devices",
+                Current = Config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
+            },
+        };
     }
 }

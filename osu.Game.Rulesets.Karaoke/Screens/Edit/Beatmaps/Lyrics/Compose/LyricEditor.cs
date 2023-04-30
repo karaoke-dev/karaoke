@@ -11,53 +11,52 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose;
+
+public partial class LyricEditor : CompositeDrawable
 {
-    public partial class LyricEditor : CompositeDrawable
+    private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
+    private readonly IBindable<float> bindableFontSize = new Bindable<float>();
+
+    private readonly LyricEditorSkin skin;
+    private readonly SkinProvidingContainer skinProvidingContainer;
+
+    public LyricEditor()
     {
-        private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
-        private readonly IBindable<float> bindableFontSize = new Bindable<float>();
+        RelativeSizeAxes = Axes.Both;
 
-        private readonly LyricEditorSkin skin;
-        private readonly SkinProvidingContainer skinProvidingContainer;
-
-        public LyricEditor()
+        InternalChild = skinProvidingContainer = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
         {
-            RelativeSizeAxes = Axes.Both;
+            Margin = new MarginPadding { Left = 30 },
+            RelativeSizeAxes = Axes.Both,
+        };
 
-            InternalChild = skinProvidingContainer = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
-            {
-                Margin = new MarginPadding { Left = 30 },
-                RelativeSizeAxes = Axes.Both,
-            };
-
-            bindableFocusedLyric.BindValueChanged(e =>
-            {
-                skinProvidingContainer.Clear();
-
-                var lyric = e.NewValue;
-                if (lyric == null)
-                    return;
-
-                skinProvidingContainer.Add(new EditableLyric(lyric)
-                {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                });
-            });
-
-            bindableFontSize.BindValueChanged(e =>
-            {
-                skin.FontSize = e.NewValue;
-            });
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        bindableFocusedLyric.BindValueChanged(e =>
         {
-            bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+            skinProvidingContainer.Clear();
 
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
-        }
+            var lyric = e.NewValue;
+            if (lyric == null)
+                return;
+
+            skinProvidingContainer.Add(new EditableLyric(lyric)
+            {
+                Anchor = Anchor.CentreLeft,
+                Origin = Anchor.CentreLeft,
+            });
+        });
+
+        bindableFontSize.BindValueChanged(e =>
+        {
+            skin.FontSize = e.NewValue;
+        });
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(ILyricCaretState lyricCaretState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    {
+        bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+
+        lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
     }
 }

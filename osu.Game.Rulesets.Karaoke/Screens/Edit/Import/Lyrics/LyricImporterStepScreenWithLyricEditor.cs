@@ -11,94 +11,93 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
 {
-    public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
+    // it's a tricky way to let navigation bar able to get the lyric state.
+    // not a good solution, but have no better way now.
+    [Cached(typeof(ILyricEditorState))]
+    private ImportLyricEditor lyricEditor { get; set; }
+
+    [Cached(typeof(ILockChangeHandler))]
+    private readonly LockChangeHandler lockChangeHandler;
+
+    protected LyricImporterStepScreenWithLyricEditor()
     {
-        // it's a tricky way to let navigation bar able to get the lyric state.
-        // not a good solution, but have no better way now.
-        [Cached(typeof(ILyricEditorState))]
-        private ImportLyricEditor lyricEditor { get; set; }
+        AddInternal(lockChangeHandler = new LockChangeHandler());
+    }
 
-        [Cached(typeof(ILockChangeHandler))]
-        private readonly LockChangeHandler lockChangeHandler;
-
-        protected LyricImporterStepScreenWithLyricEditor()
+    protected override Drawable CreateContent()
+        => lyricEditor = new ImportLyricEditor
         {
-            AddInternal(lockChangeHandler = new LockChangeHandler());
+            RelativeSizeAxes = Axes.Both,
+        };
+
+    public LyricEditorMode LyricEditorMode
+        => lyricEditor.Mode;
+
+    public T GetLyricEditorModeState<T>() where T : Enum
+        => lyricEditor.GetLyricEditorModeState<T>();
+
+    public virtual void SwitchLyricEditorMode(LyricEditorMode mode)
+        => lyricEditor.SwitchMode(mode);
+
+    public void SwitchToEditModeState<T>(T mode) where T : Enum
+        => lyricEditor.SwitchSubMode(mode);
+
+    protected void PrepareAutoGenerate()
+    {
+        lyricEditor.PrepareAutoGenerate();
+    }
+
+    private partial class ImportLyricEditor : LyricEditor
+    {
+        [Resolved]
+        private LyricImporterSubScreenStack screenStack { get; set; }
+
+        private ILyricSelectionState lyricSelectionState { get; set; }
+
+        public void PrepareAutoGenerate()
+        {
+            // then open the selecting mode and select all lyrics.
+            lyricSelectionState.StartSelecting();
+            lyricSelectionState.SelectAll();
+
+            // for some mode, we need to switch to generate section.
+            SwitchSubMode(LanguageEditMode.Generate);
+            SwitchSubMode(RubyTagEditMode.Generate);
+            SwitchSubMode(RomajiTagEditMode.Generate);
         }
 
-        protected override Drawable CreateContent()
-            => lyricEditor = new ImportLyricEditor
-            {
-                RelativeSizeAxes = Axes.Both,
-            };
-
-        public LyricEditorMode LyricEditorMode
-            => lyricEditor.Mode;
-
-        public T GetLyricEditorModeState<T>() where T : Enum
-            => lyricEditor.GetLyricEditorModeState<T>();
-
-        public virtual void SwitchLyricEditorMode(LyricEditorMode mode)
-            => lyricEditor.SwitchMode(mode);
-
-        public void SwitchToEditModeState<T>(T mode) where T : Enum
-            => lyricEditor.SwitchSubMode(mode);
-
-        protected void PrepareAutoGenerate()
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
-            lyricEditor.PrepareAutoGenerate();
+            var dependencies = base.CreateChildDependencies(parent);
+            lyricSelectionState = dependencies.Get<ILyricSelectionState>();
+            return dependencies;
         }
 
-        private partial class ImportLyricEditor : LyricEditor
+        public T GetLyricEditorModeState<T>() where T : Enum =>
+            (T)BindableModeAndSubMode.Value.SubMode;
+
+        public override void NavigateToFix(LyricEditorMode mode)
         {
-            [Resolved]
-            private LyricImporterSubScreenStack screenStack { get; set; }
-
-            private ILyricSelectionState lyricSelectionState { get; set; }
-
-            public void PrepareAutoGenerate()
+            switch (mode)
             {
-                // then open the selecting mode and select all lyrics.
-                lyricSelectionState.StartSelecting();
-                lyricSelectionState.SelectAll();
+                case LyricEditorMode.Texting:
+                    screenStack.Pop(LyricImporterStep.EditLyric);
+                    break;
 
-                // for some mode, we need to switch to generate section.
-                SwitchSubMode(LanguageEditMode.Generate);
-                SwitchSubMode(RubyTagEditMode.Generate);
-                SwitchSubMode(RomajiTagEditMode.Generate);
-            }
+                case LyricEditorMode.Language:
+                    screenStack.Pop(LyricImporterStep.AssignLanguage);
+                    break;
 
-            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            {
-                var dependencies = base.CreateChildDependencies(parent);
-                lyricSelectionState = dependencies.Get<ILyricSelectionState>();
-                return dependencies;
-            }
+                case LyricEditorMode.EditTimeTag:
+                    screenStack.Pop(LyricImporterStep.GenerateTimeTag);
+                    break;
 
-            public T GetLyricEditorModeState<T>() where T : Enum =>
-                (T)BindableModeAndSubMode.Value.SubMode;
-
-            public override void NavigateToFix(LyricEditorMode mode)
-            {
-                switch (mode)
-                {
-                    case LyricEditorMode.Texting:
-                        screenStack.Pop(LyricImporterStep.EditLyric);
-                        break;
-
-                    case LyricEditorMode.Language:
-                        screenStack.Pop(LyricImporterStep.AssignLanguage);
-                        break;
-
-                    case LyricEditorMode.EditTimeTag:
-                        screenStack.Pop(LyricImporterStep.GenerateTimeTag);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(mode));
-                }
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
     }

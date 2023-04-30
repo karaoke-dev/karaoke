@@ -11,56 +11,55 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+
+public partial class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
 {
-    public partial class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
+    private readonly ClickablePlayerSliderBar playBackSliderBar;
+
+    public PlaybackSettings()
+        : base("Playback")
     {
-        private readonly ClickablePlayerSliderBar playBackSliderBar;
-
-        public PlaybackSettings()
-            : base("Playback")
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new OsuSpriteText
             {
-                new OsuSpriteText
-                {
-                    Text = "Playback:"
-                },
-                playBackSliderBar = new ClickablePlayerSliderBar(),
-            };
-        }
+                Text = "Playback:"
+            },
+            playBackSliderBar = new ClickablePlayerSliderBar(),
+        };
+    }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
+    public bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
+    {
+        switch (e.Action)
         {
-            switch (e.Action)
-            {
-                case KaraokeAction.IncreaseTempo:
-                    playBackSliderBar.TriggerIncrease();
-                    break;
+            case KaraokeAction.IncreaseTempo:
+                playBackSliderBar.TriggerIncrease();
+                break;
 
-                case KaraokeAction.DecreaseTempo:
-                    playBackSliderBar.TriggerDecrease();
-                    break;
+            case KaraokeAction.DecreaseTempo:
+                playBackSliderBar.TriggerDecrease();
+                break;
 
-                case KaraokeAction.ResetTempo:
-                    playBackSliderBar.ResetToDefaultValue();
-                    break;
+            case KaraokeAction.ResetTempo:
+                playBackSliderBar.ResetToDefaultValue();
+                break;
 
-                default:
-                    return false;
-            }
-
-            return true;
+            default:
+                return false;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
-        {
-        }
+        return true;
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeSessionStatics session)
-        {
-            playBackSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.PlaybackSpeed);
-        }
+    public void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
+    {
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSessionStatics session)
+    {
+        playBackSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.PlaybackSpeed);
     }
 }

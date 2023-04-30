@@ -10,34 +10,33 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags;
+
+public partial class SetTimeTagTimeButton : KeyActionButton
 {
-    public partial class SetTimeTagTimeButton : KeyActionButton
+    protected override KaraokeEditAction EditAction => KaraokeEditAction.SetTime;
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    [Resolved, AllowNull]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+    [Resolved, AllowNull]
+    private EditorClock editorClock { get; set; }
+
+    public SetTimeTagTimeButton()
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.SetTime;
+        SetIcon(FontAwesome.Solid.Stopwatch);
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        [Resolved, AllowNull]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-        [Resolved, AllowNull]
-        private EditorClock editorClock { get; set; }
-
-        public SetTimeTagTimeButton()
+        Action = () =>
         {
-            SetIcon(FontAwesome.Solid.Stopwatch);
+            if (lyricCaretState.CaretPosition is not TimeTagCaretPosition timeTagCaretPosition)
+                throw new InvalidOperationException();
 
-            Action = () =>
-            {
-                if (lyricCaretState.CaretPosition is not TimeTagCaretPosition timeTagCaretPosition)
-                    throw new InvalidOperationException();
-
-                var timeTag = timeTagCaretPosition.TimeTag;
-                double currentTime = editorClock.CurrentTime;
-                lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, currentTime);
-            };
-        }
+            var timeTag = timeTagCaretPosition.TimeTag;
+            double currentTime = editorClock.CurrentTime;
+            lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, currentTime);
+        };
     }
 }

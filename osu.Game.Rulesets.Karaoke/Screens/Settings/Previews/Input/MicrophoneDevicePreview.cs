@@ -12,42 +12,41 @@ using osu.Framework.Input;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
+
+public partial class MicrophoneDevicePreview : SettingsSubsectionPreview
 {
-    public partial class MicrophoneDevicePreview : SettingsSubsectionPreview
+    private readonly Bindable<string> bindableMicrophoneDeviceName = new();
+
+    public MicrophoneDevicePreview()
     {
-        private readonly Bindable<string> bindableMicrophoneDeviceName = new();
-
-        public MicrophoneDevicePreview()
+        ShowBackground = false;
+        bindableMicrophoneDeviceName.BindValueChanged(x =>
         {
-            ShowBackground = false;
-            bindableMicrophoneDeviceName.BindValueChanged(x =>
+            // Find index by selection id
+            var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
+            int deviceIndex = microphoneList.IndexOf(x.NewValue);
+
+            bool hasDevice = microphoneList.Any();
+            string deviceName = deviceIndex == Bass.DefaultDevice ? "Default microphone device" : x.NewValue;
+
+            Child = new MicrophoneInputManager(deviceIndex)
             {
-                // Find index by selection id
-                var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
-                int deviceIndex = microphoneList.IndexOf(x.NewValue);
-
-                bool hasDevice = microphoneList.Any();
-                string deviceName = deviceIndex == Bass.DefaultDevice ? "Default microphone device" : x.NewValue;
-
-                Child = new MicrophoneInputManager(deviceIndex)
+                RelativeSizeAxes = Axes.Both,
+                Child = new MicrophoneSoundVisualizer
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Child = new MicrophoneSoundVisualizer
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        HasDevice = hasDevice,
-                        DeviceName = deviceName,
-                    }
-                };
-            }, true);
-        }
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    HasDevice = hasDevice,
+                    DeviceName = deviceName,
+                }
+            };
+        }, true);
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
-        {
-            config.BindWith(KaraokeRulesetSetting.MicrophoneDevice, bindableMicrophoneDeviceName);
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetConfigManager config)
+    {
+        config.BindWith(KaraokeRulesetSetting.MicrophoneDevice, bindableMicrophoneDeviceName);
     }
 }

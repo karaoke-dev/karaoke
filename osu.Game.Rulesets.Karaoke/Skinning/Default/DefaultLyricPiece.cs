@@ -5,18 +5,17 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Default
-{
-    /// <summary>
-    /// This component is focusing on display ruby and romaji.
-    /// </summary>
-    public partial class DefaultLyricPiece : DrawableKaraokeSpriteText<LyricSpriteText>
-    {
-        private const int whole_chunk_index = -1;
+namespace osu.Game.Rulesets.Karaoke.Skinning.Default;
 
-        public DefaultLyricPiece(Lyric hitObject, int chunkIndex = whole_chunk_index)
-            : base(hitObject, chunkIndex)
-        {
-        }
+/// <summary>
+/// This component is focusing on display ruby and romaji.
+/// </summary>
+public partial class DefaultLyricPiece : DrawableKaraokeSpriteText<LyricSpriteText>
+{
+    private const int whole_chunk_index = -1;
+
+    public DefaultLyricPiece(Lyric hitObject, int chunkIndex = whole_chunk_index)
+        : base(hitObject, chunkIndex)
+    {
     }
 }

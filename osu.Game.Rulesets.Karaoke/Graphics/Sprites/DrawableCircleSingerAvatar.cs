@@ -11,37 +11,36 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+
+public partial class DrawableCircleSingerAvatar : DrawableSingerAvatar
 {
-    public partial class DrawableCircleSingerAvatar : DrawableSingerAvatar
+    private readonly IBindable<float> bindableHue = new Bindable<float>();
+
+    [BackgroundDependencyLoader]
+    private void load(LargeTextureStore textures)
     {
-        private readonly IBindable<float> bindableHue = new Bindable<float>();
+        Masking = true;
+        CornerRadius = Math.Min(DrawSize.X, DrawSize.Y) / 2f;
+        BorderThickness = 5;
 
-        [BackgroundDependencyLoader]
-        private void load(LargeTextureStore textures)
+        bindableHue.BindValueChanged(_ =>
         {
-            Masking = true;
-            CornerRadius = Math.Min(DrawSize.X, DrawSize.Y) / 2f;
-            BorderThickness = 5;
+            BorderColour = SingerUtils.GetContentColour(Singer);
+        }, true);
+    }
 
-            bindableHue.BindValueChanged(_ =>
-            {
-                BorderColour = SingerUtils.GetContentColour(Singer);
-            }, true);
-        }
-
-        public override ISinger Singer
+    public override ISinger Singer
+    {
+        get => base.Singer;
+        set
         {
-            get => base.Singer;
-            set
-            {
-                base.Singer = value;
+            base.Singer = value;
 
-                bindableHue.UnbindBindings();
+            bindableHue.UnbindBindings();
 
-                if (value is Singer singer)
-                    bindableHue.BindTo(singer.HueBindable);
-            }
+            if (value is Singer singer)
+                bindableHue.BindTo(singer.HueBindable);
         }
     }
 }

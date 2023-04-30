@@ -11,51 +11,50 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
+
+public partial class ShowCursorPreview : SettingsSubsectionPreview
 {
-    public partial class ShowCursorPreview : SettingsSubsectionPreview
+    private readonly Bindable<bool> bindableShowCursor = new();
+    private readonly MenuCursorContainer.Cursor cursor;
+
+    public ShowCursorPreview()
     {
-        private readonly Bindable<bool> bindableShowCursor = new();
-        private readonly MenuCursorContainer.Cursor cursor;
-
-        public ShowCursorPreview()
+        Size = new Vector2(0.3f);
+        Children = new Drawable[]
         {
-            Size = new Vector2(0.3f);
-            Children = new Drawable[]
+            cursor = new MenuCursorContainer.Cursor
             {
-                cursor = new MenuCursorContainer.Cursor
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
-                },
-                new OsuSpriteText
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Y = 30,
-                    Text = "Wanna show this while gameplay?"
-                }
-            };
-
-            bindableShowCursor.BindValueChanged(e =>
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre
+            },
+            new OsuSpriteText
             {
-                bool showCursor = e.NewValue;
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Y = 30,
+                Text = "Wanna show this while gameplay?"
+            }
+        };
 
-                if (showCursor)
-                {
-                    cursor.FadeTo(1, 200);
-                }
-                else
-                {
-                    cursor.FadeTo(0.5f, 200);
-                }
-            }, true);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
+        bindableShowCursor.BindValueChanged(e =>
         {
-            config.BindWith(KaraokeRulesetSetting.ShowCursor, bindableShowCursor);
-        }
+            bool showCursor = e.NewValue;
+
+            if (showCursor)
+            {
+                cursor.FadeTo(1, 200);
+            }
+            else
+            {
+                cursor.FadeTo(0.5f, 200);
+            }
+        }, true);
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetConfigManager config)
+    {
+        config.BindWith(KaraokeRulesetSetting.ShowCursor, bindableShowCursor);
     }
 }

@@ -3,20 +3,19 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public enum LyricImporterStep
 {
-    public enum LyricImporterStep
-    {
-        ImportLyric,
+    ImportLyric,
 
-        EditLyric,
+    EditLyric,
 
-        AssignLanguage,
+    AssignLanguage,
 
-        GenerateRuby,
+    GenerateRuby,
 
-        GenerateTimeTag,
+    GenerateTimeTag,
 
-        Success,
-    }
+    Success,
 }

@@ -11,75 +11,74 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements;
+
+public class LyricStyle : IKaraokeSkinElement
 {
-    public class LyricStyle : IKaraokeSkinElement
+    public static LyricStyle CreateDefault() => new()
     {
-        public static LyricStyle CreateDefault() => new()
+        Name = "Default",
+        LeftLyricTextShaders = new ICustomizedShader[]
         {
-            Name = "Default",
-            LeftLyricTextShaders = new ICustomizedShader[]
+            new StepShader
             {
-                new StepShader
+                Name = "Step shader",
+                StepShaders = new ICustomizedShader[]
                 {
-                    Name = "Step shader",
-                    StepShaders = new ICustomizedShader[]
+                    new OutlineShader
                     {
-                        new OutlineShader
-                        {
-                            Radius = 3,
-                            OutlineColour = Color4Extensions.FromHex("#CCA532")
-                        },
-                        new ShadowShader
-                        {
-                            ShadowColour = Color4Extensions.FromHex("#6B5B2D"),
-                            ShadowOffset = new Vector2(3)
-                        }
-                    }
-                }
-            },
-            RightLyricTextShaders = new ICustomizedShader[]
-            {
-                new StepShader
-                {
-                    Name = "Step shader",
-                    StepShaders = new ICustomizedShader[]
+                        Radius = 3,
+                        OutlineColour = Color4Extensions.FromHex("#CCA532")
+                    },
+                    new ShadowShader
                     {
-                        new OutlineShader
-                        {
-                            Radius = 3,
-                            OutlineColour = Color4Extensions.FromHex("#5932CC")
-                        },
-                        new ShadowShader
-                        {
-                            ShadowColour = Color4Extensions.FromHex("#3D2D6B"),
-                            ShadowOffset = new Vector2(3)
-                        }
+                        ShadowColour = Color4Extensions.FromHex("#6B5B2D"),
+                        ShadowOffset = new Vector2(3)
                     }
                 }
             }
-        };
-
-        public int ID { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-
-        public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
-
-        public IReadOnlyList<ICustomizedShader> RightLyricTextShaders = Array.Empty<ICustomizedShader>();
-
-        public void ApplyTo(Drawable d)
+        },
+        RightLyricTextShaders = new ICustomizedShader[]
         {
-            if (d is not DrawableLyric drawableLyric)
-                throw new InvalidDrawableTypeException(nameof(d));
-
-            var shaderManager = drawableLyric.Dependencies.Get<ShaderManager>();
-            drawableLyric.ApplyToLyricPieces(l =>
+            new StepShader
             {
-                // Apply shader.
-                l.LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, this);
-                l.RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, this);
-            });
+                Name = "Step shader",
+                StepShaders = new ICustomizedShader[]
+                {
+                    new OutlineShader
+                    {
+                        Radius = 3,
+                        OutlineColour = Color4Extensions.FromHex("#5932CC")
+                    },
+                    new ShadowShader
+                    {
+                        ShadowColour = Color4Extensions.FromHex("#3D2D6B"),
+                        ShadowOffset = new Vector2(3)
+                    }
+                }
+            }
         }
+    };
+
+    public int ID { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+
+    public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
+
+    public IReadOnlyList<ICustomizedShader> RightLyricTextShaders = Array.Empty<ICustomizedShader>();
+
+    public void ApplyTo(Drawable d)
+    {
+        if (d is not DrawableLyric drawableLyric)
+            throw new InvalidDrawableTypeException(nameof(d));
+
+        var shaderManager = drawableLyric.Dependencies.Get<ShaderManager>();
+        drawableLyric.ApplyToLyricPieces(l =>
+        {
+            // Apply shader.
+            l.LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, this);
+            l.RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, this);
+        });
     }
 }

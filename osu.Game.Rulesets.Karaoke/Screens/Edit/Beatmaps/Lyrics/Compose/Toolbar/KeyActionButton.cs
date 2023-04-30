@@ -4,27 +4,26 @@
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar;
+
+/// <summary>
+/// Button that able to receive the <see cref="KaraokeEditAction"/> event.
+/// </summary>
+public abstract partial class KeyActionButton : ActionButton, IKeyBindingHandler<KaraokeEditAction>, IHasIKeyBindingHandlerOrder
 {
-    /// <summary>
-    /// Button that able to receive the <see cref="KaraokeEditAction"/> event.
-    /// </summary>
-    public abstract partial class KeyActionButton : ActionButton, IKeyBindingHandler<KaraokeEditAction>, IHasIKeyBindingHandlerOrder
+    protected abstract KaraokeEditAction EditAction { get; }
+
+    public int KeyBindingHandlerOrder => int.MinValue;
+
+    public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
-        protected abstract KaraokeEditAction EditAction { get; }
+        if (e.Action == EditAction)
+            ToggleClickEffect();
 
-        public int KeyBindingHandlerOrder => int.MinValue;
+        return false;
+    }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
-        {
-            if (e.Action == EditAction)
-                ToggleClickEffect();
-
-            return false;
-        }
-
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
-        {
-        }
+    public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
+    {
     }
 }

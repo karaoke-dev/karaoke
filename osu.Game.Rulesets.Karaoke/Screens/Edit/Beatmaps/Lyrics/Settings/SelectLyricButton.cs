@@ -12,82 +12,81 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
+
+public abstract partial class SelectLyricButton : EditorSectionButton
 {
-    public abstract partial class SelectLyricButton : EditorSectionButton
+    private IBindable<bool> selecting;
+
+    protected abstract LocalisableString StandardText { get; }
+
+    protected abstract LocalisableString SelectingText { get; }
+
+    protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
     {
-        private IBindable<bool> selecting;
+        return new Dictionary<Lyric, LocalisableString>();
+    }
 
-        protected abstract LocalisableString StandardText { get; }
+    protected abstract void Apply();
 
-        protected abstract LocalisableString SelectingText { get; }
+    protected virtual void Cancel() { }
 
-        protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
+    [Resolved]
+    private ILyricSelectionState lyricSelectionState { get; set; }
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        selecting = lyricSelectionState.Selecting.GetBoundCopy();
+        selecting.BindValueChanged(e =>
         {
-            return new Dictionary<Lyric, LocalisableString>();
-        }
+            bool isSelecting = e.NewValue;
+            BackgroundColour = isSelecting ? colours.Blue : colours.Purple;
+            Text = isSelecting ? SelectingText : StandardText;
+        }, true);
 
-        protected abstract void Apply();
-
-        protected virtual void Cancel() { }
-
-        [Resolved]
-        private ILyricSelectionState lyricSelectionState { get; set; }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        Action = () =>
         {
-            selecting = lyricSelectionState.Selecting.GetBoundCopy();
-            selecting.BindValueChanged(e =>
+            if (!selecting.Value)
             {
-                bool isSelecting = e.NewValue;
-                BackgroundColour = isSelecting ? colours.Blue : colours.Purple;
-                Text = isSelecting ? SelectingText : StandardText;
-            }, true);
-
-            Action = () =>
+                StartSelectingLyrics();
+            }
+            else
             {
-                if (!selecting.Value)
-                {
-                    StartSelectingLyrics();
-                }
-                else
-                {
-                    EndSelectingLyrics();
-                }
-            };
+                EndSelectingLyrics();
+            }
+        };
 
-            lyricSelectionState.Action = e =>
+        lyricSelectionState.Action = e =>
+        {
+            switch (e)
             {
-                switch (e)
-                {
-                    case LyricEditorSelectingAction.Apply:
-                        Apply();
-                        return;
+                case LyricEditorSelectingAction.Apply:
+                    Apply();
+                    return;
 
-                    case LyricEditorSelectingAction.Cancel:
-                        Cancel();
-                        return;
+                case LyricEditorSelectingAction.Cancel:
+                    Cancel();
+                    return;
 
-                    default:
-                        throw new InvalidOperationException();
-                }
-            };
-        }
+                default:
+                    throw new InvalidOperationException();
+            }
+        };
+    }
 
-        protected virtual void StartSelectingLyrics()
-        {
-            // update disabled lyrics list.
-            var disableLyrics = GetDisableSelectingLyrics();
-            lyricSelectionState.UpdateDisableLyricList(disableLyrics);
+    protected virtual void StartSelectingLyrics()
+    {
+        // update disabled lyrics list.
+        var disableLyrics = GetDisableSelectingLyrics();
+        lyricSelectionState.UpdateDisableLyricList(disableLyrics);
 
-            // then start selecting.
-            lyricSelectionState.StartSelecting();
-        }
+        // then start selecting.
+        lyricSelectionState.StartSelecting();
+    }
 
-        protected virtual void EndSelectingLyrics()
-        {
-            lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
-        }
+    protected virtual void EndSelectingLyrics()
+    {
+        lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
     }
 }

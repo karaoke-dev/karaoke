@@ -3,10 +3,9 @@
 
 using System.Globalization;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricLanguageChangeHandler : ILyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler
 {
-    public interface ILyricLanguageChangeHandler : ILyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler
-    {
-        void SetLanguage(CultureInfo? language);
-    }
+    void SetLanguage(CultureInfo? language);
 }

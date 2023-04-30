@@ -10,38 +10,37 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+
+public partial class LegacyStageBackground : LegacyKaraokeElement
 {
-    public partial class LegacyStageBackground : LegacyKaraokeElement
+    private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
+
+    public LegacyStageBackground()
     {
-        private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
-
-        public LegacyStageBackground()
-        {
-            RelativeSizeAxes = Axes.Both;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
-        {
-            InternalChild = new Sprite
-            {
-                Anchor = Anchor.BottomRight,
-                Origin = Anchor.BottomRight,
-                Texture = getTexture(skin)
-            };
-
-            direction.BindTo(scrollingInfo.Direction);
-            direction.BindValueChanged(OnDirectionChanged, true);
-        }
-
-        protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
-        {
-            Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
-        }
-
-        private Texture? getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
-
-        public static string GetTextureName() => "karaoke-stage-background";
+        RelativeSizeAxes = Axes.Both;
     }
+
+    [BackgroundDependencyLoader]
+    private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
+    {
+        InternalChild = new Sprite
+        {
+            Anchor = Anchor.BottomRight,
+            Origin = Anchor.BottomRight,
+            Texture = getTexture(skin)
+        };
+
+        direction.BindTo(scrollingInfo.Direction);
+        direction.BindValueChanged(OnDirectionChanged, true);
+    }
+
+    protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
+    {
+        Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
+    }
+
+    private Texture? getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
+
+    public static string GetTextureName() => "karaoke-stage-background";
 }

@@ -5,14 +5,13 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
-{
-    public partial class LegacyKaraokeColumnElement : LegacyKaraokeElement
-    {
-        protected ScrollingNotePlayfield? NotePlayfield => Playfield?.NotePlayfield;
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 
-        // TODO : get current index
-        protected override IBindable<T>? GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
-            => base.GetKaraokeSkinConfig<T>(skin, lookup, index);
-    }
+public partial class LegacyKaraokeColumnElement : LegacyKaraokeElement
+{
+    protected ScrollingNotePlayfield? NotePlayfield => Playfield?.NotePlayfield;
+
+    // TODO : get current index
+    protected override IBindable<T>? GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
+        => base.GetKaraokeSkinConfig<T>(skin, lookup, index);
 }

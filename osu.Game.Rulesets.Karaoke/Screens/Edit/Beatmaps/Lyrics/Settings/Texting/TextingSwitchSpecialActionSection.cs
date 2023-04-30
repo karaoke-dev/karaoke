@@ -4,41 +4,40 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
+
+public partial class TextingSwitchSpecialActionSection : SpecialActionSection<TextingEditModeSpecialAction>
 {
-    public partial class TextingSwitchSpecialActionSection : SpecialActionSection<TextingEditModeSpecialAction>
+    protected override string SwitchActionTitle => "Special actions";
+
+    protected override string SwitchActionDescription => "Copy, delete or move the lyrics.";
+
+    [BackgroundDependencyLoader]
+    private void load(ITextingModeState textingModeState)
     {
-        protected override string SwitchActionTitle => "Special actions";
+        BindTo(textingModeState);
+    }
 
-        protected override string SwitchActionDescription => "Copy, delete or move the lyrics.";
+    protected override void UpdateActionArea(TextingEditModeSpecialAction action)
+    {
+        RemoveAll(x => x is TextingDeleteSubsection, true);
 
-        [BackgroundDependencyLoader]
-        private void load(ITextingModeState textingModeState)
+        switch (action)
         {
-            BindTo(textingModeState);
-        }
+            case TextingEditModeSpecialAction.Copy:
+                // todo: implement
+                break;
 
-        protected override void UpdateActionArea(TextingEditModeSpecialAction action)
-        {
-            RemoveAll(x => x is TextingDeleteSubsection, true);
+            case TextingEditModeSpecialAction.Delete:
+                Add(new TextingDeleteSubsection());
+                break;
 
-            switch (action)
-            {
-                case TextingEditModeSpecialAction.Copy:
-                    // todo: implement
-                    break;
+            case TextingEditModeSpecialAction.Move:
+                // todo: implement
+                break;
 
-                case TextingEditModeSpecialAction.Delete:
-                    Add(new TextingDeleteSubsection());
-                    break;
-
-                case TextingEditModeSpecialAction.Move:
-                    // todo: implement
-                    break;
-
-                default:
-                    return;
-            }
+            default:
+                return;
         }
     }
 }

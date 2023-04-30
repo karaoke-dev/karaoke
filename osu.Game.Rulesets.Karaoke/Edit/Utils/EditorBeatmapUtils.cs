@@ -8,22 +8,21 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Utils
+namespace osu.Game.Rulesets.Karaoke.Edit.Utils;
+
+public static class EditorBeatmapUtils
 {
-    public static class EditorBeatmapUtils
+    public static IEnumerable<Lyric> GetAllReferenceLyrics(EditorBeatmap editorBeatmap, Lyric referencedLyric)
+        => editorBeatmap.HitObjects.OfType<Lyric>().Where(x => x.ReferenceLyric == referencedLyric);
+
+    public static IEnumerable<Note> GetNotesByLyric(EditorBeatmap editorBeatmap, Lyric lyric)
+        => editorBeatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric);
+
+    public static KaraokeBeatmap GetPlayableBeatmap(EditorBeatmap editorBeatmap)
     {
-        public static IEnumerable<Lyric> GetAllReferenceLyrics(EditorBeatmap editorBeatmap, Lyric referencedLyric)
-            => editorBeatmap.HitObjects.OfType<Lyric>().Where(x => x.ReferenceLyric == referencedLyric);
+        if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
+            throw new InvalidCastException();
 
-        public static IEnumerable<Note> GetNotesByLyric(EditorBeatmap editorBeatmap, Lyric lyric)
-            => editorBeatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric);
-
-        public static KaraokeBeatmap GetPlayableBeatmap(EditorBeatmap editorBeatmap)
-        {
-            if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                throw new InvalidCastException();
-
-            return karaokeBeatmap;
-        }
+        return karaokeBeatmap;
     }
 }

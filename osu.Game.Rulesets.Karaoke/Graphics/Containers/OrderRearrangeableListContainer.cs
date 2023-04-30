@@ -10,74 +10,73 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
+namespace osu.Game.Rulesets.Karaoke.Graphics.Containers;
+
+public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearrangeableListContainer<TModel>
 {
-    public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearrangeableListContainer<TModel>
+    public event Action<TModel, int> OnOrderChanged;
+
+    protected abstract Vector2 Spacing { get; }
+
+    protected OrderRearrangeableListContainer()
     {
-        public event Action<TModel, int> OnOrderChanged;
+        // this collection change event cannot directly register in parent bindable.
+        // So register in here.
+        Items.CollectionChanged += collectionChanged;
+    }
 
-        protected abstract Vector2 Spacing { get; }
-
-        protected OrderRearrangeableListContainer()
+    private void collectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
         {
-            // this collection change event cannot directly register in parent bindable.
-            // So register in here.
-            Items.CollectionChanged += collectionChanged;
+            // should get the event if user change the position.
+            case NotifyCollectionChangedAction.Move:
+                var item = (TModel)e.NewItems[0];
+                int newIndex = e.NewStartingIndex;
+                OnOrderChanged?.Invoke(item, newIndex);
+                break;
         }
+    }
 
-        private void collectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    protected override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer()
+        => base.CreateListFillFlowContainer().With(x => x.Spacing = Spacing);
+
+    private bool displayBottomDrawable;
+    private Drawable bottomDrawable;
+
+    public bool DisplayBottomDrawable
+    {
+        get => displayBottomDrawable;
+        set
         {
-            switch (e.Action)
+            if (displayBottomDrawable == value)
+                return;
+
+            displayBottomDrawable = value;
+
+            if (displayBottomDrawable)
             {
-                // should get the event if user change the position.
-                case NotifyCollectionChangedAction.Move:
-                    var item = (TModel)e.NewItems[0];
-                    int newIndex = e.NewStartingIndex;
-                    OnOrderChanged?.Invoke(item, newIndex);
-                    break;
-            }
-        }
-
-        protected override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer()
-            => base.CreateListFillFlowContainer().With(x => x.Spacing = Spacing);
-
-        private bool displayBottomDrawable;
-        private Drawable bottomDrawable;
-
-        public bool DisplayBottomDrawable
-        {
-            get => displayBottomDrawable;
-            set
-            {
-                if (displayBottomDrawable == value)
+                bottomDrawable = CreateBottomDrawable();
+                if (bottomDrawable == null)
                     return;
 
-                displayBottomDrawable = value;
+                bottomDrawable.Anchor |= Anchor.y2;
+                bottomDrawable.Origin |= Anchor.y2;
 
-                if (displayBottomDrawable)
-                {
-                    bottomDrawable = CreateBottomDrawable();
-                    if (bottomDrawable == null)
-                        return;
+                // because scroll container only follow list container size, so change the margin to let content bigger.
+                ListContainer.Margin = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y };
+                ScrollContainer.Add(bottomDrawable);
+            }
+            else
+            {
+                if (bottomDrawable == null)
+                    return;
 
-                    bottomDrawable.Anchor |= Anchor.y2;
-                    bottomDrawable.Origin |= Anchor.y2;
-
-                    // because scroll container only follow list container size, so change the margin to let content bigger.
-                    ListContainer.Margin = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y };
-                    ScrollContainer.Add(bottomDrawable);
-                }
-                else
-                {
-                    if (bottomDrawable == null)
-                        return;
-
-                    ListContainer.Margin = new MarginPadding();
-                    ScrollContainer.Remove(bottomDrawable, true);
-                }
+                ListContainer.Margin = new MarginPadding();
+                ScrollContainer.Remove(bottomDrawable, true);
             }
         }
-
-        protected virtual Drawable CreateBottomDrawable() => null;
     }
+
+    protected virtual Drawable CreateBottomDrawable() => null;
 }

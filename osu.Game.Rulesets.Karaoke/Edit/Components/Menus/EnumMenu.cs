@@ -10,47 +10,46 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+
+public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
 {
-    public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
+    private readonly Bindable<T> bindableEnum;
+
+    protected EnumMenu(Bindable<T> bindable, string text)
+        : base(text)
     {
-        private readonly Bindable<T> bindableEnum;
+        Items = createMenuItems();
 
-        protected EnumMenu(Bindable<T> bindable, string text)
-            : base(text)
+        bindableEnum = bindable;
+
+        bindable.BindValueChanged(e =>
         {
-            Items = createMenuItems();
-
-            bindableEnum = bindable;
-
-            bindable.BindValueChanged(e =>
+            var newSelection = e.NewValue;
+            Items.OfType<ToggleMenuItem>().ForEach(x =>
             {
-                var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    bool match = x.Text.Value == GetName(newSelection);
-                    x.State.Value = match;
-                });
-            }, true);
-        }
+                bool match = x.Text.Value == GetName(newSelection);
+                x.State.Value = match;
+            });
+        }, true);
+    }
 
-        private ToggleMenuItem[] createMenuItems()
+    private ToggleMenuItem[] createMenuItems()
+    {
+        return ValidEnums.Select(e =>
         {
-            return ValidEnums.Select(e =>
-            {
-                var item = new ToggleMenuItem(GetName(e), MenuItemType.Standard, _ => UpdateSelection(e));
-                return item;
-            }).ToArray();
-        }
+            var item = new ToggleMenuItem(GetName(e), MenuItemType.Standard, _ => UpdateSelection(e));
+            return item;
+        }).ToArray();
+    }
 
-        protected virtual IEnumerable<T> ValidEnums => Enum.GetValues<T>();
+    protected virtual IEnumerable<T> ValidEnums => Enum.GetValues<T>();
 
-        protected string GetName(T selection)
-            => selection.GetDescription();
+    protected string GetName(T selection)
+        => selection.GetDescription();
 
-        protected virtual void UpdateSelection(T selection)
-        {
-            bindableEnum.Value = selection;
-        }
+    protected virtual void UpdateSelection(T selection)
+    {
+        bindableEnum.Value = selection;
     }
 }

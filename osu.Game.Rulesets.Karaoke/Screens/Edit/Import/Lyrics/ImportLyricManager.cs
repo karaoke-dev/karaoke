@@ -15,59 +15,58 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using FileInfo = System.IO.FileInfo;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public partial class ImportLyricManager : Component
 {
-    public partial class ImportLyricManager : Component
+    public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar", ".txt" };
+
+    private const string backup_lrc_name = "backup.lrc";
+
+    [Resolved]
+    private EditorBeatmap editorBeatmap { get; set; }
+
+    [Resolved]
+    private IBindable<WorkingBeatmap> beatmap { get; set; }
+
+    public void ImportLrcFile(FileInfo info)
     {
-        public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar", ".txt" };
+        if (!info.Exists)
+            throw new FileNotFoundException("Lyric file does not found!");
 
-        private const string backup_lrc_name = "backup.lrc";
+        bool isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
+        if (!isFormatMatch)
+            throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
 
-        [Resolved]
-        private EditorBeatmap editorBeatmap { get; set; }
+        var set = beatmap.Value.BeatmapSetInfo;
+        var oldFile = set.Files.FirstOrDefault(f => f.Filename == backup_lrc_name);
 
-        [Resolved]
-        private IBindable<WorkingBeatmap> beatmap { get; set; }
+        using var stream = info.OpenRead();
 
-        public void ImportLrcFile(FileInfo info)
-        {
-            if (!info.Exists)
-                throw new FileNotFoundException("Lyric file does not found!");
+        // todo : make a backup if has new lyric file.
+        /*
+        if (oldFile != null)
+            beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
+        else
+            beatmaps.AddFile(set, stream, backup_lrc_name);
+        */
 
-            bool isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
-            if (!isFormatMatch)
-                throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
+        // Import and replace all the file.
+        using var reader = new LineBufferedReader(stream);
 
-            var set = beatmap.Value.BeatmapSetInfo;
-            var oldFile = set.Files.FirstOrDefault(f => f.Filename == backup_lrc_name);
+        var decoder = new LrcDecoder();
+        var lrcBeatmap = decoder.Decode(reader);
 
-            using var stream = info.OpenRead();
+        // remove all hit objects (note and lyric) from beatmap
+        editorBeatmap.Clear();
 
-            // todo : make a backup if has new lyric file.
-            /*
-            if (oldFile != null)
-                beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
-            else
-                beatmaps.AddFile(set, stream, backup_lrc_name);
-            */
+        // then re-add the lyric.
+        var lyrics = lrcBeatmap.HitObjects.OfType<Lyric>();
+        editorBeatmap.AddRange(lyrics);
+    }
 
-            // Import and replace all the file.
-            using var reader = new LineBufferedReader(stream);
-
-            var decoder = new LrcDecoder();
-            var lrcBeatmap = decoder.Decode(reader);
-
-            // remove all hit objects (note and lyric) from beatmap
-            editorBeatmap.Clear();
-
-            // then re-add the lyric.
-            var lyrics = lrcBeatmap.HitObjects.OfType<Lyric>();
-            editorBeatmap.AddRange(lyrics);
-        }
-
-        public void AbortImport()
-        {
-            editorBeatmap.Clear();
-        }
+    public void AbortImport()
+    {
+        editorBeatmap.Clear();
     }
 }

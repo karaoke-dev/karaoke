@@ -7,36 +7,35 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets;
+
+public abstract partial class MoveToCaretPositionButton : KeyActionButton
 {
-    public abstract partial class MoveToCaretPositionButton : KeyActionButton
+    protected abstract MovingCaretAction AcceptAction { get; }
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+
+    protected MoveToCaretPositionButton()
     {
-        protected abstract MovingCaretAction AcceptAction { get; }
-
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
-
-        protected MoveToCaretPositionButton()
+        Action = () =>
         {
-            Action = () =>
-            {
-                lyricCaretState.MoveCaret(AcceptAction);
-            };
+            lyricCaretState.MoveCaret(AcceptAction);
+        };
 
-            bindableCaretPosition.BindValueChanged(e =>
-            {
-                bool movable = lyricCaretState.GetCaretPositionByAction(AcceptAction) != null;
-                SetState(movable);
-            });
-        }
-
-        protected override void LoadComplete()
+        bindableCaretPosition.BindValueChanged(e =>
         {
-            base.LoadComplete();
+            bool movable = lyricCaretState.GetCaretPositionByAction(AcceptAction) != null;
+            SetState(movable);
+        });
+    }
 
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
-        }
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
     }
 }

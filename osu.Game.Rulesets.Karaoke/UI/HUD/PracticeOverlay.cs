@@ -6,33 +6,32 @@
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
+
+public partial class PracticeOverlay : SettingOverlay
 {
-    public partial class PracticeOverlay : SettingOverlay
+    protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Purple;
+
+    public PracticeOverlay()
     {
-        protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Purple;
-
-        public PracticeOverlay()
+        Children = new[]
         {
-            Children = new[]
+            new PracticeSettings
             {
-                new PracticeSettings
+                Expanded =
                 {
-                    Expanded =
-                    {
-                        Value = true
-                    },
-                    Width = 400
-                }
-            };
-        }
-
-        protected override SettingButton CreateButton() => new()
-        {
-            Name = "Toggle Practice",
-            Text = "Practice",
-            TooltipText = "Open/Close practice overlay",
-            Action = ToggleVisibility
+                    Value = true
+                },
+                Width = 400
+            }
         };
     }
+
+    protected override SettingButton CreateButton() => new()
+    {
+        Name = "Toggle Practice",
+        Text = "Practice",
+        TooltipText = "Open/Close practice overlay",
+        Action = ToggleVisibility
+    };
 }

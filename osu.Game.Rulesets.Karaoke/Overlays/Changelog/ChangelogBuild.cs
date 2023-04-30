@@ -13,82 +13,81 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+
+/// <summary>
+/// Display full content in <see cref="APIChangelogBuild"/>
+/// </summary>
+public partial class ChangelogBuild : FillFlowContainer
 {
-    /// <summary>
-    /// Display full content in <see cref="APIChangelogBuild"/>
-    /// </summary>
-    public partial class ChangelogBuild : FillFlowContainer
+    public const float HORIZONTAL_PADDING = 70;
+
+    public Action<APIChangelogBuild> SelectBuild;
+
+    protected readonly APIChangelogBuild Build;
+
+    public readonly ChangeLogMarkdownContainer ChangelogEntries;
+
+    public ChangelogBuild(APIChangelogBuild build)
     {
-        public const float HORIZONTAL_PADDING = 70;
+        Build = build;
 
-        public Action<APIChangelogBuild> SelectBuild;
+        RelativeSizeAxes = Axes.X;
+        AutoSizeAxes = Axes.Y;
+        Direction = FillDirection.Vertical;
+        Padding = new MarginPadding { Horizontal = HORIZONTAL_PADDING };
 
-        protected readonly APIChangelogBuild Build;
-
-        public readonly ChangeLogMarkdownContainer ChangelogEntries;
-
-        public ChangelogBuild(APIChangelogBuild build)
+        Children = new Drawable[]
         {
-            Build = build;
-
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-            Direction = FillDirection.Vertical;
-            Padding = new MarginPadding { Horizontal = HORIZONTAL_PADDING };
-
-            Children = new Drawable[]
+            CreateHeader(),
+            ChangelogEntries = new ChangeLogMarkdownContainer(build)
             {
-                CreateHeader(),
-                ChangelogEntries = new ChangeLogMarkdownContainer(build)
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                },
-            };
-        }
-
-        protected virtual FillFlowContainer CreateHeader() => new()
-        {
-            Anchor = Anchor.TopCentre,
-            Origin = Anchor.TopCentre,
-            AutoSizeAxes = Axes.Both,
-            Direction = FillDirection.Horizontal,
-            Margin = new MarginPadding { Top = 20 },
-            Children = new Drawable[]
-            {
-                new OsuHoverContainer
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    AutoSizeAxes = Axes.Both,
-                    Action = () => SelectBuild?.Invoke(Build),
-                    Child = new FillFlowContainer<SpriteText>
-                    {
-                        AutoSizeAxes = Axes.Both,
-                        Margin = new MarginPadding { Horizontal = 40 },
-                        Children = new[]
-                        {
-                            new OsuSpriteText
-                            {
-                                Text = "Karaoke!",
-                                Font = OsuFont.GetFont(weight: FontWeight.Medium, size: 19),
-                            },
-                            new OsuSpriteText
-                            {
-                                Text = " ",
-                                Font = OsuFont.GetFont(weight: FontWeight.Medium, size: 19),
-                            },
-                            new OsuSpriteText
-                            {
-                                Text = Build.DisplayVersion,
-                                Font = OsuFont.GetFont(weight: FontWeight.Light, size: 19),
-                                Colour = Color4.Red,
-                            },
-                        }
-                    }
-                },
-            }
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+            },
         };
     }
+
+    protected virtual FillFlowContainer CreateHeader() => new()
+    {
+        Anchor = Anchor.TopCentre,
+        Origin = Anchor.TopCentre,
+        AutoSizeAxes = Axes.Both,
+        Direction = FillDirection.Horizontal,
+        Margin = new MarginPadding { Top = 20 },
+        Children = new Drawable[]
+        {
+            new OsuHoverContainer
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                AutoSizeAxes = Axes.Both,
+                Action = () => SelectBuild?.Invoke(Build),
+                Child = new FillFlowContainer<SpriteText>
+                {
+                    AutoSizeAxes = Axes.Both,
+                    Margin = new MarginPadding { Horizontal = 40 },
+                    Children = new[]
+                    {
+                        new OsuSpriteText
+                        {
+                            Text = "Karaoke!",
+                            Font = OsuFont.GetFont(weight: FontWeight.Medium, size: 19),
+                        },
+                        new OsuSpriteText
+                        {
+                            Text = " ",
+                            Font = OsuFont.GetFont(weight: FontWeight.Medium, size: 19),
+                        },
+                        new OsuSpriteText
+                        {
+                            Text = Build.DisplayVersion,
+                            Font = OsuFont.GetFont(weight: FontWeight.Light, size: 19),
+                            Colour = Color4.Red,
+                        },
+                    }
+                }
+            },
+        }
+    };
 }

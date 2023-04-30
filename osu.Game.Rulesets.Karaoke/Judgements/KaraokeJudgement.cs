@@ -3,9 +3,8 @@
 
 using osu.Game.Rulesets.Judgements;
 
-namespace osu.Game.Rulesets.Karaoke.Judgements
+namespace osu.Game.Rulesets.Karaoke.Judgements;
+
+public class KaraokeJudgement : Judgement
 {
-    public class KaraokeJudgement : Judgement
-    {
-    }
 }

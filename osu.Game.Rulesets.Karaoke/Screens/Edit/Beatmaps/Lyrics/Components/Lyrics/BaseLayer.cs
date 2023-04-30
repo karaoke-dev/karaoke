@@ -5,23 +5,22 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+
+public abstract partial class BaseLayer : CompositeDrawable
 {
-    public abstract partial class BaseLayer : CompositeDrawable
+    protected readonly Lyric Lyric;
+
+    protected BaseLayer(Lyric lyric)
     {
-        protected readonly Lyric Lyric;
+        Lyric = lyric;
 
-        protected BaseLayer(Lyric lyric)
-        {
-            Lyric = lyric;
+        RelativeSizeAxes = Axes.Both;
+    }
 
-            RelativeSizeAxes = Axes.Both;
-        }
+    public abstract void UpdateDisableEditState(bool editable);
 
-        public abstract void UpdateDisableEditState(bool editable);
-
-        public virtual void TriggerDisallowEditEffect(LyricEditorMode editorMode)
-        {
-        }
+    public virtual void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    {
     }
 }

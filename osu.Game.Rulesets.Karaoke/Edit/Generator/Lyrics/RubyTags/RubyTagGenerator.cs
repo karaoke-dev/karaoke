@@ -4,22 +4,21 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags;
+
+public abstract class RubyTagGenerator<TConfig> : LyricPropertyGenerator<RubyTag[], TConfig>
+    where TConfig : RubyTagGeneratorConfig, new()
 {
-    public abstract class RubyTagGenerator<TConfig> : LyricPropertyGenerator<RubyTag[], TConfig>
-        where TConfig : RubyTagGeneratorConfig, new()
+    protected RubyTagGenerator(TConfig config)
+        : base(config)
     {
-        protected RubyTagGenerator(TConfig config)
-            : base(config)
-        {
-        }
+    }
 
-        protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
-        {
-            if (string.IsNullOrWhiteSpace(item.Text))
-                return "Lyric should not be empty.";
+    protected override LocalisableString? GetInvalidMessageFromItem(Lyric item)
+    {
+        if (string.IsNullOrWhiteSpace(item.Text))
+            return "Lyric should not be empty.";
 
-            return null;
-        }
+        return null;
     }
 }

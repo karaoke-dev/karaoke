@@ -6,34 +6,33 @@ using osu.Framework.Extensions;
 using osu.Framework.Localisation;
 using osu.Game.Overlays.OSD;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public partial class ClipboardToast : Toast
 {
-    public partial class ClipboardToast : Toast
+    public ClipboardToast(LyricEditorMode mode, ClipboardAction action)
+        : base(getDescription(), getValue(action), getShortcut(mode, action))
     {
-        public ClipboardToast(LyricEditorMode mode, ClipboardAction action)
-            : base(getDescription(), getValue(action), getShortcut(mode, action))
-        {
-        }
-
-        private static LocalisableString getDescription()
-            => "Lyric editor";
-
-        private static LocalisableString getValue(ClipboardAction action)
-            => action.GetDescription();
-
-        private static LocalisableString getShortcut(LyricEditorMode mode, ClipboardAction action)
-            => $"Lyric has been {action.GetDescription().ToLower()} in the {action.GetDescription().ToLower()} mode.";
     }
 
-    public enum ClipboardAction
-    {
-        [Description("Cut")]
-        Cut,
+    private static LocalisableString getDescription()
+        => "Lyric editor";
 
-        [Description("Copy")]
-        Copy,
+    private static LocalisableString getValue(ClipboardAction action)
+        => action.GetDescription();
 
-        [Description("Paste")]
-        Paste
-    }
+    private static LocalisableString getShortcut(LyricEditorMode mode, ClipboardAction action)
+        => $"Lyric has been {action.GetDescription().ToLower()} in the {action.GetDescription().ToLower()} mode.";
+}
+
+public enum ClipboardAction
+{
+    [Description("Cut")]
+    Cut,
+
+    [Description("Copy")]
+    Copy,
+
+    [Description("Paste")]
+    Paste
 }

@@ -6,32 +6,31 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+
+public partial class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
 {
-    public partial class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
+    protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
+        => new RubyTagAutoGenerateSubsection();
+
+    private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRubyTagsChangeHandler>
     {
-        protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
-            => new RubyTagAutoGenerateSubsection();
+        protected override ConfigButton CreateConfigButton()
+            => new RubyTagAutoGenerateConfigButton();
 
-        private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRubyTagsChangeHandler>
+        protected partial class RubyTagAutoGenerateConfigButton : MultiConfigButton
         {
-            protected override ConfigButton CreateConfigButton()
-                => new RubyTagAutoGenerateConfigButton();
-
-            protected partial class RubyTagAutoGenerateConfigButton : MultiConfigButton
+            protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
             {
-                protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
-                {
-                    KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
-                };
+                KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
+            };
 
-                protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
-                    setting switch
-                    {
-                        KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => "Japanese",
-                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
-                    };
-            }
+            protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
+                setting switch
+                {
+                    KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => "Japanese",
+                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                };
         }
     }
 }

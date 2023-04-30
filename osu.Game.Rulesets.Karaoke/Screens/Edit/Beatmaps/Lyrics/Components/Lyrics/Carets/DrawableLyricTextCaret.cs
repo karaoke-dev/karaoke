@@ -8,24 +8,23 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
+
+public abstract partial class DrawableLyricTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
 {
-    public abstract partial class DrawableLyricTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
+    [Resolved]
+    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+
+    protected DrawableLyricTextCaret(DrawableCaretType type)
+        : base(type)
     {
-        [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    }
 
-        protected DrawableLyricTextCaret(DrawableCaretType type)
-            : base(type)
-        {
-        }
-
-        protected Vector2 GetPosition(TCaretPosition caret)
-        {
-            float textHeight = karaokeSpriteText.LineBaseHeight;
-            bool end = caret.Index == caret.Lyric.Text.Length;
-            var originPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
-            return new Vector2(originPosition.X, originPosition.Y - textHeight);
-        }
+    protected Vector2 GetPosition(TCaretPosition caret)
+    {
+        float textHeight = karaokeSpriteText.LineBaseHeight;
+        bool end = caret.Index == caret.Lyric.Text.Length;
+        var originPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
+        return new Vector2(originPosition.X, originPosition.Y - textHeight);
     }
 }

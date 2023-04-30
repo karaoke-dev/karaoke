@@ -18,139 +18,138 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components;
+
+public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHasPopover where TTextTag : class, ITextTag, new()
 {
-    public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHasPopover where TTextTag : class, ITextTag, new()
+    public new Action<TTextTag> Action;
+
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    public LocalisableString LabelledTextBoxLabel { get; set; }
+
+    public LocalisableString LabelledTextBoxDescription { get; set; }
+
+    public CreateNewTextTagButton()
     {
-        public new Action<TTextTag> Action;
+        base.Action = this.ShowPopover;
+    }
 
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        public LocalisableString LabelledTextBoxLabel { get; set; }
-
-        public LocalisableString LabelledTextBoxDescription { get; set; }
-
-        public CreateNewTextTagButton()
+    public Popover GetPopover()
+    {
+        var lyric = lyricCaretState.BindableFocusedLyric.Value;
+        return new CreateNewPopover(lyric)
         {
-            base.Action = this.ShowPopover;
-        }
-
-        public Popover GetPopover()
-        {
-            var lyric = lyricCaretState.BindableFocusedLyric.Value;
-            return new CreateNewPopover(lyric)
+            LabelledTextBoxLabel = LabelledTextBoxLabel,
+            LabelledTextBoxDescription = LabelledTextBoxDescription,
+            Action = textTag =>
             {
-                LabelledTextBoxLabel = LabelledTextBoxLabel,
-                LabelledTextBoxDescription = LabelledTextBoxDescription,
-                Action = textTag =>
+                this.HidePopover();
+                Action?.Invoke(textTag);
+            }
+        };
+    }
+
+    private partial class CreateNewPopover : OsuPopover
+    {
+        public Action<TTextTag> Action;
+
+        private readonly LabelledNumberBox labelledStartIndexNumberBox;
+        private readonly LabelledNumberBox labelledEndIndexNumberBox;
+        private readonly LabelledTextBox labelledTagTextBox;
+
+        private readonly Lyric lyric;
+
+        public CreateNewPopover(Lyric lyric)
+        {
+            this.lyric = lyric;
+
+            Child = new FillFlowContainer
+            {
+                Width = 300,
+                AutoSizeAxes = Axes.Y,
+                Spacing = new Vector2(10),
+                Children = new Drawable[]
                 {
-                    this.HidePopover();
-                    Action?.Invoke(textTag);
+                    labelledStartIndexNumberBox = new LabelledNumberBox
+                    {
+                        Label = "Start index",
+                        Description = "Please enter the start text index in the lyric",
+                        PlaceholderText = "0",
+                        TabbableContentContainer = this,
+                    },
+                    labelledEndIndexNumberBox = new LabelledNumberBox
+                    {
+                        Label = "End index",
+                        Description = "Please enter the end text index in the lyric",
+                        PlaceholderText = "1",
+                        TabbableContentContainer = this,
+                    },
+                    labelledTagTextBox = new LabelledTextBox
+                    {
+                        PlaceholderText = "Text",
+                        TabbableContentContainer = this,
+                    },
+                    new AddButton
+                    {
+                        Text = "Add",
+                        Action = submit
+                    }
                 }
             };
         }
 
-        private partial class CreateNewPopover : OsuPopover
+        public LocalisableString LabelledTextBoxLabel
         {
-            public Action<TTextTag> Action;
+            set => labelledTagTextBox.Label = value;
+        }
 
-            private readonly LabelledNumberBox labelledStartIndexNumberBox;
-            private readonly LabelledNumberBox labelledEndIndexNumberBox;
-            private readonly LabelledTextBox labelledTagTextBox;
+        public LocalisableString LabelledTextBoxDescription
+        {
+            set => labelledTagTextBox.Description = value;
+        }
 
-            private readonly Lyric lyric;
+        private void submit()
+        {
+            const int invalid_tag_index = -1;
 
-            public CreateNewPopover(Lyric lyric)
+            string startIndexText = labelledStartIndexNumberBox.Current.Value;
+            int startIndex = startIndexText == null ? invalid_tag_index : int.Parse(startIndexText);
+
+            if (TextTagUtils.OutOfRange(lyric.Text, startIndex))
             {
-                this.lyric = lyric;
-
-                Child = new FillFlowContainer
-                {
-                    Width = 300,
-                    AutoSizeAxes = Axes.Y,
-                    Spacing = new Vector2(10),
-                    Children = new Drawable[]
-                    {
-                        labelledStartIndexNumberBox = new LabelledNumberBox
-                        {
-                            Label = "Start index",
-                            Description = "Please enter the start text index in the lyric",
-                            PlaceholderText = "0",
-                            TabbableContentContainer = this,
-                        },
-                        labelledEndIndexNumberBox = new LabelledNumberBox
-                        {
-                            Label = "End index",
-                            Description = "Please enter the end text index in the lyric",
-                            PlaceholderText = "1",
-                            TabbableContentContainer = this,
-                        },
-                        labelledTagTextBox = new LabelledTextBox
-                        {
-                            PlaceholderText = "Text",
-                            TabbableContentContainer = this,
-                        },
-                        new AddButton
-                        {
-                            Text = "Add",
-                            Action = submit
-                        }
-                    }
-                };
+                GetContainingInputManager().ChangeFocus(labelledStartIndexNumberBox);
+                return;
             }
 
-            public LocalisableString LabelledTextBoxLabel
+            string endIndexText = labelledEndIndexNumberBox.Current.Value;
+            int endIndex = endIndexText == null ? invalid_tag_index : int.Parse(endIndexText);
+
+            if (TextTagUtils.OutOfRange(lyric.Text, endIndex))
             {
-                set => labelledTagTextBox.Label = value;
+                GetContainingInputManager().ChangeFocus(labelledEndIndexNumberBox);
+                return;
             }
 
-            public LocalisableString LabelledTextBoxDescription
+            string textTagText = labelledTagTextBox.Current.Value;
+
+            if (string.IsNullOrEmpty(textTagText))
             {
-                set => labelledTagTextBox.Description = value;
+                GetContainingInputManager().ChangeFocus(labelledTagTextBox);
+                return;
             }
 
-            private void submit()
+            Action?.Invoke(new TTextTag
             {
-                const int invalid_tag_index = -1;
+                StartIndex = Math.Min(startIndex, endIndex),
+                EndIndex = Math.Max(startIndex, endIndex),
+                Text = textTagText
+            });
+        }
 
-                string startIndexText = labelledStartIndexNumberBox.Current.Value;
-                int startIndex = startIndexText == null ? invalid_tag_index : int.Parse(startIndexText);
-
-                if (TextTagUtils.OutOfRange(lyric.Text, startIndex))
-                {
-                    GetContainingInputManager().ChangeFocus(labelledStartIndexNumberBox);
-                    return;
-                }
-
-                string endIndexText = labelledEndIndexNumberBox.Current.Value;
-                int endIndex = endIndexText == null ? invalid_tag_index : int.Parse(endIndexText);
-
-                if (TextTagUtils.OutOfRange(lyric.Text, endIndex))
-                {
-                    GetContainingInputManager().ChangeFocus(labelledEndIndexNumberBox);
-                    return;
-                }
-
-                string textTagText = labelledTagTextBox.Current.Value;
-
-                if (string.IsNullOrEmpty(textTagText))
-                {
-                    GetContainingInputManager().ChangeFocus(labelledTagTextBox);
-                    return;
-                }
-
-                Action?.Invoke(new TTextTag
-                {
-                    StartIndex = Math.Min(startIndex, endIndex),
-                    EndIndex = Math.Max(startIndex, endIndex),
-                    Text = textTagText
-                });
-            }
-
-            private partial class AddButton : EditorSectionButton
-            {
-            }
+        private partial class AddButton : EditorSectionButton
+        {
         }
     }
 }
