@@ -8,30 +8,29 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar;
+
+public partial class Separator : CompositeDrawable
 {
-    public partial class Separator : CompositeDrawable
+    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+
+    private readonly Box barLine;
+
+    public Separator()
     {
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
-        private readonly Box barLine;
-
-        public Separator()
+        Size = new Vector2(3, SpecialActionToolbar.HEIGHT);
+        InternalChild = barLine = new Box
         {
-            Size = new Vector2(3, SpecialActionToolbar.HEIGHT);
-            InternalChild = barLine = new Box
-            {
-                RelativeSizeAxes = Axes.Both,
-            };
-        }
+            RelativeSizeAxes = Axes.Both,
+        };
+    }
 
-        [BackgroundDependencyLoader(true)]
-        private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+    [BackgroundDependencyLoader(true)]
+    private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+    {
+        bindableMode.BindValueChanged(x =>
         {
-            bindableMode.BindValueChanged(x =>
-            {
-                barLine.Colour = colourProvider.Background1(state.Mode);
-            }, true);
-        }
+            barLine.Colour = colourProvider.Background1(state.Mode);
+        }, true);
     }
 }

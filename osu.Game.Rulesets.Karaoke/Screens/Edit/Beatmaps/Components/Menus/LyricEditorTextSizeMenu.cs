@@ -11,42 +11,41 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
+
+public class LyricEditorTextSizeMenu : MenuItem
 {
-    public class LyricEditorTextSizeMenu : MenuItem
+    private readonly Bindable<float> bindableFontSize = new();
+
+    public LyricEditorTextSizeMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
+        : base(text)
     {
-        private readonly Bindable<float> bindableFontSize = new();
+        Items = createMenuItems();
 
-        public LyricEditorTextSizeMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
-            : base(text)
+        config.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
+        bindableFontSize.BindValueChanged(e =>
         {
-            Items = createMenuItems();
-
-            config.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
-            bindableFontSize.BindValueChanged(e =>
+            float newSelection = e.NewValue;
+            Items.OfType<ToggleMenuItem>().ForEach(x =>
             {
-                float newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    bool match = x.Text.Value == FontUtils.GetText(newSelection);
-                    x.State.Value = match;
-                });
-            }, true);
-        }
+                bool match = x.Text.Value == FontUtils.GetText(newSelection);
+                x.State.Value = match;
+            });
+        }, true);
+    }
 
-        private ToggleMenuItem[] createMenuItems()
+    private ToggleMenuItem[] createMenuItems()
+    {
+        float[] sizes = FontUtils.DefaultPreviewFontSize();
+        return sizes.Select(e =>
         {
-            float[] sizes = FontUtils.DefaultPreviewFontSize();
-            return sizes.Select(e =>
-            {
-                var item = new ToggleMenuItem(FontUtils.GetText(e), MenuItemType.Standard, _ => updateMode(e));
-                return item;
-            }).ToArray();
-        }
+            var item = new ToggleMenuItem(FontUtils.GetText(e), MenuItemType.Standard, _ => updateMode(e));
+            return item;
+        }).ToArray();
+    }
 
-        private void updateMode(float size)
-        {
-            bindableFontSize.Value = size;
-        }
+    private void updateMode(float size)
+    {
+        bindableFontSize.Value = size;
     }
 }

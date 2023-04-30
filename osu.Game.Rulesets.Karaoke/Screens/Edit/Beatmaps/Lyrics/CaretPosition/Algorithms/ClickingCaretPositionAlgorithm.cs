@@ -3,45 +3,44 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
+
+public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCaretPosition>
 {
-    public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCaretPosition>
+    public ClickingCaretPositionAlgorithm(Lyric[] lyrics)
+        : base(lyrics)
     {
-        public ClickingCaretPositionAlgorithm(Lyric[] lyrics)
-            : base(lyrics)
-        {
-        }
-
-        protected override void Validate(ClickingCaretPosition input)
-        {
-            // there's no checking rules in this algorithm.
-        }
-
-        protected override bool PositionMovable(ClickingCaretPosition position)
-        {
-            return true;
-        }
-
-        protected override ClickingCaretPosition? MoveToPreviousLyric(ClickingCaretPosition currentPosition)
-        {
-            return null;
-        }
-
-        protected override ClickingCaretPosition? MoveToNextLyric(ClickingCaretPosition currentPosition)
-        {
-            return null;
-        }
-
-        protected override ClickingCaretPosition? MoveToFirstLyric()
-        {
-            return null;
-        }
-
-        protected override ClickingCaretPosition? MoveToLastLyric()
-        {
-            return null;
-        }
-
-        protected override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
     }
+
+    protected override void Validate(ClickingCaretPosition input)
+    {
+        // there's no checking rules in this algorithm.
+    }
+
+    protected override bool PositionMovable(ClickingCaretPosition position)
+    {
+        return true;
+    }
+
+    protected override ClickingCaretPosition? MoveToPreviousLyric(ClickingCaretPosition currentPosition)
+    {
+        return null;
+    }
+
+    protected override ClickingCaretPosition? MoveToNextLyric(ClickingCaretPosition currentPosition)
+    {
+        return null;
+    }
+
+    protected override ClickingCaretPosition? MoveToFirstLyric()
+    {
+        return null;
+    }
+
+    protected override ClickingCaretPosition? MoveToLastLyric()
+    {
+        return null;
+    }
+
+    protected override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
 }

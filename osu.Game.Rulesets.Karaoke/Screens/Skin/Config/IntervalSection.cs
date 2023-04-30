@@ -8,73 +8,72 @@ using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
+
+internal partial class IntervalSection : LyricConfigSection
 {
-    internal partial class IntervalSection : LyricConfigSection
+    private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
+    private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
+    private LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
+
+    protected override LocalisableString Title => "Interval";
+
+    [BackgroundDependencyLoader]
+    private void load(LyricFontInfoManager lyricFontInfoManager)
     {
-        private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
-        private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
-        private LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
-
-        protected override LocalisableString Title => "Interval";
-
-        [BackgroundDependencyLoader]
-        private void load(LyricFontInfoManager lyricFontInfoManager)
+        Children = new[]
         {
-            Children = new[]
+            lyricIntervalSliderBar = new LabelledRealTimeSliderBar<int>
             {
-                lyricIntervalSliderBar = new LabelledRealTimeSliderBar<int>
+                Label = "Lyrics interval",
+                Description = "Lyrics interval section",
+                Current = new BindableNumber<int>
                 {
-                    Label = "Lyrics interval",
-                    Description = "Lyrics interval section",
-                    Current = new BindableNumber<int>
-                    {
-                        MinValue = 0,
-                        MaxValue = 30,
-                        Value = 10,
-                        Default = 10
-                    }
-                },
-                rubyIntervalSliderBar = new LabelledRealTimeSliderBar<int>
-                {
-                    Label = "Ruby interval",
-                    Description = "Ruby interval section",
-                    Current = new BindableNumber<int>
-                    {
-                        MinValue = 0,
-                        MaxValue = 30,
-                        Value = 10,
-                        Default = 10
-                    }
-                },
-                romajiIntervalSliderBar = new LabelledRealTimeSliderBar<int>
-                {
-                    Label = "Romaji interval",
-                    Description = "Romaji interval section",
-                    Current = new BindableNumber<int>
-                    {
-                        MinValue = 0,
-                        MaxValue = 30,
-                        Value = 10,
-                        Default = 10
-                    }
+                    MinValue = 0,
+                    MaxValue = 30,
+                    Value = 10,
+                    Default = 10
                 }
-            };
-
-            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
+            },
+            rubyIntervalSliderBar = new LabelledRealTimeSliderBar<int>
             {
-                var lyricFontInfo = e.NewValue;
-                applyCurrent(lyricIntervalSliderBar.Current, lyricFontInfo.LyricsInterval);
-                applyCurrent(rubyIntervalSliderBar.Current, lyricFontInfo.RubyInterval);
-                applyCurrent(romajiIntervalSliderBar.Current, lyricFontInfo.RomajiInterval);
+                Label = "Ruby interval",
+                Description = "Ruby interval section",
+                Current = new BindableNumber<int>
+                {
+                    MinValue = 0,
+                    MaxValue = 30,
+                    Value = 10,
+                    Default = 10
+                }
+            },
+            romajiIntervalSliderBar = new LabelledRealTimeSliderBar<int>
+            {
+                Label = "Romaji interval",
+                Description = "Romaji interval section",
+                Current = new BindableNumber<int>
+                {
+                    MinValue = 0,
+                    MaxValue = 30,
+                    Value = 10,
+                    Default = 10
+                }
+            }
+        };
 
-                static void applyCurrent<T>(Bindable<T> bindable, T value)
-                    => bindable.Value = bindable.Default = value;
-            }, true);
+        lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
+        {
+            var lyricFontInfo = e.NewValue;
+            applyCurrent(lyricIntervalSliderBar.Current, lyricFontInfo.LyricsInterval);
+            applyCurrent(rubyIntervalSliderBar.Current, lyricFontInfo.RubyInterval);
+            applyCurrent(romajiIntervalSliderBar.Current, lyricFontInfo.RomajiInterval);
 
-            lyricIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.LyricsInterval = x.NewValue));
-            rubyIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyInterval = x.NewValue));
-            romajiIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiInterval = x.NewValue));
-        }
+            static void applyCurrent<T>(Bindable<T> bindable, T value)
+                => bindable.Value = bindable.Default = value;
+        }, true);
+
+        lyricIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.LyricsInterval = x.NewValue));
+        rubyIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyInterval = x.NewValue));
+        romajiIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiInterval = x.NewValue));
     }
 }

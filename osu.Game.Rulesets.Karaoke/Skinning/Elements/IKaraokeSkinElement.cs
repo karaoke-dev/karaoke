@@ -3,14 +3,13 @@
 
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements;
+
+public interface IKaraokeSkinElement
 {
-    public interface IKaraokeSkinElement
-    {
-        int ID { get; set; }
+    int ID { get; set; }
 
-        string Name { get; set; }
+    string Name { get; set; }
 
-        void ApplyTo(Drawable d);
-    }
+    void ApplyTo(Drawable d);
 }

@@ -6,31 +6,30 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.UI.Components;
+
+public partial class DefaultColumnBackground : Box
 {
-    public partial class DefaultColumnBackground : Box
+    public const float COLUMN_HEIGHT = 20;
+
+    public DefaultColumnBackground(int index)
     {
-        public const float COLUMN_HEIGHT = 20;
+        RelativeSizeAxes = Axes.X;
+        Height = COLUMN_HEIGHT;
+        Alpha = 0.15f;
+    }
 
-        public DefaultColumnBackground(int index)
+    private bool isSpecial;
+
+    public bool IsSpecial
+    {
+        get => isSpecial;
+        set
         {
-            RelativeSizeAxes = Axes.X;
-            Height = COLUMN_HEIGHT;
-            Alpha = 0.15f;
-        }
+            if (isSpecial == value)
+                return;
 
-        private bool isSpecial;
-
-        public bool IsSpecial
-        {
-            get => isSpecial;
-            set
-            {
-                if (isSpecial == value)
-                    return;
-
-                isSpecial = value;
-            }
+            isSpecial = value;
         }
     }
 }

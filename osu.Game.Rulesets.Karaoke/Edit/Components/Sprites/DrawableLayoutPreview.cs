@@ -14,118 +14,117 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
+
+public partial class DrawableLayoutPreview : CompositeDrawable
 {
-    public partial class DrawableLayoutPreview : CompositeDrawable
+    private const float scale = 0.4f;
+
+    private readonly Box background;
+    private readonly Box previewLyric;
+    private readonly OsuSpriteText notSupportText;
+
+    [Resolved(canBeNull: true)]
+    private ISkinSource skinSource { get; set; }
+
+    public DrawableLayoutPreview()
     {
-        private const float scale = 0.4f;
-
-        private readonly Box background;
-        private readonly Box previewLyric;
-        private readonly OsuSpriteText notSupportText;
-
-        [Resolved(canBeNull: true)]
-        private ISkinSource skinSource { get; set; }
-
-        public DrawableLayoutPreview()
+        InternalChildren = new Drawable[]
         {
-            InternalChildren = new Drawable[]
+            background = new Box
             {
-                background = new Box
-                {
-                    RelativeSizeAxes = Axes.Both
-                },
-                previewLyric = new Box
-                {
-                    Height = 15
-                },
-                notSupportText = new OsuSpriteText
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                }
-            };
-
-            previewLyric.Hide();
-            notSupportText.Hide();
-        }
-
-        private LyricLayout layout;
-
-        public LyricLayout Layout
-        {
-            get => layout;
-            set
+                RelativeSizeAxes = Axes.Both
+            },
+            previewLyric = new Box
             {
-                if (layout == value)
-                    return;
-
-                layout = value;
-                updateLayout();
+                Height = 15
+            },
+            notSupportText = new OsuSpriteText
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
             }
-        }
+        };
 
-        private Lyric lyric;
+        previewLyric.Hide();
+        notSupportText.Hide();
+    }
 
-        public Lyric Lyric
+    private LyricLayout layout;
+
+    public LyricLayout Layout
+    {
+        get => layout;
+        set
         {
-            get => lyric;
-            set
-            {
-                if (lyric == value)
-                    return;
+            if (layout == value)
+                return;
 
-                lyric = value;
-                updateLayout();
-            }
+            layout = value;
+            updateLayout();
         }
+    }
 
-        private void updateLayout()
+    private Lyric lyric;
+
+    public Lyric Lyric
+    {
+        get => lyric;
+        set
         {
-            // Display in content
-            if (Layout == null)
-            {
-                // mark layout as not supported, or skin is not loaded
-                notSupportText.Show();
+            if (lyric == value)
+                return;
 
-                if (skinSource == null)
-                    notSupportText.Text = "Sorry, skin is not exist.";
-                else
-                    notSupportText.Text = "Sorry, layout is not exist.";
-            }
+            lyric = value;
+            updateLayout();
+        }
+    }
+
+    private void updateLayout()
+    {
+        // Display in content
+        if (Layout == null)
+        {
+            // mark layout as not supported, or skin is not loaded
+            notSupportText.Show();
+
+            if (skinSource == null)
+                notSupportText.Text = "Sorry, skin is not exist.";
             else
-            {
-                // Display box preview position
-                previewLyric.Show();
-
-                // Set preview width
-                const float text_size = 20;
-                previewLyric.Width = (Lyric?.Text.Length ?? 10) * text_size * scale;
-                previewLyric.Height = text_size * 1.5f * scale;
-
-                // Set relative position
-                previewLyric.Anchor = layout.Alignment;
-                previewLyric.Origin = layout.Alignment;
-
-                // Set margin
-                const float padding = 30 * scale;
-                float horizontalMargin = layout.HorizontalMargin * scale + padding;
-                float verticalMargin = layout.VerticalMargin * scale + padding;
-                previewLyric.Margin = new MarginPadding
-                {
-                    Left = layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
-                    Right = layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
-                    Top = layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
-                    Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
-                };
-            }
+                notSupportText.Text = "Sorry, layout is not exist.";
         }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        else
         {
-            background.Colour = colours.Gray2;
-            previewLyric.Colour = colours.Yellow;
+            // Display box preview position
+            previewLyric.Show();
+
+            // Set preview width
+            const float text_size = 20;
+            previewLyric.Width = (Lyric?.Text.Length ?? 10) * text_size * scale;
+            previewLyric.Height = text_size * 1.5f * scale;
+
+            // Set relative position
+            previewLyric.Anchor = layout.Alignment;
+            previewLyric.Origin = layout.Alignment;
+
+            // Set margin
+            const float padding = 30 * scale;
+            float horizontalMargin = layout.HorizontalMargin * scale + padding;
+            float verticalMargin = layout.VerticalMargin * scale + padding;
+            previewLyric.Margin = new MarginPadding
+            {
+                Left = layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
+                Right = layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
+                Top = layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
+                Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
+            };
         }
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        background.Colour = colours.Gray2;
+        previewLyric.Colour = colours.Yellow;
     }
 }

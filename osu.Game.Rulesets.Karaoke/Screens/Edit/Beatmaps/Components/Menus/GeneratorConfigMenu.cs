@@ -5,13 +5,12 @@
 
 using osu.Framework.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
+
+public class GeneratorConfigMenu : MenuItem
 {
-    public class GeneratorConfigMenu : MenuItem
+    public GeneratorConfigMenu(string text)
+        : base(text)
     {
-        public GeneratorConfigMenu(string text)
-            : base(text)
-        {
-        }
     }
 }

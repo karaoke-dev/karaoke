@@ -15,84 +15,83 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags.Components;
+
+public partial class LabelledOpacityAdjustment : LabelledSwitchButton
 {
-    public partial class LabelledOpacityAdjustment : LabelledSwitchButton
+    protected const float CONFIG_BUTTON_SIZE = 20f;
+
+    private readonly OpacityButton opacityButton;
+
+    public LabelledOpacityAdjustment()
     {
-        protected const float CONFIG_BUTTON_SIZE = 20f;
+        if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
+            return;
 
-        private readonly OpacityButton opacityButton;
-
-        public LabelledOpacityAdjustment()
+        // change padding to place config button.
+        fillFlowContainer.Padding = new MarginPadding
         {
-            if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
-                return;
+            Horizontal = CONTENT_PADDING_HORIZONTAL,
+            Vertical = CONTENT_PADDING_VERTICAL,
+            Right = CONTENT_PADDING_HORIZONTAL + CONFIG_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+        };
 
-            // change padding to place config button.
-            fillFlowContainer.Padding = new MarginPadding
+        // add config button.
+        AddInternal(new Container
+        {
+            RelativeSizeAxes = Axes.X,
+            AutoSizeAxes = Axes.Y,
+            Padding = new MarginPadding
             {
-                Horizontal = CONTENT_PADDING_HORIZONTAL,
-                Vertical = CONTENT_PADDING_VERTICAL,
-                Right = CONTENT_PADDING_HORIZONTAL + CONFIG_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                Top = CONTENT_PADDING_VERTICAL,
+                Right = CONTENT_PADDING_HORIZONTAL,
+            },
+            Child = opacityButton = new OpacityButton
+            {
+                Anchor = Anchor.TopRight,
+                Origin = Anchor.TopRight,
+                Size = new Vector2(CONFIG_BUTTON_SIZE),
+            }
+        });
+
+        Component.Current.BindValueChanged(_ => updateConfigButtonOpacity(), true);
+    }
+
+    private void updateConfigButtonOpacity()
+    {
+        bool showOpacityButton = Component.Current.Value;
+        opacityButton.FadeTo(showOpacityButton ? 1 : 0.3f, 200, Easing.OutQuint);
+        opacityButton.Enabled.Value = showOpacityButton;
+    }
+
+    public Bindable<float> Opacity
+    {
+        set => opacityButton.Current = value;
+    }
+
+    private partial class OpacityButton : IconButton, IHasPopover, IHasCurrentValue<float>
+    {
+        public Bindable<float> Current { get; set; }
+
+        public OpacityButton()
+        {
+            Icon = FontAwesome.Solid.Cog;
+            Action = this.ShowPopover;
+        }
+
+        public Popover GetPopover()
+            => new OsuPopover
+            {
+                Child = new OpacitySliderBar
+                {
+                    Width = 150,
+                    Current = Current,
+                }
             };
 
-            // add config button.
-            AddInternal(new Container
-            {
-                RelativeSizeAxes = Axes.X,
-                AutoSizeAxes = Axes.Y,
-                Padding = new MarginPadding
-                {
-                    Top = CONTENT_PADDING_VERTICAL,
-                    Right = CONTENT_PADDING_HORIZONTAL,
-                },
-                Child = opacityButton = new OpacityButton
-                {
-                    Anchor = Anchor.TopRight,
-                    Origin = Anchor.TopRight,
-                    Size = new Vector2(CONFIG_BUTTON_SIZE),
-                }
-            });
-
-            Component.Current.BindValueChanged(_ => updateConfigButtonOpacity(), true);
-        }
-
-        private void updateConfigButtonOpacity()
+        private partial class OpacitySliderBar : RoundedSliderBar<float>
         {
-            bool showOpacityButton = Component.Current.Value;
-            opacityButton.FadeTo(showOpacityButton ? 1 : 0.3f, 200, Easing.OutQuint);
-            opacityButton.Enabled.Value = showOpacityButton;
-        }
-
-        public Bindable<float> Opacity
-        {
-            set => opacityButton.Current = value;
-        }
-
-        private partial class OpacityButton : IconButton, IHasPopover, IHasCurrentValue<float>
-        {
-            public Bindable<float> Current { get; set; }
-
-            public OpacityButton()
-            {
-                Icon = FontAwesome.Solid.Cog;
-                Action = this.ShowPopover;
-            }
-
-            public Popover GetPopover()
-                => new OsuPopover
-                {
-                    Child = new OpacitySliderBar
-                    {
-                        Width = 150,
-                        Current = Current,
-                    }
-                };
-
-            private partial class OpacitySliderBar : RoundedSliderBar<float>
-            {
-                public override LocalisableString TooltipText => (Current.Value * 100).ToString("N0") + "%";
-            }
+            public override LocalisableString TooltipText => (Current.Value * 100).ToString("N0") + "%";
         }
     }
 }

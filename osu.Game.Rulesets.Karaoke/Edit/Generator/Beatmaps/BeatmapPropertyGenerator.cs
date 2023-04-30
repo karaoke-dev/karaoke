@@ -3,19 +3,18 @@
 
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
+
+/// <summary>
+/// Base interface of the auto-generator.
+/// </summary>
+/// <typeparam name="TProperty"></typeparam>
+/// <typeparam name="TConfig"></typeparam>
+public abstract class BeatmapPropertyGenerator<TProperty, TConfig> : PropertyGenerator<KaraokeBeatmap, TProperty, TConfig>
+    where TConfig : GeneratorConfig, new()
 {
-    /// <summary>
-    /// Base interface of the auto-generator.
-    /// </summary>
-    /// <typeparam name="TProperty"></typeparam>
-    /// <typeparam name="TConfig"></typeparam>
-    public abstract class BeatmapPropertyGenerator<TProperty, TConfig> : PropertyGenerator<KaraokeBeatmap, TProperty, TConfig>
-        where TConfig : GeneratorConfig, new()
+    protected BeatmapPropertyGenerator(TConfig config)
+        : base(config)
     {
-        protected BeatmapPropertyGenerator(TConfig config)
-            : base(config)
-        {
-        }
     }
 }

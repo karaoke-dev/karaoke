@@ -13,57 +13,56 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+
+public partial class DrawableSingerAvatar : CompositeDrawable
 {
-    public partial class DrawableSingerAvatar : CompositeDrawable
+    private readonly IBindable<string> bindableAvatarFile = new Bindable<string>();
+
+    private readonly Sprite avatar;
+
+    public DrawableSingerAvatar()
     {
-        private readonly IBindable<string> bindableAvatarFile = new Bindable<string>();
-
-        private readonly Sprite avatar;
-
-        public DrawableSingerAvatar()
+        InternalChild = avatar = new Sprite
         {
-            InternalChild = avatar = new Sprite
-            {
-                RelativeSizeAxes = Axes.Both,
-                FillMode = FillMode.Fit,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            };
-        }
+            RelativeSizeAxes = Axes.Both,
+            FillMode = FillMode.Fit,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(LargeTextureStore textures, IKaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider)
+    [BackgroundDependencyLoader]
+    private void load(LargeTextureStore textures, IKaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider)
+    {
+        bindableAvatarFile.BindValueChanged(_ =>
         {
-            bindableAvatarFile.BindValueChanged(_ =>
-            {
-                if (singer == null)
-                    avatar.Texture = getDefaultAvatar();
-                else
-                    avatar.Texture = karaokeBeatmapResourcesProvider.GetSingerAvatar(singer) ?? getDefaultAvatar();
+            if (singer == null)
+                avatar.Texture = getDefaultAvatar();
+            else
+                avatar.Texture = karaokeBeatmapResourcesProvider.GetSingerAvatar(singer) ?? getDefaultAvatar();
 
-                avatar.FadeInFromZero(500);
-            }, true);
+            avatar.FadeInFromZero(500);
+        }, true);
 
-            Texture getDefaultAvatar()
-                => textures.Get(@"Online/avatar-guest");
-        }
+        Texture getDefaultAvatar()
+            => textures.Get(@"Online/avatar-guest");
+    }
 
-        private ISinger singer;
+    private ISinger singer;
 
-        public virtual ISinger Singer
+    public virtual ISinger Singer
+    {
+        get => singer;
+        set
         {
-            get => singer;
-            set
-            {
-                singer = value;
+            singer = value;
 
-                if (singer is not Singer s)
-                    return;
+            if (singer is not Singer s)
+                return;
 
-                bindableAvatarFile.UnbindBindings();
-                bindableAvatarFile.BindTo(s.AvatarFileBindable);
-            }
+            bindableAvatarFile.UnbindBindings();
+            bindableAvatarFile.BindTo(s.AvatarFileBindable);
         }
     }
 }

@@ -18,139 +18,138 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
+
+public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
 {
-    public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    protected readonly Lyric Lyric;
+
+    protected TextTagBlueprintContainer(Lyric lyric)
+    {
+        Lyric = lyric;
+    }
+
+    protected override bool OnMouseDown(MouseDownEvent e)
+    {
+        lyricCaretState.MoveCaretToTargetPosition(Lyric);
+        return base.OnMouseDown(e);
+    }
+
+    protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
+        => blueprints.OrderBy(b => b.Item.StartIndex);
+
+    protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
+        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        protected readonly Lyric Lyric;
+        private float deltaScaleSize;
 
-        protected TextTagBlueprintContainer(Lyric lyric)
+        protected override void OnSelectionChanged()
         {
-            Lyric = lyric;
+            base.OnSelectionChanged();
+
+            // only select one ruby / romaji tag can let user drag to change start and end index.
+            SelectionBox.CanScaleX = SelectedItems.Count == 1;
+
+            // should clear delta size before change start/end index.
+            deltaScaleSize = 0;
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        #region User Input Handling
+
+        // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+        public override bool HandleMovement(MoveSelectionEvent<T> moveEvent)
         {
-            lyricCaretState.MoveCaretToTargetPosition(Lyric);
-            return base.OnMouseDown(e);
-        }
+            if (!SelectedItems.Any())
+                throw new InvalidOperationException("Should have at least one selected item.");
 
-        protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
-            => blueprints.OrderBy(b => b.Item.StartIndex);
+            float deltaXPosition = moveEvent.ScreenSpaceDelta.X;
+            Logger.LogPrint($"position: {deltaXPosition}", LoggingTarget.Information);
 
-        protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
-        {
-            [Resolved]
-            private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
-
-            private float deltaScaleSize;
-
-            protected override void OnSelectionChanged()
+            if (deltaXPosition < 0)
             {
-                base.OnSelectionChanged();
-
-                // only select one ruby / romaji tag can let user drag to change start and end index.
-                SelectionBox.CanScaleX = SelectedItems.Count == 1;
-
-                // should clear delta size before change start/end index.
-                deltaScaleSize = 0;
-            }
-
-            #region User Input Handling
-
-            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
-            public override bool HandleMovement(MoveSelectionEvent<T> moveEvent)
-            {
-                if (!SelectedItems.Any())
-                    throw new InvalidOperationException("Should have at least one selected item.");
-
-                float deltaXPosition = moveEvent.ScreenSpaceDelta.X;
-                Logger.LogPrint($"position: {deltaXPosition}", LoggingTarget.Information);
-
-                if (deltaXPosition < 0)
-                {
-                    var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex);
-                    int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
-                    int offset = newStartIndex - firstTimeTag!.StartIndex;
-                    if (offset == 0)
-                        return false;
-
-                    SetTextTagShifting(SelectedItems, -1);
-                }
-                else
-                {
-                    var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex);
-                    int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
-                    int offset = newEndIndex - lastTimeTag!.EndIndex;
-                    if (offset == 0)
-                        return false;
-
-                    SetTextTagShifting(SelectedItems, 1);
-                }
-
-                return true;
-            }
-
-            public override bool HandleScale(Vector2 scale, Anchor anchor)
-            {
-                deltaScaleSize += scale.X;
-
-                // this feature only works if only select one ruby / romaji tag.
-                var selectedTextTag = SelectedItems.FirstOrDefault();
-                if (selectedTextTag == null)
+                var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex);
+                int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
+                int offset = newStartIndex - firstTimeTag!.StartIndex;
+                if (offset == 0)
                     return false;
 
-                switch (anchor)
-                {
-                    case Anchor.CentreLeft:
-                        int newStartIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                        if (!TextTagUtils.ValidNewStartIndex(selectedTextTag, newStartIndex))
-                            return false;
-
-                        SetTextTagIndex(selectedTextTag, newStartIndex, null);
-                        return true;
-
-                    case Anchor.CentreRight:
-                        int newEndIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                        if (!TextTagUtils.ValidNewEndIndex(selectedTextTag, newEndIndex))
-                            return false;
-
-                        SetTextTagIndex(selectedTextTag, null, newEndIndex);
-                        return true;
-
-                    default:
-                        return false;
-                }
+                SetTextTagShifting(SelectedItems, -1);
             }
-
-            private int calculateNewIndex(T textTag, float offset, Anchor anchor)
+            else
             {
-                // get real left-side and right-side position
-                var rect = karaokeSpriteText.GetTextTagPosition(textTag);
+                var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex);
+                int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
+                int offset = newEndIndex - lastTimeTag!.EndIndex;
+                if (offset == 0)
+                    return false;
 
-                switch (anchor)
-                {
-                    case Anchor.CentreLeft:
-                        float leftPosition = rect.Left + offset;
-                        return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(leftPosition));
-
-                    case Anchor.CentreRight:
-                        float rightPosition = rect.Right + offset;
-                        return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(rightPosition));
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(anchor));
-                }
+                SetTextTagShifting(SelectedItems, 1);
             }
 
-            #endregion
-
-            protected abstract void SetTextTagShifting(IEnumerable<T> textTags, int offset);
-
-            protected abstract void SetTextTagIndex(T textTag, int? startPosition, int? endPosition);
+            return true;
         }
+
+        public override bool HandleScale(Vector2 scale, Anchor anchor)
+        {
+            deltaScaleSize += scale.X;
+
+            // this feature only works if only select one ruby / romaji tag.
+            var selectedTextTag = SelectedItems.FirstOrDefault();
+            if (selectedTextTag == null)
+                return false;
+
+            switch (anchor)
+            {
+                case Anchor.CentreLeft:
+                    int newStartIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
+                    if (!TextTagUtils.ValidNewStartIndex(selectedTextTag, newStartIndex))
+                        return false;
+
+                    SetTextTagIndex(selectedTextTag, newStartIndex, null);
+                    return true;
+
+                case Anchor.CentreRight:
+                    int newEndIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
+                    if (!TextTagUtils.ValidNewEndIndex(selectedTextTag, newEndIndex))
+                        return false;
+
+                    SetTextTagIndex(selectedTextTag, null, newEndIndex);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        private int calculateNewIndex(T textTag, float offset, Anchor anchor)
+        {
+            // get real left-side and right-side position
+            var rect = karaokeSpriteText.GetTextTagPosition(textTag);
+
+            switch (anchor)
+            {
+                case Anchor.CentreLeft:
+                    float leftPosition = rect.Left + offset;
+                    return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(leftPosition));
+
+                case Anchor.CentreRight:
+                    float rightPosition = rect.Right + offset;
+                    return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(rightPosition));
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(anchor));
+            }
+        }
+
+        #endregion
+
+        protected abstract void SetTextTagShifting(IEnumerable<T> textTags, int offset);
+
+        protected abstract void SetTextTagIndex(T textTag, int? startPosition, int? endPosition);
     }
 }

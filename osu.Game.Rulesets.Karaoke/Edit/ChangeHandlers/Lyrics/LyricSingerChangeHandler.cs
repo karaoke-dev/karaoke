@@ -7,69 +7,68 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public partial class LyricSingerChangeHandler : LyricPropertyChangeHandler, ILyricSingerChangeHandler
 {
-    public partial class LyricSingerChangeHandler : LyricPropertyChangeHandler, ILyricSingerChangeHandler
+    public void Add(ISinger singer)
     {
-        public void Add(ISinger singer)
+        PerformOnSelection(lyric =>
         {
-            PerformOnSelection(lyric =>
+            lyric.SingerIds.Add(singer.ID);
+
+            TriggerHitObjectUpdate(lyric);
+        });
+    }
+
+    public void AddRange(IEnumerable<ISinger> singers)
+    {
+        PerformOnSelection(lyric =>
+        {
+            // should convert to array because enumerable might change while deleting.
+            foreach (var singer in singers.ToArray())
             {
                 lyric.SingerIds.Add(singer.ID);
+            }
 
-                TriggerHitObjectUpdate(lyric);
-            });
-        }
+            TriggerHitObjectUpdate(lyric);
+        });
+    }
 
-        public void AddRange(IEnumerable<ISinger> singers)
+    public void Remove(ISinger singer)
+    {
+        PerformOnSelection(lyric =>
         {
-            PerformOnSelection(lyric =>
-            {
-                // should convert to array because enumerable might change while deleting.
-                foreach (var singer in singers.ToArray())
-                {
-                    lyric.SingerIds.Add(singer.ID);
-                }
+            lyric.SingerIds.Remove(singer.ID);
 
-                TriggerHitObjectUpdate(lyric);
-            });
-        }
+            TriggerHitObjectUpdate(lyric);
+        });
+    }
 
-        public void Remove(ISinger singer)
+    public void RemoveRange(IEnumerable<ISinger> singers)
+    {
+        PerformOnSelection(lyric =>
         {
-            PerformOnSelection(lyric =>
+            // should convert to array because enumerable might change while deleting.
+            foreach (var singer in singers.ToArray())
             {
                 lyric.SingerIds.Remove(singer.ID);
+            }
 
-                TriggerHitObjectUpdate(lyric);
-            });
-        }
-
-        public void RemoveRange(IEnumerable<ISinger> singers)
-        {
-            PerformOnSelection(lyric =>
-            {
-                // should convert to array because enumerable might change while deleting.
-                foreach (var singer in singers.ToArray())
-                {
-                    lyric.SingerIds.Remove(singer.ID);
-                }
-
-                TriggerHitObjectUpdate(lyric);
-            });
-        }
-
-        public void Clear()
-        {
-            PerformOnSelection(lyric =>
-            {
-                lyric.SingerIds.Clear();
-
-                TriggerHitObjectUpdate(lyric);
-            });
-        }
-
-        protected override bool IsWritePropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.SingerIds));
+            TriggerHitObjectUpdate(lyric);
+        });
     }
+
+    public void Clear()
+    {
+        PerformOnSelection(lyric =>
+        {
+            lyric.SingerIds.Clear();
+
+            TriggerHitObjectUpdate(lyric);
+        });
+    }
+
+    protected override bool IsWritePropertyLocked(Lyric lyric)
+        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.SingerIds));
 }

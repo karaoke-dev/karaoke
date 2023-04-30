@@ -5,13 +5,12 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Argon
+namespace osu.Game.Rulesets.Karaoke.Skinning.Argon;
+
+public class KaraokeArgonSkinTransformer : KaraokeDefaultSkinTransformer
 {
-    public class KaraokeArgonSkinTransformer : KaraokeDefaultSkinTransformer
+    public KaraokeArgonSkinTransformer(ISkin skin, IBeatmap beatmap)
+        : base(skin, beatmap)
     {
-        public KaraokeArgonSkinTransformer(ISkin skin, IBeatmap beatmap)
-            : base(skin, beatmap)
-        {
-        }
     }
 }

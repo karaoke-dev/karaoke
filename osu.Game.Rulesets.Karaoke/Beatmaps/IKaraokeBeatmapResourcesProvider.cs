@@ -4,10 +4,9 @@
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Beatmaps;
+
+public interface IKaraokeBeatmapResourcesProvider
 {
-    public interface IKaraokeBeatmapResourcesProvider
-    {
-        Texture? GetSingerAvatar(ISinger singer);
-    }
+    Texture? GetSingerAvatar(ISinger singer);
 }

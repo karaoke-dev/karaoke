@@ -13,54 +13,53 @@ using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.Karaoke.UI
+namespace osu.Game.Rulesets.Karaoke.UI;
+
+/// <summary>
+/// Having a place to get all user customize font.
+/// todo : need to check will have better place or not.
+/// </summary>
+public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
 {
-    /// <summary>
-    /// Having a place to get all user customize font.
-    /// todo : need to check will have better place or not.
-    /// </summary>
-    public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
+    [Resolved]
+    private FontStore fontStore { get; set; }
+
+    private KaraokeLocalFontStore localFontStore;
+
+    [BackgroundDependencyLoader]
+    private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager manager)
     {
-        [Resolved]
-        private FontStore fontStore { get; set; }
-
-        private KaraokeLocalFontStore localFontStore;
-
-        [BackgroundDependencyLoader]
-        private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager manager)
+        // get all font usage which wants to import.
+        var targetImportFonts = new[]
         {
-            // get all font usage which wants to import.
-            var targetImportFonts = new[]
-            {
-                manager.Get<FontUsage>(KaraokeRulesetSetting.MainFont),
-                manager.Get<FontUsage>(KaraokeRulesetSetting.RubyFont),
-                manager.Get<FontUsage>(KaraokeRulesetSetting.RomajiFont),
-                manager.Get<FontUsage>(KaraokeRulesetSetting.TranslateFont),
-                manager.Get<FontUsage>(KaraokeRulesetSetting.NoteFont),
-            };
+            manager.Get<FontUsage>(KaraokeRulesetSetting.MainFont),
+            manager.Get<FontUsage>(KaraokeRulesetSetting.RubyFont),
+            manager.Get<FontUsage>(KaraokeRulesetSetting.RomajiFont),
+            manager.Get<FontUsage>(KaraokeRulesetSetting.TranslateFont),
+            manager.Get<FontUsage>(KaraokeRulesetSetting.NoteFont),
+        };
 
-            var fontInfos = targetImportFonts
-                            .Distinct()
-                            .ToArray();
+        var fontInfos = targetImportFonts
+                        .Distinct()
+                        .ToArray();
 
-            if (!fontInfos.Any())
-                return;
+        if (!fontInfos.Any())
+            return;
 
-            // create local font store and import those files
-            localFontStore = new KaraokeLocalFontStore(fontManager, renderer);
-            fontStore.AddStore(localFontStore);
+        // create local font store and import those files
+        localFontStore = new KaraokeLocalFontStore(fontManager, renderer);
+        fontStore.AddStore(localFontStore);
 
-            foreach (var fontInfo in fontInfos)
-            {
-                localFontStore.AddFont(fontInfo);
-            }
-        }
-
-        protected override void Dispose(bool isDisposing)
+        foreach (var fontInfo in fontInfos)
         {
-            base.Dispose(isDisposing);
-
-            fontStore?.RemoveStore(localFontStore);
+            localFontStore.AddFont(fontInfo);
         }
+    }
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        fontStore?.RemoveStore(localFontStore);
     }
 }

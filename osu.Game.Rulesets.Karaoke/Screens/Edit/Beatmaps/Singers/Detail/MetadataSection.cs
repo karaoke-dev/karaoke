@@ -8,43 +8,42 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail;
+
+internal partial class MetadataSection : EditSingerSection
 {
-    internal partial class MetadataSection : EditSingerSection
+    protected override LocalisableString Title => "Metadata";
+
+    public MetadataSection(Singer singer)
     {
-        protected override LocalisableString Title => "Metadata";
-
-        public MetadataSection(Singer singer)
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new LabelledTextBox
             {
-                new LabelledTextBox
-                {
-                    Label = "Singer",
-                    Current = singer.NameBindable,
-                    TabbableContentContainer = this
-                },
-                new LabelledTextBox
-                {
-                    Label = "Romaji name",
-                    Current = singer.RomajiNameBindable,
-                    TabbableContentContainer = this
-                },
-                new LabelledTextBox
-                {
-                    Label = "English name",
-                    Current = singer.EnglishNameBindable,
-                    TabbableContentContainer = this
-                },
-                new LabelledTextBox
-                {
-                    Label = "Description",
-                    Current = singer.DescriptionBindable,
-                    TabbableContentContainer = this
-                },
-            };
+                Label = "Singer",
+                Current = singer.NameBindable,
+                TabbableContentContainer = this
+            },
+            new LabelledTextBox
+            {
+                Label = "Romaji name",
+                Current = singer.RomajiNameBindable,
+                TabbableContentContainer = this
+            },
+            new LabelledTextBox
+            {
+                Label = "English name",
+                Current = singer.EnglishNameBindable,
+                TabbableContentContainer = this
+            },
+            new LabelledTextBox
+            {
+                Label = "Description",
+                Current = singer.DescriptionBindable,
+                TabbableContentContainer = this
+            },
+        };
 
-            // todo: see NoteEditPopover to implement the undo behavior.
-        }
+        // todo: see NoteEditPopover to implement the undo behavior.
     }
 }

@@ -9,87 +9,86 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Containers;
+
+public abstract partial class BindableScrollContainer : ZoomableScrollContainer
 {
-    public abstract partial class BindableScrollContainer : ZoomableScrollContainer
+    protected readonly BindableFloat BindableZoom = new();
+    protected readonly BindableFloat BindableCurrent = new();
+
+    protected BindableScrollContainer()
     {
-        protected readonly BindableFloat BindableZoom = new();
-        protected readonly BindableFloat BindableCurrent = new();
+        ZoomDuration = 200;
+        ZoomEasing = Easing.OutQuint;
+        ScrollbarVisible = false;
 
-        protected BindableScrollContainer()
+        BindableZoom.MaxValueChanged += assignZoomRange;
+        BindableZoom.MinValueChanged += assignZoomRange;
+
+        void assignZoomRange(float _)
         {
-            ZoomDuration = 200;
-            ZoomEasing = Easing.OutQuint;
-            ScrollbarVisible = false;
-
-            BindableZoom.MaxValueChanged += assignZoomRange;
-            BindableZoom.MinValueChanged += assignZoomRange;
-
-            void assignZoomRange(float _)
-            {
-                // we should make sure that will not cause error while assigning the size.
-                float initial = Math.Clamp(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
-                float minimum = BindableZoom.MinValue;
-                float maximum = BindableZoom.MaxValue;
-                SetupZoom(initial, minimum, maximum);
-            }
-
-            BindableZoom.BindValueChanged(e =>
-            {
-                if (e.NewValue == Zoom)
-                    return;
-
-                Zoom = e.NewValue;
-            }, true);
-
-            BindableCurrent.BindValueChanged(e =>
-            {
-                ScrollTo(e.NewValue);
-            }, true);
+            // we should make sure that will not cause error while assigning the size.
+            float initial = Math.Clamp(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
+            float minimum = BindableZoom.MinValue;
+            float maximum = BindableZoom.MaxValue;
+            SetupZoom(initial, minimum, maximum);
         }
 
-        protected override bool OnScroll(ScrollEvent e)
+        BindableZoom.BindValueChanged(e =>
         {
-            bool zoneChanged = base.OnScroll(e);
-            if (!zoneChanged)
-                return false;
+            if (e.NewValue == Zoom)
+                return;
 
-            if (e.AltPressed)
-            {
-                // todo : this event not working while zooming, because zooming will also call scroll to.
-                // bindableCurrent.Value = getCurrentPosition();
+            Zoom = e.NewValue;
+        }, true);
 
-                // Update zoom to target, ignore easing value.
-                BindableZoom.Value = Zoom;
-            }
+        BindableCurrent.BindValueChanged(e =>
+        {
+            ScrollTo(e.NewValue);
+        }, true);
+    }
 
-            return true;
+    protected override bool OnScroll(ScrollEvent e)
+    {
+        bool zoneChanged = base.OnScroll(e);
+        if (!zoneChanged)
+            return false;
 
-            /*
-            float getCurrentPosition()
-            {
-                // params
-                var zoomedContent = Content;
-                var focusPoint = zoomedContent.ToLocalSpace(e.ScreenSpaceMousePosition).X;
-                var contentSize = zoomedContent.DrawWidth;
-                var scrollOffset = Current;
+        if (e.AltPressed)
+        {
+            // todo : this event not working while zooming, because zooming will also call scroll to.
+            // bindableCurrent.Value = getCurrentPosition();
 
-                // calculation
-                float focusOffset = focusPoint - scrollOffset;
-                float expectedWidth = DrawWidth * Zoom;
-                float targetOffset = expectedWidth * (focusPoint / contentSize) - focusOffset;
-
-                return targetOffset;
-            }
-            */
+            // Update zoom to target, ignore easing value.
+            BindableZoom.Value = Zoom;
         }
 
-        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
-        {
-            base.OnUserScroll(value, animated, distanceDecay);
+        return true;
 
-            // update current value if user scroll to.
-            BindableCurrent.Value = value;
+        /*
+        float getCurrentPosition()
+        {
+            // params
+            var zoomedContent = Content;
+            var focusPoint = zoomedContent.ToLocalSpace(e.ScreenSpaceMousePosition).X;
+            var contentSize = zoomedContent.DrawWidth;
+            var scrollOffset = Current;
+
+            // calculation
+            float focusOffset = focusPoint - scrollOffset;
+            float expectedWidth = DrawWidth * Zoom;
+            float targetOffset = expectedWidth * (focusPoint / contentSize) - focusOffset;
+
+            return targetOffset;
         }
+        */
+    }
+
+    protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
+    {
+        base.OnUserScroll(value, animated, distanceDecay);
+
+        // update current value if user scroll to.
+        BindableCurrent.Value = value;
     }
 }

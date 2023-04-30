@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricTextTagsChangeHandler<in TTextTag> : ILyricListPropertyChangeHandler<TTextTag> where TTextTag : ITextTag
 {
-    public interface ILyricTextTagsChangeHandler<in TTextTag> : ILyricListPropertyChangeHandler<TTextTag> where TTextTag : ITextTag
-    {
-        void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
+    void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
 
-        void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset);
+    void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset);
 
-        void SetText(TTextTag textTag, string text);
-    }
+    void SetText(TTextTag textTag, string text);
 }

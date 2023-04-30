@@ -5,20 +5,19 @@
 
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
+
+public enum KaraokeBeatmapEditorScreenMode
 {
-    public enum KaraokeBeatmapEditorScreenMode
-    {
-        [Description("Lyric")]
-        Lyric,
+    [Description("Lyric")]
+    Lyric,
 
-        [Description("Singer")]
-        Singer,
+    [Description("Singer")]
+    Singer,
 
-        [Description("Translate")]
-        Translate,
+    [Description("Translate")]
+    Translate,
 
-        [Description("Page")]
-        Page,
-    }
+    [Description("Page")]
+    Page,
 }

@@ -7,18 +7,17 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public interface ILyricImporterStepScreen : IScreen
 {
-    public interface ILyricImporterStepScreen : IScreen
-    {
-        LyricImporterStep Step { get; }
+    LyricImporterStep Step { get; }
 
-        string Title { get; }
+    string Title { get; }
 
-        string ShortTitle { get; }
+    string ShortTitle { get; }
 
-        IconUsage Icon { get; }
+    IconUsage Icon { get; }
 
-        void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack);
-    }
+    void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack);
 }

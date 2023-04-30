@@ -11,50 +11,49 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
+
+public partial class LyricsProvider : Component, ILyricsProvider
 {
-    public partial class LyricsProvider : Component, ILyricsProvider
+    /// <summary>
+    /// Get the bindable lyrics with sorted order.
+    /// </summary>
+    public BindableList<Lyric> BindableLyrics { get; } = new();
+
+    [BackgroundDependencyLoader]
+    private void load(EditorBeatmap beatmap)
     {
-        /// <summary>
-        /// Get the bindable lyrics with sorted order.
-        /// </summary>
-        public BindableList<Lyric> BindableLyrics { get; } = new();
+        // Load the lyric into bindable list.
+        // And notice that order change in the bindable will not affect the order in the editor beatmap.
+        // The hit object in the editor beatmap will auto sort by the time.
+        var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
+        BindableLyrics.AddRange(lyrics);
 
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        // need to check is there any lyric added or removed.
+        beatmap.HitObjectAdded += e =>
         {
-            // Load the lyric into bindable list.
-            // And notice that order change in the bindable will not affect the order in the editor beatmap.
-            // The hit object in the editor beatmap will auto sort by the time.
-            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
-            BindableLyrics.AddRange(lyrics);
+            if (e is not Lyric lyric)
+                return;
 
-            // need to check is there any lyric added or removed.
-            beatmap.HitObjectAdded += e =>
+            var previousLyric = BindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
+
+            if (previousLyric != null)
             {
-                if (e is not Lyric lyric)
-                    return;
-
-                var previousLyric = BindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
-
-                if (previousLyric != null)
-                {
-                    int insertIndex = BindableLyrics.IndexOf(previousLyric) + 1;
-                    BindableLyrics.Insert(insertIndex, lyric);
-                }
-                else
-                {
-                    // insert to first.
-                    BindableLyrics.Insert(0, lyric);
-                }
-            };
-            beatmap.HitObjectRemoved += e =>
+                int insertIndex = BindableLyrics.IndexOf(previousLyric) + 1;
+                BindableLyrics.Insert(insertIndex, lyric);
+            }
+            else
             {
-                if (e is not Lyric lyric)
-                    return;
+                // insert to first.
+                BindableLyrics.Insert(0, lyric);
+            }
+        };
+        beatmap.HitObjectRemoved += e =>
+        {
+            if (e is not Lyric lyric)
+                return;
 
-                BindableLyrics.Remove(lyric);
-            };
-        }
+            BindableLyrics.Remove(lyric);
+        };
     }
 }

@@ -4,13 +4,12 @@
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Judgements
+namespace osu.Game.Rulesets.Karaoke.Judgements;
+
+public class KaraokeJudgementResult : JudgementResult
 {
-    public class KaraokeJudgementResult : JudgementResult
+    public KaraokeJudgementResult(HitObject hitObject, Judgement judgement)
+        : base(hitObject, judgement)
     {
-        public KaraokeJudgementResult(HitObject hitObject, Judgement judgement)
-            : base(hitObject, judgement)
-        {
-        }
     }
 }

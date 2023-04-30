@@ -4,22 +4,21 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Objects
+namespace osu.Game.Rulesets.Karaoke.Objects;
+
+public class Title : KaraokeHitObject, IHasDuration
 {
-    public class Title : KaraokeHitObject, IHasDuration
-    {
-        public string Name { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-        public int KaraokeLayoutIndex { get; set; }
+    public int KaraokeLayoutIndex { get; set; }
 
-        public double Duration { get; set; }
+    public double Duration { get; set; }
 
-        public double EndTime => StartTime + Duration;
+    public double EndTime => StartTime + Duration;
 
-        public int LineInterval { get; set; }
+    public int LineInterval { get; set; }
 
-        public bool ShowRuby { get; set; }
+    public bool ShowRuby { get; set; }
 
-        public IList<TitlePart> TitleParts { get; set; } = new List<TitlePart>();
-    }
+    public IList<TitlePart> TitleParts { get; set; } = new List<TitlePart>();
 }

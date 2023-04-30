@@ -7,18 +7,17 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.RecordingTimeTags;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor;
+
+public partial class RecordingTimeTagBottomEditor : BaseBottomEditor
 {
-    public partial class RecordingTimeTagBottomEditor : BaseBottomEditor
+    public override float ContentHeight => 60;
+
+    protected override Drawable CreateInfo()
     {
-        public override float ContentHeight => 60;
-
-        protected override Drawable CreateInfo()
-        {
-            // todo : waiting for implementation.
-            return new Container();
-        }
-
-        protected override Drawable CreateContent() => new RecordingTimeTagScrollContainer();
+        // todo : waiting for implementation.
+        return new Container();
     }
+
+    protected override Drawable CreateContent() => new RecordingTimeTagScrollContainer();
 }

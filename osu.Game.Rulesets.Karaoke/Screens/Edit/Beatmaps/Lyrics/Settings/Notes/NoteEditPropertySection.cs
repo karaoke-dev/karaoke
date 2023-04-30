@@ -15,166 +15,165 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
+
+public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
 {
-    public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
+    protected override LocalisableString Title => "Properties";
+
+    protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new NotePropertiesEditor();
+
+    protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+        => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric); //todo: should reference by another utils.
+
+    protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            LockLyricPropertyBy.ReferenceLyricConfig => "Notes is sync to another notes.",
+            LockLyricPropertyBy.LockState => "Notes is locked.",
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
+
+    protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the notes because it's sync to another lyric's notes.",
+            LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the note.",
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
+
+    private partial class NotePropertiesEditor : LyricPropertiesEditor
     {
-        protected override LocalisableString Title => "Properties";
+        private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
 
-        protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new NotePropertiesEditor();
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
-        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric); //todo: should reference by another utils.
-
-        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Notes is sync to another notes.",
-                LockLyricPropertyBy.LockState => "Notes is locked.",
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
-
-        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the notes because it's sync to another lyric's notes.",
-                LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the note.",
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
-
-        private partial class NotePropertiesEditor : LyricPropertiesEditor
+        public NotePropertiesEditor()
         {
-            private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
-
-            [Resolved]
-            private EditorBeatmap beatmap { get; set; }
-
-            public NotePropertiesEditor()
+            bindableNoteEditPropertyMode.BindValueChanged(e =>
             {
-                bindableNoteEditPropertyMode.BindValueChanged(e =>
+                RedrewContent();
+            });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IEditNoteModeState editNoteModeState)
+        {
+            bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
+        }
+
+        protected override Drawable CreateDrawable(Note item)
+        {
+            // todo: deal with create or remove the notes.
+            int index = Items.IndexOf(item);
+            return bindableNoteEditPropertyMode.Value switch
+            {
+                NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(item)
                 {
-                    RedrewContent();
-                });
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(IEditNoteModeState editNoteModeState)
-            {
-                bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
-            }
-
-            protected override Drawable CreateDrawable(Note item)
-            {
-                // todo: deal with create or remove the notes.
-                int index = Items.IndexOf(item);
-                return bindableNoteEditPropertyMode.Value switch
+                    Label = $"#{index + 1}",
+                    TabbableContentContainer = this
+                },
+                NoteEditPropertyMode.RubyText => new LabelledNoteRubyTextTextBox(item)
                 {
-                    NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(item)
-                    {
-                        Label = $"#{index + 1}",
-                        TabbableContentContainer = this
-                    },
-                    NoteEditPropertyMode.RubyText => new LabelledNoteRubyTextTextBox(item)
-                    {
-                        Label = item.Text,
-                        TabbableContentContainer = this
-                    },
-                    NoteEditPropertyMode.Display => new LabelledNoteDisplaySwitchButton(item)
-                    {
-                        Label = item.Text,
-                    },
-                    _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value))
-                };
-            }
-
-            protected override EditorSectionButton CreateCreateNewItemButton() => null;
-
-            protected override IBindableList<Note> GetItems(Lyric lyric)
-            {
-                var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
-                return new BindableList<Note>(notes);
-            }
+                    Label = item.Text,
+                    TabbableContentContainer = this
+                },
+                NoteEditPropertyMode.Display => new LabelledNoteDisplaySwitchButton(item)
+                {
+                    Label = item.Text,
+                },
+                _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value))
+            };
         }
 
-        private partial class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
+        protected override EditorSectionButton CreateCreateNewItemButton() => null;
+
+        protected override IBindableList<Note> GetItems(Lyric lyric)
         {
-            [Resolved]
-            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+            var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
+            return new BindableList<Note>(notes);
+        }
+    }
 
-            [Resolved]
-            private IEditNoteModeState editNoteModeState { get; set; }
+    private partial class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
+    {
+        [Resolved]
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 
-            public LabelledNoteTextTextBox(Note item)
-                : base(item)
-            {
-            }
+        [Resolved]
+        private IEditNoteModeState editNoteModeState { get; set; }
 
-            protected override void TriggerSelect(Note item)
-                => editNoteModeState.Select(item);
-
-            protected override string GetFieldValue(Note note)
-                => note.Text;
-
-            protected override void ApplyValue(Note note, string value)
-                => notePropertyChangeHandler.ChangeText(value);
-
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                SelectedItems.BindTo(editNoteModeState.SelectedItems);
-            }
+        public LabelledNoteTextTextBox(Note item)
+            : base(item)
+        {
         }
 
-        private partial class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
+        protected override void TriggerSelect(Note item)
+            => editNoteModeState.Select(item);
+
+        protected override string GetFieldValue(Note note)
+            => note.Text;
+
+        protected override void ApplyValue(Note note, string value)
+            => notePropertyChangeHandler.ChangeText(value);
+
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            [Resolved]
-            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+            SelectedItems.BindTo(editNoteModeState.SelectedItems);
+        }
+    }
 
-            [Resolved]
-            private IEditNoteModeState editNoteModeState { get; set; }
+    private partial class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
+    {
+        [Resolved]
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 
-            public LabelledNoteRubyTextTextBox(Note item)
-                : base(item)
-            {
-            }
+        [Resolved]
+        private IEditNoteModeState editNoteModeState { get; set; }
 
-            protected override void TriggerSelect(Note item)
-                => editNoteModeState.Select(item);
-
-            protected override string GetFieldValue(Note note)
-                => note.RubyText;
-
-            protected override void ApplyValue(Note note, string value)
-                => notePropertyChangeHandler.ChangeRubyText(value);
-
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                SelectedItems.BindTo(editNoteModeState.SelectedItems);
-            }
+        public LabelledNoteRubyTextTextBox(Note item)
+            : base(item)
+        {
         }
 
-        private partial class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
+        protected override void TriggerSelect(Note item)
+            => editNoteModeState.Select(item);
+
+        protected override string GetFieldValue(Note note)
+            => note.RubyText;
+
+        protected override void ApplyValue(Note note, string value)
+            => notePropertyChangeHandler.ChangeRubyText(value);
+
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            [Resolved]
-            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+            SelectedItems.BindTo(editNoteModeState.SelectedItems);
+        }
+    }
 
-            public LabelledNoteDisplaySwitchButton(Note item)
-                : base(item)
-            {
-            }
+    private partial class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
+    {
+        [Resolved]
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
 
-            protected override bool GetFieldValue(Note note)
-                => note.Display;
+        public LabelledNoteDisplaySwitchButton(Note item)
+            : base(item)
+        {
+        }
 
-            protected override void ApplyValue(Note note, bool value)
-                => notePropertyChangeHandler.ChangeDisplayState(value);
+        protected override bool GetFieldValue(Note note)
+            => note.Display;
 
-            [BackgroundDependencyLoader]
-            private void load(IEditNoteModeState editNoteModeState)
-            {
-                SelectedItems.BindTo(editNoteModeState.SelectedItems);
-            }
+        protected override void ApplyValue(Note note, bool value)
+            => notePropertyChangeHandler.ChangeDisplayState(value);
+
+        [BackgroundDependencyLoader]
+        private void load(IEditNoteModeState editNoteModeState)
+        {
+            SelectedItems.BindTo(editNoteModeState.SelectedItems);
         }
     }
 }

@@ -14,163 +14,162 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
+
+public abstract partial class HitObjectChangeHandler<THitObject> : Component where THitObject : HitObject
 {
-    public abstract partial class HitObjectChangeHandler<THitObject> : Component where THitObject : HitObject
+    private readonly Cached changingCache = new();
+
+    private bool triggerBeatmapSave = true;
+
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
+
+    protected HitObjectChangeHandler()
     {
-        private readonly Cached changingCache = new();
+        changingCache.Validate();
+    }
 
-        private bool triggerBeatmapSave = true;
+    protected void CheckExactlySelectedOneHitObject()
+    {
+        if (beatmap.SelectedHitObjects.OfType<THitObject>().Count() != 1)
+            throw new InvalidOperationException($"Should be exactly one {nameof(THitObject)} being selected.");
+    }
 
-        [Resolved, AllowNull]
-        private EditorBeatmap beatmap { get; set; }
+    // Can remove this method after as TransactionalCommitComponent injection for all rulesets(means customized ruleset is able to save/load beatmap).
+    // we can use changeHandler.TransactionActive to check if there's any active transaction.
+    // e.g. : changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive
+    protected void NotTriggerSaveStateOnThisChange()
+    {
+        triggerBeatmapSave = false;
+    }
 
-        protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
+    protected virtual void PerformOnSelection(Action<THitObject> action)
+        => PerformOnSelection<THitObject>(action);
 
-        protected HitObjectChangeHandler()
+    protected void PerformOnSelection<T>(Action<T> action) where T : HitObject
+    {
+        if (!changingCache.IsValid)
+            throw new NotSupportedException("Cannot trigger the change while applying another change.");
+
+        if (beatmap.SelectedHitObjects.Count == 0)
+            throw new NotSupportedException($"Should contain at least one selected {nameof(THitObject)}");
+
+        changingCache.Invalidate();
+
+        try
+        {
+            // todo: follow-up the discussion in the https://github.com/karaoke-dev/karaoke/pull/1669 after support the change handler for customized ruleset.
+            if (triggerBeatmapSave)
+            {
+                // should trigger the UpdateState() in the editor beatmap only if there's no active state.
+                beatmap.PerformOnSelection(h =>
+                {
+                    if (h is T tHitObject)
+                        action(tHitObject);
+                });
+            }
+            else
+            {
+                // Just update the object property if already in the changing state.
+                // e.g. dragging.
+                beatmap.SelectedHitObjects.ForEach(h =>
+                {
+                    if (h is T tHitObject)
+                        action(tHitObject);
+                });
+            }
+        }
+        catch
+        {
+            // We should make sure that editor beatmap will end the change if still changing.
+            // will goes to here if have exception in the change handler.
+            if (beatmap.TransactionActive)
+                beatmap.EndChange();
+
+            throw;
+        }
+        finally
         {
             changingCache.Validate();
+            triggerBeatmapSave = true;
         }
+    }
 
-        protected void CheckExactlySelectedOneHitObject()
+    protected void AddRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Add);
+
+    protected virtual void Add<T>(T hitObject) where T : HitObject
+    {
+        bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
+        if (containsInBeatmap)
+            throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
+
+        if (isCreateObjectLocked(hitObject))
+            throw new AddOrRemoveForbiddenException();
+
+        beatmap.Add(hitObject);
+    }
+
+    protected virtual void Insert<T>(int index, T hitObject) where T : HitObject
+    {
+        bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
+        if (containsInBeatmap)
+            throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
+
+        if (isCreateObjectLocked(hitObject))
+            throw new AddOrRemoveForbiddenException();
+
+        beatmap.Insert(index, hitObject);
+    }
+
+    protected void RemoveRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Remove);
+
+    protected void Remove<T>(T hitObject) where T : HitObject
+    {
+        if (isRemoveObjectLocked(hitObject))
+            throw new AddOrRemoveForbiddenException();
+
+        beatmap.Remove(hitObject);
+    }
+
+    private bool isCreateObjectLocked<T>(T hitObject)
+    {
+        return hitObject switch
         {
-            if (beatmap.SelectedHitObjects.OfType<THitObject>().Count() != 1)
-                throw new InvalidOperationException($"Should be exactly one {nameof(THitObject)} being selected.");
+            Lyric => false,
+            Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
+            _ => throw new InvalidCastException()
+        };
+    }
+
+    private bool isRemoveObjectLocked<T>(T hitObject)
+    {
+        switch (hitObject)
+        {
+            case Lyric lyric:
+                bool hasReferenceLyric = EditorBeatmapUtils.GetAllReferenceLyrics(beatmap, lyric).Any();
+                return hasReferenceLyric || HitObjectWritableUtils.IsRemoveLyricLocked(lyric);
+
+            case Note note:
+                return note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric);
+
+            default:
+                throw new InvalidCastException();
         }
+    }
 
-        // Can remove this method after as TransactionalCommitComponent injection for all rulesets(means customized ruleset is able to save/load beatmap).
-        // we can use changeHandler.TransactionActive to check if there's any active transaction.
-        // e.g. : changeHandler is TransactionalCommitComponent transactionalCommitComponent && !transactionalCommitComponent.TransactionActive
-        protected void NotTriggerSaveStateOnThisChange()
+    protected void TriggerHitObjectUpdate<T>(T hitObject) where T : HitObject
+    {
+        beatmap.Update(hitObject);
+    }
+
+    public class AddOrRemoveForbiddenException : Exception
+    {
+        public AddOrRemoveForbiddenException()
+            : base("Should not add or remove the hit-object.")
         {
-            triggerBeatmapSave = false;
-        }
-
-        protected virtual void PerformOnSelection(Action<THitObject> action)
-            => PerformOnSelection<THitObject>(action);
-
-        protected void PerformOnSelection<T>(Action<T> action) where T : HitObject
-        {
-            if (!changingCache.IsValid)
-                throw new NotSupportedException("Cannot trigger the change while applying another change.");
-
-            if (beatmap.SelectedHitObjects.Count == 0)
-                throw new NotSupportedException($"Should contain at least one selected {nameof(THitObject)}");
-
-            changingCache.Invalidate();
-
-            try
-            {
-                // todo: follow-up the discussion in the https://github.com/karaoke-dev/karaoke/pull/1669 after support the change handler for customized ruleset.
-                if (triggerBeatmapSave)
-                {
-                    // should trigger the UpdateState() in the editor beatmap only if there's no active state.
-                    beatmap.PerformOnSelection(h =>
-                    {
-                        if (h is T tHitObject)
-                            action(tHitObject);
-                    });
-                }
-                else
-                {
-                    // Just update the object property if already in the changing state.
-                    // e.g. dragging.
-                    beatmap.SelectedHitObjects.ForEach(h =>
-                    {
-                        if (h is T tHitObject)
-                            action(tHitObject);
-                    });
-                }
-            }
-            catch
-            {
-                // We should make sure that editor beatmap will end the change if still changing.
-                // will goes to here if have exception in the change handler.
-                if (beatmap.TransactionActive)
-                    beatmap.EndChange();
-
-                throw;
-            }
-            finally
-            {
-                changingCache.Validate();
-                triggerBeatmapSave = true;
-            }
-        }
-
-        protected void AddRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Add);
-
-        protected virtual void Add<T>(T hitObject) where T : HitObject
-        {
-            bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
-            if (containsInBeatmap)
-                throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
-
-            if (isCreateObjectLocked(hitObject))
-                throw new AddOrRemoveForbiddenException();
-
-            beatmap.Add(hitObject);
-        }
-
-        protected virtual void Insert<T>(int index, T hitObject) where T : HitObject
-        {
-            bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
-            if (containsInBeatmap)
-                throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
-
-            if (isCreateObjectLocked(hitObject))
-                throw new AddOrRemoveForbiddenException();
-
-            beatmap.Insert(index, hitObject);
-        }
-
-        protected void RemoveRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Remove);
-
-        protected void Remove<T>(T hitObject) where T : HitObject
-        {
-            if (isRemoveObjectLocked(hitObject))
-                throw new AddOrRemoveForbiddenException();
-
-            beatmap.Remove(hitObject);
-        }
-
-        private bool isCreateObjectLocked<T>(T hitObject)
-        {
-            return hitObject switch
-            {
-                Lyric => false,
-                Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
-                _ => throw new InvalidCastException()
-            };
-        }
-
-        private bool isRemoveObjectLocked<T>(T hitObject)
-        {
-            switch (hitObject)
-            {
-                case Lyric lyric:
-                    bool hasReferenceLyric = EditorBeatmapUtils.GetAllReferenceLyrics(beatmap, lyric).Any();
-                    return hasReferenceLyric || HitObjectWritableUtils.IsRemoveLyricLocked(lyric);
-
-                case Note note:
-                    return note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric);
-
-                default:
-                    throw new InvalidCastException();
-            }
-        }
-
-        protected void TriggerHitObjectUpdate<T>(T hitObject) where T : HitObject
-        {
-            beatmap.Update(hitObject);
-        }
-
-        public class AddOrRemoveForbiddenException : Exception
-        {
-            public AddOrRemoveForbiddenException()
-                : base("Should not add or remove the hit-object.")
-            {
-            }
         }
     }
 }

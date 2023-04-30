@@ -3,22 +3,21 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
-{
-    public static class NoteUtils
-    {
-        /// <summary>
-        /// Get the display text while gameplay or in editor.
-        /// </summary>
-        /// <param name="note">Note</param>
-        /// <param name="useRubyTextIfHave">Should use ruby text first if have.</param>
-        /// <returns>Text should be display.</returns>
-        public static string DisplayText(Note note, bool useRubyTextIfHave = false)
-        {
-            if (!useRubyTextIfHave)
-                return note.Text;
+namespace osu.Game.Rulesets.Karaoke.Utils;
 
-            return string.IsNullOrEmpty(note.RubyText) ? note.Text : note.RubyText;
-        }
+public static class NoteUtils
+{
+    /// <summary>
+    /// Get the display text while gameplay or in editor.
+    /// </summary>
+    /// <param name="note">Note</param>
+    /// <param name="useRubyTextIfHave">Should use ruby text first if have.</param>
+    /// <returns>Text should be display.</returns>
+    public static string DisplayText(Note note, bool useRubyTextIfHave = false)
+    {
+        if (!useRubyTextIfHave)
+            return note.Text;
+
+        return string.IsNullOrEmpty(note.RubyText) ? note.Text : note.RubyText;
     }
 }

@@ -11,62 +11,61 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
+
+public partial class DefaultPreview : SettingsSubsectionPreview
 {
-    public partial class DefaultPreview : SettingsSubsectionPreview
+    private const double transition_time = 1000;
+
+    public FillFlowContainer TextContainer { get; }
+
+    public DefaultPreview()
     {
-        private const double transition_time = 1000;
+        Size = new Vector2(0.3f);
 
-        public FillFlowContainer TextContainer { get; }
-
-        public DefaultPreview()
+        Child = TextContainer = new FillFlowContainer
         {
-            Size = new Vector2(0.3f);
-
-            Child = TextContainer = new FillFlowContainer
+            AutoSizeAxes = Axes.Both,
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Direction = FillDirection.Vertical,
+            Children = new Drawable[]
             {
-                AutoSizeAxes = Axes.Both,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Direction = FillDirection.Vertical,
-                Children = new Drawable[]
+                new SpriteIcon
                 {
-                    new SpriteIcon
-                    {
-                        Icon = FontAwesome.Solid.Cog,
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
-                        Size = new Vector2(50),
-                    },
-                    new OsuSpriteText
-                    {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
-                        Text = "Welcome to config!",
-                        Colour = ThemeColor.Lighten(0.8f),
-                        Font = OsuFont.GetFont(size: 32),
-                    },
-                    new OsuSpriteText
-                    {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
-                        Text = "Select left size to adjust.",
-                        Font = OsuFont.GetFont(size: 20),
-                    },
-                }
-            };
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            TextContainer.Position = new Vector2(DrawSize.X / 16, 0);
-
-            using (BeginDelayedSequence(100))
-            {
-                TextContainer.MoveTo(Vector2.Zero, transition_time, Easing.OutExpo);
+                    Icon = FontAwesome.Solid.Cog,
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    Size = new Vector2(50),
+                },
+                new OsuSpriteText
+                {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    Text = "Welcome to config!",
+                    Colour = ThemeColor.Lighten(0.8f),
+                    Font = OsuFont.GetFont(size: 32),
+                },
+                new OsuSpriteText
+                {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    Text = "Select left size to adjust.",
+                    Font = OsuFont.GetFont(size: 20),
+                },
             }
+        };
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        TextContainer.Position = new Vector2(DrawSize.X / 16, 0);
+
+        using (BeginDelayedSequence(100))
+        {
+            TextContainer.MoveTo(Vector2.Zero, transition_time, Easing.OutExpo);
         }
     }
 }

@@ -10,22 +10,21 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public abstract partial class KaraokeSettingsSubsection : SettingsSubsection
 {
-    public abstract partial class KaraokeSettingsSubsection : SettingsSubsection
+    [Resolved]
+    protected KaraokeRulesetConfigManager Config { get; private set; }
+
+    [Resolved]
+    private Bindable<SettingsSubsection> selectedSubsection { get; set; }
+
+    public virtual SettingsSubsectionPreview CreatePreview() => new UnderConstructionPreview();
+
+    protected override bool OnHover(HoverEvent e)
     {
-        [Resolved]
-        protected KaraokeRulesetConfigManager Config { get; private set; }
-
-        [Resolved]
-        private Bindable<SettingsSubsection> selectedSubsection { get; set; }
-
-        public virtual SettingsSubsectionPreview CreatePreview() => new UnderConstructionPreview();
-
-        protected override bool OnHover(HoverEvent e)
-        {
-            selectedSubsection.Value = this;
-            return base.OnHover(e);
-        }
+        selectedSubsection.Value = this;
+        return base.OnHover(e);
     }
 }

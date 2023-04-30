@@ -3,12 +3,11 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
-{
-    public interface IHasBlueprintSelection<T> where T : class
-    {
-        BindableList<T> SelectedItems { get; }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-        void Select(T item);
-    }
+public interface IHasBlueprintSelection<T> where T : class
+{
+    BindableList<T> SelectedItems { get; }
+
+    void Select(T item);
 }

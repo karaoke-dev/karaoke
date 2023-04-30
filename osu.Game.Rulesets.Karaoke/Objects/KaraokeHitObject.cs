@@ -3,11 +3,10 @@
 
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Objects
+namespace osu.Game.Rulesets.Karaoke.Objects;
+
+public class KaraokeHitObject : HitObject
 {
-    public class KaraokeHitObject : HitObject
-    {
-        public double TimePreempt = 600;
-        public double TimeFadeIn = 400;
-    }
+    public double TimePreempt = 600;
+    public double TimeFadeIn = 400;
 }

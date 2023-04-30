@@ -24,119 +24,118 @@ using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Settings.Sections.Input;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
+
+/// <summary>
+/// For showing the key and adjust the key binding.
+/// </summary>
+public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
 {
-    /// <summary>
-    /// For showing the key and adjust the key binding.
-    /// </summary>
-    public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
+    private readonly InputKeyDescriptionAction inputKeyDescriptionAction;
+
+    [Resolved]
+    private ReadableKeyCombinationProvider keyCombinationProvider { get; set; }
+
+    [Resolved]
+    private RealmAccess realm { get; set; }
+
+    public InputKeyText(InputKeyDescriptionAction inputKeyDescriptionAction)
+        : base(inputKeyDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the key." })
     {
-        private readonly InputKeyDescriptionAction inputKeyDescriptionAction;
+        this.inputKeyDescriptionAction = inputKeyDescriptionAction;
 
-        [Resolved]
-        private ReadableKeyCombinationProvider keyCombinationProvider { get; set; }
+        CornerRadius = 4;
+        Masking = true;
+    }
 
-        [Resolved]
-        private RealmAccess realm { get; set; }
-
-        public InputKeyText(InputKeyDescriptionAction inputKeyDescriptionAction)
-            : base(inputKeyDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the key." })
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider)
+    {
+        AddInternal(new Box
         {
-            this.inputKeyDescriptionAction = inputKeyDescriptionAction;
+            Name = "Background",
+            Depth = 1,
+            RelativeSizeAxes = Axes.Both,
+            Colour = colourProvider.Background6,
+        });
 
-            CornerRadius = 4;
-            Masking = true;
+        updateDisplayText();
+
+        // todo: IDK why not being triggered.
+        keyCombinationProvider.KeymapChanged += updateDisplayText;
+    }
+
+    private void updateDisplayText()
+    {
+        string text = string.IsNullOrEmpty(inputKeyDescriptionAction.Text.ToString())
+            ? getKeyName(inputKeyDescriptionAction.AdjustableActions.FirstOrDefault())
+            : inputKeyDescriptionAction.Text.ToString();
+
+        var spriteText = InternalChildren.OfType<OsuSpriteText>().FirstOrDefault();
+        Debug.Assert(spriteText != null);
+
+        spriteText.Text = text;
+        spriteText.Padding = new MarginPadding { Horizontal = 4 };
+
+        string getKeyName(KaraokeEditAction action)
+        {
+            var ruleset = new KaraokeRuleset();
+            string rulesetName = ruleset.ShortName;
+            const int edit_input_variant = KaraokeRuleset.EDIT_INPUT_VARIANT;
+
+            var keyBinding = realm.Run(r => r.All<RealmKeyBinding>()
+                                             .Where(b => b.RulesetName == rulesetName && b.Variant == edit_input_variant)
+                                             .Detach()).FirstOrDefault(x => (int)x.Action == (int)action);
+
+            if (keyBinding == null)
+                throw new ArgumentNullException(nameof(keyBinding));
+
+            return keyCombinationProvider.GetReadableString(keyBinding.KeyCombination);
         }
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+    protected override void OnLinkPressed()
+    {
+        // open the popover
+        this.ShowPopover();
+    }
+
+    public Popover GetPopover()
+    {
+        var popover = new OsuPopover
         {
-            AddInternal(new Box
+            Child = new PopoverKeyBindingsSubsection(inputKeyDescriptionAction.AdjustableActions)
             {
-                Name = "Background",
-                Depth = 1,
-                RelativeSizeAxes = Axes.Both,
-                Colour = colourProvider.Background6,
-            });
-
-            updateDisplayText();
-
-            // todo: IDK why not being triggered.
-            keyCombinationProvider.KeymapChanged += updateDisplayText;
-        }
-
-        private void updateDisplayText()
-        {
-            string text = string.IsNullOrEmpty(inputKeyDescriptionAction.Text.ToString())
-                ? getKeyName(inputKeyDescriptionAction.AdjustableActions.FirstOrDefault())
-                : inputKeyDescriptionAction.Text.ToString();
-
-            var spriteText = InternalChildren.OfType<OsuSpriteText>().FirstOrDefault();
-            Debug.Assert(spriteText != null);
-
-            spriteText.Text = text;
-            spriteText.Padding = new MarginPadding { Horizontal = 4 };
-
-            string getKeyName(KaraokeEditAction action)
-            {
-                var ruleset = new KaraokeRuleset();
-                string rulesetName = ruleset.ShortName;
-                const int edit_input_variant = KaraokeRuleset.EDIT_INPUT_VARIANT;
-
-                var keyBinding = realm.Run(r => r.All<RealmKeyBinding>()
-                                                 .Where(b => b.RulesetName == rulesetName && b.Variant == edit_input_variant)
-                                                 .Detach()).FirstOrDefault(x => (int)x.Action == (int)action);
-
-                if (keyBinding == null)
-                    throw new ArgumentNullException(nameof(keyBinding));
-
-                return keyCombinationProvider.GetReadableString(keyBinding.KeyCombination);
+                Width = 300,
+                RelativeSizeAxes = Axes.None,
             }
-        }
+        };
 
-        protected override void OnLinkPressed()
+        // because it's not possible to get the key change event, so at least update the key after popover closed.
+        popover.State.BindValueChanged(x =>
         {
-            // open the popover
-            this.ShowPopover();
-        }
+            if (x.NewValue == Visibility.Hidden)
+                updateDisplayText();
+        });
 
-        public Popover GetPopover()
+        return popover;
+    }
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        if (keyCombinationProvider != null)
+            keyCombinationProvider.KeymapChanged -= updateDisplayText;
+    }
+
+    private partial class PopoverKeyBindingsSubsection : VariantBindingsSubsection
+    {
+        public PopoverKeyBindingsSubsection(IEnumerable<KaraokeEditAction> actions)
+            : base(new KaraokeRuleset().RulesetInfo, KaraokeRuleset.EDIT_INPUT_VARIANT)
         {
-            var popover = new OsuPopover
-            {
-                Child = new PopoverKeyBindingsSubsection(inputKeyDescriptionAction.AdjustableActions)
-                {
-                    Width = 300,
-                    RelativeSizeAxes = Axes.None,
-                }
-            };
-
-            // because it's not possible to get the key change event, so at least update the key after popover closed.
-            popover.State.BindValueChanged(x =>
-            {
-                if (x.NewValue == Visibility.Hidden)
-                    updateDisplayText();
-            });
-
-            return popover;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            if (keyCombinationProvider != null)
-                keyCombinationProvider.KeymapChanged -= updateDisplayText;
-        }
-
-        private partial class PopoverKeyBindingsSubsection : VariantBindingsSubsection
-        {
-            public PopoverKeyBindingsSubsection(IEnumerable<KaraokeEditAction> actions)
-                : base(new KaraokeRuleset().RulesetInfo, KaraokeRuleset.EDIT_INPUT_VARIANT)
-            {
-                // should only show the keys in the list.
-                Defaults = Defaults.Where(x => x.Action is KaraokeEditAction action && actions.Contains(action));
-            }
+            // should only show the keys in the list.
+            Defaults = Defaults.Where(x => x.Action is KaraokeEditAction action && actions.Contains(action));
         }
     }
 }

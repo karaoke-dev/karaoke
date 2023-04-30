@@ -16,39 +16,38 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.Karaoke.Mods
+namespace osu.Game.Rulesets.Karaoke.Mods;
+
+public class KaraokeModAutoplayBySinger : KaraokeModAutoplay
 {
-    public class KaraokeModAutoplayBySinger : KaraokeModAutoplay
+    public override string Name => "Autoplay by singer";
+    public override string Acronym => "ABS";
+    public override LocalisableString Description => "Autoplay mode but replay's record is by singer's voice.";
+
+    public override IconUsage? Icon => KaraokeIcon.ModAutoPlayBySinger;
+
+    private Stream? trackData;
+
+    public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
+        => new(new KaraokeAutoGeneratorBySinger(beatmap, trackData).Generate(), new ModCreatedUser { Username = "karaoke!singer" });
+
+    public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
     {
-        public override string Name => "Autoplay by singer";
-        public override string Acronym => "ABS";
-        public override LocalisableString Description => "Autoplay mode but replay's record is by singer's voice.";
+        if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
+            return;
 
-        public override IconUsage? Icon => KaraokeIcon.ModAutoPlayBySinger;
+        var workingBeatmap = karaokePlayfield.WorkingBeatmap;
+        string? path = getPathForFile(workingBeatmap.BeatmapInfo);
+        trackData = workingBeatmap.GetStream(path);
 
-        private Stream? trackData;
+        base.ApplyToDrawableRuleset(drawableRuleset);
+    }
 
-        public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-            => new(new KaraokeAutoGeneratorBySinger(beatmap, trackData).Generate(), new ModCreatedUser { Username = "karaoke!singer" });
+    private string? getPathForFile(BeatmapInfo beatmapInfo)
+    {
+        var beatmapSetInfo = beatmapInfo.BeatmapSet;
+        string audioFile = beatmapInfo.Metadata.AudioFile;
 
-        public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
-        {
-            if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
-                return;
-
-            var workingBeatmap = karaokePlayfield.WorkingBeatmap;
-            string? path = getPathForFile(workingBeatmap.BeatmapInfo);
-            trackData = workingBeatmap.GetStream(path);
-
-            base.ApplyToDrawableRuleset(drawableRuleset);
-        }
-
-        private string? getPathForFile(BeatmapInfo beatmapInfo)
-        {
-            var beatmapSetInfo = beatmapInfo.BeatmapSet;
-            string audioFile = beatmapInfo.Metadata.AudioFile;
-
-            return beatmapSetInfo?.Files.SingleOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))?.File.GetStoragePath();
-        }
+        return beatmapSetInfo?.Files.SingleOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))?.File.GetStoragePath();
     }
 }

@@ -4,22 +4,21 @@
 using System.Linq;
 using osu.Framework.Graphics.Primitives;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class RectangleFUtils
 {
-    public static class RectangleFUtils
+    /// <summary>Creates the smallest possible third rectangle that can contain both of multi rectangles that form a union.</summary>
+    /// <returns>A third <see cref="RectangleF"/> structure that contains both of the multi rectangles that form the union.</returns>
+    /// <param name="rectangles">All the rectangles to union.</param>
+    /// <filterpriority>1</filterpriority>
+    public static RectangleF Union(params RectangleF[] rectangles)
     {
-        /// <summary>Creates the smallest possible third rectangle that can contain both of multi rectangles that form a union.</summary>
-        /// <returns>A third <see cref="RectangleF"/> structure that contains both of the multi rectangles that form the union.</returns>
-        /// <param name="rectangles">All the rectangles to union.</param>
-        /// <filterpriority>1</filterpriority>
-        public static RectangleF Union(params RectangleF[] rectangles)
-        {
-            if (rectangles.Length == 0)
-                return new RectangleF();
+        if (rectangles.Length == 0)
+            return new RectangleF();
 
-            var result = rectangles.FirstOrDefault();
+        var result = rectangles.FirstOrDefault();
 
-            return rectangles.Aggregate(result, RectangleF.Union);
-        }
+        return rectangles.Aggregate(result, RectangleF.Union);
     }
 }

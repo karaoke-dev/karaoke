@@ -13,80 +13,79 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.View
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.View;
+
+public partial class AdjustFontSizeButton : CompositeDrawable
 {
-    public partial class AdjustFontSizeButton : CompositeDrawable
+    private readonly Bindable<float> bindableFontSize = new();
+
+    public AdjustFontSizeButton()
     {
-        private readonly Bindable<float> bindableFontSize = new();
+        IconButton previousSizeButton;
+        OsuSpriteText fontSizeSpriteText;
+        IconButton nextSizeButton;
+        float[] sizes = FontUtils.ComposerFontSize();
 
-        public AdjustFontSizeButton()
+        Height = SpecialActionToolbar.HEIGHT;
+        AutoSizeAxes = Axes.X;
+        InternalChild = new FillFlowContainer
         {
-            IconButton previousSizeButton;
-            OsuSpriteText fontSizeSpriteText;
-            IconButton nextSizeButton;
-            float[] sizes = FontUtils.ComposerFontSize();
-
-            Height = SpecialActionToolbar.HEIGHT;
-            AutoSizeAxes = Axes.X;
-            InternalChild = new FillFlowContainer
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            AutoSizeAxes = Axes.Both,
+            Direction = FillDirection.Horizontal,
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                AutoSizeAxes = Axes.Both,
-                Direction = FillDirection.Horizontal,
-                Children = new Drawable[]
+                previousSizeButton = new IconButton
                 {
-                    previousSizeButton = new IconButton
+                    Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
+                    Icon = FontAwesome.Solid.Minus,
+                    Action = () =>
                     {
-                        Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
-                        Icon = FontAwesome.Solid.Minus,
-                        Action = () =>
-                        {
-                            float previousSize = sizes.GetPrevious(bindableFontSize.Value);
-                            if (previousSize == default)
-                                return;
+                        float previousSize = sizes.GetPrevious(bindableFontSize.Value);
+                        if (previousSize == default)
+                            return;
 
-                            bindableFontSize.Value = previousSize;
-                        }
-                    },
-                    new Container
+                        bindableFontSize.Value = previousSize;
+                    }
+                },
+                new Container
+                {
+                    Width = 48,
+                    Height = SpecialActionToolbar.ICON_SIZE,
+                    Child = fontSizeSpriteText = new OsuSpriteText
                     {
-                        Width = 48,
-                        Height = SpecialActionToolbar.ICON_SIZE,
-                        Child = fontSizeSpriteText = new OsuSpriteText
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                        },
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                     },
-                    nextSizeButton = new IconButton
+                },
+                nextSizeButton = new IconButton
+                {
+                    Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
+                    Icon = FontAwesome.Solid.Plus,
+                    Action = () =>
                     {
-                        Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
-                        Icon = FontAwesome.Solid.Plus,
-                        Action = () =>
-                        {
-                            float nextSize = sizes.GetNext(bindableFontSize.Value);
-                            if (nextSize == default)
-                                return;
+                        float nextSize = sizes.GetNext(bindableFontSize.Value);
+                        if (nextSize == default)
+                            return;
 
-                            bindableFontSize.Value = nextSize;
-                        }
+                        bindableFontSize.Value = nextSize;
                     }
                 }
-            };
+            }
+        };
 
-            bindableFontSize.BindValueChanged(e =>
-            {
-                fontSizeSpriteText.Text = FontUtils.GetText(e.NewValue);
-                previousSizeButton.Enabled.Value = sizes.GetPrevious(e.NewValue) != default;
-                nextSizeButton.Enabled.Value = sizes.GetNext(e.NewValue) != default;
-            });
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        bindableFontSize.BindValueChanged(e =>
         {
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
-        }
+            fontSizeSpriteText.Text = FontUtils.GetText(e.NewValue);
+            previousSizeButton.Enabled.Value = sizes.GetPrevious(e.NewValue) != default;
+            nextSizeButton.Enabled.Value = sizes.GetNext(e.NewValue) != default;
+        });
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    {
+        lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
     }
 }

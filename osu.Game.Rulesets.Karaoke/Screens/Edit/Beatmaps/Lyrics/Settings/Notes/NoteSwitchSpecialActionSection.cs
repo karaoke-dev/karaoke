@@ -6,40 +6,39 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
+
+public partial class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
 {
-    public partial class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
+    protected override string SwitchActionTitle => "Special actions";
+    protected override string SwitchActionDescription => "Auto-generate, edit or clear the notes.";
+
+    [BackgroundDependencyLoader]
+    private void load(IEditNoteModeState editNoteModeState)
     {
-        protected override string SwitchActionTitle => "Special actions";
-        protected override string SwitchActionDescription => "Auto-generate, edit or clear the notes.";
+        BindTo(editNoteModeState);
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(IEditNoteModeState editNoteModeState)
+    protected override void UpdateActionArea(NoteEditModeSpecialAction action)
+    {
+        RemoveAll(x => x is NoteAutoGenerateSubsection or NoteClearSubsection, true);
+
+        switch (action)
         {
-            BindTo(editNoteModeState);
-        }
+            case NoteEditModeSpecialAction.AutoGenerate:
+                Add(new NoteAutoGenerateSubsection());
+                break;
 
-        protected override void UpdateActionArea(NoteEditModeSpecialAction action)
-        {
-            RemoveAll(x => x is NoteAutoGenerateSubsection or NoteClearSubsection, true);
+            case NoteEditModeSpecialAction.SyncTime:
+                // todo: implement
+                break;
 
-            switch (action)
-            {
-                case NoteEditModeSpecialAction.AutoGenerate:
-                    Add(new NoteAutoGenerateSubsection());
-                    break;
+            case NoteEditModeSpecialAction.Clear:
+                Add(new NoteClearSubsection());
+                break;
 
-                case NoteEditModeSpecialAction.SyncTime:
-                    // todo: implement
-                    break;
-
-                case NoteEditModeSpecialAction.Clear:
-                    Add(new NoteClearSubsection());
-                    break;
-
-                default:
-                    return;
-            }
+            default:
+                return;
         }
     }
 }

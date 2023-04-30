@@ -3,16 +3,15 @@
 
 using System.Collections.Generic;
 
-namespace osu.Game.Rulesets.Karaoke.Extensions
-{
-    public static class ListExtensions
-    {
-        public static void AddRangeWithNullCheck<T>(this List<T> collection, IEnumerable<T>? newValue)
-        {
-            if (newValue == null)
-                return;
+namespace osu.Game.Rulesets.Karaoke.Extensions;
 
-            collection.AddRange(newValue);
-        }
+public static class ListExtensions
+{
+    public static void AddRangeWithNullCheck<T>(this List<T> collection, IEnumerable<T>? newValue)
+    {
+        if (newValue == null)
+            return;
+
+        collection.AddRange(newValue);
     }
 }

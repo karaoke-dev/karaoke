@@ -4,18 +4,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
-{
-    public static class TypeUtils
-    {
-        [return: NotNullIfNotNull("value")]
-        public static TType? ChangeType<TType>(object? value)
-        {
-            if (value == null)
-                return default;
+namespace osu.Game.Rulesets.Karaoke.Utils;
 
-            var type = typeof(TType);
-            return (TType)Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
-        }
+public static class TypeUtils
+{
+    [return: NotNullIfNotNull("value")]
+    public static TType? ChangeType<TType>(object? value)
+    {
+        if (value == null)
+            return default;
+
+        var type = typeof(TType);
+        return (TType)Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
     }
 }

@@ -12,110 +12,109 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+
+public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler, IBeatmapSingersChangeHandler
 {
-    public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler, IBeatmapSingersChangeHandler
+    [Resolved]
+    private BeatmapManager? beatmapManager { get; set; }
+
+    [Resolved]
+    private IBindable<WorkingBeatmap>? working { get; set; }
+
+    private SingerInfo singerInfo => KaraokeBeatmap.SingerInfo;
+
+    public BindableList<ISinger> Singers => singerInfo.Singers;
+
+    public void ChangeOrder(ISinger singer, int newIndex)
     {
-        [Resolved]
-        private BeatmapManager? beatmapManager { get; set; }
-
-        [Resolved]
-        private IBindable<WorkingBeatmap>? working { get; set; }
-
-        private SingerInfo singerInfo => KaraokeBeatmap.SingerInfo;
-
-        public BindableList<ISinger> Singers => singerInfo.Singers;
-
-        public void ChangeOrder(ISinger singer, int newIndex)
+        performSingerChanged(singer, s =>
         {
-            performSingerChanged(singer, s =>
+            int oldOrder = s.Order;
+            int newOrder = newIndex + 1; // order is start from 1
+            OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
             {
-                int oldOrder = s.Order;
-                int newOrder = newIndex + 1; // order is start from 1
-                OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
-                {
-                    // todo : not really sure should call update?
-                });
+                // todo : not really sure should call update?
             });
+        });
+    }
+
+    public bool ChangeSingerAvatar(Singer singer, FileInfo fileInfo)
+    {
+        if (beatmapManager == null || working == null)
+            return false;
+
+        if (!fileInfo.Exists)
+            throw new FileNotFoundException();
+
+        // note: follow the same logic in the ResourcesSection.ChangeBackgroundImage
+        var set = working.Value.BeatmapSetInfo;
+
+        // todo: we might re-format the new file name, like give it a hash name for prevent duplicated file name with other singer.
+        string newFileName = fileInfo.Name;
+
+        using (var stream = fileInfo.OpenRead())
+        {
+            // in the future we probably want to check if this is being used elsewhere (other difficulties?)
+            var oldFile = set.Files.FirstOrDefault(f => f.Filename == singer.AvatarFile);
+            if (oldFile != null)
+                beatmapManager.DeleteFile(set, oldFile);
+
+            beatmapManager.AddFile(set, stream, $"assets/singers/{newFileName}");
         }
 
-        public bool ChangeSingerAvatar(Singer singer, FileInfo fileInfo)
+        performSingerChanged(singer, s =>
         {
-            if (beatmapManager == null || working == null)
-                return false;
+            // Write-back the file name.
+            s.AvatarFile = newFileName;
+        });
 
-            if (!fileInfo.Exists)
-                throw new FileNotFoundException();
+        return true;
+    }
 
-            // note: follow the same logic in the ResourcesSection.ChangeBackgroundImage
-            var set = working.Value.BeatmapSetInfo;
-
-            // todo: we might re-format the new file name, like give it a hash name for prevent duplicated file name with other singer.
-            string newFileName = fileInfo.Name;
-
-            using (var stream = fileInfo.OpenRead())
-            {
-                // in the future we probably want to check if this is being used elsewhere (other difficulties?)
-                var oldFile = set.Files.FirstOrDefault(f => f.Filename == singer.AvatarFile);
-                if (oldFile != null)
-                    beatmapManager.DeleteFile(set, oldFile);
-
-                beatmapManager.AddFile(set, stream, $"assets/singers/{newFileName}");
-            }
-
-            performSingerChanged(singer, s =>
-            {
-                // Write-back the file name.
-                s.AvatarFile = newFileName;
-            });
-
-            return true;
-        }
-
-        public Singer Add()
+    public Singer Add()
+    {
+        var newSinger = singerInfo.AddSinger(s =>
         {
-            var newSinger = singerInfo.AddSinger(s =>
-            {
-                s.Order = getMaxSingerOrder() + 1;
-                s.Name = "New singer";
-            });
-            return newSinger;
+            s.Order = getMaxSingerOrder() + 1;
+            s.Name = "New singer";
+        });
+        return newSinger;
 
-            int getMaxSingerOrder()
-                => OrderUtils.GetMaxOrderNumber(singerInfo.GetAllSingers());
-        }
+        int getMaxSingerOrder()
+            => OrderUtils.GetMaxOrderNumber(singerInfo.GetAllSingers());
+    }
 
-        public void Remove(Singer singer)
+    public void Remove(Singer singer)
+    {
+        singerInfo.RemoveSinger(singer);
+
+        // Should re-sort the order
+        OrderUtils.ShiftingOrder(singerInfo.GetAllSingers().Where(x => x.Order > singer.Order), -1);
+
+        // should clear removed singer ids in singer editor.
+        Lyrics.ForEach(x =>
         {
-            singerInfo.RemoveSinger(singer);
+            x.SingerIds.Remove(singer.ID);
+        });
+    }
 
-            // Should re-sort the order
-            OrderUtils.ShiftingOrder(singerInfo.GetAllSingers().Where(x => x.Order > singer.Order), -1);
-
-            // should clear removed singer ids in singer editor.
-            Lyrics.ForEach(x =>
-            {
-                x.SingerIds.Remove(singer.ID);
-            });
-        }
-
-        private void performSingerInfoChanged(Action<SingerInfo> action)
+    private void performSingerInfoChanged(Action<SingerInfo> action)
+    {
+        PerformBeatmapChanged(beatmap =>
         {
-            PerformBeatmapChanged(beatmap =>
-            {
-                action(beatmap.SingerInfo);
-            });
-        }
+            action(beatmap.SingerInfo);
+        });
+    }
 
-        private void performSingerChanged<TSinger>(TSinger singer, Action<TSinger> action) where TSinger : ISinger
+    private void performSingerChanged<TSinger>(TSinger singer, Action<TSinger> action) where TSinger : ISinger
+    {
+        performSingerInfoChanged(singerInfo =>
         {
-            performSingerInfoChanged(singerInfo =>
-            {
-                if (!singerInfo.Singers.Contains(singer))
-                    throw new InvalidOperationException("Singer should be in the beatmap");
+            if (!singerInfo.Singers.Contains(singer))
+                throw new InvalidOperationException("Singer should be in the beatmap");
 
-                action(singer);
-            });
-        }
+            action(singer);
+        });
     }
 }

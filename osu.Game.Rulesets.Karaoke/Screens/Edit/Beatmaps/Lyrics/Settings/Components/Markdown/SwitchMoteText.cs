@@ -11,46 +11,45 @@ using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
+
+public partial class SwitchMoteText : OsuMarkdownLinkText
 {
-    public partial class SwitchMoteText : OsuMarkdownLinkText
+    [Resolved]
+    private ILyricEditorState? state { get; set; }
+
+    private readonly SwitchModeDescriptionAction switchModeDescriptionAction;
+
+    public SwitchMoteText(SwitchModeDescriptionAction switchModeDescriptionAction)
+        : base(switchModeDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the edit mode." })
     {
-        [Resolved]
-        private ILyricEditorState? state { get; set; }
+        this.switchModeDescriptionAction = switchModeDescriptionAction;
 
-        private readonly SwitchModeDescriptionAction switchModeDescriptionAction;
+        CornerRadius = 4;
+        Masking = true;
+    }
 
-        public SwitchMoteText(SwitchModeDescriptionAction switchModeDescriptionAction)
-            : base(switchModeDescriptionAction.Text.ToString(), new LinkInline { Title = "Click to change the edit mode." })
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider)
+    {
+        AddInternal(new Box
         {
-            this.switchModeDescriptionAction = switchModeDescriptionAction;
+            Name = "Background",
+            Depth = 1,
+            RelativeSizeAxes = Axes.Both,
+            Colour = colourProvider.Background6,
+        });
 
-            CornerRadius = 4;
-            Masking = true;
-        }
+        var spriteText = InternalChildren.OfType<OsuSpriteText>().FirstOrDefault();
+        Debug.Assert(spriteText != null);
 
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
-        {
-            AddInternal(new Box
-            {
-                Name = "Background",
-                Depth = 1,
-                RelativeSizeAxes = Axes.Both,
-                Colour = colourProvider.Background6,
-            });
+        spriteText.Padding = new MarginPadding { Horizontal = 4 };
+    }
 
-            var spriteText = InternalChildren.OfType<OsuSpriteText>().FirstOrDefault();
-            Debug.Assert(spriteText != null);
+    protected override void OnLinkPressed()
+    {
+        base.OnLinkPressed();
 
-            spriteText.Padding = new MarginPadding { Horizontal = 4 };
-        }
-
-        protected override void OnLinkPressed()
-        {
-            base.OnLinkPressed();
-
-            state?.NavigateToFix(switchModeDescriptionAction.Mode);
-        }
+        state?.NavigateToFix(switchModeDescriptionAction.Mode);
     }
 }

@@ -20,114 +20,113 @@ using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
+
+/// <summary>
+/// A component which displays a singer along with related description text.
+/// </summary>
+public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
 {
     /// <summary>
-    /// A component which displays a singer along with related description text.
+    /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>
+    /// to be removed from its palette.
     /// </summary>
-    public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
+    public event Action<SingerDisplay> DeleteRequested;
+
+    private readonly BindableWithCurrent<Singer> current = new();
+
+    private OsuSpriteText singerName;
+
+    public Bindable<Singer> Current
     {
-        /// <summary>
-        /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>
-        /// to be removed from its palette.
-        /// </summary>
-        public event Action<SingerDisplay> DeleteRequested;
+        get => current.Current;
+        set => current.Current = value;
+    }
 
-        private readonly BindableWithCurrent<Singer> current = new();
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        AutoSizeAxes = Axes.Y;
+        Width = 100;
 
-        private OsuSpriteText singerName;
-
-        public Bindable<Singer> Current
+        InternalChild = new FillFlowContainer
         {
-            get => current.Current;
-            set => current.Current = value;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            AutoSizeAxes = Axes.Y;
-            Width = 100;
-
-            InternalChild = new FillFlowContainer
+            RelativeSizeAxes = Axes.X,
+            AutoSizeAxes = Axes.Y,
+            Direction = FillDirection.Vertical,
+            Spacing = new Vector2(0, 10),
+            Children = new Drawable[]
             {
-                RelativeSizeAxes = Axes.X,
-                AutoSizeAxes = Axes.Y,
-                Direction = FillDirection.Vertical,
-                Spacing = new Vector2(0, 10),
-                Children = new Drawable[]
+                new SingerCircle
                 {
-                    new SingerCircle
-                    {
-                        Current = { BindTarget = Current },
-                        DeleteRequested = () => DeleteRequested?.Invoke(this)
-                    },
-                    singerName = new OsuSpriteText
-                    {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre
-                    }
+                    Current = { BindTarget = Current },
+                    DeleteRequested = () => DeleteRequested?.Invoke(this)
+                },
+                singerName = new OsuSpriteText
+                {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre
+                }
+            }
+        };
+
+        Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name, true);
+    }
+
+    private partial class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
+    {
+        public Bindable<Singer> Current { get; } = new();
+
+        public Action DeleteRequested { get; set; }
+
+        private readonly DrawableSingerAvatar singerAvatar;
+
+        [Resolved]
+        private OsuColour colours { get; set; }
+
+        public SingerCircle()
+        {
+            RelativeSizeAxes = Axes.X;
+            Height = 100;
+            CornerRadius = 50;
+            Masking = true;
+            BorderThickness = 5;
+            Action = () =>
+            {
+                // todo: show edit singer dialog.
+            };
+
+            Children = new Drawable[]
+            {
+                singerAvatar = new DrawableSingerAvatar
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
                 }
             };
-
-            Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name, true);
         }
 
-        private partial class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
+        protected override void LoadComplete()
         {
-            public Bindable<Singer> Current { get; } = new();
+            base.LoadComplete();
 
-            public Action DeleteRequested { get; set; }
-
-            private readonly DrawableSingerAvatar singerAvatar;
-
-            [Resolved]
-            private OsuColour colours { get; set; }
-
-            public SingerCircle()
-            {
-                RelativeSizeAxes = Axes.X;
-                Height = 100;
-                CornerRadius = 50;
-                Masking = true;
-                BorderThickness = 5;
-                Action = () =>
-                {
-                    // todo: show edit singer dialog.
-                };
-
-                Children = new Drawable[]
-                {
-                    singerAvatar = new DrawableSingerAvatar
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
-                    }
-                };
-            }
-
-            protected override void LoadComplete()
-            {
-                base.LoadComplete();
-
-                Current.BindValueChanged(_ => updateSinger(), true);
-            }
-
-            private void updateSinger()
-            {
-                BorderColour = SingerUtils.GetContentColour(Current.Value);
-                singerAvatar.Singer = Current.Value;
-            }
-
-            public MenuItem[] ContextMenuItems => new MenuItem[]
-            {
-                new OsuMenuItem("Delete", MenuItemType.Destructive, () => DeleteRequested?.Invoke())
-            };
-
-            public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
-
-            public Singer TooltipContent => Current.Value;
+            Current.BindValueChanged(_ => updateSinger(), true);
         }
+
+        private void updateSinger()
+        {
+            BorderColour = SingerUtils.GetContentColour(Current.Value);
+            singerAvatar.Singer = Current.Value;
+        }
+
+        public MenuItem[] ContextMenuItems => new MenuItem[]
+        {
+            new OsuMenuItem("Delete", MenuItemType.Destructive, () => DeleteRequested?.Invoke())
+        };
+
+        public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
+
+        public Singer TooltipContent => Current.Value;
     }
 }

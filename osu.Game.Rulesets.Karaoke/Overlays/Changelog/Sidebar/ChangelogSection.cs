@@ -22,134 +22,133 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
+
+public partial class ChangelogSection : CompositeDrawable
 {
-    public partial class ChangelogSection : CompositeDrawable
+    private const int animation_duration = 250;
+    private const float font_size = 16;
+
+    public readonly BindableBool Expanded = new(true);
+
+    public ChangelogSection(int year, IEnumerable<APIChangelogBuild> posts)
     {
-        private const int animation_duration = 250;
-        private const float font_size = 16;
-
-        public readonly BindableBool Expanded = new(true);
-
-        public ChangelogSection(int year, IEnumerable<APIChangelogBuild> posts)
+        Debug.Assert(posts.All(p =>
         {
-            Debug.Assert(posts.All(p =>
-            {
-                ArgumentNullException.ThrowIfNull(p);
+            ArgumentNullException.ThrowIfNull(p);
 
-                return p.PublishedAt.Year == year;
-            }));
+            return p.PublishedAt.Year == year;
+        }));
+
+        RelativeSizeAxes = Axes.X;
+        AutoSizeAxes = Axes.Y;
+        Masking = true;
+
+        InternalChild = new FillFlowContainer
+        {
+            RelativeSizeAxes = Axes.X,
+            AutoSizeAxes = Axes.Y,
+            Direction = FillDirection.Vertical,
+            Children = new Drawable[]
+            {
+                new PostsContainer
+                {
+                    Expanded = { BindTarget = Expanded },
+                    Children = posts.Select(p => new PostButton(p)).ToArray()
+                }
+            }
+        };
+    }
+
+    private partial class PostButton : OsuHoverContainer
+    {
+        protected override IEnumerable<Drawable> EffectTargets => new[] { text };
+
+        private readonly TextFlowContainer text;
+        private readonly APIChangelogBuild post;
+
+        public PostButton(APIChangelogBuild post)
+        {
+            this.post = post;
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
-            Masking = true;
-
-            InternalChild = new FillFlowContainer
+            Child = text = new TextFlowContainer(t => t.Font = OsuFont.GetFont(size: font_size))
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Direction = FillDirection.Vertical,
-                Children = new Drawable[]
-                {
-                    new PostsContainer
-                    {
-                        Expanded = { BindTarget = Expanded },
-                        Children = posts.Select(p => new PostButton(p)).ToArray()
-                    }
-                }
+                Text = post.DisplayVersion
             };
         }
 
-        private partial class PostButton : OsuHoverContainer
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider overlayColours, GameHost host, Bindable<APIChangelogBuild> current)
         {
-            protected override IEnumerable<Drawable> EffectTargets => new[] { text };
-
-            private readonly TextFlowContainer text;
-            private readonly APIChangelogBuild post;
-
-            public PostButton(APIChangelogBuild post)
+            current.BindValueChanged(e =>
             {
-                this.post = post;
+                bool isCurrent = post == e.NewValue;
 
-                RelativeSizeAxes = Axes.X;
-                AutoSizeAxes = Axes.Y;
-                Child = text = new TextFlowContainer(t => t.Font = OsuFont.GetFont(size: font_size))
+                // update hover color.
+                Colour = isCurrent ? Color4.White : overlayColours.Light2;
+                HoverColour = isCurrent ? Color4.White : overlayColours.Light1;
+
+                // update font.
+                text.OfType<SpriteText>().ForEach(f =>
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Text = post.DisplayVersion
-                };
-            }
+                    f.Font = OsuFont.GetFont(size: font_size, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
+                });
+            }, true);
 
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider overlayColours, GameHost host, Bindable<APIChangelogBuild> current)
+            TooltipText = ChangelogStrings.ViewCurrentChangelog;
+
+            Action = () => current.Value = post;
+        }
+    }
+
+    private partial class PostsContainer : Container
+    {
+        public readonly BindableBool Expanded = new();
+
+        protected override Container<Drawable> Content { get; }
+
+        public PostsContainer()
+        {
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
+            AutoSizeDuration = animation_duration;
+            AutoSizeEasing = Easing.Out;
+            InternalChild = Content = new FillFlowContainer
             {
-                current.BindValueChanged(e =>
-                {
-                    bool isCurrent = post == e.NewValue;
-
-                    // update hover color.
-                    Colour = isCurrent ? Color4.White : overlayColours.Light2;
-                    HoverColour = isCurrent ? Color4.White : overlayColours.Light1;
-
-                    // update font.
-                    text.OfType<SpriteText>().ForEach(f =>
-                    {
-                        f.Font = OsuFont.GetFont(size: font_size, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
-                    });
-                }, true);
-
-                TooltipText = ChangelogStrings.ViewCurrentChangelog;
-
-                Action = () => current.Value = post;
-            }
+                Margin = new MarginPadding { Top = 5 },
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Direction = FillDirection.Vertical,
+                Spacing = new Vector2(0, 5),
+                Alpha = 0
+            };
         }
 
-        private partial class PostsContainer : Container
+        protected override void LoadComplete()
         {
-            public readonly BindableBool Expanded = new();
+            base.LoadComplete();
+            Expanded.BindValueChanged(updateState, true);
+        }
 
-            protected override Container<Drawable> Content { get; }
+        private void updateState(ValueChangedEvent<bool> expanded)
+        {
+            ClearTransforms(true);
 
-            public PostsContainer()
+            if (expanded.NewValue)
             {
-                RelativeSizeAxes = Axes.X;
                 AutoSizeAxes = Axes.Y;
-                AutoSizeDuration = animation_duration;
-                AutoSizeEasing = Easing.Out;
-                InternalChild = Content = new FillFlowContainer
-                {
-                    Margin = new MarginPadding { Top = 5 },
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
-                    Spacing = new Vector2(0, 5),
-                    Alpha = 0
-                };
+                Content.FadeIn(animation_duration, Easing.OutQuint);
             }
-
-            protected override void LoadComplete()
+            else
             {
-                base.LoadComplete();
-                Expanded.BindValueChanged(updateState, true);
-            }
+                AutoSizeAxes = Axes.None;
+                this.ResizeHeightTo(0, animation_duration, Easing.OutQuint);
 
-            private void updateState(ValueChangedEvent<bool> expanded)
-            {
-                ClearTransforms(true);
-
-                if (expanded.NewValue)
-                {
-                    AutoSizeAxes = Axes.Y;
-                    Content.FadeIn(animation_duration, Easing.OutQuint);
-                }
-                else
-                {
-                    AutoSizeAxes = Axes.None;
-                    this.ResizeHeightTo(0, animation_duration, Easing.OutQuint);
-
-                    Content.FadeOut(animation_duration, Easing.OutQuint);
-                }
+                Content.FadeOut(animation_duration, Easing.OutQuint);
             }
         }
     }

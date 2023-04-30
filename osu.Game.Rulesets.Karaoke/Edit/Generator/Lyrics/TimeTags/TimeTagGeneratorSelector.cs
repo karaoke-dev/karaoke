@@ -7,16 +7,15 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
+
+public class TimeTagGeneratorSelector : LyricGeneratorSelector<TimeTag[], TimeTagGeneratorConfig>
 {
-    public class TimeTagGeneratorSelector : LyricGeneratorSelector<TimeTag[], TimeTagGeneratorConfig>
+    public TimeTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
+        : base(generatorConfigManager)
     {
-        public TimeTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
-            : base(generatorConfigManager)
-        {
-            RegisterGenerator<JaTimeTagGenerator, JaTimeTagGeneratorConfig>(new CultureInfo(17));
-            RegisterGenerator<JaTimeTagGenerator, JaTimeTagGeneratorConfig>(new CultureInfo(1041));
-            RegisterGenerator<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>(new CultureInfo(1028));
-        }
+        RegisterGenerator<JaTimeTagGenerator, JaTimeTagGeneratorConfig>(new CultureInfo(17));
+        RegisterGenerator<JaTimeTagGenerator, JaTimeTagGeneratorConfig>(new CultureInfo(1041));
+        RegisterGenerator<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>(new CultureInfo(1028));
     }
 }

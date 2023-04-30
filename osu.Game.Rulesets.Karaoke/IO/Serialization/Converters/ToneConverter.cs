@@ -6,29 +6,28 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class ToneConverter : JsonConverter<Tone>
 {
-    public class ToneConverter : JsonConverter<Tone>
+    public override Tone ReadJson(JsonReader reader, Type objectType, Tone existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        public override Tone ReadJson(JsonReader reader, Type objectType, Tone existingValue, bool hasExistingValue, JsonSerializer serializer)
+        var obj = JToken.Load(reader);
+        double value = obj.Value<double>();
+
+        bool half = Math.Abs(value) % 1 == 0.5;
+        int scale = (int)value - (value < 0 && half ? 1 : 0);
+
+        return new Tone
         {
-            var obj = JToken.Load(reader);
-            double value = obj.Value<double>();
+            Scale = scale,
+            Half = half
+        };
+    }
 
-            bool half = Math.Abs(value) % 1 == 0.5;
-            int scale = (int)value - (value < 0 && half ? 1 : 0);
-
-            return new Tone
-            {
-                Scale = scale,
-                Half = half
-            };
-        }
-
-        public override void WriteJson(JsonWriter writer, Tone value, JsonSerializer serializer)
-        {
-            double scale = value.Scale + (value.Half ? 0.5 : 0);
-            writer.WriteValue(scale);
-        }
+    public override void WriteJson(JsonWriter writer, Tone value, JsonSerializer serializer)
+    {
+        double scale = value.Scale + (value.Half ? 0.5 : 0);
+        writer.WriteValue(scale);
     }
 }

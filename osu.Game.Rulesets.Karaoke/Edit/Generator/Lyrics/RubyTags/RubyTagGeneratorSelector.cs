@@ -6,15 +6,14 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags;
+
+public class RubyTagGeneratorSelector : LyricGeneratorSelector<RubyTag[], RubyTagGeneratorConfig>
 {
-    public class RubyTagGeneratorSelector : LyricGeneratorSelector<RubyTag[], RubyTagGeneratorConfig>
+    public RubyTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
+        : base(generatorConfigManager)
     {
-        public RubyTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
-            : base(generatorConfigManager)
-        {
-            RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(17));
-            RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
-        }
+        RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(17));
+        RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
     }
 }

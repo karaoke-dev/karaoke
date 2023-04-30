@@ -10,23 +10,22 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
+
+public partial class EditBodyPiece : Container
 {
-    public partial class EditBodyPiece : Container
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
     {
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        Masking = true;
+        BorderColour = colours.Yellow;
+        BorderThickness = 2;
+        CornerRadius = DefaultBodyPiece.CORNER_RADIUS;
+        Child = new Box
         {
-            Masking = true;
-            BorderColour = colours.Yellow;
-            BorderThickness = 2;
-            CornerRadius = DefaultBodyPiece.CORNER_RADIUS;
-            Child = new Box
-            {
-                RelativeSizeAxes = Axes.Both,
-                AlwaysPresent = true,
-                Alpha = 0
-            };
-        }
+            RelativeSizeAxes = Axes.Both,
+            AlwaysPresent = true,
+            Alpha = 0
+        };
     }
 }

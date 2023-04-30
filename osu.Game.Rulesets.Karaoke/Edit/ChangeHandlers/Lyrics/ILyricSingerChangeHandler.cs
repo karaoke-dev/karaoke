@@ -3,10 +3,9 @@
 
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricSingerChangeHandler : ILyricListPropertyChangeHandler<ISinger>
 {
-    public interface ILyricSingerChangeHandler : ILyricListPropertyChangeHandler<ISinger>
-    {
-        void Clear();
-    }
+    void Clear();
 }

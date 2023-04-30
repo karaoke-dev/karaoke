@@ -8,38 +8,37 @@ using Newtonsoft.Json.Linq;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class ShaderConverter : GenericTypeConverter<ICustomizedShader>
 {
-    public class ShaderConverter : GenericTypeConverter<ICustomizedShader>
+    protected override void PostProcessJObject(JObject jObject, ICustomizedShader value, JsonSerializer serializer)
     {
-        protected override void PostProcessJObject(JObject jObject, ICustomizedShader value, JsonSerializer serializer)
+        var childShader = getShadersFromParent(value, serializer);
+
+        if (childShader != null)
         {
-            var childShader = getShadersFromParent(value, serializer);
-
-            if (childShader != null)
-            {
-                jObject.Remove("step_shaders");
-                jObject.Add("step_shaders", childShader);
-            }
-
-            static JArray? getShadersFromParent(ICustomizedShader shader, JsonSerializer serializer)
-            {
-                if (shader is not StepShader stepShader)
-                    return null;
-
-                return JArray.FromObject(stepShader.StepShaders, serializer);
-            }
+            jObject.Remove("step_shaders");
+            jObject.Add("step_shaders", childShader);
         }
 
-        protected override Type GetTypeByName(string name)
+        static JArray? getShadersFromParent(ICustomizedShader shader, JsonSerializer serializer)
         {
-            // only get name from font
-            var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");
-            Debug.Assert(assembly != null);
+            if (shader is not StepShader stepShader)
+                return null;
 
-            var type = assembly.GetType($"osu.Framework.Graphics.Shaders.{name}");
-            Debug.Assert(type != null);
-            return type;
+            return JArray.FromObject(stepShader.StepShaders, serializer);
         }
+    }
+
+    protected override Type GetTypeByName(string name)
+    {
+        // only get name from font
+        var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");
+        Debug.Assert(assembly != null);
+
+        var type = assembly.GetType($"osu.Framework.Graphics.Shaders.{name}");
+        Debug.Assert(type != null);
+        return type;
     }
 }

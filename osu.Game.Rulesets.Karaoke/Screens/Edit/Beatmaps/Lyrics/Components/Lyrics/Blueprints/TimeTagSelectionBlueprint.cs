@@ -9,38 +9,37 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
+
+public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
 {
-    public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
+    private const float time_tag_size = 10;
+
+    [Resolved]
+    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+
+    public TimeTagSelectionBlueprint(TimeTag item)
+        : base(item)
     {
-        private const float time_tag_size = 10;
-
-        [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
-
-        public TimeTagSelectionBlueprint(TimeTag item)
-            : base(item)
-        {
-            RelativeSizeAxes = Axes.None;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            updatePosition();
-        }
-
-        private void updatePosition()
-        {
-            var size = new Vector2(time_tag_size);
-            var position = karaokeSpriteText.GetTimeTagPosition(Item) - size / 2;
-
-            X = position.X;
-            Y = position.Y;
-            Width = time_tag_size;
-            Height = time_tag_size;
-        }
-
-        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+        RelativeSizeAxes = Axes.None;
     }
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        updatePosition();
+    }
+
+    private void updatePosition()
+    {
+        var size = new Vector2(time_tag_size);
+        var position = karaokeSpriteText.GetTimeTagPosition(Item) - size / 2;
+
+        X = position.X;
+        Y = position.Y;
+        Width = time_tag_size;
+        Height = time_tag_size;
+    }
+
+    public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 }

@@ -8,119 +8,118 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+
+public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<TSpriteText> where TSpriteText : LyricSpriteText, new()
 {
-    public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<TSpriteText> where TSpriteText : LyricSpriteText, new()
+    private const int whole_chunk_index = -1;
+
+    private readonly IBindable<string> textBindable = new Bindable<string>();
+    private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
+    private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
+    private readonly IBindable<int> rubyTagsVersion = new Bindable<int>();
+    private readonly IBindableList<RubyTag> rubyTagsBindable = new BindableList<RubyTag>();
+    private readonly IBindable<int> romajiTagsVersion = new Bindable<int>();
+    private readonly IBindableList<RomajiTag> romajiTagsBindable = new BindableList<RomajiTag>();
+
+    private readonly int chunkIndex;
+
+    protected DrawableKaraokeSpriteText(Lyric lyric, int chunkIndex = whole_chunk_index)
     {
-        private const int whole_chunk_index = -1;
+        this.chunkIndex = chunkIndex;
 
-        private readonly IBindable<string> textBindable = new Bindable<string>();
-        private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
-        private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
-        private readonly IBindable<int> rubyTagsVersion = new Bindable<int>();
-        private readonly IBindableList<RubyTag> rubyTagsBindable = new BindableList<RubyTag>();
-        private readonly IBindable<int> romajiTagsVersion = new Bindable<int>();
-        private readonly IBindableList<RomajiTag> romajiTagsBindable = new BindableList<RomajiTag>();
+        textBindable.BindValueChanged(_ => UpdateText(), true);
+        timeTagsVersion.BindValueChanged(_ => UpdateTimeTags());
+        timeTagsBindable.BindCollectionChanged((_, _) => UpdateTimeTags());
+        rubyTagsVersion.BindValueChanged(_ => UpdateRubies());
+        rubyTagsBindable.BindCollectionChanged((_, _) => UpdateRubies());
+        romajiTagsVersion.BindValueChanged(_ => UpdateRomajies());
+        romajiTagsBindable.BindCollectionChanged((_, _) => UpdateRomajies());
 
-        private readonly int chunkIndex;
+        textBindable.BindTo(lyric.TextBindable);
+        timeTagsVersion.BindTo(lyric.TimeTagsVersion);
+        timeTagsBindable.BindTo(lyric.TimeTagsBindable);
+        rubyTagsVersion.BindTo(lyric.RubyTagsVersion);
+        rubyTagsBindable.BindTo(lyric.RubyTagsBindable);
+        romajiTagsVersion.BindTo(lyric.RomajiTagsVersion);
+        romajiTagsBindable.BindTo(lyric.RomajiTagsBindable);
+    }
 
-        protected DrawableKaraokeSpriteText(Lyric lyric, int chunkIndex = whole_chunk_index)
+    protected virtual void UpdateText()
+    {
+        if (chunkIndex == whole_chunk_index)
         {
-            this.chunkIndex = chunkIndex;
-
-            textBindable.BindValueChanged(_ => UpdateText(), true);
-            timeTagsVersion.BindValueChanged(_ => UpdateTimeTags());
-            timeTagsBindable.BindCollectionChanged((_, _) => UpdateTimeTags());
-            rubyTagsVersion.BindValueChanged(_ => UpdateRubies());
-            rubyTagsBindable.BindCollectionChanged((_, _) => UpdateRubies());
-            romajiTagsVersion.BindValueChanged(_ => UpdateRomajies());
-            romajiTagsBindable.BindCollectionChanged((_, _) => UpdateRomajies());
-
-            textBindable.BindTo(lyric.TextBindable);
-            timeTagsVersion.BindTo(lyric.TimeTagsVersion);
-            timeTagsBindable.BindTo(lyric.TimeTagsBindable);
-            rubyTagsVersion.BindTo(lyric.RubyTagsVersion);
-            rubyTagsBindable.BindTo(lyric.RubyTagsBindable);
-            romajiTagsVersion.BindTo(lyric.RomajiTagsVersion);
-            romajiTagsBindable.BindTo(lyric.RomajiTagsBindable);
+            Text = textBindable.Value;
         }
-
-        protected virtual void UpdateText()
+        else
         {
-            if (chunkIndex == whole_chunk_index)
-            {
-                Text = textBindable.Value;
-            }
-            else
-            {
-                throw new NotImplementedException("Chunk lyric will be available until V2");
-            }
+            throw new NotImplementedException("Chunk lyric will be available until V2");
         }
+    }
 
-        protected virtual void UpdateTimeTags()
+    protected virtual void UpdateTimeTags()
+    {
+        if (chunkIndex == whole_chunk_index)
         {
-            if (chunkIndex == whole_chunk_index)
-            {
-                TimeTags = TimeTagsUtils.ToTimeBasedDictionary(timeTagsBindable.ToList());
-            }
-            else
-            {
-                throw new NotImplementedException("Chunk lyric will be available until V2");
-            }
+            TimeTags = TimeTagsUtils.ToTimeBasedDictionary(timeTagsBindable.ToList());
         }
-
-        protected virtual void UpdateRubies()
+        else
         {
-            if (chunkIndex == whole_chunk_index)
-            {
-                Rubies = DisplayRuby ? rubyTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
-            }
-            else
-            {
-                throw new NotImplementedException("Chunk lyric will be available until V2");
-            }
+            throw new NotImplementedException("Chunk lyric will be available until V2");
         }
+    }
 
-        protected virtual void UpdateRomajies()
+    protected virtual void UpdateRubies()
+    {
+        if (chunkIndex == whole_chunk_index)
         {
-            if (chunkIndex == whole_chunk_index)
-            {
-                Romajies = DisplayRomaji ? romajiTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
-            }
-            else
-            {
-                throw new NotImplementedException("Chunk lyric will be available until V2");
-            }
+            Rubies = DisplayRuby ? rubyTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
         }
-
-        private bool displayRuby = true;
-
-        public bool DisplayRuby
+        else
         {
-            get => displayRuby;
-            set
-            {
-                if (displayRuby == value)
-                    return;
-
-                displayRuby = value;
-                Schedule(UpdateRubies);
-            }
+            throw new NotImplementedException("Chunk lyric will be available until V2");
         }
+    }
 
-        private bool displayRomaji = true;
-
-        public bool DisplayRomaji
+    protected virtual void UpdateRomajies()
+    {
+        if (chunkIndex == whole_chunk_index)
         {
-            get => displayRomaji;
-            set
-            {
-                if (displayRomaji == value)
-                    return;
+            Romajies = DisplayRomaji ? romajiTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
+        }
+        else
+        {
+            throw new NotImplementedException("Chunk lyric will be available until V2");
+        }
+    }
 
-                displayRomaji = value;
-                Schedule(UpdateRomajies);
-            }
+    private bool displayRuby = true;
+
+    public bool DisplayRuby
+    {
+        get => displayRuby;
+        set
+        {
+            if (displayRuby == value)
+                return;
+
+            displayRuby = value;
+            Schedule(UpdateRubies);
+        }
+    }
+
+    private bool displayRomaji = true;
+
+    public bool DisplayRomaji
+    {
+        get => displayRomaji;
+        set
+        {
+            if (displayRomaji == value)
+                return;
+
+            displayRomaji = value;
+            Schedule(UpdateRomajies);
         }
     }
 }

@@ -4,21 +4,20 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
-{
-    public partial class ViewOnlyLyric : InteractableLyric
-    {
-        public ViewOnlyLyric(Lyric lyric)
-            : base(lyric)
-        {
-        }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 
-        protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+public partial class ViewOnlyLyric : InteractableLyric
+{
+    public ViewOnlyLyric(Lyric lyric)
+        : base(lyric)
+    {
+    }
+
+    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+    {
+        return new BaseLayer[]
         {
-            return new BaseLayer[]
-            {
-                new TimeTagLayer(lyric),
-            };
-        }
+            new TimeTagLayer(lyric),
+        };
     }
 }

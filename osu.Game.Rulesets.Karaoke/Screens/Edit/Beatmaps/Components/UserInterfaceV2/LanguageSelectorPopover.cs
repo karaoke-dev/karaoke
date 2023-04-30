@@ -6,27 +6,26 @@ using osu.Framework.Bindables;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2;
+
+public partial class LanguageSelectorPopover : OsuPopover
 {
-    public partial class LanguageSelectorPopover : OsuPopover
+    private readonly LanguageSelector languageSelector;
+
+    public LanguageSelectorPopover(Bindable<CultureInfo> bindable)
     {
-        private readonly LanguageSelector languageSelector;
-
-        public LanguageSelectorPopover(Bindable<CultureInfo> bindable)
+        Child = languageSelector = new LanguageSelector
         {
-            Child = languageSelector = new LanguageSelector
-            {
-                Width = 400,
-                Height = 600,
-                Current = bindable
-            };
-        }
+            Width = 400,
+            Height = 600,
+            Current = bindable
+        };
+    }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
-            GetContainingInputManager().ChangeFocus(languageSelector);
-        }
+        GetContainingInputManager().ChangeFocus(languageSelector);
     }
 }

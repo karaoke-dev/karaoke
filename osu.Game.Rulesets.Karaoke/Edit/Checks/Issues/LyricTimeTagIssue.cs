@@ -4,18 +4,17 @@
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
+
+public class LyricTimeTagIssue : LyricIssue
 {
-    public class LyricTimeTagIssue : LyricIssue
+    public readonly TimeTag TimeTag;
+
+    public LyricTimeTagIssue(Lyric lyric, IssueTemplate template, TimeTag timeTag, params object[] args)
+        : base(lyric, template, args)
     {
-        public readonly TimeTag TimeTag;
+        TimeTag = timeTag;
 
-        public LyricTimeTagIssue(Lyric lyric, IssueTemplate template, TimeTag timeTag, params object[] args)
-            : base(lyric, template, args)
-        {
-            TimeTag = timeTag;
-
-            Time = TimeTag.Time ?? Lyric.LyricStartTime;
-        }
+        Time = TimeTag.Time ?? Lyric.LyricStartTime;
     }
 }

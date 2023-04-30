@@ -3,35 +3,34 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar;
+
+/// <summary>
+/// Button for toggle open and close.
+/// </summary>
+public abstract partial class ToggleButton : ToolbarButton
 {
-    /// <summary>
-    /// Button for toggle open and close.
-    /// </summary>
-    public abstract partial class ToggleButton : ToolbarButton
+    protected readonly Bindable<bool> Active = new();
+
+    protected ToggleButton()
     {
-        protected readonly Bindable<bool> Active = new();
-
-        protected ToggleButton()
+        Active.BindValueChanged(x =>
         {
-            Active.BindValueChanged(x =>
+            // should wait until set icon done.
+            Schedule(() =>
             {
-                // should wait until set icon done.
-                Schedule(() =>
-                {
-                    toggle(x.NewValue);
-                });
-            }, true);
+                toggle(x.NewValue);
+            });
+        }, true);
 
-            Action = () =>
-            {
-                Active.Value = !Active.Value;
-            };
-        }
-
-        private void toggle(bool active)
+        Action = () =>
         {
-            IconContainer.Icon.Alpha = active ? 1 : 0.5f;
-        }
+            Active.Value = !Active.Value;
+        };
+    }
+
+    private void toggle(bool active)
+    {
+        IconContainer.Icon.Alpha = active ? 1 : 0.5f;
     }
 }

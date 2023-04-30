@@ -10,30 +10,29 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail
-{
-    public partial class SingerEditPopover : OsuPopover
-    {
-        public SingerEditPopover(Singer singer)
-        {
-            ArgumentNullException.ThrowIfNull(singer);
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail;
 
-            Child = new OsuScrollContainer
+public partial class SingerEditPopover : OsuPopover
+{
+    public SingerEditPopover(Singer singer)
+    {
+        ArgumentNullException.ThrowIfNull(singer);
+
+        Child = new OsuScrollContainer
+        {
+            Height = 500,
+            Width = 300,
+            Child = new FillFlowContainer<EditSingerSection>
             {
-                Height = 500,
-                Width = 300,
-                Child = new FillFlowContainer<EditSingerSection>
+                Direction = FillDirection.Vertical,
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Children = new EditSingerSection[]
                 {
-                    Direction = FillDirection.Vertical,
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Children = new EditSingerSection[]
-                    {
-                        new AvatarSection(singer),
-                        new MetadataSection(singer),
-                    }
+                    new AvatarSection(singer),
+                    new MetadataSection(singer),
                 }
-            };
-        }
+            }
+        };
     }
 }

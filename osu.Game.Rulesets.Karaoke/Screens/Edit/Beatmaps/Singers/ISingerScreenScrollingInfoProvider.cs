@@ -5,12 +5,11 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers
-{
-    public interface ISingerScreenScrollingInfoProvider
-    {
-        BindableFloat BindableZoom { get; }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
-        BindableFloat BindableCurrent { get; }
-    }
+public interface ISingerScreenScrollingInfoProvider
+{
+    BindableFloat BindableZoom { get; }
+
+    BindableFloat BindableCurrent { get; }
 }

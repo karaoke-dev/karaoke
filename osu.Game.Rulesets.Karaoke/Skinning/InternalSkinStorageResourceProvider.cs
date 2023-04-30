@@ -11,22 +11,21 @@ using osu.Framework.IO.Stores;
 using osu.Game.Database;
 using osu.Game.IO;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning
+namespace osu.Game.Rulesets.Karaoke.Skinning;
+
+public class InternalSkinStorageResourceProvider : IStorageResourceProvider
 {
-    public class InternalSkinStorageResourceProvider : IStorageResourceProvider
+    public InternalSkinStorageResourceProvider(string skinName)
     {
-        public InternalSkinStorageResourceProvider(string skinName)
-        {
-            var store = new KaraokeRuleset().CreateResourceStore();
-            Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
-        }
-
-        public IRenderer Renderer => new DummyRenderer();
-
-        public AudioManager AudioManager => null;
-        public IResourceStore<byte[]> Files { get; }
-        public IResourceStore<byte[]> Resources { get; }
-        public RealmAccess RealmAccess => null;
-        public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
+        var store = new KaraokeRuleset().CreateResourceStore();
+        Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
     }
+
+    public IRenderer Renderer => new DummyRenderer();
+
+    public AudioManager AudioManager => null;
+    public IResourceStore<byte[]> Files { get; }
+    public IResourceStore<byte[]> Resources { get; }
+    public RealmAccess RealmAccess => null;
+    public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
 }

@@ -18,175 +18,174 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+
+public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
 {
-    public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
+    public ChangeLogMarkdownContainer(APIChangelogBuild build)
     {
-        public ChangeLogMarkdownContainer(APIChangelogBuild build)
+        DocumentUrl = build.DocumentUrl;
+        RootUrl = build.RootUrl;
+
+        using var httpClient = new HttpClient();
+
+        try
         {
-            DocumentUrl = build.DocumentUrl;
-            RootUrl = build.RootUrl;
+            Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
+        }
+        catch (Exception)
+        {
+            Text = "Oops, seems there's something wrong with network.";
+        }
+    }
 
-            using var httpClient = new HttpClient();
+    public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
 
-            try
+    public override SpriteText CreateSpriteText() => base.CreateSpriteText().With(s =>
+    {
+        s.Font = OsuFont.GetFont(size: 16, weight: FontWeight.Regular);
+    });
+
+    /// <summary>
+    /// Re-calculate image size by changelog width.
+    /// </summary>
+    public partial class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
+    {
+        protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
+
+        private readonly IDictionary<string, string> githubUrls = new Dictionary<string, string>
+        {
+            { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
+            { "edge", "https://github.com/karaoke-dev/karaoke/" },
+            { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io/" },
+            { "launcher", "https://github.com/karaoke-dev/launcher/" },
+            { "sample", "https://github.com/karaoke-dev/sample-beatmap/" },
+            { "microphone-package", "https://github.com/karaoke-dev/osu-framework-microphone/" },
+            { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" }
+        };
+
+        protected override void AddLinkText(string text, LinkInline linkInline)
+        {
+            if (linkInline.Url == null)
+                return;
+
+            if (!githubUrls.ContainsKey(text))
             {
-                Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
+                base.AddLinkText(text, linkInline);
+                return;
             }
-            catch (Exception)
+
+            var baseUri = new Uri(githubUrls[text]);
+
+            // Get hash tag with number
+            const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
+            var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
+
+            if (!result.Any())
+                return;
+
+            // add issue if has user
+            string[] issues = result.Select(x => x.GetGroupValue<string>("issue")).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+            if (issues.Any())
             {
-                Text = "Oops, seems there's something wrong with network.";
+                AddText("(");
+
+                foreach (string issue in issues)
+                {
+                    if (string.IsNullOrEmpty(issue))
+                        continue;
+
+                    AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
+                    {
+                        Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
+                    }));
+
+                    if (issue != issues.LastOrDefault())
+                        AddText(", ");
+                }
+
+                AddText(")");
+            }
+
+            // add use name if has user
+            var usernames = result.Select(x => x.GetGroupValue<string>("username")).Where(x => !string.IsNullOrEmpty(x));
+
+            foreach (string user in usernames)
+            {
+                if (string.IsNullOrEmpty(user))
+                    return;
+
+                var textScale = new Vector2(0.7f);
+                AddText("    by ", t =>
+                {
+                    t.Scale = textScale;
+                    t.Padding = new MarginPadding { Top = 6 };
+                });
+                AddDrawable(new UserLinkText(user, new LinkInline
+                {
+                    Url = $"https://github.com/{user}"
+                })
+                {
+                    Scale = textScale,
+                    Anchor = Anchor.BottomLeft,
+                });
             }
         }
 
-        public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
-
-        public override SpriteText CreateSpriteText() => base.CreateSpriteText().With(s =>
-        {
-            s.Font = OsuFont.GetFont(size: 16, weight: FontWeight.Regular);
-        });
-
         /// <summary>
-        /// Re-calculate image size by changelog width.
+        /// Override <see cref="OsuMarkdownImage"/> to limit image display size
         /// </summary>
-        public partial class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
+        /// <returns></returns>
+        private partial class ChangeLogMarkdownImage : OsuMarkdownImage
         {
-            protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
+            private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
 
-            private readonly IDictionary<string, string> githubUrls = new Dictionary<string, string>
+            public ChangeLogMarkdownImage(LinkInline linkInline)
+                : base(linkInline)
             {
-                { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
-                { "edge", "https://github.com/karaoke-dev/karaoke/" },
-                { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io/" },
-                { "launcher", "https://github.com/karaoke-dev/launcher/" },
-                { "sample", "https://github.com/karaoke-dev/sample-beatmap/" },
-                { "microphone-package", "https://github.com/karaoke-dev/osu-framework-microphone/" },
-                { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" }
-            };
+                AutoSizeAxes = Axes.None;
+                RelativeSizeAxes = Axes.X;
 
-            protected override void AddLinkText(string text, LinkInline linkInline)
-            {
-                if (linkInline.Url == null)
-                    return;
-
-                if (!githubUrls.ContainsKey(text))
-                {
-                    base.AddLinkText(text, linkInline);
-                    return;
-                }
-
-                var baseUri = new Uri(githubUrls[text]);
-
-                // Get hash tag with number
-                const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
-                var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
-
-                if (!result.Any())
-                    return;
-
-                // add issue if has user
-                string[] issues = result.Select(x => x.GetGroupValue<string>("issue")).Where(x => !string.IsNullOrEmpty(x)).ToArray();
-
-                if (issues.Any())
-                {
-                    AddText("(");
-
-                    foreach (string issue in issues)
-                    {
-                        if (string.IsNullOrEmpty(issue))
-                            continue;
-
-                        AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
-                        {
-                            Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
-                        }));
-
-                        if (issue != issues.LastOrDefault())
-                            AddText(", ");
-                    }
-
-                    AddText(")");
-                }
-
-                // add use name if has user
-                var usernames = result.Select(x => x.GetGroupValue<string>("username")).Where(x => !string.IsNullOrEmpty(x));
-
-                foreach (string user in usernames)
-                {
-                    if (string.IsNullOrEmpty(user))
-                        return;
-
-                    var textScale = new Vector2(0.7f);
-                    AddText("    by ", t =>
-                    {
-                        t.Scale = textScale;
-                        t.Padding = new MarginPadding { Top = 6 };
-                    });
-                    AddDrawable(new UserLinkText(user, new LinkInline
-                    {
-                        Url = $"https://github.com/{user}"
-                    })
-                    {
-                        Scale = textScale,
-                        Anchor = Anchor.BottomLeft,
-                    });
-                }
+                AddLayout(widthSizeCache);
             }
 
-            /// <summary>
-            /// Override <see cref="OsuMarkdownImage"/> to limit image display size
-            /// </summary>
-            /// <returns></returns>
-            private partial class ChangeLogMarkdownImage : OsuMarkdownImage
+            private bool imageLoaded;
+
+            protected override void Update()
             {
-                private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
+                base.Update();
 
-                public ChangeLogMarkdownImage(LinkInline linkInline)
-                    : base(linkInline)
+                // unable to get texture size on OnLoadComplete event, so use this way.
+                if (!imageLoaded && InternalChild.Width != 0)
                 {
-                    AutoSizeAxes = Axes.None;
-                    RelativeSizeAxes = Axes.X;
-
-                    AddLayout(widthSizeCache);
-                }
-
-                private bool imageLoaded;
-
-                protected override void Update()
-                {
-                    base.Update();
-
-                    // unable to get texture size on OnLoadComplete event, so use this way.
-                    if (!imageLoaded && InternalChild.Width != 0)
-                    {
-                        computeImageSize();
-                        imageLoaded = true;
-                    }
-
-                    if (widthSizeCache.IsValid)
-                        return;
-
                     computeImageSize();
-                    widthSizeCache.Validate();
+                    imageLoaded = true;
                 }
 
-                private void computeImageSize()
-                {
-                    // if image is larger then parent size, then adjust image scale
-                    float scale = Math.Min(1, DrawWidth / InternalChild.Width);
+                if (widthSizeCache.IsValid)
+                    return;
 
-                    InternalChild.Scale = new Vector2(scale);
-                    Height = InternalChild.Height * scale;
-                }
+                computeImageSize();
+                widthSizeCache.Validate();
             }
 
-            private partial class UserLinkText : OsuMarkdownLinkText
+            private void computeImageSize()
             {
-                public UserLinkText(string text, LinkInline linkInline)
-                    : base(text, linkInline)
-                {
-                    Padding = new MarginPadding { Top = 6 };
-                }
+                // if image is larger then parent size, then adjust image scale
+                float scale = Math.Min(1, DrawWidth / InternalChild.Width);
+
+                InternalChild.Scale = new Vector2(scale);
+                Height = InternalChild.Height * scale;
+            }
+        }
+
+        private partial class UserLinkText : OsuMarkdownLinkText
+        {
+            public UserLinkText(string text, LinkInline linkInline)
+                : base(text, linkInline)
+            {
+                Padding = new MarginPadding { Top = 6 };
             }
         }
     }

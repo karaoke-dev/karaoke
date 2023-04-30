@@ -3,22 +3,21 @@
 
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Karaoke.Objects.Types
+namespace osu.Game.Rulesets.Karaoke.Objects.Types;
+
+public interface IHasLock
 {
-    public interface IHasLock
-    {
-        LockState Lock { get; set; }
-    }
+    LockState Lock { get; set; }
+}
 
-    public enum LockState
-    {
-        [Description("None")]
-        None,
+public enum LockState
+{
+    [Description("None")]
+    None,
 
-        [Description("Partial")]
-        Partial,
+    [Description("Partial")]
+    Partial,
 
-        [Description("Full")]
-        Full
-    }
+    [Description("Full")]
+    Full
 }

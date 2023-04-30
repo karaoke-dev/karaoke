@@ -9,29 +9,28 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+public partial class StyleManager : Component
 {
-    public partial class StyleManager : Component
+    public readonly Bindable<LyricStyle> EditStyle = new();
+
+    public readonly Bindable<NoteStyle> EditNoteStyle = new();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        public readonly Bindable<LyricStyle> EditStyle = new();
+    }
 
-        public readonly Bindable<NoteStyle> EditNoteStyle = new();
+    public void ApplyCurrentStyleChange(Action<LyricStyle> action)
+    {
+        action?.Invoke(EditStyle.Value);
+        EditStyle.TriggerChange();
+    }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-        }
-
-        public void ApplyCurrentStyleChange(Action<LyricStyle> action)
-        {
-            action?.Invoke(EditStyle.Value);
-            EditStyle.TriggerChange();
-        }
-
-        public void ApplyCurrentNoteStyle(Action<NoteStyle> action)
-        {
-            action?.Invoke(EditNoteStyle.Value);
-            EditNoteStyle.TriggerChange();
-        }
+    public void ApplyCurrentNoteStyle(Action<NoteStyle> action)
+    {
+        action?.Invoke(EditNoteStyle.Value);
+        EditNoteStyle.TriggerChange();
     }
 }

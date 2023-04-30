@@ -6,28 +6,27 @@
 using System;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public partial class RollBackPopupDialog : PopupDialog
 {
-    public partial class RollBackPopupDialog : PopupDialog
+    public RollBackPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction = null)
     {
-        public RollBackPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction = null)
+        Icon = screen.Icon;
+        HeaderText = screen.ShortTitle;
+        BodyText = $"Will roll-back to step '{screen.Title}'";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = screen.Icon;
-            HeaderText = screen.ShortTitle;
-            BodyText = $"Will roll-back to step '{screen.Title}'";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"Cancel",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"Cancel",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

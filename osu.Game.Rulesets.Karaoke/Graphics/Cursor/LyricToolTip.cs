@@ -8,26 +8,25 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
+namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+
+public partial class LyricTooltip : BackgroundToolTip<Lyric>
 {
-    public partial class LyricTooltip : BackgroundToolTip<Lyric>
+    private Lyric lastLyric;
+
+    public override void SetContent(Lyric lyric)
     {
-        private Lyric lastLyric;
+        if (lyric == lastLyric)
+            return;
 
-        public override void SetContent(Lyric lyric)
+        lastLyric = lyric;
+
+        Child = new DrawableLyricSpriteText(lyric)
         {
-            if (lyric == lastLyric)
-                return;
-
-            lastLyric = lyric;
-
-            Child = new DrawableLyricSpriteText(lyric)
-            {
-                Margin = new MarginPadding(10),
-                Font = new FontUsage(size: 32),
-                RubyFont = new FontUsage(size: 12),
-                RomajiFont = new FontUsage(size: 12)
-            };
-        }
+            Margin = new MarginPadding(10),
+            Font = new FontUsage(size: 32),
+            RubyFont = new FontUsage(size: 12),
+            RomajiFont = new FontUsage(size: 12)
+        };
     }
 }

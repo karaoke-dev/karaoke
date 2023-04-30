@@ -24,128 +24,127 @@ using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit;
+
+public partial class KaraokeSelectionHandler : EditorSelectionHandler
 {
-    public partial class KaraokeSelectionHandler : EditorSelectionHandler
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; }
+
+    [Resolved]
+    private INotePositionInfo notePositionInfo { get; set; }
+
+    [Resolved]
+    private ISkinSource source { get; set; }
+
+    [Resolved]
+    private HitObjectComposer composer { get; set; }
+
+    [Resolved]
+    private INotesChangeHandler notesChangeHandler { get; set; }
+
+    [Resolved]
+    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
+    [Resolved]
+    private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+
+    protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
+
+    protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
     {
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
-        [Resolved]
-        private INotePositionInfo notePositionInfo { get; set; }
-
-        [Resolved]
-        private ISkinSource source { get; set; }
-
-        [Resolved]
-        private HitObjectComposer composer { get; set; }
-
-        [Resolved]
-        private INotesChangeHandler notesChangeHandler { get; set; }
-
-        [Resolved]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
-
-        [Resolved]
-        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
-
-        protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
-
-        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
+        if (selection.All(x => x is LyricSelectionBlueprint))
         {
-            if (selection.All(x => x is LyricSelectionBlueprint))
+            return new[]
             {
-                return new[]
-                {
-                    createSingerMenuItem()
-                };
-            }
-
-            if (EditorBeatmap.SelectedHitObjects.All(x => x is Note)
-                && EditorBeatmap.SelectedHitObjects.Count > 1)
-            {
-                var menu = new List<MenuItem>();
-                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime).ToArray();
-
-                // Set multi note display property
-                menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
-
-                // Combine multi note if they has same start and end index.
-                var firstObject = selectedObject.FirstOrDefault();
-                if (firstObject != null && selectedObject.All(x => x.ReferenceTimeTagIndex == firstObject.ReferenceTimeTagIndex))
-                    menu.Add(createCombineNoteMenuItem());
-
-                return menu;
-            }
-
-            return new List<MenuItem>();
-        }
-
-        private MenuItem createMultiNoteDisplayPropertyMenuItem(IReadOnlyCollection<Note> selectedObject)
-        {
-            bool display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
-            string displayText = display ? "Hide" : "Show";
-            return new OsuMenuItem($"{displayText} {selectedObject.Count} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
-                () =>
-                {
-                    notePropertyChangeHandler.ChangeDisplayState(!display);
-                });
-        }
-
-        private MenuItem createCombineNoteMenuItem()
-        {
-            return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
-            {
-                notesChangeHandler.Combine();
-            });
-        }
-
-        private MenuItem createSingerMenuItem()
-        {
-            return new SingerContextMenu(beatmap, lyricSingerChangeHandler, "Singer");
-        }
-
-        public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)
-        {
-            // Only note can be moved.
-            if (moveEvent.Blueprint is not NoteSelectionBlueprint noteSelectionBlueprint)
-                return false;
-
-            var lastTone = noteSelectionBlueprint.HitObject.Tone;
-            performColumnMovement(lastTone, moveEvent);
-
-            return true;
-        }
-
-        private void performColumnMovement(Tone lastTone, MoveSelectionEvent<HitObject> moveEvent)
-        {
-            if (moveEvent.Blueprint is not NoteSelectionBlueprint)
-                return;
-
-            var calculator = notePositionInfo.Calculator;
-
-            // get center position
-            var screenSpacePosition = moveEvent.Blueprint.ScreenSpaceSelectionPoint + moveEvent.ScreenSpaceDelta;
-            var position = NotePlayfield.ToLocalSpace(screenSpacePosition);
-            var centerPosition = new Vector2(position.X, position.Y - NotePlayfield.Height / 2);
-
-            // get delta position
-            float lastCenterPosition = calculator.YPositionAt(lastTone);
-            float delta = centerPosition.Y - lastCenterPosition;
-
-            // get offset tone.
-            const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
-            var offset = delta switch
-            {
-                > trigger_height => -new Tone { Half = true },
-                < 0 => new Tone { Half = true },
-                _ => default
+                createSingerMenuItem()
             };
-
-            if (offset == default(Tone))
-                return;
-
-            notePropertyChangeHandler.OffsetTone(offset);
         }
+
+        if (EditorBeatmap.SelectedHitObjects.All(x => x is Note)
+            && EditorBeatmap.SelectedHitObjects.Count > 1)
+        {
+            var menu = new List<MenuItem>();
+            var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime).ToArray();
+
+            // Set multi note display property
+            menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
+
+            // Combine multi note if they has same start and end index.
+            var firstObject = selectedObject.FirstOrDefault();
+            if (firstObject != null && selectedObject.All(x => x.ReferenceTimeTagIndex == firstObject.ReferenceTimeTagIndex))
+                menu.Add(createCombineNoteMenuItem());
+
+            return menu;
+        }
+
+        return new List<MenuItem>();
+    }
+
+    private MenuItem createMultiNoteDisplayPropertyMenuItem(IReadOnlyCollection<Note> selectedObject)
+    {
+        bool display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
+        string displayText = display ? "Hide" : "Show";
+        return new OsuMenuItem($"{displayText} {selectedObject.Count} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
+            () =>
+            {
+                notePropertyChangeHandler.ChangeDisplayState(!display);
+            });
+    }
+
+    private MenuItem createCombineNoteMenuItem()
+    {
+        return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
+        {
+            notesChangeHandler.Combine();
+        });
+    }
+
+    private MenuItem createSingerMenuItem()
+    {
+        return new SingerContextMenu(beatmap, lyricSingerChangeHandler, "Singer");
+    }
+
+    public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)
+    {
+        // Only note can be moved.
+        if (moveEvent.Blueprint is not NoteSelectionBlueprint noteSelectionBlueprint)
+            return false;
+
+        var lastTone = noteSelectionBlueprint.HitObject.Tone;
+        performColumnMovement(lastTone, moveEvent);
+
+        return true;
+    }
+
+    private void performColumnMovement(Tone lastTone, MoveSelectionEvent<HitObject> moveEvent)
+    {
+        if (moveEvent.Blueprint is not NoteSelectionBlueprint)
+            return;
+
+        var calculator = notePositionInfo.Calculator;
+
+        // get center position
+        var screenSpacePosition = moveEvent.Blueprint.ScreenSpaceSelectionPoint + moveEvent.ScreenSpaceDelta;
+        var position = NotePlayfield.ToLocalSpace(screenSpacePosition);
+        var centerPosition = new Vector2(position.X, position.Y - NotePlayfield.Height / 2);
+
+        // get delta position
+        float lastCenterPosition = calculator.YPositionAt(lastTone);
+        float delta = centerPosition.Y - lastCenterPosition;
+
+        // get offset tone.
+        const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
+        var offset = delta switch
+        {
+            > trigger_height => -new Tone { Half = true },
+            < 0 => new Tone { Half = true },
+            _ => default
+        };
+
+        if (offset == default(Tone))
+            return;
+
+        notePropertyChangeHandler.OffsetTone(offset);
     }
 }

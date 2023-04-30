@@ -11,21 +11,20 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Scoring;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI
+namespace osu.Game.Rulesets.Karaoke.UI;
+
+public partial class KaraokeReplayRecorder : ReplayRecorder<KaraokeScoringAction>
 {
-    public partial class KaraokeReplayRecorder : ReplayRecorder<KaraokeScoringAction>
+    public KaraokeReplayRecorder(Score score)
+        : base(score)
     {
-        public KaraokeReplayRecorder(Score score)
-            : base(score)
-        {
-        }
+    }
 
-        protected override ReplayFrame HandleFrame(Vector2 mousePosition, List<KaraokeScoringAction> actions, ReplayFrame previousFrame)
-        {
-            if (actions.Any())
-                return new KaraokeReplayFrame(Time.Current, actions.FirstOrDefault().Scale);
+    protected override ReplayFrame HandleFrame(Vector2 mousePosition, List<KaraokeScoringAction> actions, ReplayFrame previousFrame)
+    {
+        if (actions.Any())
+            return new KaraokeReplayFrame(Time.Current, actions.FirstOrDefault().Scale);
 
-            return new KaraokeReplayFrame(Time.Current);
-        }
+        return new KaraokeReplayFrame(Time.Current);
     }
 }

@@ -20,132 +20,131 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes;
+
+[Cached]
+public partial class NoteEditor : Container
 {
+    private const int columns = 9;
+
+    [Cached(typeof(INotePositionInfo))]
+    private readonly PreviewNotePositionInfo notePositionInfo = new();
+
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
+
     [Cached]
-    public partial class NoteEditor : Container
+    private readonly BindableList<Note> bindableNotes = new();
+
+    [Cached(typeof(Playfield))]
+    public EditorNotePlayfield Playfield { get; }
+
+    public NoteEditor()
     {
-        private const int columns = 9;
-
-        [Cached(typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new();
-
-        [Resolved, AllowNull]
-        private EditorBeatmap beatmap { get; set; }
-
-        private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
-
-        [Cached]
-        private readonly BindableList<Note> bindableNotes = new();
-
-        [Cached(typeof(Playfield))]
-        public EditorNotePlayfield Playfield { get; }
-
-        public NoteEditor()
+        InternalChild = new Container
         {
-            InternalChild = new Container
+            Name = "Content",
+            RelativeSizeAxes = Axes.Both,
+            Children = new Drawable[]
             {
-                Name = "Content",
-                RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                // layers below playfield
+                Playfield = new EditorNotePlayfield(columns)
                 {
-                    // layers below playfield
-                    Playfield = new EditorNotePlayfield(columns)
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                    },
-                    // layers above playfield
-                    new EditNoteBlueprintContainer
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                    },
-                }
-            };
-
-            bindableFocusedLyric.BindValueChanged(e =>
-            {
-                bindableNotes.Clear();
-
-                var lyric = e.NewValue;
-                if (lyric == null)
-                    return;
-
-                Playfield.Clock = new StopClock(lyric.LyricStartTime);
-
-                // add all matched notes into playfield
-                var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
-                bindableNotes.AddRange(notes);
-            });
-
-            bindableNotes.BindCollectionChanged((_, args) =>
-            {
-                switch (args.Action)
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                },
+                // layers above playfield
+                new EditNoteBlueprintContainer
                 {
-                    case NotifyCollectionChangedAction.Add:
-                        Debug.Assert(args.NewItems != null);
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                },
+            }
+        };
 
-                        foreach (var obj in args.NewItems.OfType<Note>())
-                            Playfield.Add(obj);
-
-                        break;
-
-                    case NotifyCollectionChangedAction.Remove:
-                        Debug.Assert(args.OldItems != null);
-
-                        foreach (var obj in args.OldItems.OfType<Note>())
-                            Playfield.Remove(obj);
-
-                        break;
-                }
-            });
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
+        bindableFocusedLyric.BindValueChanged(e =>
         {
-            bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+            bindableNotes.Clear();
 
-            beatmap.HitObjectAdded += addHitObject;
-            beatmap.HitObjectRemoved += removeHitObject;
-        }
-
-        private void addHitObject(HitObject hitObject)
-        {
-            if (hitObject is not Note note)
+            var lyric = e.NewValue;
+            if (lyric == null)
                 return;
 
-            if (note.ReferenceLyric != bindableFocusedLyric.Value)
-                return;
+            Playfield.Clock = new StopClock(lyric.LyricStartTime);
 
-            bindableNotes.Add(note);
-        }
+            // add all matched notes into playfield
+            var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
+            bindableNotes.AddRange(notes);
+        });
 
-        private void removeHitObject(HitObject hitObject)
+        bindableNotes.BindCollectionChanged((_, args) =>
         {
-            if (hitObject is not Note note)
-                return;
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    Debug.Assert(args.NewItems != null);
 
-            if (note.ReferenceLyric != bindableFocusedLyric.Value)
-                return;
+                    foreach (var obj in args.NewItems.OfType<Note>())
+                        Playfield.Add(obj);
 
-            bindableNotes.Remove(note);
-        }
+                    break;
 
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
+                case NotifyCollectionChangedAction.Remove:
+                    Debug.Assert(args.OldItems != null);
 
-            beatmap.HitObjectAdded -= addHitObject;
-            beatmap.HitObjectRemoved -= removeHitObject;
-        }
+                    foreach (var obj in args.OldItems.OfType<Note>())
+                        Playfield.Remove(obj);
 
-        private class PreviewNotePositionInfo : INotePositionInfo
-        {
-            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, 12, ScrollingNotePlayfield.COLUMN_SPACING));
+                    break;
+            }
+        });
+    }
 
-            public NotePositionCalculator Calculator => Position.Value;
-        }
+    [BackgroundDependencyLoader]
+    private void load(ILyricCaretState lyricCaretState)
+    {
+        bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
+
+        beatmap.HitObjectAdded += addHitObject;
+        beatmap.HitObjectRemoved += removeHitObject;
+    }
+
+    private void addHitObject(HitObject hitObject)
+    {
+        if (hitObject is not Note note)
+            return;
+
+        if (note.ReferenceLyric != bindableFocusedLyric.Value)
+            return;
+
+        bindableNotes.Add(note);
+    }
+
+    private void removeHitObject(HitObject hitObject)
+    {
+        if (hitObject is not Note note)
+            return;
+
+        if (note.ReferenceLyric != bindableFocusedLyric.Value)
+            return;
+
+        bindableNotes.Remove(note);
+    }
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        beatmap.HitObjectAdded -= addHitObject;
+        beatmap.HitObjectRemoved -= removeHitObject;
+    }
+
+    private class PreviewNotePositionInfo : INotePositionInfo
+    {
+        public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, 12, ScrollingNotePlayfield.COLUMN_SPACING));
+
+        public NotePositionCalculator Calculator => Position.Value;
     }
 }

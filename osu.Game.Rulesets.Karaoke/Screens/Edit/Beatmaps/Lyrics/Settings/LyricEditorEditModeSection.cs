@@ -10,50 +10,49 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
+
+public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
+    where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : struct, Enum
 {
-    public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
-        where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : struct, Enum
+    [Resolved]
+    private TEditModeState tEditModeState { get; set; }
+
+    protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
+
+    internal sealed override void UpdateEditMode(TEditMode mode)
     {
-        [Resolved]
-        private TEditModeState tEditModeState { get; set; }
+        tEditModeState.ChangeEditMode(mode);
 
-        protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
+        base.UpdateEditMode(mode);
+    }
+}
 
-        internal sealed override void UpdateEditMode(TEditMode mode)
-        {
-            tEditModeState.ChangeEditMode(mode);
+public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSection<TEditMode>
+    where TEditMode : struct, Enum
+{
+    [Resolved]
+    private ILyricSelectionState lyricSelectionState { get; set; }
 
-            base.UpdateEditMode(mode);
-        }
+    protected override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
+        => new LyricEditorDescriptionTextFlowContainer();
+
+    internal override void UpdateEditMode(TEditMode mode)
+    {
+        // should cancel the selection after change to the new edit mode.
+        lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
+
+        base.UpdateEditMode(mode);
     }
 
-    public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSection<TEditMode>
-        where TEditMode : struct, Enum
+    protected abstract partial class LyricEditorVerifySelection : VerifySelection
     {
-        [Resolved]
-        private ILyricSelectionState lyricSelectionState { get; set; }
-
-        protected override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
-            => new LyricEditorDescriptionTextFlowContainer();
-
-        internal override void UpdateEditMode(TEditMode mode)
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorVerifier verifier)
         {
-            // should cancel the selection after change to the new edit mode.
-            lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
-
-            base.UpdateEditMode(mode);
+            Issues.BindTo(verifier.GetIssueByType(EditMode));
         }
 
-        protected abstract partial class LyricEditorVerifySelection : VerifySelection
-        {
-            [BackgroundDependencyLoader]
-            private void load(ILyricEditorVerifier verifier)
-            {
-                Issues.BindTo(verifier.GetIssueByType(EditMode));
-            }
-
-            protected abstract LyricEditorMode EditMode { get; }
-        }
+        protected abstract LyricEditorMode EditMode { get; }
     }
 }

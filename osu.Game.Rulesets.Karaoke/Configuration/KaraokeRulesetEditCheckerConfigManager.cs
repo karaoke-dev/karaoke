@@ -4,27 +4,26 @@
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Configuration
+namespace osu.Game.Rulesets.Karaoke.Configuration;
+
+public class KaraokeRulesetEditCheckerConfigManager : InMemoryConfigManager<KaraokeRulesetEditCheckerSetting>
 {
-    public class KaraokeRulesetEditCheckerConfigManager : InMemoryConfigManager<KaraokeRulesetEditCheckerSetting>
+    protected override void InitialiseDefaults()
     {
-        protected override void InitialiseDefaults()
-        {
-            base.InitialiseDefaults();
+        base.InitialiseDefaults();
 
-            // Lyric
-            SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, TextTagsUtils.Sorting.Asc);
-            SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
-            SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
-            SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeGroupCheck, GroupCheck.Asc);
-        }
+        // Lyric
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, TextTagsUtils.Sorting.Asc);
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeGroupCheck, GroupCheck.Asc);
     }
+}
 
-    public enum KaraokeRulesetEditCheckerSetting
-    {
-        LyricRubyPositionSorting,
-        LyricRomajiPositionSorting,
-        LyricTimeTagTimeSelfCheck,
-        LyricTimeTagTimeGroupCheck
-    }
+public enum KaraokeRulesetEditCheckerSetting
+{
+    LyricRubyPositionSorting,
+    LyricRomajiPositionSorting,
+    LyricTimeTagTimeSelfCheck,
+    LyricTimeTagTimeGroupCheck
 }

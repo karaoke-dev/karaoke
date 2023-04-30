@@ -4,10 +4,9 @@
 using System;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+
+public interface IHasSpecialAction<TSpecialAction> where TSpecialAction : Enum
 {
-    public interface IHasSpecialAction<TSpecialAction> where TSpecialAction : Enum
-    {
-        Bindable<TSpecialAction> BindableSpecialAction { get; }
-    }
+    Bindable<TSpecialAction> BindableSpecialAction { get; }
 }

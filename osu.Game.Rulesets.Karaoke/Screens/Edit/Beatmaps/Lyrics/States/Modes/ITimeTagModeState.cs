@@ -4,12 +4,11 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
-{
-    public interface ITimeTagModeState : IHasBlueprintSelection<TimeTag>, IHasEditModeState<TimeTagEditMode>
-    {
-        BindableFloat BindableRecordZoom { get; }
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-        BindableFloat BindableAdjustZoom { get; }
-    }
+public interface ITimeTagModeState : IHasBlueprintSelection<TimeTag>, IHasEditModeState<TimeTagEditMode>
+{
+    BindableFloat BindableRecordZoom { get; }
+
+    BindableFloat BindableAdjustZoom { get; }
 }

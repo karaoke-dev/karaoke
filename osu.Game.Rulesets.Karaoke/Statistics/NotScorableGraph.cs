@@ -11,30 +11,29 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Statistics
+namespace osu.Game.Rulesets.Karaoke.Statistics;
+
+public partial class NotScorableGraph : Container
 {
-    public partial class NotScorableGraph : Container
+    public NotScorableGraph()
     {
-        public NotScorableGraph()
+        Masking = true;
+        CornerRadius = 5;
+        InternalChildren = new Drawable[]
         {
-            Masking = true;
-            CornerRadius = 5;
-            InternalChildren = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    Name = "Background",
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Black.Opacity(0.5f),
-                },
-                new OsuSpriteText
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
-                    Text = "Sorry, this beatmap is not scorable."
-                }
-            };
-        }
+                Name = "Background",
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4.Black.Opacity(0.5f),
+            },
+            new OsuSpriteText
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
+                Text = "Sorry, this beatmap is not scorable."
+            }
+        };
     }
 }

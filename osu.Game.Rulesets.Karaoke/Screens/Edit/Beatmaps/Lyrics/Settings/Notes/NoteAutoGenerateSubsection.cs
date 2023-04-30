@@ -13,40 +13,39 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
-{
-    /// <summary>
-    /// In <see cref="NoteEditMode.Generate"/> mode, able to let user generate notes by <see cref="TimeTag"/>
-    /// But need to make sure that lyric should not have any <see cref="LyricTimeTagIssue"/>
-    /// If found any issue, will navigate to target lyric.
-    /// </summary>
-    public partial class NoteAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricNotesChangeHandler>
-    {
-        private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 
-        protected override DescriptionFormat CreateInvalidDescriptionFormat()
-            => new()
+/// <summary>
+/// In <see cref="NoteEditMode.Generate"/> mode, able to let user generate notes by <see cref="TimeTag"/>
+/// But need to make sure that lyric should not have any <see cref="LyricTimeTagIssue"/>
+/// If found any issue, will navigate to target lyric.
+/// </summary>
+public partial class NoteAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricNotesChangeHandler>
+{
+    private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
+
+    protected override DescriptionFormat CreateInvalidDescriptionFormat()
+        => new()
+        {
+            Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_ACTION}]({create_time_tag_mode}) to fix those issue.",
+            Actions = new Dictionary<string, IDescriptionAction>
             {
-                Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_ACTION}]({create_time_tag_mode}) to fix those issue.",
-                Actions = new Dictionary<string, IDescriptionAction>
                 {
+                    create_time_tag_mode, new SwitchModeDescriptionAction
                     {
-                        create_time_tag_mode, new SwitchModeDescriptionAction
-                        {
-                            Text = "adjust time-tag mode",
-                            Mode = LyricEditorMode.EditTimeTag
-                        }
+                        Text = "adjust time-tag mode",
+                        Mode = LyricEditorMode.EditTimeTag
                     }
                 }
-            };
+            }
+        };
 
-        protected override ConfigButton CreateConfigButton()
-            => new NoteAutoGenerateConfigButton();
+    protected override ConfigButton CreateConfigButton()
+        => new NoteAutoGenerateConfigButton();
 
-        protected partial class NoteAutoGenerateConfigButton : ConfigButton
-        {
-            public override Popover GetPopover()
-                => new GeneratorConfigPopover(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
-        }
+    protected partial class NoteAutoGenerateConfigButton : ConfigButton
+    {
+        public override Popover GetPopover()
+            => new GeneratorConfigPopover(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
     }
 }

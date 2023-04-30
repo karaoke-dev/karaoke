@@ -19,171 +19,170 @@ using osu.Game.Screens;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
+
+public partial class Header : Container
 {
-    public partial class Header : Container
+    public const float HEIGHT = 80;
+
+    private readonly Box background;
+
+    public Header(ScreenStack stack)
     {
-        public const float HEIGHT = 80;
+        RelativeSizeAxes = Axes.X;
+        Height = HEIGHT;
 
-        private readonly Box background;
+        HeaderBreadcrumbControl breadcrumbs;
+        LyricImporterHeaderTitle title;
 
-        public Header(ScreenStack stack)
+        Children = new Drawable[]
         {
-            RelativeSizeAxes = Axes.X;
-            Height = HEIGHT;
-
-            HeaderBreadcrumbControl breadcrumbs;
-            LyricImporterHeaderTitle title;
-
-            Children = new Drawable[]
+            background = new Box
             {
-                background = new Box
+                RelativeSizeAxes = Axes.Both,
+            },
+            new Container
+            {
+                Anchor = Anchor.CentreLeft,
+                Origin = Anchor.CentreLeft,
+                RelativeSizeAxes = Axes.Both,
+                Padding = new MarginPadding { Left = WaveOverlayContainer.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
+                    title = new LyricImporterHeaderTitle
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.BottomLeft,
+                    },
+                    breadcrumbs = new HeaderBreadcrumbControl(stack)
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft
+                    }
                 },
-                new Container
+            },
+        };
+
+        breadcrumbs.Current.ValueChanged += screen =>
+        {
+            if (screen.NewValue is ILyricImporterStepScreen multiScreen)
+                title.Screen = multiScreen;
+        };
+
+        breadcrumbs.Current.TriggerChange();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider)
+    {
+        background.Colour = colourProvider.Background5;
+    }
+
+    private partial class LyricImporterHeaderTitle : CompositeDrawable
+    {
+        private const float spacing = 6;
+
+        private readonly OsuSpriteText dot;
+        private readonly OsuSpriteText pageTitle;
+
+        public ILyricImporterStepScreen Screen
+        {
+            set => pageTitle.Text = value.ShortTitle;
+        }
+
+        public LyricImporterHeaderTitle()
+        {
+            AutoSizeAxes = Axes.Both;
+
+            InternalChildren = new Drawable[]
+            {
+                new FillFlowContainer
                 {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                    RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding { Left = WaveOverlayContainer.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
+                    AutoSizeAxes = Axes.Both,
+                    Spacing = new Vector2(spacing, 0),
+                    Direction = FillDirection.Horizontal,
                     Children = new Drawable[]
                     {
-                        title = new LyricImporterHeaderTitle
+                        new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.BottomLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
+                            Text = "Import lyric"
                         },
-                        breadcrumbs = new HeaderBreadcrumbControl(stack)
+                        dot = new OsuSpriteText
                         {
-                            Anchor = Anchor.BottomLeft,
-                            Origin = Anchor.BottomLeft
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
+                            Text = "·"
+                        },
+                        pageTitle = new OsuSpriteText
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
                         }
-                    },
+                    }
                 },
             };
-
-            breadcrumbs.Current.ValueChanged += screen =>
-            {
-                if (screen.NewValue is ILyricImporterStepScreen multiScreen)
-                    title.Screen = multiScreen;
-            };
-
-            breadcrumbs.Current.TriggerChange();
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+        private void load(OsuColour colours)
         {
-            background.Colour = colourProvider.Background5;
+            pageTitle.Colour = dot.Colour = colours.Yellow;
+        }
+    }
+
+    private partial class HeaderBreadcrumbControl : ScreenBreadcrumbControl
+    {
+        public HeaderBreadcrumbControl(ScreenStack stack)
+            : base(stack)
+        {
+            RelativeSizeAxes = Axes.X;
+            StripColour = Color4.Transparent;
         }
 
-        private partial class LyricImporterHeaderTitle : CompositeDrawable
+        protected override void LoadComplete()
         {
-            private const float spacing = 6;
-
-            private readonly OsuSpriteText dot;
-            private readonly OsuSpriteText pageTitle;
-
-            public ILyricImporterStepScreen Screen
-            {
-                set => pageTitle.Text = value.ShortTitle;
-            }
-
-            public LyricImporterHeaderTitle()
-            {
-                AutoSizeAxes = Axes.Both;
-
-                InternalChildren = new Drawable[]
-                {
-                    new FillFlowContainer
-                    {
-                        AutoSizeAxes = Axes.Both,
-                        Spacing = new Vector2(spacing, 0),
-                        Direction = FillDirection.Horizontal,
-                        Children = new Drawable[]
-                        {
-                            new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                                Text = "Import lyric"
-                            },
-                            dot = new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                                Text = "·"
-                            },
-                            pageTitle = new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                            }
-                        }
-                    },
-                };
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                pageTitle.Colour = dot.Colour = colours.Yellow;
-            }
+            base.LoadComplete();
+            AccentColour = Color4Extensions.FromHex("#e35c99");
         }
 
-        private partial class HeaderBreadcrumbControl : ScreenBreadcrumbControl
+        protected override void SelectTab(TabItem<IScreen> tab)
         {
-            public HeaderBreadcrumbControl(ScreenStack stack)
-                : base(stack)
+            if (tab.Value == Current.Value)
+                return;
+
+            if (Current.Value is not ILyricImporterStepScreen currentScreen)
+                return;
+
+            if (tab.Value is not ILyricImporterStepScreen targetScreen)
+                return;
+
+            if (targetScreen.Step > currentScreen.Step)
+                throw new InvalidOperationException("Cannot roll back to next step. How did you did that?");
+
+            // Should make sure that
+            targetScreen.ConfirmRollBackFromStep(currentScreen, enabled =>
             {
-                RelativeSizeAxes = Axes.X;
-                StripColour = Color4.Transparent;
-            }
+                if (enabled)
+                    base.SelectTab(tab);
+            });
+        }
 
-            protected override void LoadComplete()
+        protected override TabItem<IScreen> CreateTabItem(IScreen value) => new HeaderBreadcrumbTabItem(value)
+        {
+            AccentColour = AccentColour
+        };
+
+        private partial class HeaderBreadcrumbTabItem : BreadcrumbTabItem
+        {
+            public HeaderBreadcrumbTabItem(IScreen value)
+                : base(value)
             {
-                base.LoadComplete();
-                AccentColour = Color4Extensions.FromHex("#e35c99");
-            }
-
-            protected override void SelectTab(TabItem<IScreen> tab)
-            {
-                if (tab.Value == Current.Value)
-                    return;
-
-                if (Current.Value is not ILyricImporterStepScreen currentScreen)
-                    return;
-
-                if (tab.Value is not ILyricImporterStepScreen targetScreen)
-                    return;
-
-                if (targetScreen.Step > currentScreen.Step)
-                    throw new InvalidOperationException("Cannot roll back to next step. How did you did that?");
-
-                // Should make sure that
-                targetScreen.ConfirmRollBackFromStep(currentScreen, enabled =>
-                {
-                    if (enabled)
-                        base.SelectTab(tab);
-                });
-            }
-
-            protected override TabItem<IScreen> CreateTabItem(IScreen value) => new HeaderBreadcrumbTabItem(value)
-            {
-                AccentColour = AccentColour
-            };
-
-            private partial class HeaderBreadcrumbTabItem : BreadcrumbTabItem
-            {
-                public HeaderBreadcrumbTabItem(IScreen value)
-                    : base(value)
-                {
-                    Bar.Colour = Color4.Transparent;
-                }
+                Bar.Colour = Color4.Transparent;
             }
         }
     }

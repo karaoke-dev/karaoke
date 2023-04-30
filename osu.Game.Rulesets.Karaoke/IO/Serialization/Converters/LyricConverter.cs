@@ -11,83 +11,82 @@ using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class LyricConverter : JsonConverter<Lyric>
 {
-    public class LyricConverter : JsonConverter<Lyric>
+    public override Lyric ReadJson(JsonReader reader, Type objectType, Lyric? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        public override Lyric ReadJson(JsonReader reader, Type objectType, Lyric? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        var jObject = JObject.Load(reader);
+
+        var newReader = jObject.CreateReader();
+
+        var instance = (Lyric)Activator.CreateInstance(objectType)!;
+        serializer.Populate(newReader, instance);
+        return instance;
+    }
+
+    public override void WriteJson(JsonWriter writer, Lyric? value, JsonSerializer serializer)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        // follow: https://stackoverflow.com/a/59329703
+        // not a good way but seems there's no better choice.
+        serializer.Converters.Remove(this);
+
+        var jObject = JObject.FromObject(value, serializer);
+
+        serializer.Converters.Add(this);
+
+        // should remove some properties from jObject if has the config.
+        if (value.ReferenceLyricConfig != null)
         {
-            var jObject = JObject.Load(reader);
+            Debug.Assert(value.ReferenceLyricConfig != null);
 
-            var newReader = jObject.CreateReader();
+            // note: should convert into snake case.
+            string[] removedProperties = removePropertyNamesByConfig(value.ReferenceLyricConfig)
+                                         .Select(x => x.ToSnakeCase())
+                                         .ToArray();
 
-            var instance = (Lyric)Activator.CreateInstance(objectType)!;
-            serializer.Populate(newReader, instance);
-            return instance;
+            foreach (string removedProperty in removedProperties)
+            {
+                jObject.Remove(removedProperty);
+            }
         }
 
-        public override void WriteJson(JsonWriter writer, Lyric? value, JsonSerializer serializer)
+        jObject.WriteTo(writer);
+    }
+
+    private IEnumerable<string> removePropertyNamesByConfig(IReferenceLyricPropertyConfig config)
+    {
+        switch (config)
         {
-            ArgumentNullException.ThrowIfNull(value);
+            case ReferenceLyricConfig:
+                yield break;
 
-            // follow: https://stackoverflow.com/a/59329703
-            // not a good way but seems there's no better choice.
-            serializer.Converters.Remove(this);
+            case SyncLyricConfig syncLyricConfig:
+                yield return nameof(Lyric.Text);
 
-            var jObject = JObject.FromObject(value, serializer);
+                if (syncLyricConfig.SyncTimeTagProperty)
+                    yield return nameof(Lyric.TimeTags);
 
-            serializer.Converters.Add(this);
+                yield return nameof(Lyric.RubyTags);
+                yield return nameof(Lyric.RomajiTags);
+                yield return nameof(Lyric.StartTime);
+                yield return nameof(Lyric.Duration);
+                yield return nameof(Lyric.EndTime);
 
-            // should remove some properties from jObject if has the config.
-            if (value.ReferenceLyricConfig != null)
-            {
-                Debug.Assert(value.ReferenceLyricConfig != null);
+                if (syncLyricConfig.SyncSingerProperty)
+                    yield return nameof(Lyric.SingerIds);
 
-                // note: should convert into snake case.
-                string[] removedProperties = removePropertyNamesByConfig(value.ReferenceLyricConfig)
-                                             .Select(x => x.ToSnakeCase())
-                                             .ToArray();
+                yield return nameof(Lyric.Translates);
+                yield return nameof(Lyric.Language);
+                yield return nameof(Lyric.Order);
 
-                foreach (string removedProperty in removedProperties)
-                {
-                    jObject.Remove(removedProperty);
-                }
-            }
+                yield break;
 
-            jObject.WriteTo(writer);
-        }
-
-        private IEnumerable<string> removePropertyNamesByConfig(IReferenceLyricPropertyConfig config)
-        {
-            switch (config)
-            {
-                case ReferenceLyricConfig:
-                    yield break;
-
-                case SyncLyricConfig syncLyricConfig:
-                    yield return nameof(Lyric.Text);
-
-                    if (syncLyricConfig.SyncTimeTagProperty)
-                        yield return nameof(Lyric.TimeTags);
-
-                    yield return nameof(Lyric.RubyTags);
-                    yield return nameof(Lyric.RomajiTags);
-                    yield return nameof(Lyric.StartTime);
-                    yield return nameof(Lyric.Duration);
-                    yield return nameof(Lyric.EndTime);
-
-                    if (syncLyricConfig.SyncSingerProperty)
-                        yield return nameof(Lyric.SingerIds);
-
-                    yield return nameof(Lyric.Translates);
-                    yield return nameof(Lyric.Language);
-                    yield return nameof(Lyric.Order);
-
-                    yield break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(config), config, "unknown config.");
-            }
+            default:
+                throw new ArgumentOutOfRangeException(nameof(config), config, "unknown config.");
         }
     }
 }

@@ -15,61 +15,60 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
+
+public partial class TimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
 {
-    public partial class TimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    [UsedImplicitly]
+    private readonly BindableList<TimeTag> timeTags;
+
+    protected readonly Lyric Lyric;
+
+    public TimeTagBlueprintContainer(Lyric lyric)
+    {
+        Lyric = lyric;
+        timeTags = lyric.TimeTagsBindable.GetBoundCopy();
+    }
+
+    protected override bool OnMouseDown(MouseDownEvent e)
+    {
+        lyricCaretState.MoveCaretToTargetPosition(Lyric);
+        return base.OnMouseDown(e);
+    }
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        // Add time tag into blueprint container
+        RegisterBindable(timeTags);
+    }
+
+    protected override SelectionHandler<TimeTag> CreateSelectionHandler()
+        => new TimeTagSelectionHandler();
+
+    protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
+        => new TimeTagSelectionBlueprint(item);
+
+    protected partial class TimeTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        [UsedImplicitly]
-        private readonly BindableList<TimeTag> timeTags;
-
-        protected readonly Lyric Lyric;
-
-        public TimeTagBlueprintContainer(Lyric lyric)
-        {
-            Lyric = lyric;
-            timeTags = lyric.TimeTagsBindable.GetBoundCopy();
-        }
-
-        protected override bool OnMouseDown(MouseDownEvent e)
-        {
-            lyricCaretState.MoveCaretToTargetPosition(Lyric);
-            return base.OnMouseDown(e);
-        }
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(ITimeTagModeState timeTagModeState)
         {
-            // Add time tag into blueprint container
-            RegisterBindable(timeTags);
+            SelectedItems.BindTo(timeTagModeState.SelectedItems);
         }
 
-        protected override SelectionHandler<TimeTag> CreateSelectionHandler()
-            => new TimeTagSelectionHandler();
+        // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+        public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;
 
-        protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-            => new TimeTagSelectionBlueprint(item);
-
-        protected partial class TimeTagSelectionHandler : BindableSelectionHandler
+        protected override void DeleteItems(IEnumerable<TimeTag> items)
         {
-            [Resolved]
-            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-            [BackgroundDependencyLoader]
-            private void load(ITimeTagModeState timeTagModeState)
-            {
-                SelectedItems.BindTo(timeTagModeState.SelectedItems);
-            }
-
-            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
-            public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;
-
-            protected override void DeleteItems(IEnumerable<TimeTag> items)
-            {
-                lyricTimeTagsChangeHandler.RemoveRange(items);
-            }
+            lyricTimeTagsChangeHandler.RemoveRange(items);
         }
     }
 }

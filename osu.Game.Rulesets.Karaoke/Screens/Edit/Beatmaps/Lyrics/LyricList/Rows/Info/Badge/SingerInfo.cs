@@ -10,35 +10,34 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
+
+public partial class SingerInfo : Container
 {
-    public partial class SingerInfo : Container
+    private readonly SingerDisplay singerDisplay;
+
+    private readonly IBindableDictionary<Singer, SingerState[]> singerIndexesBindable;
+
+    public SingerInfo(Lyric lyric)
     {
-        private readonly SingerDisplay singerDisplay;
+        singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
 
-        private readonly IBindableDictionary<Singer, SingerState[]> singerIndexesBindable;
+        AutoSizeAxes = Axes.Both;
 
-        public SingerInfo(Lyric lyric)
+        Child = singerDisplay = new SingerDisplay
         {
-            singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
+            Anchor = Anchor.TopRight,
+            Origin = Anchor.TopRight,
+        };
+    }
 
-            AutoSizeAxes = Axes.Both;
-
-            Child = singerDisplay = new SingerDisplay
-            {
-                Anchor = Anchor.TopRight,
-                Origin = Anchor.TopRight,
-            };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        singerIndexesBindable.BindCollectionChanged((_, _) =>
         {
-            singerIndexesBindable.BindCollectionChanged((_, _) =>
-            {
-                // todo: maybe should display the singer state also?
-                singerDisplay.Current.Value = singerIndexesBindable.Keys.ToArray();
-            }, true);
-        }
+            // todo: maybe should display the singer state also?
+            singerDisplay.Current.Value = singerIndexesBindable.Keys.ToArray();
+        }, true);
     }
 }

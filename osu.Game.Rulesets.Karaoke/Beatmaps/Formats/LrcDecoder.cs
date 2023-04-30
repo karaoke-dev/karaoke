@@ -12,65 +12,64 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
+namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+
+public class LrcDecoder : Decoder<Beatmap>
 {
-    public class LrcDecoder : Decoder<Beatmap>
+    public static void Register()
     {
-        public static void Register()
+        // Lrc decoder looks like [mm:ss:__]
+        AddDecoder<Beatmap>("[", _ => new LrcDecoder());
+    }
+
+    protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
+    {
+        // Clear all hitobjects
+        output.HitObjects.Clear();
+
+        string lyricText = stream.ReadToEnd();
+        var result = new LrcParser.Parser.Lrc.LrcParser().Decode(lyricText);
+
+        foreach (var lrcLyric in result.Lyrics)
         {
-            // Lrc decoder looks like [mm:ss:__]
-            AddDecoder<Beatmap>("[", _ => new LrcDecoder());
+            var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToArray();
+            var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
+            var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
+
+            var lyric = new Lyric
+            {
+                ID = output.HitObjects.Count, // id is star from zero.
+                Order = output.HitObjects.Count + 1, // should create default order.
+                Text = lrcLyric.Text,
+                TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
+                RubyTags = lrcRubies
+            };
+            output.HitObjects.Add(lyric);
         }
 
-        protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
+        static TimeTag convertTimeTag(KeyValuePair<TextIndex, int?> timeTag)
+            => new(convertTextIndex(timeTag.Key), timeTag.Value);
+
+        static Framework.Graphics.Sprites.TextIndex convertTextIndex(TextIndex textIndex)
         {
-            // Clear all hitobjects
-            output.HitObjects.Clear();
+            int index = textIndex.Index;
+            var state = textIndex.State == IndexState.Start ? Framework.Graphics.Sprites.TextIndex.IndexState.Start : Framework.Graphics.Sprites.TextIndex.IndexState.End;
 
-            string lyricText = stream.ReadToEnd();
-            var result = new LrcParser.Parser.Lrc.LrcParser().Decode(lyricText);
+            return new Framework.Graphics.Sprites.TextIndex(index, state);
+        }
 
-            foreach (var lrcLyric in result.Lyrics)
+        static RubyTag convertRubyTag(LrcParser.Model.RubyTag rubyTag)
+            => new()
             {
-                var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToArray();
-                var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
-                var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
+                Text = rubyTag.Text,
+                StartIndex = rubyTag.StartIndex,
+                EndIndex = rubyTag.EndIndex
+            };
 
-                var lyric = new Lyric
-                {
-                    ID = output.HitObjects.Count, // id is star from zero.
-                    Order = output.HitObjects.Count + 1, // should create default order.
-                    Text = lrcLyric.Text,
-                    TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
-                    RubyTags = lrcRubies
-                };
-                output.HitObjects.Add(lyric);
-            }
-
-            static TimeTag convertTimeTag(KeyValuePair<TextIndex, int?> timeTag)
-                => new(convertTextIndex(timeTag.Key), timeTag.Value);
-
-            static Framework.Graphics.Sprites.TextIndex convertTextIndex(TextIndex textIndex)
-            {
-                int index = textIndex.Index;
-                var state = textIndex.State == IndexState.Start ? Framework.Graphics.Sprites.TextIndex.IndexState.Start : Framework.Graphics.Sprites.TextIndex.IndexState.End;
-
-                return new Framework.Graphics.Sprites.TextIndex(index, state);
-            }
-
-            static RubyTag convertRubyTag(LrcParser.Model.RubyTag rubyTag)
-                => new()
-                {
-                    Text = rubyTag.Text,
-                    StartIndex = rubyTag.StartIndex,
-                    EndIndex = rubyTag.EndIndex
-                };
-
-            static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
-            {
-                int startIndex = rubyTag.StartIndex;
-                return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<TextIndex, int?>(new TextIndex(startIndex), x.Value))).ToArray();
-            }
+        static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
+        {
+            int startIndex = rubyTag.StartIndex;
+            return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<TextIndex, int?>(new TextIndex(startIndex), x.Value))).ToArray();
         }
     }
 }

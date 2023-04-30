@@ -5,63 +5,62 @@
 
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public enum LyricEditorMode
 {
-    public enum LyricEditorMode
-    {
-        /// <summary>
-        /// Cannot edit anything except each lyric's left-side part.
-        /// </summary>
-        [Description("View")]
-        View,
+    /// <summary>
+    /// Cannot edit anything except each lyric's left-side part.
+    /// </summary>
+    [Description("View")]
+    View,
 
-        /// <summary>
-        /// Can create/delete/move/split/combine lyric.
-        /// And typing the lyric.
-        /// </summary>
-        [Description("Texting")]
-        Texting,
+    /// <summary>
+    /// Can create/delete/move/split/combine lyric.
+    /// And typing the lyric.
+    /// </summary>
+    [Description("Texting")]
+    Texting,
 
-        /// <summary>
-        /// Mark the lyric is "similar" to another lyric.
-        /// </summary>
-        [Description("Reference")]
-        Reference,
+    /// <summary>
+    /// Mark the lyric is "similar" to another lyric.
+    /// </summary>
+    [Description("Reference")]
+    Reference,
 
-        /// <summary>
-        /// Can edit each lyric's language.
-        /// </summary>
-        [Description("Select language")]
-        Language,
+    /// <summary>
+    /// Can edit each lyric's language.
+    /// </summary>
+    [Description("Select language")]
+    Language,
 
-        /// <summary>
-        /// Able to create/delete ruby.
-        /// </summary>
-        [Description("Edit ruby")]
-        EditRuby,
+    /// <summary>
+    /// Able to create/delete ruby.
+    /// </summary>
+    [Description("Edit ruby")]
+    EditRuby,
 
-        /// <summary>
-        /// Able to create/delete romaji.
-        /// </summary>
-        [Description("Edit romaji")]
-        EditRomaji,
+    /// <summary>
+    /// Able to create/delete romaji.
+    /// </summary>
+    [Description("Edit romaji")]
+    EditRomaji,
 
-        /// <summary>
-        /// Enable to create/delete and reset time tag.
-        /// </summary>
-        [Description("Edit time tag")]
-        EditTimeTag,
+    /// <summary>
+    /// Enable to create/delete and reset time tag.
+    /// </summary>
+    [Description("Edit time tag")]
+    EditTimeTag,
 
-        /// <summary>
-        /// Enable to create/delete notes.
-        /// </summary>
-        [Description("Edit note")]
-        EditNote,
+    /// <summary>
+    /// Enable to create/delete notes.
+    /// </summary>
+    [Description("Edit note")]
+    EditNote,
 
-        /// <summary>
-        /// Can edit each lyric's singer.
-        /// </summary>
-        [Description("Select singer")]
-        Singer,
-    }
+    /// <summary>
+    /// Can edit each lyric's singer.
+    /// </summary>
+    [Description("Select singer")]
+    Singer,
 }

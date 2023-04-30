@@ -21,94 +21,93 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
+
+public partial class NotePlayfieldPreview : SettingsSubsectionPreview
 {
-    public partial class NotePlayfieldPreview : SettingsSubsectionPreview
+    private const int columns = 9;
+
+    [Cached(typeof(IScrollingInfo))]
+    private readonly LocalScrollingInfo scrollingInfo = new();
+
+    [Cached(typeof(INotePositionInfo))]
+    private readonly PreviewNotePositionInfo notePositionInfo = new();
+
+    private readonly NotePlayfield notePlayfield;
+
+    public NotePlayfieldPreview()
     {
-        private const int columns = 9;
+        Size = new Vector2(0.7f, 0.5f);
 
-        [Cached(typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo = new();
-
-        [Cached(typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new();
-
-        private readonly NotePlayfield notePlayfield;
-
-        public NotePlayfieldPreview()
+        Child = new Container
         {
-            Size = new Vector2(0.7f, 0.5f);
-
-            Child = new Container
+            RelativeSizeAxes = Axes.Both,
+            Padding = new MarginPadding(30),
+            Child = notePlayfield = new NotePlayfield(columns)
             {
-                RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding(30),
-                Child = notePlayfield = new NotePlayfield(columns)
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                }
-            };
-        }
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+            }
+        };
+    }
 
-        private double lastCreateSampleTime;
+    private double lastCreateSampleTime;
 
-        protected override void Update()
+    protected override void Update()
+    {
+        base.Update();
+
+        if (!(Time.Current > lastCreateSampleTime + 3000))
+            return;
+
+        lastCreateSampleTime = Time.Current;
+
+        double startTime = Time.Current + 3000;
+        notePlayfield.Add(new Note
         {
-            base.Update();
+            StartTime = startTime,
+            Duration = 1000,
+            Text = "Note",
+            ReferenceLyric = new Lyric(),
+            HitWindows = new KaraokeNoteHitWindows(),
+        });
 
-            if (!(Time.Current > lastCreateSampleTime + 3000))
-                return;
-
-            lastCreateSampleTime = Time.Current;
-
-            double startTime = Time.Current + 3000;
-            notePlayfield.Add(new Note
-            {
-                StartTime = startTime,
-                Duration = 1000,
-                Text = "Note",
-                ReferenceLyric = new Lyric(),
-                HitWindows = new KaraokeNoteHitWindows(),
-            });
-
-            notePlayfield.Add(new BarLine
-            {
-                StartTime = startTime,
-                Major = true
-            });
-        }
-
-        private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
-
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
+        notePlayfield.Add(new BarLine
         {
-            config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
-            configDirection.BindValueChanged(direction =>
-            {
-                if (scrollingInfo.Direction is Bindable<ScrollingDirection> bindableScrollingDirection)
-                    bindableScrollingDirection.Value = (ScrollingDirection)direction.NewValue;
-            }, true);
+            StartTime = startTime,
+            Major = true
+        });
+    }
 
-            config.BindWith(KaraokeRulesetSetting.ScrollTime, scrollingInfo.TimeRange as BindableDouble);
-        }
+    private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
-        private class LocalScrollingInfo : IScrollingInfo
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetConfigManager config)
+    {
+        config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
+        configDirection.BindValueChanged(direction =>
         {
-            public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>();
+            if (scrollingInfo.Direction is Bindable<ScrollingDirection> bindableScrollingDirection)
+                bindableScrollingDirection.Value = (ScrollingDirection)direction.NewValue;
+        }, true);
 
-            public IBindable<double> TimeRange { get; } = new BindableDouble(1500);
+        config.BindWith(KaraokeRulesetSetting.ScrollTime, scrollingInfo.TimeRange as BindableDouble);
+    }
 
-            public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new SortedList<MultiplierControlPoint>(Comparer<MultiplierControlPoint>.Default));
-        }
+    private class LocalScrollingInfo : IScrollingInfo
+    {
+        public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>();
 
-        private class PreviewNotePositionInfo : INotePositionInfo
-        {
-            public IBindable<NotePositionCalculator> Position { get; } =
-                new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+        public IBindable<double> TimeRange { get; } = new BindableDouble(1500);
 
-            public NotePositionCalculator Calculator => Position.Value;
-        }
+        public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new SortedList<MultiplierControlPoint>(Comparer<MultiplierControlPoint>.Default));
+    }
+
+    private class PreviewNotePositionInfo : INotePositionInfo
+    {
+        public IBindable<NotePositionCalculator> Position { get; } =
+            new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+
+        public NotePositionCalculator Calculator => Position.Value;
     }
 }

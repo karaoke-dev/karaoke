@@ -5,31 +5,30 @@ using Newtonsoft.Json;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization;
+
+public static class KaraokeJsonSerializableExtensions
 {
-    public static class KaraokeJsonSerializableExtensions
+    public static JsonSerializerSettings CreateGlobalSettings()
     {
-        public static JsonSerializerSettings CreateGlobalSettings()
-        {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+        var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
 
-            // karaoke beatmap.
-            globalSetting.Converters.Add(new SingerConverter());
+        // karaoke beatmap.
+        globalSetting.Converters.Add(new SingerConverter());
 
-            // hit-object
-            globalSetting.Converters.Add(new CultureInfoConverter());
-            globalSetting.Converters.Add(new RomajiTagConverter());
-            globalSetting.Converters.Add(new RomajiTagsConverter());
-            globalSetting.Converters.Add(new RubyTagConverter());
-            globalSetting.Converters.Add(new RubyTagsConverter());
-            globalSetting.Converters.Add(new TimeTagConverter());
-            globalSetting.Converters.Add(new TimeTagsConverter());
-            globalSetting.Converters.Add(new ToneConverter());
-            globalSetting.Converters.Add(new TranslatesConverter());
-            globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConverter());
-            globalSetting.Converters.Add(new LyricConverter());
+        // hit-object
+        globalSetting.Converters.Add(new CultureInfoConverter());
+        globalSetting.Converters.Add(new RomajiTagConverter());
+        globalSetting.Converters.Add(new RomajiTagsConverter());
+        globalSetting.Converters.Add(new RubyTagConverter());
+        globalSetting.Converters.Add(new RubyTagsConverter());
+        globalSetting.Converters.Add(new TimeTagConverter());
+        globalSetting.Converters.Add(new TimeTagsConverter());
+        globalSetting.Converters.Add(new ToneConverter());
+        globalSetting.Converters.Add(new TranslatesConverter());
+        globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConverter());
+        globalSetting.Converters.Add(new LyricConverter());
 
-            return globalSetting;
-        }
+        return globalSetting;
     }
 }

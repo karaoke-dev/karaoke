@@ -11,52 +11,51 @@ using osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit.Setup;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Setup
+namespace osu.Game.Rulesets.Karaoke.Edit.Setup;
+
+public partial class KaraokeSetupSection : RulesetSetupSection
 {
-    public partial class KaraokeSetupSection : RulesetSetupSection
+    private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(Beatmap);
+
+    private LabelledSwitchButton scorable;
+    private LabelledSingerList singerList;
+
+    public KaraokeSetupSection()
+        : base(new KaraokeRuleset().RulesetInfo)
     {
-        private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(Beatmap);
+    }
 
-        private LabelledSwitchButton scorable;
-        private LabelledSingerList singerList;
-
-        public KaraokeSetupSection()
-            : base(new KaraokeRuleset().RulesetInfo)
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        Children = new Drawable[]
         {
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Children = new Drawable[]
+            scorable = new LabelledSwitchButton
             {
-                scorable = new LabelledSwitchButton
-                {
-                    Label = "Scorable",
-                    Description = "Will not show score playfield if the option is unchecked.",
-                    Current = { Value = true }
-                },
-                singerList = new LabelledSingerList
-                {
-                    Label = "Singer list",
-                    Description = "All the singers in beatmap.",
-                    FixedLabelWidth = LABEL_WIDTH,
-                    SingerNamePrefix = "#"
-                }
-            };
-        }
+                Label = "Scorable",
+                Description = "Will not show score playfield if the option is unchecked.",
+                Current = { Value = true }
+            },
+            singerList = new LabelledSingerList
+            {
+                Label = "Singer list",
+                Description = "All the singers in beatmap.",
+                FixedLabelWidth = LABEL_WIDTH,
+                SingerNamePrefix = "#"
+            }
+        };
+    }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
-            scorable.Current.BindValueChanged(_ => updateBeatmap());
-        }
+        scorable.Current.BindValueChanged(_ => updateBeatmap());
+    }
 
-        private void updateBeatmap()
-        {
-            // todo: update the value.
-            // karaokeBeatmap.Scorable = scorable.Current.Value;
-        }
+    private void updateBeatmap()
+    {
+        // todo: update the value.
+        // karaokeBeatmap.Scorable = scorable.Current.Value;
     }
 }

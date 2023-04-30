@@ -3,18 +3,17 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+
+public readonly struct ClickingCaretPosition : ICaretPosition
 {
-    public readonly struct ClickingCaretPosition : ICaretPosition
+    public ClickingCaretPosition(Lyric lyric, CaretGenerateType generateType = CaretGenerateType.Action)
     {
-        public ClickingCaretPosition(Lyric lyric, CaretGenerateType generateType = CaretGenerateType.Action)
-        {
-            Lyric = lyric;
-            GenerateType = generateType;
-        }
-
-        public Lyric Lyric { get; }
-
-        public CaretGenerateType GenerateType { get; }
+        Lyric = lyric;
+        GenerateType = generateType;
     }
+
+    public Lyric Lyric { get; }
+
+    public CaretGenerateType GenerateType { get; }
 }

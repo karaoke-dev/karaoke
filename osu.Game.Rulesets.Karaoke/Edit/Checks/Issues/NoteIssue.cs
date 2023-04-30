@@ -4,16 +4,15 @@
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues
-{
-    public class NoteIssue : Issue
-    {
-        public Note Note;
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 
-        public NoteIssue(Note note, IssueTemplate template, params object[] args)
-            : base(note, template, args)
-        {
-            Note = note;
-        }
+public class NoteIssue : Issue
+{
+    public Note Note;
+
+    public NoteIssue(Note note, IssueTemplate template, params object[] args)
+        : base(note, template, args)
+    {
+        Note = note;
     }
 }

@@ -7,30 +7,29 @@ using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+
+public interface ILyricSelectionState
 {
-    public interface ILyricSelectionState
-    {
-        IBindable<bool> Selecting { get; }
+    IBindable<bool> Selecting { get; }
 
-        IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric { get; }
+    IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric { get; }
 
-        IBindableList<Lyric> SelectedLyrics { get; }
+    IBindableList<Lyric> SelectedLyrics { get; }
 
-        Action<LyricEditorSelectingAction>? Action { get; set; }
+    Action<LyricEditorSelectingAction>? Action { get; set; }
 
-        void StartSelecting();
+    void StartSelecting();
 
-        void EndSelecting(LyricEditorSelectingAction action);
+    void EndSelecting(LyricEditorSelectingAction action);
 
-        void Select(Lyric lyric);
+    void Select(Lyric lyric);
 
-        void UnSelect(Lyric lyric);
+    void UnSelect(Lyric lyric);
 
-        void SelectAll();
+    void SelectAll();
 
-        void UnSelectAll();
+    void UnSelectAll();
 
-        void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics);
-    }
+    void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics);
 }

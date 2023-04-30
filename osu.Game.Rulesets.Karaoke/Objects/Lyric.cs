@@ -19,225 +19,224 @@ using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Objects
+namespace osu.Game.Rulesets.Karaoke.Objects;
+
+public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
 {
-    public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
+    private void updateStateByDataProperty(LyricWorkingProperty workingProperty)
+        => workingPropertyValidator.UpdateStateByDataProperty(workingProperty);
+
+    /// <summary>
+    /// Primary key.
+    /// </summary>
+    public int ID { get; set; }
+
+    [JsonIgnore]
+    public readonly Bindable<string> TextBindable = new(string.Empty);
+
+    /// <summary>
+    /// Text of the lyric
+    /// </summary>
+    public string Text
     {
-        private void updateStateByDataProperty(LyricWorkingProperty workingProperty)
-            => workingPropertyValidator.UpdateStateByDataProperty(workingProperty);
+        get => TextBindable.Value;
+        set => TextBindable.Value = value;
+    }
 
-        /// <summary>
-        /// Primary key.
-        /// </summary>
-        public int ID { get; set; }
+    [JsonIgnore]
+    public IBindable<int> TimeTagsVersion => timeTagsVersion;
 
-        [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new(string.Empty);
+    private readonly Bindable<int> timeTagsVersion = new();
 
-        /// <summary>
-        /// Text of the lyric
-        /// </summary>
-        public string Text
+    [JsonIgnore]
+    public readonly BindableList<TimeTag> TimeTagsBindable = new();
+
+    /// <summary>
+    /// Time tags
+    /// </summary>
+    public IList<TimeTag> TimeTags
+    {
+        get => TimeTagsBindable;
+        set
         {
-            get => TextBindable.Value;
-            set => TextBindable.Value = value;
+            TimeTagsBindable.Clear();
+            TimeTagsBindable.AddRange(value);
         }
+    }
 
-        [JsonIgnore]
-        public IBindable<int> TimeTagsVersion => timeTagsVersion;
+    [JsonIgnore]
+    public IBindable<int> RubyTagsVersion => rubyTagsVersion;
 
-        private readonly Bindable<int> timeTagsVersion = new();
+    private readonly Bindable<int> rubyTagsVersion = new();
 
-        [JsonIgnore]
-        public readonly BindableList<TimeTag> TimeTagsBindable = new();
+    [JsonIgnore]
+    public readonly BindableList<RubyTag> RubyTagsBindable = new();
 
-        /// <summary>
-        /// Time tags
-        /// </summary>
-        public IList<TimeTag> TimeTags
+    /// <summary>
+    /// List of ruby tags
+    /// </summary>
+    public IList<RubyTag> RubyTags
+    {
+        get => RubyTagsBindable;
+        set
         {
-            get => TimeTagsBindable;
-            set
-            {
-                TimeTagsBindable.Clear();
-                TimeTagsBindable.AddRange(value);
-            }
+            RubyTagsBindable.Clear();
+            RubyTagsBindable.AddRange(value);
         }
+    }
 
-        [JsonIgnore]
-        public IBindable<int> RubyTagsVersion => rubyTagsVersion;
+    [JsonIgnore]
+    public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
 
-        private readonly Bindable<int> rubyTagsVersion = new();
+    private readonly Bindable<int> romajiTagsVersion = new();
 
-        [JsonIgnore]
-        public readonly BindableList<RubyTag> RubyTagsBindable = new();
+    [JsonIgnore]
+    public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
 
-        /// <summary>
-        /// List of ruby tags
-        /// </summary>
-        public IList<RubyTag> RubyTags
+    /// <summary>
+    /// List of ruby tags
+    /// </summary>
+    public IList<RomajiTag> RomajiTags
+    {
+        get => RomajiTagsBindable;
+        set
         {
-            get => RubyTagsBindable;
-            set
-            {
-                RubyTagsBindable.Clear();
-                RubyTagsBindable.AddRange(value);
-            }
+            RomajiTagsBindable.Clear();
+            RomajiTagsBindable.AddRange(value);
         }
+    }
 
-        [JsonIgnore]
-        public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
+    [JsonIgnore]
+    public readonly BindableList<int> SingerIdsBindable = new();
 
-        private readonly Bindable<int> romajiTagsVersion = new();
-
-        [JsonIgnore]
-        public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
-
-        /// <summary>
-        /// List of ruby tags
-        /// </summary>
-        public IList<RomajiTag> RomajiTags
+    /// <summary>
+    /// Singers
+    /// </summary>
+    public IList<int> SingerIds
+    {
+        get => SingerIdsBindable;
+        set
         {
-            get => RomajiTagsBindable;
-            set
-            {
-                RomajiTagsBindable.Clear();
-                RomajiTagsBindable.AddRange(value);
-            }
+            SingerIdsBindable.Clear();
+            SingerIdsBindable.AddRange(value);
         }
+    }
 
-        [JsonIgnore]
-        public readonly BindableList<int> SingerIdsBindable = new();
+    [JsonIgnore]
+    public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new();
 
-        /// <summary>
-        /// Singers
-        /// </summary>
-        public IList<int> SingerIds
+    /// <summary>
+    /// Translates
+    /// </summary>
+    public IDictionary<CultureInfo, string> Translates
+    {
+        get => TranslateTextBindable;
+        set
         {
-            get => SingerIdsBindable;
-            set
-            {
-                SingerIdsBindable.Clear();
-                SingerIdsBindable.AddRange(value);
-            }
+            TranslateTextBindable.Clear();
+            TranslateTextBindable.AddRange(value);
         }
+    }
 
-        [JsonIgnore]
-        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new();
+    [JsonIgnore]
+    public readonly Bindable<CultureInfo?> LanguageBindable = new();
 
-        /// <summary>
-        /// Translates
-        /// </summary>
-        public IDictionary<CultureInfo, string> Translates
+    /// <summary>
+    /// Language
+    /// </summary>
+    public CultureInfo? Language
+    {
+        get => LanguageBindable.Value;
+        set => LanguageBindable.Value = value;
+    }
+
+    [JsonIgnore]
+    public readonly Bindable<int> OrderBindable = new();
+
+    /// <summary>
+    /// Order
+    /// </summary>
+    public int Order
+    {
+        get => OrderBindable.Value;
+        set => OrderBindable.Value = value;
+    }
+
+    [JsonIgnore]
+    public readonly Bindable<LockState> LockBindable = new();
+
+    /// <summary>
+    /// Lock
+    /// </summary>
+    public LockState Lock
+    {
+        get => LockBindable.Value;
+        set => LockBindable.Value = value;
+    }
+
+    private int? referenceLyricId;
+
+    public int? ReferenceLyricId
+    {
+        get => referenceLyricId;
+        set
         {
-            get => TranslateTextBindable;
-            set
-            {
-                TranslateTextBindable.Clear();
-                TranslateTextBindable.AddRange(value);
-            }
+            referenceLyricId = value;
+            updateStateByDataProperty(LyricWorkingProperty.ReferenceLyric);
         }
+    }
 
-        [JsonIgnore]
-        public readonly Bindable<CultureInfo?> LanguageBindable = new();
+    [JsonIgnore]
+    public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
 
-        /// <summary>
-        /// Language
-        /// </summary>
-        public CultureInfo? Language
-        {
-            get => LanguageBindable.Value;
-            set => LanguageBindable.Value = value;
-        }
+    private readonly Bindable<int> referenceLyricConfigVersion = new();
 
-        [JsonIgnore]
-        public readonly Bindable<int> OrderBindable = new();
+    [JsonIgnore]
+    public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
 
-        /// <summary>
-        /// Order
-        /// </summary>
-        public int Order
-        {
-            get => OrderBindable.Value;
-            set => OrderBindable.Value = value;
-        }
+    /// <summary>
+    /// Config for define the strategy to sync the property from the lyric.
+    /// </summary>
+    public IReferenceLyricPropertyConfig? ReferenceLyricConfig
+    {
+        get => ReferenceLyricConfigBindable.Value;
+        set => ReferenceLyricConfigBindable.Value = value;
+    }
 
-        [JsonIgnore]
-        public readonly Bindable<LockState> LockBindable = new();
+    [JsonIgnore]
+    public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
 
-        /// <summary>
-        /// Lock
-        /// </summary>
-        public LockState Lock
-        {
-            get => LockBindable.Value;
-            set => LockBindable.Value = value;
-        }
+    private readonly Bindable<int> lyricPropertyWritableVersion = new();
 
-        private int? referenceLyricId;
+    public Lyric()
+    {
+        workingPropertyValidator = new LyricWorkingPropertyValidator(this);
 
-        public int? ReferenceLyricId
-        {
-            get => referenceLyricId;
-            set
-            {
-                referenceLyricId = value;
-                updateStateByDataProperty(LyricWorkingProperty.ReferenceLyric);
-            }
-        }
+        initInternalBindingEvent();
+        initReferenceLyricEvent();
+    }
 
-        [JsonIgnore]
-        public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
+    public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
 
-        private readonly Bindable<int> referenceLyricConfigVersion = new();
+    protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, IBeatmapDifficultyInfo difficulty)
+    {
+        base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
 
-        [JsonIgnore]
-        public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
+        // Add because it will cause error on exit then enter gameplay.
+        StartTimeBindable.UnbindAll();
+    }
 
-        /// <summary>
-        /// Config for define the strategy to sync the property from the lyric.
-        /// </summary>
-        public IReferenceLyricPropertyConfig? ReferenceLyricConfig
-        {
-            get => ReferenceLyricConfigBindable.Value;
-            set => ReferenceLyricConfigBindable.Value = value;
-        }
+    protected override HitWindows CreateHitWindows() => new KaraokeLyricHitWindows();
 
-        [JsonIgnore]
-        public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
+    public Lyric DeepClone()
+    {
+        string serializeString = JsonConvert.SerializeObject(this, KaraokeJsonSerializableExtensions.CreateGlobalSettings());
+        var lyric = JsonConvert.DeserializeObject<Lyric>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
 
-        private readonly Bindable<int> lyricPropertyWritableVersion = new();
+        lyric.StartTime = StartTime;
+        lyric.Duration = Duration;
+        lyric.ReferenceLyric = ReferenceLyric;
 
-        public Lyric()
-        {
-            workingPropertyValidator = new LyricWorkingPropertyValidator(this);
-
-            initInternalBindingEvent();
-            initReferenceLyricEvent();
-        }
-
-        public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
-
-        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, IBeatmapDifficultyInfo difficulty)
-        {
-            base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
-
-            // Add because it will cause error on exit then enter gameplay.
-            StartTimeBindable.UnbindAll();
-        }
-
-        protected override HitWindows CreateHitWindows() => new KaraokeLyricHitWindows();
-
-        public Lyric DeepClone()
-        {
-            string serializeString = JsonConvert.SerializeObject(this, KaraokeJsonSerializableExtensions.CreateGlobalSettings());
-            var lyric = JsonConvert.DeserializeObject<Lyric>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
-
-            lyric.StartTime = StartTime;
-            lyric.Duration = Duration;
-            lyric.ReferenceLyric = ReferenceLyric;
-
-            return lyric;
-        }
+        return lyric;
     }
 }

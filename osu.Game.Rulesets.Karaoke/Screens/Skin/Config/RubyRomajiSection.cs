@@ -11,74 +11,73 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
+
+internal partial class RubyRomajiSection : LyricConfigSection
 {
-    internal partial class RubyRomajiSection : LyricConfigSection
+    private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
+    private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
+    private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
+    private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
+
+    protected override LocalisableString Title => "Ruby/Romaji";
+
+    [BackgroundDependencyLoader]
+    private void load(LyricFontInfoManager lyricFontInfoManager)
     {
-        private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
-        private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
-        private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
-        private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
-
-        protected override LocalisableString Title => "Ruby/Romaji";
-
-        [BackgroundDependencyLoader]
-        private void load(LyricFontInfoManager lyricFontInfoManager)
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            rubyAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
             {
-                rubyAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
+                Label = "Ruby alignment",
+                Description = "Ruby alignment section",
+            },
+            romajiAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
+            {
+                Label = "Romaji alignment",
+                Description = "Romaji alignment section",
+            },
+            rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
+            {
+                Label = "Ruby margin",
+                Description = "Ruby margin section",
+                Current = new BindableNumber<int>
                 {
-                    Label = "Ruby alignment",
-                    Description = "Ruby alignment section",
-                },
-                romajiAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
-                {
-                    Label = "Romaji alignment",
-                    Description = "Romaji alignment section",
-                },
-                rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
-                {
-                    Label = "Ruby margin",
-                    Description = "Ruby margin section",
-                    Current = new BindableNumber<int>
-                    {
-                        MinValue = 0,
-                        MaxValue = 30,
-                        Value = 10,
-                        Default = 10
-                    }
-                },
-                romajiMarginSliderBar = new LabelledRealTimeSliderBar<int>
-                {
-                    Label = "Romaji margin",
-                    Description = "Romaji margin section",
-                    Current = new BindableNumber<int>
-                    {
-                        MinValue = 0,
-                        MaxValue = 30,
-                        Value = 10,
-                        Default = 10
-                    }
+                    MinValue = 0,
+                    MaxValue = 30,
+                    Value = 10,
+                    Default = 10
                 }
-            };
-
-            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
+            },
+            romajiMarginSliderBar = new LabelledRealTimeSliderBar<int>
             {
-                var lyricFontInfo = e.NewValue;
-                applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
-                applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomajiAlignment);
-                applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
-                applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomajiMargin);
+                Label = "Romaji margin",
+                Description = "Romaji margin section",
+                Current = new BindableNumber<int>
+                {
+                    MinValue = 0,
+                    MaxValue = 30,
+                    Value = 10,
+                    Default = 10
+                }
+            }
+        };
 
-                static void applyCurrent<T>(Bindable<T> bindable, T value)
-                    => bindable.Value = bindable.Default = value;
-            }, true);
+        lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
+        {
+            var lyricFontInfo = e.NewValue;
+            applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
+            applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomajiAlignment);
+            applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
+            applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomajiMargin);
 
-            rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
-            romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
-            rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
-            romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
-        }
+            static void applyCurrent<T>(Bindable<T> bindable, T value)
+                => bindable.Value = bindable.Default = value;
+        }, true);
+
+        rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
+        romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
+        rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
+        romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
     }
 }

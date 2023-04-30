@@ -11,37 +11,36 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.Karaoke.Mods
+namespace osu.Game.Rulesets.Karaoke.Mods;
+
+public class KaraokeModAutoplay : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToMicrophone
 {
-    public class KaraokeModAutoplay : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToMicrophone
+    public bool MicrophoneEnabled => false;
+
+    public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
+        => new(new KaraokeAutoGenerator(beatmap, mods).Generate(), new ModCreatedUser { Username = "osu!7pupu" });
+
+    public virtual void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
     {
-        public bool MicrophoneEnabled => false;
+        // Got no idea why edit ruleset call this shit.
+        if (drawableRuleset is DrawableKaraokeEditorRuleset)
+            return;
 
-        public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
-            => new(new KaraokeAutoGenerator(beatmap, mods).Generate(), new ModCreatedUser { Username = "osu!7pupu" });
+        if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
+            return;
 
-        public virtual void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
+        // todo : add replay visualization into note playfield from here?
+        // todo : should have a better way(or called more generic) way to apply replay into replay field.
+        var replay = new KaraokeAutoGenerator(drawableRuleset.Beatmap).Generate();
+        var notePlayfield = karaokePlayfield.NotePlayfield as NotePlayfield;
+        var frames = replay.Frames.OfType<KaraokeReplayFrame>();
+
+        // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
+        notePlayfield?.ClearReplay();
+
+        foreach (var frame in frames)
         {
-            // Got no idea why edit ruleset call this shit.
-            if (drawableRuleset is DrawableKaraokeEditorRuleset)
-                return;
-
-            if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
-                return;
-
-            // todo : add replay visualization into note playfield from here?
-            // todo : should have a better way(or called more generic) way to apply replay into replay field.
-            var replay = new KaraokeAutoGenerator(drawableRuleset.Beatmap).Generate();
-            var notePlayfield = karaokePlayfield.NotePlayfield as NotePlayfield;
-            var frames = replay.Frames.OfType<KaraokeReplayFrame>();
-
-            // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
-            notePlayfield?.ClearReplay();
-
-            foreach (var frame in frames)
-            {
-                notePlayfield?.AddReplay(frame);
-            }
+            notePlayfield?.AddReplay(frame);
         }
     }
 }

@@ -8,25 +8,24 @@ using osu.Framework.Bindables;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo;
+
+public partial class OrderInfo : OsuSpriteText
 {
-    public partial class OrderInfo : OsuSpriteText
+    private readonly IBindable<int> bindableOrder;
+
+    public OrderInfo(Lyric lyric)
     {
-        private readonly IBindable<int> bindableOrder;
+        bindableOrder = lyric.OrderBindable.GetBoundCopy();
+    }
 
-        public OrderInfo(Lyric lyric)
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        bindableOrder.BindValueChanged(value =>
         {
-            bindableOrder = lyric.OrderBindable.GetBoundCopy();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            bindableOrder.BindValueChanged(value =>
-            {
-                int order = value.NewValue;
-                Text = $"#{order}";
-            }, true);
-        }
+            int order = value.NewValue;
+            Text = $"#{order}";
+        }, true);
     }
 }

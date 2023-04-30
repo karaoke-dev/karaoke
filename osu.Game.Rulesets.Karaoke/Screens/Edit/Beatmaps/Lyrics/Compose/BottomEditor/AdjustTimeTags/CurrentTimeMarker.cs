@@ -10,48 +10,47 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.AdjustTimeTags;
+
+public partial class CurrentTimeMarker : CompositeDrawable
 {
-    public partial class CurrentTimeMarker : CompositeDrawable
+    private const float triangle_width = 15;
+    private const float triangle_height = 10;
+    private const float bar_width = 2;
+
+    public CurrentTimeMarker()
     {
-        private const float triangle_width = 15;
-        private const float triangle_height = 10;
-        private const float bar_width = 2;
+        RelativeSizeAxes = Axes.Y;
+        Size = new Vector2(triangle_width, 1);
 
-        public CurrentTimeMarker()
+        InternalChildren = new Drawable[]
         {
-            RelativeSizeAxes = Axes.Y;
-            Size = new Vector2(triangle_width, 1);
-
-            InternalChildren = new Drawable[]
+            new Box
             {
-                new Box
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Y,
-                    Width = bar_width,
-                },
-                new Triangle
-                {
-                    Anchor = Anchor.TopCentre,
-                    Origin = Anchor.BottomCentre,
-                    Size = new Vector2(triangle_width, triangle_height),
-                    Scale = new Vector2(1, -1)
-                },
-                new Triangle
-                {
-                    Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
-                    Size = new Vector2(triangle_width, triangle_height),
-                }
-            };
-        }
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.Y,
+                Width = bar_width,
+            },
+            new Triangle
+            {
+                Anchor = Anchor.TopCentre,
+                Origin = Anchor.BottomCentre,
+                Size = new Vector2(triangle_width, triangle_height),
+                Scale = new Vector2(1, -1)
+            },
+            new Triangle
+            {
+                Anchor = Anchor.BottomCentre,
+                Origin = Anchor.BottomCentre,
+                Size = new Vector2(triangle_width, triangle_height),
+            }
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            Colour = colours.RedDark;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        Colour = colours.RedDark;
     }
 }

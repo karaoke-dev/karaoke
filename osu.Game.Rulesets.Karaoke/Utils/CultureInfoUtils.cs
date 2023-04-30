@@ -3,34 +3,33 @@
 
 using System.Globalization;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class CultureInfoUtils
 {
-    public static class CultureInfoUtils
+    /// <summary>
+    /// Get all the languages that are not related to the country
+    /// </summary>
+    /// <returns></returns>
+    public static CultureInfo[] GetAvailableLanguages()
     {
-        /// <summary>
-        /// Get all the languages that are not related to the country
-        /// </summary>
-        /// <returns></returns>
-        public static CultureInfo[] GetAvailableLanguages()
-        {
-            // todo: should make sure that all the language's LCID or ISC code are not duplicated.
-            return CultureInfo.GetCultures(CultureTypes.NeutralCultures);
-        }
-
-        public static bool IsLanguage(CultureInfo cultureInfo)
-            => (cultureInfo.CultureTypes & CultureTypes.NeutralCultures) != 0;
-
-        public static string GetLanguageDisplayText(CultureInfo? cultureInfo)
-            => cultureInfo?.NativeName ?? "None";
-
-        public static int GetSaveCultureInfoId(CultureInfo cultureInfo)
-            => cultureInfo.LCID;
-
-        public static CultureInfo CreateLoadCultureInfoById(int lcid) => new(lcid);
-
-        public static string GetSaveCultureInfoCode(CultureInfo cultureInfo)
-            => cultureInfo.ToString();
-
-        public static CultureInfo CreateLoadCultureInfoByCode(string code) => new(code);
+        // todo: should make sure that all the language's LCID or ISC code are not duplicated.
+        return CultureInfo.GetCultures(CultureTypes.NeutralCultures);
     }
+
+    public static bool IsLanguage(CultureInfo cultureInfo)
+        => (cultureInfo.CultureTypes & CultureTypes.NeutralCultures) != 0;
+
+    public static string GetLanguageDisplayText(CultureInfo? cultureInfo)
+        => cultureInfo?.NativeName ?? "None";
+
+    public static int GetSaveCultureInfoId(CultureInfo cultureInfo)
+        => cultureInfo.LCID;
+
+    public static CultureInfo CreateLoadCultureInfoById(int lcid) => new(lcid);
+
+    public static string GetSaveCultureInfoCode(CultureInfo cultureInfo)
+        => cultureInfo.ToString();
+
+    public static CultureInfo CreateLoadCultureInfoByCode(string code) => new(code);
 }

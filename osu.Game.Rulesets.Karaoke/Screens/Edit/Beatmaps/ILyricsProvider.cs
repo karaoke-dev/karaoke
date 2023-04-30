@@ -6,10 +6,9 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
+
+public interface ILyricsProvider
 {
-    public interface ILyricsProvider
-    {
-        BindableList<Lyric> BindableLyrics { get; }
-    }
+    BindableList<Lyric> BindableLyrics { get; }
 }

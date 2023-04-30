@@ -10,36 +10,35 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
+
+internal partial class PositionSection : LyricConfigSection
 {
-    internal partial class PositionSection : LyricConfigSection
+    private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
+
+    protected override LocalisableString Title => "Position";
+
+    [BackgroundDependencyLoader]
+    private void load(LyricFontInfoManager lyricFontInfoManager)
     {
-        private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
-
-        protected override LocalisableString Title => "Position";
-
-        [BackgroundDependencyLoader]
-        private void load(LyricFontInfoManager lyricFontInfoManager)
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>
             {
-                smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>
-                {
-                    Label = "Smart horizon",
-                    Description = "Smart horizon section",
-                }
-            };
+                Label = "Smart horizon",
+                Description = "Smart horizon section",
+            }
+        };
 
-            lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
-            {
-                var lyricFontInfo = e.NewValue;
-                applyCurrent(smartHorizonDropdown.Current, lyricFontInfo.SmartHorizon);
+        lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
+        {
+            var lyricFontInfo = e.NewValue;
+            applyCurrent(smartHorizonDropdown.Current, lyricFontInfo.SmartHorizon);
 
-                static void applyCurrent<T>(Bindable<T> bindable, T value)
-                    => bindable.Value = bindable.Default = value;
-            }, true);
+            static void applyCurrent<T>(Bindable<T> bindable, T value)
+                => bindable.Value = bindable.Default = value;
+        }, true);
 
-            smartHorizonDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.SmartHorizon = x.NewValue));
-        }
+        smartHorizonDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.SmartHorizon = x.NewValue));
     }
 }

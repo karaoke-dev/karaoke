@@ -4,35 +4,34 @@
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
-{
-    public static class TimeTagUtils
-    {
-        /// <summary>
-        /// Shifting time-tag.
-        /// </summary>
-        /// <param name="timeTag"></param>
-        /// <param name="offset"></param>
-        /// <returns></returns>
-        public static TimeTag ShiftingTimeTag(TimeTag timeTag, int offset)
-        {
-            var index = TextIndexUtils.ShiftingIndex(timeTag.Index, offset);
-            double? time = timeTag.Time;
-            return new TimeTag(index, time);
-        }
+namespace osu.Game.Rulesets.Karaoke.Utils;
 
-        /// <summary>
-        /// Display string with time format
-        /// </summary>
-        /// <example>
-        /// 02:32:155
-        /// --:--:---
-        /// </example>
-        /// <param name="timeTag"></param>
-        /// <returns></returns>
-        public static string FormattedString(TimeTag timeTag)
-        {
-            return timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
-        }
+public static class TimeTagUtils
+{
+    /// <summary>
+    /// Shifting time-tag.
+    /// </summary>
+    /// <param name="timeTag"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public static TimeTag ShiftingTimeTag(TimeTag timeTag, int offset)
+    {
+        var index = TextIndexUtils.ShiftingIndex(timeTag.Index, offset);
+        double? time = timeTag.Time;
+        return new TimeTag(index, time);
+    }
+
+    /// <summary>
+    /// Display string with time format
+    /// </summary>
+    /// <example>
+    /// 02:32:155
+    /// --:--:---
+    /// </example>
+    /// <param name="timeTag"></param>
+    /// <returns></returns>
+    public static string FormattedString(TimeTag timeTag)
+    {
+        return timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
     }
 }

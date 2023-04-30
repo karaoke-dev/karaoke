@@ -5,16 +5,15 @@ using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+
+public interface ILyricReferenceChangeHandler : ILyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler
 {
-    public interface ILyricReferenceChangeHandler : ILyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler
-    {
-        void UpdateReferenceLyric(Lyric? referenceLyric);
+    void UpdateReferenceLyric(Lyric? referenceLyric);
 
-        void SwitchToReferenceLyricConfig();
+    void SwitchToReferenceLyricConfig();
 
-        void SwitchToSyncLyricConfig();
+    void SwitchToSyncLyricConfig();
 
-        void AdjustLyricConfig<TConfig>(Action<TConfig> action) where TConfig : IReferenceLyricPropertyConfig;
-    }
+    void AdjustLyricConfig<TConfig>(Action<TConfig> action) where TConfig : IReferenceLyricPropertyConfig;
 }

@@ -7,24 +7,23 @@ using Newtonsoft.Json.Linq;
 using osu.Framework.Extensions.Color4Extensions;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class ColourConverter : JsonConverter<Color4>
 {
-    public class ColourConverter : JsonConverter<Color4>
+    public override Color4 ReadJson(JsonReader reader, Type objectType, Color4 existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        public override Color4 ReadJson(JsonReader reader, Type objectType, Color4 existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            var obj = JToken.Load(reader);
-            string? value = obj.Value<string>();
+        var obj = JToken.Load(reader);
+        string? value = obj.Value<string>();
 
-            if (value == null)
-                return new Color4();
+        if (value == null)
+            return new Color4();
 
-            return Color4Extensions.FromHex(value);
-        }
+        return Color4Extensions.FromHex(value);
+    }
 
-        public override void WriteJson(JsonWriter writer, Color4 value, JsonSerializer serializer)
-        {
-            writer.WriteValue(value.ToHex());
-        }
+    public override void WriteJson(JsonWriter writer, Color4 value, JsonSerializer serializer)
+    {
+        writer.WriteValue(value.ToHex());
     }
 }

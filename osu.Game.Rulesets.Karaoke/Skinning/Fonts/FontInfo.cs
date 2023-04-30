@@ -3,46 +3,45 @@
 
 using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
+namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts;
+
+public readonly struct FontInfo
 {
-    public readonly struct FontInfo
+    public string FontName { get; }
+
+    public string Family { get; }
+
+    public string? Weight { get; }
+
+    public FontFormat FontFormat { get; }
+
+    public FontInfo(string fontName, FontFormat fontFormat)
     {
-        public string FontName { get; }
+        FontName = fontName;
+        FontFormat = fontFormat;
 
-        public string Family { get; }
+        string[] parts = fontName.Split('-');
 
-        public string? Weight { get; }
-
-        public FontFormat FontFormat { get; }
-
-        public FontInfo(string fontName, FontFormat fontFormat)
+        switch (parts.Length)
         {
-            FontName = fontName;
-            FontFormat = fontFormat;
+            case 1:
+                Family = parts[0];
+                Weight = null;
+                break;
 
-            string[] parts = fontName.Split('-');
-
-            switch (parts.Length)
-            {
-                case 1:
-                    Family = parts[0];
-                    Weight = null;
-                    break;
-
-                default:
-                    Family = string.Join('-', parts.Take(parts.Length - 1));
-                    Weight = fontName.Split('-').LastOrDefault();
-                    break;
-            }
+            default:
+                Family = string.Join('-', parts.Take(parts.Length - 1));
+                Weight = fontName.Split('-').LastOrDefault();
+                break;
         }
     }
+}
 
-    public enum FontFormat
-    {
-        Internal,
+public enum FontFormat
+{
+    Internal,
 
-        Fnt,
+    Fnt,
 
-        Ttf,
-    }
+    Ttf,
 }

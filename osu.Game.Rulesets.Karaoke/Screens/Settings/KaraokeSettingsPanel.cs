@@ -19,139 +19,138 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public partial class KaraokeSettingsPanel : SettingsPanel
 {
-    public partial class KaraokeSettingsPanel : SettingsPanel
+    public new const float WIDTH = 300;
+
+    private Box hoverBackground;
+
+    protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
     {
-        public new const float WIDTH = 300;
+        new ConfigSection(),
+        new StyleSection(),
+        new ScoringSection()
+    };
 
-        private Box hoverBackground;
+    protected override Drawable CreateFooter() => new Container
+    {
+        Height = 130,
+    };
 
-        protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
-        {
-            new ConfigSection(),
-            new StyleSection(),
-            new ScoringSection()
-        };
+    public KaraokeSettingsPanel()
+        : base(false)
+    {
+    }
 
-        protected override Drawable CreateFooter() => new Container
-        {
-            Height = 130,
-        };
+    // prevent click outside to hide the overlay
+    protected override bool BlockPositionalInput => false;
 
-        public KaraokeSettingsPanel()
-            : base(false)
-        {
-        }
+    // prevent handle back key event every time, should call onPressed() only once.
+    protected override bool BlockNonPositionalInput => false;
 
-        // prevent click outside to hide the overlay
-        protected override bool BlockPositionalInput => false;
+    // on press should return false to prevent handle the back key action.
+    public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+        => false;
 
-        // prevent handle back key event every time, should call onPressed() only once.
-        protected override bool BlockNonPositionalInput => false;
+    // prevent let main content darker.
+    protected override bool DimMainContent => false;
 
-        // on press should return false to prevent handle the back key action.
-        public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
-            => false;
+    // prevent hide the overlay.
+    public override void Hide() { }
 
-        // prevent let main content darker.
-        protected override bool DimMainContent => false;
+    public void ScrollToSection(SettingsSection settingsSection)
+    {
+        // prevent trigger scroll by config section.
+        if (SectionsContainer.SelectedSection.Value == settingsSection)
+            return;
 
-        // prevent hide the overlay.
-        public override void Hide() { }
+        // instead of base scroll to method, using customized method to prevent weird spacing.
+        // SectionsContainer.ScrollTo(settingsSection);
+        var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
+        scrollContainer?.ScrollTo(scrollContainer.GetChildPosInContent(settingsSection) - (SectionsContainer.FixedHeader?.BoundingBox.Height ?? 0));
+    }
 
-        public void ScrollToSection(SettingsSection settingsSection)
-        {
-            // prevent trigger scroll by config section.
-            if (SectionsContainer.SelectedSection.Value == settingsSection)
-                return;
+    public IReadOnlyList<SettingsSection> Sections => SectionsContainer.Children;
 
-            // instead of base scroll to method, using customized method to prevent weird spacing.
-            // SectionsContainer.ScrollTo(settingsSection);
-            var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
-            scrollContainer?.ScrollTo(scrollContainer.GetChildPosInContent(settingsSection) - (SectionsContainer.FixedHeader?.BoundingBox.Height ?? 0));
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
+    {
+        initialSelectionContainer();
+        initialContentContainer();
+        initialSearchTextBox();
+        initialBackground();
 
-        public IReadOnlyList<SettingsSection> Sections => SectionsContainer.Children;
+        Show();
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
-        {
-            initialSelectionContainer();
-            initialContentContainer();
-            initialSearchTextBox();
-            initialBackground();
-
-            Show();
-
-            void initialSelectionContainer() =>
-                SectionsContainer.SelectedSection.ValueChanged += section =>
-                {
-                    selectedSection.Value = section.NewValue;
-                };
-
-            void initialContentContainer()
+        void initialSelectionContainer() =>
+            SectionsContainer.SelectedSection.ValueChanged += section =>
             {
-                ContentContainer.Width = WIDTH;
+                selectedSection.Value = section.NewValue;
+            };
 
-                selectedSection.BindValueChanged(x =>
-                {
-                    var background = ContentContainer.Children.OfType<Box>().FirstOrDefault();
-                    if (background == null)
-                        return;
+        void initialContentContainer()
+        {
+            ContentContainer.Width = WIDTH;
 
-                    var colour = colourProvider.GetBackground3Colour(x.NewValue);
-                    background.Delay(200).Then().FadeColour(colour, 500);
-                });
-            }
-
-            void initialSearchTextBox()
+            selectedSection.BindValueChanged(x =>
             {
-                if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
-                {
-                    searchTextBox.Current.ValueChanged += term =>
-                    {
-                        // should clear selected sub-section if change search text.
-                        selectedSubsection.Value = null;
-                    };
-                }
-            }
-
-            void initialBackground()
-            {
-                var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
-                if (scrollContainer == null)
+                var background = ContentContainer.Children.OfType<Box>().FirstOrDefault();
+                if (background == null)
                     return;
 
-                // create hove background.
-                scrollContainer.Add(hoverBackground = new Box
+                var colour = colourProvider.GetBackground3Colour(x.NewValue);
+                background.Delay(200).Then().FadeColour(colour, 500);
+            });
+        }
+
+        void initialSearchTextBox()
+        {
+            if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
+            {
+                searchTextBox.Current.ValueChanged += term =>
                 {
-                    RelativeSizeAxes = Axes.X,
-                    Depth = 1,
-                });
-
-                // change background color if section changed.
-                selectedSection.BindValueChanged(x =>
-                {
-                    var colour = colourProvider.GetBackgroundColour(x.NewValue);
-                    hoverBackground.Delay(200).Then().FadeColour(colour, 500);
-                });
-
-                // move background to target sub-section if user hover to it.
-                selectedSubsection.BindValueChanged(x =>
-                {
-                    float alpha = x.NewValue != null ? 0.6f : 0f;
-                    hoverBackground.FadeTo(alpha, 200);
-
-                    if (x.NewValue == null)
-                        return;
-
-                    const int offset = 8;
-                    float position = scrollContainer.GetChildPosInContent(x.NewValue);
-                    hoverBackground.MoveToY(position + offset, 50);
-                    hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
-                });
+                    // should clear selected sub-section if change search text.
+                    selectedSubsection.Value = null;
+                };
             }
+        }
+
+        void initialBackground()
+        {
+            var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
+            if (scrollContainer == null)
+                return;
+
+            // create hove background.
+            scrollContainer.Add(hoverBackground = new Box
+            {
+                RelativeSizeAxes = Axes.X,
+                Depth = 1,
+            });
+
+            // change background color if section changed.
+            selectedSection.BindValueChanged(x =>
+            {
+                var colour = colourProvider.GetBackgroundColour(x.NewValue);
+                hoverBackground.Delay(200).Then().FadeColour(colour, 500);
+            });
+
+            // move background to target sub-section if user hover to it.
+            selectedSubsection.BindValueChanged(x =>
+            {
+                float alpha = x.NewValue != null ? 0.6f : 0f;
+                hoverBackground.FadeTo(alpha, 200);
+
+                if (x.NewValue == null)
+                    return;
+
+                const int offset = 8;
+                float position = scrollContainer.GetChildPosInContent(x.NewValue);
+                hoverBackground.MoveToY(position + offset, 50);
+                hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
+            });
         }
     }
 }

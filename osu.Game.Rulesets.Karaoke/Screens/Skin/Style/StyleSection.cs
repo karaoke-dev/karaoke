@@ -5,9 +5,8 @@
 
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+internal abstract partial class StyleSection : Section
 {
-    internal abstract partial class StyleSection : Section
-    {
-    }
 }

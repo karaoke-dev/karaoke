@@ -11,56 +11,55 @@ using osu.Game.Overlays;
 using osu.Game.Resources.Localisation.Web;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+
+/// <summary>
+/// Change log header, display <see cref="APIChangelogBuild"/> title
+/// </summary>
+public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
 {
-    /// <summary>
-    /// Change log header, display <see cref="APIChangelogBuild"/> title
-    /// </summary>
-    public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
+    public readonly Bindable<APIChangelogBuild> Build = new();
+
+    public Action ListingSelected;
+
+    public static LocalisableString ListingString => LayoutStrings.HeaderChangelogIndex;
+
+    public ChangelogHeader()
     {
-        public readonly Bindable<APIChangelogBuild> Build = new();
+        TabControl.AddItem(ListingString);
 
-        public Action ListingSelected;
-
-        public static LocalisableString ListingString => LayoutStrings.HeaderChangelogIndex;
-
-        public ChangelogHeader()
+        Current.ValueChanged += e =>
         {
-            TabControl.AddItem(ListingString);
+            if (e.NewValue == ListingString)
+                ListingSelected?.Invoke();
+        };
 
-            Current.ValueChanged += e =>
-            {
-                if (e.NewValue == ListingString)
-                    ListingSelected?.Invoke();
-            };
-
-            Build.BindValueChanged(e =>
-            {
-                if (e.OldValue != null)
-                    TabControl.RemoveItem(e.OldValue.DisplayVersion);
-
-                if (e.NewValue != null)
-                {
-                    TabControl.AddItem(e.NewValue.DisplayVersion);
-                    Current.Value = e.NewValue.DisplayVersion;
-                }
-                else
-                {
-                    Current.Value = ListingString;
-                }
-            });
-        }
-
-        protected override OverlayTitle CreateTitle() => new ChangelogHeaderTitle();
-
-        private partial class ChangelogHeaderTitle : OverlayTitle
+        Build.BindValueChanged(e =>
         {
-            public ChangelogHeaderTitle()
+            if (e.OldValue != null)
+                TabControl.RemoveItem(e.OldValue.DisplayVersion);
+
+            if (e.NewValue != null)
             {
-                Title = PageTitleStrings.MainChangelogControllerDefault;
-                Description = NamedOverlayComponentStrings.ChangelogDescription;
-                IconTexture = "Icons/Hexacons/devtools";
+                TabControl.AddItem(e.NewValue.DisplayVersion);
+                Current.Value = e.NewValue.DisplayVersion;
             }
+            else
+            {
+                Current.Value = ListingString;
+            }
+        });
+    }
+
+    protected override OverlayTitle CreateTitle() => new ChangelogHeaderTitle();
+
+    private partial class ChangelogHeaderTitle : OverlayTitle
+    {
+        public ChangelogHeaderTitle()
+        {
+            Title = PageTitleStrings.MainChangelogControllerDefault;
+            Description = NamedOverlayComponentStrings.ChangelogDescription;
+            IconTexture = "Icons/Hexacons/devtools";
         }
     }
 }

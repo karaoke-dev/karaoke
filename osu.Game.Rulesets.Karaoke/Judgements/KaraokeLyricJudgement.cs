@@ -3,12 +3,11 @@
 
 using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Rulesets.Karaoke.Judgements
-{
-    public class KaraokeLyricJudgement : KaraokeJudgement
-    {
-        public override HitResult MaxResult => HitResult.Perfect;
+namespace osu.Game.Rulesets.Karaoke.Judgements;
 
-        protected override double HealthIncreaseFor(HitResult result) => 0;
-    }
+public class KaraokeLyricJudgement : KaraokeJudgement
+{
+    public override HitResult MaxResult => HitResult.Perfect;
+
+    protected override double HealthIncreaseFor(HitResult result) => 0;
 }

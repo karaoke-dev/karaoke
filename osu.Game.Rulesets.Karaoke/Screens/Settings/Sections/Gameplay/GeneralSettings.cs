@@ -10,25 +10,24 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
+
+public partial class GeneralSettings : KaraokeSettingsSubsection
 {
-    public partial class GeneralSettings : KaraokeSettingsSubsection
+    protected override LocalisableString Header => "General";
+
+    public override SettingsSubsectionPreview CreatePreview() => new ShowCursorPreview();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override LocalisableString Header => "General";
-
-        public override SettingsSubsectionPreview CreatePreview() => new ShowCursorPreview();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        Children = new[]
         {
-            Children = new[]
+            new SettingsCheckbox
             {
-                new SettingsCheckbox
-                {
-                    LabelText = "Show cursor while playing",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
-                },
-            };
-        }
+                LabelText = "Show cursor while playing",
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+            },
+        };
     }
 }

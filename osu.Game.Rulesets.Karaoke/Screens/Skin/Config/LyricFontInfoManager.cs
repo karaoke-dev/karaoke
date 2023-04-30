@@ -12,35 +12,34 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
+
+public partial class LyricFontInfoManager : Component
 {
-    public partial class LyricFontInfoManager : Component
+    public readonly BindableList<LyricFontInfo> Configs = new();
+
+    public readonly Bindable<LyricFontInfo> LoadedLyricFontInfo = new();
+
+    public readonly Bindable<LyricFontInfo> EditLyricFontInfo = new();
+
+    [Resolved]
+    private ISkinSource source { get; set; }
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        public readonly BindableList<LyricFontInfo> Configs = new();
+        var lookup = new KaraokeSkinLookup(ElementType.LyricFontInfo);
+        var lyricFontInfo = source.GetConfig<KaraokeSkinLookup, LyricFontInfo>(lookup)?.Value;
+        if (lyricFontInfo != null)
+            Configs.Add(lyricFontInfo);
 
-        public readonly Bindable<LyricFontInfo> LoadedLyricFontInfo = new();
+        LoadedLyricFontInfo.Value = Configs.FirstOrDefault();
+        EditLyricFontInfo.Value = Configs.FirstOrDefault();
+    }
 
-        public readonly Bindable<LyricFontInfo> EditLyricFontInfo = new();
-
-        [Resolved]
-        private ISkinSource source { get; set; }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var lookup = new KaraokeSkinLookup(ElementType.LyricFontInfo);
-            var lyricFontInfo = source.GetConfig<KaraokeSkinLookup, LyricFontInfo>(lookup)?.Value;
-            if (lyricFontInfo != null)
-                Configs.Add(lyricFontInfo);
-
-            LoadedLyricFontInfo.Value = Configs.FirstOrDefault();
-            EditLyricFontInfo.Value = Configs.FirstOrDefault();
-        }
-
-        public void ApplyCurrentLyricFontInfoChange(Action<LyricFontInfo> action)
-        {
-            action?.Invoke(LoadedLyricFontInfo.Value);
-            LoadedLyricFontInfo.TriggerChange();
-        }
+    public void ApplyCurrentLyricFontInfoChange(Action<LyricFontInfo> action)
+    {
+        action?.Invoke(LoadedLyricFontInfo.Value);
+        LoadedLyricFontInfo.TriggerChange();
     }
 }

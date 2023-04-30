@@ -6,20 +6,19 @@
 using System;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog
+namespace osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
+
+public partial class OkPopupDialog : PopupDialog
 {
-    public partial class OkPopupDialog : PopupDialog
+    public OkPopupDialog(Action<bool> okAction = null)
     {
-        public OkPopupDialog(Action<bool> okAction = null)
+        Buttons = new PopupDialogButton[]
         {
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+        };
     }
 }

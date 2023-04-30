@@ -5,38 +5,37 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+
+public interface ILyricCaretState
 {
-    public interface ILyricCaretState
-    {
-        ICaretPosition? HoverCaretPosition => BindableHoverCaretPosition.Value;
+    ICaretPosition? HoverCaretPosition => BindableHoverCaretPosition.Value;
 
-        ICaretPosition? CaretPosition => BindableCaretPosition.Value;
+    ICaretPosition? CaretPosition => BindableCaretPosition.Value;
 
-        IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
+    IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
-        IBindable<ICaretPosition?> BindableCaretPosition { get; }
+    IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
-        IBindable<Lyric?> BindableFocusedLyric { get; }
+    IBindable<Lyric?> BindableFocusedLyric { get; }
 
-        bool MoveCaret(MovingCaretAction action);
+    bool MoveCaret(MovingCaretAction action);
 
-        ICaretPosition? GetCaretPositionByAction(MovingCaretAction action);
+    ICaretPosition? GetCaretPositionByAction(MovingCaretAction action);
 
-        bool MoveCaretToTargetPosition(Lyric lyric);
+    bool MoveCaretToTargetPosition(Lyric lyric);
 
-        bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
+    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
 
-        bool MoveHoverCaretToTargetPosition(Lyric lyric);
+    bool MoveHoverCaretToTargetPosition(Lyric lyric);
 
-        bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
+    bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
 
-        bool ConfirmHoverCaretPosition();
+    bool ConfirmHoverCaretPosition();
 
-        bool ClearHoverCaretPosition();
+    bool ClearHoverCaretPosition();
 
-        void SyncSelectedHitObjectWithCaret();
+    void SyncSelectedHitObjectWithCaret();
 
-        bool CaretEnabled { get; }
-    }
+    bool CaretEnabled { get; }
 }

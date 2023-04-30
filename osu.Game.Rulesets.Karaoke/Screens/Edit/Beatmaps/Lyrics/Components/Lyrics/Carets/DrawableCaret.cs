@@ -7,45 +7,44 @@ using System;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
+
+public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
 {
-    public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
+    protected DrawableCaret(DrawableCaretType type)
+        : base(type)
     {
-        protected DrawableCaret(DrawableCaretType type)
-            : base(type)
-        {
-        }
-
-        protected static float GetAlpha(DrawableCaretType type) =>
-            type switch
-            {
-                DrawableCaretType.Caret => 1,
-                DrawableCaretType.HoverCaret => 0.5f,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-
-        public override void ApplyCaretPosition(ICaretPosition caret)
-        {
-            if (caret is not TCaret tCaret)
-                throw new InvalidCastException();
-
-            Apply(tCaret);
-        }
-
-        protected abstract void Apply(TCaret caret);
     }
 
-    public abstract partial class DrawableCaret : CompositeDrawable
-    {
-        public readonly DrawableCaretType Type;
-
-        protected DrawableCaret(DrawableCaretType type)
+    protected static float GetAlpha(DrawableCaretType type) =>
+        type switch
         {
-            Type = type;
-        }
+            DrawableCaretType.Caret => 1,
+            DrawableCaretType.HoverCaret => 0.5f,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
 
-        public abstract void ApplyCaretPosition(ICaretPosition caret);
+    public override void ApplyCaretPosition(ICaretPosition caret)
+    {
+        if (caret is not TCaret tCaret)
+            throw new InvalidCastException();
 
-        public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
+        Apply(tCaret);
     }
+
+    protected abstract void Apply(TCaret caret);
+}
+
+public abstract partial class DrawableCaret : CompositeDrawable
+{
+    public readonly DrawableCaretType Type;
+
+    protected DrawableCaret(DrawableCaretType type)
+    {
+        Type = type;
+    }
+
+    public abstract void ApplyCaretPosition(ICaretPosition caret);
+
+    public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
 }

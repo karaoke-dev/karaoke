@@ -8,37 +8,36 @@ using Newtonsoft.Json.Linq;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class RomajiTagConverter : JsonConverter<RomajiTag>
 {
-    public class RomajiTagConverter : JsonConverter<RomajiTag>
+    public override RomajiTag ReadJson(JsonReader reader, Type objectType, RomajiTag? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
-        public override RomajiTag ReadJson(JsonReader reader, Type objectType, RomajiTag? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        var obj = JToken.Load(reader);
+        string? value = obj.Value<string>();
+
+        if (string.IsNullOrEmpty(value))
+            return new RomajiTag();
+
+        var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
+        var result = regex.Match(value);
+        if (!result.Success)
+            return new RomajiTag();
+
+        return new RomajiTag
         {
-            var obj = JToken.Load(reader);
-            string? value = obj.Value<string>();
+            StartIndex = result.GetGroupValue<int>("start"),
+            EndIndex = result.GetGroupValue<int>("end"),
+            Text = result.GetGroupValue<string>("romaji")
+        };
+    }
 
-            if (string.IsNullOrEmpty(value))
-                return new RomajiTag();
+    public override void WriteJson(JsonWriter writer, RomajiTag? value, JsonSerializer serializer)
+    {
+        ArgumentNullException.ThrowIfNull(value);
 
-            var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
-            var result = regex.Match(value);
-            if (!result.Success)
-                return new RomajiTag();
-
-            return new RomajiTag
-            {
-                StartIndex = result.GetGroupValue<int>("start"),
-                EndIndex = result.GetGroupValue<int>("end"),
-                Text = result.GetGroupValue<string>("romaji")
-            };
-        }
-
-        public override void WriteJson(JsonWriter writer, RomajiTag? value, JsonSerializer serializer)
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
-            writer.WriteValue(str);
-        }
+        string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
+        writer.WriteValue(str);
     }
 }

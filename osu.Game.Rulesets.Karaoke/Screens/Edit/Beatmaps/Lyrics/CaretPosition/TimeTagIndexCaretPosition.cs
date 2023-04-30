@@ -4,21 +4,20 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+
+public readonly struct TimeTagIndexCaretPosition : IIndexCaretPosition
 {
-    public readonly struct TimeTagIndexCaretPosition : IIndexCaretPosition
+    public TimeTagIndexCaretPosition(Lyric lyric, TextIndex index, CaretGenerateType generateType = CaretGenerateType.Action)
     {
-        public TimeTagIndexCaretPosition(Lyric lyric, TextIndex index, CaretGenerateType generateType = CaretGenerateType.Action)
-        {
-            Lyric = lyric;
-            Index = index;
-            GenerateType = generateType;
-        }
-
-        public Lyric Lyric { get; }
-
-        public TextIndex Index { get; }
-
-        public CaretGenerateType GenerateType { get; }
+        Lyric = lyric;
+        Index = index;
+        GenerateType = generateType;
     }
+
+    public Lyric Lyric { get; }
+
+    public TextIndex Index { get; }
+
+    public CaretGenerateType GenerateType { get; }
 }

@@ -12,61 +12,60 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
+
+public abstract partial class LyricPlacementColumn : CompositeDrawable
 {
-    public abstract partial class LyricPlacementColumn : CompositeDrawable
+    protected const int INFO_SIZE = 178;
+
+    private readonly Singer singer;
+
+    protected LyricPlacementColumn(Singer singer)
     {
-        protected const int INFO_SIZE = 178;
+        this.singer = singer;
+    }
 
-        private readonly Singer singer;
-
-        protected LyricPlacementColumn(Singer singer)
+    [BackgroundDependencyLoader(true)]
+    private void load(OverlayColourProvider colourProvider, [CanBeNull] KaraokeHitObjectComposer composer)
+    {
+        InternalChildren = new Drawable[]
         {
-            this.singer = singer;
-        }
-
-        [BackgroundDependencyLoader(true)]
-        private void load(OverlayColourProvider colourProvider, [CanBeNull] KaraokeHitObjectComposer composer)
-        {
-            InternalChildren = new Drawable[]
+            new Box
             {
-                new Box
+                RelativeSizeAxes = Axes.Both,
+                Alpha = 0.3f,
+                Colour = colourProvider.Background1,
+            },
+            new GridContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                ColumnDimensions = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.3f,
-                    Colour = colourProvider.Background1,
+                    new Dimension(GridSizeMode.Absolute, SingerInfoSize),
+                    new Dimension(GridSizeMode.Absolute, 5),
+                    new Dimension(),
                 },
-                new GridContainer
+                Content = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    ColumnDimensions = new[]
+                    new[]
                     {
-                        new Dimension(GridSizeMode.Absolute, SingerInfoSize),
-                        new Dimension(GridSizeMode.Absolute, 5),
-                        new Dimension(),
-                    },
-                    Content = new[]
-                    {
-                        new[]
+                        CreateSingerInfo(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
+                        new Box
                         {
-                            CreateSingerInfo(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
-                            new Box
-                            {
-                                Name = "Separator",
-                                RelativeSizeAxes = Axes.Both,
-                                Colour = colourProvider.Dark1,
-                            },
-                            CreateTimeLinePart(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
-                        }
+                            Name = "Separator",
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = colourProvider.Dark1,
+                        },
+                        CreateTimeLinePart(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
                     }
                 }
-            };
-        }
-
-        protected virtual float SingerInfoSize => INFO_SIZE;
-
-        protected abstract Drawable CreateSingerInfo(Singer singer);
-
-        protected abstract Drawable CreateTimeLinePart(Singer singer);
+            }
+        };
     }
+
+    protected virtual float SingerInfoSize => INFO_SIZE;
+
+    protected abstract Drawable CreateSingerInfo(Singer singer);
+
+    protected abstract Drawable CreateTimeLinePart(Singer singer);
 }

@@ -8,26 +8,25 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections;
+
+public partial class ConfigSection : KaraokeSettingsSection
 {
-    public partial class ConfigSection : KaraokeSettingsSection
+    public override LocalisableString Header => "Config";
+
+    public override Drawable CreateIcon() => new SpriteIcon
     {
-        public override LocalisableString Header => "Config";
+        Icon = FontAwesome.Solid.Cog
+    };
 
-        public override Drawable CreateIcon() => new SpriteIcon
+    public ConfigSection()
+    {
+        Children = new Drawable[]
         {
-            Icon = FontAwesome.Solid.Cog
+            new GeneralSettings(),
+            new NoteSettings(),
+            new LyricSettings(),
+            new TranslateSettings(),
         };
-
-        public ConfigSection()
-        {
-            Children = new Drawable[]
-            {
-                new GeneralSettings(),
-                new NoteSettings(),
-                new LyricSettings(),
-                new TranslateSettings(),
-            };
-        }
     }
 }

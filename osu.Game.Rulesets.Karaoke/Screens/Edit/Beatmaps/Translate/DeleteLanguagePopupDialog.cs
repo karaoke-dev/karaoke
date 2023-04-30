@@ -9,28 +9,27 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+
+public partial class DeleteLanguagePopupDialog : PopupDialog
 {
-    public partial class DeleteLanguagePopupDialog : PopupDialog
+    public DeleteLanguagePopupDialog(CultureInfo currentLanguage, Action<bool> okAction = null)
     {
-        public DeleteLanguagePopupDialog(CultureInfo currentLanguage, Action<bool> okAction = null)
+        Icon = FontAwesome.Regular.TrashAlt;
+        HeaderText = $"Confirm deletion of language {CultureInfoUtils.GetLanguageDisplayText(currentLanguage)}?";
+        BodyText = "It will also remove the translate.";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Regular.TrashAlt;
-            HeaderText = $"Confirm deletion of language {CultureInfoUtils.GetLanguageDisplayText(currentLanguage)}?";
-            BodyText = "It will also remove the translate.";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"Yes. Go for it.",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"No! Abort mission!",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"Yes. Go for it.",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"No! Abort mission!",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

@@ -8,109 +8,108 @@ using System.Data;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class TextTagsUtils
 {
-    public static class TextTagsUtils
+    public static T[] Sort<T>(IEnumerable<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
+        sorting switch
+        {
+            Sorting.Asc => textTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
+            Sorting.Desc => textTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
+            _ => throw new InvalidEnumArgumentException(nameof(sorting))
+        };
+
+    public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
     {
-        public static T[] Sort<T>(IEnumerable<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
-            sorting switch
-            {
-                Sorting.Asc => textTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
-                Sorting.Desc => textTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
-                _ => throw new InvalidEnumArgumentException(nameof(sorting))
-            };
+        return textTags.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
+    }
 
-        public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
+    public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
+    {
+        // check is null or empty
+        if (!textTags.Any())
+            return Array.Empty<T>();
+
+        // todo : need to make sure is need to sort in here?
+        var sortedTextTags = Sort(textTags, sorting);
+
+        var invalidList = new List<T>();
+
+        // check end is less or equal to start index
+        invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex <= x.StartIndex));
+
+        // find other is smaller or bigger
+        foreach (var textTag in sortedTextTags)
         {
-            return textTags.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
-        }
+            if (invalidList.Contains(textTag))
+                continue;
 
-        public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
-        {
-            // check is null or empty
-            if (!textTags.Any())
-                return Array.Empty<T>();
+            var checkTags = sortedTextTags.Except(new[] { textTag });
 
-            // todo : need to make sure is need to sort in here?
-            var sortedTextTags = Sort(textTags, sorting);
-
-            var invalidList = new List<T>();
-
-            // check end is less or equal to start index
-            invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex <= x.StartIndex));
-
-            // find other is smaller or bigger
-            foreach (var textTag in sortedTextTags)
+            switch (sorting)
             {
-                if (invalidList.Contains(textTag))
-                    continue;
+                case Sorting.Asc:
+                    // start index within tne target
+                    invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
+                    break;
 
-                var checkTags = sortedTextTags.Except(new[] { textTag });
+                case Sorting.Desc:
+                    // end index within tne target
+                    invalidList.AddRange(checkTags.Where(x => x.EndIndex > textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
+                    break;
 
-                switch (sorting)
-                {
-                    case Sorting.Asc:
-                        // start index within tne target
-                        invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
-                        break;
-
-                    case Sorting.Desc:
-                        // end index within tne target
-                        invalidList.AddRange(checkTags.Where(x => x.EndIndex > textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
-                        break;
-
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(sorting));
-                }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(sorting));
             }
-
-            return Sort(invalidList.Distinct());
         }
 
-        public static T[] FindEmptyText<T>(IEnumerable<T> textTags) where T : ITextTag
+        return Sort(invalidList.Distinct());
+    }
+
+    public static T[] FindEmptyText<T>(IEnumerable<T> textTags) where T : ITextTag
+    {
+        return textTags.Where(TextTagUtils.EmptyText).ToArray();
+    }
+
+    public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
+    {
+        return Combine(new[] { textTagA, textTagB });
+    }
+
+    public static T Combine<T>(T[] textTags) where T : ITextTag, new()
+    {
+        if (textTags == null || !textTags.Any())
+            throw new ArgumentNullException(nameof(textTags));
+
+        var sortingValue = Sort(textTags);
+        var firstValue = sortingValue.FirstOrDefault();
+        var lastValue = sortingValue.LastOrDefault();
+
+        if (firstValue == null)
+            throw new NoNullAllowedException(nameof(firstValue));
+
+        if (lastValue == null)
+            throw new NoNullAllowedException(nameof(lastValue));
+
+        return new T
         {
-            return textTags.Where(TextTagUtils.EmptyText).ToArray();
-        }
+            StartIndex = firstValue.StartIndex,
+            EndIndex = lastValue.EndIndex,
+            Text = string.Join(string.Empty, sortingValue.Select(x => x.Text))
+        };
+    }
 
-        public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
-        {
-            return Combine(new[] { textTagA, textTagB });
-        }
+    public enum Sorting
+    {
+        /// <summary>
+        /// Mark next time tag is error if conflict.
+        /// </summary>
+        Asc,
 
-        public static T Combine<T>(T[] textTags) where T : ITextTag, new()
-        {
-            if (textTags == null || !textTags.Any())
-                throw new ArgumentNullException(nameof(textTags));
-
-            var sortingValue = Sort(textTags);
-            var firstValue = sortingValue.FirstOrDefault();
-            var lastValue = sortingValue.LastOrDefault();
-
-            if (firstValue == null)
-                throw new NoNullAllowedException(nameof(firstValue));
-
-            if (lastValue == null)
-                throw new NoNullAllowedException(nameof(lastValue));
-
-            return new T
-            {
-                StartIndex = firstValue.StartIndex,
-                EndIndex = lastValue.EndIndex,
-                Text = string.Join(string.Empty, sortingValue.Select(x => x.Text))
-            };
-        }
-
-        public enum Sorting
-        {
-            /// <summary>
-            /// Mark next time tag is error if conflict.
-            /// </summary>
-            Asc,
-
-            /// <summary>
-            /// Mark previous tag is error if conflict.
-            /// </summary>
-            Desc
-        }
+        /// <summary>
+        /// Mark previous tag is error if conflict.
+        /// </summary>
+        Desc
     }
 }

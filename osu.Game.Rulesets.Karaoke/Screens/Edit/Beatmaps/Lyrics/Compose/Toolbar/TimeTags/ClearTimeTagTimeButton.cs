@@ -9,30 +9,29 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags;
+
+public partial class ClearTimeTagTimeButton : KeyActionButton
 {
-    public partial class ClearTimeTagTimeButton : KeyActionButton
+    protected override KaraokeEditAction EditAction => KaraokeEditAction.ClearTime;
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    [Resolved, AllowNull]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+    public ClearTimeTagTimeButton()
     {
-        protected override KaraokeEditAction EditAction => KaraokeEditAction.ClearTime;
+        SetIcon(FontAwesome.Solid.Eraser);
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        [Resolved, AllowNull]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-        public ClearTimeTagTimeButton()
+        Action = () =>
         {
-            SetIcon(FontAwesome.Solid.Eraser);
+            if (lyricCaretState.CaretPosition is not TimeTagCaretPosition timeTagCaretPosition)
+                throw new InvalidOperationException();
 
-            Action = () =>
-            {
-                if (lyricCaretState.CaretPosition is not TimeTagCaretPosition timeTagCaretPosition)
-                    throw new InvalidOperationException();
-
-                var timeTag = timeTagCaretPosition.TimeTag;
-                lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
-            };
-        }
+            var timeTag = timeTagCaretPosition.TimeTag;
+            lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
+        };
     }
 }

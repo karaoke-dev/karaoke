@@ -16,79 +16,78 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
+
+public partial class SettingOverlayContainer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>, ISettingHUDOverlay
 {
-    public partial class SettingOverlayContainer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>, ISettingHUDOverlay
+    private GeneralSettingOverlay generalSettingsOverlay;
+
+    public Action<SettingOverlay> OnNewOverlayAdded;
+
+    [BackgroundDependencyLoader]
+    private void load(IBindable<IReadOnlyList<Mod>> mods)
     {
-        private GeneralSettingOverlay generalSettingsOverlay;
+        AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay());
 
-        public Action<SettingOverlay> OnNewOverlayAdded;
+        if (mods == null)
+            return;
 
-        [BackgroundDependencyLoader]
-        private void load(IBindable<IReadOnlyList<Mod>> mods)
+        foreach (var mod in mods.Value.OfType<IApplicableToSettingHUDOverlay>())
+            mod.ApplyToOverlay(this);
+    }
+
+    public void ToggleGeneralSettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
+
+    public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
+    {
+        switch (e.Action)
         {
-            AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay());
+            // Open adjustment overlay
+            case KaraokeAction.OpenPanel:
+                ToggleGeneralSettingsOverlay();
+                return true;
 
-            if (mods == null)
-                return;
-
-            foreach (var mod in mods.Value.OfType<IApplicableToSettingHUDOverlay>())
-                mod.ApplyToOverlay(this);
+            default:
+                return false;
         }
+    }
 
-        public void ToggleGeneralSettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
+    public virtual void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
+    {
+    }
 
-        public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
+    public void AddSettingsGroup(PlayerSettingsGroup group)
+    {
+        generalSettingsOverlay.Add(group);
+    }
+
+    public void AddExtraOverlay(SettingOverlay overlay)
+    {
+        AddInternal(overlay);
+        OnNewOverlayAdded?.Invoke(overlay);
+    }
+
+    public void ChangeOverlayDirection(OverlayDirection direction)
+    {
+        foreach (var settingOverlay in InternalChildren.OfType<SettingOverlay>())
         {
-            switch (e.Action)
-            {
-                // Open adjustment overlay
-                case KaraokeAction.OpenPanel:
-                    ToggleGeneralSettingsOverlay();
-                    return true;
-
-                default:
-                    return false;
-            }
+            settingOverlay.Direction = direction;
         }
+    }
 
-        public virtual void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
-        {
-        }
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+    {
+        var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
-        public void AddSettingsGroup(PlayerSettingsGroup group)
-        {
-            generalSettingsOverlay.Add(group);
-        }
+        // use tricky way to get session from karaoke ruleset.
+        object drawableRuleset = dependencies.Get(typeof(DrawableRuleset));
 
-        public void AddExtraOverlay(SettingOverlay overlay)
-        {
-            AddInternal(overlay);
-            OnNewOverlayAdded?.Invoke(overlay);
-        }
-
-        public void ChangeOverlayDirection(OverlayDirection direction)
-        {
-            foreach (var settingOverlay in InternalChildren.OfType<SettingOverlay>())
-            {
-                settingOverlay.Direction = direction;
-            }
-        }
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-            // use tricky way to get session from karaoke ruleset.
-            object drawableRuleset = dependencies.Get(typeof(DrawableRuleset));
-
-            if (drawableRuleset is not DrawableKaraokeRuleset drawableKaraokeRuleset)
-                return dependencies;
-
-            dependencies.CacheAs(drawableKaraokeRuleset.Config);
-            dependencies.CacheAs(drawableKaraokeRuleset.Session);
-
+        if (drawableRuleset is not DrawableKaraokeRuleset drawableKaraokeRuleset)
             return dependencies;
-        }
+
+        dependencies.CacheAs(drawableKaraokeRuleset.Config);
+        dependencies.CacheAs(drawableKaraokeRuleset.Session);
+
+        return dependencies;
     }
 }

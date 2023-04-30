@@ -7,32 +7,31 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
+
+public class CheckLyricSinger : CheckHitObjectProperty<Lyric>
 {
-    public class CheckLyricSinger : CheckHitObjectProperty<Lyric>
+    protected override string Description => "Lyric with invalid singer.";
+
+    public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        protected override string Description => "Lyric with invalid singer.";
+        new IssueTemplateLyricNoSinger(this),
+    };
 
-        public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
-        {
-            new IssueTemplateLyricNoSinger(this),
-        };
+    protected override IEnumerable<Issue> Check(Lyric lyric)
+    {
+        if (!lyric.SingerIds.Any())
+            yield return new IssueTemplateLyricNoSinger(this).Create(lyric);
+    }
 
-        protected override IEnumerable<Issue> Check(Lyric lyric)
+    public class IssueTemplateLyricNoSinger : IssueTemplate
+    {
+        public IssueTemplateLyricNoSinger(ICheck check)
+            : base(check, IssueType.Problem, "Lyric must have at least one singer.")
         {
-            if (!lyric.SingerIds.Any())
-                yield return new IssueTemplateLyricNoSinger(this).Create(lyric);
         }
 
-        public class IssueTemplateLyricNoSinger : IssueTemplate
-        {
-            public IssueTemplateLyricNoSinger(ICheck check)
-                : base(check, IssueType.Problem, "Lyric must have at least one singer.")
-            {
-            }
-
-            public Issue Create(Lyric lyric)
-                => new LyricIssue(lyric, this);
-        }
+        public Issue Create(Lyric lyric)
+            => new LyricIssue(lyric, this);
     }
 }

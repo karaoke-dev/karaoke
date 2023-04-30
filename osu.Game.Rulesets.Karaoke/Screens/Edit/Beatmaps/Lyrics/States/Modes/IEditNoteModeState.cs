@@ -5,10 +5,9 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+
+public interface IEditNoteModeState : IHasEditModeState<NoteEditMode>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
 {
-    public interface IEditNoteModeState : IHasEditModeState<NoteEditMode>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
-    {
-        Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; }
-    }
+    Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; }
 }

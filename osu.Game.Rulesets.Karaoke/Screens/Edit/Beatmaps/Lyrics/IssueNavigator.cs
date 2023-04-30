@@ -14,121 +14,120 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+
+public partial class IssueNavigator : Component, IIssueNavigator
 {
-    public partial class IssueNavigator : Component, IIssueNavigator
+    [Resolved, AllowNull]
+    private ILyricEditorState lyricEditorState { get; set; }
+
+    [Resolved, AllowNull]
+    private ILyricCaretState lyricCaretState { get; set; }
+
+    [Resolved, AllowNull]
+    private IEditRubyModeState editRubyModeState { get; set; }
+
+    [Resolved, AllowNull]
+    private IEditRomajiModeState editRomajiModeState { get; set; }
+
+    [Resolved, AllowNull]
+    private ITimeTagModeState timeTagModeState { get; set; }
+
+    [Resolved, AllowNull]
+    private IEditNoteModeState noteModeState { get; set; }
+
+    [Resolved, AllowNull]
+    private EditorClock clock { get; set; }
+
+    public void Navigate(Issue issue)
     {
-        [Resolved, AllowNull]
-        private ILyricEditorState lyricEditorState { get; set; }
+        // seek the time if contains the time in the issue.
+        if (issue.Time.HasValue)
+            clock.Seek(issue.Time.Value);
 
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
+        // navigate to edit mode.
+        var targetEditMode = getNavigateEditMode(issue.Check);
+        if (targetEditMode != null)
+            lyricEditorState.SwitchMode(targetEditMode.Value);
 
-        [Resolved, AllowNull]
-        private IEditRubyModeState editRubyModeState { get; set; }
+        // navigate to sub-mode if needed.
+        var targetSubMode = getNavigateSubMode(issue);
+        if (targetSubMode != null)
+            lyricEditorState.SwitchSubMode(targetSubMode);
 
-        [Resolved, AllowNull]
-        private IEditRomajiModeState editRomajiModeState { get; set; }
+        // navigate to the target lyric.
+        (var lyric, object? lyricIndex) = getNavigateLyricAndIndex(issue);
+        if (lyric == null)
+            return;
 
-        [Resolved, AllowNull]
-        private ITimeTagModeState timeTagModeState { get; set; }
+        lyricCaretState.MoveCaretToTargetPosition(lyric);
 
-        [Resolved, AllowNull]
-        private IEditNoteModeState noteModeState { get; set; }
+        // navigate to the target index in the lyric.
+        if (lyricIndex == null)
+            return;
 
-        [Resolved, AllowNull]
-        private EditorClock clock { get; set; }
+        var blueprintSelection = getBlueprintSelection(lyricIndex);
+        blueprintSelection?.Select(lyricIndex);
+    }
 
-        public void Navigate(Issue issue)
+    private static LyricEditorMode? getNavigateEditMode(ICheck check)
+    {
+        switch (check)
         {
-            // seek the time if contains the time in the issue.
-            if (issue.Time.HasValue)
-                clock.Seek(issue.Time.Value);
+            case CheckLyricText:
+                return LyricEditorMode.Texting;
 
-            // navigate to edit mode.
-            var targetEditMode = getNavigateEditMode(issue.Check);
-            if (targetEditMode != null)
-                lyricEditorState.SwitchMode(targetEditMode.Value);
+            case CheckLyricReferenceLyric:
+                return LyricEditorMode.Reference;
 
-            // navigate to sub-mode if needed.
-            var targetSubMode = getNavigateSubMode(issue);
-            if (targetSubMode != null)
-                lyricEditorState.SwitchSubMode(targetSubMode);
+            case CheckLyricLanguage:
+                return LyricEditorMode.Language;
 
-            // navigate to the target lyric.
-            (var lyric, object? lyricIndex) = getNavigateLyricAndIndex(issue);
-            if (lyric == null)
-                return;
+            case CheckLyricRubyTag:
+                return LyricEditorMode.EditRuby;
 
-            lyricCaretState.MoveCaretToTargetPosition(lyric);
+            case CheckLyricRomajiTag:
+                return LyricEditorMode.EditRomaji;
 
-            // navigate to the target index in the lyric.
-            if (lyricIndex == null)
-                return;
+            case CheckLyricTimeTag:
+                return LyricEditorMode.EditTimeTag;
 
-            var blueprintSelection = getBlueprintSelection(lyricIndex);
-            blueprintSelection?.Select(lyricIndex);
+            case CheckNoteReferenceLyric:
+            case CheckNoteText:
+                return LyricEditorMode.EditNote;
+
+            default:
+                return null;
         }
+    }
 
-        private static LyricEditorMode? getNavigateEditMode(ICheck check)
+    private static Enum? getNavigateSubMode(Issue issue)
+    {
+        // todo: implement.
+        return null;
+    }
+
+    private static Tuple<Lyric?, object?> getNavigateLyricAndIndex(Issue issue) =>
+        issue switch
         {
-            switch (check)
-            {
-                case CheckLyricText:
-                    return LyricEditorMode.Texting;
+            LyricRubyTagIssue rubyTagIssue => new Tuple<Lyric?, object?>(rubyTagIssue.Lyric, rubyTagIssue.RubyTag),
+            LyricRomajiTagIssue romajiTagIssue => new Tuple<Lyric?, object?>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag),
+            LyricTimeTagIssue timeTagIssue => new Tuple<Lyric?, object?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
+            LyricIssue lyricIssue => new Tuple<Lyric?, object?>(lyricIssue.Lyric, null),
+            NoteIssue noteIssue => new Tuple<Lyric?, object?>(noteIssue.Note.ReferenceLyric, null),
+            _ => new Tuple<Lyric?, object?>(null, null)
+        };
 
-                case CheckLyricReferenceLyric:
-                    return LyricEditorMode.Reference;
-
-                case CheckLyricLanguage:
-                    return LyricEditorMode.Language;
-
-                case CheckLyricRubyTag:
-                    return LyricEditorMode.EditRuby;
-
-                case CheckLyricRomajiTag:
-                    return LyricEditorMode.EditRomaji;
-
-                case CheckLyricTimeTag:
-                    return LyricEditorMode.EditTimeTag;
-
-                case CheckNoteReferenceLyric:
-                case CheckNoteText:
-                    return LyricEditorMode.EditNote;
-
-                default:
-                    return null;
-            }
-        }
-
-        private static Enum? getNavigateSubMode(Issue issue)
+    private IHasBlueprintSelection<TItem>? getBlueprintSelection<TItem>(TItem item) where TItem : class
+    {
+        object[] availableEditModes =
         {
-            // todo: implement.
-            return null;
-        }
+            editRubyModeState,
+            editRomajiModeState,
+            timeTagModeState,
+            noteModeState
+        };
 
-        private static Tuple<Lyric?, object?> getNavigateLyricAndIndex(Issue issue) =>
-            issue switch
-            {
-                LyricRubyTagIssue rubyTagIssue => new Tuple<Lyric?, object?>(rubyTagIssue.Lyric, rubyTagIssue.RubyTag),
-                LyricRomajiTagIssue romajiTagIssue => new Tuple<Lyric?, object?>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag),
-                LyricTimeTagIssue timeTagIssue => new Tuple<Lyric?, object?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
-                LyricIssue lyricIssue => new Tuple<Lyric?, object?>(lyricIssue.Lyric, null),
-                NoteIssue noteIssue => new Tuple<Lyric?, object?>(noteIssue.Note.ReferenceLyric, null),
-                _ => new Tuple<Lyric?, object?>(null, null)
-            };
-
-        private IHasBlueprintSelection<TItem>? getBlueprintSelection<TItem>(TItem item) where TItem : class
-        {
-            object[] availableEditModes =
-            {
-                editRubyModeState,
-                editRomajiModeState,
-                timeTagModeState,
-                noteModeState
-            };
-
-            return availableEditModes.OfType<IHasBlueprintSelection<TItem>>().FirstOrDefault();
-        }
+        return availableEditModes.OfType<IHasBlueprintSelection<TItem>>().FirstOrDefault();
     }
 }

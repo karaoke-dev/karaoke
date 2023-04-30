@@ -3,9 +3,8 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+
+public interface IEditRomajiModeState : IHasEditModeState<RomajiTagEditMode>, IHasBlueprintSelection<RomajiTag>
 {
-    public interface IEditRomajiModeState : IHasEditModeState<RomajiTagEditMode>, IHasBlueprintSelection<RomajiTag>
-    {
-    }
 }

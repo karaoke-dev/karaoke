@@ -14,41 +14,40 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Components;
+
+public partial class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<TimeTag>
 {
-    public partial class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<TimeTag>
+    /// <summary>
+    /// Height of major bar line triangles.
+    /// </summary>
+    private const float triangle_width = 6;
+
+    private readonly TimeTag timeTag;
+
+    public DrawableTimeTag(TimeTag timeTag)
     {
-        /// <summary>
-        /// Height of major bar line triangles.
-        /// </summary>
-        private const float triangle_width = 6;
+        AutoSizeAxes = Axes.Both;
+        Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
 
-        private readonly TimeTag timeTag;
+        this.timeTag = timeTag;
+        var state = timeTag.Index.State;
 
-        public DrawableTimeTag(TimeTag timeTag)
+        InternalChild = new DrawableTextIndex
         {
-            AutoSizeAxes = Axes.Both;
-            Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
-
-            this.timeTag = timeTag;
-            var state = timeTag.Index.State;
-
-            InternalChild = new DrawableTextIndex
-            {
-                Name = "Text index",
-                Size = new Vector2(triangle_width),
-                State = state
-            };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            InternalChild.Colour = colours.GetTimeTagColour(timeTag);
-        }
-
-        public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
-
-        public TimeTag TooltipContent => timeTag;
+            Name = "Text index",
+            Size = new Vector2(triangle_width),
+            State = state
+        };
     }
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        InternalChild.Colour = colours.GetTimeTagColour(timeTag);
+    }
+
+    public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
+
+    public TimeTag TooltipContent => timeTag;
 }

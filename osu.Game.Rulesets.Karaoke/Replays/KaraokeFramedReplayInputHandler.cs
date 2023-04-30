@@ -6,31 +6,30 @@ using osu.Framework.Input.StateChanges;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Replays;
 
-namespace osu.Game.Rulesets.Karaoke.Replays
+namespace osu.Game.Rulesets.Karaoke.Replays;
+
+public class KaraokeFramedReplayInputHandler : FramedReplayInputHandler<KaraokeReplayFrame>
 {
-    public class KaraokeFramedReplayInputHandler : FramedReplayInputHandler<KaraokeReplayFrame>
+    public KaraokeFramedReplayInputHandler(Replay replay)
+        : base(replay)
     {
-        public KaraokeFramedReplayInputHandler(Replay replay)
-            : base(replay)
-        {
-        }
+    }
 
-        protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Sound;
+    protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Sound;
 
-        protected override void CollectReplayInputs(List<IInput> inputs)
+    protected override void CollectReplayInputs(List<IInput> inputs)
+    {
+        inputs.Add(new ReplayState<KaraokeScoringAction>
         {
-            inputs.Add(new ReplayState<KaraokeScoringAction>
-            {
-                PressedActions = CurrentFrame?.Sound ?? false
-                    ? new List<KaraokeScoringAction>
+            PressedActions = CurrentFrame?.Sound ?? false
+                ? new List<KaraokeScoringAction>
+                {
+                    new()
                     {
-                        new()
-                        {
-                            Scale = CurrentFrame.Scale
-                        }
+                        Scale = CurrentFrame.Scale
                     }
-                    : new List<KaraokeScoringAction>()
-            });
-        }
+                }
+                : new List<KaraokeScoringAction>()
+        });
     }
 }

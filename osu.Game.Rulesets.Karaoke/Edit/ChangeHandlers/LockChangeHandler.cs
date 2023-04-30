@@ -6,32 +6,31 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
+
+public partial class LockChangeHandler : HitObjectPropertyChangeHandler<KaraokeHitObject>, ILockChangeHandler
 {
-    public partial class LockChangeHandler : HitObjectPropertyChangeHandler<KaraokeHitObject>, ILockChangeHandler
+    public void Lock(LockState lockState)
     {
-        public void Lock(LockState lockState)
+        PerformOnSelection(h =>
         {
-            PerformOnSelection(h =>
-            {
-                if (h is IHasLock hasLock)
-                    hasLock.Lock = lockState;
-            });
-        }
+            if (h is IHasLock hasLock)
+                hasLock.Lock = lockState;
+        });
+    }
 
-        public void Unlock()
-        {
-            Lock(LockState.None);
-        }
+    public void Unlock()
+    {
+        Lock(LockState.None);
+    }
 
-        protected sealed override bool IsWritePropertyLocked(KaraokeHitObject hitObject)
+    protected sealed override bool IsWritePropertyLocked(KaraokeHitObject hitObject)
+    {
+        return hitObject switch
         {
-            return hitObject switch
-            {
-                Lyric lyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Lock)),
-                Note note => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Lyric.Lock)),
-                _ => throw new NotSupportedException()
-            };
-        }
+            Lyric lyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Lock)),
+            Note note => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Lyric.Lock)),
+            _ => throw new NotSupportedException()
+        };
     }
 }

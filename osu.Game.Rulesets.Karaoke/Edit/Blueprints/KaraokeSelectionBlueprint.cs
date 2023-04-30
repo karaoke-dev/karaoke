@@ -7,15 +7,14 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints;
+
+public partial class KaraokeSelectionBlueprint<T> : HitObjectSelectionBlueprint<T>
+    where T : KaraokeHitObject
 {
-    public partial class KaraokeSelectionBlueprint<T> : HitObjectSelectionBlueprint<T>
-        where T : KaraokeHitObject
+    protected KaraokeSelectionBlueprint(T hitObject)
+        : base(hitObject)
     {
-        protected KaraokeSelectionBlueprint(T hitObject)
-            : base(hitObject)
-        {
-            RelativeSizeAxes = Axes.None;
-        }
+        RelativeSizeAxes = Axes.None;
     }
 }

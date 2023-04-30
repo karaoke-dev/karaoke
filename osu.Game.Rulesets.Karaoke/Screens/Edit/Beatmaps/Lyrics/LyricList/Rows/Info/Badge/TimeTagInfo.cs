@@ -9,32 +9,31 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
+
+public partial class TimeTagInfo : SubInfo
 {
-    public partial class TimeTagInfo : SubInfo
+    private readonly IBindable<int> bindableTimeTagsVersion;
+    private readonly IBindableList<TimeTag> bindableTimeTags;
+
+    public TimeTagInfo(Lyric lyric)
+        : base(lyric)
     {
-        private readonly IBindable<int> bindableTimeTagsVersion;
-        private readonly IBindableList<TimeTag> bindableTimeTags;
+        bindableTimeTagsVersion = lyric.TimeTagsVersion.GetBoundCopy();
+        bindableTimeTags = lyric.TimeTagsBindable.GetBoundCopy();
+    }
 
-        public TimeTagInfo(Lyric lyric)
-            : base(lyric)
-        {
-            bindableTimeTagsVersion = lyric.TimeTagsVersion.GetBoundCopy();
-            bindableTimeTags = lyric.TimeTagsBindable.GetBoundCopy();
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        BadgeColour = colours.Green;
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            BadgeColour = colours.Green;
+        bindableTimeTagsVersion.BindValueChanged(_ => updateBadgeText());
+        bindableTimeTags.BindCollectionChanged((_, _) => updateBadgeText());
 
-            bindableTimeTagsVersion.BindValueChanged(_ => updateBadgeText());
-            bindableTimeTags.BindCollectionChanged((_, _) => updateBadgeText());
+        updateBadgeText();
 
-            updateBadgeText();
-
-            void updateBadgeText()
-                => BadgeText = LyricUtils.TimeTagTimeFormattedString(Lyric);
-        }
+        void updateBadgeText()
+            => BadgeText = LyricUtils.TimeTagTimeFormattedString(Lyric);
     }
 }

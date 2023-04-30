@@ -17,94 +17,93 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+
+// refactor this shit
+public partial class LabelledColourSelector : LabelledComponent<LabelledColourSelector.ColourSelectorDisplay, Colour4>
 {
-    // refactor this shit
-    public partial class LabelledColourSelector : LabelledComponent<LabelledColourSelector.ColourSelectorDisplay, Colour4>
+    public LabelledColourSelector()
+        : base(true)
     {
-        public LabelledColourSelector()
-            : base(true)
+    }
+
+    protected override ColourSelectorDisplay CreateComponent()
+        => new();
+
+    public partial class ColourSelectorDisplay : CompositeDrawable, IHasCurrentValue<Colour4>, IHasPopover
+    {
+        private readonly BindableWithCurrent<Colour4> current = new();
+
+        private Box fill;
+        private OsuSpriteText colourHexCode;
+
+        public Bindable<Colour4> Current
         {
+            get => current.Current;
+            set => current.Current = value;
         }
 
-        protected override ColourSelectorDisplay CreateComponent()
-            => new();
-
-        public partial class ColourSelectorDisplay : CompositeDrawable, IHasCurrentValue<Colour4>, IHasPopover
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
         {
-            private readonly BindableWithCurrent<Colour4> current = new();
+            AutoSizeAxes = Axes.Y;
+            RelativeSizeAxes = Axes.X;
 
-            private Box fill;
-            private OsuSpriteText colourHexCode;
-
-            public Bindable<Colour4> Current
+            InternalChild = new FillFlowContainer
             {
-                get => current.Current;
-                set => current.Current = value;
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                AutoSizeAxes = Axes.Y;
-                RelativeSizeAxes = Axes.X;
-
-                InternalChild = new FillFlowContainer
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Direction = FillDirection.Vertical,
+                Spacing = new Vector2(0, 10),
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
-                    Spacing = new Vector2(0, 10),
-                    Children = new Drawable[]
+                    new OsuClickableContainer
                     {
-                        new OsuClickableContainer
+                        RelativeSizeAxes = Axes.X,
+                        Height = 60,
+                        CornerRadius = 10,
+                        Masking = true,
+                        BorderThickness = 2f,
+                        BorderColour = colours.Gray5,
+                        Children = new Drawable[]
                         {
-                            RelativeSizeAxes = Axes.X,
-                            Height = 60,
-                            CornerRadius = 10,
-                            Masking = true,
-                            BorderThickness = 2f,
-                            BorderColour = colours.Gray5,
-                            Children = new Drawable[]
+                            fill = new Box
                             {
-                                fill = new Box
-                                {
-                                    RelativeSizeAxes = Axes.Both
-                                },
-                                colourHexCode = new OsuSpriteText
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    Font = OsuFont.Default.With(size: 12)
-                                }
+                                RelativeSizeAxes = Axes.Both
                             },
-                            Action = this.ShowPopover
+                            colourHexCode = new OsuSpriteText
+                            {
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Font = OsuFont.Default.With(size: 12)
+                            }
                         },
-                    }
-                };
-            }
-
-            protected override void LoadComplete()
-            {
-                base.LoadComplete();
-
-                current.BindValueChanged(_ => updateColour(), true);
-            }
-
-            private void updateColour()
-            {
-                fill.Colour = current.Value;
-                colourHexCode.Text = current.Value.ToHex();
-                colourHexCode.Colour = OsuColour.ForegroundTextColourFor(current.Value);
-            }
-
-            public Popover GetPopover() => new OsuPopover(false)
-            {
-                Child = new OsuColourPicker
-                {
-                    Current = { BindTarget = Current }
+                        Action = this.ShowPopover
+                    },
                 }
             };
         }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            current.BindValueChanged(_ => updateColour(), true);
+        }
+
+        private void updateColour()
+        {
+            fill.Colour = current.Value;
+            colourHexCode.Text = current.Value.ToHex();
+            colourHexCode.Colour = OsuColour.ForegroundTextColourFor(current.Value);
+        }
+
+        public Popover GetPopover() => new OsuPopover(false)
+        {
+            Child = new OsuColourPicker
+            {
+                Current = { BindTarget = Current }
+            }
+        };
     }
 }

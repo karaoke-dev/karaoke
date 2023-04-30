@@ -6,47 +6,46 @@ using osu.Game.Replays.Legacy;
 using osu.Game.Rulesets.Replays;
 using osu.Game.Rulesets.Replays.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Replays
+namespace osu.Game.Rulesets.Karaoke.Replays;
+
+public class KaraokeReplayFrame : ReplayFrame, IConvertibleReplayFrame
 {
-    public class KaraokeReplayFrame : ReplayFrame, IConvertibleReplayFrame
+    /// <summary>
+    /// Use for Scoring playfield
+    /// Maybe format will be changed, but i have no idea now.
+    /// </summary>
+    public float Scale { get; private set; }
+
+    // To record this frame has sound.
+    public bool Sound { get; private set; }
+
+    public KaraokeReplayFrame()
     {
-        /// <summary>
-        /// Use for Scoring playfield
-        /// Maybe format will be changed, but i have no idea now.
-        /// </summary>
-        public float Scale { get; private set; }
+    }
 
-        // To record this frame has sound.
-        public bool Sound { get; private set; }
+    public KaraokeReplayFrame(double time)
+        : base(time)
+    {
+    }
 
-        public KaraokeReplayFrame()
-        {
-        }
+    public KaraokeReplayFrame(double time, float scale)
+        : base(time)
+    {
+        Scale = scale;
+        Sound = true;
+    }
 
-        public KaraokeReplayFrame(double time)
-            : base(time)
-        {
-        }
+    public override string ToString() => $"{Time}, {Scale}";
 
-        public KaraokeReplayFrame(double time, float scale)
-            : base(time)
-        {
-            Scale = scale;
-            Sound = true;
-        }
+    public void FromLegacy(LegacyReplayFrame currentFrame, IBeatmap beatmap, ReplayFrame? lastFrame = null)
+    {
+        Sound = currentFrame.MouseY.HasValue;
+        Scale = currentFrame.MouseY.GetValueOrDefault();
+    }
 
-        public override string ToString() => $"{Time}, {Scale}";
-
-        public void FromLegacy(LegacyReplayFrame currentFrame, IBeatmap beatmap, ReplayFrame? lastFrame = null)
-        {
-            Sound = currentFrame.MouseY.HasValue;
-            Scale = currentFrame.MouseY.GetValueOrDefault();
-        }
-
-        public LegacyReplayFrame ToLegacy(IBeatmap beatmap)
-        {
-            float? mouseYPosition = Sound ? Scale : default(float?);
-            return new LegacyReplayFrame(Time, null, mouseYPosition, ReplayButtonState.None);
-        }
+    public LegacyReplayFrame ToLegacy(IBeatmap beatmap)
+    {
+        float? mouseYPosition = Sound ? Scale : default(float?);
+        return new LegacyReplayFrame(Time, null, mouseYPosition, ReplayButtonState.None);
     }
 }

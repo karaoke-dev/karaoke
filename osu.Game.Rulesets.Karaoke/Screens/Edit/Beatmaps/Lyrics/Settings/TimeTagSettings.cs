@@ -9,47 +9,46 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
+
+public partial class TimeTagSettings : LyricEditorSettings
 {
-    public partial class TimeTagSettings : LyricEditorSettings
+    public override SettingsDirection Direction => SettingsDirection.Right;
+    public override float SettingsWidth => 300;
+
+    private readonly IBindable<TimeTagEditMode> bindableMode = new Bindable<TimeTagEditMode>();
+
+    [BackgroundDependencyLoader]
+    private void load(ITimeTagModeState timeTagModeState)
     {
-        public override SettingsDirection Direction => SettingsDirection.Right;
-        public override float SettingsWidth => 300;
-
-        private readonly IBindable<TimeTagEditMode> bindableMode = new Bindable<TimeTagEditMode>();
-
-        [BackgroundDependencyLoader]
-        private void load(ITimeTagModeState timeTagModeState)
+        bindableMode.BindTo(timeTagModeState.BindableEditMode);
+        bindableMode.BindValueChanged(e =>
         {
-            bindableMode.BindTo(timeTagModeState.BindableEditMode);
-            bindableMode.BindValueChanged(e =>
-            {
-                ReloadSections();
-            }, true);
-        }
-
-        protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
-        {
-            TimeTagEditMode.Create => new Drawable[]
-            {
-                new TimeTagEditModeSection(),
-                new TimeTagAutoGenerateSection(),
-                new TimeTagCreateConfigSection(),
-                new CreateTimeTagActionReceiver()
-            },
-            TimeTagEditMode.Recording => new Drawable[]
-            {
-                new TimeTagEditModeSection(),
-                new TimeTagRecordingConfigSection(),
-                new RecordTimeTagActionReceiver()
-            },
-            TimeTagEditMode.Adjust => new Drawable[]
-            {
-                new TimeTagEditModeSection(),
-                new TimeTagAdjustConfigSection(),
-                new TimeTagIssueSection(),
-            },
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            ReloadSections();
+        }, true);
     }
+
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    {
+        TimeTagEditMode.Create => new Drawable[]
+        {
+            new TimeTagEditModeSection(),
+            new TimeTagAutoGenerateSection(),
+            new TimeTagCreateConfigSection(),
+            new CreateTimeTagActionReceiver()
+        },
+        TimeTagEditMode.Recording => new Drawable[]
+        {
+            new TimeTagEditModeSection(),
+            new TimeTagRecordingConfigSection(),
+            new RecordTimeTagActionReceiver()
+        },
+        TimeTagEditMode.Adjust => new Drawable[]
+        {
+            new TimeTagEditModeSection(),
+            new TimeTagAdjustConfigSection(),
+            new TimeTagIssueSection(),
+        },
+        _ => throw new ArgumentOutOfRangeException()
+    };
 }

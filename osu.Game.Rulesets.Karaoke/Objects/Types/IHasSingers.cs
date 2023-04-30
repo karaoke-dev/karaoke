@@ -3,10 +3,9 @@
 
 using System.Collections.Generic;
 
-namespace osu.Game.Rulesets.Karaoke.Objects.Types
+namespace osu.Game.Rulesets.Karaoke.Objects.Types;
+
+public interface IHasSingers
 {
-    public interface IHasSingers
-    {
-        IList<int> SingerIds { get; }
-    }
+    IList<int> SingerIds { get; }
 }

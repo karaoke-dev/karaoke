@@ -20,197 +20,196 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+
+public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
 {
-    public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
+    private const int time_tag_spacing = 8;
+
+    public Lyric HitObject;
+
+    public Action SizeChanged;
+
+    public InteractableKaraokeSpriteText(Lyric lyric)
+        : base(lyric)
     {
-        private const int time_tag_spacing = 8;
+        HitObject = lyric;
 
-        public Lyric HitObject;
+        DisplayRuby = true;
+        DisplayRomaji = true;
+    }
 
-        public Action SizeChanged;
+    public TimeTag GetHoverTimeTag(float position)
+    {
+        var textIndex = GetHoverIndex(position);
+        return HitObject?.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+    }
 
-        public InteractableKaraokeSpriteText(Lyric lyric)
-            : base(lyric)
+    public TextIndex GetHoverIndex(float position)
+    {
+        string text = Text;
+        if (string.IsNullOrEmpty(text))
+            return new TextIndex();
+
+        for (int i = 0; i < text.Length; i++)
         {
-            HitObject = lyric;
+            if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
+                return new TextIndex(i);
 
-            DisplayRuby = true;
-            DisplayRomaji = true;
+            if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
+                return new TextIndex(i, TextIndex.IndexState.End);
         }
 
-        public TimeTag GetHoverTimeTag(float position)
+        return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
+
+        // todo : might have a better way to call GetTextIndexPosition just once.
+        float getTriggerPositionByTimeIndex(TextIndex textIndex)
         {
-            var textIndex = GetHoverIndex(position);
-            return HitObject?.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+            int charIndex = textIndex.Index;
+            float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
+            float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
+
+            if (textIndex.State == TextIndex.IndexState.Start)
+                return startPosition + (endPosition - startPosition) / 2;
+
+            return endPosition;
         }
+    }
 
-        public TextIndex GetHoverIndex(float position)
-        {
-            string text = Text;
-            if (string.IsNullOrEmpty(text))
-                return new TextIndex();
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
-                    return new TextIndex(i);
-
-                if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
-                    return new TextIndex(i, TextIndex.IndexState.End);
-            }
-
-            return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
-
-            // todo : might have a better way to call GetTextIndexPosition just once.
-            float getTriggerPositionByTimeIndex(TextIndex textIndex)
-            {
-                int charIndex = textIndex.Index;
-                float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
-                float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
-
-                if (textIndex.State == TextIndex.IndexState.Start)
-                    return startPosition + (endPosition - startPosition) / 2;
-
-                return endPosition;
-            }
-        }
-
-        public float LineBaseHeight
-        {
-            get
-            {
-                var spriteText = getSpriteText();
-                if (spriteText == null)
-                    throw new ArgumentNullException(nameof(spriteText));
-
-                return spriteText.LineBaseHeight;
-            }
-        }
-
-        public RectangleF GetTextTagPosition(ITextTag textTag)
+    public float LineBaseHeight
+    {
+        get
         {
             var spriteText = getSpriteText();
             if (spriteText == null)
                 throw new ArgumentNullException(nameof(spriteText));
 
-            return textTag switch
-            {
-                RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
-                RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
-                _ => throw new ArgumentOutOfRangeException(nameof(textTag))
-            };
+            return spriteText.LineBaseHeight;
         }
+    }
 
-        public Vector2 GetTimeTagPosition(TimeTag timeTag)
+    public RectangleF GetTextTagPosition(ITextTag textTag)
+    {
+        var spriteText = getSpriteText();
+        if (spriteText == null)
+            throw new ArgumentNullException(nameof(spriteText));
+
+        return textTag switch
         {
-            var basePosition = GetTextIndexPosition(timeTag.Index);
-            float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);
-            return basePosition + new Vector2(extraPosition, 0);
+            RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
+            RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
+            _ => throw new ArgumentOutOfRangeException(nameof(textTag))
+        };
+    }
 
-            static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
-            {
-                var textIndex = timeTag.Index;
-                var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse(), timeTagsInLyric);
-                int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
-                int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
-                return spacing;
-            }
+    public Vector2 GetTimeTagPosition(TimeTag timeTag)
+    {
+        var basePosition = GetTextIndexPosition(timeTag.Index);
+        float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);
+        return basePosition + new Vector2(extraPosition, 0);
+
+        static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
+        {
+            var textIndex = timeTag.Index;
+            var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse(), timeTagsInLyric);
+            int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
+            int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
+            return spacing;
         }
+    }
 
-        public Vector2 GetTextIndexPosition(TextIndex index)
+    public Vector2 GetTextIndexPosition(TextIndex index)
+    {
+        var spriteText = getSpriteText();
+        if (spriteText == null)
+            throw new ArgumentNullException(nameof(spriteText));
+
+        return spriteText.GetTimeTagPosition(index);
+    }
+
+    private EditorLyricSpriteText getSpriteText()
+        => (InternalChildren.FirstOrDefault() as Container<EditorLyricSpriteText>)?.Child;
+
+    [BackgroundDependencyLoader(true)]
+    private void load(ISkinSource skin, ShaderManager shaderManager)
+    {
+        skin.GetConfig<Lyric, LyricStyle>(HitObject)?.BindValueChanged(lyricStyle =>
         {
-            var spriteText = getSpriteText();
-            if (spriteText == null)
-                throw new ArgumentNullException(nameof(spriteText));
+            var newStyle = lyricStyle.NewValue;
+            if (newStyle == null)
+                return;
 
-            return spriteText.GetTimeTagPosition(index);
-        }
-
-        private EditorLyricSpriteText getSpriteText()
-            => (InternalChildren.FirstOrDefault() as Container<EditorLyricSpriteText>)?.Child;
-
-        [BackgroundDependencyLoader(true)]
-        private void load(ISkinSource skin, ShaderManager shaderManager)
-        {
-            skin.GetConfig<Lyric, LyricStyle>(HitObject)?.BindValueChanged(lyricStyle =>
-            {
-                var newStyle = lyricStyle.NewValue;
-                if (newStyle == null)
-                    return;
-
-                LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, newStyle);
-                RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, newStyle);
-
-                triggerSizeChangedEvent();
-            }, true);
-
-            skin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.BindValueChanged(e =>
-            {
-                var newConfig = e.NewValue;
-                if (newConfig == null)
-                    return;
-
-                // Apply text font info
-                var lyricFont = newConfig.MainTextFont;
-                var rubyFont = newConfig.RubyTextFont;
-                var romajiFont = newConfig.RomajiTextFont;
-
-                Font = getFont(lyricFont.Size);
-                RubyFont = getFont(rubyFont.Size);
-                RomajiFont = getFont(romajiFont.Size);
-
-                triggerSizeChangedEvent();
-
-                static FontUsage getFont(float? charSize = null)
-                    => FontUsage.Default.With(size: charSize * 2);
-            }, true);
-        }
-
-        protected override void UpdateText()
-        {
-            base.UpdateText();
+            LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, newStyle);
+            RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, newStyle);
 
             triggerSizeChangedEvent();
-        }
+        }, true);
 
-        protected override void UpdateRubies()
+        skin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.BindValueChanged(e =>
         {
-            base.UpdateRubies();
+            var newConfig = e.NewValue;
+            if (newConfig == null)
+                return;
+
+            // Apply text font info
+            var lyricFont = newConfig.MainTextFont;
+            var rubyFont = newConfig.RubyTextFont;
+            var romajiFont = newConfig.RomajiTextFont;
+
+            Font = getFont(lyricFont.Size);
+            RubyFont = getFont(rubyFont.Size);
+            RomajiFont = getFont(romajiFont.Size);
 
             triggerSizeChangedEvent();
-        }
 
-        protected override void UpdateRomajies()
+            static FontUsage getFont(float? charSize = null)
+                => FontUsage.Default.With(size: charSize * 2);
+        }, true);
+    }
+
+    protected override void UpdateText()
+    {
+        base.UpdateText();
+
+        triggerSizeChangedEvent();
+    }
+
+    protected override void UpdateRubies()
+    {
+        base.UpdateRubies();
+
+        triggerSizeChangedEvent();
+    }
+
+    protected override void UpdateRomajies()
+    {
+        base.UpdateRomajies();
+
+        triggerSizeChangedEvent();
+    }
+
+    private void triggerSizeChangedEvent()
+    {
+        ScheduleAfterChildren(() =>
         {
-            base.UpdateRomajies();
+            SizeChanged?.Invoke();
+        });
+    }
 
-            triggerSizeChangedEvent();
-        }
+    public override bool RemoveCompletedTransforms => false;
 
-        private void triggerSizeChangedEvent()
+    public partial class EditorLyricSpriteText : LyricSpriteText
+    {
+        public RectangleF GetRubyTagPosition(RubyTag rubyTag)
+            => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
+
+        public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
+            => GetRomajiTagDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
+
+        public Vector2 GetTimeTagPosition(TextIndex index)
         {
-            ScheduleAfterChildren(() =>
-            {
-                SizeChanged?.Invoke();
-            });
-        }
-
-        public override bool RemoveCompletedTransforms => false;
-
-        public partial class EditorLyricSpriteText : LyricSpriteText
-        {
-            public RectangleF GetRubyTagPosition(RubyTag rubyTag)
-                => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
-
-            public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
-                => GetRomajiTagDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
-
-            public Vector2 GetTimeTagPosition(TextIndex index)
-            {
-                var drawRectangle = GetCharacterDrawRectangle(index.Index);
-                return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
-            }
+            var drawRectangle = GetCharacterDrawRectangle(index.Index);
+            return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
         }
     }
 }

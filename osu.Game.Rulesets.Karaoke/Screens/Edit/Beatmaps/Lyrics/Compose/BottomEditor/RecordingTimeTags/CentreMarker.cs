@@ -9,30 +9,29 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.RecordingTimeTags
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.RecordingTimeTags;
+
+public partial class CentreMarker : CompositeDrawable
 {
-    public partial class CentreMarker : CompositeDrawable
+    private const float bar_width = 2;
+
+    public CentreMarker()
     {
-        private const float bar_width = 2;
-
-        public CentreMarker()
+        Anchor = Anchor.Centre;
+        Origin = Anchor.Centre;
+        RelativeSizeAxes = Axes.Y;
+        InternalChild = new Box
         {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-            RelativeSizeAxes = Axes.Y;
-            InternalChild = new Box
-            {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                RelativeSizeAxes = Axes.Y,
-                Width = bar_width,
-            };
-        }
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            RelativeSizeAxes = Axes.Y,
+            Width = bar_width,
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            Colour = colours.RedDark;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        Colour = colours.RedDark;
     }
 }

@@ -10,30 +10,29 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
+
+public partial class LyricSettings : KaraokeSettingsSubsection
 {
-    public partial class LyricSettings : KaraokeSettingsSubsection
+    protected override LocalisableString Header => "Lyric";
+
+    public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override LocalisableString Header => "Lyric";
-
-        public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
-
-        [BackgroundDependencyLoader]
-        private void load()
+        Children = new[]
         {
-            Children = new[]
+            new SettingsCheckbox
             {
-                new SettingsCheckbox
-                {
-                    LabelText = "Display ruby",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRuby)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Display romaji",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRomaji)
-                },
-            };
-        }
+                LabelText = "Display ruby",
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRuby)
+            },
+            new SettingsCheckbox
+            {
+                LabelText = "Display romaji",
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRomaji)
+            },
+        };
     }
 }

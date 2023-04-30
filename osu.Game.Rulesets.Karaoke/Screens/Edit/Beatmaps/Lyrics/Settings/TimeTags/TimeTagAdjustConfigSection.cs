@@ -11,38 +11,37 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags
-{
-    public partial class TimeTagAdjustConfigSection : EditorSection
-    {
-        protected override LocalisableString Title => "Config";
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ITimeTagModeState timeTagModeState)
+public partial class TimeTagAdjustConfigSection : EditorSection
+{
+    protected override LocalisableString Title => "Config";
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ITimeTagModeState timeTagModeState)
+    {
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            new LabelledRealTimeSliderBar<float>
             {
-                new LabelledRealTimeSliderBar<float>
-                {
-                    Label = "Time range",
-                    Description = "Change time-range to zoom-in/zoom-out the adjust area.",
-                    Current = timeTagModeState.BindableAdjustZoom
-                },
-                new LabelledOpacityAdjustment
-                {
-                    Label = "Waveform",
-                    Description = "Show/hide or change the opacity of the waveform.",
-                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowWaveform),
-                    Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagWaveformOpacity),
-                },
-                new LabelledOpacityAdjustment
-                {
-                    Label = "Ticks",
-                    Description = "Show/hide or change the opacity of the ticks.",
-                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowTick),
-                    Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagTickOpacity),
-                }
-            };
-        }
+                Label = "Time range",
+                Description = "Change time-range to zoom-in/zoom-out the adjust area.",
+                Current = timeTagModeState.BindableAdjustZoom
+            },
+            new LabelledOpacityAdjustment
+            {
+                Label = "Waveform",
+                Description = "Show/hide or change the opacity of the waveform.",
+                Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowWaveform),
+                Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagWaveformOpacity),
+            },
+            new LabelledOpacityAdjustment
+            {
+                Label = "Ticks",
+                Description = "Show/hide or change the opacity of the ticks.",
+                Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowTick),
+                Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.AdjustTimeTagTickOpacity),
+            }
+        };
     }
 }

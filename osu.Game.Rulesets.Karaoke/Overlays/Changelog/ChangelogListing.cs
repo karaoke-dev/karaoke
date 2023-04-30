@@ -13,61 +13,60 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
-namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
-{
-    /// <summary>
-    /// Display list of <see cref="APIChangelogBuild"/>
-    /// </summary>
-    public partial class ChangelogListing : ChangelogContent
-    {
-        private readonly List<APIChangelogBuild> entries;
+namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 
-        public ChangelogListing(List<APIChangelogBuild> entries)
+/// <summary>
+/// Display list of <see cref="APIChangelogBuild"/>
+/// </summary>
+public partial class ChangelogListing : ChangelogContent
+{
+    private readonly List<APIChangelogBuild> entries;
+
+    public ChangelogListing(List<APIChangelogBuild> entries)
+    {
+        this.entries = entries.Take(4).ToList();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
+    {
+        if (entries == null)
+            return;
+
+        foreach (var build in entries)
         {
-            this.entries = entries.Take(4).ToList();
+            if (Children.Count != 0)
+            {
+                Add(new Box
+                {
+                    RelativeSizeAxes = Axes.X,
+                    Height = 2,
+                    Colour = colourProvider.Background6,
+                    Margin = new MarginPadding { Top = 30 },
+                });
+            }
+
+            Add(new ChangelogBuild(build)
+            {
+                Masking = true,
+                AutoSizeAxes = Axes.None,
+                Height = 300,
+                SelectBuild = SelectBuild
+            });
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
+        if (entries.Any())
         {
-            if (entries == null)
-                return;
-
-            foreach (var build in entries)
+            Add(new ShowMoreButton
             {
-                if (Children.Count != 0)
+                Anchor = Anchor.TopCentre,
+                Origin = Anchor.TopCentre,
+                Padding = new MarginPadding { Top = 15, Bottom = 15 },
+                Action = () =>
                 {
-                    Add(new Box
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        Height = 2,
-                        Colour = colourProvider.Background6,
-                        Margin = new MarginPadding { Top = 30 },
-                    });
-                }
-
-                Add(new ChangelogBuild(build)
-                {
-                    Masking = true,
-                    AutoSizeAxes = Axes.None,
-                    Height = 300,
-                    SelectBuild = SelectBuild
-                });
-            }
-
-            if (entries.Any())
-            {
-                Add(new ShowMoreButton
-                {
-                    Anchor = Anchor.TopCentre,
-                    Origin = Anchor.TopCentre,
-                    Padding = new MarginPadding { Top = 15, Bottom = 15 },
-                    Action = () =>
-                    {
-                        current.Value = entries.LastOrDefault();
-                    },
-                });
-            }
+                    current.Value = entries.LastOrDefault();
+                },
+            });
         }
     }
 }

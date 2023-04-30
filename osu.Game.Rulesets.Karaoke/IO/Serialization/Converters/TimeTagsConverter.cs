@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class TimeTagsConverter : SortableJsonConverter<TimeTag>
 {
-    public class TimeTagsConverter : SortableJsonConverter<TimeTag>
-    {
-        protected override IEnumerable<TimeTag> GetSortedValue(IEnumerable<TimeTag> objects)
-            => TimeTagsUtils.Sort(objects);
-    }
+    protected override IEnumerable<TimeTag> GetSortedValue(IEnumerable<TimeTag> objects)
+        => TimeTagsUtils.Sort(objects);
 }

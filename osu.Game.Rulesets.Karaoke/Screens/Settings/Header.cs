@@ -18,148 +18,147 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public partial class Header : Container
 {
-    public partial class Header : Container
+    public const float HEIGHT = 75;
+
+    [Resolved]
+    private KaraokeSettingsColourProvider colourProvider { get; set; }
+
+    private readonly Box background;
+    private readonly KaraokeConfigHeaderTitle title;
+    private readonly KaraokeConfigPageTabControl tabs;
+
+    public Header()
     {
-        public const float HEIGHT = 75;
+        RelativeSizeAxes = Axes.X;
+        Height = HEIGHT;
 
-        [Resolved]
-        private KaraokeSettingsColourProvider colourProvider { get; set; }
-
-        private readonly Box background;
-        private readonly KaraokeConfigHeaderTitle title;
-        private readonly KaraokeConfigPageTabControl tabs;
-
-        public Header()
+        Children = new Drawable[]
         {
-            RelativeSizeAxes = Axes.X;
-            Height = HEIGHT;
-
-            Children = new Drawable[]
+            background = new Box
             {
-                background = new Box
+                RelativeSizeAxes = Axes.Both,
+                Colour = Color4Extensions.FromHex(@"#1f1921"),
+            },
+            new Container
+            {
+                Anchor = Anchor.CentreLeft,
+                Origin = Anchor.CentreLeft,
+                RelativeSizeAxes = Axes.Both,
+                Padding = new MarginPadding { Left = 10 },
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4Extensions.FromHex(@"#1f1921"),
+                    title = new KaraokeConfigHeaderTitle
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.BottomLeft,
+                    },
+                    tabs = new KaraokeConfigPageTabControl
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Scale = new Vector2(1.5f)
+                    },
                 },
-                new Container
+            },
+        };
+
+        tabs.Current.BindValueChanged(x =>
+        {
+            background.Delay(200).Then().FadeColour(colourProvider.GetBackground2Colour(x.NewValue), 500);
+
+            tabs.Colour = colourProvider.GetContent2Colour(x.NewValue);
+            tabs.StripColour = colourProvider.GetContentColour(x.NewValue);
+        });
+    }
+
+    public IReadOnlyList<SettingsSection> TabItems
+    {
+        get => tabs.Items;
+        set => tabs.Items = value;
+    }
+
+    public Bindable<SettingsSection> SelectedSection
+    {
+        get => tabs.Current;
+        set => tabs.Current = value;
+    }
+
+    private partial class KaraokeConfigHeaderTitle : CompositeDrawable
+    {
+        private const float spacing = 6;
+
+        private readonly OsuSpriteText dot;
+        private readonly OsuSpriteText pageTitle;
+
+        public KaraokeConfigHeaderTitle()
+        {
+            AutoSizeAxes = Axes.Both;
+
+            InternalChildren = new Drawable[]
+            {
+                new FillFlowContainer
                 {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                    RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding { Left = 10 },
+                    AutoSizeAxes = Axes.Both,
+                    Spacing = new Vector2(spacing, 0),
+                    Direction = FillDirection.Horizontal,
                     Children = new Drawable[]
                     {
-                        title = new KaraokeConfigHeaderTitle
+                        new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.BottomLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
+                            Text = "Karaoke"
                         },
-                        tabs = new KaraokeConfigPageTabControl
+                        dot = new OsuSpriteText
                         {
-                            Anchor = Anchor.BottomLeft,
-                            Origin = Anchor.BottomLeft,
-                            RelativeSizeAxes = Axes.X,
-                            Scale = new Vector2(1.5f)
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
+                            Text = "·"
                         },
-                    },
+                        pageTitle = new OsuSpriteText
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Font = OsuFont.GetFont(size: 24),
+                        }
+                    }
                 },
             };
+        }
 
-            tabs.Current.BindValueChanged(x =>
+        [BackgroundDependencyLoader]
+        private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
+        {
+            selectedSection.BindValueChanged(x =>
             {
-                background.Delay(200).Then().FadeColour(colourProvider.GetBackground2Colour(x.NewValue), 500);
+                var colour = colourProvider.GetContentColour(x.NewValue);
 
-                tabs.Colour = colourProvider.GetContent2Colour(x.NewValue);
-                tabs.StripColour = colourProvider.GetContentColour(x.NewValue);
+                pageTitle.Text = x.NewValue?.Header ?? "404 Not found";
+                pageTitle.FadeColour(colour, 200);
             });
         }
+    }
 
-        public IReadOnlyList<SettingsSection> TabItems
+    private partial class KaraokeConfigPageTabControl : PageTabControl<SettingsSection>
+    {
+        protected override TabItem<SettingsSection> CreateTabItem(SettingsSection value)
+            => new KaraokeConfigPageTabItem(value);
+
+        internal partial class KaraokeConfigPageTabItem : PageTabItem
         {
-            get => tabs.Items;
-            set => tabs.Items = value;
-        }
-
-        public Bindable<SettingsSection> SelectedSection
-        {
-            get => tabs.Current;
-            set => tabs.Current = value;
-        }
-
-        private partial class KaraokeConfigHeaderTitle : CompositeDrawable
-        {
-            private const float spacing = 6;
-
-            private readonly OsuSpriteText dot;
-            private readonly OsuSpriteText pageTitle;
-
-            public KaraokeConfigHeaderTitle()
+            public KaraokeConfigPageTabItem(SettingsSection value)
+                : base(value)
             {
-                AutoSizeAxes = Axes.Both;
-
-                InternalChildren = new Drawable[]
-                {
-                    new FillFlowContainer
-                    {
-                        AutoSizeAxes = Axes.Both,
-                        Spacing = new Vector2(spacing, 0),
-                        Direction = FillDirection.Horizontal,
-                        Children = new Drawable[]
-                        {
-                            new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                                Text = "Karaoke"
-                            },
-                            dot = new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                                Text = "·"
-                            },
-                            pageTitle = new OsuSpriteText
-                            {
-                                Anchor = Anchor.CentreLeft,
-                                Origin = Anchor.CentreLeft,
-                                Font = OsuFont.GetFont(size: 24),
-                            }
-                        }
-                    },
-                };
             }
 
-            [BackgroundDependencyLoader]
-            private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
-            {
-                selectedSection.BindValueChanged(x =>
-                {
-                    var colour = colourProvider.GetContentColour(x.NewValue);
-
-                    pageTitle.Text = x.NewValue?.Header ?? "404 Not found";
-                    pageTitle.FadeColour(colour, 200);
-                });
-            }
-        }
-
-        private partial class KaraokeConfigPageTabControl : PageTabControl<SettingsSection>
-        {
-            protected override TabItem<SettingsSection> CreateTabItem(SettingsSection value)
-                => new KaraokeConfigPageTabItem(value);
-
-            internal partial class KaraokeConfigPageTabItem : PageTabItem
-            {
-                public KaraokeConfigPageTabItem(SettingsSection value)
-                    : base(value)
-                {
-                }
-
-                protected override LocalisableString CreateText() => Value.Header;
-            }
+            protected override LocalisableString CreateText() => Value.Header;
         }
     }
 }

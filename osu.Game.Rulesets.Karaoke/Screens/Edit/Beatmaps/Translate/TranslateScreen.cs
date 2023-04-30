@@ -11,53 +11,52 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+
+public partial class TranslateScreen : BeatmapEditorRoundedScreen
 {
-    public partial class TranslateScreen : BeatmapEditorRoundedScreen
+    [Cached(typeof(IBeatmapLanguagesChangeHandler))]
+    private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
+
+    [Cached(typeof(ILyricTranslateChangeHandler))]
+    private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
+
+    public TranslateScreen()
+        : base(KaraokeBeatmapEditorScreenMode.Translate)
     {
-        [Cached(typeof(IBeatmapLanguagesChangeHandler))]
-        private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
+        AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
+        AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
+    }
 
-        [Cached(typeof(ILyricTranslateChangeHandler))]
-        private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
-
-        public TranslateScreen()
-            : base(KaraokeBeatmapEditorScreenMode.Translate)
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        Add(new SectionsContainer<Container>
         {
-            AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
-            AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Add(new SectionsContainer<Container>
+            FixedHeader = new TranslateScreenHeader(),
+            RelativeSizeAxes = Axes.Both,
+            Children = new Container[]
             {
-                FixedHeader = new TranslateScreenHeader(),
-                RelativeSizeAxes = Axes.Both,
-                Children = new Container[]
+                new TranslateEditSection
                 {
-                    new TranslateEditSection
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                    },
-                }
-            });
-        }
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                },
+            }
+        });
+    }
 
-        internal partial class TranslateScreenHeader : OverlayHeader
+    internal partial class TranslateScreenHeader : OverlayHeader
+    {
+        protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
+
+        private partial class TranslateScreenTitle : OverlayTitle
         {
-            protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
-
-            private partial class TranslateScreenTitle : OverlayTitle
+            public TranslateScreenTitle()
             {
-                public TranslateScreenTitle()
-                {
-                    Title = "translate";
-                    Description = "create translation of your beatmap";
-                    IconTexture = "Icons/Hexacons/social";
-                }
+                Title = "translate";
+                Description = "create translation of your beatmap";
+                IconTexture = "Icons/Hexacons/social";
             }
         }
     }

@@ -11,30 +11,29 @@ using osu.Framework.Testing;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public abstract partial class KaraokeSettingsSection : SettingsSection
 {
-    public abstract partial class KaraokeSettingsSection : SettingsSection
+    private const int margin = 20;
+
+    protected KaraokeSettingsSection()
     {
-        private const int margin = 20;
+        Margin = new MarginPadding { Bottom = margin };
+    }
 
-        protected KaraokeSettingsSection()
-        {
-            Margin = new MarginPadding { Bottom = margin };
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSettingsColourProvider colourProvider)
+    {
+        var colour = colourProvider.GetContentColour(this);
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeSettingsColourProvider colourProvider)
-        {
-            var colour = colourProvider.GetContentColour(this);
+        // set header box and text to target color.
+        var headerBox = FlowContent.ChildrenOfType<Box>().FirstOrDefault(x => x.Name == "separator");
+        var title = FlowContent.ChildrenOfType<OsuSpriteText>().FirstOrDefault(x => x.Text == Header);
+        if (headerBox == null || title == null)
+            return;
 
-            // set header box and text to target color.
-            var headerBox = FlowContent.ChildrenOfType<Box>().FirstOrDefault(x => x.Name == "separator");
-            var title = FlowContent.ChildrenOfType<OsuSpriteText>().FirstOrDefault(x => x.Text == Header);
-            if (headerBox == null || title == null)
-                return;
-
-            headerBox.Colour = colour;
-            title.Colour = colour;
-        }
+        headerBox.Colour = colour;
+        title.Colour = colour;
     }
 }

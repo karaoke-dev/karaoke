@@ -9,25 +9,24 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
+
+public class LyricLockContextMenu : OsuMenuItem
 {
-    public class LyricLockContextMenu : OsuMenuItem
+    public LyricLockContextMenu(ILockChangeHandler lockChangeHandler, Lyric lyric, string name)
+        : this(lockChangeHandler, new List<Lyric> { lyric }, name)
     {
-        public LyricLockContextMenu(ILockChangeHandler lockChangeHandler, Lyric lyric, string name)
-            : this(lockChangeHandler, new List<Lyric> { lyric }, name)
-        {
-        }
+    }
 
-        public LyricLockContextMenu(ILockChangeHandler lockChangeHandler, List<Lyric> lyrics, string name)
-            : base(name)
+    public LyricLockContextMenu(ILockChangeHandler lockChangeHandler, List<Lyric> lyrics, string name)
+        : base(name)
+    {
+        Items = Enum.GetValues<LockState>().Select(l => new OsuMenuItem(l.ToString(), anyLyricInLockState(l) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
         {
-            Items = Enum.GetValues<LockState>().Select(l => new OsuMenuItem(l.ToString(), anyLyricInLockState(l) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
-            {
-                // todo: how to make lyric as selected?
-                lockChangeHandler.Lock(l);
-            })).ToList();
+            // todo: how to make lyric as selected?
+            lockChangeHandler.Lock(l);
+        })).ToList();
 
-            bool anyLyricInLockState(LockState lockState) => lyrics.Any(lyric => lyric.Lock == lockState);
-        }
+        bool anyLyricInLockState(LockState lockState) => lyrics.Any(lyric => lyric.Lock == lockState);
     }
 }

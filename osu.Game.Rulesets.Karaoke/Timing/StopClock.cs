@@ -3,29 +3,28 @@
 
 using osu.Framework.Timing;
 
-namespace osu.Game.Rulesets.Karaoke.Timing
+namespace osu.Game.Rulesets.Karaoke.Timing;
+
+public class StopClock : IFrameBasedClock
 {
-    public class StopClock : IFrameBasedClock
+    public StopClock(double targetTime)
     {
-        public StopClock(double targetTime)
-        {
-            CurrentTime = targetTime;
-        }
+        CurrentTime = targetTime;
+    }
 
-        public double ElapsedFrameTime => 0;
+    public double ElapsedFrameTime => 0;
 
-        public double FramesPerSecond => 0;
+    public double FramesPerSecond => 0;
 
-        public FrameTimeInfo TimeInfo => new() { Current = CurrentTime, Elapsed = ElapsedFrameTime };
+    public FrameTimeInfo TimeInfo => new() { Current = CurrentTime, Elapsed = ElapsedFrameTime };
 
-        public double CurrentTime { get; }
+    public double CurrentTime { get; }
 
-        public double Rate => 0;
+    public double Rate => 0;
 
-        public bool IsRunning => false;
+    public bool IsRunning => false;
 
-        public void ProcessFrame()
-        {
-        }
+    public void ProcessFrame()
+    {
     }
 }

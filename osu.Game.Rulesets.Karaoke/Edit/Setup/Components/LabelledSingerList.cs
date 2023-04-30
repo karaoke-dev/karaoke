@@ -7,23 +7,22 @@ using osu.Framework.Bindables;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
+
+public partial class LabelledSingerList : LabelledDrawable<SingerList>
 {
-    public partial class LabelledSingerList : LabelledDrawable<SingerList>
+    public LabelledSingerList()
+        : base(true)
     {
-        public LabelledSingerList()
-            : base(true)
-        {
-        }
-
-        public BindableList<Singer> Singers => Component.Singers;
-
-        public string SingerNamePrefix
-        {
-            get => Component.SingerNamePrefix;
-            set => Component.SingerNamePrefix = value;
-        }
-
-        protected override SingerList CreateComponent() => new();
     }
+
+    public BindableList<Singer> Singers => Component.Singers;
+
+    public string SingerNamePrefix
+    {
+        get => Component.SingerNamePrefix;
+        set => Component.SingerNamePrefix = value;
+    }
+
+    protected override SingerList CreateComponent() => new();
 }

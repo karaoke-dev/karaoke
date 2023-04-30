@@ -12,42 +12,41 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
+
+public partial class CreateNewLyricDetailRow : DetailRow
 {
-    public partial class CreateNewLyricDetailRow : DetailRow
+    [Resolved, AllowNull]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
+    public CreateNewLyricDetailRow()
+        : base(new Lyric { Text = "New lyric" })
     {
-        [Resolved, AllowNull]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+    }
 
-        public CreateNewLyricDetailRow()
-            : base(new Lyric { Text = "New lyric" })
+    protected override IEnumerable<Dimension> GetColumnDimensions() =>
+        new[]
         {
-        }
+            new Dimension(GridSizeMode.Absolute, TIMING_WIDTH),
+            new Dimension()
+        };
 
-        protected override IEnumerable<Dimension> GetColumnDimensions() =>
-            new[]
-            {
-                new Dimension(GridSizeMode.Absolute, TIMING_WIDTH),
-                new Dimension()
-            };
+    protected override Drawable CreateTimingInfo(Lyric lyric)
+        => Empty();
 
-        protected override Drawable CreateTimingInfo(Lyric lyric)
-            => Empty();
-
-        protected override Drawable CreateContent(Lyric lyric)
+    protected override Drawable CreateContent(Lyric lyric)
+    {
+        return new IconButton
         {
-            return new IconButton
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Icon = FontAwesome.Solid.PlusCircle,
+            Size = new Vector2(32),
+            TooltipText = "Click to add new lyric",
+            Action = () =>
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Icon = FontAwesome.Solid.PlusCircle,
-                Size = new Vector2(32),
-                TooltipText = "Click to add new lyric",
-                Action = () =>
-                {
-                    lyricsChangeHandler.CreateAtLast();
-                }
-            };
-        }
+                lyricsChangeHandler.CreateAtLast();
+            }
+        };
     }
 }

@@ -19,184 +19,183 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI
+namespace osu.Game.Rulesets.Karaoke.UI;
+
+public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponent
 {
-    public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponent
+    [Resolved]
+    private IBindable<WorkingBeatmap> beatmap { get; set; }
+
+    public WorkingBeatmap WorkingBeatmap => beatmap.Value;
+
+    public LyricPlayfield LyricPlayfield { get; }
+
+    public ScrollingNotePlayfield NotePlayfield { get; }
+
+    public BindableBool DisplayCursor { get; set; } = new();
+    public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
+
+    private readonly BindableInt bindablePitch = new();
+    private readonly BindableInt bindableVocalPitch = new();
+    private readonly BindableInt bindablePlayback = new();
+    private readonly BindableDouble notePlayfieldAlpha = new();
+    private readonly BindableDouble lyricPlayfieldAlpha = new();
+
+    public KaraokePlayfield()
     {
-        [Resolved]
-        private IBindable<WorkingBeatmap> beatmap { get; set; }
-
-        public WorkingBeatmap WorkingBeatmap => beatmap.Value;
-
-        public LyricPlayfield LyricPlayfield { get; }
-
-        public ScrollingNotePlayfield NotePlayfield { get; }
-
-        public BindableBool DisplayCursor { get; set; } = new();
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
-
-        private readonly BindableInt bindablePitch = new();
-        private readonly BindableInt bindableVocalPitch = new();
-        private readonly BindableInt bindablePlayback = new();
-        private readonly BindableDouble notePlayfieldAlpha = new();
-        private readonly BindableDouble lyricPlayfieldAlpha = new();
-
-        public KaraokePlayfield()
+        AddInternal(LyricPlayfield = CreateLyricPlayfield().With(x =>
         {
-            AddInternal(LyricPlayfield = CreateLyricPlayfield().With(x =>
-            {
-                x.RelativeSizeAxes = Axes.Both;
-            }));
+            x.RelativeSizeAxes = Axes.Both;
+        }));
 
-            AddInternal(NotePlayfield = CreateNotePlayfield(9).With(x =>
-            {
-                x.RelativeSizeAxes = Axes.X;
-            }));
-
-            AddNested(LyricPlayfield);
-            AddNested(NotePlayfield);
-
-            bindablePitch.BindValueChanged(value =>
-            {
-                // Convert between -10 and 10 into 0.5 and 1.5
-                float newValue = 1.0f + (float)value.NewValue / 40;
-                WorkingBeatmap.Track.Frequency.Value = newValue;
-            });
-
-            bindableVocalPitch.BindValueChanged(value =>
-            {
-                // TODO : implement until has vocal track
-            });
-
-            bindablePlayback.BindValueChanged(value =>
-            {
-                // Convert between -10 and 10 into 0.5 and 1.5
-                float newValue = 1.0f + (float)value.NewValue / 40;
-                WorkingBeatmap.Track.Tempo.Value = newValue;
-            });
-
-            // Alpha
-            notePlayfieldAlpha.BindValueChanged(x =>
-            {
-                // todo : how to check is there any notes in this playfield?
-                double alpha = WorkingBeatmap.Beatmap.IsScorable() ? x.NewValue : 0;
-                NotePlayfield.Alpha = (float)alpha;
-            });
-            lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
-        }
-
-        protected virtual LyricPlayfield CreateLyricPlayfield() => new();
-
-        protected virtual ScrollingNotePlayfield CreateNotePlayfield(int columns) => new NotePlayfield(columns);
-
-        #region Pooling support
-
-        public override void Add(HitObject hitObject)
+        AddInternal(NotePlayfield = CreateNotePlayfield(9).With(x =>
         {
-            switch (hitObject)
-            {
-                case Lyric:
-                    LyricPlayfield.Add(hitObject);
-                    break;
+            x.RelativeSizeAxes = Axes.X;
+        }));
 
-                case Note:
-                case BarLine:
-                    NotePlayfield.Add(hitObject);
+        AddNested(LyricPlayfield);
+        AddNested(NotePlayfield);
 
-                    break;
-
-                default:
-                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
-            }
-        }
-
-        public override bool Remove(HitObject hitObject)
+        bindablePitch.BindValueChanged(value =>
         {
-            switch (hitObject)
-            {
-                case Lyric:
-                    return LyricPlayfield.Remove(hitObject);
+            // Convert between -10 and 10 into 0.5 and 1.5
+            float newValue = 1.0f + (float)value.NewValue / 40;
+            WorkingBeatmap.Track.Frequency.Value = newValue;
+        });
 
-                case Note:
-                case BarLine:
-                    return NotePlayfield.Remove(hitObject);
-
-                default:
-                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
-            }
-        }
-
-        #endregion
-
-        #region Non-pooling support
-
-        public override void Add(DrawableHitObject h)
+        bindableVocalPitch.BindValueChanged(value =>
         {
-            switch (h)
-            {
-                case DrawableLyric:
-                    LyricPlayfield.Add(h);
-                    break;
+            // TODO : implement until has vocal track
+        });
 
-                case DrawableNote:
-                    NotePlayfield.Add(h);
-
-                    break;
-
-                default:
-                    base.Add(h);
-                    break;
-            }
-        }
-
-        public override bool Remove(DrawableHitObject h) =>
-            h switch
-            {
-                DrawableLyric => LyricPlayfield.Remove(h),
-                DrawableNote => NotePlayfield.Remove(h),
-                _ => base.Remove(h)
-            };
-
-        #endregion
-
-        public override void PostProcess()
+        bindablePlayback.BindValueChanged(value =>
         {
-            base.PostProcess();
+            // Convert between -10 and 10 into 0.5 and 1.5
+            float newValue = 1.0f + (float)value.NewValue / 40;
+            WorkingBeatmap.Track.Tempo.Value = newValue;
+        });
 
-            // trigger again to update note playfield alpha.
-            notePlayfieldAlpha.TriggerChange();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
+        // Alpha
+        notePlayfieldAlpha.BindValueChanged(x =>
         {
-            // Cursor
-            rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
+            // todo : how to check is there any notes in this playfield?
+            double alpha = WorkingBeatmap.Beatmap.IsScorable() ? x.NewValue : 0;
+            NotePlayfield.Alpha = (float)alpha;
+        });
+        lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
+    }
 
-            // Alpha
-            rulesetConfig?.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
-            rulesetConfig?.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
+    protected virtual LyricPlayfield CreateLyricPlayfield() => new();
 
-            // Pitch
-            session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
-            session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
-            session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
-        }
+    protected virtual ScrollingNotePlayfield CreateNotePlayfield(int columns) => new NotePlayfield(columns);
 
-        public void Add(IStageComponent component)
+    #region Pooling support
+
+    public override void Add(HitObject hitObject)
+    {
+        switch (hitObject)
         {
-            if (component is not Drawable drawableComponent)
-                throw new ArgumentException($"Component must be {nameof(Drawable)}");
+            case Lyric:
+                LyricPlayfield.Add(hitObject);
+                break;
 
-            AddInternal(drawableComponent);
+            case Note:
+            case BarLine:
+                NotePlayfield.Add(hitObject);
+
+                break;
+
+            default:
+                throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
         }
+    }
 
-        public bool Remove(IStageComponent component)
+    public override bool Remove(HitObject hitObject)
+    {
+        switch (hitObject)
         {
-            if (component is not Drawable drawableComponent)
-                throw new ArgumentException($"Component must be {nameof(Drawable)}");
+            case Lyric:
+                return LyricPlayfield.Remove(hitObject);
 
-            return RemoveInternal(drawableComponent, true);
+            case Note:
+            case BarLine:
+                return NotePlayfield.Remove(hitObject);
+
+            default:
+                throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
         }
+    }
+
+    #endregion
+
+    #region Non-pooling support
+
+    public override void Add(DrawableHitObject h)
+    {
+        switch (h)
+        {
+            case DrawableLyric:
+                LyricPlayfield.Add(h);
+                break;
+
+            case DrawableNote:
+                NotePlayfield.Add(h);
+
+                break;
+
+            default:
+                base.Add(h);
+                break;
+        }
+    }
+
+    public override bool Remove(DrawableHitObject h) =>
+        h switch
+        {
+            DrawableLyric => LyricPlayfield.Remove(h),
+            DrawableNote => NotePlayfield.Remove(h),
+            _ => base.Remove(h)
+        };
+
+    #endregion
+
+    public override void PostProcess()
+    {
+        base.PostProcess();
+
+        // trigger again to update note playfield alpha.
+        notePlayfieldAlpha.TriggerChange();
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
+    {
+        // Cursor
+        rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
+
+        // Alpha
+        rulesetConfig?.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
+        rulesetConfig?.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
+
+        // Pitch
+        session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
+        session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
+        session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
+    }
+
+    public void Add(IStageComponent component)
+    {
+        if (component is not Drawable drawableComponent)
+            throw new ArgumentException($"Component must be {nameof(Drawable)}");
+
+        AddInternal(drawableComponent);
+    }
+
+    public bool Remove(IStageComponent component)
+    {
+        if (component is not Drawable drawableComponent)
+            throw new ArgumentException($"Component must be {nameof(Drawable)}");
+
+        return RemoveInternal(drawableComponent, true);
     }
 }

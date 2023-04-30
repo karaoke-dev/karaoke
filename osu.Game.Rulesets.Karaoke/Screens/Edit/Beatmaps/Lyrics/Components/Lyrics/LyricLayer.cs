@@ -7,27 +7,26 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+
+public partial class LyricLayer : BaseLayer
 {
-    public partial class LyricLayer : BaseLayer
+    [Resolved, AllowNull]
+    private OsuColour colours { get; set; }
+
+    public LyricLayer(Lyric lyric, Drawable karaokeSpriteText)
+        : base(lyric)
     {
-        [Resolved, AllowNull]
-        private OsuColour colours { get; set; }
+        InternalChild = karaokeSpriteText;
+    }
 
-        public LyricLayer(Lyric lyric, Drawable karaokeSpriteText)
-            : base(lyric)
-        {
-            InternalChild = karaokeSpriteText;
-        }
+    public override void UpdateDisableEditState(bool editable)
+    {
+        this.FadeTo(editable ? 1 : 0.5f, 100);
+    }
 
-        public override void UpdateDisableEditState(bool editable)
-        {
-            this.FadeTo(editable ? 1 : 0.5f, 100);
-        }
-
-        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
-        {
-            this.FlashColour(colours.Red, 200);
-        }
+    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    {
+        this.FlashColour(colours.Red, 200);
     }
 }

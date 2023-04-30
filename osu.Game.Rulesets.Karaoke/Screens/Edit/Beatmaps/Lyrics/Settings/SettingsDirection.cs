@@ -3,18 +3,17 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
-{
-    public enum SettingsDirection
-    {
-        /// <summary>
-        /// At the right side of the main lyric editor.
-        /// </summary>
-        Left,
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-        /// <summary>
-        /// At the right side of the main lyric editor.
-        /// </summary>
-        Right
-    }
+public enum SettingsDirection
+{
+    /// <summary>
+    /// At the right side of the main lyric editor.
+    /// </summary>
+    Left,
+
+    /// <summary>
+    /// At the right side of the main lyric editor.
+    /// </summary>
+    Right
 }

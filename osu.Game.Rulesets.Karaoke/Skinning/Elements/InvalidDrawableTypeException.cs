@@ -3,13 +3,12 @@
 
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements;
+
+public class InvalidDrawableTypeException : Exception
 {
-    public class InvalidDrawableTypeException : Exception
+    public InvalidDrawableTypeException(string message)
+        : base(@$"Drawable type does not supported ({message})")
     {
-        public InvalidDrawableTypeException(string message)
-            : base(@$"Drawable type does not supported ({message})")
-        {
-        }
     }
 }

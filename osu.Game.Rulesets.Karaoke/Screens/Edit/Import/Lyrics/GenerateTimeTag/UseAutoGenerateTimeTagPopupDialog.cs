@@ -7,28 +7,27 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
+
+public partial class UseAutoGenerateTimeTagPopupDialog : PopupDialog
 {
-    public partial class UseAutoGenerateTimeTagPopupDialog : PopupDialog
+    public UseAutoGenerateTimeTagPopupDialog(Action<bool> okAction = null)
     {
-        public UseAutoGenerateTimeTagPopupDialog(Action<bool> okAction = null)
+        Icon = FontAwesome.Solid.Globe;
+        HeaderText = "Auto generate time tag";
+        BodyText = "Would you like to use time-tag to auto generate each lyric's time tag?";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Auto generate time tag";
-            BodyText = "Would you like to use time-tag to auto generate each lyric's time tag?";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"Cancel",
-                    Action = () => okAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"Cancel",
+                Action = () => okAction?.Invoke(false),
+            },
+        };
     }
 }

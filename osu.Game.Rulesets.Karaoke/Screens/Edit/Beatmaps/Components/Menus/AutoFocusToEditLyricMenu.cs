@@ -11,70 +11,69 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
+
+public class AutoFocusToEditLyricMenu : MenuItem
 {
-    public class AutoFocusToEditLyricMenu : MenuItem
+    private const int disable_selection_index = -1;
+
+    private readonly BindableBool bindableAutoFocusToEditLyric = new();
+    private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new();
+
+    public AutoFocusToEditLyricMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
+        : base(text)
     {
-        private const int disable_selection_index = -1;
-
-        private readonly BindableBool bindableAutoFocusToEditLyric = new();
-        private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new();
-
-        public AutoFocusToEditLyricMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
-            : base(text)
+        var selections = new List<MenuItem>
         {
-            var selections = new List<MenuItem>
-            {
-                new ToggleMenuItem(getName(disable_selection_index), MenuItemType.Standard, _ => updateAutoFocusToEditLyric())
-            };
-            selections.AddRange(Enumerable.Range(0, 4).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => updateAutoFocusToEditLyricSkipRows(x))));
-            Items = selections;
+            new ToggleMenuItem(getName(disable_selection_index), MenuItemType.Standard, _ => updateAutoFocusToEditLyric())
+        };
+        selections.AddRange(Enumerable.Range(0, 4).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => updateAutoFocusToEditLyricSkipRows(x))));
+        Items = selections;
 
-            config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
-            config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
+        config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
+        config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
 
-            // mark disable as selected option.
-            bindableAutoFocusToEditLyric.BindValueChanged(_ =>
-            {
-                updateSelectionState();
-            }, true);
-
-            // mark line as selected option.
-            bindableAutoFocusToEditLyricSkipRows.BindValueChanged(_ =>
-            {
-                updateSelectionState();
-            }, true);
-        }
-
-        private string getName(int number)
+        // mark disable as selected option.
+        bindableAutoFocusToEditLyric.BindValueChanged(_ =>
         {
-            return number switch
-            {
-                disable_selection_index => "Disable",
-                0 => "Enable",
-                _ => $"Enable (skip {number} rows)"
-            };
-        }
+            updateSelectionState();
+        }, true);
 
-        private void updateAutoFocusToEditLyric()
+        // mark line as selected option.
+        bindableAutoFocusToEditLyricSkipRows.BindValueChanged(_ =>
         {
-            bindableAutoFocusToEditLyric.Value = !bindableAutoFocusToEditLyric.Value;
-        }
+            updateSelectionState();
+        }, true);
+    }
 
-        private void updateAutoFocusToEditLyricSkipRows(int rows)
+    private string getName(int number)
+    {
+        return number switch
         {
-            bindableAutoFocusToEditLyric.Value = true;
-            bindableAutoFocusToEditLyricSkipRows.Value = rows;
-        }
+            disable_selection_index => "Disable",
+            0 => "Enable",
+            _ => $"Enable (skip {number} rows)"
+        };
+    }
 
-        private void updateSelectionState()
+    private void updateAutoFocusToEditLyric()
+    {
+        bindableAutoFocusToEditLyric.Value = !bindableAutoFocusToEditLyric.Value;
+    }
+
+    private void updateAutoFocusToEditLyricSkipRows(int rows)
+    {
+        bindableAutoFocusToEditLyric.Value = true;
+        bindableAutoFocusToEditLyricSkipRows.Value = rows;
+    }
+
+    private void updateSelectionState()
+    {
+        int selection = bindableAutoFocusToEditLyric.Value ? bindableAutoFocusToEditLyricSkipRows.Value : disable_selection_index;
+        Items.OfType<ToggleMenuItem>().ForEach(x =>
         {
-            int selection = bindableAutoFocusToEditLyric.Value ? bindableAutoFocusToEditLyricSkipRows.Value : disable_selection_index;
-            Items.OfType<ToggleMenuItem>().ForEach(x =>
-            {
-                bool match = x.Text.Value == getName(selection);
-                x.State.Value = match;
-            });
-        }
+            bool match = x.Text.Value == getName(selection);
+            x.State.Value = match;
+        });
     }
 }

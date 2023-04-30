@@ -10,63 +10,62 @@ using osu.Game.Skinning;
 using osuTK;
 using Container = osu.Framework.Graphics.Containers.Container;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+public partial class StyleScreen : KaraokeSkinEditorScreen
 {
-    public partial class StyleScreen : KaraokeSkinEditorScreen
-    {
-        [Cached]
-        protected readonly StyleManager StyleManager;
+    [Cached]
+    protected readonly StyleManager StyleManager;
 
-        public StyleScreen(ISkin skin)
-            : base(skin, KaraokeSkinEditorScreenMode.Style)
+    public StyleScreen(ISkin skin)
+        : base(skin, KaraokeSkinEditorScreenMode.Style)
+    {
+        AddInternal(StyleManager = new StyleManager());
+    }
+
+    protected override Section[] CreateSelectionContainer()
+        => Array.Empty<Section>();
+
+    protected override Section[] CreatePropertiesContainer()
+        => new Section[]
         {
-            AddInternal(StyleManager = new StyleManager());
-        }
+            // style
+            new LyricColorSection(),
+            new LyricFontSection(),
+            new LyricShadowSection(),
+            // note
+            new NoteColorSection(),
+            new NoteFontSection(),
+        };
 
-        protected override Section[] CreateSelectionContainer()
-            => Array.Empty<Section>();
+    protected override Container CreatePreviewArea()
+        => new LyricStylePreview
+        {
+            Name = "Lyric style preview area",
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Size = new Vector2(0.95f),
+            RelativeSizeAxes = Axes.Both
+        };
 
-        protected override Section[] CreatePropertiesContainer()
-            => new Section[]
-            {
-                // style
-                new LyricColorSection(),
-                new LyricFontSection(),
-                new LyricShadowSection(),
-                // note
-                new NoteColorSection(),
-                new NoteFontSection(),
-            };
+    /*
+    protected override Container CreatePreviewArea()
+        => new NoteStylePreview
+        {
+            Name = "Note style preview area",
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+            Size = new Vector2(0.95f),
+            RelativeSizeAxes = Axes.Both
+        };
+    */
+}
 
-        protected override Container CreatePreviewArea()
-            => new LyricStylePreview
-            {
-                Name = "Lyric style preview area",
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(0.95f),
-                RelativeSizeAxes = Axes.Both
-            };
+public enum Style
+{
+    [Description("Lyric")]
+    Lyric,
 
-        /*
-        protected override Container CreatePreviewArea()
-            => new NoteStylePreview
-            {
-                Name = "Note style preview area",
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(0.95f),
-                RelativeSizeAxes = Axes.Both
-            };
-        */
-    }
-
-    public enum Style
-    {
-        [Description("Lyric")]
-        Lyric,
-
-        [Description("Note")]
-        Note
-    }
+    [Description("Note")]
+    Note
 }

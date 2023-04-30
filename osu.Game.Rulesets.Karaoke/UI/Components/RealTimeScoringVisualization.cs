@@ -10,81 +10,80 @@ using osu.Framework.Caching;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.UI.Components;
+
+public partial class RealTimeScoringVisualization : VoiceVisualization<KeyValuePair<double, KaraokeScoringAction>>
 {
-    public partial class RealTimeScoringVisualization : VoiceVisualization<KeyValuePair<double, KaraokeScoringAction>>
+    private readonly Cached addStateCache = new();
+
+    protected override float PathRadius => 2.5f;
+
+    protected override float Offset => DrawSize.X;
+
+    [Resolved]
+    private INotePositionInfo notePositionInfo { get; set; }
+
+    public RealTimeScoringVisualization()
     {
-        private readonly Cached addStateCache = new();
+        Masking = true;
+    }
 
-        protected override float PathRadius => 2.5f;
+    protected override double GetTime(KeyValuePair<double, KaraokeScoringAction> frame) => frame.Key;
 
-        protected override float Offset => DrawSize.X;
+    protected override float GetPosition(KeyValuePair<double, KaraokeScoringAction> frame) => notePositionInfo.Calculator.YPositionAt(frame.Value);
 
-        [Resolved]
-        private INotePositionInfo notePositionInfo { get; set; }
+    private bool createNew = true;
 
-        public RealTimeScoringVisualization()
+    private double minAvailableTime;
+
+    public void AddAction(KaraokeScoringAction action)
+    {
+        if (Time.Current <= minAvailableTime)
+            return;
+
+        minAvailableTime = Time.Current;
+
+        if (createNew)
         {
-            Masking = true;
+            createNew = false;
+
+            CreateNew(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
+        }
+        else
+        {
+            Append(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
         }
 
-        protected override double GetTime(KeyValuePair<double, KaraokeScoringAction> frame) => frame.Key;
+        // Trigger update last frame
+        addStateCache.Invalidate();
+    }
 
-        protected override float GetPosition(KeyValuePair<double, KaraokeScoringAction> frame) => notePositionInfo.Calculator.YPositionAt(frame.Value);
+    public void Release()
+    {
+        if (Time.Current < minAvailableTime)
+            return;
 
-        private bool createNew = true;
+        minAvailableTime = Time.Current;
 
-        private double minAvailableTime;
+        createNew = true;
+    }
 
-        public void AddAction(KaraokeScoringAction action)
+    protected override void Update()
+    {
+        // If addStateCache is invalid, means last path should be re-calculate
+        if (!addStateCache.IsValid && Paths.Any())
         {
-            if (Time.Current <= minAvailableTime)
-                return;
-
-            minAvailableTime = Time.Current;
-
-            if (createNew)
-            {
-                createNew = false;
-
-                CreateNew(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
-            }
-            else
-            {
-                Append(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
-            }
-
-            // Trigger update last frame
-            addStateCache.Invalidate();
+            var updatePath = Paths.LastOrDefault();
+            MarkAsInvalid(updatePath);
+            addStateCache.Validate();
         }
 
-        public void Release()
-        {
-            if (Time.Current < minAvailableTime)
-                return;
+        base.Update();
+    }
 
-            minAvailableTime = Time.Current;
-
-            createNew = true;
-        }
-
-        protected override void Update()
-        {
-            // If addStateCache is invalid, means last path should be re-calculate
-            if (!addStateCache.IsValid && Paths.Any())
-            {
-                var updatePath = Paths.LastOrDefault();
-                MarkAsInvalid(updatePath);
-                addStateCache.Validate();
-            }
-
-            base.Update();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            Colour = colours.Yellow;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        Colour = colours.Yellow;
     }
 }

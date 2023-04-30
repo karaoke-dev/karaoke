@@ -12,27 +12,26 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Localisation;
 using osu.Game.Overlays.Settings;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
+
+public partial class SettingsMicrophoneDeviceDropdown : SettingsDropdown<string>
 {
-    public partial class SettingsMicrophoneDeviceDropdown : SettingsDropdown<string>
+    protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
+
+    [BackgroundDependencyLoader]
+    private void load()
     {
-        protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
+        var microphoneManager = new MicrophoneManager();
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var microphoneManager = new MicrophoneManager();
+        var deviceItems = new List<string> { string.Empty };
+        deviceItems.AddRange(microphoneManager.MicrophoneDeviceNames);
 
-            var deviceItems = new List<string> { string.Empty };
-            deviceItems.AddRange(microphoneManager.MicrophoneDeviceNames);
+        Items = deviceItems.Distinct().ToList();
+    }
 
-            Items = deviceItems.Distinct().ToList();
-        }
-
-        private partial class MicrophoneDeviceDropdownControl : DropdownControl
-        {
-            protected override LocalisableString GenerateItemText(string item)
-                => string.IsNullOrEmpty(item) ? CommonStrings.Default : base.GenerateItemText(item);
-        }
+    private partial class MicrophoneDeviceDropdownControl : DropdownControl
+    {
+        protected override LocalisableString GenerateItemText(string item)
+            => string.IsNullOrEmpty(item) ? CommonStrings.Default : base.GenerateItemText(item);
     }
 }

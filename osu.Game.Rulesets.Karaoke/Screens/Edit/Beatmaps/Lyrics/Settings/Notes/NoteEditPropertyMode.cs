@@ -3,14 +3,13 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
+
+public enum NoteEditPropertyMode
 {
-    public enum NoteEditPropertyMode
-    {
-        Text,
+    Text,
 
-        RubyText,
+    RubyText,
 
-        Display
-    }
+    Display
 }

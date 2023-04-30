@@ -3,19 +3,18 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
+
+/// <summary>
+/// Base interface of the detector.
+/// </summary>
+/// <typeparam name="TProperty"></typeparam>
+/// <typeparam name="TConfig"></typeparam>
+public abstract class LyricPropertyDetector<TProperty, TConfig> : PropertyDetector<Lyric, TProperty, TConfig>
+    where TConfig : GeneratorConfig, new()
 {
-    /// <summary>
-    /// Base interface of the detector.
-    /// </summary>
-    /// <typeparam name="TProperty"></typeparam>
-    /// <typeparam name="TConfig"></typeparam>
-    public abstract class LyricPropertyDetector<TProperty, TConfig> : PropertyDetector<Lyric, TProperty, TConfig>
-        where TConfig : GeneratorConfig, new()
+    protected LyricPropertyDetector(TConfig config)
+        : base(config)
     {
-        protected LyricPropertyDetector(TConfig config)
-            : base(config)
-        {
-        }
     }
 }

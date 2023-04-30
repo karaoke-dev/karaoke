@@ -12,60 +12,59 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
+
+public partial class NoteIssueSection : LyricEditorIssueSection
 {
-    public partial class NoteIssueSection : LyricEditorIssueSection
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
+
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new NoteIssueTable();
+
+    private partial class NoteIssueTable : LyricsIssueTable
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditNote;
-
-        protected override LyricsIssueTable CreateLyricsIssueTable() => new NoteIssueTable();
-
-        private partial class NoteIssueTable : LyricsIssueTable
+        protected override TableColumn[] CreateHeaders() => new[]
         {
-            protected override TableColumn[] CreateHeaders() => new[]
-            {
-                new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-                new TableColumn("Note", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
-                new TableColumn("Message", Anchor.CentreLeft),
-            };
+            new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
+            new TableColumn("Note", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
+            new TableColumn("Message", Anchor.CentreLeft),
+        };
 
-            protected override Drawable[] CreateContent(Issue issue)
-            {
-                var note = getInvalidByIssue(issue);
-                string noteIndex = note.ReferenceLyric?.Order.ToString() ?? "??";
+        protected override Drawable[] CreateContent(Issue issue)
+        {
+            var note = getInvalidByIssue(issue);
+            string noteIndex = note.ReferenceLyric?.Order.ToString() ?? "??";
 
-                return new Drawable[]
+            return new Drawable[]
+            {
+                new IssueIcon
                 {
-                    new IssueIcon
-                    {
-                        Origin = Anchor.Centre,
-                        Size = new Vector2(10),
-                        Margin = new MarginPadding { Left = 10 },
-                        Issue = issue,
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = $"#{noteIndex}",
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                        Margin = new MarginPadding { Right = 10 },
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = issue.ToString(),
-                        Truncate = true,
-                        RelativeSizeAxes = Axes.X,
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
-                    },
-                };
-            }
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(10),
+                    Margin = new MarginPadding { Left = 10 },
+                    Issue = issue,
+                },
+                new OsuSpriteText
+                {
+                    Text = $"#{noteIndex}",
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                    Margin = new MarginPadding { Right = 10 },
+                },
+                new OsuSpriteText
+                {
+                    Text = issue.ToString(),
+                    Truncate = true,
+                    RelativeSizeAxes = Axes.X,
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                },
+            };
+        }
 
-            private Note getInvalidByIssue(Issue issue)
-            {
-                if (issue is not NoteIssue noteIssue)
-                    throw new InvalidCastException();
+        private Note getInvalidByIssue(Issue issue)
+        {
+            if (issue is not NoteIssue noteIssue)
+                throw new InvalidCastException();
 
-                return noteIssue.Note;
-            }
+            return noteIssue.Note;
         }
     }
 }

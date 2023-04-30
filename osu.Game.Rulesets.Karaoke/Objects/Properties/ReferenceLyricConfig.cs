@@ -5,24 +5,23 @@ using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Objects.Properties
+namespace osu.Game.Rulesets.Karaoke.Objects.Properties;
+
+public class ReferenceLyricConfig : IReferenceLyricPropertyConfig
 {
-    public class ReferenceLyricConfig : IReferenceLyricPropertyConfig
+    public event Action? Changed;
+
+    public ReferenceLyricConfig()
     {
-        public event Action? Changed;
+        OffsetTimeBindable.ValueChanged += _ => Changed?.Invoke();
+    }
 
-        public ReferenceLyricConfig()
-        {
-            OffsetTimeBindable.ValueChanged += _ => Changed?.Invoke();
-        }
+    [JsonIgnore]
+    public readonly Bindable<double> OffsetTimeBindable = new BindableDouble();
 
-        [JsonIgnore]
-        public readonly Bindable<double> OffsetTimeBindable = new BindableDouble();
-
-        public double OffsetTime
-        {
-            get => OffsetTimeBindable.Value;
-            set => OffsetTimeBindable.Value = value;
-        }
+    public double OffsetTime
+    {
+        get => OffsetTimeBindable.Value;
+        set => OffsetTimeBindable.Value = value;
     }
 }

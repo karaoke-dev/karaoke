@@ -7,133 +7,132 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
+
+public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyric>
 {
-    public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyric>
+    protected override string Description => "Note with invalid reference lyric.";
+
+    public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        protected override string Description => "Note with invalid reference lyric.";
+        new IssueTemplateNoteNullReferenceLyric(this),
+        new IssueTemplateNoteInvalidReferenceLyric(this),
+        new IssueTemplateNoteMissingReferenceTimeTag(this),
+        new IssueTemplateNoteMissingStartReferenceTimeTag(this),
+        new IssueTemplateNoteStartReferenceTimeTagMissingTime(this),
+        new IssueTemplateNoteMissingEndReferenceTimeTag(this),
+        new IssueTemplateNoteEndReferenceTimeTagMissingTime(this),
+    };
 
-        public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
+    protected override IEnumerable<Issue> CheckReferenceProperty(Note note, IEnumerable<Lyric> allAvailableReferencedHitObjects)
+    {
+        if (note.ReferenceLyric == null)
         {
-            new IssueTemplateNoteNullReferenceLyric(this),
-            new IssueTemplateNoteInvalidReferenceLyric(this),
-            new IssueTemplateNoteMissingReferenceTimeTag(this),
-            new IssueTemplateNoteMissingStartReferenceTimeTag(this),
-            new IssueTemplateNoteStartReferenceTimeTagMissingTime(this),
-            new IssueTemplateNoteMissingEndReferenceTimeTag(this),
-            new IssueTemplateNoteEndReferenceTimeTagMissingTime(this),
-        };
+            yield return new IssueTemplateNoteNullReferenceLyric(this).Create(note);
 
-        protected override IEnumerable<Issue> CheckReferenceProperty(Note note, IEnumerable<Lyric> allAvailableReferencedHitObjects)
-        {
-            if (note.ReferenceLyric == null)
-            {
-                yield return new IssueTemplateNoteNullReferenceLyric(this).Create(note);
-
-                yield break;
-            }
-
-            if (note.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(note.ReferenceLyric))
-                yield return new IssueTemplateNoteInvalidReferenceLyric(this).Create(note);
-
-            var startTimeTag = note.StartReferenceTimeTag;
-            var endTimeTag = note.EndReferenceTimeTag;
-
-            if (startTimeTag == null && endTimeTag == null)
-            {
-                yield return new IssueTemplateNoteMissingReferenceTimeTag(this).Create(note);
-
-                yield break;
-            }
-
-            if (startTimeTag == null)
-                yield return new IssueTemplateNoteMissingStartReferenceTimeTag(this).Create(note);
-
-            if (startTimeTag != null && startTimeTag.Time == null)
-                yield return new IssueTemplateNoteStartReferenceTimeTagMissingTime(this).Create(note);
-
-            if (endTimeTag == null)
-                yield return new IssueTemplateNoteMissingEndReferenceTimeTag(this).Create(note);
-
-            if (endTimeTag != null && endTimeTag.Time == null)
-                yield return new IssueTemplateNoteEndReferenceTimeTagMissingTime(this).Create(note);
+            yield break;
         }
 
-        public class IssueTemplateNoteNullReferenceLyric : IssueTemplate
-        {
-            public IssueTemplateNoteNullReferenceLyric(ICheck check)
-                : base(check, IssueType.Error, "Note must have its parent lyric.")
-            {
-            }
+        if (note.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(note.ReferenceLyric))
+            yield return new IssueTemplateNoteInvalidReferenceLyric(this).Create(note);
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+        var startTimeTag = note.StartReferenceTimeTag;
+        var endTimeTag = note.EndReferenceTimeTag;
+
+        if (startTimeTag == null && endTimeTag == null)
+        {
+            yield return new IssueTemplateNoteMissingReferenceTimeTag(this).Create(note);
+
+            yield break;
         }
 
-        public class IssueTemplateNoteInvalidReferenceLyric : IssueTemplate
-        {
-            public IssueTemplateNoteInvalidReferenceLyric(ICheck check)
-                : base(check, IssueType.Error, "Note's reference lyric must in the beatmap.")
-            {
-            }
+        if (startTimeTag == null)
+            yield return new IssueTemplateNoteMissingStartReferenceTimeTag(this).Create(note);
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+        if (startTimeTag != null && startTimeTag.Time == null)
+            yield return new IssueTemplateNoteStartReferenceTimeTagMissingTime(this).Create(note);
+
+        if (endTimeTag == null)
+            yield return new IssueTemplateNoteMissingEndReferenceTimeTag(this).Create(note);
+
+        if (endTimeTag != null && endTimeTag.Time == null)
+            yield return new IssueTemplateNoteEndReferenceTimeTagMissingTime(this).Create(note);
+    }
+
+    public class IssueTemplateNoteNullReferenceLyric : IssueTemplate
+    {
+        public IssueTemplateNoteNullReferenceLyric(ICheck check)
+            : base(check, IssueType.Error, "Note must have its parent lyric.")
+        {
         }
 
-        public class IssueTemplateNoteMissingReferenceTimeTag : IssueTemplate
-        {
-            public IssueTemplateNoteMissingReferenceTimeTag(ICheck check)
-                : base(check, IssueType.Problem, "Note's reference time-tag is missing.")
-            {
-            }
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+    public class IssueTemplateNoteInvalidReferenceLyric : IssueTemplate
+    {
+        public IssueTemplateNoteInvalidReferenceLyric(ICheck check)
+            : base(check, IssueType.Error, "Note's reference lyric must in the beatmap.")
+        {
         }
 
-        public class IssueTemplateNoteMissingStartReferenceTimeTag : IssueTemplate
-        {
-            public IssueTemplateNoteMissingStartReferenceTimeTag(ICheck check)
-                : base(check, IssueType.Problem, "Note's start reference time-tag is missing.")
-            {
-            }
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+    public class IssueTemplateNoteMissingReferenceTimeTag : IssueTemplate
+    {
+        public IssueTemplateNoteMissingReferenceTimeTag(ICheck check)
+            : base(check, IssueType.Problem, "Note's reference time-tag is missing.")
+        {
         }
 
-        public class IssueTemplateNoteStartReferenceTimeTagMissingTime : IssueTemplate
-        {
-            public IssueTemplateNoteStartReferenceTimeTagMissingTime(ICheck check)
-                : base(check, IssueType.Problem, "Note's start reference time-tag is found but missing time.")
-            {
-            }
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+    public class IssueTemplateNoteMissingStartReferenceTimeTag : IssueTemplate
+    {
+        public IssueTemplateNoteMissingStartReferenceTimeTag(ICheck check)
+            : base(check, IssueType.Problem, "Note's start reference time-tag is missing.")
+        {
         }
 
-        public class IssueTemplateNoteMissingEndReferenceTimeTag : IssueTemplate
-        {
-            public IssueTemplateNoteMissingEndReferenceTimeTag(ICheck check)
-                : base(check, IssueType.Problem, "Note's end reference time-tag is missing.")
-            {
-            }
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+    public class IssueTemplateNoteStartReferenceTimeTagMissingTime : IssueTemplate
+    {
+        public IssueTemplateNoteStartReferenceTimeTagMissingTime(ICheck check)
+            : base(check, IssueType.Problem, "Note's start reference time-tag is found but missing time.")
+        {
         }
 
-        public class IssueTemplateNoteEndReferenceTimeTagMissingTime : IssueTemplate
-        {
-            public IssueTemplateNoteEndReferenceTimeTagMissingTime(ICheck check)
-                : base(check, IssueType.Problem, "Note's end reference time-tag is found but missing time.")
-            {
-            }
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
 
-            public Issue Create(Note note)
-                => new NoteIssue(note, this);
+    public class IssueTemplateNoteMissingEndReferenceTimeTag : IssueTemplate
+    {
+        public IssueTemplateNoteMissingEndReferenceTimeTag(ICheck check)
+            : base(check, IssueType.Problem, "Note's end reference time-tag is missing.")
+        {
         }
+
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
+    }
+
+    public class IssueTemplateNoteEndReferenceTimeTagMissingTime : IssueTemplate
+    {
+        public IssueTemplateNoteEndReferenceTimeTagMissingTime(ICheck check)
+            : base(check, IssueType.Problem, "Note's end reference time-tag is found but missing time.")
+        {
+        }
+
+        public Issue Create(Note note)
+            => new NoteIssue(note, this);
     }
 }

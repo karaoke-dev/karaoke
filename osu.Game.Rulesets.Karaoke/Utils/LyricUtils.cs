@@ -11,298 +11,297 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Utils
+namespace osu.Game.Rulesets.Karaoke.Utils;
+
+public static class LyricUtils
 {
-    public static class LyricUtils
+    #region progessing
+
+    public static void RemoveText(Lyric lyric, int position, int count = 1)
     {
-        #region progessing
+        ArgumentNullException.ThrowIfNull(lyric);
 
-        public static void RemoveText(Lyric lyric, int position, int count = 1)
+        int textLength = lyric.Text.Length;
+        if (textLength == 0)
+            return;
+
+        if (position < 0 || position > textLength)
+            throw new ArgumentOutOfRangeException(nameof(position));
+
+        if (count < 0)
+            throw new ArgumentOutOfRangeException(nameof(position));
+
+        if (position + count >= textLength)
+            count = textLength - position;
+
+        // deal with ruby and romaji, might remove and shifting.
+        lyric.RubyTags = processTags(lyric.RubyTags, position, count);
+        lyric.RomajiTags = processTags(lyric.RomajiTags, position, count);
+        lyric.TimeTags = processTimeTags(lyric.TimeTags, position, count);
+
+        // deal with text
+        string newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
+        lyric.Text = newLyric;
+
+        static IList<T> processTags<T>(IList<T> tags, int position, int count) where T : class, ITextTag
         {
-            ArgumentNullException.ThrowIfNull(lyric);
-
-            int textLength = lyric.Text.Length;
-            if (textLength == 0)
-                return;
-
-            if (position < 0 || position > textLength)
-                throw new ArgumentOutOfRangeException(nameof(position));
-
-            if (count < 0)
-                throw new ArgumentOutOfRangeException(nameof(position));
-
-            if (position + count >= textLength)
-                count = textLength - position;
-
-            // deal with ruby and romaji, might remove and shifting.
-            lyric.RubyTags = processTags(lyric.RubyTags, position, count);
-            lyric.RomajiTags = processTags(lyric.RomajiTags, position, count);
-            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, count);
-
-            // deal with text
-            string newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
-            lyric.Text = newLyric;
-
-            static IList<T> processTags<T>(IList<T> tags, int position, int count) where T : class, ITextTag
+            // shifting index.
+            foreach (var tag in tags)
             {
-                // shifting index.
-                foreach (var tag in tags)
+                if (tag.StartIndex > position + count)
                 {
-                    if (tag.StartIndex > position + count)
-                    {
-                        tag.StartIndex -= count;
-                        tag.EndIndex -= count;
-                    }
-                    else if (tag.StartIndex > position)
-                    {
-                        tag.StartIndex = position;
-                        tag.EndIndex -= count;
-                    }
-                    else if (tag.EndIndex > position)
-                    {
-                        tag.EndIndex = Math.Max(position, tag.EndIndex - count);
-                    }
+                    tag.StartIndex -= count;
+                    tag.EndIndex -= count;
                 }
-
-                // if end index less or equal than start index, means this tag has been deleted.
-                return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
+                else if (tag.StartIndex > position)
+                {
+                    tag.StartIndex = position;
+                    tag.EndIndex -= count;
+                }
+                else if (tag.EndIndex > position)
+                {
+                    tag.EndIndex = Math.Max(position, tag.EndIndex - count);
+                }
             }
 
-            static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
+            // if end index less or equal than start index, means this tag has been deleted.
+            return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
+        }
+
+        static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
+        {
+            int endPosition = position + count;
+            return timeTags.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
+                           .Select(t => t.Index.Index > position ? TimeTagUtils.ShiftingTimeTag(t, -count) : t)
+                           .ToArray();
+        }
+    }
+
+    public static void AddText(Lyric lyric, int position, string text)
+    {
+        ArgumentNullException.ThrowIfNull(lyric);
+
+        // make position is at the range.
+        string lyricText = lyric.Text;
+        int lyricTextLength = lyricText.Length;
+        position = Math.Clamp(position, 0, lyricTextLength);
+
+        int offset = text.Length;
+        if (offset == 0)
+            return;
+
+        // deal with ruby and romaji with shifting.
+        lyric.RubyTags = processTags(lyric.RubyTags, position, offset);
+        lyric.RomajiTags = processTags(lyric.RomajiTags, position, offset);
+        lyric.TimeTags = processTimeTags(lyric.TimeTags, position, offset);
+
+        // deal with text
+        string newLyricText = lyricText[..position] + text + lyricText[position..];
+        lyric.Text = newLyricText;
+
+        static T[] processTags<T>(IEnumerable<T> tags, int position, int offset) where T : ITextTag =>
+            tags.Select(x =>
+                {
+                    if (x.StartIndex >= position)
+                        x.StartIndex += offset;
+                    if (x.EndIndex > position)
+                        x.EndIndex += offset;
+                    return x;
+                })
+                .ToArray();
+
+        static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int offset)
+            => timeTags.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
+    }
+
+    #endregion
+
+    #region Time tag
+
+    public static bool HasTimedTimeTags(Lyric lyric)
+        => lyric.TimeTags.Any(x => x.Time.HasValue);
+
+    public static string GetTimeTagIndexDisplayText(Lyric lyric, TextIndex index)
+    {
+        ArgumentNullException.ThrowIfNull(lyric);
+
+        string text = lyric.Text;
+        if (string.IsNullOrEmpty(text))
+            throw new ArgumentNullException(nameof(text));
+
+        // not showing text if index out of range.
+        if (index.Index < 0 || index.Index >= text.Length)
+            return "-";
+
+        var timeTags = lyric.TimeTags;
+
+        switch (index.State)
+        {
+            case TextIndex.IndexState.Start:
             {
-                int endPosition = position + count;
-                return timeTags.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
-                               .Select(t => t.Index.Index > position ? TimeTagUtils.ShiftingTimeTag(t, -count) : t)
-                               .ToArray();
+                var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
+                int startIndex = index.Index;
+                int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
+                return $"{text.Substring(startIndex, endIndex - startIndex)}-";
             }
-        }
 
-        public static void AddText(Lyric lyric, int position, string text)
-        {
-            ArgumentNullException.ThrowIfNull(lyric);
-
-            // make position is at the range.
-            string lyricText = lyric.Text;
-            int lyricTextLength = lyricText.Length;
-            position = Math.Clamp(position, 0, lyricTextLength);
-
-            int offset = text.Length;
-            if (offset == 0)
-                return;
-
-            // deal with ruby and romaji with shifting.
-            lyric.RubyTags = processTags(lyric.RubyTags, position, offset);
-            lyric.RomajiTags = processTags(lyric.RomajiTags, position, offset);
-            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, offset);
-
-            // deal with text
-            string newLyricText = lyricText[..position] + text + lyricText[position..];
-            lyric.Text = newLyricText;
-
-            static T[] processTags<T>(IEnumerable<T> tags, int position, int offset) where T : ITextTag =>
-                tags.Select(x =>
-                    {
-                        if (x.StartIndex >= position)
-                            x.StartIndex += offset;
-                        if (x.EndIndex > position)
-                            x.EndIndex += offset;
-                        return x;
-                    })
-                    .ToArray();
-
-            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int offset)
-                => timeTags.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
-        }
-
-        #endregion
-
-        #region Time tag
-
-        public static bool HasTimedTimeTags(Lyric lyric)
-            => lyric.TimeTags.Any(x => x.Time.HasValue);
-
-        public static string GetTimeTagIndexDisplayText(Lyric lyric, TextIndex index)
-        {
-            ArgumentNullException.ThrowIfNull(lyric);
-
-            string text = lyric.Text;
-            if (string.IsNullOrEmpty(text))
-                throw new ArgumentNullException(nameof(text));
-
-            // not showing text if index out of range.
-            if (index.Index < 0 || index.Index >= text.Length)
-                return "-";
-
-            var timeTags = lyric.TimeTags;
-
-            switch (index.State)
+            case TextIndex.IndexState.End:
             {
-                case TextIndex.IndexState.Start:
-                {
-                    var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
-                    int startIndex = index.Index;
-                    int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
-                    return $"{text.Substring(startIndex, endIndex - startIndex)}-";
-                }
-
-                case TextIndex.IndexState.End:
-                {
-                    var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
-                    int startIndex = previousTimeTag?.Index.Index ?? 0;
-                    int endIndex = index.Index + 1;
-                    return $"-{text.Substring(startIndex, endIndex - startIndex)}";
-                }
-
-                default:
-                    throw new InvalidEnumArgumentException(nameof(index.State));
+                var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
+                int startIndex = previousTimeTag?.Index.Index ?? 0;
+                int endIndex = index.Index + 1;
+                return $"-{text.Substring(startIndex, endIndex - startIndex)}";
             }
+
+            default:
+                throw new InvalidEnumArgumentException(nameof(index.State));
         }
+    }
 
-        public static string GetTimeTagDisplayText(Lyric lyric, TimeTag timeTag)
+    public static string GetTimeTagDisplayText(Lyric lyric, TimeTag timeTag)
+    {
+        ArgumentNullException.ThrowIfNull(timeTag);
+
+        return GetTimeTagIndexDisplayText(lyric, timeTag.Index);
+    }
+
+    public static string GetTimeTagDisplayRubyText(Lyric lyric, TimeTag timeTag)
+    {
+        ArgumentNullException.ThrowIfNull(timeTag);
+
+        var state = timeTag.Index.State;
+
+        // should check has ruby in target lyric with target index.
+        var matchRuby = lyric.RubyTags.Where(x =>
         {
-            ArgumentNullException.ThrowIfNull(timeTag);
+            int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
-            return GetTimeTagIndexDisplayText(lyric, timeTag.Index);
-        }
-
-        public static string GetTimeTagDisplayRubyText(Lyric lyric, TimeTag timeTag)
-        {
-            ArgumentNullException.ThrowIfNull(timeTag);
-
-            var state = timeTag.Index.State;
-
-            // should check has ruby in target lyric with target index.
-            var matchRuby = lyric.RubyTags.Where(x =>
-            {
-                int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
-
-                return state switch
-                {
-                    TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
-                    TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
-                    _ => throw new InvalidEnumArgumentException(nameof(state))
-                };
-            }).FirstOrDefault();
-
-            if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
-                return GetTimeTagDisplayText(lyric, timeTag);
-
-            // get all the rubies with same index.
-            var timeTagsWithSameIndex = lyric.TimeTags.Where(x =>
-            {
-                if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
-                    return false;
-
-                return x.Index.State != TextIndex.IndexState.Start || x.Index.Index != matchRuby.EndIndex;
-            }).ToList();
-
-            // get ruby text and should notice exceed case if time-tag is more than ruby text.
-            int index = timeTagsWithSameIndex.IndexOf(timeTag);
-            string text = matchRuby.Text;
-            string subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
-
-            // return substring with format.
             return state switch
             {
-                TextIndex.IndexState.Start => $"({subtext})-",
-                TextIndex.IndexState.End => $"-({subtext})",
+                TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
+                TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
                 _ => throw new InvalidEnumArgumentException(nameof(state))
             };
-        }
+        }).FirstOrDefault();
 
-        #endregion
+        if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
+            return GetTimeTagDisplayText(lyric, timeTag);
 
-        #region Ruby/romaji tag
-
-        public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
-            => index >= 0 && index <= lyric.Text.Length;
-
-        #endregion
-
-        #region Time display
-
-        public static string LyricTimeFormattedString(Lyric lyric)
+        // get all the rubies with same index.
+        var timeTagsWithSameIndex = lyric.TimeTags.Where(x =>
         {
-            ArgumentNullException.ThrowIfNull(lyric);
-
-            string startTime = lyric.StartTime.ToEditorFormattedString();
-            string endTime = lyric.EndTime.ToEditorFormattedString();
-            return $"{startTime} - {endTime}";
-        }
-
-        public static string TimeTagTimeFormattedString(Lyric lyric)
-        {
-            ArgumentNullException.ThrowIfNull(lyric);
-
-            var availableTimeTags = lyric.TimeTags.Where(x => x.Time != null).ToArray();
-            var minTimeTag = availableTimeTags.MinBy(x => x.Time);
-            var maxTimeTag = availableTimeTags.MaxBy(x => x.Time);
-
-            string startTime = TimeTagUtils.FormattedString(minTimeTag ?? new TimeTag(new TextIndex()));
-            string endTime = TimeTagUtils.FormattedString(maxTimeTag ?? new TimeTag(new TextIndex()));
-            return $"{startTime} - {endTime}";
-        }
-
-        #endregion
-
-        #region Singer
-
-        public static bool ContainsSinger(Lyric lyric, Singer singer)
-        {
-            ArgumentNullException.ThrowIfNull(lyric);
-            ArgumentNullException.ThrowIfNull(singer);
-
-            return lyric.SingerIds.Contains(singer.ID);
-        }
-
-        public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
-        {
-            ArgumentNullException.ThrowIfNull(singers);
-
-            var singerIds = singers.Select(x => x.ID);
-            return lyric.SingerIds.All(x => singerIds.Contains(x));
-        }
-
-        #endregion
-
-        #region Check
-
-        /// <summary>
-        /// Check start time is larger than end time.
-        /// </summary>
-        /// <param name="lyric"></param>
-        /// <returns></returns>
-        public static bool CheckIsTimeOverlapping(Lyric lyric)
-        {
-            return lyric.StartTime > lyric.EndTime;
-        }
-
-        /// <summary>
-        /// Start time should be smaller than any time-tag.
-        /// </summary>
-        /// <param name="lyric"></param>
-        /// <returns></returns>
-        public static bool CheckIsStartTimeInvalid(Lyric lyric)
-        {
-            if (!lyric.TimeTags.Any())
+            if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
                 return false;
 
-            return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
-        }
+            return x.Index.State != TextIndex.IndexState.Start || x.Index.Index != matchRuby.EndIndex;
+        }).ToList();
 
-        /// <summary>
-        /// End time should be larger than any time-tag.
-        /// </summary>
-        /// <param name="lyric"></param>
-        /// <returns></returns>
-        public static bool CheckIsEndTimeInvalid(Lyric lyric)
+        // get ruby text and should notice exceed case if time-tag is more than ruby text.
+        int index = timeTagsWithSameIndex.IndexOf(timeTag);
+        string text = matchRuby.Text;
+        string subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
+
+        // return substring with format.
+        return state switch
         {
-            if (!lyric.TimeTags.Any())
-                return false;
-
-            return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);
-        }
-
-        #endregion
+            TextIndex.IndexState.Start => $"({subtext})-",
+            TextIndex.IndexState.End => $"-({subtext})",
+            _ => throw new InvalidEnumArgumentException(nameof(state))
+        };
     }
+
+    #endregion
+
+    #region Ruby/romaji tag
+
+    public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
+        => index >= 0 && index <= lyric.Text.Length;
+
+    #endregion
+
+    #region Time display
+
+    public static string LyricTimeFormattedString(Lyric lyric)
+    {
+        ArgumentNullException.ThrowIfNull(lyric);
+
+        string startTime = lyric.StartTime.ToEditorFormattedString();
+        string endTime = lyric.EndTime.ToEditorFormattedString();
+        return $"{startTime} - {endTime}";
+    }
+
+    public static string TimeTagTimeFormattedString(Lyric lyric)
+    {
+        ArgumentNullException.ThrowIfNull(lyric);
+
+        var availableTimeTags = lyric.TimeTags.Where(x => x.Time != null).ToArray();
+        var minTimeTag = availableTimeTags.MinBy(x => x.Time);
+        var maxTimeTag = availableTimeTags.MaxBy(x => x.Time);
+
+        string startTime = TimeTagUtils.FormattedString(minTimeTag ?? new TimeTag(new TextIndex()));
+        string endTime = TimeTagUtils.FormattedString(maxTimeTag ?? new TimeTag(new TextIndex()));
+        return $"{startTime} - {endTime}";
+    }
+
+    #endregion
+
+    #region Singer
+
+    public static bool ContainsSinger(Lyric lyric, Singer singer)
+    {
+        ArgumentNullException.ThrowIfNull(lyric);
+        ArgumentNullException.ThrowIfNull(singer);
+
+        return lyric.SingerIds.Contains(singer.ID);
+    }
+
+    public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
+    {
+        ArgumentNullException.ThrowIfNull(singers);
+
+        var singerIds = singers.Select(x => x.ID);
+        return lyric.SingerIds.All(x => singerIds.Contains(x));
+    }
+
+    #endregion
+
+    #region Check
+
+    /// <summary>
+    /// Check start time is larger than end time.
+    /// </summary>
+    /// <param name="lyric"></param>
+    /// <returns></returns>
+    public static bool CheckIsTimeOverlapping(Lyric lyric)
+    {
+        return lyric.StartTime > lyric.EndTime;
+    }
+
+    /// <summary>
+    /// Start time should be smaller than any time-tag.
+    /// </summary>
+    /// <param name="lyric"></param>
+    /// <returns></returns>
+    public static bool CheckIsStartTimeInvalid(Lyric lyric)
+    {
+        if (!lyric.TimeTags.Any())
+            return false;
+
+        return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
+    }
+
+    /// <summary>
+    /// End time should be larger than any time-tag.
+    /// </summary>
+    /// <param name="lyric"></param>
+    /// <returns></returns>
+    public static bool CheckIsEndTimeInvalid(Lyric lyric)
+    {
+        if (!lyric.TimeTags.Any())
+            return false;
+
+        return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);
+    }
+
+    #endregion
 }

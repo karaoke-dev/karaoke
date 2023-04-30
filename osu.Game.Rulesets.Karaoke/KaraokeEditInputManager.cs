@@ -10,102 +10,101 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Game.Input.Bindings;
 
-namespace osu.Game.Rulesets.Karaoke
+namespace osu.Game.Rulesets.Karaoke;
+
+public partial class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
 {
-    public partial class KaraokeEditInputManager : DatabasedKeyBindingContainer<KaraokeEditAction>
+    public KaraokeEditInputManager(RulesetInfo ruleset)
+        : base(ruleset, 2, SimultaneousBindingMode.Unique, KeyCombinationMatchingMode.Modifiers)
     {
-        public KaraokeEditInputManager(RulesetInfo ruleset)
-            : base(ruleset, 2, SimultaneousBindingMode.Unique, KeyCombinationMatchingMode.Modifiers)
-        {
-        }
+    }
 
-        protected override IEnumerable<Drawable> KeyBindingInputQueue
+    protected override IEnumerable<Drawable> KeyBindingInputQueue
+    {
+        get
         {
-            get
-            {
-                var queue = base.KeyBindingInputQueue;
-                return queue.OrderBy(x => x is IHasIKeyBindingHandlerOrder keyBindingHandlerOrder
-                    ? keyBindingHandlerOrder.KeyBindingHandlerOrder
-                    : int.MaxValue);
-            }
+            var queue = base.KeyBindingInputQueue;
+            return queue.OrderBy(x => x is IHasIKeyBindingHandlerOrder keyBindingHandlerOrder
+                ? keyBindingHandlerOrder.KeyBindingHandlerOrder
+                : int.MaxValue);
         }
     }
+}
 
-    public interface IHasIKeyBindingHandlerOrder
-    {
-        int KeyBindingHandlerOrder { get; }
-    }
+public interface IHasIKeyBindingHandlerOrder
+{
+    int KeyBindingHandlerOrder { get; }
+}
 
-    public enum KaraokeEditAction
-    {
-        // moving
-        [Description("Up")]
-        MoveToPreviousLyric,
+public enum KaraokeEditAction
+{
+    // moving
+    [Description("Up")]
+    MoveToPreviousLyric,
 
-        [Description("Down")]
-        MoveToNextLyric,
+    [Description("Down")]
+    MoveToNextLyric,
 
-        [Description("First Lyric")]
-        MoveToFirstLyric,
+    [Description("First Lyric")]
+    MoveToFirstLyric,
 
-        [Description("Last Lyric")]
-        MoveToLastLyric,
+    [Description("Last Lyric")]
+    MoveToLastLyric,
 
-        [Description("Left")]
-        MoveToPreviousIndex,
+    [Description("Left")]
+    MoveToPreviousIndex,
 
-        [Description("Right")]
-        MoveToNextIndex,
+    [Description("Right")]
+    MoveToNextIndex,
 
-        [Description("First index")]
-        MoveToFirstIndex,
+    [Description("First index")]
+    MoveToFirstIndex,
 
-        [Description("Last index")]
-        MoveToLastIndex,
+    [Description("Last index")]
+    MoveToLastIndex,
 
-        // Switch edit mode.
-        [Description("Previous edit mode")]
-        PreviousEditMode,
+    // Switch edit mode.
+    [Description("Previous edit mode")]
+    PreviousEditMode,
 
-        [Description("Next edit mode")]
-        NextEditMode,
+    [Description("Next edit mode")]
+    NextEditMode,
 
-        // Edit Ruby / romaji tag.
-        [Description("Reduce start index")]
-        EditTextTagReduceStartIndex,
+    // Edit Ruby / romaji tag.
+    [Description("Reduce start index")]
+    EditTextTagReduceStartIndex,
 
-        [Description("Increase start index")]
-        EditTextTagIncreaseStartIndex,
+    [Description("Increase start index")]
+    EditTextTagIncreaseStartIndex,
 
-        [Description("Reduce end index")]
-        EditTextTagReduceEndIndex,
+    [Description("Reduce end index")]
+    EditTextTagReduceEndIndex,
 
-        [Description("Increase end index")]
-        EditTextTagIncreaseEndIndex,
+    [Description("Increase end index")]
+    EditTextTagIncreaseEndIndex,
 
-        // Edit time-tag.
-        [Description("Create new")]
-        CreateTimeTag,
+    // Edit time-tag.
+    [Description("Create new")]
+    CreateTimeTag,
 
-        [Description("Remove")]
-        RemoveTimeTag,
+    [Description("Remove")]
+    RemoveTimeTag,
 
-        [Description("Shift the time-tag left.")]
-        ShiftTheTimeTagLeft,
+    [Description("Shift the time-tag left.")]
+    ShiftTheTimeTagLeft,
 
-        [Description("Shift the time-tag right.")]
-        ShiftTheTimeTagRight,
+    [Description("Shift the time-tag right.")]
+    ShiftTheTimeTagRight,
 
-        [Description("Shift the time-tag state left.")]
-        ShiftTheTimeTagStateLeft,
+    [Description("Shift the time-tag state left.")]
+    ShiftTheTimeTagStateLeft,
 
-        [Description("Shift the time-tag state right.")]
-        ShiftTheTimeTagStateRight,
+    [Description("Shift the time-tag state right.")]
+    ShiftTheTimeTagStateRight,
 
-        [Description("Set time")]
-        SetTime,
+    [Description("Set time")]
+    SetTime,
 
-        [Description("Clear time")]
-        ClearTime,
-    }
+    [Description("Clear time")]
+    ClearTime,
 }

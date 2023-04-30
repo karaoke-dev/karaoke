@@ -6,25 +6,24 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
+
+public class ZhTimeTagGenerator : TimeTagGenerator<ZhTimeTagGeneratorConfig>
 {
-    public class ZhTimeTagGenerator : TimeTagGenerator<ZhTimeTagGeneratorConfig>
+    public ZhTimeTagGenerator(ZhTimeTagGeneratorConfig config)
+        : base(config)
     {
-        public ZhTimeTagGenerator(ZhTimeTagGeneratorConfig config)
-            : base(config)
-        {
-        }
+    }
 
-        protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)
-        {
-            string text = lyric.Text;
+    protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)
+    {
+        string text = lyric.Text;
 
-            for (int i = 1; i < text.Length; i++)
+        for (int i = 1; i < text.Length; i++)
+        {
+            if (CharUtils.IsChinese(text[i]))
             {
-                if (CharUtils.IsChinese(text[i]))
-                {
-                    timeTags.Add(new TimeTag(new TextIndex(i)));
-                }
+                timeTags.Add(new TimeTag(new TextIndex(i)));
             }
         }
     }

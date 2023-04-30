@@ -8,18 +8,17 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+
+public partial class TranslateLyricSpriteText : DrawableLyricSpriteText, IHasCustomTooltip<Lyric>
 {
-    public partial class TranslateLyricSpriteText : DrawableLyricSpriteText, IHasCustomTooltip<Lyric>
+    public TranslateLyricSpriteText(Lyric hitObject)
+        : base(hitObject)
     {
-        public TranslateLyricSpriteText(Lyric hitObject)
-            : base(hitObject)
-        {
-            TooltipContent = hitObject;
-        }
-
-        public ITooltip<Lyric> GetCustomTooltip() => new LyricTooltip();
-
-        public Lyric TooltipContent { get; }
+        TooltipContent = hitObject;
     }
+
+    public ITooltip<Lyric> GetCustomTooltip() => new LyricTooltip();
+
+    public Lyric TooltipContent { get; }
 }

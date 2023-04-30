@@ -6,16 +6,15 @@ using System.Diagnostics;
 using System.Reflection;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+
+public class ReferenceLyricPropertyConfigConverter : GenericTypeConverter<IReferenceLyricPropertyConfig>
 {
-    public class ReferenceLyricPropertyConfigConverter : GenericTypeConverter<IReferenceLyricPropertyConfig>
+    protected override Type GetTypeByName(string name)
     {
-        protected override Type GetTypeByName(string name)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Objects.Properties.{name}");
-            Debug.Assert(type != null);
-            return type;
-        }
+        var assembly = Assembly.GetExecutingAssembly();
+        var type = assembly.GetType($"osu.Game.Rulesets.Karaoke.Objects.Properties.{name}");
+        Debug.Assert(type != null);
+        return type;
     }
 }

@@ -7,29 +7,28 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile
-{
-    public partial class ImportLyricDialog : PopupDialog
-    {
-        public ImportLyricDialog(Action<bool> resetAction = null)
-        {
-            Icon = FontAwesome.Regular.TrashAlt;
-            HeaderText = @"Confirm import lyric file?";
-            BodyText = "Import lyric file will clean-up all exist lyric.";
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile;
 
-            Buttons = new PopupDialogButton[]
+public partial class ImportLyricDialog : PopupDialog
+{
+    public ImportLyricDialog(Action<bool> resetAction = null)
+    {
+        Icon = FontAwesome.Regular.TrashAlt;
+        HeaderText = @"Confirm import lyric file?";
+        BodyText = "Import lyric file will clean-up all exist lyric.";
+
+        Buttons = new PopupDialogButton[]
+        {
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"Yes. Go for it.",
-                    Action = () => resetAction?.Invoke(true),
-                },
-                new PopupDialogCancelButton
-                {
-                    Text = @"No! Abort mission!",
-                    Action = () => resetAction?.Invoke(false),
-                },
-            };
-        }
+                Text = @"Yes. Go for it.",
+                Action = () => resetAction?.Invoke(true),
+            },
+            new PopupDialogCancelButton
+            {
+                Text = @"No! Abort mission!",
+                Action = () => resetAction?.Invoke(false),
+            },
+        };
     }
 }

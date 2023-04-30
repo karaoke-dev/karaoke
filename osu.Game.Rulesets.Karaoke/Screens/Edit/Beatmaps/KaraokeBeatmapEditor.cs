@@ -22,107 +22,106 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Screens.Edit.Components.Menus;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
+
+public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorScreenMode>
 {
-    public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorScreenMode>
+    [Cached]
+    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
+
+    [Cached]
+    private readonly KaraokeRulesetEditConfigManager editConfigManager;
+
+    [Cached]
+    private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
+
+    [Cached]
+    private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
+
+    [Cached]
+    private readonly KaraokeRulesetEditCheckerConfigManager checkerConfigManager;
+
+    [Cached]
+    private readonly FontManager fontManager;
+
+    [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+    private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
+    [Cached(typeof(ILyricsProvider))]
+    private readonly LyricsProvider lyricsProvider;
+
+    [Cached]
+    private readonly ExportLyricManager exportLyricManager;
+
+    [Cached(typeof(IImportBeatmapChangeHandler))]
+    private readonly ImportBeatmapChangeHandler importBeatmapChangeHandler;
+
+    [Cached]
+    private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
+
+    public KaraokeBeatmapEditor()
     {
-        [Cached]
-        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
+        editConfigManager = new KaraokeRulesetEditConfigManager();
+        lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
+        generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
+        checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
 
-        [Cached]
-        private readonly KaraokeRulesetEditConfigManager editConfigManager;
+        // Duplicated registration because selection handler need to use it.
+        AddInternal(fontManager = new FontManager());
+        AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
 
-        [Cached]
-        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
+        AddInternal(exportLyricManager = new ExportLyricManager());
+        AddInternal(lyricsProvider = new LyricsProvider());
 
-        [Cached]
-        private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
+        AddInternal(importBeatmapChangeHandler = new ImportBeatmapChangeHandler());
+    }
 
-        [Cached]
-        private readonly KaraokeRulesetEditCheckerConfigManager checkerConfigManager;
-
-        [Cached]
-        private readonly FontManager fontManager;
-
-        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
-        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
-
-        [Cached(typeof(ILyricsProvider))]
-        private readonly LyricsProvider lyricsProvider;
-
-        [Cached]
-        private readonly ExportLyricManager exportLyricManager;
-
-        [Cached(typeof(IImportBeatmapChangeHandler))]
-        private readonly ImportBeatmapChangeHandler importBeatmapChangeHandler;
-
-        [Cached]
-        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
-
-        public KaraokeBeatmapEditor()
+    protected override GenericEditorScreen<KaraokeBeatmapEditorScreenMode> GenerateScreen(KaraokeBeatmapEditorScreenMode screenMode) =>
+        screenMode switch
         {
-            editConfigManager = new KaraokeRulesetEditConfigManager();
-            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
-            generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
-            checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
+            KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
+            KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
+            KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
+            KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
+            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+        };
 
-            // Duplicated registration because selection handler need to use it.
-            AddInternal(fontManager = new FontManager());
-            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
-
-            AddInternal(exportLyricManager = new ExportLyricManager());
-            AddInternal(lyricsProvider = new LyricsProvider());
-
-            AddInternal(importBeatmapChangeHandler = new ImportBeatmapChangeHandler());
-        }
-
-        protected override GenericEditorScreen<KaraokeBeatmapEditorScreenMode> GenerateScreen(KaraokeBeatmapEditorScreenMode screenMode) =>
-            screenMode switch
-            {
-                KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
-                KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
-                KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
-                KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
-                _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
-            };
-
-        protected override MenuItem[] GenerateMenuItems(KaraokeBeatmapEditorScreenMode screenMode)
+    protected override MenuItem[] GenerateMenuItems(KaraokeBeatmapEditorScreenMode screenMode)
+    {
+        return screenMode switch
         {
-            return screenMode switch
+            KaraokeBeatmapEditorScreenMode.Lyric => new MenuItem[]
             {
-                KaraokeBeatmapEditorScreenMode.Lyric => new MenuItem[]
+                new("File")
                 {
-                    new("File")
+                    Items = new MenuItem[]
                     {
-                        Items = new MenuItem[]
-                        {
-                            new ImportLyricMenu(this, "Import from text", importBeatmapChangeHandler),
-                            new ImportLyricMenu(this, "Import from .lrc file", importBeatmapChangeHandler),
-                            new EditorMenuItemSpacer(),
-                            new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
-                            new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
-                            new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
-                            new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
-                        }
-                    },
-                    new LyricEditorModeMenu(bindableLyricEditorMode, "Mode"),
-                    new("View")
-                    {
-                        Items = new MenuItem[]
-                        {
-                            new LyricEditorPreferLayoutMenu(lyricEditorConfigManager, "Layout"),
-                            new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
-                            new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
-                        }
-                    },
-                    new("Config")
-                    {
-                        Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock") }
-                    },
-                    new("Tools") { Items = new MenuItem[] { new KaraokeSkinEditorMenu(this, null, "Skin editor") } },
+                        new ImportLyricMenu(this, "Import from text", importBeatmapChangeHandler),
+                        new ImportLyricMenu(this, "Import from .lrc file", importBeatmapChangeHandler),
+                        new EditorMenuItemSpacer(),
+                        new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
+                        new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
+                        new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
+                        new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
+                    }
                 },
-                _ => null
-            };
-        }
+                new LyricEditorModeMenu(bindableLyricEditorMode, "Mode"),
+                new("View")
+                {
+                    Items = new MenuItem[]
+                    {
+                        new LyricEditorPreferLayoutMenu(lyricEditorConfigManager, "Layout"),
+                        new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
+                        new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
+                    }
+                },
+                new("Config")
+                {
+                    Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock") }
+                },
+                new("Tools") { Items = new MenuItem[] { new KaraokeSkinEditorMenu(this, null, "Skin editor") } },
+            },
+            _ => null
+        };
     }
 }

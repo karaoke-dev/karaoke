@@ -12,55 +12,54 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
+
+public partial class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosition>
 {
-    public partial class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosition>
+    private const float triangle_width = 8;
+
+    [Resolved]
+    private OsuColour colours { get; set; }
+
+    [Resolved]
+    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+
+    private readonly DrawableTextIndex drawableTextIndex;
+
+    public DrawableTimeTagRecordCaret(DrawableCaretType type)
+        : base(type)
     {
-        private const float triangle_width = 8;
+        AutoSizeAxes = Axes.Both;
 
-        [Resolved]
-        private OsuColour colours { get; set; }
-
-        [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
-
-        private readonly DrawableTextIndex drawableTextIndex;
-
-        public DrawableTimeTagRecordCaret(DrawableCaretType type)
-            : base(type)
+        InternalChild = drawableTextIndex = new DrawableTextIndex
         {
-            AutoSizeAxes = Axes.Both;
+            Name = "Text index",
+            Size = new Vector2(triangle_width),
+            Alpha = GetAlpha(type),
+        };
+    }
 
-            InternalChild = drawableTextIndex = new DrawableTextIndex
+    protected override void Apply(TimeTagCaretPosition caret)
+    {
+        var timeTag = caret.TimeTag;
+        var textIndex = timeTag.Index;
+        this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), getMoveToDuration(Type), Easing.OutCubic);
+        Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
+
+        drawableTextIndex.State = textIndex.State;
+        drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+
+        static double getMoveToDuration(DrawableCaretType type) =>
+            type switch
             {
-                Name = "Text index",
-                Size = new Vector2(triangle_width),
-                Alpha = GetAlpha(type),
+                DrawableCaretType.Caret => 100,
+                DrawableCaretType.HoverCaret => 0,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
-        }
+    }
 
-        protected override void Apply(TimeTagCaretPosition caret)
-        {
-            var timeTag = caret.TimeTag;
-            var textIndex = timeTag.Index;
-            this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), getMoveToDuration(Type), Easing.OutCubic);
-            Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
-
-            drawableTextIndex.State = textIndex.State;
-            drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-
-            static double getMoveToDuration(DrawableCaretType type) =>
-                type switch
-                {
-                    DrawableCaretType.Caret => 100,
-                    DrawableCaretType.HoverCaret => 0,
-                    _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-                };
-        }
-
-        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
-        {
-            this.FlashColour(colours.Red, 200);
-        }
+    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    {
+        this.FlashColour(colours.Red, 200);
     }
 }

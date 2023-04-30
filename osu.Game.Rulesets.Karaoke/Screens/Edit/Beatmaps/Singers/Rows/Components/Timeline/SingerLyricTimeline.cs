@@ -14,65 +14,64 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline;
+
+[Cached]
+public partial class SingerLyricTimeline : EditableTimeline
 {
-    [Cached]
-    public partial class SingerLyricTimeline : EditableTimeline
+    private const float timeline_height = 38;
+
+    [Resolved, AllowNull]
+    private EditorBeatmap beatmap { get; set; }
+
+    public readonly Singer Singer;
+
+    public SingerLyricTimeline(Singer singer)
     {
-        private const float timeline_height = 38;
+        Singer = singer;
 
-        [Resolved, AllowNull]
-        private EditorBeatmap beatmap { get; set; }
+        RelativeSizeAxes = Axes.Both;
+    }
 
-        public readonly Singer Singer;
-
-        public SingerLyricTimeline(Singer singer)
+    [BackgroundDependencyLoader]
+    private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colours)
+    {
+        AddInternal(new Box
         {
-            Singer = singer;
+            Name = "Background",
+            Depth = 1,
+            RelativeSizeAxes = Axes.X,
+            Height = timeline_height,
+            Anchor = Anchor.CentreLeft,
+            Origin = Anchor.CentreLeft,
+            Colour = colours.Gray3,
+        });
 
-            RelativeSizeAxes = Axes.Both;
-        }
+        BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);
+        BindableCurrent.BindTo(scrollingInfoProvider.BindableCurrent);
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colours)
-        {
-            AddInternal(new Box
-            {
-                Name = "Background",
-                Depth = 1,
-                RelativeSizeAxes = Axes.X,
-                Height = timeline_height,
-                Anchor = Anchor.CentreLeft,
-                Origin = Anchor.CentreLeft,
-                Colour = colours.Gray3,
-            });
+    protected override Container CreateMainContainer()
+    {
+        return base.CreateMainContainer().With(c => c.Height = timeline_height);
+    }
 
-            BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);
-            BindableCurrent.BindTo(scrollingInfoProvider.BindableCurrent);
-        }
+    protected override IEnumerable<Drawable> CreateBlueprintContainer()
+    {
+        yield return new SingerLyricEditorBlueprintContainer();
+    }
 
-        protected override Container CreateMainContainer()
-        {
-            return base.CreateMainContainer().With(c => c.Height = timeline_height);
-        }
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
-        protected override IEnumerable<Drawable> CreateBlueprintContainer()
-        {
-            yield return new SingerLyricEditorBlueprintContainer();
-        }
+        const float preempt_time = 1000;
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
+        var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricStartTime > 0);
+        if (firstLyric == null)
+            return;
 
-            const float preempt_time = 1000;
-
-            var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricStartTime > 0);
-            if (firstLyric == null)
-                return;
-
-            float position = PositionAtTime(firstLyric.LyricStartTime - preempt_time);
-            ScrollTo(position, false);
-        }
+        float position = PositionAtTime(firstLyric.LyricStartTime - preempt_time);
+        ScrollTo(position, false);
     }
 }

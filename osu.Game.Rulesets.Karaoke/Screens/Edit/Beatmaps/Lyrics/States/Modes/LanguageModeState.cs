@@ -5,17 +5,16 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+
+public partial class LanguageModeState : Component, ILanguageModeState
 {
-    public partial class LanguageModeState : Component, ILanguageModeState
-    {
-        private readonly Bindable<LanguageEditMode> bindableEditMode = new();
+    private readonly Bindable<LanguageEditMode> bindableEditMode = new();
 
-        public Bindable<LanguageEditModeSpecialAction> BindableSpecialAction { get; } = new();
+    public Bindable<LanguageEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
-        public IBindable<LanguageEditMode> BindableEditMode => bindableEditMode;
+    public IBindable<LanguageEditMode> BindableEditMode => bindableEditMode;
 
-        public void ChangeEditMode(LanguageEditMode mode)
-            => bindableEditMode.Value = mode;
-    }
+    public void ChangeEditMode(LanguageEditMode mode)
+        => bindableEditMode.Value = mode;
 }

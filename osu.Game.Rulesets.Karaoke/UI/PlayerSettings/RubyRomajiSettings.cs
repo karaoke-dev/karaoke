@@ -8,35 +8,34 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+
+public partial class RubyRomajiSettings : PlayerSettingsGroup
 {
-    public partial class RubyRomajiSettings : PlayerSettingsGroup
+    private readonly PlayerCheckbox displayRubyCheckBox;
+    private readonly PlayerCheckbox displayRomajiCheckBox;
+
+    public RubyRomajiSettings()
+        : base("Ruby/Romaji")
     {
-        private readonly PlayerCheckbox displayRubyCheckBox;
-        private readonly PlayerCheckbox displayRomajiCheckBox;
-
-        public RubyRomajiSettings()
-            : base("Ruby/Romaji")
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            displayRubyCheckBox = new PlayerCheckbox
             {
-                displayRubyCheckBox = new PlayerCheckbox
-                {
-                    LabelText = "Display ruby"
-                },
-                displayRomajiCheckBox = new PlayerCheckbox
-                {
-                    LabelText = "Display romaji"
-                },
-            };
-        }
+                LabelText = "Display ruby"
+            },
+            displayRomajiCheckBox = new PlayerCheckbox
+            {
+                LabelText = "Display romaji"
+            },
+        };
+    }
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeSessionStatics session)
-        {
-            // Ruby/Romaji
-            displayRubyCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby);
-            displayRomajiCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji);
-        }
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSessionStatics session)
+    {
+        // Ruby/Romaji
+        displayRubyCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby);
+        displayRomajiCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji);
     }
 }

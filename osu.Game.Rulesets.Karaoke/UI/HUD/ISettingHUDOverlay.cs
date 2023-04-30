@@ -5,12 +5,11 @@
 
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
-{
-    public interface ISettingHUDOverlay
-    {
-        void AddSettingsGroup(PlayerSettingsGroup group);
+namespace osu.Game.Rulesets.Karaoke.UI.HUD;
 
-        void AddExtraOverlay(SettingOverlay overlay);
-    }
+public interface ISettingHUDOverlay
+{
+    void AddSettingsGroup(PlayerSettingsGroup group);
+
+    void AddExtraOverlay(SettingOverlay overlay);
 }

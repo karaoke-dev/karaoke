@@ -7,23 +7,22 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
+
+public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
 {
-    public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
+    public AlreadyContainTimeTagPopupDialog(Action<bool> okAction = null)
     {
-        public AlreadyContainTimeTagPopupDialog(Action<bool> okAction = null)
+        Icon = FontAwesome.Solid.Globe;
+        HeaderText = "Already contains time-tag.";
+        BodyText = "Seems this karaoke file already contains valid time-tag.";
+        Buttons = new PopupDialogButton[]
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Already contains time-tag.";
-            BodyText = "Seems this karaoke file already contains valid time-tag.";
-            Buttons = new PopupDialogButton[]
+            new PopupDialogOkButton
             {
-                new PopupDialogOkButton
-                {
-                    Text = @"OK",
-                    Action = () => okAction?.Invoke(true),
-                },
-            };
-        }
+                Text = @"OK",
+                Action = () => okAction?.Invoke(true),
+            },
+        };
     }
 }

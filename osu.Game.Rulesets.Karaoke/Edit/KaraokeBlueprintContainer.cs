@@ -11,23 +11,22 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit;
+
+public partial class KaraokeBlueprintContainer : ComposeBlueprintContainer
 {
-    public partial class KaraokeBlueprintContainer : ComposeBlueprintContainer
+    public KaraokeBlueprintContainer(HitObjectComposer composer)
+        : base(composer)
     {
-        public KaraokeBlueprintContainer(HitObjectComposer composer)
-            : base(composer)
-        {
-        }
-
-        public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject) =>
-            hitObject switch
-            {
-                Note note => new NoteSelectionBlueprint(note),
-                Lyric lyric => new LyricSelectionBlueprint(lyric),
-                _ => throw new ArgumentOutOfRangeException(nameof(hitObject))
-            };
-
-        protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();
     }
+
+    public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject) =>
+        hitObject switch
+        {
+            Note note => new NoteSelectionBlueprint(note),
+            Lyric lyric => new LyricSelectionBlueprint(lyric),
+            _ => throw new ArgumentOutOfRangeException(nameof(hitObject))
+        };
+
+    protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();
 }

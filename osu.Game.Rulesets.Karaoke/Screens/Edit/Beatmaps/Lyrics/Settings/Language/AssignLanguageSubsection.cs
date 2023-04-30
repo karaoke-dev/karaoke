@@ -14,56 +14,55 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
+
+public partial class AssignLanguageSubsection : SelectLyricButton, IHasPopover
 {
-    public partial class AssignLanguageSubsection : SelectLyricButton, IHasPopover
+    private readonly Bindable<CultureInfo> bindableLanguage = new();
+
+    [Resolved]
+    private ILyricLanguageChangeHandler lyricLanguageChangeHandler { get; set; }
+
+    public AssignLanguageSubsection()
     {
-        private readonly Bindable<CultureInfo> bindableLanguage = new();
-
-        [Resolved]
-        private ILyricLanguageChangeHandler lyricLanguageChangeHandler { get; set; }
-
-        public AssignLanguageSubsection()
+        bindableLanguage.BindValueChanged(e =>
         {
-            bindableLanguage.BindValueChanged(e =>
-            {
-                var language = e.NewValue;
-                if (language == null)
-                    return;
-
-                this.HidePopover();
-                StartSelectingLyrics();
-            });
-        }
-
-        protected override LocalisableString StandardText => "Change language";
-
-        protected override LocalisableString SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
-
-        protected override void Apply()
-        {
-            lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
-            bindableLanguage.Value = null;
-        }
-
-        protected override void Cancel()
-        {
-            bindableLanguage.Value = null;
-        }
-
-        protected override void StartSelectingLyrics()
-        {
-            // before start selecting, we should make sure that language has been assigned.
-            if (bindableLanguage.Value == null)
-            {
-                this.ShowPopover();
+            var language = e.NewValue;
+            if (language == null)
                 return;
-            }
 
-            base.StartSelectingLyrics();
+            this.HidePopover();
+            StartSelectingLyrics();
+        });
+    }
+
+    protected override LocalisableString StandardText => "Change language";
+
+    protected override LocalisableString SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
+
+    protected override void Apply()
+    {
+        lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
+        bindableLanguage.Value = null;
+    }
+
+    protected override void Cancel()
+    {
+        bindableLanguage.Value = null;
+    }
+
+    protected override void StartSelectingLyrics()
+    {
+        // before start selecting, we should make sure that language has been assigned.
+        if (bindableLanguage.Value == null)
+        {
+            this.ShowPopover();
+            return;
         }
 
-        public Popover GetPopover()
-            => new LanguageSelectorPopover(bindableLanguage);
+        base.StartSelectingLyrics();
     }
+
+    public Popover GetPopover()
+        => new LanguageSelectorPopover(bindableLanguage);
 }

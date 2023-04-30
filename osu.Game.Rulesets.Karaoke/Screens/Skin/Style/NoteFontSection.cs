@@ -10,31 +10,30 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
+
+internal partial class NoteFontSection : StyleSection
 {
-    internal partial class NoteFontSection : StyleSection
+    private LabelledColourSelector textColorPicker;
+    private LabelledSwitchButton boldSwitchButton;
+
+    protected override LocalisableString Title => "Font";
+
+    [BackgroundDependencyLoader]
+    private void load(SkinManager manager)
     {
-        private LabelledColourSelector textColorPicker;
-        private LabelledSwitchButton boldSwitchButton;
-
-        protected override LocalisableString Title => "Font";
-
-        [BackgroundDependencyLoader]
-        private void load(SkinManager manager)
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            textColorPicker = new LabelledColourSelector
             {
-                textColorPicker = new LabelledColourSelector
-                {
-                    Label = "Color",
-                    Description = "Select color.",
-                },
-                boldSwitchButton = new LabelledSwitchButton
-                {
-                    Label = "Bold",
-                    Description = "Select bold or not.",
-                }
-            };
-        }
+                Label = "Color",
+                Description = "Select color.",
+            },
+            boldSwitchButton = new LabelledSwitchButton
+            {
+                Label = "Bold",
+                Description = "Select bold or not.",
+            }
+        };
     }
 }

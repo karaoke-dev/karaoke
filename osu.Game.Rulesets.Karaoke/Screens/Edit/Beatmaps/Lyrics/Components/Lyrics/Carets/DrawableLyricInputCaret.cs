@@ -17,204 +17,203 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
+
+public partial class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
 {
-    public partial class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
+    private const float caret_move_time = 60;
+    private const float caret_width = 3;
+
+    [Resolved]
+    private OsuColour colours { get; set; }
+
+    [Resolved]
+    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+
+    private Box drawableCaret;
+    private InputCaretTextBox inputCaretTextBox;
+
+    private TypingCaretPosition? caretPosition;
+
+    public DrawableLyricInputCaret(DrawableCaretType type)
+        : base(type)
     {
-        private const float caret_move_time = 60;
-        private const float caret_width = 3;
+        Width = caret_width;
+    }
 
-        [Resolved]
-        private OsuColour colours { get; set; }
-
-        [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
-
-        private Box drawableCaret;
-        private InputCaretTextBox inputCaretTextBox;
-
-        private TypingCaretPosition? caretPosition;
-
-        public DrawableLyricInputCaret(DrawableCaretType type)
-            : base(type)
+    [BackgroundDependencyLoader]
+    private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
+    {
+        InternalChild = drawableCaret = new Box
         {
-            Width = caret_width;
-        }
+            RelativeSizeAxes = Axes.Both,
+            Colour = Color4.White,
+            Alpha = GetAlpha(Type)
+        };
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
+        if (Type == DrawableCaretType.Caret)
         {
-            InternalChild = drawableCaret = new Box
+            AddInternal(inputCaretTextBox = new InputCaretTextBox
             {
-                RelativeSizeAxes = Axes.Both,
-                Colour = Color4.White,
-                Alpha = GetAlpha(Type)
-            };
-
-            if (Type == DrawableCaretType.Caret)
-            {
-                AddInternal(inputCaretTextBox = new InputCaretTextBox
+                Anchor = Anchor.TopRight,
+                Origin = Anchor.TopLeft,
+                Width = 50,
+                Height = 20,
+                ReleaseFocusOnCommit = false,
+                NewCommitText = text =>
                 {
-                    Anchor = Anchor.TopRight,
-                    Origin = Anchor.TopLeft,
-                    Width = 50,
-                    Height = 20,
-                    ReleaseFocusOnCommit = false,
-                    NewCommitText = text =>
+                    if (lyricTextChangeHandler.IsSelectionsLocked())
                     {
-                        if (lyricTextChangeHandler.IsSelectionsLocked())
-                        {
-                            editableLyricState.TriggerDisallowEditEffect();
-                            return;
-                        }
-
-                        if (caretPosition == null)
-                            throw new ArgumentNullException(nameof(caretPosition));
-
-                        int index = caretPosition.Value.Index;
-                        lyricTextChangeHandler.InsertText(index, text);
-
-                        moveCaret(text.Length);
-                    },
-                    DeleteText = () =>
-                    {
-                        if (lyricTextChangeHandler.IsSelectionsLocked())
-                        {
-                            editableLyricState.TriggerDisallowEditEffect();
-                            return;
-                        }
-
-                        if (caretPosition == null)
-                            throw new ArgumentNullException(nameof(caretPosition));
-
-                        int index = caretPosition.Value.Index;
-                        if (index == 0)
-                            return;
-
-                        lyricTextChangeHandler.DeleteLyricText(index);
-
-                        moveCaret(-1);
+                        editableLyricState.TriggerDisallowEditEffect();
+                        return;
                     }
-                });
-            }
 
-            void moveCaret(int offset)
-            {
-                ArgumentNullException.ThrowIfNull(caretPosition);
+                    if (caretPosition == null)
+                        throw new ArgumentNullException(nameof(caretPosition));
 
-                // calculate new caret position.
-                var lyric = caretPosition.Value.Lyric;
-                int index = caretPosition.Value.Index + offset;
-                lyricCaretState.MoveCaretToTargetPosition(lyric, index);
-            }
-        }
+                    int index = caretPosition.Value.Index;
+                    lyricTextChangeHandler.InsertText(index, text);
 
-        public override void Hide() => this.FadeOut(200);
+                    moveCaret(text.Length);
+                },
+                DeleteText = () =>
+                {
+                    if (lyricTextChangeHandler.IsSelectionsLocked())
+                    {
+                        editableLyricState.TriggerDisallowEditEffect();
+                        return;
+                    }
 
-        protected override void Apply(TypingCaretPosition caret)
-        {
-            caretPosition = caret;
+                    if (caretPosition == null)
+                        throw new ArgumentNullException(nameof(caretPosition));
 
-            Height = karaokeSpriteText.LineBaseHeight;
-            var position = GetPosition(caret);
+                    int index = caretPosition.Value.Index;
+                    if (index == 0)
+                        return;
 
-            bool displayAnimation = Alpha > 0;
-            int time = displayAnimation ? 60 : 0;
+                    lyricTextChangeHandler.DeleteLyricText(index);
 
-            this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
-            this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
-
-            drawableCaret
-                .FadeColour(Color4.White, 200, Easing.Out)
-                .Loop(c => c.FadeTo(0.7f).FadeTo(0.4f, 500, Easing.InOutSine));
-
-            if (inputCaretTextBox == null)
-                return;
-
-            // should focus the caret if change the state.
-            Schedule(() =>
-            {
-                inputCaretTextBox.Text = string.Empty;
-                GetContainingInputManager().ChangeFocus(inputCaretTextBox);
+                    moveCaret(-1);
+                }
             });
         }
 
-        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        void moveCaret(int offset)
         {
-            this.FlashColour(colours.Red, 200);
+            ArgumentNullException.ThrowIfNull(caretPosition);
+
+            // calculate new caret position.
+            var lyric = caretPosition.Value.Lyric;
+            int index = caretPosition.Value.Index + offset;
+            lyricCaretState.MoveCaretToTargetPosition(lyric, index);
+        }
+    }
+
+    public override void Hide() => this.FadeOut(200);
+
+    protected override void Apply(TypingCaretPosition caret)
+    {
+        caretPosition = caret;
+
+        Height = karaokeSpriteText.LineBaseHeight;
+        var position = GetPosition(caret);
+
+        bool displayAnimation = Alpha > 0;
+        int time = displayAnimation ? 60 : 0;
+
+        this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
+        this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
+
+        drawableCaret
+            .FadeColour(Color4.White, 200, Easing.Out)
+            .Loop(c => c.FadeTo(0.7f).FadeTo(0.4f, 500, Easing.InOutSine));
+
+        if (inputCaretTextBox == null)
+            return;
+
+        // should focus the caret if change the state.
+        Schedule(() =>
+        {
+            inputCaretTextBox.Text = string.Empty;
+            GetContainingInputManager().ChangeFocus(inputCaretTextBox);
+        });
+    }
+
+    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    {
+        this.FlashColour(colours.Red, 200);
+    }
+
+    private partial class InputCaretTextBox : BasicTextBox
+    {
+        public Action<string> NewCommitText;
+
+        public Action DeleteText;
+
+        // should not accept tab event because all focus/unfocus should be controlled by caret.
+        public override bool CanBeTabbedTo => false;
+
+        // should not allow cursor index change because press left/right event is handled by parent caret.
+        protected override bool AllowWordNavigation => false;
+
+        public InputCaretTextBox()
+        {
+            OnCommit += (sender, newText) =>
+            {
+                if (!newText)
+                    return;
+
+                string text = sender.Text;
+
+                if (string.IsNullOrEmpty(text))
+                    return;
+
+                NewCommitText?.Invoke(text);
+
+                sender.Text = string.Empty;
+            };
         }
 
-        private partial class InputCaretTextBox : BasicTextBox
+        public override bool OnPressed(KeyBindingPressEvent<PlatformAction> e)
         {
-            public Action<string> NewCommitText;
+            bool triggerDeleteText = processTriggerDeleteText(e.Action);
+            bool triggerMoveTextCaretIndex = processTriggerMoveText(e.Action);
 
-            public Action DeleteText;
-
-            // should not accept tab event because all focus/unfocus should be controlled by caret.
-            public override bool CanBeTabbedTo => false;
-
-            // should not allow cursor index change because press left/right event is handled by parent caret.
-            protected override bool AllowWordNavigation => false;
-
-            public InputCaretTextBox()
+            // should trigger delete the main text in lyric if there's not pending text.
+            if (triggerDeleteText && string.IsNullOrEmpty(Text))
             {
-                OnCommit += (sender, newText) =>
+                DeleteText?.Invoke();
+                return true;
+            }
+
+            // should not block the move left/right event if there's on text in the text box.
+            if (triggerMoveTextCaretIndex && string.IsNullOrEmpty(Text))
+            {
+                return false;
+            }
+
+            return base.OnPressed(e);
+
+            static bool processTriggerDeleteText(PlatformAction action) =>
+                action switch
                 {
-                    if (!newText)
-                        return;
-
-                    string text = sender.Text;
-
-                    if (string.IsNullOrEmpty(text))
-                        return;
-
-                    NewCommitText?.Invoke(text);
-
-                    sender.Text = string.Empty;
+                    // Deletion
+                    PlatformAction.DeleteBackwardChar => true,
+                    _ => false
                 };
-            }
 
-            public override bool OnPressed(KeyBindingPressEvent<PlatformAction> e)
-            {
-                bool triggerDeleteText = processTriggerDeleteText(e.Action);
-                bool triggerMoveTextCaretIndex = processTriggerMoveText(e.Action);
-
-                // should trigger delete the main text in lyric if there's not pending text.
-                if (triggerDeleteText && string.IsNullOrEmpty(Text))
+            static bool processTriggerMoveText(PlatformAction action) =>
+                action switch
                 {
-                    DeleteText?.Invoke();
-                    return true;
-                }
-
-                // should not block the move left/right event if there's on text in the text box.
-                if (triggerMoveTextCaretIndex && string.IsNullOrEmpty(Text))
-                {
-                    return false;
-                }
-
-                return base.OnPressed(e);
-
-                static bool processTriggerDeleteText(PlatformAction action) =>
-                    action switch
-                    {
-                        // Deletion
-                        PlatformAction.DeleteBackwardChar => true,
-                        _ => false
-                    };
-
-                static bool processTriggerMoveText(PlatformAction action) =>
-                    action switch
-                    {
-                        // Move left/right actions.
-                        PlatformAction.MoveBackwardChar => true,
-                        PlatformAction.MoveForwardChar => true,
-                        PlatformAction.MoveBackwardWord => true,
-                        PlatformAction.MoveForwardWord => true,
-                        PlatformAction.MoveBackwardLine => true,
-                        PlatformAction.MoveForwardLine => true,
-                        _ => false
-                    };
-            }
+                    // Move left/right actions.
+                    PlatformAction.MoveBackwardChar => true,
+                    PlatformAction.MoveForwardChar => true,
+                    PlatformAction.MoveBackwardWord => true,
+                    PlatformAction.MoveForwardWord => true,
+                    PlatformAction.MoveBackwardLine => true,
+                    PlatformAction.MoveForwardLine => true,
+                    _ => false
+                };
         }
     }
 }

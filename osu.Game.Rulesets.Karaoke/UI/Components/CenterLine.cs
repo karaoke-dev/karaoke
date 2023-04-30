@@ -9,26 +9,25 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.UI.Components;
+
+public partial class CenterLine : Container
 {
-    public partial class CenterLine : Container
+    private readonly Box centerLineBox;
+
+    public CenterLine()
     {
-        private readonly Box centerLineBox;
+        RelativeSizeAxes = Axes.X;
 
-        public CenterLine()
+        Child = centerLineBox = new Box
         {
-            RelativeSizeAxes = Axes.X;
+            RelativeSizeAxes = Axes.Both,
+        };
+    }
 
-            Child = centerLineBox = new Box
-            {
-                RelativeSizeAxes = Axes.Both,
-            };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            centerLineBox.Colour = colours.Red;
-        }
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours)
+    {
+        centerLineBox.Colour = colours.Red;
     }
 }

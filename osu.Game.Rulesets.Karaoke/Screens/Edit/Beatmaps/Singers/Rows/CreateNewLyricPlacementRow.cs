@@ -12,37 +12,36 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
+
+public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
 {
-    public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
+    [Resolved]
+    private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
+
+    public CreateNewLyricPlacementColumn()
+        : base(new Singer(-1) { Name = "Press to create new singer" })
     {
-        [Resolved]
-        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
-
-        public CreateNewLyricPlacementColumn()
-            : base(new Singer(-1) { Name = "Press to create new singer" })
-        {
-        }
-
-        protected override Drawable CreateSingerInfo(Singer singer)
-        {
-            return new Container
-            {
-                Child = new IconButton
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Icon = FontAwesome.Solid.PlusCircle,
-                    Size = new Vector2(32),
-                    TooltipText = "Click to add new singer",
-                    Action = () =>
-                    {
-                        beatmapSingersChangeHandler.Add();
-                    }
-                }
-            };
-        }
-
-        protected override Drawable CreateTimeLinePart(Singer singer) => Empty();
     }
+
+    protected override Drawable CreateSingerInfo(Singer singer)
+    {
+        return new Container
+        {
+            Child = new IconButton
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Icon = FontAwesome.Solid.PlusCircle,
+                Size = new Vector2(32),
+                TooltipText = "Click to add new singer",
+                Action = () =>
+                {
+                    beatmapSingersChangeHandler.Add();
+                }
+            }
+        };
+    }
+
+    protected override Drawable CreateTimeLinePart(Singer singer) => Empty();
 }

@@ -17,147 +17,146 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit;
 using SharpCompress.Archives.Zip;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Export
+namespace osu.Game.Rulesets.Karaoke.Edit.Export;
+
+public partial class ExportLyricManager : Component
 {
-    public partial class ExportLyricManager : Component
+    [Resolved]
+    private Storage storage { get; set; }
+
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; }
+
+    public void ExportToLrc()
     {
-        [Resolved]
-        private Storage storage { get; set; }
+        var exportStorage = storage.GetStorageForDirectory("lrc");
+        string filename = $"{beatmap.Name}.lrc";
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
-        public void ExportToLrc()
+        using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
+        using (var sw = new StreamWriter(outputStream))
         {
-            var exportStorage = storage.GetStorageForDirectory("lrc");
-            string filename = $"{beatmap.Name}.lrc";
-
-            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
-            using (var sw = new StreamWriter(outputStream))
+            var encoder = new LrcEncoder();
+            sw.WriteLine(encoder.Encode(new Beatmap
             {
-                var encoder = new LrcEncoder();
-                sw.WriteLine(encoder.Encode(new Beatmap
-                {
-                    HitObjects = beatmap.HitObjects.ToList()
-                }));
-            }
-
-            exportStorage.PresentFileExternally(filename);
+                HitObjects = beatmap.HitObjects.ToList()
+            }));
         }
 
-        public void ExportToText()
+        exportStorage.PresentFileExternally(filename);
+    }
+
+    public void ExportToText()
+    {
+        var exportStorage = storage.GetStorageForDirectory("text");
+        string filename = $"{beatmap.Name}.txt";
+
+        using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
+        using (var sw = new StreamWriter(outputStream))
         {
-            var exportStorage = storage.GetStorageForDirectory("text");
-            string filename = $"{beatmap.Name}.txt";
-
-            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
-            using (var sw = new StreamWriter(outputStream))
+            var encoder = new LyricTextEncoder();
+            sw.WriteLine(encoder.Encode(new Beatmap
             {
-                var encoder = new LyricTextEncoder();
-                sw.WriteLine(encoder.Encode(new Beatmap
-                {
-                    HitObjects = beatmap.HitObjects.ToList()
-                }));
-            }
-
-            exportStorage.PresentFileExternally(filename);
+                HitObjects = beatmap.HitObjects.ToList()
+            }));
         }
 
-        public void ExportToJson()
+        exportStorage.PresentFileExternally(filename);
+    }
+
+    public void ExportToJson()
+    {
+        // note : this is for develop testing purpose.
+        // will be removed eventually
+        string beatmapName = string.IsNullOrEmpty(beatmap.Name) ? "[NoName]" : beatmap.Name;
+        var exportStorage = storage.GetStorageForDirectory("json");
+        string filename = $"{beatmapName}.json";
+
+        using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
+        using (var sw = new StreamWriter(outputStream))
         {
-            // note : this is for develop testing purpose.
-            // will be removed eventually
-            string beatmapName = string.IsNullOrEmpty(beatmap.Name) ? "[NoName]" : beatmap.Name;
-            var exportStorage = storage.GetStorageForDirectory("json");
-            string filename = $"{beatmapName}.json";
-
-            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
-            using (var sw = new StreamWriter(outputStream))
-            {
-                sw.WriteLine(generateJsonBeatmap());
-            }
-
-            exportStorage.PresentFileExternally(filename);
+            sw.WriteLine(generateJsonBeatmap());
         }
 
-        public void ExportToJsonBeatmap()
-        {
-            // note : this is for develop testing purpose.
-            // will be removed eventually
-            string beatmapName = string.IsNullOrEmpty(beatmap.Name) ? "[NoName]" : beatmap.Name;
-            string filename = $"{beatmapName}.osu";
-            string beatmapText = generateJsonBeatmap();
+        exportStorage.PresentFileExternally(filename);
+    }
 
-            new KaraokeLegacyBeatmapExporter(storage, filename, beatmapText).Export(beatmap.BeatmapInfo.BeatmapSet);
+    public void ExportToJsonBeatmap()
+    {
+        // note : this is for develop testing purpose.
+        // will be removed eventually
+        string beatmapName = string.IsNullOrEmpty(beatmap.Name) ? "[NoName]" : beatmap.Name;
+        string filename = $"{beatmapName}.osu";
+        string beatmapText = generateJsonBeatmap();
+
+        new KaraokeLegacyBeatmapExporter(storage, filename, beatmapText).Export(beatmap.BeatmapInfo.BeatmapSet);
+    }
+
+    private string generateJsonBeatmap()
+    {
+        var encoder = new KaraokeJsonBeatmapEncoder();
+        var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
+
+        var encodeBeatmap = new Beatmap
+        {
+            Difficulty = karaokeBeatmap.Difficulty.Clone(),
+            BeatmapInfo = karaokeBeatmap.BeatmapInfo.Clone(),
+            ControlPointInfo = karaokeBeatmap.ControlPointInfo.DeepClone(),
+            Breaks = karaokeBeatmap.Breaks,
+            HitObjects = beatmap.HitObjects.ToList(),
+        };
+        encodeBeatmap.BeatmapInfo.BeatmapSet = new BeatmapSetInfo();
+        encodeBeatmap.BeatmapInfo.Metadata = new BeatmapMetadata
+        {
+            Title = "json beatmap",
+            AudioFile = karaokeBeatmap.Metadata.AudioFile,
+            BackgroundFile = karaokeBeatmap.Metadata.BackgroundFile,
+        };
+
+        return encoder.Encode(encodeBeatmap);
+    }
+
+    private class KaraokeLegacyBeatmapExporter : LegacyBeatmapExporter
+    {
+        private readonly string filename;
+        private readonly string content;
+
+        public KaraokeLegacyBeatmapExporter(Storage storage, string filename, string content)
+            : base(storage)
+        {
+            this.filename = filename;
+            this.content = content;
         }
 
-        private string generateJsonBeatmap()
+        public override void ExportModelTo(BeatmapSetInfo model, Stream outputStream)
         {
-            var encoder = new KaraokeJsonBeatmapEncoder();
-            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
+            // base.ExportModelTo(model, outputStream);
+            using var zipArchive = ZipArchive.Create();
 
-            var encodeBeatmap = new Beatmap
+            foreach (INamedFileUsage file in model.Files)
             {
-                Difficulty = karaokeBeatmap.Difficulty.Clone(),
-                BeatmapInfo = karaokeBeatmap.BeatmapInfo.Clone(),
-                ControlPointInfo = karaokeBeatmap.ControlPointInfo.DeepClone(),
-                Breaks = karaokeBeatmap.Breaks,
-                HitObjects = beatmap.HitObjects.ToList(),
-            };
-            encodeBeatmap.BeatmapInfo.BeatmapSet = new BeatmapSetInfo();
-            encodeBeatmap.BeatmapInfo.Metadata = new BeatmapMetadata
-            {
-                Title = "json beatmap",
-                AudioFile = karaokeBeatmap.Metadata.AudioFile,
-                BackgroundFile = karaokeBeatmap.Metadata.BackgroundFile,
-            };
+                // do not export other osu beatmap.
+                if (file.Filename.EndsWith(".osu", StringComparison.Ordinal))
+                    continue;
 
-            return encoder.Encode(encodeBeatmap);
+                zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()));
+            }
+
+            // add the json file.
+            using var jsonBeatmapStream = getJsonBeatmapStream();
+            zipArchive.AddEntry(filename, jsonBeatmapStream);
+            zipArchive.SaveTo(outputStream);
         }
 
-        private class KaraokeLegacyBeatmapExporter : LegacyBeatmapExporter
+        private Stream getJsonBeatmapStream()
         {
-            private readonly string filename;
-            private readonly string content;
+            var memoryStream = new MemoryStream();
+            var sw = new StreamWriter(memoryStream);
 
-            public KaraokeLegacyBeatmapExporter(Storage storage, string filename, string content)
-                : base(storage)
-            {
-                this.filename = filename;
-                this.content = content;
-            }
+            sw.WriteLine(content);
+            sw.Flush();
 
-            public override void ExportModelTo(BeatmapSetInfo model, Stream outputStream)
-            {
-                // base.ExportModelTo(model, outputStream);
-                using var zipArchive = ZipArchive.Create();
-
-                foreach (INamedFileUsage file in model.Files)
-                {
-                    // do not export other osu beatmap.
-                    if (file.Filename.EndsWith(".osu", StringComparison.Ordinal))
-                        continue;
-
-                    zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()));
-                }
-
-                // add the json file.
-                using var jsonBeatmapStream = getJsonBeatmapStream();
-                zipArchive.AddEntry(filename, jsonBeatmapStream);
-                zipArchive.SaveTo(outputStream);
-            }
-
-            private Stream getJsonBeatmapStream()
-            {
-                var memoryStream = new MemoryStream();
-                var sw = new StreamWriter(memoryStream);
-
-                sw.WriteLine(content);
-                sw.Flush();
-
-                memoryStream.Position = 0;
-                return memoryStream;
-            }
+            memoryStream.Position = 0;
+            return memoryStream;
         }
     }
 }

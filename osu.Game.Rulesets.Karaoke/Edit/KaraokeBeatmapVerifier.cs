@@ -7,30 +7,29 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
-{
-    public class KaraokeBeatmapVerifier : IBeatmapVerifier
-    {
-        private readonly List<ICheck> checks = new()
-        {
-            new CheckBeatmapAvailableTranslates(),
-            new CheckBeatmapClassicStageInfo(),
-            new CheckBeatmapNoteInfo(),
-            new CheckBeatmapPageInfo(),
-            new CheckLyricLanguage(),
-            new CheckLyricReferenceLyric(),
-            new CheckLyricRomajiTag(),
-            new CheckLyricRubyTag(),
-            new CheckLyricSinger(),
-            new CheckLyricText(),
-            new CheckLyricTime(),
-            new CheckLyricTimeTag(),
-            new CheckLyricTranslate(),
-            new CheckNoteReferenceLyric(),
-            new CheckNoteText(),
-            new CheckNoteTime(),
-        };
+namespace osu.Game.Rulesets.Karaoke.Edit;
 
-        public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
-    }
+public class KaraokeBeatmapVerifier : IBeatmapVerifier
+{
+    private readonly List<ICheck> checks = new()
+    {
+        new CheckBeatmapAvailableTranslates(),
+        new CheckBeatmapClassicStageInfo(),
+        new CheckBeatmapNoteInfo(),
+        new CheckBeatmapPageInfo(),
+        new CheckLyricLanguage(),
+        new CheckLyricReferenceLyric(),
+        new CheckLyricRomajiTag(),
+        new CheckLyricRubyTag(),
+        new CheckLyricSinger(),
+        new CheckLyricText(),
+        new CheckLyricTime(),
+        new CheckLyricTimeTag(),
+        new CheckLyricTranslate(),
+        new CheckNoteReferenceLyric(),
+        new CheckNoteText(),
+        new CheckNoteTime(),
+    };
+
+    public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
 }

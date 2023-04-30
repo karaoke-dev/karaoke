@@ -14,162 +14,161 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference;
+
+public partial class ReferenceLyricConfigSection : LyricPropertySection
 {
-    public partial class ReferenceLyricConfigSection : LyricPropertySection
+    private const string sync = "sync";
+    private const string reference = "reference";
+
+    protected override LocalisableString Title => "Config";
+
+    [Resolved, AllowNull]
+    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
+
+    private readonly IBindable<IReferenceLyricPropertyConfig?> bindableReferenceLyricPropertyConfig = new Bindable<IReferenceLyricPropertyConfig?>();
+
+    private readonly LabelledDropdown<string> labelledReferenceLyricConfig;
+    private readonly LabelledSwitchButton labelledSyncEverything;
+    private readonly LabelledSwitchButton labelledSyncSinger;
+    private readonly LabelledSwitchButton labelledSyncTimeTag;
+
+    private bool isConfigChanging;
+
+    public ReferenceLyricConfigSection()
     {
-        private const string sync = "sync";
-        private const string reference = "reference";
-
-        protected override LocalisableString Title => "Config";
-
-        [Resolved, AllowNull]
-        private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
-
-        private readonly IBindable<IReferenceLyricPropertyConfig?> bindableReferenceLyricPropertyConfig = new Bindable<IReferenceLyricPropertyConfig?>();
-
-        private readonly LabelledDropdown<string> labelledReferenceLyricConfig;
-        private readonly LabelledSwitchButton labelledSyncEverything;
-        private readonly LabelledSwitchButton labelledSyncSinger;
-        private readonly LabelledSwitchButton labelledSyncTimeTag;
-
-        private bool isConfigChanging;
-
-        public ReferenceLyricConfigSection()
+        Children = new Drawable[]
         {
-            Children = new Drawable[]
+            labelledReferenceLyricConfig = new LabelledDropdown<string>
             {
-                labelledReferenceLyricConfig = new LabelledDropdown<string>
+                Label = "Config",
+                Description = "Select the similar lyric that want to reference or sync the property.",
+                Items = new[]
                 {
-                    Label = "Config",
-                    Description = "Select the similar lyric that want to reference or sync the property.",
-                    Items = new[]
-                    {
-                        sync,
-                        reference
-                    }
-                },
-                labelledSyncEverything = new LabelledSwitchButton
-                {
-                    Label = "Sync",
-                    Description = "Sync most property.",
-                    Current =
-                    {
-                        Value = true,
-                        Disabled = true
-                    }
-                },
-                labelledSyncSinger = new LabelledSwitchButton
-                {
-                    Label = "Sync singer.",
-                    Description = "Un-select the selection if want to customize the singer.",
-                },
-                labelledSyncTimeTag = new LabelledSwitchButton
-                {
-                    Label = "Sync time-tags.",
-                    Description = "Un-select the selection if want to customize the time-tag.",
+                    sync,
+                    reference
                 }
-            };
-
-            bindableReferenceLyricPropertyConfig.BindValueChanged(e =>
+            },
+            labelledSyncEverything = new LabelledSwitchButton
             {
-                onConfigChanged();
-            }, true);
-
-            labelledReferenceLyricConfig.Current.BindValueChanged(x =>
-            {
-                if (IsRebinding || isConfigChanging)
-                    return;
-
-                switch (x.NewValue)
+                Label = "Sync",
+                Description = "Sync most property.",
+                Current =
                 {
-                    case sync:
-                        lyricReferenceChangeHandler.SwitchToSyncLyricConfig();
-                        break;
-
-                    case reference:
-                        lyricReferenceChangeHandler.SwitchToReferenceLyricConfig();
-                        break;
-
-                    default:
-                        throw new InvalidOperationException();
+                    Value = true,
+                    Disabled = true
                 }
-            });
-
-            labelledSyncSinger.Current.BindValueChanged(x =>
+            },
+            labelledSyncSinger = new LabelledSwitchButton
             {
-                if (!IsRebinding && !isConfigChanging)
-                    lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncSingerProperty = x.NewValue);
-            });
-
-            labelledSyncTimeTag.Current.BindValueChanged(x =>
+                Label = "Sync singer.",
+                Description = "Un-select the selection if want to customize the singer.",
+            },
+            labelledSyncTimeTag = new LabelledSwitchButton
             {
-                if (!IsRebinding && !isConfigChanging)
-                    lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncTimeTagProperty = x.NewValue);
-            });
-        }
+                Label = "Sync time-tags.",
+                Description = "Un-select the selection if want to customize the time-tag.",
+            }
+        };
 
-        protected override void OnLyricChanged(Lyric? lyric)
+        bindableReferenceLyricPropertyConfig.BindValueChanged(e =>
         {
-            bindableReferenceLyricPropertyConfig.UnbindBindings();
+            onConfigChanged();
+        }, true);
 
-            if (lyric != null)
-                bindableReferenceLyricPropertyConfig.BindTo(lyric.ReferenceLyricConfigBindable);
-        }
-
-        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
-            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
-
-        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                // technically the property is always editable.
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
-
-        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
-            lockLyricPropertyBy switch
-            {
-                // technically the property is always editable.
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
-            };
-
-        private void onConfigChanged()
+        labelledReferenceLyricConfig.Current.BindValueChanged(x =>
         {
-            isConfigChanging = true;
+            if (IsRebinding || isConfigChanging)
+                return;
 
-            Children.ForEach(x => x.Hide());
-            Show();
-
-            var config = bindableReferenceLyricPropertyConfig.Value;
-
-            switch (config)
+            switch (x.NewValue)
             {
-                case ReferenceLyricConfig:
-                    labelledReferenceLyricConfig.Current.Value = reference;
-                    labelledReferenceLyricConfig.Show();
+                case sync:
+                    lyricReferenceChangeHandler.SwitchToSyncLyricConfig();
                     break;
 
-                case SyncLyricConfig syncLyricConfig:
-                    labelledReferenceLyricConfig.Current.Value = sync;
-                    labelledSyncSinger.Current = syncLyricConfig.SyncSingerPropertyBindable;
-                    labelledSyncTimeTag.Current = syncLyricConfig.SyncTimeTagPropertyBindable;
-
-                    labelledReferenceLyricConfig.Show();
-                    labelledSyncEverything.Show();
-                    labelledSyncSinger.Show();
-                    labelledSyncTimeTag.Show();
-                    break;
-
-                case null:
-                    Hide();
+                case reference:
+                    lyricReferenceChangeHandler.SwitchToReferenceLyricConfig();
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(config), config, "unknown config.");
+                    throw new InvalidOperationException();
             }
+        });
 
-            isConfigChanging = false;
+        labelledSyncSinger.Current.BindValueChanged(x =>
+        {
+            if (!IsRebinding && !isConfigChanging)
+                lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncSingerProperty = x.NewValue);
+        });
+
+        labelledSyncTimeTag.Current.BindValueChanged(x =>
+        {
+            if (!IsRebinding && !isConfigChanging)
+                lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncTimeTagProperty = x.NewValue);
+        });
+    }
+
+    protected override void OnLyricChanged(Lyric? lyric)
+    {
+        bindableReferenceLyricPropertyConfig.UnbindBindings();
+
+        if (lyric != null)
+            bindableReferenceLyricPropertyConfig.BindTo(lyric.ReferenceLyricConfigBindable);
+    }
+
+    protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+        => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
+
+    protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            // technically the property is always editable.
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
+
+    protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+        lockLyricPropertyBy switch
+        {
+            // technically the property is always editable.
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+        };
+
+    private void onConfigChanged()
+    {
+        isConfigChanging = true;
+
+        Children.ForEach(x => x.Hide());
+        Show();
+
+        var config = bindableReferenceLyricPropertyConfig.Value;
+
+        switch (config)
+        {
+            case ReferenceLyricConfig:
+                labelledReferenceLyricConfig.Current.Value = reference;
+                labelledReferenceLyricConfig.Show();
+                break;
+
+            case SyncLyricConfig syncLyricConfig:
+                labelledReferenceLyricConfig.Current.Value = sync;
+                labelledSyncSinger.Current = syncLyricConfig.SyncSingerPropertyBindable;
+                labelledSyncTimeTag.Current = syncLyricConfig.SyncTimeTagPropertyBindable;
+
+                labelledReferenceLyricConfig.Show();
+                labelledSyncEverything.Show();
+                labelledSyncSinger.Show();
+                labelledSyncTimeTag.Show();
+                break;
+
+            case null:
+                Hide();
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException(nameof(config), config, "unknown config.");
         }
+
+        isConfigChanging = false;
     }
 }

@@ -9,39 +9,38 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
+
+public partial class LanguageSettings : LyricEditorSettings
 {
-    public partial class LanguageSettings : LyricEditorSettings
+    public override SettingsDirection Direction => SettingsDirection.Right;
+
+    public override float SettingsWidth => 300;
+
+    private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
+
+    [BackgroundDependencyLoader]
+    private void load(ILanguageModeState languageModeState)
     {
-        public override SettingsDirection Direction => SettingsDirection.Right;
-
-        public override float SettingsWidth => 300;
-
-        private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
-
-        [BackgroundDependencyLoader]
-        private void load(ILanguageModeState languageModeState)
+        bindableMode.BindTo(languageModeState.BindableEditMode);
+        bindableMode.BindValueChanged(e =>
         {
-            bindableMode.BindTo(languageModeState.BindableEditMode);
-            bindableMode.BindValueChanged(e =>
-            {
-                ReloadSections();
-            }, true);
-        }
-
-        protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
-        {
-            LanguageEditMode.Generate => new Drawable[]
-            {
-                new LanguageEditModeSection(),
-                new LanguageSwitchSpecialActionSection(),
-            },
-            LanguageEditMode.Verify => new Drawable[]
-            {
-                new LanguageEditModeSection(),
-                new LanguageIssueSection(),
-            },
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            ReloadSections();
+        }, true);
     }
+
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    {
+        LanguageEditMode.Generate => new Drawable[]
+        {
+            new LanguageEditModeSection(),
+            new LanguageSwitchSpecialActionSection(),
+        },
+        LanguageEditMode.Verify => new Drawable[]
+        {
+            new LanguageEditModeSection(),
+            new LanguageIssueSection(),
+        },
+        _ => throw new ArgumentOutOfRangeException()
+    };
 }

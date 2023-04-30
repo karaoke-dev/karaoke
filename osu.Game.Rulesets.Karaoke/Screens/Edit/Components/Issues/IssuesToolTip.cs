@@ -12,54 +12,53 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
+
+public partial class IssuesToolTip : BackgroundToolTip<Issue[]>
 {
-    public partial class IssuesToolTip : BackgroundToolTip<Issue[]>
+    private readonly MessageContainer invalidMessage;
+
+    public IssuesToolTip()
     {
-        private readonly MessageContainer invalidMessage;
-
-        public IssuesToolTip()
+        Child = invalidMessage = new MessageContainer(s => s.Font = s.Font.With(size: 14))
         {
-            Child = invalidMessage = new MessageContainer(s => s.Font = s.Font.With(size: 14))
-            {
-                Width = 300,
-                AutoSizeAxes = Axes.Y,
-                Colour = Color4.White.Opacity(0.75f),
-                Spacing = new Vector2(0, 5),
-                Name = "Invalid message",
-            };
-        }
+            Width = 300,
+            AutoSizeAxes = Axes.Y,
+            Colour = Color4.White.Opacity(0.75f),
+            Spacing = new Vector2(0, 5),
+            Name = "Invalid message",
+        };
+    }
 
-        private Issue[] lastIssues;
+    private Issue[] lastIssues;
 
-        public override void SetContent(Issue[] issues)
+    public override void SetContent(Issue[] issues)
+    {
+        if (issues == lastIssues)
+            return;
+
+        lastIssues = issues;
+
+        // clear exist warning.
+        invalidMessage.Clear();
+
+        foreach (var issue in issues)
         {
-            if (issues == lastIssues)
-                return;
-
-            lastIssues = issues;
-
-            // clear exist warning.
-            invalidMessage.Clear();
-
-            foreach (var issue in issues)
+            switch (issue)
             {
-                switch (issue)
-                {
-                    // print normal message
-                    case Issue:
-                        invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
-                        break;
+                // print normal message
+                case Issue:
+                    invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
+                    break;
 
-                    // Should throw exception because every issue message should be printed.
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(issue));
-                }
+                // Should throw exception because every issue message should be printed.
+                default:
+                    throw new InvalidEnumArgumentException(nameof(issue));
             }
-
-            // show no problem message
-            if (issues.Length == 0)
-                invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
         }
+
+        // show no problem message
+        if (issues.Length == 0)
+            invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
     }
 }

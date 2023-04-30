@@ -9,83 +9,82 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algor
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Configuration
+namespace osu.Game.Rulesets.Karaoke.Configuration;
+
+public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<KaraokeRulesetLyricEditorSetting>
 {
-    public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<KaraokeRulesetLyricEditorSetting>
+    protected override void InitialiseDefaults()
     {
-        protected override void InitialiseDefaults()
-        {
-            base.InitialiseDefaults();
+        base.InitialiseDefaults();
 
-            // General
-            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.Preview);
-            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, FontUtils.DEFAULT_FONT_SIZE);
-            SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
-            SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
-
-            // Composer
-            SetDefault(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
-
-            // Create time-tag.
-            SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
-            SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
-
-            // Recording
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, 0.5f, 0, 1, 0.01f);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity, 0.5f, 0, 1, 0.01f);
-
-            // Adjust
-            SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowWaveform, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagWaveformOpacity, 0.5f, 0, 1, 0.01f);
-            SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowTick, true);
-            SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagTickOpacity, 0.5f, 0, 1, 0.01f);
-        }
-
-        /// <summary>
-        /// Binds a local bindable with a configuration-backed bindable.
-        /// </summary>
-        public void BindWith<TValue>(KaraokeRulesetLyricEditorSetting lookup, IBindable<TValue> bindable) => bindable.BindTo(GetOriginalBindable<TValue>(lookup));
-    }
-
-    public enum KaraokeRulesetLyricEditorSetting
-    {
         // General
-        LyricEditorPreferLayout,
-        LyricEditorFontSize,
-        AutoFocusToEditLyric,
-        AutoFocusToEditLyricSkipRows,
-        ClickToLockLyricState,
+        SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.Preview);
+        SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, FontUtils.DEFAULT_FONT_SIZE);
+        SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
+        SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
 
         // Composer
-        ShowPropertyPanelInComposer,
-        ShowInvalidInfoInComposer,
-        FontSizeInComposer,
+        SetDefault(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
         // Create time-tag.
-        CreateTimeTagEditMode,
-        CreateTimeTagMovingCaretMode,
+        SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
+        SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
 
         // Recording
-        RecordingTimeTagMovingCaretMode,
-        RecordingAutoMoveToNextTimeTag,
-        RecordingChangeTimeWhileMovingTheCaret,
-        RecordingTimeTagShowWaveform,
-        RecordingTimeTagWaveformOpacity,
-        RecordingTimeTagShowTick,
-        RecordingTimeTagTickOpacity,
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, 0.5f, 0, 1, 0.01f);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity, 0.5f, 0, 1, 0.01f);
 
         // Adjust
-        AdjustTimeTagShowWaveform,
-        AdjustTimeTagWaveformOpacity,
-        AdjustTimeTagShowTick,
-        AdjustTimeTagTickOpacity,
+        SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowWaveform, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagWaveformOpacity, 0.5f, 0, 1, 0.01f);
+        SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowTick, true);
+        SetDefault(KaraokeRulesetLyricEditorSetting.AdjustTimeTagTickOpacity, 0.5f, 0, 1, 0.01f);
     }
+
+    /// <summary>
+    /// Binds a local bindable with a configuration-backed bindable.
+    /// </summary>
+    public void BindWith<TValue>(KaraokeRulesetLyricEditorSetting lookup, IBindable<TValue> bindable) => bindable.BindTo(GetOriginalBindable<TValue>(lookup));
+}
+
+public enum KaraokeRulesetLyricEditorSetting
+{
+    // General
+    LyricEditorPreferLayout,
+    LyricEditorFontSize,
+    AutoFocusToEditLyric,
+    AutoFocusToEditLyricSkipRows,
+    ClickToLockLyricState,
+
+    // Composer
+    ShowPropertyPanelInComposer,
+    ShowInvalidInfoInComposer,
+    FontSizeInComposer,
+
+    // Create time-tag.
+    CreateTimeTagEditMode,
+    CreateTimeTagMovingCaretMode,
+
+    // Recording
+    RecordingTimeTagMovingCaretMode,
+    RecordingAutoMoveToNextTimeTag,
+    RecordingChangeTimeWhileMovingTheCaret,
+    RecordingTimeTagShowWaveform,
+    RecordingTimeTagWaveformOpacity,
+    RecordingTimeTagShowTick,
+    RecordingTimeTagTickOpacity,
+
+    // Adjust
+    AdjustTimeTagShowWaveform,
+    AdjustTimeTagWaveformOpacity,
+    AdjustTimeTagShowTick,
+    AdjustTimeTagTickOpacity,
 }

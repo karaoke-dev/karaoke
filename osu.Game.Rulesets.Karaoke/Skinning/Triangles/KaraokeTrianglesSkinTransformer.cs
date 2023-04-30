@@ -5,13 +5,12 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Triangles
+namespace osu.Game.Rulesets.Karaoke.Skinning.Triangles;
+
+public class KaraokeTrianglesSkinTransformer : KaraokeDefaultSkinTransformer
 {
-    public class KaraokeTrianglesSkinTransformer : KaraokeDefaultSkinTransformer
+    public KaraokeTrianglesSkinTransformer(ISkin skin, IBeatmap beatmap)
+        : base(skin, beatmap)
     {
-        public KaraokeTrianglesSkinTransformer(ISkin skin, IBeatmap beatmap)
-            : base(skin, beatmap)
-        {
-        }
     }
 }
