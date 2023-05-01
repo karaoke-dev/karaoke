@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -23,15 +24,16 @@ public class LyricUtilsTest
     [TestCase("", 0, 0, "")]
     public void TestRemoveText(string text, int position, int count, string? expected)
     {
+        var lyric = new Lyric { Text = text };
+
         if (expected != null)
         {
-            var lyric = new Lyric { Text = text };
             LyricUtils.RemoveText(lyric, position, count);
             Assert.AreEqual(expected, lyric.Text);
         }
         else
         {
-            Assert.IsNull(expected);
+            Assert.Catch(() => LyricUtils.RemoveText(lyric, position, count));
         }
     }
 

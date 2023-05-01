@@ -32,8 +32,7 @@ public class LyricsUtilsTest
         }
         else
         {
-            Assert.IsNull(expectedFirstText);
-            Assert.IsNull(expectedSecondText);
+            Assert.Catch(() => LyricsUtils.SplitLyric(lyric, splitIndex));
         }
     }
 
