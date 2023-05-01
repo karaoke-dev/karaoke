@@ -25,20 +25,20 @@ public class TimeTagsUtilsTest
     [TestCase("[1,start]:", null, 2, null)] // should not be null.
     public void GenerateTimeTag(string startTag, string? endTag, int index, string? result)
     {
+        var startTimeTag = TestCaseTagHelper.ParseTimeTag(startTag);
+        var endTimeTag = TestCaseTagHelper.ParseTimeTag(endTag);
+
         if (result != null)
         {
             var expectedTimeTag = TestCaseTagHelper.ParseTimeTag(result);
-            var actualTimeTag = TimeTagsUtils.GenerateCenterTimeTag(
-                TestCaseTagHelper.ParseTimeTag(startTag),
-                TestCaseTagHelper.ParseTimeTag(endTag),
-                index);
+            var actualTimeTag = TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index);
 
             Assert.AreEqual(expectedTimeTag.Index, actualTimeTag.Index);
             Assert.AreEqual(expectedTimeTag.Time, actualTimeTag.Time);
         }
         else
         {
-            Assert.IsNull(result);
+            Assert.Catch(() => TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index));
         }
     }
 

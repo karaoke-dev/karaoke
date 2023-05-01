@@ -39,8 +39,7 @@ public class NotesUtilsTest
         }
         else
         {
-            Assert.IsNull(firstTime);
-            Assert.IsNull(secondTime);
+            Assert.Catch(() => NotesUtils.SplitNote(note, percentage));
         }
     }
 
