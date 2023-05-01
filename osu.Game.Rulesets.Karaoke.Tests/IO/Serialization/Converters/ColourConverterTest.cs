@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
@@ -27,17 +28,17 @@ public class ColourConverterTest : BaseSingleConverterTest<ColourConverter>
     [TestCase("#AAAAAAAA", "#AAAAAAAA")]
     [TestCase("", null)] // should throw exception
     [TestCase(null, null)] // should throw exception
-    public void TestDeserialize(string? json, string hex)
+    public void TestDeserialize(string? json, string? hex)
     {
-        try
+        if (hex != null)
         {
             var expected = Color4Extensions.FromHex(hex);
             var actual = JsonConvert.DeserializeObject<Color4>($"\"{json}\"", CreateSettings());
             Assert.AreEqual(expected, actual);
         }
-        catch
+        else
         {
-            Assert.IsNull(hex);
+            Assert.Catch(() => JsonConvert.DeserializeObject<Color4>($"\"{json}\"", CreateSettings()));
         }
     }
 }
