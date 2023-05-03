@@ -24,11 +24,8 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo;
 
-public partial class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>, IHasPopover
+public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasPopover
 {
-    // todo : might able to have auto-fix option by right-click
-    public MenuItem[] ContextMenuItems => Array.Empty<MenuItem>();
-
     private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
     private readonly Lyric lyric;
 
