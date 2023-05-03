@@ -22,7 +22,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     [TestCase(nameof(singleLyric), 0, 4, false)]
     [TestCase(nameof(singleLyric), 0, 5, false)]
     [TestCase(nameof(singleLyric), 0, -1, false)]
-    [TestCase(nameof(singleLyricWithNoText), 0, 0, true)] // It's not able to cut if no lyric text.
+    [TestCase(nameof(singleLyricWithNoText), 0, 0, false)] // It's not able to cut if no lyric text.
     [TestCase(nameof(singleLyricWithNoText), 0, 1, false)]
     [TestCase(nameof(singleLyricWithNoText), 0, -1, false)]
     public void TestPositionMovable(string sourceName, int lyricIndex, int index, bool movable)
