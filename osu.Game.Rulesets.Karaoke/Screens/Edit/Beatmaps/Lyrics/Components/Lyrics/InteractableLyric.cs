@@ -97,9 +97,10 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
                 lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
                 break;
 
-            case TimeTagIndexCaretPosition:
-                var textIndex = karaokeSpriteText.GetHoverIndex(position);
-                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, textIndex);
+            case CharIndexCaretPosition:
+                int? charIndex = karaokeSpriteText.GetCharIndexByPosition(position);
+                if (charIndex != null)
+                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, charIndex);
                 break;
 
             case TimeTagCaretPosition:
