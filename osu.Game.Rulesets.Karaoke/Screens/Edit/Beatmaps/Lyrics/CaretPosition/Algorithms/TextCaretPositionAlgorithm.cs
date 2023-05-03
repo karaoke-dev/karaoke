@@ -32,7 +32,12 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
         if (lyric == null)
             return null;
 
-        int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
+        int minIndex = GetMinIndex(lyric.Text);
+        int maxIndex = GetMaxIndex(lyric.Text);
+        if (maxIndex < minIndex)
+            return null;
+
+        int index = Math.Clamp(currentPosition.Index, minIndex, maxIndex);
 
         return CreateCaretPosition(lyric, index);
     }
@@ -124,9 +129,6 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
     private bool indexInTextRange(int index, Lyric lyric)
     {
         string text = lyric.Text;
-        if (string.IsNullOrEmpty(text))
-            return index == 0;
-
         return index >= GetMinIndex(text) && index <= GetMaxIndex(text);
     }
 
