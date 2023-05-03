@@ -6,10 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
@@ -17,11 +24,8 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.FixedInfo;
 
-public partial class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>
+public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasPopover
 {
-    // todo : might able to have auto-fix option by right-click
-    public MenuItem[] ContextMenuItems => Array.Empty<MenuItem>();
-
     private readonly IBindableList<Issue> bindableIssues = new BindableList<Issue>();
     private readonly Lyric lyric;
 
@@ -88,8 +92,106 @@ public partial class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomToolti
         return issues.OrderByDescending(x => x.Template.Type).First();
     }
 
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (bindableIssues.Any())
+        {
+            this.ShowPopover();
+        }
+
+        return base.OnClick(e);
+    }
+
     public ITooltip<Issue[]> GetCustomTooltip()
         => new IssuesToolTip();
 
     public Issue[]? TooltipContent { get; private set; }
+
+    public Popover GetPopover()
+        => new IssueTablePopover(this, bindableIssues);
+
+    private partial class IssueTablePopover : OsuPopover
+    {
+        private readonly CompositeDrawable parentDrawable;
+
+        public IssueTablePopover(CompositeDrawable parent, IReadOnlyCollection<Issue> issues)
+        {
+            parentDrawable = parent;
+
+            Child = new Container
+            {
+                Width = 300,
+                AutoSizeAxes = Axes.Y,
+                Children = new Drawable[]
+                {
+                    new SingleLyricIssueTable
+                    {
+                        Issues = issues
+                    },
+                    new IconButton
+                    {
+                        Anchor = Anchor.TopRight,
+                        Origin = Anchor.TopRight,
+                        Icon = FontAwesome.Solid.Redo,
+                        Scale = new Vector2(0.7f),
+                        Action = () =>
+                        {
+                            var verifier = parentDrawable.Dependencies.Get<ILyricEditorVerifier>();
+                            verifier.Refresh();
+
+                            // should close the popover if has no issue.
+                            if (!issues.Any())
+                                this.HidePopover();
+                        }
+                    }
+                }
+            };
+        }
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+            dependencies.Cache(parentDrawable.Dependencies.Get<LyricEditorColourProvider>());
+            dependencies.CacheAs(parentDrawable.Dependencies.Get<ILyricEditorState>());
+            dependencies.CacheAs(parentDrawable.Dependencies.Get<IIssueNavigator>());
+
+            return dependencies;
+        }
+
+        private partial class SingleLyricIssueTable : LyricEditorIssueTable
+        {
+            protected override TableColumn[] CreateHeaders() => new[]
+            {
+                new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
+                new TableColumn("Message", Anchor.CentreLeft),
+            };
+
+            protected override Drawable[] CreateContent(Issue issue) =>
+                new Drawable[]
+                {
+                    new IssueIcon
+                    {
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(10),
+                        Margin = new MarginPadding { Left = 10 },
+                        Issue = issue
+                    },
+                    new OsuSpriteText
+                    {
+                        Text = issue.ToString(),
+                        Truncate = true,
+                        RelativeSizeAxes = Axes.X,
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                    },
+                };
+
+            protected override void OnIssueClicked(Issue issue)
+            {
+                base.OnIssueClicked(issue);
+
+                this.HidePopover();
+            }
+        }
+    }
 }
