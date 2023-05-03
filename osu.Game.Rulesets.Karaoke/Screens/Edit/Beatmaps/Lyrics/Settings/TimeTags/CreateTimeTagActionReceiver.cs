@@ -6,6 +6,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -29,24 +30,32 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
 
         return caretPosition switch
         {
-            TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
+            CharIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
             TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
             _ => throw new NotSupportedException(nameof(caretPosition))
         };
     }
 
-    private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+    private bool processCreateTimeTagAction(CharIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
     {
-        var index = timeTagIndexCaretPosition.Index;
+        int index = timeTagIndexCaretPosition.Index;
 
         switch (action)
         {
-            case KaraokeEditAction.CreateTimeTag:
-                lyricTimeTagsChangeHandler.AddByPosition(index);
+            case KaraokeEditAction.CreateStartTimeTag:
+                lyricTimeTagsChangeHandler.AddByPosition(new TextIndex(index));
                 return true;
 
-            case KaraokeEditAction.RemoveTimeTag:
-                lyricTimeTagsChangeHandler.RemoveByPosition(index);
+            case KaraokeEditAction.CreateEndTimeTag:
+                lyricTimeTagsChangeHandler.AddByPosition(new TextIndex(index, TextIndex.IndexState.End));
+                return true;
+
+            case KaraokeEditAction.RemoveStartTimeTag:
+                lyricTimeTagsChangeHandler.RemoveByPosition(new TextIndex(index));
+                return true;
+
+            case KaraokeEditAction.RemoveEndTimeTag:
+                lyricTimeTagsChangeHandler.RemoveByPosition(new TextIndex(index, TextIndex.IndexState.End));
                 return true;
 
             default:
@@ -56,14 +65,17 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
 
     private bool processModifyTimeTagAction(TimeTagCaretPosition timeTagCaretPosition, KaraokeEditAction action)
     {
+        // todo: modify time-tag might have it's own key.
         switch (action)
         {
-            case KaraokeEditAction.CreateTimeTag:
+            case KaraokeEditAction.CreateStartTimeTag:
+            case KaraokeEditAction.CreateEndTimeTag:
                 var index = timeTagCaretPosition.TimeTag.Index;
                 lyricTimeTagsChangeHandler.AddByPosition(index);
                 return true;
 
-            case KaraokeEditAction.RemoveTimeTag:
+            case KaraokeEditAction.RemoveStartTimeTag:
+            case KaraokeEditAction.RemoveEndTimeTag:
                 var timeTag = timeTagCaretPosition.TimeTag;
                 bool movable = lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex);
                 lyricTimeTagsChangeHandler.Remove(timeTag);

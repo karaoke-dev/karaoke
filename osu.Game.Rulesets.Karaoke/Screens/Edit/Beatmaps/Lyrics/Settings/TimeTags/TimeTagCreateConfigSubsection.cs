@@ -147,8 +147,28 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                     $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_ACTION}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_ACTION}](remove_time_tag) to delete exist time-tag.",
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
-                    { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
-                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
+                    {
+                        "create_time_tag", new InputKeyDescriptionAction
+                        {
+                            Text = "Create Time-tag keys.",
+                            AdjustableActions = new List<KaraokeEditAction>
+                            {
+                                KaraokeEditAction.CreateStartTimeTag,
+                                KaraokeEditAction.CreateEndTimeTag
+                            }
+                        }
+                    },
+                    {
+                        "remove_time_tag", new InputKeyDescriptionAction
+                        {
+                            Text = "Remove Time-tag keys.",
+                            AdjustableActions = new List<KaraokeEditAction>
+                            {
+                                KaraokeEditAction.RemoveStartTimeTag,
+                                KaraokeEditAction.RemoveEndTimeTag
+                            }
+                        }
+                    }
                 }
             },
             CreateTimeTagEditMode.Modify => new DescriptionFormat
@@ -170,8 +190,8 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                             }
                         }
                     },
-                    { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateTimeTag } } },
-                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveTimeTag } } }
+                    { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateStartTimeTag, KaraokeEditAction.CreateEndTimeTag } } },
+                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag } } }
                 }
             },
             _ => throw new InvalidOperationException(nameof(mode))

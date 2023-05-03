@@ -84,11 +84,17 @@ public enum KaraokeEditAction
     EditTextTagIncreaseEndIndex,
 
     // Edit time-tag.
-    [Description("Create new")]
-    CreateTimeTag,
+    [Description("Create start time-tag")]
+    CreateStartTimeTag,
 
-    [Description("Remove")]
-    RemoveTimeTag,
+    [Description("Create end time-tag")]
+    CreateEndTimeTag,
+
+    [Description("Remove start time-tag")]
+    RemoveStartTimeTag,
+
+    [Description("Remove end time-tag")]
+    RemoveEndTimeTag,
 
     [Description("Shift the time-tag left.")]
     ShiftTheTimeTagLeft,
