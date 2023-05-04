@@ -22,7 +22,9 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     [TestCase(nameof(singleLyric), 0, 4, false)]
     [TestCase(nameof(singleLyric), 0, 5, false)]
     [TestCase(nameof(singleLyric), 0, -1, false)]
-    [TestCase(nameof(singleLyricWithNoText), 0, 0, true)] // It's not able to cut if no lyric text.
+    [TestCase(nameof(singleLyricWithTwoText), 0, 1, true)]
+    [TestCase(nameof(singleLyricWithOneText), 0, 1, false)] // Should be able to hover only has at least two chars.
+    [TestCase(nameof(singleLyricWithNoText), 0, 0, false)] // It's not able to cut if no lyric text.
     [TestCase(nameof(singleLyricWithNoText), 0, 1, false)]
     [TestCase(nameof(singleLyricWithNoText), 0, -1, false)]
     public void TestPositionMovable(string sourceName, int lyricIndex, int index, bool movable)
@@ -35,6 +37,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     }
 
     [TestCase(nameof(singleLyric), 0, 1, null, null)] // cannot move up if at top index.
+    [TestCase(nameof(singleLyricWithTwoText), 0, 1, null, null)]
     [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 1)]
     [TestCase(nameof(threeLyricsWithSpacing), 2, 1, 0, 1)]
     [TestCase(nameof(threeLyricsWithSpacing), 2, 2, 0, 2)]
@@ -90,6 +93,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     }
 
     [TestCase(nameof(singleLyric), 0, 1)]
+    [TestCase(nameof(singleLyricWithTwoText), 0, 1)]
     public void TestMoveToTargetLyric(string sourceName, int lyricIndex, int expectedTextIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
@@ -106,6 +110,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
 
     [TestCase(nameof(singleLyric), 0, 1, null, null)]
     [TestCase(nameof(singleLyric), 0, 2, 0, 1)]
+    [TestCase(nameof(singleLyricWithTwoText), 0, 1, null, null)]
     public void TestMoveToPreviousIndex(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
@@ -118,6 +123,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
 
     [TestCase(nameof(singleLyric), 0, 3, null, null)]
     [TestCase(nameof(singleLyric), 0, 2, 0, 3)]
+    [TestCase(nameof(singleLyricWithTwoText), 0, 1, null, null)]
     public void TestMoveToNextIndex(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
@@ -129,6 +135,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     }
 
     [TestCase(nameof(singleLyric), 0, 0, 1)]
+    [TestCase(nameof(singleLyricWithTwoText), 0, 0, 1)]
     public void TestMoveToFirstIndex(string sourceName, int lyricIndex, int? expectedLyricIndex, int? expectedIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
@@ -140,6 +147,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     }
 
     [TestCase(nameof(singleLyric), 0, 0, 3)]
+    [TestCase(nameof(singleLyricWithTwoText), 0, 0, 1)]
     public void TestMoveToLastIndex(string sourceName, int lyricIndex, int? expectedLyricIndex, int? expectedIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
@@ -196,6 +204,22 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
         new Lyric
         {
             Text = "カラオケ"
+        }
+    };
+
+    private static Lyric[] singleLyricWithTwoText => new[]
+    {
+        new Lyric
+        {
+            Text = "AA"
+        }
+    };
+
+    private static Lyric[] singleLyricWithOneText => new[]
+    {
+        new Lyric
+        {
+            Text = "A"
         }
     };
 
