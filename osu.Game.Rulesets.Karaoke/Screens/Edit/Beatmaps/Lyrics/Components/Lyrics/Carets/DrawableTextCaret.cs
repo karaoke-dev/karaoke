@@ -10,12 +10,12 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public abstract partial class DrawableLyricTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
+public abstract partial class DrawableTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
 {
     [Resolved]
     private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
 
-    protected DrawableLyricTextCaret(DrawableCaretType type)
+    protected DrawableTextCaret(DrawableCaretType type)
         : base(type)
     {
     }

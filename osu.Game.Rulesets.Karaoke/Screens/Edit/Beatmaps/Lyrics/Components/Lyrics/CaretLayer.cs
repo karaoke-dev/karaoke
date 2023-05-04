@@ -56,13 +56,13 @@ public partial class CaretLayer : BaseLayer
             caretPositionAlgorithm switch
             {
                 // cutting lyric
-                CuttingCaretPosition => new DrawableLyricSplitterCaret(type),
+                CuttingCaretPosition => new DrawableCuttingCaret(type),
                 // typing
-                TypingCaretPosition => new DrawableLyricInputCaret(type),
+                TypingCaretPosition => new DrawableTypingCaret(type),
                 // creat time-tag
-                TimeTagIndexCaretPosition => new DrawableTimeTagEditCaret(type),
+                TimeTagIndexCaretPosition => new DrawableTimeTagIndexCaret(type),
                 // record time-tag
-                TimeTagCaretPosition => new DrawableTimeTagRecordCaret(type),
+                TimeTagCaretPosition => new DrawableTimeTagCaret(type),
                 _ => null
             };
     }

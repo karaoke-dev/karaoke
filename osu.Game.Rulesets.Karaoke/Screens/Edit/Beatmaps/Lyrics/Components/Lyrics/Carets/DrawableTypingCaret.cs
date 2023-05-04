@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCaretPosition>
+public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition>
 {
     private const float caret_move_time = 60;
     private const float caret_width = 3;
@@ -35,7 +35,7 @@ public partial class DrawableLyricInputCaret : DrawableLyricTextCaret<TypingCare
 
     private TypingCaretPosition? caretPosition;
 
-    public DrawableLyricInputCaret(DrawableCaretType type)
+    public DrawableTypingCaret(DrawableCaretType type)
         : base(type)
     {
         Width = caret_width;
