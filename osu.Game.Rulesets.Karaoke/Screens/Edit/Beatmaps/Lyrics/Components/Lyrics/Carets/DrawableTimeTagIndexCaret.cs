@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
@@ -14,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosition>
+public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
 {
     private const float triangle_width = 8;
 
@@ -26,7 +25,7 @@ public partial class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosi
 
     private readonly DrawableTextIndex drawableTextIndex;
 
-    public DrawableTimeTagRecordCaret(DrawableCaretType type)
+    public DrawableTimeTagIndexCaret(DrawableCaretType type)
         : base(type)
     {
         AutoSizeAxes = Axes.Both;
@@ -39,23 +38,14 @@ public partial class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosi
         };
     }
 
-    protected override void Apply(TimeTagCaretPosition caret)
+    protected override void Apply(TimeTagIndexCaretPosition caret)
     {
-        var timeTag = caret.TimeTag;
-        var textIndex = timeTag.Index;
-        this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), getMoveToDuration(Type), Easing.OutCubic);
+        var textIndex = caret.Index;
+        Position = karaokeSpriteText.GetTextIndexPosition(textIndex);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-
-        static double getMoveToDuration(DrawableCaretType type) =>
-            type switch
-            {
-                DrawableCaretType.Caret => 100,
-                DrawableCaretType.HoverCaret => 0,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
+        drawableTextIndex.Colour = colours.GetEditTimeTagCaretColour();
     }
 
     public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
