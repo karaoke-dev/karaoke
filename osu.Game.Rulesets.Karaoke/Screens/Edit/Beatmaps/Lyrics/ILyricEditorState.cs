@@ -35,4 +35,12 @@ public struct ModeWithSubMode
         SubMode = null;
         Default = true;
     }
+
+    public TSubMode GetSubMode<TSubMode>() where TSubMode : Enum
+    {
+        if (SubMode is not TSubMode subMode)
+            throw new InvalidOperationException();
+
+        return subMode;
+    }
 }
