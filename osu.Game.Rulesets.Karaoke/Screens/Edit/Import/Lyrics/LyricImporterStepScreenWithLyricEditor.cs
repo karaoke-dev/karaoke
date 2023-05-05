@@ -78,7 +78,7 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
         }
 
         public T GetLyricEditorModeState<T>() where T : Enum =>
-            (T)BindableModeAndSubMode.Value.SubMode;
+            BindableModeAndSubMode.Value.GetSubMode<T>();
 
         public override void NavigateToFix(LyricEditorMode mode)
         {

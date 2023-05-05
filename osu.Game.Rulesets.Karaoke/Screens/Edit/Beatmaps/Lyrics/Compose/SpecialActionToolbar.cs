@@ -109,16 +109,38 @@ public partial class SpecialActionToolbar : CompositeDrawable
         return modeWithSubMode.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => Array.Empty<Drawable>(),
+            LyricEditorMode.Texting => createItemsForTextingMode(modeWithSubMode.GetSubMode<TextingEditMode>()),
             LyricEditorMode.Reference => Array.Empty<Drawable>(),
             LyricEditorMode.Language => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditRomaji => Array.Empty<Drawable>(),
-            LyricEditorMode.EditTimeTag => modeWithSubMode.SubMode is TimeTagEditMode timeTagEditMode ? createItemsForEditTimeTagMode(timeTagEditMode) : throw new InvalidCastException(),
-            LyricEditorMode.EditNote => modeWithSubMode.SubMode is NoteEditMode noteEditMode ? createItemsForEditNoteMode(noteEditMode) : throw new InvalidCastException(),
+            LyricEditorMode.EditTimeTag => createItemsForEditTimeTagMode(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
+            LyricEditorMode.EditNote => createItemsForEditNoteMode(modeWithSubMode.GetSubMode<NoteEditMode>()),
             LyricEditorMode.Singer => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        static IEnumerable<Drawable> createItemsForTextingMode(TextingEditMode textingEditMode)
+        {
+            switch (textingEditMode)
+            {
+                case TextingEditMode.Typing:
+                case TextingEditMode.Split:
+                    return new Drawable[]
+                    {
+                        new MoveToFirstIndexButton(),
+                        new MoveToPreviousIndexButton(),
+                        new MoveToNextIndexButton(),
+                        new MoveToLastIndexButton(),
+                    };
+
+                case TextingEditMode.Verify:
+                    return Array.Empty<Drawable>();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(textingEditMode));
+            }
+        }
 
         static IEnumerable<Drawable> createItemsForEditTimeTagMode(TimeTagEditMode timeTagEditMode) =>
             timeTagEditMode switch
@@ -129,6 +151,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new MoveToPreviousIndexButton(),
                     new MoveToNextIndexButton(),
                     new MoveToLastIndexButton(),
+                    new Separator(),
                     new CreateTimeTagButton(),
                     new RemoveTimeTagButton(),
                 },
@@ -140,6 +163,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new MoveToPreviousIndexButton(),
                     new MoveToNextIndexButton(),
                     new MoveToLastIndexButton(),
+                    new Separator(),
                     new SetTimeTagTimeButton(),
                     new ClearTimeTagTimeButton(),
                     new ClearAllTimeTagTimeButton(),

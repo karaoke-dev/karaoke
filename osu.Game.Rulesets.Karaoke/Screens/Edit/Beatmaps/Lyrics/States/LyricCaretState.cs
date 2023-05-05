@@ -123,17 +123,16 @@ public partial class LyricCaretState : Component, ILyricCaretState
     {
         var lyrics = bindableLyrics.ToArray();
         var mode = modeWithSubMode.Mode;
-        var subMode = modeWithSubMode.SubMode;
 
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => subMode is TextingEditMode textingEditMode ? getTextingModeAlgorithm(textingEditMode) : throw new InvalidCastException(),
+            LyricEditorMode.Texting => getTextingModeAlgorithm(modeWithSubMode.GetSubMode<TextingEditMode>()),
             LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.EditTimeTag => subMode is TimeTagEditMode timeTagEditMode ? getTimeTagModeAlgorithm(timeTagEditMode) : throw new InvalidCastException(),
+            LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
             _ => throw new InvalidOperationException(nameof(mode))

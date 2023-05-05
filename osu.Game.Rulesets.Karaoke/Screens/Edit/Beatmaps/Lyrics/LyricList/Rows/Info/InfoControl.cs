@@ -140,7 +140,7 @@ public partial class InfoControl : Container, IHasContextMenu
 
         bindableModeAndSubMode.BindValueChanged(e =>
         {
-            initializeBadge(e.NewValue.Mode, e.NewValue.SubMode);
+            initializeBadge(e.NewValue);
 
             if (ValueChangedEventUtils.EditModeChanged(e) || !IsLoaded)
                 Schedule(() => updateColour(e.NewValue.Mode));
@@ -159,7 +159,7 @@ public partial class InfoControl : Container, IHasContextMenu
         headerBackground.Colour = colourProvider.Background5(mode);
     }
 
-    private void initializeBadge(LyricEditorMode mode, Enum? subMode)
+    private void initializeBadge(ModeWithSubMode mode)
     {
         subInfoContainer.Clear();
         var subInfo = createSubInfo();
@@ -173,7 +173,7 @@ public partial class InfoControl : Container, IHasContextMenu
 
         Drawable? createSubInfo()
         {
-            switch (mode)
+            switch (mode.Mode)
             {
                 case LyricEditorMode.View:
                 case LyricEditorMode.Texting:
@@ -190,10 +190,7 @@ public partial class InfoControl : Container, IHasContextMenu
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditTimeTag:
-                    if (subMode is not TimeTagEditMode timeTagEditMode)
-                        throw new ArgumentNullException();
-
-                    return createTimeTagModeSubInfo(timeTagEditMode, Lyric);
+                    return createTimeTagModeSubInfo(mode.GetSubMode<TimeTagEditMode>(), Lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;
@@ -217,7 +214,7 @@ public partial class InfoControl : Container, IHasContextMenu
                         return new TimeTagInfo(lyric);
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(subMode));
+                        throw new ArgumentOutOfRangeException(nameof(editMode));
                 }
             }
         }
