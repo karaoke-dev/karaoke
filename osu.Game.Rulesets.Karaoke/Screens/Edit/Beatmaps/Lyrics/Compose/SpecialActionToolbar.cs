@@ -109,7 +109,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
         return modeWithSubMode.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => Array.Empty<Drawable>(),
+            LyricEditorMode.Texting => modeWithSubMode.SubMode is TextingEditMode textingEditMode ? createItemsForTextingMode(textingEditMode) : throw new InvalidCastException(),
             LyricEditorMode.Reference => Array.Empty<Drawable>(),
             LyricEditorMode.Language => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
@@ -119,6 +119,28 @@ public partial class SpecialActionToolbar : CompositeDrawable
             LyricEditorMode.Singer => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        static IEnumerable<Drawable> createItemsForTextingMode(TextingEditMode textingEditMode)
+        {
+            switch (textingEditMode)
+            {
+                case TextingEditMode.Typing:
+                case TextingEditMode.Split:
+                    return new Drawable[]
+                    {
+                        new MoveToFirstIndexButton(),
+                        new MoveToPreviousIndexButton(),
+                        new MoveToNextIndexButton(),
+                        new MoveToLastIndexButton(),
+                    };
+
+                case TextingEditMode.Verify:
+                    return Array.Empty<Drawable>();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(textingEditMode));
+            }
+        }
 
         static IEnumerable<Drawable> createItemsForEditTimeTagMode(TimeTagEditMode timeTagEditMode) =>
             timeTagEditMode switch
