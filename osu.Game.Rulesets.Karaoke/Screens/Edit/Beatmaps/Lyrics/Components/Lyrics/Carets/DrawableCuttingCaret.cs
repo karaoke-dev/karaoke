@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -15,16 +13,10 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPosition>
+public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 {
     private readonly Container splitter;
     private readonly SpriteIcon splitIcon;
-
-    [Resolved]
-    private OsuColour colours { get; set; }
-
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     public DrawableCuttingCaret(DrawableCaretType type)
         : base(type)
@@ -91,16 +83,16 @@ public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPositi
         splitIcon.Colour = colours.Yellow;
     }
 
-    protected override void Apply(CuttingCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CuttingCaretPosition caret)
     {
-        var rect = GetRect(caret);
+        var rect = positionProvider.GetRectByCharIndicator(caret.Index);
 
         Position = rect.TopLeft;
         Height = rect.Height;
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 }

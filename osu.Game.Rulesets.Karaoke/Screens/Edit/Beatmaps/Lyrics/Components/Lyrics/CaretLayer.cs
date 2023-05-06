@@ -100,6 +100,6 @@ public partial class CaretLayer : BaseLayer
 
     public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
     {
-        InternalChildren.OfType<DrawableCaret>().ForEach(x => x.TriggerDisallowEditEffect(editorMode));
+        InternalChildren.OfType<DrawableCaret>().ForEach(x => x.TriggerDisallowEditEffect());
     }
 }

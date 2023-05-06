@@ -1,10 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
@@ -17,12 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
 {
     private const float triangle_width = 8;
-
-    [Resolved]
-    private OsuColour colours { get; set; }
-
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     private readonly DrawableTextIndex drawableTextIndex;
 
@@ -39,15 +30,17 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
         };
     }
 
-    protected override void Apply(TimeTagCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagCaretPosition caret)
     {
         var timeTag = caret.TimeTag;
         var textIndex = timeTag.Index;
-        this.MoveTo(previewLyricPositionProvider.GetPositionByTimeTag(timeTag), getMoveToDuration(Type), Easing.OutCubic);
+
+        var position = positionProvider.GetPositionByTimeTag(timeTag);
+        this.MoveTo(position, getMoveToDuration(Type), Easing.OutCubic);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+        drawableTextIndex.Colour = colour.GetRecordingTimeTagCaretColour(timeTag);
 
         static double getMoveToDuration(DrawableCaretType type) =>
             type switch
@@ -58,8 +51,8 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
             };
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 }

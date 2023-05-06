@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -19,19 +17,13 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition>
+public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 {
     private const float caret_move_time = 60;
     private const float caret_width = 3;
 
-    [Resolved]
-    private OsuColour colours { get; set; }
-
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
-
-    private Box drawableCaret;
-    private InputCaretTextBox inputCaretTextBox;
+    private Box drawableCaret = null!;
+    private InputCaretTextBox? inputCaretTextBox;
 
     private TypingCaretPosition? caretPosition;
 
@@ -111,11 +103,11 @@ public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition
 
     public override void Hide() => this.FadeOut(200);
 
-    protected override void Apply(TypingCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TypingCaretPosition caret)
     {
         caretPosition = caret;
 
-        var rect = GetRect(caret);
+        var rect = positionProvider.GetRectByCharIndicator(caret.Index);
 
         Height = rect.Height;
         var position = rect.TopLeft;
@@ -141,16 +133,16 @@ public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition
         });
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 
     private partial class InputCaretTextBox : BasicTextBox
     {
-        public Action<string> NewCommitText;
+        public Action<string>? NewCommitText;
 
-        public Action DeleteText;
+        public Action? DeleteText;
 
         // should not accept tab event because all focus/unfocus should be controlled by caret.
         public override bool CanBeTabbedTo => false;

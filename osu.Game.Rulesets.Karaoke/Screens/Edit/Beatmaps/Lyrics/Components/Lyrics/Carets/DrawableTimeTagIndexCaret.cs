@@ -1,9 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
@@ -16,12 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
 {
     private const float triangle_width = 8;
-
-    [Resolved]
-    private OsuColour colours { get; set; }
-
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     private readonly DrawableTextIndex drawableTextIndex;
 
@@ -38,18 +29,19 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
         };
     }
 
-    protected override void Apply(TimeTagIndexCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagIndexCaretPosition caret)
     {
         var textIndex = caret.Index;
-        Position = previewLyricPositionProvider.GetTextIndexPosition(textIndex);
+
+        Position = positionProvider.GetTextIndexPosition(textIndex);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = colours.GetEditTimeTagCaretColour();
+        drawableTextIndex.Colour = colour.GetEditTimeTagCaretColour();
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 }
