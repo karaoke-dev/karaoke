@@ -44,7 +44,7 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
     protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
+        private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
         private float deltaScaleSize;
 
@@ -129,17 +129,17 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
         private int calculateNewIndex(T textTag, float offset, Anchor anchor)
         {
             // get real left-side and right-side position
-            var rect = karaokeSpriteText.GetTextTagByPosition(textTag);
+            var rect = previewLyricPositionProvider.GetTextTagByPosition(textTag);
 
             switch (anchor)
             {
                 case Anchor.CentreLeft:
                     float leftPosition = rect.Left + offset;
-                    return karaokeSpriteText.GetCharIndicatorByPosition(leftPosition);
+                    return previewLyricPositionProvider.GetCharIndicatorByPosition(leftPosition);
 
                 case Anchor.CentreRight:
                     float rightPosition = rect.Right + offset;
-                    return karaokeSpriteText.GetCharIndicatorByPosition(rightPosition);
+                    return previewLyricPositionProvider.GetCharIndicatorByPosition(rightPosition);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(anchor));

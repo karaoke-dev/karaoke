@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
-    [Cached]
+    [Cached(typeof(IPreviewLyricPositionProvider))]
     private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
     [Resolved, AllowNull]

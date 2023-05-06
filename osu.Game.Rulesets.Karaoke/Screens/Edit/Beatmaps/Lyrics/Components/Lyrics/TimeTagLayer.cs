@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public partial class TimeTagLayer : BaseLayer
 {
     [Resolved, AllowNull]
-    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
 
@@ -34,7 +34,7 @@ public partial class TimeTagLayer : BaseLayer
 
         foreach (var timeTag in timeTagsBindable)
         {
-            var position = karaokeSpriteText.GetPositionByTimeTag(timeTag);
+            var position = previewLyricPositionProvider.GetPositionByTimeTag(timeTag);
             AddInternal(new DrawableTimeTag(timeTag)
             {
                 Position = position

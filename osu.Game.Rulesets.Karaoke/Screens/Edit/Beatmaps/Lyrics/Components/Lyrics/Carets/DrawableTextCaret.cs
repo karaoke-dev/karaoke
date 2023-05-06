@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class DrawableTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
 {
     [Resolved]
-    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     protected DrawableTextCaret(DrawableCaretType type)
         : base(type)
@@ -21,6 +21,6 @@ public abstract partial class DrawableTextCaret<TCaretPosition> : DrawableCaret<
 
     protected RectangleF GetRect(TCaretPosition caret)
     {
-        return karaokeSpriteText.GetRectByCharIndicator(caret.Index);
+        return previewLyricPositionProvider.GetRectByCharIndicator(caret.Index);
     }
 }

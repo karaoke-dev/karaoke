@@ -22,7 +22,7 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
     private readonly Container indexRangeBackground;
 
     [Resolved]
-    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     protected TextTagSelectionBlueprint(T item)
         : base(item)
@@ -73,10 +73,10 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
         // wait until lyric update ruby position.
         ScheduleAfterChildren(() =>
         {
-            var textTagRect = karaokeSpriteText.GetTextTagByPosition(Item);
+            var textTagRect = previewLyricPositionProvider.GetTextTagByPosition(Item);
 
-            var startRect = karaokeSpriteText.GetRectByCharIndicator(Item.StartIndex);
-            var endRect = karaokeSpriteText.GetRectByCharIndicator(Item.EndIndex);
+            var startRect = previewLyricPositionProvider.GetRectByCharIndicator(Item.StartIndex);
+            var endRect = previewLyricPositionProvider.GetRectByCharIndicator(Item.EndIndex);
 
             // update select position
             updateDrawableRect(previewTextArea, textTagRect);

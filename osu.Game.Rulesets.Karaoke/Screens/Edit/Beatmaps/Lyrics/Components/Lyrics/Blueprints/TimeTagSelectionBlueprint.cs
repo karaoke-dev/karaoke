@@ -16,7 +16,7 @@ public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     private const float time_tag_size = 10;
 
     [Resolved]
-    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     public TimeTagSelectionBlueprint(TimeTag item)
         : base(item)
@@ -33,7 +33,7 @@ public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     private void updatePosition()
     {
         var size = new Vector2(time_tag_size);
-        var position = karaokeSpriteText.GetPositionByTimeTag(Item) - size / 2;
+        var position = previewLyricPositionProvider.GetPositionByTimeTag(Item) - size / 2;
 
         X = position.X;
         Y = position.Y;
