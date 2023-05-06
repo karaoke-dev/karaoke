@@ -13,6 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
 {
+    [Resolved]
+    private OsuColour colours { get; set; } = null!;
+
+    [Resolved]
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;
+
     protected DrawableCaret(DrawableCaretType type)
         : base(type)
     {
@@ -26,25 +32,26 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 
-    public override void ApplyCaretPosition(ICaretPosition caret)
+    public sealed override void ApplyCaretPosition(ICaretPosition caret)
     {
         if (caret is not TCaret tCaret)
             throw new InvalidCastException();
 
-        Apply(tCaret);
+        ApplyCaretPosition(previewLyricPositionProvider, colours, tCaret);
     }
 
-    protected abstract void Apply(TCaret caret);
+    public sealed override void TriggerDisallowEditEffect()
+    {
+        TriggerDisallowEditEffect(colours);
+    }
+
+    protected abstract void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TCaret caret);
+
+    protected abstract void TriggerDisallowEditEffect(OsuColour colour);
 }
 
 public abstract partial class DrawableCaret : CompositeDrawable
 {
-    [Resolved]
-    protected OsuColour Colours { get; set; } = null!;
-
-    [Resolved]
-    protected IPreviewLyricPositionProvider PreviewLyricPositionProvider { get; set; } = null!;
-
     public readonly DrawableCaretType Type;
 
     protected DrawableCaret(DrawableCaretType type)
@@ -54,5 +61,5 @@ public abstract partial class DrawableCaret : CompositeDrawable
 
     public abstract void ApplyCaretPosition(ICaretPosition caret);
 
-    public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
+    public abstract void TriggerDisallowEditEffect();
 }

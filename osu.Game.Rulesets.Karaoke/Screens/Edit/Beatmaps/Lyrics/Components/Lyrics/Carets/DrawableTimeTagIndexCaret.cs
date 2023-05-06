@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -28,19 +29,19 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
         };
     }
 
-    protected override void Apply(TimeTagIndexCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagIndexCaretPosition caret)
     {
         var textIndex = caret.Index;
 
-        Position = PreviewLyricPositionProvider.GetTextIndexPosition(textIndex);
+        Position = positionProvider.GetTextIndexPosition(textIndex);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = Colours.GetEditTimeTagCaretColour();
+        drawableTextIndex.Colour = colour.GetEditTimeTagCaretColour();
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(Colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 }

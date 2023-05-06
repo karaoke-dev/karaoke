@@ -83,16 +83,16 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
         splitIcon.Colour = colours.Yellow;
     }
 
-    protected override void Apply(CuttingCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CuttingCaretPosition caret)
     {
-        var rect = PreviewLyricPositionProvider.GetRectByCharIndicator(caret.Index);
+        var rect = positionProvider.GetRectByCharIndicator(caret.Index);
 
         Position = rect.TopLeft;
         Height = rect.Height;
     }
 
-    public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+    protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
-        this.FlashColour(Colours.Red, 200);
+        this.FlashColour(colour.Red, 200);
     }
 }
