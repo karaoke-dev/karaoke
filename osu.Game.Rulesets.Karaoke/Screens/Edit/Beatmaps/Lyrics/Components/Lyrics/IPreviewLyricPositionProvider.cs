@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Primitives;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
@@ -24,10 +23,4 @@ public interface IPreviewLyricPositionProvider
     TimeTag? GetTimeTagByPosition(float position);
 
     Vector2 GetPositionByTimeTag(TimeTag timeTag);
-
-    // todo: will remove this method eventually.
-    TextIndex GetHoverIndex(float position);
-
-    // todo: will remove this method eventually.
-    Vector2 GetTextIndexPosition(TextIndex index);
 }

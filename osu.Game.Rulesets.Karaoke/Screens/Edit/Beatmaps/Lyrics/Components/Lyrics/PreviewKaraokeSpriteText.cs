@@ -188,38 +188,6 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #endregion
 
-    // todo: will remove this method eventually.
-    public TextIndex GetHoverIndex(float position)
-    {
-        string text = Text;
-        if (string.IsNullOrEmpty(text))
-            return new TextIndex();
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
-                return new TextIndex(i);
-
-            if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
-                return new TextIndex(i, TextIndex.IndexState.End);
-        }
-
-        return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
-
-        // todo : might have a better way to call spriteText.GetTimeTagPosition just once.
-        float getTriggerPositionByTimeIndex(TextIndex textIndex)
-        {
-            int charIndex = textIndex.Index;
-            float startPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex)).X;
-            float endPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
-
-            return TextIndexUtils.GetValueByState(textIndex, () => startPosition + (endPosition - startPosition) / 2, () => endPosition);
-        }
-    }
-
-    // todo: will remove this method eventually.
-    public Vector2 GetTextIndexPosition(TextIndex index) => spriteText.GetTimeTagPosition(index);
-
     [BackgroundDependencyLoader(true)]
     private void load(ISkinSource skin, ShaderManager shaderManager)
     {
