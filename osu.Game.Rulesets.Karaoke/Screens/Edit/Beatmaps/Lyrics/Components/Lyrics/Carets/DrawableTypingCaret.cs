@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -25,10 +23,10 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
     private const float caret_width = 3;
 
     [Resolved]
-    private OsuColour colours { get; set; }
+    private OsuColour colours { get; set; } = null!;
 
-    private Box drawableCaret;
-    private InputCaretTextBox inputCaretTextBox;
+    private Box drawableCaret = null!;
+    private InputCaretTextBox? inputCaretTextBox;
 
     private TypingCaretPosition? caretPosition;
 
@@ -145,9 +143,9 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
     private partial class InputCaretTextBox : BasicTextBox
     {
-        public Action<string> NewCommitText;
+        public Action<string>? NewCommitText;
 
-        public Action DeleteText;
+        public Action? DeleteText;
 
         // should not accept tab event because all focus/unfocus should be controlled by caret.
         public override bool CanBeTabbedTo => false;

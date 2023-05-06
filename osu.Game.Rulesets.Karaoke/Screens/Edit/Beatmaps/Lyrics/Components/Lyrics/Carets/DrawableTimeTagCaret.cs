@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -19,7 +17,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
     private const float triangle_width = 8;
 
     [Resolved]
-    private OsuColour colours { get; set; }
+    private OsuColour colours { get; set; } = null!;
 
     private readonly DrawableTextIndex drawableTextIndex;
 
