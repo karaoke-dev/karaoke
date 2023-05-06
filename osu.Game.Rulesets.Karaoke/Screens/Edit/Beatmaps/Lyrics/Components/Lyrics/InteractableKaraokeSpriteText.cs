@@ -30,6 +30,8 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
     public Action SizeChanged;
 
+    private readonly EditorLyricSpriteText spriteText;
+
     public InteractableKaraokeSpriteText(Lyric lyric)
         : base(lyric)
     {
@@ -37,6 +39,16 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
         DisplayRuby = true;
         DisplayRomaji = true;
+
+        spriteText = getSpriteText();
+
+        EditorLyricSpriteText getSpriteText()
+        {
+            if (InternalChildren.First() is not Container<EditorLyricSpriteText> lyricSpriteTexts)
+                throw new ArgumentNullException();
+
+            return lyricSpriteTexts.Child;
+        }
     }
 
     public TimeTag GetHoverTimeTag(float position)
@@ -73,31 +85,15 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
         }
     }
 
-    public float LineBaseHeight
-    {
-        get
-        {
-            var spriteText = getSpriteText();
-            if (spriteText == null)
-                throw new ArgumentNullException(nameof(spriteText));
+    public float LineBaseHeight => spriteText.LineBaseHeight;
 
-            return spriteText.LineBaseHeight;
-        }
-    }
-
-    public RectangleF GetTextTagPosition(ITextTag textTag)
-    {
-        var spriteText = getSpriteText();
-        if (spriteText == null)
-            throw new ArgumentNullException(nameof(spriteText));
-
-        return textTag switch
+    public RectangleF GetTextTagPosition(ITextTag textTag) =>
+        textTag switch
         {
             RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
             RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
             _ => throw new ArgumentOutOfRangeException(nameof(textTag))
         };
-    }
 
     public Vector2 GetTimeTagPosition(TimeTag timeTag)
     {
@@ -115,17 +111,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
         }
     }
 
-    public Vector2 GetTextIndexPosition(TextIndex index)
-    {
-        var spriteText = getSpriteText();
-        if (spriteText == null)
-            throw new ArgumentNullException(nameof(spriteText));
-
-        return spriteText.GetTimeTagPosition(index);
-    }
-
-    private EditorLyricSpriteText getSpriteText()
-        => (InternalChildren.FirstOrDefault() as Container<EditorLyricSpriteText>)?.Child;
+    public Vector2 GetTextIndexPosition(TextIndex index) => spriteText.GetTimeTagPosition(index);
 
     [BackgroundDependencyLoader(true)]
     private void load(ISkinSource skin, ShaderManager shaderManager)
