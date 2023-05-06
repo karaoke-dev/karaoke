@@ -115,8 +115,10 @@ public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition
     {
         caretPosition = caret;
 
-        Height = karaokeSpriteText.LineBaseHeight;
-        var position = GetPosition(caret);
+        var rect = GetRect(caret);
+
+        Height = rect.Height;
+        var position = rect.TopLeft;
 
         bool displayAnimation = Alpha > 0;
         int time = displayAnimation ? 60 : 0;

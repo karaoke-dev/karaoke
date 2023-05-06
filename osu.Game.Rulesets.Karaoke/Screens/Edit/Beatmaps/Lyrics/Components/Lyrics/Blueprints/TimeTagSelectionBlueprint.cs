@@ -33,7 +33,7 @@ public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     private void updatePosition()
     {
         var size = new Vector2(time_tag_size);
-        var position = karaokeSpriteText.GetTimeTagPosition(Item) - size / 2;
+        var position = karaokeSpriteText.GetPositionByTimeTag(Item) - size / 2;
 
         X = position.X;
         Y = position.Y;

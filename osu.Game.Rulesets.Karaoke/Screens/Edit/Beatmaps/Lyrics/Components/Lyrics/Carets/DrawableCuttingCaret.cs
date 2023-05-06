@@ -93,8 +93,10 @@ public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPositi
 
     protected override void Apply(CuttingCaretPosition caret)
     {
-        Position = GetPosition(caret);
-        Height = karaokeSpriteText.LineBaseHeight;
+        var rect = GetRect(caret);
+
+        Position = rect.TopLeft;
+        Height = rect.Height;
     }
 
     public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)

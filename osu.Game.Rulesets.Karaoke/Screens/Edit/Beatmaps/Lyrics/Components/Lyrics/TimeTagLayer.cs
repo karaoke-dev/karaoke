@@ -34,7 +34,7 @@ public partial class TimeTagLayer : BaseLayer
 
         foreach (var timeTag in timeTagsBindable)
         {
-            var position = karaokeSpriteText.GetTimeTagPosition(timeTag);
+            var position = karaokeSpriteText.GetPositionByTimeTag(timeTag);
             AddInternal(new DrawableTimeTag(timeTag)
             {
                 Position = position

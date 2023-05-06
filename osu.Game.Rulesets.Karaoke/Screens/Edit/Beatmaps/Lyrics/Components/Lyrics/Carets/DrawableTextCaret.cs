@@ -4,9 +4,8 @@
 #nullable disable
 
 using osu.Framework.Allocation;
+using osu.Framework.Graphics.Primitives;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Utils;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
@@ -20,11 +19,8 @@ public abstract partial class DrawableTextCaret<TCaretPosition> : DrawableCaret<
     {
     }
 
-    protected Vector2 GetPosition(TCaretPosition caret)
+    protected RectangleF GetRect(TCaretPosition caret)
     {
-        float textHeight = karaokeSpriteText.LineBaseHeight;
-        bool end = caret.Index == caret.Lyric.Text.Length;
-        var originPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
-        return new Vector2(originPosition.X, originPosition.Y - textHeight);
+        return karaokeSpriteText.GetRectByCharIndicator(caret.Index);
     }
 }
