@@ -22,7 +22,7 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
     private readonly Container indexRangeBackground;
 
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     protected TextTagSelectionBlueprint(T item)
         : base(item)

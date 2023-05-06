@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
     [Cached]
-    private readonly InteractableKaraokeSpriteText karaokeSpriteText;
+    private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
     [Resolved, AllowNull]
     private ILyricCaretState lyricCaretState { get; set; }
@@ -43,7 +43,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
         InternalChildren = new Drawable[]
         {
-            new LyricLayer(lyric, karaokeSpriteText = new InteractableKaraokeSpriteText(lyric)),
+            new LyricLayer(lyric, karaokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
         };
 
         AddRangeInternal(CreateLayers(lyric));

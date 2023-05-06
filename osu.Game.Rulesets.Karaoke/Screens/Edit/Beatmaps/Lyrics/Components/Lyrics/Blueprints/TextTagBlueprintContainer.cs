@@ -44,7 +44,7 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
     protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+        private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
         private float deltaScaleSize;
 

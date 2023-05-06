@@ -16,7 +16,7 @@ public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     private const float time_tag_size = 10;
 
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     public TimeTagSelectionBlueprint(TimeTag item)
         : base(item)

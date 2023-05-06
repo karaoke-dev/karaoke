@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public partial class TimeTagLayer : BaseLayer
 {
     [Resolved, AllowNull]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
 

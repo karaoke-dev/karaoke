@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class DrawableTextCaret<TCaretPosition> : DrawableCaret<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
 {
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     protected DrawableTextCaret(DrawableCaretType type)
         : base(type)

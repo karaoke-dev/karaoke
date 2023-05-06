@@ -21,7 +21,7 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
     private OsuColour colours { get; set; }
 
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     private readonly DrawableTextIndex drawableTextIndex;
 

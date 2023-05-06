@@ -24,7 +24,7 @@ public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPositi
     private OsuColour colours { get; set; }
 
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private PreviewKaraokeSpriteText karaokeSpriteText { get; set; }
 
     public DrawableCuttingCaret(DrawableCaretType type)
         : base(type)
