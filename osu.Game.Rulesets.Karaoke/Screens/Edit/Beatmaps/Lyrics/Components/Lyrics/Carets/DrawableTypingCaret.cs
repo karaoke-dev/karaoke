@@ -27,9 +27,6 @@ public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition
     [Resolved]
     private OsuColour colours { get; set; }
 
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
-
     private Box drawableCaret;
     private InputCaretTextBox inputCaretTextBox;
 

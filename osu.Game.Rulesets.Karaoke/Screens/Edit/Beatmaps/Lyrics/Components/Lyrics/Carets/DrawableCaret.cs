@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
@@ -37,6 +38,9 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
 
 public abstract partial class DrawableCaret : CompositeDrawable
 {
+    [Resolved]
+    protected IPreviewLyricPositionProvider PreviewLyricPositionProvider { get; set; } = null!;
+
     public readonly DrawableCaretType Type;
 
     protected DrawableCaret(DrawableCaretType type)

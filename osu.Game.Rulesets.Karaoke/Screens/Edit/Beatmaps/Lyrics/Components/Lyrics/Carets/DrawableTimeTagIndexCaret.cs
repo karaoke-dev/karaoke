@@ -20,9 +20,6 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
     [Resolved]
     private OsuColour colours { get; set; }
 
-    [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
-
     private readonly DrawableTextIndex drawableTextIndex;
 
     public DrawableTimeTagIndexCaret(DrawableCaretType type)
@@ -41,7 +38,8 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
     protected override void Apply(TimeTagIndexCaretPosition caret)
     {
         var textIndex = caret.Index;
-        Position = previewLyricPositionProvider.GetTextIndexPosition(textIndex);
+
+        Position = PreviewLyricPositionProvider.GetTextIndexPosition(textIndex);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
