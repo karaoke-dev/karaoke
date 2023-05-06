@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPosition>
+public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 {
     private readonly Container splitter;
     private readonly SpriteIcon splitIcon;
@@ -90,7 +90,7 @@ public partial class DrawableCuttingCaret : DrawableTextCaret<CuttingCaretPositi
 
     protected override void Apply(CuttingCaretPosition caret)
     {
-        var rect = GetRect(caret);
+        var rect = PreviewLyricPositionProvider.GetRectByCharIndicator(caret.Index);
 
         Position = rect.TopLeft;
         Height = rect.Height;

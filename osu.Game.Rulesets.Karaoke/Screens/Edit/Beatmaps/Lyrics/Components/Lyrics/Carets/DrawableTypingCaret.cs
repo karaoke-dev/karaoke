@@ -19,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition>
+public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 {
     private const float caret_move_time = 60;
     private const float caret_width = 3;
@@ -112,7 +112,7 @@ public partial class DrawableTypingCaret : DrawableTextCaret<TypingCaretPosition
     {
         caretPosition = caret;
 
-        var rect = GetRect(caret);
+        var rect = PreviewLyricPositionProvider.GetRectByCharIndicator(caret.Index);
 
         Height = rect.Height;
         var position = rect.TopLeft;
