@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
@@ -21,9 +20,6 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 {
     private const float caret_move_time = 60;
     private const float caret_width = 3;
-
-    [Resolved]
-    private OsuColour colours { get; set; } = null!;
 
     private Box drawableCaret = null!;
     private InputCaretTextBox? inputCaretTextBox;
@@ -138,7 +134,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
     public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(Colours.Red, 200);
     }
 
     private partial class InputCaretTextBox : BasicTextBox

@@ -18,9 +18,6 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
     private readonly Container splitter;
     private readonly SpriteIcon splitIcon;
 
-    [Resolved]
-    private OsuColour colours { get; set; } = null!;
-
     public DrawableCuttingCaret(DrawableCaretType type)
         : base(type)
     {
@@ -96,6 +93,6 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 
     public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
     {
-        this.FlashColour(colours.Red, 200);
+        this.FlashColour(Colours.Red, 200);
     }
 }
