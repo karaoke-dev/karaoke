@@ -44,7 +44,7 @@ public class LrcEncoder
         static LrcParser.Model.TextIndex convertTextIndex(TextIndex textIndex)
         {
             int index = textIndex.Index;
-            var state = textIndex.State == TextIndex.IndexState.Start ? IndexState.Start : IndexState.End;
+            var state = TextIndexUtils.GetValueByState(textIndex, IndexState.Start, IndexState.End);
 
             return new LrcParser.Model.TextIndex(index, state);
         }

@@ -69,10 +69,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
             float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
             float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
 
-            if (textIndex.State == TextIndex.IndexState.Start)
-                return startPosition + (endPosition - startPosition) / 2;
-
-            return endPosition;
+            return TextIndexUtils.GetValueByState(textIndex, startPosition + (endPosition - startPosition) / 2, endPosition);
         }
     }
 
