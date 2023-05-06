@@ -22,7 +22,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
     private OsuColour colours { get; set; }
 
     [Resolved]
-    private InteractableKaraokeSpriteText karaokeSpriteText { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
 
     private readonly DrawableTextIndex drawableTextIndex;
 
@@ -43,7 +43,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
     {
         var timeTag = caret.TimeTag;
         var textIndex = timeTag.Index;
-        this.MoveTo(karaokeSpriteText.GetPositionByTimeTag(timeTag), getMoveToDuration(Type), Easing.OutCubic);
+        this.MoveTo(previewLyricPositionProvider.GetPositionByTimeTag(timeTag), getMoveToDuration(Type), Easing.OutCubic);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;

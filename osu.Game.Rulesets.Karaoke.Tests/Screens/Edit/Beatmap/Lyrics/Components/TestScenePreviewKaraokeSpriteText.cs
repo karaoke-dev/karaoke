@@ -19,9 +19,9 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components;
 
-public partial class TestSceneInteractableKaraokeSpriteText : OsuTestScene
+public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
 {
-    private InteractableKaraokeSpriteText karaokeSpriteText = null!;
+    private PreviewKaraokeSpriteText karaokeSpriteText = null!;
     private Container mask = null!;
     private OsuSpriteText spriteText = null!;
 
@@ -29,7 +29,7 @@ public partial class TestSceneInteractableKaraokeSpriteText : OsuTestScene
 
     private readonly Lyric lyric;
 
-    public TestSceneInteractableKaraokeSpriteText()
+    public TestScenePreviewKaraokeSpriteText()
     {
         lyric = new Lyric
         {
@@ -63,7 +63,7 @@ public partial class TestSceneInteractableKaraokeSpriteText : OsuTestScene
                     RelativeSizeAxes = Axes.Both,
                     Colour = colour.BlueDarker,
                 },
-                karaokeSpriteText = new InteractableKaraokeSpriteText(lyric),
+                karaokeSpriteText = new PreviewKaraokeSpriteText(lyric),
                 mask = new Container
                 {
                     Masking = true,

@@ -17,15 +17,14 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 
 public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
-    [Cached]
-    private readonly InteractableKaraokeSpriteText karaokeSpriteText;
+    [Cached(typeof(IPreviewLyricPositionProvider))]
+    private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
     [Resolved, AllowNull]
     private ILyricCaretState lyricCaretState { get; set; }
@@ -44,7 +43,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
         InternalChildren = new Drawable[]
         {
-            new LyricLayer(lyric, karaokeSpriteText = new InteractableKaraokeSpriteText(lyric)),
+            new LyricLayer(lyric, karaokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
         };
 
         AddRangeInternal(CreateLayers(lyric));

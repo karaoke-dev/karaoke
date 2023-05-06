@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 
-public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<InteractableKaraokeSpriteText.EditorLyricSpriteText>
+public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<PreviewKaraokeSpriteText.EditorLyricSpriteText>, IPreviewLyricPositionProvider
 {
     private const int time_tag_spacing = 8;
 
@@ -30,7 +30,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
     private readonly EditorLyricSpriteText spriteText;
 
-    public InteractableKaraokeSpriteText(Lyric lyric)
+    public PreviewKaraokeSpriteText(Lyric lyric)
         : base(lyric)
     {
         HitObject = lyric;
