@@ -202,12 +202,7 @@ public static class LyricUtils
         string subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
         // return substring with format.
-        return state switch
-        {
-            TextIndex.IndexState.Start => $"({subtext})-",
-            TextIndex.IndexState.End => $"-({subtext})",
-            _ => throw new InvalidEnumArgumentException(nameof(state))
-        };
+        return TextIndexUtils.GetValueByState(state, $"({subtext})-", $"-({subtext})");
     }
 
     #endregion

@@ -18,7 +18,7 @@ public static class TextIndexUtils
 
     public static TextIndex.IndexState ReverseState(TextIndex.IndexState state)
     {
-        return state == TextIndex.IndexState.Start ? TextIndex.IndexState.End : TextIndex.IndexState.Start;
+        return GetValueByState(state, TextIndex.IndexState.End, TextIndex.IndexState.Start);
     }
 
     public static TextIndex GetPreviousIndex(TextIndex originIndex)
@@ -47,11 +47,14 @@ public static class TextIndexUtils
     }
 
     public static T GetValueByState<T>(TextIndex index, T startValue, T endValue) =>
-        index.State switch
+        GetValueByState(index.State, startValue, endValue);
+
+    public static T GetValueByState<T>(TextIndex.IndexState state, T startValue, T endValue) =>
+        state switch
         {
             TextIndex.IndexState.Start => startValue,
             TextIndex.IndexState.End => endValue,
-            _ => throw new ArgumentOutOfRangeException(nameof(index))
+            _ => throw new ArgumentOutOfRangeException(nameof(state))
         };
 
     /// <summary>
