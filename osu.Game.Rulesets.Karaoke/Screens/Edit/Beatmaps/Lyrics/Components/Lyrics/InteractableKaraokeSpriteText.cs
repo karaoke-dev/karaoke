@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +26,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
     public Lyric HitObject;
 
-    public Action SizeChanged;
+    public Action? SizeChanged = null;
 
     private readonly EditorLyricSpriteText spriteText;
 
@@ -51,10 +49,149 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
         }
     }
 
-    public TimeTag GetHoverTimeTag(float position)
+    #region Text char index
+
+    public int? GetCharIndexByPosition(float position)
+    {
+        for (int i = 0; i < Text.Length; i++)
+        {
+            (double startX, double endX) = getTriggerPositionByTimeIndex(i);
+            if (position >= startX && position <= endX)
+                return i;
+        }
+
+        return null;
+
+        Tuple<double, double> getTriggerPositionByTimeIndex(int charIndex)
+        {
+            var rectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+            return new Tuple<double, double>(rectangle.Left, rectangle.Right);
+        }
+    }
+
+    public RectangleF GetRectByCharIndex(int charIndex)
+    {
+        if (charIndex < 0 || charIndex >= Text.Length)
+            throw new ArgumentOutOfRangeException(nameof(charIndex));
+
+        return spriteText.GetCharacterDrawRectangle(charIndex);
+    }
+
+    #endregion
+
+    #region Text indicator
+
+    public int GetCharIndicatorByPosition(float position)
+    {
+        for (int i = 0; i < Text.Length; i++)
+        {
+            float textCenterPosition = getTriggerPositionByTimeIndex(i);
+            if (position < textCenterPosition)
+                return i;
+        }
+
+        return Text.Length;
+
+        float getTriggerPositionByTimeIndex(int charIndex)
+        {
+            var rectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+            return rectangle.Centre.X;
+        }
+    }
+
+    public RectangleF GetRectByCharIndicator(int charIndex)
+    {
+        if (charIndex < 0 || charIndex > Text.Length)
+            throw new ArgumentOutOfRangeException(nameof(charIndex));
+
+        const float min_spacing_width = 1;
+
+        if (charIndex == 0)
+        {
+            var referenceRectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+            return new RectangleF(referenceRectangle.X - min_spacing_width, referenceRectangle.Y, min_spacing_width, referenceRectangle.Height);
+        }
+
+        if (charIndex == Text.Length)
+        {
+            var referenceRectangle = spriteText.GetCharacterDrawRectangle(charIndex - 1);
+            return new RectangleF(referenceRectangle.Right, referenceRectangle.Top, min_spacing_width, referenceRectangle.Height);
+        }
+
+        var leftRectangle = spriteText.GetCharacterDrawRectangle(charIndex - 1);
+        var rightRectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+        return new RectangleF(leftRectangle.Right, leftRectangle.Top, rightRectangle.X - leftRectangle.Right, leftRectangle.Y);
+    }
+
+    #endregion
+
+    #region Ruby/Romaji tag
+
+    public RectangleF GetTextTagByPosition(ITextTag textTag) =>
+        textTag switch
+        {
+            RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
+            RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
+            _ => throw new ArgumentOutOfRangeException(nameof(textTag))
+        };
+
+    #endregion
+
+    #region Time tag
+
+    public TimeTag? GetTimeTagByPosition(float position)
+    {
+        // todo: will use better way to get the time-tag
+        var textIndex = getHoverIndex();
+        return HitObject.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+
+        TextIndex getHoverIndex()
+        {
+            for (int i = 0; i < Text.Length; i++)
+            {
+                if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
+                    return new TextIndex(i);
+
+                if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
+                    return new TextIndex(i, TextIndex.IndexState.End);
+            }
+
+            return new TextIndex(Text.Length - 1, TextIndex.IndexState.End);
+
+            // todo : might have a better way to call spriteText.GetTimeTagPosition just once.
+            float getTriggerPositionByTimeIndex(TextIndex textIndex)
+            {
+                int charIndex = textIndex.Index;
+                float startPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex)).X;
+                float endPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
+
+                return TextIndexUtils.GetValueByState(textIndex, () => startPosition + (endPosition - startPosition) / 2, () => endPosition);
+            }
+        }
+    }
+
+    public Vector2 GetPositionByTimeTag(TimeTag timeTag)
+    {
+        var basePosition = spriteText.GetTimeTagPosition(timeTag.Index);
+        float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);
+        return basePosition + new Vector2(extraPosition, 0);
+
+        static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
+        {
+            var textIndex = timeTag.Index;
+            var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse, () => timeTagsInLyric);
+            int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
+            int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
+            return spacing;
+        }
+    }
+
+    #endregion
+
+    public TimeTag? GetHoverTimeTag(float position)
     {
         var textIndex = GetHoverIndex(position);
-        return HitObject?.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+        return HitObject.TimeTags.FirstOrDefault(x => x.Index == textIndex);
     }
 
     public TextIndex GetHoverIndex(float position)
@@ -86,14 +223,6 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
     }
 
     public float LineBaseHeight => spriteText.LineBaseHeight;
-
-    public RectangleF GetTextTagPosition(ITextTag textTag) =>
-        textTag switch
-        {
-            RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
-            RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
-            _ => throw new ArgumentOutOfRangeException(nameof(textTag))
-        };
 
     public Vector2 GetTimeTagPosition(TimeTag timeTag)
     {
