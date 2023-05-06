@@ -135,27 +135,19 @@ public static class LyricUtils
 
         var timeTags = lyric.TimeTags;
 
-        switch (index.State)
+        return TextIndexUtils.GetValueByState(index, () =>
         {
-            case TextIndex.IndexState.Start:
-            {
-                var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
-                int startIndex = index.Index;
-                int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
-                return $"{text.Substring(startIndex, endIndex - startIndex)}-";
-            }
-
-            case TextIndex.IndexState.End:
-            {
-                var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
-                int startIndex = previousTimeTag?.Index.Index ?? 0;
-                int endIndex = index.Index + 1;
-                return $"-{text.Substring(startIndex, endIndex - startIndex)}";
-            }
-
-            default:
-                throw new InvalidEnumArgumentException(nameof(index.State));
-        }
+            var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
+            int startIndex = index.Index;
+            int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
+            return $"{text.Substring(startIndex, endIndex - startIndex)}-";
+        }, () =>
+        {
+            var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
+            int startIndex = previousTimeTag?.Index.Index ?? 0;
+            int endIndex = index.Index + 1;
+            return $"-{text.Substring(startIndex, endIndex - startIndex)}";
+        });
     }
 
     public static string GetTimeTagDisplayText(Lyric lyric, TimeTag timeTag)
@@ -175,13 +167,9 @@ public static class LyricUtils
         var matchRuby = lyric.RubyTags.Where(x =>
         {
             int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
-
-            return state switch
-            {
-                TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
-                TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
-                _ => throw new InvalidEnumArgumentException(nameof(state))
-            };
+            return TextIndexUtils.GetValueByState(state,
+                () => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
+                () => x.StartIndex < stringIndex && x.EndIndex >= stringIndex);
         }).FirstOrDefault();
 
         if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
@@ -202,12 +190,7 @@ public static class LyricUtils
         string subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
         // return substring with format.
-        return state switch
-        {
-            TextIndex.IndexState.Start => $"({subtext})-",
-            TextIndex.IndexState.End => $"-({subtext})",
-            _ => throw new InvalidEnumArgumentException(nameof(state))
-        };
+        return TextIndexUtils.GetValueByState(state, $"({subtext})-", $"-({subtext})");
     }
 
     #endregion

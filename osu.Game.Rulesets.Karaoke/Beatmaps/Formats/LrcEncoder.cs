@@ -44,7 +44,7 @@ public class LrcEncoder
         static LrcParser.Model.TextIndex convertTextIndex(TextIndex textIndex)
         {
             int index = textIndex.Index;
-            var state = textIndex.State == TextIndex.IndexState.Start ? IndexState.Start : IndexState.End;
+            var state = TextIndexUtils.GetValueByState(textIndex, IndexState.Start, IndexState.End);
 
             return new LrcParser.Model.TextIndex(index, state);
         }
@@ -74,7 +74,7 @@ public class LrcEncoder
 
         // convert to dictionary, will get start's smallest time and end's largest time.
         return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index)
-                             .Select(x => TextIndexUtils.GetValueByState(x.Key, x.FirstOrDefault(), x.LastOrDefault()))
+                             .Select(x => TextIndexUtils.GetValueByState(x.Key, x.FirstOrDefault, x.LastOrDefault))
                              .ToDictionary(
                                  k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
                                  v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
