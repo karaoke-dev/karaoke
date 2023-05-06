@@ -106,6 +106,12 @@ public class TextIndexUtilsTest
 
         object valueByState = TextIndexUtils.GetValueByState(state, startValue, endValue);
         Assert.AreEqual(expected, valueByState);
+
+        object valueByTextIndexWithFunction = TextIndexUtils.GetValueByState(textIndex, () => startValue, () => endValue);
+        Assert.AreEqual(expected, valueByTextIndexWithFunction);
+
+        object valueByStateWithFunction = TextIndexUtils.GetValueByState(state, () => startValue, () => endValue);
+        Assert.AreEqual(expected, valueByStateWithFunction);
     }
 
     [TestCase(0, TextIndex.IndexState.Start, "0")]

@@ -57,6 +57,17 @@ public static class TextIndexUtils
             _ => throw new ArgumentOutOfRangeException(nameof(state))
         };
 
+    public static T GetValueByState<T>(TextIndex index, Func<T> startValue, Func<T> endValue) =>
+        GetValueByState(index.State, startValue, endValue);
+
+    public static T GetValueByState<T>(TextIndex.IndexState state, Func<T> startValue, Func<T> endValue) =>
+        state switch
+        {
+            TextIndex.IndexState.Start => startValue(),
+            TextIndex.IndexState.End => endValue(),
+            _ => throw new ArgumentOutOfRangeException(nameof(state))
+        };
+
     /// <summary>
     /// Display string with position format
     /// </summary>
