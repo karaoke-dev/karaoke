@@ -135,11 +135,11 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             {
                 case Anchor.CentreLeft:
                     float leftPosition = rect.Left + offset;
-                    return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(leftPosition));
+                    return karaokeSpriteText.GetCharIndicatorByPosition(leftPosition);
 
                 case Anchor.CentreRight:
                     float rightPosition = rect.Right + offset;
-                    return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(rightPosition));
+                    return karaokeSpriteText.GetCharIndicatorByPosition(rightPosition);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(anchor));
