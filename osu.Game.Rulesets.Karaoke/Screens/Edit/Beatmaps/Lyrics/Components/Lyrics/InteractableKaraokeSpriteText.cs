@@ -69,7 +69,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
             float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
             float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
 
-            return TextIndexUtils.GetValueByState(textIndex, startPosition + (endPosition - startPosition) / 2, endPosition);
+            return TextIndexUtils.GetValueByState(textIndex, () => startPosition + (endPosition - startPosition) / 2, () => endPosition);
         }
     }
 
@@ -108,7 +108,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
         static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
         {
             var textIndex = timeTag.Index;
-            var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse(), timeTagsInLyric);
+            var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse, () => timeTagsInLyric);
             int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
             int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
             return spacing;
