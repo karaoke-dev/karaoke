@@ -129,7 +129,7 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
         private int calculateNewIndex(T textTag, float offset, Anchor anchor)
         {
             // get real left-side and right-side position
-            var rect = karaokeSpriteText.GetTextTagPosition(textTag);
+            var rect = karaokeSpriteText.GetTextTagByPosition(textTag);
 
             switch (anchor)
             {

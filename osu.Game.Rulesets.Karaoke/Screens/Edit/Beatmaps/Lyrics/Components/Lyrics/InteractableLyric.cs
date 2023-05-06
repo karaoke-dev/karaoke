@@ -85,12 +85,12 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         switch (lyricCaretState.CaretPosition)
         {
             case CuttingCaretPosition:
-                int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
+                int cuttingLyricStringIndex = karaokeSpriteText.GetCharIndicatorByPosition(position);
                 lyricCaretState.MoveHoverCaretToTargetPosition(lyric, cuttingLyricStringIndex);
                 break;
 
             case TypingCaretPosition:
-                int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
+                int typingStringIndex = karaokeSpriteText.GetCharIndicatorByPosition(position);
                 lyricCaretState.MoveHoverCaretToTargetPosition(lyric, typingStringIndex);
                 break;
 
@@ -104,7 +104,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
                 break;
 
             case TimeTagCaretPosition:
-                var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
+                var timeTag = karaokeSpriteText.GetTimeTagByPosition(position);
                 lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
                 break;
         }

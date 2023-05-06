@@ -74,17 +74,17 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
         // wait until lyric update ruby position.
         ScheduleAfterChildren(() =>
         {
-            var textTagRect = karaokeSpriteText.GetTextTagPosition(Item);
+            var textTagRect = karaokeSpriteText.GetTextTagByPosition(Item);
 
-            var startIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.StartIndex, false));
-            var endIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.EndIndex, true));
+            var startRect = karaokeSpriteText.GetRectByCharIndicator(Item.StartIndex);
+            var endRect = karaokeSpriteText.GetRectByCharIndicator(Item.EndIndex);
 
             // update select position
             updateDrawableRect(previewTextArea, textTagRect);
 
             // update index range position.
-            var indexRangePosition = new Vector2(startIndexPosition.X, textTagRect.Y);
-            var indexRangeSize = new Vector2(endIndexPosition.X - startIndexPosition.X, textTagRect.Height);
+            var indexRangePosition = new Vector2(startRect.Right, textTagRect.Y);
+            var indexRangeSize = new Vector2(endRect.Left - startRect.Right, textTagRect.Height);
             updateDrawableRect(indexRangeBackground, new RectangleF(indexRangePosition, indexRangeSize));
         });
 

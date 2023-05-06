@@ -188,12 +188,7 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
     #endregion
 
-    public TimeTag? GetHoverTimeTag(float position)
-    {
-        var textIndex = GetHoverIndex(position);
-        return HitObject.TimeTags.FirstOrDefault(x => x.Index == textIndex);
-    }
-
+    // todo: will remove this method eventually.
     public TextIndex GetHoverIndex(float position)
     {
         string text = Text;
@@ -211,35 +206,18 @@ public partial class InteractableKaraokeSpriteText : DrawableKaraokeSpriteText<I
 
         return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
 
-        // todo : might have a better way to call GetTextIndexPosition just once.
+        // todo : might have a better way to call spriteText.GetTimeTagPosition just once.
         float getTriggerPositionByTimeIndex(TextIndex textIndex)
         {
             int charIndex = textIndex.Index;
-            float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
-            float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
+            float startPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex)).X;
+            float endPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
 
             return TextIndexUtils.GetValueByState(textIndex, () => startPosition + (endPosition - startPosition) / 2, () => endPosition);
         }
     }
 
-    public float LineBaseHeight => spriteText.LineBaseHeight;
-
-    public Vector2 GetTimeTagPosition(TimeTag timeTag)
-    {
-        var basePosition = GetTextIndexPosition(timeTag.Index);
-        float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);
-        return basePosition + new Vector2(extraPosition, 0);
-
-        static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
-        {
-            var textIndex = timeTag.Index;
-            var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse, () => timeTagsInLyric);
-            int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
-            int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
-            return spacing;
-        }
-    }
-
+    // todo: will remove this method eventually.
     public Vector2 GetTextIndexPosition(TextIndex index) => spriteText.GetTimeTagPosition(index);
 
     [BackgroundDependencyLoader(true)]

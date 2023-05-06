@@ -43,7 +43,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
     {
         var timeTag = caret.TimeTag;
         var textIndex = timeTag.Index;
-        this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), getMoveToDuration(Type), Easing.OutCubic);
+        this.MoveTo(karaokeSpriteText.GetPositionByTimeTag(timeTag), getMoveToDuration(Type), Easing.OutCubic);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
