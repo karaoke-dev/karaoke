@@ -8,12 +8,14 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags;
 
 public partial class RemoveTimeTagButton : KeyActionButton
 {
-    protected override KaraokeEditAction EditAction => KaraokeEditAction.RemoveTimeTag;
+    protected override KaraokeEditAction EditAction
+        => TextIndexUtils.GetValueByState(indexState, KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag);
 
     [Resolved, AllowNull]
     private ILyricCaretState lyricCaretState { get; set; }
@@ -21,17 +23,21 @@ public partial class RemoveTimeTagButton : KeyActionButton
     [Resolved, AllowNull]
     private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-    public RemoveTimeTagButton()
+    private readonly TextIndex.IndexState indexState;
+
+    public RemoveTimeTagButton(TextIndex.IndexState indexState)
     {
+        this.indexState = indexState;
+
         SetIcon(FontAwesome.Solid.Eraser);
 
         Action = () =>
         {
-            if (lyricCaretState.CaretPosition is not TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+            if (lyricCaretState.CaretPosition is not CharIndexCaretPosition charIndexCaretPosition)
                 throw new InvalidOperationException();
 
-            var index = timeTagIndexCaretPosition.Index;
-            lyricTimeTagsChangeHandler.RemoveByPosition(index);
+            int index = charIndexCaretPosition.Index;
+            lyricTimeTagsChangeHandler.RemoveByPosition(new TextIndex(index, this.indexState));
         };
     }
 }

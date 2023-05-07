@@ -160,7 +160,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             static ICaretPositionAlgorithm getCreateTimeTagEditModeAlgorithm(Lyric[] lyrics, CreateTimeTagEditMode createTimeTagEditMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
                 createTimeTagEditMode switch
                 {
-                    CreateTimeTagEditMode.Create => new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
+                    CreateTimeTagEditMode.Create => new CharIndexCaretPositionAlgorithm(lyrics),
                     CreateTimeTagEditMode.Modify => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
                     _ => throw new InvalidOperationException(nameof(createTimeTagEditMode))
                 };

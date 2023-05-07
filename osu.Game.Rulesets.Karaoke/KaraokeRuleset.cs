@@ -117,8 +117,10 @@ public partial class KaraokeRuleset : Ruleset
                 new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
 
                 // edit time-tag.
-                new KeyBinding(InputKey.N, KaraokeEditAction.CreateTimeTag),
-                new KeyBinding(InputKey.Delete, KaraokeEditAction.RemoveTimeTag),
+                new KeyBinding(InputKey.Q, KaraokeEditAction.CreateStartTimeTag),
+                new KeyBinding(InputKey.W, KaraokeEditAction.CreateEndTimeTag),
+                new KeyBinding(InputKey.A, KaraokeEditAction.RemoveStartTimeTag),
+                new KeyBinding(InputKey.S, KaraokeEditAction.RemoveEndTimeTag),
                 new KeyBinding(new[] { InputKey.Z }, KaraokeEditAction.ShiftTheTimeTagLeft),
                 new KeyBinding(new[] { InputKey.X }, KaraokeEditAction.ShiftTheTimeTagRight),
                 new KeyBinding(new[] { InputKey.A }, KaraokeEditAction.ShiftTheTimeTagStateLeft),
