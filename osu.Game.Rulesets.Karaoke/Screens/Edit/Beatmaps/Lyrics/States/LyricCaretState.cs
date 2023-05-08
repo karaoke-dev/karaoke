@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -42,8 +41,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
     private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
     private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
-    [Resolved, AllowNull]
-    private EditorClock editorClock { get; set; }
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
 
     public LyricCaretState()
     {

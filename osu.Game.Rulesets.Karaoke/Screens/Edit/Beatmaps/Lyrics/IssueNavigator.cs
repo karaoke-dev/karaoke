@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -18,26 +17,26 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public partial class IssueNavigator : Component, IIssueNavigator
 {
-    [Resolved, AllowNull]
-    private ILyricEditorState lyricEditorState { get; set; }
+    [Resolved]
+    private ILyricEditorState lyricEditorState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IEditRubyModeState editRubyModeState { get; set; }
+    [Resolved]
+    private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IEditRomajiModeState editRomajiModeState { get; set; }
+    [Resolved]
+    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ITimeTagModeState timeTagModeState { get; set; }
+    [Resolved]
+    private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IEditNoteModeState noteModeState { get; set; }
+    [Resolved]
+    private IEditNoteModeState noteModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private EditorClock clock { get; set; }
+    [Resolved]
+    private EditorClock clock { get; set; } = null!;
 
     public void Navigate(Issue issue)
     {

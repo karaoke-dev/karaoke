@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -21,11 +20,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 /// <typeparam name="TEnum"></typeparam>
 public abstract partial class EditorVerifier<TEnum> : Component, IEditorVerifier<TEnum> where TEnum : struct, Enum
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IBindable<WorkingBeatmap> workingBeatmap { get; set; }
+    [Resolved]
+    private IBindable<WorkingBeatmap> workingBeatmap { get; set; } = null!;
 
     private readonly IDictionary<TEnum, ICheck[]> checkMappings = new Dictionary<TEnum, ICheck[]>();
     private readonly IDictionary<TEnum, BindableList<Issue>> issues = new Dictionary<TEnum, BindableList<Issue>>();
@@ -117,11 +116,11 @@ public abstract partial class EditorVerifier<TEnum> : Component, IEditorVerifier
 /// </summary>
 public abstract partial class EditorVerifier : Component, IEditorVerifier
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IBindable<WorkingBeatmap> workingBeatmap { get; set; }
+    [Resolved]
+    private IBindable<WorkingBeatmap> workingBeatmap { get; set; } = null!;
 
     private readonly List<ICheck> checks = new();
     private readonly BindableList<Issue> issues = new();

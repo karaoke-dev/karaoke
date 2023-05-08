@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -16,14 +15,14 @@ public partial class SetTimeTagTimeButton : KeyActionButton
 {
     protected override KaraokeEditAction EditAction => KaraokeEditAction.SetTime;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+    [Resolved]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private EditorClock editorClock { get; set; }
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
 
     public SetTimeTagTimeButton()
     {

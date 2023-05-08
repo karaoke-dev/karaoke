@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -36,8 +35,8 @@ public abstract partial class TimeTagScrollContainer : BindableScrollContainer
     protected readonly IBindable<bool> ShowTick = new BindableBool();
     protected readonly IBindable<float> TickOpacity = new BindableFloat();
 
-    [Resolved, AllowNull]
-    private EditorClock editorClock { get; set; }
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
 
     protected TimeTagScrollContainer()
     {

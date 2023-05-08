@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -16,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 
 public partial class CreateNewLyricDetailRow : DetailRow
 {
-    [Resolved, AllowNull]
-    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+    [Resolved]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
 
     public CreateNewLyricDetailRow()
         : base(new Lyric { Text = "New lyric" })

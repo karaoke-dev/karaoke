@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
@@ -41,14 +40,14 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
 
         private partial class PageAutoGenerateButton : EditorSectionButton
         {
-            [Resolved, AllowNull]
-            private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+            [Resolved]
+            private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; } = null!;
 
-            [Resolved, AllowNull]
-            private IDialogOverlay dialogOverlay { get; set; }
+            [Resolved]
+            private IDialogOverlay dialogOverlay { get; set; } = null!;
 
-            [Resolved, AllowNull]
-            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+            [Resolved]
+            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; } = null!;
 
             public PageAutoGenerateButton()
             {

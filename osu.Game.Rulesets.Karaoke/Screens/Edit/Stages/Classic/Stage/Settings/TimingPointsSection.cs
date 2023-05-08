@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
@@ -37,8 +36,8 @@ public partial class TimingPointsSection : EditorSection
         {
             private readonly IBindable<int> timingPointsVersion = new Bindable<int>();
 
-            [Resolved, AllowNull]
-            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; }
+            [Resolved]
+            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; } = null!;
 
             public DrawableTimingPoint(ClassicLyricTimingPoint item)
                 : base(item)
@@ -67,11 +66,11 @@ public partial class TimingPointsSection : EditorSection
 
         private partial class CreateNewTimingPointButton : EditorSectionButton
         {
-            [Resolved, AllowNull]
-            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; }
+            [Resolved]
+            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; } = null!;
 
-            [Resolved, AllowNull]
-            private EditorClock clock { get; set; }
+            [Resolved]
+            private EditorClock clock { get; set; } = null!;
 
             public CreateNewTimingPointButton()
             {

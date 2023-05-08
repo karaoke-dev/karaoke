@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -14,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public abstract partial class LyricEditorIssueTable : IssueTable
 {
-    [Resolved, AllowNull]
-    private IIssueNavigator issueNavigator { get; set; }
+    [Resolved]
+    private IIssueNavigator issueNavigator { get; set; } = null!;
 
     public new bool ShowHeaders
     {

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -108,8 +107,8 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
 
         protected partial class DrawableLyricListItem : DrawableTextListItem
         {
-            [Resolved, AllowNull]
-            private OsuColour colours { get; set; }
+            [Resolved]
+            private OsuColour colours { get; set; } = null!;
 
             public DrawableLyricListItem(Lyric? item)
                 : base(item)

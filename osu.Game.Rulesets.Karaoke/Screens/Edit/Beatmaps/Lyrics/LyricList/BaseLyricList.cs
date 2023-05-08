@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -21,8 +20,8 @@ public abstract partial class BaseLyricList : CompositeDrawable
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
 
-    [Resolved, AllowNull]
-    private LyricEditorColourProvider colourProvider { get; set; }
+    [Resolved]
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -30,8 +29,8 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     [Cached(typeof(IStageEditorVerifier))]
     private readonly StageEditorVerifier stageEditorVerifier;
 
-    [Resolved, AllowNull]
-    private EditorBeatmap editorBeatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
 
     public ClassicStageInfo StageInfo
     {

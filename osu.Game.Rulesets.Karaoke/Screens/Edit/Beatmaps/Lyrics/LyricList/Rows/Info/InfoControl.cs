@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -41,14 +40,14 @@ public partial class InfoControl : Container, IHasContextMenu
     [Resolved]
     private IDialogOverlay? dialogOverlay { get; set; }
 
-    [Resolved, AllowNull]
-    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+    [Resolved]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private LyricEditorColourProvider colourProvider { get; set; }
+    [Resolved]
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
     public Lyric Lyric { get; }
 

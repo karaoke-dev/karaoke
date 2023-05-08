@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -124,11 +123,11 @@ public partial class RecordingTimeTagPart : TimelinePart
 
     private partial class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
     {
-        [Resolved, AllowNull]
-        private ILyricCaretState lyricCaretState { get; set; }
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-        [Resolved, AllowNull]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         private readonly Bindable<double?> bindableTime;
 

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
@@ -16,8 +15,8 @@ public partial class LyricNotesChangeHandler : LyricPropertyChangeHandler, ILyri
 {
     #region Auto-Generate
 
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     public bool CanGenerate()
     {

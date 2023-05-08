@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -25,8 +24,8 @@ public abstract partial class Row : CompositeDrawable
 {
     public const int SELECT_AREA_WIDTH = 48;
 
-    [Resolved, AllowNull]
-    private LyricEditorColourProvider colourProvider { get; set; }
+    [Resolved]
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();

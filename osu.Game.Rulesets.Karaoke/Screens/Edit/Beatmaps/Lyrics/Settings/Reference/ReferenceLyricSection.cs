@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -15,8 +14,8 @@ public partial class ReferenceLyricSection : LyricPropertySection
 {
     protected override LocalisableString Title => "Reference lyric";
 
-    [Resolved, AllowNull]
-    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
+    [Resolved]
+    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; } = null!;
 
     private readonly LabelledReferenceLyricSelector labelledReferenceLyricSelector;
 

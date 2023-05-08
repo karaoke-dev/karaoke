@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,8 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 
 public partial class NotePropertyChangeHandler : HitObjectPropertyChangeHandler<Note>, INotePropertyChangeHandler
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     public void ChangeText(string text)
     {

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -19,8 +18,8 @@ public partial class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, 
     private readonly Bindable<NoteEditMode> bindableEditMode = new();
     private readonly BindableList<HitObject> selectedHitObjects = new();
 
-    [Resolved, AllowNull]
-    private EditorBeatmap editorBeatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
 
     public IBindable<NoteEditMode> BindableEditMode => bindableEditMode;
 

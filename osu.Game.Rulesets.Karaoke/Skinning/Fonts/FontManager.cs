@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -21,8 +20,8 @@ public partial class FontManager : Component
 {
     public const string FONT_BASE_PATH = @"fonts";
 
-    [Resolved, AllowNull]
-    private GameHost host { get; set; }
+    [Resolved]
+    private GameHost host { get; set; } = null!;
 
     private Storage storage => host.Storage.GetStorageForDirectory(FONT_BASE_PATH);
 

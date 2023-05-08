@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -42,8 +41,8 @@ public partial class LabelledReferenceLyricSelector : LabelledComponent<Labelled
 
     public partial class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
     {
-        [Resolved, AllowNull]
-        private EditorBeatmap editorBeatmap { get; set; }
+        [Resolved]
+        private EditorBeatmap editorBeatmap { get; set; } = null!;
 
         private readonly BindableWithCurrent<Lyric?> current = new();
 
@@ -122,11 +121,11 @@ public partial class LabelledReferenceLyricSelector : LabelledComponent<Labelled
 
             protected partial class DrawableReferenceLyricListItem : DrawableLyricListItem
             {
-                [Resolved, AllowNull]
-                private OsuColour colours { get; set; }
+                [Resolved]
+                private OsuColour colours { get; set; } = null!;
 
-                [Resolved, AllowNull]
-                private EditorBeatmap editorBeatmap { get; set; }
+                [Resolved]
+                private EditorBeatmap editorBeatmap { get; set; } = null!;
 
                 [Resolved]
                 private Lyric? ignoredLyric { get; set; }

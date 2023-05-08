@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Caching;
@@ -22,8 +21,8 @@ public abstract partial class HitObjectChangeHandler<THitObject> : Component whe
 
     private bool triggerBeatmapSave = true;
 
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
 

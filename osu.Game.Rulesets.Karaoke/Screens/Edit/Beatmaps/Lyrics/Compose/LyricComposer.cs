@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -37,8 +36,8 @@ public partial class LyricComposer : CompositeDrawable
         { PanelDirection.Right, new List<PanelType>() },
     };
 
-    [Resolved, AllowNull]
-    private LyricEditorColourProvider colourProvider { get; set; }
+    [Resolved]
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
     private readonly GridContainer gridContainer;
 
