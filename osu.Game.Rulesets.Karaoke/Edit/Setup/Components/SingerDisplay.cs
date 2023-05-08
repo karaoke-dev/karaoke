@@ -68,7 +68,7 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
             }
         };
 
-        Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name, true);
+        Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name ?? "unknown singer", true);
     }
 
     private partial class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
