@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -134,7 +132,7 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
         bindableDescription.BindValueChanged(e => singerDescription.Text = string.IsNullOrEmpty(e.NewValue) ? "<No description>" : e.NewValue, true);
     }
 
-    private ISinger lastSinger;
+    private ISinger? lastSinger;
 
     public override void SetContent(ISinger singer)
     {

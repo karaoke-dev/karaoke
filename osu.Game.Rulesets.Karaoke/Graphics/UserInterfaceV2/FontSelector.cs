@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -40,9 +38,9 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
     private readonly BindableList<FontInfo> fonts = new();
 
     [Resolved]
-    private FontStore fontStore { get; set; }
+    private FontStore fontStore { get; set; } = null!;
 
-    private KaraokeLocalFontStore localFontStore;
+    private KaraokeLocalFontStore localFontStore = null!;
 
     public Bindable<FontUsage> Current
     {
@@ -158,8 +156,8 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
             // re-calculate if source changed.
             Schedule(() =>
             {
-                string[] oldFamilies = b.OldItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
-                string[] newFamilies = b.NewItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+                string[]? oldFamilies = b.OldItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+                string[]? newFamilies = b.NewItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
 
                 if (oldFamilies != null)
                 {
@@ -261,7 +259,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
             private partial class DrawableFontFamilyListItem : DrawableTextListItem
             {
                 [Resolved]
-                private FontManager fontManager { get; set; }
+                private FontManager fontManager { get; set; } = null!;
 
                 public DrawableFontFamilyListItem(string item)
                     : base(item)

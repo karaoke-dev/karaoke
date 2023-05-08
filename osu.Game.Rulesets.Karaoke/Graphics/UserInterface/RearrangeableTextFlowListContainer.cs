@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
@@ -26,9 +24,9 @@ public partial class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeab
 {
     public readonly Bindable<TModel> SelectedSet = new();
 
-    public Action<TModel> RequestSelection;
+    public Action<TModel>? RequestSelection;
 
-    private SearchContainer<RearrangeableListItem<TModel>> searchContainer;
+    private SearchContainer<RearrangeableListItem<TModel>> searchContainer = null!;
 
     protected sealed override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer() => searchContainer = new SearchContainer<RearrangeableListItem<TModel>>
     {
@@ -56,9 +54,9 @@ public partial class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeab
     {
         public readonly Bindable<TModel> SelectedSet = new();
 
-        public Action<TModel> RequestSelection;
+        public Action<TModel>? RequestSelection;
 
-        private TextFlowContainer text;
+        private TextFlowContainer text = null!;
 
         private Color4 selectedColour;
 
@@ -112,11 +110,11 @@ public partial class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeab
 
         public virtual IEnumerable<LocalisableString> FilterTerms => new[]
         {
-            new LocalisableString(Model.ToString())
+            new LocalisableString(Model?.ToString() ?? string.Empty)
         };
 
         protected virtual void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, TModel model)
-            => textFlowContainer.AddText(model.ToString());
+            => textFlowContainer.AddText(model?.ToString() ?? string.Empty);
 
         private bool matchingFilter = true;
 

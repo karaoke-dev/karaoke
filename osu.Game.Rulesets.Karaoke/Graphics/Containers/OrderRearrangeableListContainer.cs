@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Specialized;
 using osu.Framework.Graphics;
@@ -14,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers;
 
 public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearrangeableListContainer<TModel>
 {
-    public event Action<TModel, int> OnOrderChanged;
+    public event Action<TModel, int>? OnOrderChanged;
 
     protected abstract Vector2 Spacing { get; }
 
@@ -25,7 +23,7 @@ public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearr
         Items.CollectionChanged += collectionChanged;
     }
 
-    private void collectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void collectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         switch (e.Action)
         {
@@ -42,7 +40,7 @@ public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearr
         => base.CreateListFillFlowContainer().With(x => x.Spacing = Spacing);
 
     private bool displayBottomDrawable;
-    private Drawable bottomDrawable;
+    private Drawable? bottomDrawable;
 
     public bool DisplayBottomDrawable
     {
@@ -78,5 +76,5 @@ public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearr
         }
     }
 
-    protected virtual Drawable CreateBottomDrawable() => null;
+    protected virtual Drawable? CreateBottomDrawable() => null;
 }
