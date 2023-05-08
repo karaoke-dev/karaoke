@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -13,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
 public abstract partial class LyricEditorAutoGenerateSubsection<TChangeHandler> : AutoGenerateSubsection
-    where TChangeHandler : ILyricPropertyAutoGenerateChangeHandler
+    where TChangeHandler : class, ILyricPropertyAutoGenerateChangeHandler
 {
     protected override EditorSectionButton CreateGenerateButton()
         => new AutoGenerateButton();
@@ -23,8 +22,8 @@ public abstract partial class LyricEditorAutoGenerateSubsection<TChangeHandler> 
 
     private partial class AutoGenerateButton : SelectLyricButton
     {
-        [Resolved, AllowNull]
-        private TChangeHandler changeHandler { get; set; }
+        [Resolved]
+        private TChangeHandler changeHandler { get; set; } = null!;
 
         protected override LocalisableString StandardText => "Generate";
 
