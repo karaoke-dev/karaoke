@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -25,7 +23,7 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
 
     protected override bool DisplayNotePlayfield => true;
 
-    public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
+    public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods)
         : base(ruleset, beatmap, mods)
     {
         bindableDisplayRubyToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRuby, x.NewValue); });

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -31,11 +29,11 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
     /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>
     /// to be removed from its palette.
     /// </summary>
-    public event Action<SingerDisplay> DeleteRequested;
+    public event Action<SingerDisplay>? DeleteRequested;
 
     private readonly BindableWithCurrent<Singer> current = new();
 
-    private OsuSpriteText singerName;
+    private OsuSpriteText singerName = null!;
 
     public Bindable<Singer> Current
     {
@@ -77,12 +75,12 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
     {
         public Bindable<Singer> Current { get; } = new();
 
-        public Action DeleteRequested { get; set; }
+        public Action? DeleteRequested { get; set; }
 
         private readonly DrawableSingerAvatar singerAvatar;
 
         [Resolved]
-        private OsuColour colours { get; set; }
+        private OsuColour colours { get; set; } = null!;
 
         public SingerCircle()
         {

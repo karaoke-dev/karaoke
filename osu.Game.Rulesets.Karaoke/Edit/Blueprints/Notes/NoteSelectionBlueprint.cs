@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
@@ -25,22 +23,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, IHasPopover
 {
     [Resolved]
-    private INotesChangeHandler notesChangeHandler { get; set; }
+    private INotesChangeHandler notesChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private Playfield playfield { get; set; }
+    private Playfield playfield { get; set; } = null!;
 
     [Resolved]
-    private IScrollingInfo scrollingInfo { get; set; }
+    private IScrollingInfo scrollingInfo { get; set; } = null!;
 
     [Resolved]
-    private INotePositionInfo notePositionInfo { get; set; }
+    private INotePositionInfo notePositionInfo { get; set; } = null!;
 
     [Resolved]
-    private EditorBeatmap beatmap { get; set; }
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     protected ScrollingHitObjectContainer HitObjectContainer => ((KaraokePlayfield)playfield).NotePlayfield.HitObjectContainer;
 

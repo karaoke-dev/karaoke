@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
@@ -24,8 +22,8 @@ public partial class DrawableLayoutPreview : CompositeDrawable
     private readonly Box previewLyric;
     private readonly OsuSpriteText notSupportText;
 
-    [Resolved(canBeNull: true)]
-    private ISkinSource skinSource { get; set; }
+    [Resolved]
+    private ISkinSource? skinSource { get; set; }
 
     public DrawableLayoutPreview()
     {
@@ -50,9 +48,9 @@ public partial class DrawableLayoutPreview : CompositeDrawable
         notSupportText.Hide();
     }
 
-    private LyricLayout layout;
+    private LyricLayout? layout;
 
-    public LyricLayout Layout
+    public LyricLayout? Layout
     {
         get => layout;
         set
@@ -65,9 +63,9 @@ public partial class DrawableLayoutPreview : CompositeDrawable
         }
     }
 
-    private Lyric lyric;
+    private Lyric? lyric;
 
-    public Lyric Lyric
+    public Lyric? Lyric
     {
         get => lyric;
         set
@@ -104,19 +102,19 @@ public partial class DrawableLayoutPreview : CompositeDrawable
             previewLyric.Height = text_size * 1.5f * scale;
 
             // Set relative position
-            previewLyric.Anchor = layout.Alignment;
-            previewLyric.Origin = layout.Alignment;
+            previewLyric.Anchor = Layout.Alignment;
+            previewLyric.Origin = Layout.Alignment;
 
             // Set margin
             const float padding = 30 * scale;
-            float horizontalMargin = layout.HorizontalMargin * scale + padding;
-            float verticalMargin = layout.VerticalMargin * scale + padding;
+            float horizontalMargin = Layout.HorizontalMargin * scale + padding;
+            float verticalMargin = Layout.VerticalMargin * scale + padding;
             previewLyric.Margin = new MarginPadding
             {
-                Left = layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
-                Right = layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
-                Top = layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
-                Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
+                Left = Layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
+                Right = Layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
+                Top = Layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
+                Bottom = Layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
             };
         }
     }

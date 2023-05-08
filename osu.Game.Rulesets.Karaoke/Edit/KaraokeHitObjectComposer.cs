@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit;
 
 public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
 {
-    private DrawableKaraokeEditorRuleset drawableRuleset;
+    private DrawableKaraokeEditorRuleset drawableRuleset = null!;
 
     [Cached]
     private readonly KaraokeRulesetEditConfigManager editConfigManager;
@@ -75,7 +73,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
     private readonly ExportLyricManager exportLyricManager;
 
     [Resolved]
-    private Editor editor { get; set; }
+    private Editor editor { get; set; } = null!;
 
     public KaraokeHitObjectComposer(Ruleset ruleset)
         : base(ruleset)
@@ -104,14 +102,14 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
         CreateMenuBar();
     }
 
-    private DependencyContainer dependencies;
+    private DependencyContainer dependencies = null!;
 
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
     public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
 
-    protected override Playfield PlayfieldAtScreenSpacePosition(Vector2 screenSpacePosition)
+    protected override Playfield? PlayfieldAtScreenSpacePosition(Vector2 screenSpacePosition)
     {
         // Only note and lyric playfield can interact with mouse input.
         if (Playfield.NotePlayfield.ReceivePositionalInputAt(screenSpacePosition))
@@ -132,7 +130,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
             : result;
     }
 
-    protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
+    protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods = null)
     {
         drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
 
@@ -166,7 +164,8 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                 {
                     Items = new MenuItem[]
                     {
-                        new KaraokeSkinEditorMenu(editor, null, "Skin editor"),
+                        // todo: remove this menu until we have a better way to edit skin.
+                        new KaraokeSkinEditorMenu(editor, null!, "Skin editor"),
                         new KaraokeEditorMenu(editor, "Karaoke editor")
                     }
                 },

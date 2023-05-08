@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.IO;
 using System.Linq;
@@ -22,10 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export;
 public partial class ExportLyricManager : Component
 {
     [Resolved]
-    private Storage storage { get; set; }
+    private Storage storage { get; set; } = null!;
 
     [Resolved]
-    private EditorBeatmap beatmap { get; set; }
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     public void ExportToLrc()
     {
