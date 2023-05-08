@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -20,8 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 // so guess this class will be removed eventually.
 public abstract partial class BeatmapListPropertyChangeHandler<TItem> : Component
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
 

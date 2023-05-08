@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
@@ -14,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 
 public partial class StageEditorEditModeSection : EditModeSection<StageEditorEditMode>
 {
-    [Resolved, AllowNull]
-    private IStageEditorStateProvider stageEditorStateProvider { get; set; }
+    [Resolved]
+    private IStageEditorStateProvider stageEditorStateProvider { get; set; } = null!;
 
     private readonly StageEditorEditCategory category;
 

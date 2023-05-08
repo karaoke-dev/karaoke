@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -24,11 +23,11 @@ public abstract partial class ToolbarButton : OsuClickableContainer
         IconContainer.Show();
     }
 
-    [Resolved, AllowNull]
-    private TextureStore textures { get; set; }
+    [Resolved]
+    private TextureStore textures { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ReadableKeyCombinationProvider keyCombinationProvider { get; set; }
+    [Resolved]
+    private ReadableKeyCombinationProvider keyCombinationProvider { get; set; } = null!;
 
     public void SetIcon(string texture) =>
         SetIcon(new Sprite

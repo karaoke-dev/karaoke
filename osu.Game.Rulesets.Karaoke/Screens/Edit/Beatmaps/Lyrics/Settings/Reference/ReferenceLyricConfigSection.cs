@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -23,8 +22,8 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
 
     protected override LocalisableString Title => "Config";
 
-    [Resolved, AllowNull]
-    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
+    [Resolved]
+    private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; } = null!;
 
     private readonly IBindable<IReferenceLyricPropertyConfig?> bindableReferenceLyricPropertyConfig = new Bindable<IReferenceLyricPropertyConfig?>();
 

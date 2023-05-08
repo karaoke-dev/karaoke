@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -26,8 +25,8 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
     [Cached(typeof(IPreviewLyricPositionProvider))]
     private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<int> bindableLyricPropertyWritableVersion;

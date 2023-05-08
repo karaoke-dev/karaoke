@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Caching;
@@ -21,8 +20,8 @@ public partial class BeatmapPropertyChangeHandler : Component
 {
     private readonly Cached changingCache = new();
 
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     protected KaraokeBeatmap KaraokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
 

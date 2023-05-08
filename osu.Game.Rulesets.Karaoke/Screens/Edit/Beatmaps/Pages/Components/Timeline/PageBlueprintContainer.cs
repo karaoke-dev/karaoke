@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Edit;
@@ -15,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Components.Timel
 
 public partial class PageBlueprintContainer : EditableTimelineBlueprintContainer<Page>
 {
-    [Resolved, AllowNull]
-    private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+    [Resolved]
+    private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; } = null!;
 
     [BackgroundDependencyLoader]
     private void load(IPageStateProvider pageStateProvider)
@@ -42,11 +41,11 @@ public partial class PageBlueprintContainer : EditableTimelineBlueprintContainer
 
     protected partial class PageSelectionHandler : EditableTimelineSelectionHandler
     {
-        [Resolved, AllowNull]
-        private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+        [Resolved]
+        private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; } = null!;
 
-        [Resolved, AllowNull]
-        private IPageStateProvider pageStateProvider { get; set; }
+        [Resolved]
+        private IPageStateProvider pageStateProvider { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load()

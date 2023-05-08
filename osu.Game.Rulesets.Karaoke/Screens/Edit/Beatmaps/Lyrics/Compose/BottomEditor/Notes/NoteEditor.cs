@@ -3,7 +3,6 @@
 
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -30,8 +29,8 @@ public partial class NoteEditor : Container
     [Cached(typeof(INotePositionInfo))]
     private readonly PreviewNotePositionInfo notePositionInfo = new();
 
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 

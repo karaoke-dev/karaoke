@@ -2,23 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Components.Timeline;
 
 public partial class PagesTimeLine : EditableTimeline
 {
     public const float TIMELINE_HEIGHT = 38;
-
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
 
     [BackgroundDependencyLoader]
     private void load(OsuColour colours, IPageStateProvider pageStateProvider)

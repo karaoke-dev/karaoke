@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -21,8 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyricEditorVerifier
 {
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     private readonly Dictionary<KaraokeHitObject, BindableList<Issue>> hitObjectIssues = new();
 

@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -22,8 +21,8 @@ public abstract partial class SectionTimingInfoItemsEditor<TItem> : SectionItems
 
     protected abstract partial class DrawableTimingInfoItem : CompositeDrawable
     {
-        [Resolved, AllowNull]
-        private ISectionItemsEditorProvider sectionItemsEditorProvider { get; set; }
+        [Resolved]
+        private ISectionItemsEditorProvider sectionItemsEditorProvider { get; set; } = null!;
 
         public readonly TItem Item;
 

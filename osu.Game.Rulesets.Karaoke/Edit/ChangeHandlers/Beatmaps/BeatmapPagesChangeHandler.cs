@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
@@ -18,8 +17,8 @@ public partial class BeatmapPagesChangeHandler : BeatmapPropertyChangeHandler, I
 {
     #region Auto-Generate
 
-    [Resolved, AllowNull]
-    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+    [Resolved]
+    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; } = null!;
 
     public bool CanGenerate()
     {

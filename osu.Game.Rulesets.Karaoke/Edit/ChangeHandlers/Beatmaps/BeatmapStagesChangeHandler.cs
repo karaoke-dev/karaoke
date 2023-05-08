@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
@@ -15,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapStagesChangeHandler
 {
-    [Resolved, AllowNull]
-    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+    [Resolved]
+    private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; } = null!;
 
     bool IAutoGenerateChangeHandler<StageInfo>.CanGenerate<TStageInfo>()
         => CanGenerate<TStageInfo>();

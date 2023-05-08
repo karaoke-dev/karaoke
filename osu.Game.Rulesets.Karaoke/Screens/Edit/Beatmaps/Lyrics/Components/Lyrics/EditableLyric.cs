@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -18,11 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 [Cached(typeof(IEditableLyricState))]
 public partial class EditableLyric : InteractableLyric, IEditableLyricState
 {
-    [Resolved, AllowNull]
-    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+    [Resolved]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     public EditableLyric(Lyric lyric)
         : base(lyric)

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
@@ -37,8 +36,8 @@ public partial class PagesSection : EditorSection
         {
             private readonly IBindable<int> pagesVersion = new Bindable<int>();
 
-            [Resolved, AllowNull]
-            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+            [Resolved]
+            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; } = null!;
 
             public DrawablePage(Page item)
                 : base(item)
@@ -67,11 +66,11 @@ public partial class PagesSection : EditorSection
 
         private partial class CreateNewPageButton : EditorSectionButton
         {
-            [Resolved, AllowNull]
-            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; }
+            [Resolved]
+            private IBeatmapPagesChangeHandler beatmapPagesChangeHandler { get; set; } = null!;
 
-            [Resolved, AllowNull]
-            private EditorClock clock { get; set; }
+            [Resolved]
+            private EditorClock clock { get; set; } = null!;
 
             public CreateNewPageButton()
             {

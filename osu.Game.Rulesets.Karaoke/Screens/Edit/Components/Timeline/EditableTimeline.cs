@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -18,8 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 [Cached]
 public partial class EditableTimeline : BindableScrollContainer, IPositionSnapProvider
 {
-    [Resolved, AllowNull]
-    private EditorClock editorClock { get; set; }
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
 
     public EditableTimeline()
     {

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -78,8 +77,8 @@ public partial class TestSceneOverlayColourProvider : OsuTestScene
 
     private partial class PreviewColourDrawable : CompositeDrawable
     {
-        [Resolved, AllowNull]
-        private GameHost host { get; set; }
+        [Resolved]
+        private GameHost host { get; set; } = null!;
 
         private readonly Color4 color;
 

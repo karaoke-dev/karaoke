@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -27,11 +26,11 @@ public partial class LyricSelectionState : Component, ILyricSelectionState
 
     public Action<LyricEditorSelectingAction>? Action { get; set; }
 
-    [Resolved, AllowNull]
-    private EditorBeatmap beatmap { get; set; }
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     private readonly BindableBool selecting = new();
 

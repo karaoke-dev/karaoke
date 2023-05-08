@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
@@ -14,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
 public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
 {
-    [Resolved, AllowNull]
-    private EditorClock clock { get; set; }
+    [Resolved]
+    private EditorClock clock { get; set; } = null!;
 
     protected override IEnumerable<ICheck> CreateChecks() => new ICheck[] { new CheckBeatmapPageInfo() };
 

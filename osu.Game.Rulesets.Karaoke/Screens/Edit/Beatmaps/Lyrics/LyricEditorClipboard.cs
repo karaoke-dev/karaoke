@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
@@ -24,28 +23,28 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
 {
-    [Resolved, AllowNull]
-    private GameHost host { get; set; }
+    [Resolved]
+    private GameHost host { get; set; } = null!;
 
     [Resolved]
     private OnScreenDisplay? onScreenDisplay { get; set; }
 
-    [Resolved, AllowNull]
-    private ILyricCaretState lyricCaretState { get; set; }
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     private Lyric? getSelectedLyric() => lyricCaretState.BindableFocusedLyric.Value;
 
-    [Resolved, AllowNull]
-    private ITextingModeState textingModeState { get; set; }
+    [Resolved]
+    private ITextingModeState textingModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IEditRubyModeState editRubyModeState { get; set; }
+    [Resolved]
+    private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private IEditRomajiModeState editRomajiModeState { get; set; }
+    [Resolved]
+    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
-    [Resolved, AllowNull]
-    private ITimeTagModeState timeTagModeState { get; set; }
+    [Resolved]
+    private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }

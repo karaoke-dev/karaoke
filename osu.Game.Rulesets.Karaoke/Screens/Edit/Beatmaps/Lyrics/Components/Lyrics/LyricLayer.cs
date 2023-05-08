@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
@@ -11,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class LyricLayer : BaseLayer
 {
-    [Resolved, AllowNull]
-    private OsuColour colours { get; set; }
+    [Resolved]
+    private OsuColour colours { get; set; } = null!;
 
     public LyricLayer(Lyric lyric, Drawable karaokeSpriteText)
         : base(lyric)
