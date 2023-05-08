@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Reflection;
 using osu.Framework.Allocation;
@@ -18,12 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 public partial class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatmapResourcesProvider
 {
     [Resolved]
-    private BeatmapManager beatmapManager { get; set; }
+    private BeatmapManager beatmapManager { get; set; } = null!;
 
     [Resolved]
-    private IBindable<WorkingBeatmap> working { get; set; }
+    private IBindable<WorkingBeatmap> working { get; set; } = null!;
 
-    public Texture GetSingerAvatar(ISinger singer)
+    public Texture? GetSingerAvatar(ISinger singer)
     {
         var provider = getBeatmapResourceProvider();
         if (provider == null)
@@ -36,11 +34,11 @@ public partial class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatma
         if (beatmapSetInfo == null)
             return null;
 
-        string path = beatmapSetInfo.GetPathForFile($"assets/singers/{s.AvatarFile}");
+        string? path = beatmapSetInfo.GetPathForFile($"assets/singers/{s.AvatarFile}");
         return provider.LargeTextureStore.Get(path);
     }
 
-    private IBeatmapResourceProvider getBeatmapResourceProvider()
+    private IBeatmapResourceProvider? getBeatmapResourceProvider()
     {
         // todo : use better way to get the resource provider.
         var prop = typeof(BeatmapManager).GetField("workingBeatmapCache", BindingFlags.Instance | BindingFlags.NonPublic);

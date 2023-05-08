@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
@@ -17,8 +15,8 @@ public partial class KaraokeSetupSection : RulesetSetupSection
 {
     private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(Beatmap);
 
-    private LabelledSwitchButton scorable;
-    private LabelledSingerList singerList;
+    private LabelledSwitchButton scorable = null!;
+    private LabelledSingerList singerList = null!;
 
     public KaraokeSetupSection()
         : base(new KaraokeRuleset().RulesetInfo)

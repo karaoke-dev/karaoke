@@ -74,7 +74,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                     {
                         Items = new MenuItem[]
                         {
-                            new KaraokeSkinEditorMenu(null, null, "Skin editor"),
+                            new KaraokeSkinEditorMenu(null!, null!, "Skin editor"),
                         }
                     },
                 }

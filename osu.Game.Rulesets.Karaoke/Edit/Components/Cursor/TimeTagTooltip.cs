@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -20,7 +18,7 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
 {
     private const int time_display_height = 25;
 
-    private Box background;
+    private Box background = null!;
     private readonly OsuSpriteText trackTimer;
     private readonly OsuSpriteText index;
     private readonly OsuSpriteText indexState;
@@ -84,7 +82,7 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
         };
     }
 
-    private TimeTag lastTimeTag;
+    private TimeTag? lastTimeTag;
 
     public override void SetContent(TimeTag timeTag)
     {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -45,7 +43,7 @@ public partial class SingerList : CompositeDrawable
         }
     }
 
-    private FillFlowContainer singers;
+    private FillFlowContainer singers = null!;
 
     private IEnumerable<SingerDisplay> singerDisplays => singers.OfType<SingerDisplay>();
 

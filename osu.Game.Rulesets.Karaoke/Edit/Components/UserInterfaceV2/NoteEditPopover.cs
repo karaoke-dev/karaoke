@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -42,7 +40,7 @@ public partial class NoteEditPopover : OsuPopover
 
     private partial class NoteSection : Section
     {
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
         protected override LocalisableString Title => "Note property";
 
@@ -108,9 +106,6 @@ public partial class NoteEditPopover : OsuPopover
         [BackgroundDependencyLoader(true)]
         private void load(HitObjectComposer composer)
         {
-            if (notePropertyChangeHandler != null || composer == null)
-                return;
-
             // todo: not a good way to get change handler, might remove or found another way eventually.
             // cannot get change handler directly in editor screen, so should trying to get from karaoke hit object composer.
             notePropertyChangeHandler = composer.Dependencies.Get<INotePropertyChangeHandler>();

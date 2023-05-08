@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -21,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
-using osu.Game.Skinning;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit;
@@ -29,25 +26,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit;
 public partial class KaraokeSelectionHandler : EditorSelectionHandler
 {
     [Resolved]
-    private EditorBeatmap beatmap { get; set; }
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     [Resolved]
-    private INotePositionInfo notePositionInfo { get; set; }
+    private INotePositionInfo notePositionInfo { get; set; } = null!;
 
     [Resolved]
-    private ISkinSource source { get; set; }
+    private HitObjectComposer composer { get; set; } = null!;
 
     [Resolved]
-    private HitObjectComposer composer { get; set; }
+    private INotesChangeHandler notesChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private INotesChangeHandler notesChangeHandler { get; set; }
+    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
-
-    [Resolved]
-    private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+    private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; } = null!;
 
     protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 

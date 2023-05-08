@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
@@ -19,8 +17,8 @@ public partial class LayoutToolTip : BackgroundToolTip<Lyric>
 
     private readonly DrawableLayoutPreview preview;
 
-    [Resolved(canBeNull: true)]
-    private ISkinSource skinSource { get; set; }
+    [Resolved]
+    private ISkinSource? skinSource { get; set; }
 
     public LayoutToolTip()
     {
@@ -30,7 +28,7 @@ public partial class LayoutToolTip : BackgroundToolTip<Lyric>
         };
     }
 
-    private Lyric lastLyric;
+    private Lyric? lastLyric;
 
     public override void SetContent(Lyric lyric)
     {
@@ -40,7 +38,7 @@ public partial class LayoutToolTip : BackgroundToolTip<Lyric>
         lastLyric = lyric;
 
         // Get layout
-        var layout = skinSource?.GetConfig<Lyric, LyricLayout>(lyric).Value;
+        var layout = skinSource?.GetConfig<Lyric, LyricLayout>(lyric)?.Value;
 
         // Display in content
         preview.Layout = layout;
