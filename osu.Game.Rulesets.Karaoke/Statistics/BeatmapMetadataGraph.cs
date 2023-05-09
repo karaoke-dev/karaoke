@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.Color4Extensions;
@@ -58,19 +57,19 @@ public partial class BeatmapMetadataGraph : Container
                     {
                         new TextMetadataSection("Description")
                         {
-                            Text = beatmapInfo?.DifficultyName
+                            Text = beatmapInfo?.DifficultyName ?? string.Empty
                         },
                         new TextMetadataSection("Source")
                         {
-                            Text = beatmapInfo?.Metadata.Source
+                            Text = beatmapInfo?.Metadata.Source ?? string.Empty
                         },
                         new TextMetadataSection("Tags")
                         {
-                            Text = beatmapInfo?.Metadata.Tags
+                            Text = beatmapInfo?.Metadata.Tags ?? string.Empty
                         },
                         new SingerMetadataSection("Singer")
                         {
-                            Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray()
+                            Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray() ?? Array.Empty<Singer>()
                         }
                     },
                 },
@@ -111,7 +110,7 @@ public partial class BeatmapMetadataGraph : Container
 
     private partial class TextMetadataSection : MetadataSection
     {
-        private TextFlowContainer textFlow;
+        private TextFlowContainer? textFlow;
 
         public TextMetadataSection(string title)
             : base(title)
@@ -149,7 +148,7 @@ public partial class BeatmapMetadataGraph : Container
 
     private partial class SingerMetadataSection : MetadataSection
     {
-        private FillFlowContainer<SingerSpriteText> textFlow;
+        private FillFlowContainer<SingerSpriteText>? textFlow;
 
         public SingerMetadataSection(string title)
             : base(title)
@@ -160,7 +159,7 @@ public partial class BeatmapMetadataGraph : Container
         {
             set
             {
-                if (value == null || !value.Any())
+                if (!value.Any())
                 {
                     this.FadeOut(transition_duration);
                     return;
@@ -194,7 +193,6 @@ public partial class BeatmapMetadataGraph : Container
 
         private partial class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
         {
-            private Singer singer;
             private readonly OsuSpriteText osuSpriteText;
 
             public SingerSpriteText()
@@ -209,7 +207,9 @@ public partial class BeatmapMetadataGraph : Container
                 };
             }
 
-            public Singer Singer
+            private Singer? singer;
+
+            public Singer? Singer
             {
                 get => singer;
                 set
@@ -221,7 +221,7 @@ public partial class BeatmapMetadataGraph : Container
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
-            public Singer TooltipContent => Singer;
+            public Singer? TooltipContent => Singer;
         }
     }
 }
