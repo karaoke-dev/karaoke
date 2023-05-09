@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
@@ -15,10 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings;
 public abstract partial class KaraokeSettingsSubsection : SettingsSubsection
 {
     [Resolved]
-    protected KaraokeRulesetConfigManager Config { get; private set; }
+    protected KaraokeRulesetConfigManager Config { get; private set; } = null!;
 
     [Resolved]
-    private Bindable<SettingsSubsection> selectedSubsection { get; set; }
+    private Bindable<SettingsSubsection?> selectedSubsection { get; set; } = null!;
 
     public virtual SettingsSubsectionPreview CreatePreview() => new UnderConstructionPreview();
 

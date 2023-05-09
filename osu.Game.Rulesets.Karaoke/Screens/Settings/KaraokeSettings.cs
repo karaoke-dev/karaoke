@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -31,7 +29,7 @@ public partial class KaraokeSettings : OsuScreen
     private Bindable<SettingsSection> selectedSection = new();
 
     [Cached]
-    private Bindable<SettingsSubsection> selectedSubsection = new();
+    private Bindable<SettingsSubsection?> selectedSubsection = new();
 
     private readonly KaraokeConfigWaveContainer waves;
     private readonly Box background;
