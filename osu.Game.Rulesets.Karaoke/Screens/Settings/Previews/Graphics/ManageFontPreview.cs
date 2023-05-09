@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +34,11 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
         ShowBackground = false;
     }
 
-    private EggContainer eggContainer;
-    private FillFlowContainer<GenerateRowContainer> textContainer;
+    private EggContainer eggContainer = null!;
+    private FillFlowContainer<GenerateRowContainer> textContainer = null!;
 
     [BackgroundDependencyLoader]
-    private void load(TextureStore textures, OsuColour colours)
+    private void load(OsuColour colours)
     {
         Children = new Drawable[]
         {
@@ -126,7 +124,7 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
                             return ("Eggs/camp-tent", 0.5f, 50);
 
                         default:
-                            return (null, 0, 0);
+                            return (string.Empty, 0, 0);
                     }
                 }
             };
@@ -168,7 +166,7 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
 
         private readonly GenerateDirection direction;
 
-        public Action<string> ClickedText;
+        public Action<string>? ClickedText;
 
         public GenerateRowContainer(GenerateDirection direction)
         {
@@ -268,7 +266,7 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
     public partial class EggContainer : BeatSyncedContainer
     {
         [Resolved]
-        private TextureStore textures { get; set; }
+        private TextureStore textures { get; set; } = null!;
 
         public void GenerateEgg(string textureName, float scale, float yOffset)
         {

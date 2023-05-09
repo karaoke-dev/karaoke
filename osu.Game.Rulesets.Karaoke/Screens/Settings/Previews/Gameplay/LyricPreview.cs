@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Allocation;
@@ -31,9 +29,9 @@ public partial class LyricPreview : SettingsSubsectionPreview
     private readonly Bindable<CultureInfo> preferLanguage = new();
 
     [Resolved]
-    private FontStore fontStore { get; set; }
+    private FontStore fontStore { get; set; } = null!;
 
-    private KaraokeLocalFontStore localFontStore;
+    private KaraokeLocalFontStore localFontStore = null!;
 
     private readonly DrawableLyric drawableLyric;
 
