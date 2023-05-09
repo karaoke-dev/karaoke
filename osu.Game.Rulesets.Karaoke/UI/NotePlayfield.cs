@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -211,8 +210,8 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         explosion.Delay(200).Expire(true);
     }
 
-    [BackgroundDependencyLoader(true)]
-    private void load([CanBeNull] KaraokeSessionStatics session)
+    [BackgroundDependencyLoader]
+    private void load(KaraokeSessionStatics? session)
     {
         session?.BindWith(KaraokeRulesetSession.ScoringPitch, scoringPitch);
 
