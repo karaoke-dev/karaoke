@@ -72,7 +72,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         recalculateIssues();
     }
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(KaraokeRulesetEditCheckerConfigManager? rulesetEditCheckerConfigManager)
     {
         // todo: adjust the config in the config.

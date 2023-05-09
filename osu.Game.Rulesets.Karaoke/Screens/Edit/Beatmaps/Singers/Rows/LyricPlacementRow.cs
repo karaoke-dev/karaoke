@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
@@ -25,8 +23,8 @@ public abstract partial class LyricPlacementColumn : CompositeDrawable
         this.singer = singer;
     }
 
-    [BackgroundDependencyLoader(true)]
-    private void load(OverlayColourProvider colourProvider, [CanBeNull] KaraokeHitObjectComposer composer)
+    [BackgroundDependencyLoader]
+    private void load(OverlayColourProvider colourProvider)
     {
         InternalChildren = new Drawable[]
         {

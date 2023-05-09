@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +32,10 @@ public partial class KaraokeInputManager : RulesetInputManager<KaraokeScoringAct
         UseParentInput = false;
     }
 
-    private IBeatmap beatmap;
+    private IBeatmap beatmap = null!;
 
-    [BackgroundDependencyLoader(true)]
-    private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session, EditorBeatmap editorBeatmap)
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session, EditorBeatmap? editorBeatmap)
     {
         if (editorBeatmap != null)
         {

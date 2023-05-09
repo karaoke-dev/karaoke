@@ -40,7 +40,7 @@ public partial class EditorNotePlayfield : ScrollingNotePlayfield
         });
     }
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load()
     {
         // todo : load data from scoring manager.

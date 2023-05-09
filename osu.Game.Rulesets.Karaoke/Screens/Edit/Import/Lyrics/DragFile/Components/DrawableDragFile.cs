@@ -26,7 +26,7 @@ public partial class DrawableDragFile : Container
 
     private RoundedButton importButton;
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(OsuColour colours)
     {
         Masking = true;
