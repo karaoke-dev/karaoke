@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -16,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Statistics;
 
 public partial class BeatmapInfoGraph : ClickableContainer
 {
-    [Resolved(CanBeNull = true)]
-    private OsuGame game { get; set; }
+    [Resolved]
+    private OsuGame? game { get; set; }
 
     private readonly IBeatmap beatmap;
 
@@ -34,8 +32,8 @@ public partial class BeatmapInfoGraph : ClickableContainer
         return base.OnClick(e);
     }
 
-    [BackgroundDependencyLoader(true)]
-    private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap, [CanBeNull] BeatmapDifficultyCache difficultyCache)
+    [BackgroundDependencyLoader]
+    private void load(IBindable<WorkingBeatmap>? workingBeatmap, BeatmapDifficultyCache? difficultyCache)
     {
         if (workingBeatmap == null || difficultyCache == null)
             return;
@@ -68,7 +66,7 @@ public partial class BeatmapInfoGraph : ClickableContainer
             InfoLabelContainer.RemoveRange(shouldBeRemovedLabel, true);
         }
 
-        protected FillFlowContainer InfoLabelContainer
+        protected FillFlowContainer? InfoLabelContainer
             => (Children.LastOrDefault() as FillFlowContainer)?.LastOrDefault() as FillFlowContainer;
     }
 }
