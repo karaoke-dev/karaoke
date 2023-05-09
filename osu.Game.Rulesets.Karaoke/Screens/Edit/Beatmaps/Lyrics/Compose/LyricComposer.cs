@@ -152,8 +152,8 @@ public partial class LyricComposer : CompositeDrawable
         }
     }
 
-    [BackgroundDependencyLoader(true)]
-    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state, ITimeTagModeState timeTagModeState)
+    [BackgroundDependencyLoader]
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state)
     {
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);

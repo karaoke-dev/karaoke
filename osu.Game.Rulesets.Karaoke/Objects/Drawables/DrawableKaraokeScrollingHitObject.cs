@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -23,8 +22,8 @@ public abstract partial class DrawableKaraokeScrollingHitObject : DrawableHitObj
     {
     }
 
-    [BackgroundDependencyLoader(true)]
-    private void load([NotNull] IScrollingInfo scrollingInfo)
+    [BackgroundDependencyLoader]
+    private void load(IScrollingInfo scrollingInfo)
     {
         Direction.BindTo(scrollingInfo.Direction);
         Direction.BindValueChanged(OnDirectionChanged, true);
