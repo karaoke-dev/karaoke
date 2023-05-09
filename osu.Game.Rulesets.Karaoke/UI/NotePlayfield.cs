@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -48,7 +46,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
     public override bool IsPresent => true;
 
     [Resolved]
-    private INotePositionInfo notePositionInfo { get; set; }
+    private INotePositionInfo notePositionInfo { get; set; } = null!;
 
     public NotePlayfield(int columns)
         : base(columns)
@@ -61,7 +59,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
 
         BackgroundLayer.AddRange(new Drawable[]
         {
-            new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.StageBackground), _ => null)
+            new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.StageBackground))
             {
                 Depth = 2,
                 RelativeSizeAxes = Axes.Both

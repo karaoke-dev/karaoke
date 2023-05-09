@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -27,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI;
 
 public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
 {
-    public KaraokeSessionStatics Session { get; private set; }
+    public KaraokeSessionStatics Session { get; private set; } = null!;
     public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
     public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
@@ -43,13 +42,13 @@ public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHi
     private readonly FontManager fontManager;
 
     [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
-    private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+    private readonly KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
 
-    public new KaraokeBeatmap Beatmap => base.Beatmap as KaraokeBeatmap;
+    public new KaraokeBeatmap Beatmap => (KaraokeBeatmap)base.Beatmap;
 
     protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
-    public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
+    public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods)
         : base(ruleset, beatmap, mods)
     {
         AddInternal(positionCalculator = new NotePositionInfo());
@@ -74,7 +73,11 @@ public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHi
     {
         // todo: use better way to assign the stage info.
         // also, should monitor the stage info change.
-        updatePlayfieldArrangement(Beatmap.CurrentStageInfo);
+        var stageInfo = Beatmap.CurrentStageInfo;
+        if (stageInfo == null)
+            throw new ArgumentNullException();
+
+        updatePlayfieldArrangement(stageInfo);
 
         // TODO : it should be moved into NotePlayfield
         new BarLineGenerator<BarLine>(Beatmap).BarLines.ForEach(bar => base.Playfield.Add(bar));
@@ -89,7 +92,7 @@ public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHi
             Playfield.NotePlayfield.Hide();
     }
 
-    public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
+    public override DrawableHitObject<KaraokeHitObject>? CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
     protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
 
