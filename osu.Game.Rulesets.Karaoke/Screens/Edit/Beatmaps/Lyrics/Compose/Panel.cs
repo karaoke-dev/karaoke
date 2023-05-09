@@ -57,7 +57,7 @@ public abstract partial class Panel : FocusedOverlayContainer
 
     protected abstract IReadOnlyList<Drawable> CreateSections();
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider, AudioManager audio)
     {
         bindableMode.BindTo(state.BindableMode);

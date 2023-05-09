@@ -36,7 +36,7 @@ public partial class KaraokeInputManager : RulesetInputManager<KaraokeScoringAct
 
     private IBeatmap beatmap;
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session, EditorBeatmap editorBeatmap)
     {
         if (editorBeatmap != null)

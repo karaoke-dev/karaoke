@@ -25,7 +25,7 @@ public partial class Separator : CompositeDrawable
         };
     }
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
     {
         bindableMode.BindValueChanged(x =>

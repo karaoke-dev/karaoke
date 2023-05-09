@@ -103,7 +103,7 @@ public partial class NoteEditPopover : OsuPopover
             });
         }
 
-        [BackgroundDependencyLoader(true)]
+        [BackgroundDependencyLoader]
         private void load(HitObjectComposer composer)
         {
             // todo: not a good way to get change handler, might remove or found another way eventually.

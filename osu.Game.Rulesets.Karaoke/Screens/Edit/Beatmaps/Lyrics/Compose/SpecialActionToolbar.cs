@@ -54,7 +54,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
         };
     }
 
-    [BackgroundDependencyLoader(true)]
+    [BackgroundDependencyLoader]
     private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
     {
         bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
