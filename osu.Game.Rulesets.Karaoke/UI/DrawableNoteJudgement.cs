@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.UI;
 
 public partial class DrawableNoteJudgement : DrawableJudgement
 {
-    public DrawableNoteJudgement(JudgementResult result, DrawableHitObject judgedObject)
+    public DrawableNoteJudgement(JudgementResult result, DrawableHitObject? judgedObject)
         : base(result, judgedObject)
     {
     }
