@@ -15,10 +15,10 @@ namespace osu.Game.Rulesets.Karaoke.Extensions;
 /// </summary>
 public static class OsuGameExtensions
 {
-    public static KaraokeRuleset? GetRuleset(this DependencyContainer dependencies)
+    public static KaraokeRuleset GetRuleset(this DependencyContainer dependencies)
     {
         var rulesets = dependencies.Get<RulesetStore>().AvailableRulesets.Select(info => info.CreateInstance());
-        return rulesets.FirstOrDefault(r => r is KaraokeRuleset) as KaraokeRuleset;
+        return rulesets.OfType<KaraokeRuleset>().First();
     }
 
     private static Container? getBasePlacementContainer(this OsuGame game)
