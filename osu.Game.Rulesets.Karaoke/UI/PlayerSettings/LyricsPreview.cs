@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -28,7 +26,7 @@ public partial class LyricsPreview : CompositeDrawable
     private readonly Bindable<Lyric[]> singingLyrics = new();
 
     [Resolved]
-    private IBindable<WorkingBeatmap> beatmap { get; set; }
+    private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
 
     public LyricsPreview()
     {
