@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -28,9 +26,9 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
     }
 
     [Resolved]
-    protected OsuGame Game { get; private set; }
+    protected OsuGame Game { get; private set; } = null!;
 
-    private KaraokeChangelogOverlay changelogOverlay;
+    private KaraokeChangelogOverlay? changelogOverlay;
 
     [BackgroundDependencyLoader]
     private void load()
