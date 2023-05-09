@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 /// </summary>
 public partial class ChangelogListing : ChangelogContent
 {
-    private readonly List<APIChangelogBuild> entries;
+    private readonly IReadOnlyList<APIChangelogBuild> entries;
 
-    public ChangelogListing(List<APIChangelogBuild> entries)
+    public ChangelogListing(IEnumerable<APIChangelogBuild> entries)
     {
         this.entries = entries.Take(4).ToList();
     }
