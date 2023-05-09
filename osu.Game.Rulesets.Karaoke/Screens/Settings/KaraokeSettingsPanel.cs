@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -25,7 +23,7 @@ public partial class KaraokeSettingsPanel : SettingsPanel
 {
     public new const float WIDTH = 300;
 
-    private Box hoverBackground;
+    private Box hoverBackground = null!;
 
     protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
     {
@@ -75,7 +73,7 @@ public partial class KaraokeSettingsPanel : SettingsPanel
     public IReadOnlyList<SettingsSection> Sections => SectionsContainer.Children;
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
+    private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection?> selectedSubsection)
     {
         initialSelectionContainer();
         initialContentContainer();

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -32,7 +30,7 @@ public partial class SettingsFont : SettingsItem<FontUsage>
         private const float height = 30;
 
         private readonly BindableWithCurrent<FontUsage> current = new();
-        private BindableFontUsage bindableFontUsage;
+        private BindableFontUsage? bindableFontUsage;
 
         private readonly GridContainer grid;
         private readonly SettingsButton fontButton;

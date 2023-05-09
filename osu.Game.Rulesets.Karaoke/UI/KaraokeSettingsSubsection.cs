@@ -73,7 +73,7 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
             // Device
             new SettingsMicrophoneDeviceDropdown
             {
-                ClassicDefault = null,
+                ClassicDefault = string.Empty,
                 LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevice,
                 Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
             },

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -25,7 +23,7 @@ public partial class Header : Container
     public const float HEIGHT = 75;
 
     [Resolved]
-    private KaraokeSettingsColourProvider colourProvider { get; set; }
+    private KaraokeSettingsColourProvider colourProvider { get; set; } = null!;
 
     private readonly Box background;
     private readonly KaraokeConfigHeaderTitle title;
