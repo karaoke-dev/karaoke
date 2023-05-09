@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -64,12 +62,12 @@ public partial class ChangelogSingleBuild : ChangelogContent
             fill.Insert(-1, new NavigationIconButton(Build.Versions.Next)
             {
                 Icon = FontAwesome.Solid.ChevronLeft,
-                SelectBuild = b => SelectBuild(b)
+                SelectBuild = b => SelectBuild?.Invoke(b)
             });
             fill.Insert(1, new NavigationIconButton(Build.Versions.Previous)
             {
                 Icon = FontAwesome.Solid.ChevronRight,
-                SelectBuild = b => SelectBuild(b)
+                SelectBuild = b => SelectBuild?.Invoke(b)
             });
 
             return fill;
@@ -78,9 +76,9 @@ public partial class ChangelogSingleBuild : ChangelogContent
 
     private partial class NavigationIconButton : IconButton
     {
-        public Action<APIChangelogBuild> SelectBuild;
+        public Action<APIChangelogBuild>? SelectBuild;
 
-        public NavigationIconButton(APIChangelogBuild build)
+        public NavigationIconButton(APIChangelogBuild? build)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;

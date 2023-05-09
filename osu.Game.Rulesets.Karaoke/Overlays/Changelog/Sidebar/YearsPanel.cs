@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -22,7 +20,7 @@ public partial class YearsPanel : CompositeDrawable
 {
     private readonly Bindable<APIChangelogSidebar> metadata = new();
 
-    private FillFlowContainer yearsFlow;
+    private FillFlowContainer yearsFlow = null!;
 
     [BackgroundDependencyLoader]
     private void load(OverlayColourProvider overlayColours, Bindable<APIChangelogSidebar> metadata)
@@ -100,7 +98,7 @@ public partial class YearsPanel : CompositeDrawable
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata, Bindable<int> currentYear)
+        private void load(OverlayColourProvider colourProvider, Bindable<int> currentYear)
         {
             currentYear.BindValueChanged(e =>
             {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
@@ -18,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 /// </summary>
 public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
 {
-    public readonly Bindable<APIChangelogBuild> Build = new();
+    public readonly Bindable<APIChangelogBuild?> Build = new();
 
-    public Action ListingSelected;
+    public Action? ListingSelected;
 
     public static LocalisableString ListingString => LayoutStrings.HeaderChangelogIndex;
 

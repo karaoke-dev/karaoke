@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -20,19 +18,16 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 /// </summary>
 public partial class ChangelogListing : ChangelogContent
 {
-    private readonly List<APIChangelogBuild> entries;
+    private readonly IReadOnlyList<APIChangelogBuild> entries;
 
-    public ChangelogListing(List<APIChangelogBuild> entries)
+    public ChangelogListing(IEnumerable<APIChangelogBuild> entries)
     {
         this.entries = entries.Take(4).ToList();
     }
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
+    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild?> current)
     {
-        if (entries == null)
-            return;
-
         foreach (var build in entries)
         {
             if (Children.Count != 0)
