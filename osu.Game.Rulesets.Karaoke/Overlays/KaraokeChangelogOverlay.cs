@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,15 +32,15 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 
     [Cached]
-    public readonly Bindable<APIChangelogBuild> Current = new();
+    public readonly Bindable<APIChangelogBuild?> Current = new();
 
     private readonly Container sidebarContainer;
     private readonly ChangelogSidebar sidebar;
     private readonly Container content;
 
-    private Sample sampleBack;
+    private Sample? sampleBack;
 
-    private List<APIChangelogBuild> builds;
+    private readonly List<APIChangelogBuild> builds = new();
 
     private readonly string organizationName;
     private readonly string branchName;
@@ -181,7 +179,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
         }
     }
 
-    private Task initialFetchTask;
+    private Task? initialFetchTask;
 
     private void performAfterFetch(Action action) => fetchListing()?.ContinueWith(_ =>
         Schedule(action), TaskContinuationOptions.OnlyOnRanToCompletion);
@@ -203,13 +201,14 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
+                    builds.Clear();
+                    builds.AddRange(reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
                         DisplayVersion = x.Name,
                         PublishedAt = getPublishDateFromName(x.Name)
-                    }).ToList();
+                    }));
 
                     foreach (var build in builds)
                     {
@@ -251,7 +250,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
         }
     }
 
-    private CancellationTokenSource loadContentCancellation;
+    private CancellationTokenSource? loadContentCancellation;
 
     private void loadContent(ChangelogContent newContent)
     {

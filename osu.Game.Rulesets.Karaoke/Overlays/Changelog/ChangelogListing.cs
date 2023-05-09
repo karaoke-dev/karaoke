@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -28,11 +26,8 @@ public partial class ChangelogListing : ChangelogContent
     }
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
+    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild?> current)
     {
-        if (entries == null)
-            return;
-
         foreach (var build in entries)
         {
             if (Children.Count != 0)

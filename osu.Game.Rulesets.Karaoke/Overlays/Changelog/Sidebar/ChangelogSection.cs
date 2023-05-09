@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -82,7 +80,7 @@ public partial class ChangelogSection : CompositeDrawable
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider overlayColours, GameHost host, Bindable<APIChangelogBuild> current)
+        private void load(OverlayColourProvider overlayColours, GameHost host, Bindable<APIChangelogBuild?> current)
         {
             current.BindValueChanged(e =>
             {

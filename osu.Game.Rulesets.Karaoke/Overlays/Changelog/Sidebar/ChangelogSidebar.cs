@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -24,10 +22,10 @@ public partial class ChangelogSidebar : CompositeDrawable
     [Cached]
     public readonly Bindable<int> Year = new();
 
-    private FillFlowContainer<ChangelogSection> changelogsFlow;
+    private FillFlowContainer<ChangelogSection> changelogsFlow = null!;
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
+    private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild?> current)
     {
         RelativeSizeAxes = Axes.Y;
         Width = 250;
@@ -111,7 +109,7 @@ public partial class ChangelogSidebar : CompositeDrawable
         Year.BindValueChanged(e => onMetadataChanged(Metadata.Value, e.NewValue), true);
     }
 
-    private void onMetadataChanged(APIChangelogSidebar metadata, int targetYear)
+    private void onMetadataChanged(APIChangelogSidebar? metadata, int targetYear)
     {
         changelogsFlow.Clear();
 
