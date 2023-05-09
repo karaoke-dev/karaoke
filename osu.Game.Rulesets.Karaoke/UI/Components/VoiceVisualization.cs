@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +27,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
     private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
     [Resolved]
-    private IScrollingInfo scrollingInfo { get; set; }
+    private IScrollingInfo scrollingInfo { get; set; } = null!;
 
     private readonly LayoutValue initialStateCache = new(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 
@@ -149,7 +147,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
         if (pathInitialStateCache[path].IsValid)
             return;
 
-        pathInitialStateCache?[path].Validate();
+        pathInitialStateCache[path].Validate();
 
         // Calculate path
         var frameList = frames[path];
