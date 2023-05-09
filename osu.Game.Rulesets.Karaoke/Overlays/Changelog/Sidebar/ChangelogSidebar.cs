@@ -122,7 +122,7 @@ public partial class ChangelogSidebar : CompositeDrawable
             return;
 
         var lookup = metadata.Changelogs.ToLookup(post => post.PublishedAt.Year);
-        var posts = lookup[targetYear];
+        var posts = lookup[targetYear].ToList();
         changelogsFlow.Add(new ChangelogSection(targetYear, posts));
     }
 }

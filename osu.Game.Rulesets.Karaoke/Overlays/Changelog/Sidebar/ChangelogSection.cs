@@ -29,7 +29,7 @@ public partial class ChangelogSection : CompositeDrawable
 
     public readonly BindableBool Expanded = new(true);
 
-    public ChangelogSection(int year, IEnumerable<APIChangelogBuild> posts)
+    public ChangelogSection(int year, IReadOnlyList<APIChangelogBuild> posts)
     {
         Debug.Assert(posts.All(p =>
         {
