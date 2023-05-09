@@ -80,7 +80,7 @@ public partial class ChangelogSection : CompositeDrawable
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider overlayColours, GameHost host, Bindable<APIChangelogBuild?> current)
+        private void load(OverlayColourProvider overlayColours, Bindable<APIChangelogBuild?> current)
         {
             current.BindValueChanged(e =>
             {

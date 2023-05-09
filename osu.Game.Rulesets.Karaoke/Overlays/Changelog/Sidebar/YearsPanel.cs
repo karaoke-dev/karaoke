@@ -98,7 +98,7 @@ public partial class YearsPanel : CompositeDrawable
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata, Bindable<int> currentYear)
+        private void load(OverlayColourProvider colourProvider, Bindable<int> currentYear)
         {
             currentYear.BindValueChanged(e =>
             {
