@@ -4,12 +4,14 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Extensions;
+using osu.Game.Overlays.Notifications;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit;
@@ -83,10 +85,16 @@ public partial class ExportLyricManager : Component
         // note : this is for develop testing purpose.
         // will be removed eventually
         string beatmapName = string.IsNullOrEmpty(beatmap.Name) ? "[NoName]" : beatmap.Name;
+        var exportStorage = storage.GetStorageForDirectory("exports");
         string filename = $"{beatmapName}.osu";
-        string beatmapText = generateJsonBeatmap();
 
-        new KaraokeLegacyBeatmapExporter(storage, filename, beatmapText).Export(beatmap.BeatmapInfo.BeatmapSet);
+        using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
+        {
+            string beatmapText = generateJsonBeatmap();
+            new KaraokeLegacyBeatmapExporter(storage, filename, beatmapText).ExportToStream(beatmap.BeatmapInfo.BeatmapSet!, outputStream, null);
+        }
+
+        exportStorage.PresentFileExternally(filename);
     }
 
     private string generateJsonBeatmap()
@@ -125,7 +133,7 @@ public partial class ExportLyricManager : Component
             this.content = content;
         }
 
-        public override void ExportModelTo(BeatmapSetInfo model, Stream outputStream)
+        public override void ExportToStream(BeatmapSetInfo model, Stream outputStream, ProgressNotification? notification, CancellationToken cancellationToken = new())
         {
             // base.ExportModelTo(model, outputStream);
             using var zipArchive = ZipArchive.Create();
