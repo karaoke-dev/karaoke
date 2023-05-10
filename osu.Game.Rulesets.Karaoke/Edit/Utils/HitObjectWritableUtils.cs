@@ -89,6 +89,7 @@ public static class HitObjectWritableUtils
             nameof(Lyric.ReferenceLyricConfig) => lockState > LockState.Partial,
             // base class
             nameof(Lyric.Samples) => false,
+            nameof(Lyric.LegacyBpmMultiplier) => false,
             _ => throw new NotSupportedException()
         };
     }
@@ -116,6 +117,7 @@ public static class HitObjectWritableUtils
                 nameof(Lyric.ReferenceLyricConfig) => false,
                 // base class
                 nameof(Lyric.Samples) => false,
+                nameof(Lyric.LegacyBpmMultiplier) => false,
                 _ => throw new NotSupportedException()
             },
             null => false,
