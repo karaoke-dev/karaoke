@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
@@ -14,13 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class NoteFontSection : StyleSection
 {
-    private LabelledColourSelector textColorPicker;
-    private LabelledSwitchButton boldSwitchButton;
+    private readonly LabelledColourSelector textColorPicker;
+    private readonly LabelledSwitchButton boldSwitchButton;
 
     protected override LocalisableString Title => "Font";
 
-    [BackgroundDependencyLoader]
-    private void load(SkinManager manager)
+    public NoteFontSection()
     {
         Children = new Drawable[]
         {
@@ -35,5 +32,10 @@ internal partial class NoteFontSection : StyleSection
                 Description = "Select bold or not.",
             }
         };
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(SkinManager manager)
+    {
     }
 }

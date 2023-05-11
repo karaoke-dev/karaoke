@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,14 +13,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricShadowSection : StyleSection
 {
-    private LabelledSwitchButton displayShaderSwitchButton;
-    private LabelledRealTimeSliderBar<float> shadowXSliderBar;
-    private LabelledRealTimeSliderBar<float> shadowYSliderBar;
+    private readonly LabelledSwitchButton displayShaderSwitchButton;
+    private readonly LabelledRealTimeSliderBar<float> shadowXSliderBar;
+    private readonly LabelledRealTimeSliderBar<float> shadowYSliderBar;
 
     protected override LocalisableString Title => "Shadow";
 
-    [BackgroundDependencyLoader]
-    private void load(SkinManager manager)
+    public LyricShadowSection()
     {
         Children = new Drawable[]
         {
@@ -54,5 +51,10 @@ internal partial class LyricShadowSection : StyleSection
                 }
             }
         };
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(SkinManager manager)
+    {
     }
 }

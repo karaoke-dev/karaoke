@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -23,18 +21,20 @@ public partial class LyricFontInfoManager : Component
     public readonly Bindable<LyricFontInfo> EditLyricFontInfo = new();
 
     [Resolved]
-    private ISkinSource source { get; set; }
+    private ISkinSource source { get; set; } = null!;
 
     [BackgroundDependencyLoader]
     private void load()
     {
         var lookup = new KaraokeSkinLookup(ElementType.LyricFontInfo);
         var lyricFontInfo = source.GetConfig<KaraokeSkinLookup, LyricFontInfo>(lookup)?.Value;
-        if (lyricFontInfo != null)
-            Configs.Add(lyricFontInfo);
+        if (lyricFontInfo == null)
+            return;
 
-        LoadedLyricFontInfo.Value = Configs.FirstOrDefault();
-        EditLyricFontInfo.Value = Configs.FirstOrDefault();
+        Configs.Add(lyricFontInfo);
+
+        LoadedLyricFontInfo.Value = Configs.First();
+        EditLyricFontInfo.Value = Configs.First();
     }
 
     public void ApplyCurrentLyricFontInfoChange(Action<LyricFontInfo> action)

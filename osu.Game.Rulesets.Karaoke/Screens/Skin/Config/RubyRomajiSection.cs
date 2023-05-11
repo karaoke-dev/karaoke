@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,15 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
 
 internal partial class RubyRomajiSection : LyricConfigSection
 {
-    private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
-    private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
-    private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
-    private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
+    private readonly LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
+    private readonly LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
+    private readonly LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
 
     protected override LocalisableString Title => "Ruby/Romaji";
 
-    [BackgroundDependencyLoader]
-    private void load(LyricFontInfoManager lyricFontInfoManager)
+    public RubyRomajiSection()
     {
         Children = new Drawable[]
         {
@@ -62,7 +59,11 @@ internal partial class RubyRomajiSection : LyricConfigSection
                 }
             }
         };
+    }
 
+    [BackgroundDependencyLoader]
+    private void load(LyricFontInfoManager lyricFontInfoManager)
+    {
         lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
         {
             var lyricFontInfo = e.NewValue;
