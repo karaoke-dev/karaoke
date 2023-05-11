@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -111,10 +109,10 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
 
     private partial class FullScreenLyricEditor : LyricEditor
     {
-        private ILyricCaretState lyricCaretState { get; set; }
+        private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-        [Resolved(canBeNull: true)]
-        private OnScreenDisplay onScreenDisplay { get; set; }
+        [Resolved]
+        private OnScreenDisplay? onScreenDisplay { get; set; }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
