@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,7 +16,7 @@ public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<L
     public const float HANDLER_WIDTH = 22;
 
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 

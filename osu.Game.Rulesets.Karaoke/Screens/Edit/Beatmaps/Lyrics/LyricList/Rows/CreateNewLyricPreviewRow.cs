@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -17,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows;
 public partial class CreateNewLyricPreviewRow : PreviewRow
 {
     [Resolved]
-    private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
 
     public CreateNewLyricPreviewRow()
         : base(new Lyric { Text = "New lyric" })
