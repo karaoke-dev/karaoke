@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
@@ -12,14 +10,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
 
 internal partial class IntervalSection : LyricConfigSection
 {
-    private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
-    private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
-    private LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
 
     protected override LocalisableString Title => "Interval";
 
-    [BackgroundDependencyLoader]
-    private void load(LyricFontInfoManager lyricFontInfoManager)
+    public IntervalSection()
     {
         Children = new[]
         {
@@ -60,7 +57,11 @@ internal partial class IntervalSection : LyricConfigSection
                 }
             }
         };
+    }
 
+    [BackgroundDependencyLoader]
+    private void load(LyricFontInfoManager lyricFontInfoManager)
+    {
         lyricFontInfoManager.LoadedLyricFontInfo.BindValueChanged(e =>
         {
             var lyricFontInfo = e.NewValue;

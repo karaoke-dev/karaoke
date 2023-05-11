@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,15 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricFontSection : StyleSection
 {
-    private LabelledEnumDropdown<Font> fontDropdown;
-    private LabelledSwitchButton boldSwitchButton;
-    private LabelledRealTimeSliderBar<float> fontSizeSliderBar;
-    private LabelledRealTimeSliderBar<int> borderSliderBar;
+    private readonly LabelledEnumDropdown<Font> fontDropdown;
+    private readonly LabelledSwitchButton boldSwitchButton;
+    private readonly LabelledRealTimeSliderBar<float> fontSizeSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> borderSliderBar;
 
     protected override LocalisableString Title => "Font";
 
-    [BackgroundDependencyLoader]
-    private void load(SkinManager manager)
+    public LyricFontSection()
     {
         Children = new Drawable[]
         {
@@ -60,6 +57,11 @@ internal partial class LyricFontSection : StyleSection
                 }
             }
         };
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(SkinManager manager)
+    {
     }
 }
 

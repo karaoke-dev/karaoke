@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
@@ -13,13 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricColorSection : StyleSection
 {
-    private LabelledEnumDropdown<ColorArea> colorAreaDropdown;
-    private LabelledColourSelector colorPicker;
+    private readonly LabelledEnumDropdown<ColorArea> colorAreaDropdown;
+    private readonly LabelledColourSelector colorPicker;
 
     protected override LocalisableString Title => "Color";
 
-    [BackgroundDependencyLoader]
-    private void load(StyleManager manager)
+    public LyricColorSection()
     {
         Children = new Drawable[]
         {
@@ -34,6 +31,11 @@ internal partial class LyricColorSection : StyleSection
                 Description = "Select color.",
             }
         };
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(StyleManager manager)
+    {
     }
 }
 

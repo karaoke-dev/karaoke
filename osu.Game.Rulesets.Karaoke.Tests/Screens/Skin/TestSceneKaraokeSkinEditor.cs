@@ -28,14 +28,14 @@ public partial class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEdi
         },
     });
 
-    private KaraokeSkin? karaokeSkin;
+    private KaraokeSkin karaokeSkin = null!;
 
     [BackgroundDependencyLoader]
     private void load(SkinManager skinManager)
     {
         skinManager.CurrentSkinInfo.Value = TestingSkin.CreateInfo().ToLiveUnmanaged();
 
-        karaokeSkin = skinManager.CurrentSkin.Value as KaraokeSkin;
+        karaokeSkin = (KaraokeSkin)skinManager.CurrentSkin.Value;
     }
 
     protected override KaraokeSkinEditor CreateScreen() => new(karaokeSkin);
