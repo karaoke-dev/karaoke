@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
@@ -16,7 +14,7 @@ public partial class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     private const float time_tag_size = 10;
 
     [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;
 
     public TimeTagSelectionBlueprint(TimeTag item)
         : base(item)

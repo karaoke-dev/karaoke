@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
 {
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     protected readonly Lyric Lyric;
 
@@ -44,7 +42,7 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
     protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; }
+        private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;
 
         private float deltaScaleSize;
 
@@ -72,9 +70,9 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
 
             if (deltaXPosition < 0)
             {
-                var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex);
+                var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex) ?? throw new InvalidOperationException();
                 int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
-                int offset = newStartIndex - firstTimeTag!.StartIndex;
+                int offset = newStartIndex - firstTimeTag.StartIndex;
                 if (offset == 0)
                     return false;
 
@@ -82,9 +80,9 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             }
             else
             {
-                var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex);
+                var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex) ?? throw new InvalidOperationException();
                 int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
-                int offset = newEndIndex - lastTimeTag!.EndIndex;
+                int offset = newEndIndex - lastTimeTag.EndIndex;
                 if (offset == 0)
                     return false;
 
