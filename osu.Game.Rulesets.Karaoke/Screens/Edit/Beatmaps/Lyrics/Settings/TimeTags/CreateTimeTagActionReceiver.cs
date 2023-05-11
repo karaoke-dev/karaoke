@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -18,10 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
 public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
 {
     [Resolved]
-    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
@@ -98,7 +96,7 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
                 return true;
         }
 
-        static Tuple<ShiftingDirection, ShiftingType> getTupleByAction(KaraokeEditAction action) =>
+        static Tuple<ShiftingDirection, ShiftingType>? getTupleByAction(KaraokeEditAction action) =>
             action switch
             {
                 KaraokeEditAction.ShiftTheTimeTagLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.Index),

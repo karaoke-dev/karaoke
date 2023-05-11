@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
@@ -13,10 +11,11 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
 public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
-    where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : struct, Enum
+    where TEditModeState : class, IHasEditModeState<TEditMode>
+    where TEditMode : struct, Enum
 {
     [Resolved]
-    private TEditModeState tEditModeState { get; set; }
+    private TEditModeState tEditModeState { get; set; } = null!;
 
     protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
 
@@ -32,7 +31,7 @@ public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSe
     where TEditMode : struct, Enum
 {
     [Resolved]
-    private ILyricSelectionState lyricSelectionState { get; set; }
+    private ILyricSelectionState lyricSelectionState { get; set; } = null!;
 
     protected override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
         => new LyricEditorDescriptionTextFlowContainer();

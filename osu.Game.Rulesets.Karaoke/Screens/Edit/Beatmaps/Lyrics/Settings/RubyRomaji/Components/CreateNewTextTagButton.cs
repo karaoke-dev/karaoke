@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions;
@@ -22,10 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
 
 public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHasPopover where TTextTag : class, ITextTag, new()
 {
-    public new Action<TTextTag> Action;
+    public new Action<TTextTag>? Action;
 
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     public LocalisableString LabelledTextBoxLabel { get; set; }
 
@@ -39,6 +37,9 @@ public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHa
     public Popover GetPopover()
     {
         var lyric = lyricCaretState.BindableFocusedLyric.Value;
+        if (lyric == null)
+            throw new InvalidOperationException();
+
         return new CreateNewPopover(lyric)
         {
             LabelledTextBoxLabel = LabelledTextBoxLabel,
@@ -53,7 +54,7 @@ public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHa
 
     private partial class CreateNewPopover : OsuPopover
     {
-        public Action<TTextTag> Action;
+        public Action<TTextTag>? Action;
 
         private readonly LabelledNumberBox labelledStartIndexNumberBox;
         private readonly LabelledNumberBox labelledEndIndexNumberBox;

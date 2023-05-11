@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -31,7 +29,7 @@ public partial class SingerEditSection : LyricPropertySection
     protected override LocalisableString Title => "Singer";
 
     [Resolved]
-    private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+    private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; } = null!;
 
     public SingerEditSection()
     {
@@ -80,7 +78,7 @@ public partial class SingerEditSection : LyricPropertySection
         bindableSingers.BindTo(beatmapSingersChangeHandler.Singers);
     }
 
-    protected override void OnLyricChanged(Lyric lyric)
+    protected override void OnLyricChanged(Lyric? lyric)
     {
         singerIndexes.UnbindBindings();
 

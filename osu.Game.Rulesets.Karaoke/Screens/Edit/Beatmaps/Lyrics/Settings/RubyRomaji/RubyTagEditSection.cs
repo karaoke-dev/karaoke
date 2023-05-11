@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Diagnostics;
 using osu.Framework.Allocation;
@@ -44,7 +42,7 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
     private partial class RubyTagsEditor : TextTagsEditor
     {
         [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
 
         protected override IBindableList<RubyTag> GetItems(Lyric lyric)
             => lyric.RubyTagsBindable;
@@ -68,10 +66,10 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
     protected partial class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
     {
         [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IEditRubyModeState editRubyModeState { get; set; }
+        private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
         public LabelledRubyTagTextBox(Lyric lyric, RubyTag textTag)
             : base(lyric, textTag)
