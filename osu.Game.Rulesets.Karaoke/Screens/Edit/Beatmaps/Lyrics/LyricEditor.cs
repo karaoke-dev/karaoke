@@ -1,12 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -201,7 +198,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             Default = false,
         };
 
-        Enum getTheSubMode(LyricEditorMode mode) =>
+        Enum? getTheSubMode(LyricEditorMode mode) =>
             mode switch
             {
                 LyricEditorMode.View => null,
@@ -253,7 +250,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 throw new ArgumentOutOfRangeException(nameof(settings.Direction));
         }
 
-        LyricEditorSettings getSettings() =>
+        LyricEditorSettings? getSettings() =>
             Mode switch
             {
                 LyricEditorMode.Texting => new TextingSettings(),
@@ -453,8 +450,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         editModeState.ChangeEditMode(subMode);
     }
 
-    [CanBeNull]
-    private IHasEditModeState<TSubMode> getEditModeState<TSubMode>() where TSubMode : Enum
+    private IHasEditModeState<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum
         => InternalChildren.OfType<IHasEditModeState<TSubMode>>().FirstOrDefault();
 
     public virtual void NavigateToFix(LyricEditorMode mode)

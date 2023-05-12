@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Diagnostics;
 using osu.Framework.Allocation;
@@ -44,7 +42,7 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
     private partial class RomajiTagsEditor : TextTagsEditor
     {
         [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; } = null!;
 
         protected override IBindableList<RomajiTag> GetItems(Lyric lyric)
             => lyric.RomajiTagsBindable;
@@ -68,10 +66,10 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
     protected partial class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
     {
         [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IEditRomajiModeState editRomajiModeState { get; set; }
+        private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
         public LabelledRomajiTagTextBox(Lyric lyric, RomajiTag textTag)
             : base(lyric, textTag)

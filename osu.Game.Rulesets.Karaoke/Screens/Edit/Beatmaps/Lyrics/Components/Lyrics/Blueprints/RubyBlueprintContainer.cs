@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -42,7 +40,7 @@ public partial class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
     protected partial class RubyTagSelectionHandler : TextTagSelectionHandler
     {
         [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load(IEditRubyModeState editRubyModeState)

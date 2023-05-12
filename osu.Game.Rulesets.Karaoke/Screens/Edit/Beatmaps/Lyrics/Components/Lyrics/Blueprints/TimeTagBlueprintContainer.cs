@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -20,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public partial class TimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
 {
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     [UsedImplicitly]
     private readonly BindableList<TimeTag> timeTags;
@@ -55,7 +53,7 @@ public partial class TimeTagBlueprintContainer : BindableBlueprintContainer<Time
     protected partial class TimeTagSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load(ITimeTagModeState timeTagModeState)

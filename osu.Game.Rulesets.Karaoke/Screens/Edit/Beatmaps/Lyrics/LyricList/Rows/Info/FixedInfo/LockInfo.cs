@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -25,13 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
 public partial class LockInfo : SpriteIcon, IHasContextMenu
 {
     [Resolved]
-    private ILockChangeHandler lockChangeHandler { get; set; }
+    private ILockChangeHandler lockChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     [Resolved]
-    private KaraokeRulesetLyricEditorConfigManager configManager { get; set; }
+    private KaraokeRulesetLyricEditorConfigManager configManager { get; set; } = null!;
 
     public MenuItem[] ContextMenuItems => new LyricLockContextMenu(lockChangeHandler, lyric, "Lock").Items.ToArray();
 

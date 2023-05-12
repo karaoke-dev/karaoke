@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -31,7 +29,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
         : base(textTag)
     {
         if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
-            return;
+            throw new ArgumentNullException(nameof(fillFlowContainer));
 
         // change padding to place delete button.
         fillFlowContainer.Padding = new MarginPadding
@@ -157,7 +155,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
 
         public override bool AcceptsFocus => true;
 
-        public Action<AdjustIndex, AdjustAction> Action;
+        public Action<AdjustIndex, AdjustAction>? Action;
 
         private readonly Box background;
         private readonly IconButton reduceStartIndexButton;
@@ -165,7 +163,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
         private readonly IconButton reduceEndIndexButton;
         private readonly IconButton increaseEndIndexButton;
 
-        public Action<bool> Selected;
+        public Action<bool>? Selected;
 
         public IndexShiftingPart()
         {

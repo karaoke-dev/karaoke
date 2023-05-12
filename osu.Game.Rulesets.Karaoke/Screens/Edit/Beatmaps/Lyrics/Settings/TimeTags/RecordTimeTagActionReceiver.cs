@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -19,16 +17,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTa
 public partial class RecordTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
 {
     [Resolved]
-    private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
+    private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; } = null!;
 
     [Resolved]
-    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; }
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
 
     [Resolved]
-    private EditorClock editorClock { get; set; }
+    private EditorClock editorClock { get; set; } = null!;
 
     public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {

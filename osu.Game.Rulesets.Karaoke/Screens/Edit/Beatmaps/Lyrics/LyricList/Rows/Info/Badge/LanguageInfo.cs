@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -21,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
 
 public partial class LanguageInfo : SubInfo, IHasPopover
 {
-    private readonly Bindable<CultureInfo> languageBindable;
+    private readonly Bindable<CultureInfo?> languageBindable;
 
     public LanguageInfo(Lyric lyric)
         : base(lyric)
@@ -46,7 +44,7 @@ public partial class LanguageInfo : SubInfo, IHasPopover
 
         BadgeColour = colours.BlueDarker;
 
-        void updateBadgeText(CultureInfo language)
+        void updateBadgeText(CultureInfo? language)
             => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
     }
 

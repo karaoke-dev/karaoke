@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -74,9 +72,9 @@ public abstract partial class LabelledObjectFieldSwitchButton<T> : LabelledSwitc
 
     protected partial class ObjectFieldSwitchButton : SwitchButton
     {
-        public Action<bool> Selected;
+        public Action<bool>? Selected;
 
-        public Action<ObjectFieldSwitchButton, bool> OnCommit;
+        public Action<ObjectFieldSwitchButton, bool>? OnCommit;
 
         protected override bool OnHover(HoverEvent e)
         {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -20,7 +18,7 @@ public abstract partial class SpecialActionSection<TAction> : EditorSection wher
     private readonly Bindable<TAction> bindableModeSpecialAction = new();
 
     [Resolved]
-    private ILyricSelectionState lyricSelectionState { get; set; }
+    private ILyricSelectionState lyricSelectionState { get; set; } = null!;
 
     protected SpecialActionSection()
     {
@@ -37,10 +35,12 @@ public abstract partial class SpecialActionSection<TAction> : EditorSection wher
         bindableModeSpecialAction.BindValueChanged(e =>
         {
             // should cancel the selection after change to the new action.
-            lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
+            lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
 
             UpdateActionArea(e.NewValue);
-        }, true);
+        });
+
+        UpdateActionArea(bindableModeSpecialAction.Value);
     }
 
     protected void BindTo(IHasSpecialAction<TAction> specialAction)

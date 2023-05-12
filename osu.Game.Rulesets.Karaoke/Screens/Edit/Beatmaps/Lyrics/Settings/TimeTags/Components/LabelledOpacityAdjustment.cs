@@ -1,8 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
@@ -26,7 +25,7 @@ public partial class LabelledOpacityAdjustment : LabelledSwitchButton
     public LabelledOpacityAdjustment()
     {
         if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
-            return;
+            throw new ArgumentNullException(nameof(fillFlowContainer));
 
         // change padding to place config button.
         fillFlowContainer.Padding = new MarginPadding

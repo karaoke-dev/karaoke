@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -29,7 +27,7 @@ public partial class ApplySelectingArea : CompositeDrawable
     private readonly IBindable<bool> selecting = new Bindable<bool>();
     private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
-    private ActionButton applyButton;
+    private ActionButton applyButton = null!;
 
     [BackgroundDependencyLoader]
     private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
@@ -193,7 +191,7 @@ public partial class ApplySelectingArea : CompositeDrawable
                 bool disabled = disabledLyricNumber == totalLyrics;
 
                 allSelectedCheckbox.Current.Disabled = disabled;
-                allSelectedCheckbox.TooltipText = disabled ? "Seems all selection are disabled" : null;
+                allSelectedCheckbox.TooltipText = disabled ? "Seems all selection are disabled" : string.Empty;
             });
 
             // get bindable and update bindable if select or not select all.

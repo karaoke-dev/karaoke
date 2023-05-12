@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -25,7 +23,7 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
     public const float TIMELINE_HEIGHT = 20;
 
     [Resolved]
-    private EditorClock editorClock { get; set; }
+    private EditorClock editorClock { get; set; } = null!;
 
     /// <summary>
     /// The timeline's scroll position in the last frame.
@@ -49,7 +47,7 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
 
     private readonly CentreMarker centreMarker;
 
-    private OsuSpriteText trackTimer;
+    private OsuSpriteText trackTimer = null!;
 
     public RecordingTimeTagScrollContainer()
     {

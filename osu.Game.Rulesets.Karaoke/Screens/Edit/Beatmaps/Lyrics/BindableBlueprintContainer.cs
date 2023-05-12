@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -16,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public abstract partial class BindableBlueprintContainer<T> : BlueprintContainer<T> where T : class
 {
-    private BindableList<T> bindableList;
+    private BindableList<T>? bindableList;
 
     protected void RegisterBindable(BindableList<T> bindable)
     {

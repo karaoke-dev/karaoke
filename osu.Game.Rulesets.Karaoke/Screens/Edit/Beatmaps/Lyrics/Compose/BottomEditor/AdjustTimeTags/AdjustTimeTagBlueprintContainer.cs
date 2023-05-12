@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
 
 public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContainer<TimeTag>
 {
-    [Resolved(CanBeNull = true)]
-    private AdjustTimeTagScrollContainer timeline { get; set; }
+    [Resolved]
+    private AdjustTimeTagScrollContainer timeline { get; set; } = null!;
 
     [Resolved]
-    private EditorClock editorClock { get; set; }
+    private EditorClock editorClock { get; set; } = null!;
 
     [Resolved]
-    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
     [BackgroundDependencyLoader]
     private void load(BindableList<TimeTag> timeTags)
@@ -99,7 +97,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
     protected partial class TimeTagEditorSelectionHandler : BindableSelectionHandler
     {
         [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load(ITimeTagModeState timeTagModeState)
@@ -145,7 +143,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
         private double? startTime;
 
         [Resolved]
-        private AdjustTimeTagScrollContainer timeline { get; set; }
+        private AdjustTimeTagScrollContainer timeline { get; set; } = null!;
 
         protected override Drawable CreateBox() => new Box
         {

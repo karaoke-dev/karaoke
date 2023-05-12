@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
@@ -14,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 public partial class NoteClearSubsection : SelectLyricButton
 {
     [Resolved]
-    private INotesChangeHandler notesChangeHandler { get; set; }
+    private INotesChangeHandler notesChangeHandler { get; set; } = null!;
 
     protected override LocalisableString StandardText => "Clear";
 

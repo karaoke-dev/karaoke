@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -23,9 +21,9 @@ public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPos
     public const float TIMELINE_HEIGHT = 38;
 
     [Resolved]
-    private EditorClock editorClock { get; set; }
+    private EditorClock editorClock { get; set; } = null!;
 
-    private CurrentTimeMarker currentTimeMarker;
+    private CurrentTimeMarker? currentTimeMarker;
 
     public AdjustTimeTagScrollContainer()
     {
@@ -80,7 +78,7 @@ public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPos
         base.UpdateAfterChildren();
 
         float position = PositionAtTime(editorClock.CurrentTime);
-        currentTimeMarker.MoveToX(position);
+        currentTimeMarker?.MoveToX(position);
     }
 
     public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)

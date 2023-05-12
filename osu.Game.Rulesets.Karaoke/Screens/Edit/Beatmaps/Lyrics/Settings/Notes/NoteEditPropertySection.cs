@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -47,7 +45,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
         private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
 
         [Resolved]
-        private EditorBeatmap beatmap { get; set; }
+        private EditorBeatmap beatmap { get; set; } = null!;
 
         public NotePropertiesEditor()
         {
@@ -87,7 +85,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
             };
         }
 
-        protected override EditorSectionButton CreateCreateNewItemButton() => null;
+        protected override EditorSectionButton? CreateCreateNewItemButton() => null;
 
         protected override IBindableList<Note> GetItems(Lyric lyric)
         {
@@ -99,10 +97,10 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
     private partial class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
     {
         [Resolved]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IEditNoteModeState editNoteModeState { get; set; }
+        private IEditNoteModeState editNoteModeState { get; set; } = null!;
 
         public LabelledNoteTextTextBox(Note item)
             : base(item)
@@ -128,10 +126,10 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
     private partial class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
     {
         [Resolved]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IEditNoteModeState editNoteModeState { get; set; }
+        private IEditNoteModeState editNoteModeState { get; set; } = null!;
 
         public LabelledNoteRubyTextTextBox(Note item)
             : base(item)
@@ -142,7 +140,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
             => editNoteModeState.Select(item);
 
         protected override string GetFieldValue(Note note)
-            => note.RubyText;
+            => note.RubyText ?? string.Empty;
 
         protected override void ApplyValue(Note note, string value)
             => notePropertyChangeHandler.ChangeRubyText(value);
@@ -157,7 +155,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
     private partial class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
     {
         [Resolved]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
         public LabelledNoteDisplaySwitchButton(Note item)
             : base(item)
