@@ -32,7 +32,4 @@ public static class OsuGameExtensions
 
     public static SettingsOverlay? GetSettingsOverlay(this OsuGame game)
         => game.getBasePlacementContainer()?.ChildrenOfType<SettingsOverlay>().FirstOrDefault();
-
-    public static OsuScreenStack? GetScreenStack(this OsuGame game)
-        => ((game.Children[3] as Container)?.Child as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
 }
