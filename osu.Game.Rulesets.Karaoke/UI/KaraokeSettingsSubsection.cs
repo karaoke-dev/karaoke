@@ -73,11 +73,6 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
                 Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
             },
             // Practice
-            new SettingsSlider<double, TimeSlider>
-            {
-                LabelText = KaraokeSettingsSubsectionStrings.PracticePreemptTime,
-                Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
-            },
             new DangerousSettingsButton
             {
                 Text = KaraokeSettingsSubsectionStrings.OpenRulesetSettings,
