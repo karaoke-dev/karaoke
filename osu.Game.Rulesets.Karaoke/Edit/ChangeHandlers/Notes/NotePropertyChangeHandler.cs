@@ -24,7 +24,7 @@ public partial class NotePropertyChangeHandler : HitObjectPropertyChangeHandler<
         });
     }
 
-    public void ChangeRubyText(string ruby)
+    public void ChangeRubyText(string? ruby)
     {
         CheckExactlySelectedOneHitObject();
 

@@ -9,7 +9,7 @@ public interface INotePropertyChangeHandler : IHitObjectPropertyChangeHandler
 {
     void ChangeText(string text);
 
-    void ChangeRubyText(string ruby);
+    void ChangeRubyText(string? ruby);
 
     void ChangeDisplayState(bool display);
 
