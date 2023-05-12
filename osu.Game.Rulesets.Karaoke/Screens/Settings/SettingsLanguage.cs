@@ -21,11 +21,11 @@ public partial class SettingsLanguage : SettingsItem<CultureInfo>
         RelativeSizeAxes = Axes.X,
     };
 
-    private partial class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
+    private partial class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo?>, IHasPopover
     {
-        private readonly BindableWithCurrent<CultureInfo> current = new();
+        private readonly BindableWithCurrent<CultureInfo?> current = new();
 
-        public Bindable<CultureInfo> Current
+        public Bindable<CultureInfo?> Current
         {
             get => current.Current;
             set => current.Current = value;
@@ -45,13 +45,13 @@ public partial class SettingsLanguage : SettingsItem<CultureInfo>
 
     private partial class LanguageSelectorPopover : OsuPopover
     {
-        public LanguageSelectorPopover(Bindable<CultureInfo> bindableCultureInfo)
+        public LanguageSelectorPopover(Bindable<CultureInfo?> bindableCultureInfo)
         {
             Child = new LanguageSelector
             {
                 Width = 400,
                 Height = 600,
-                Current = bindableCultureInfo
+                Current = bindableCultureInfo,
             };
         }
     }
