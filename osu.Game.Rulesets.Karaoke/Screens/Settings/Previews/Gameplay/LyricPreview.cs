@@ -6,16 +6,16 @@ using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Karaoke.Timing;
+using osu.Game.Rulesets.Karaoke.UI;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
@@ -33,19 +33,24 @@ public partial class LyricPreview : SettingsSubsectionPreview
 
     private KaraokeLocalFontStore localFontStore = null!;
 
-    private readonly DrawableLyric drawableLyric;
+    private readonly LyricPlayfield lyricPlayfield;
+    private readonly Lyric lyric;
 
     public LyricPreview()
     {
         Size = new Vector2(0.7f, 0.5f);
 
-        // todo : should add skin support.
-        Child = drawableLyric = new DrawableLyric(createPreviewLyric())
+        Child = new Container
         {
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            Clock = new StopClock(0),
+            RelativeSizeAxes = Axes.Both,
+            Padding = new MarginPadding(30),
+            Child = lyricPlayfield = new LyricPlayfield
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+            }
         };
+        lyricPlayfield.Add(lyric = createPreviewLyric());
 
         mainFont.BindValueChanged(e =>
         {
@@ -65,11 +70,18 @@ public partial class LyricPreview : SettingsSubsectionPreview
         });
         preferLanguage.BindValueChanged(e =>
         {
-            drawableLyric.HitObject.Translates = createPreviewTranslate(e.NewValue);
+            lyric.Translates = createPreviewTranslate(e.NewValue);
         });
 
         void addFont(FontUsage fontUsage)
             => localFontStore.AddFont(fontUsage);
+    }
+
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+    {
+        var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+        baseDependencies.Cache(new KaraokeSessionStatics(baseDependencies.Get<KaraokeRulesetConfigManager>(), null));
+        return baseDependencies;
     }
 
     [BackgroundDependencyLoader]
@@ -122,7 +134,18 @@ public partial class LyricPreview : SettingsSubsectionPreview
                     Text = "karaoke"
                 },
             },
+            StartTime = 0,
+            Duration = 1000000,
+            TimeTags = new List<TimeTag>
+            {
+                new(new TextIndex(0), 500),
+                new(new TextIndex(1), 600),
+                new(new TextIndex(2), 1000),
+                new(new TextIndex(3), 1500),
+                new(new TextIndex(4), 2000),
+            },
             HitWindows = new KaraokeLyricHitWindows(),
+            EffectApplier = new PreviewLyricEffectApplier(),
         };
 
     private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
