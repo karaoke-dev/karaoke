@@ -25,6 +25,7 @@ public partial class ConfigSection : KaraokeSettingsSection
             new NoteSettings(),
             new LyricSettings(),
             new TranslateSettings(),
+            new PracticeSettings(),
         };
     }
 }
