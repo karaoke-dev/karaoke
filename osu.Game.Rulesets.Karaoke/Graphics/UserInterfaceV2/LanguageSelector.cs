@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -19,8 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo?>
 {
-    private readonly CultureInfo defaultCulture = new("default");
-
     private readonly LanguageSelectionSearchTextBox filter;
     private readonly RearrangeableLanguageListContainer languageList;
 
@@ -62,7 +61,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
                         RelativeSizeAxes = Axes.Both,
                         RequestSelection = item =>
                         {
-                            Current.Value = EqualityComparer<CultureInfo>.Default.Equals(item, defaultCulture) ? null : item;
+                            Current.Value = item.CultureInfo;
                         },
                     }
                 }
@@ -75,7 +74,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
             // we need to wait until language list loaded.
             Schedule(() =>
             {
-                languageList.SelectedSet.Value = e.NewValue ?? defaultCulture;
+                languageList.SelectedSet.Value = new LanguageModel(e.NewValue);
             });
         }, true);
 
@@ -104,12 +103,12 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
 
     private void reloadLanguageList()
     {
-        var languages = CultureInfoUtils.GetAvailableLanguages();
+        var languages = CultureInfoUtils.GetAvailableLanguages().Select(x => new LanguageModel(x));
         languageList.Items.Clear();
 
         if (EnableEmptyOption)
         {
-            languageList.Items.Insert(0, defaultCulture);
+            languageList.Items.Insert(0, new LanguageModel(null));
         }
 
         languageList.Items.AddRange(languages);
@@ -125,16 +124,14 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
         }
     }
 
-    private partial class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<CultureInfo>
+    private partial class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<LanguageModel>
     {
-        protected override DrawableTextListItem CreateDrawable(CultureInfo item)
+        protected override DrawableTextListItem CreateDrawable(LanguageModel item)
             => new DrawableLanguageListItem(item);
 
         private partial class DrawableLanguageListItem : DrawableTextListItem
         {
-            private readonly CultureInfo defaultCulture = new("default");
-
-            public DrawableLanguageListItem(CultureInfo item)
+            public DrawableLanguageListItem(LanguageModel item)
                 : base(item)
             {
             }
@@ -143,27 +140,40 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
             {
                 get
                 {
-                    yield return new LocalisableString(CultureInfoUtils.GetLanguageDisplayText(Model));
+                    var cultureInfo = Model.CultureInfo;
 
-                    if (EqualityComparer<CultureInfo>.Default.Equals(Model, defaultCulture))
+                    yield return new LocalisableString(CultureInfoUtils.GetLanguageDisplayText(cultureInfo));
+
+                    if (cultureInfo == null)
                     {
                         yield return new LocalisableString(string.Empty);
                     }
                     else
                     {
-                        yield return new LocalisableString(Model.Name);
-                        yield return new LocalisableString(Model.DisplayName);
-                        yield return new LocalisableString(Model.EnglishName);
+                        yield return new LocalisableString(cultureInfo.Name);
+                        yield return new LocalisableString(cultureInfo.DisplayName);
+                        yield return new LocalisableString(cultureInfo.EnglishName);
                     }
                 }
             }
 
-            protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, CultureInfo model)
+            protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, LanguageModel model)
             {
-                textFlowContainer.AddText(EqualityComparer<CultureInfo>.Default.Equals(model, defaultCulture)
-                    ? CultureInfoUtils.GetLanguageDisplayText(null)
-                    : CultureInfoUtils.GetLanguageDisplayText(model));
+                textFlowContainer.AddText(CultureInfoUtils.GetLanguageDisplayText(model.CultureInfo));
             }
         }
+    }
+
+    /// <summary>
+    ///  use this struct to warp the <see cref="CultureInfo"/> because <see cref="RearrangeableLanguageListContainer"/> is not able support null value.
+    /// </summary>
+    private struct LanguageModel
+    {
+        public LanguageModel(CultureInfo? cultureInfo)
+        {
+            CultureInfo = cultureInfo;
+        }
+
+        public CultureInfo? CultureInfo { get; }
     }
 }
