@@ -49,8 +49,8 @@ public partial class SettingsLanguage : SettingsItem<CultureInfo>
         {
             Child = new LanguageSelector
             {
-                Width = 400,
-                Height = 600,
+                Width = 260,
+                Height = 400,
                 Current = bindableCultureInfo,
             };
         }

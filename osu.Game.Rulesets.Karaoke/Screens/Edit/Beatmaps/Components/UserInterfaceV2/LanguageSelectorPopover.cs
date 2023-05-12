@@ -16,8 +16,8 @@ public partial class LanguageSelectorPopover : OsuPopover
     {
         Child = languageSelector = new LanguageSelector
         {
-            Width = 400,
-            Height = 600,
+            Width = 260,
+            Height = 400,
             Current = bindable
         };
     }
