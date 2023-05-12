@@ -38,7 +38,9 @@ public abstract partial class SpecialActionSection<TAction> : EditorSection wher
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
 
             UpdateActionArea(e.NewValue);
-        }, true);
+        });
+
+        UpdateActionArea(bindableModeSpecialAction.Value);
     }
 
     protected void BindTo(IHasSpecialAction<TAction> specialAction)
