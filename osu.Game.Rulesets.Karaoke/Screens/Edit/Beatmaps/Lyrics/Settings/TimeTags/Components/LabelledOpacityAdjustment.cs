@@ -71,7 +71,13 @@ public partial class LabelledOpacityAdjustment : LabelledSwitchButton
 
     private partial class OpacityButton : IconButton, IHasPopover, IHasCurrentValue<float>
     {
-        public Bindable<float> Current { get; set; }
+        private readonly BindableNumberWithCurrent<float> current = new();
+
+        public Bindable<float> Current
+        {
+            get => current.Current;
+            set => current.Current = value;
+        }
 
         public OpacityButton()
         {
@@ -85,7 +91,7 @@ public partial class LabelledOpacityAdjustment : LabelledSwitchButton
                 Child = new OpacitySliderBar
                 {
                     Width = 150,
-                    Current = Current,
+                    Current = { BindTarget = Current },
                 }
             };
 
