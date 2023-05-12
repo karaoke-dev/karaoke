@@ -17,13 +17,16 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo>
+public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo?>
 {
+    private readonly CultureInfo defaultCulture = new("default");
+
     private readonly LanguageSelectionSearchTextBox filter;
+    private readonly RearrangeableLanguageListContainer languageList;
 
-    private readonly BindableWithCurrent<CultureInfo> current = new();
+    private readonly BindableWithCurrent<CultureInfo?> current = new();
 
-    public Bindable<CultureInfo> Current
+    public Bindable<CultureInfo?> Current
     {
         get => current.Current;
         set => current.Current = value;
@@ -35,9 +38,6 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
 
     public LanguageSelector()
     {
-        var languages = new BindableList<CultureInfo>(CultureInfoUtils.GetAvailableLanguages());
-
-        RearrangeableLanguageListContainer languageList;
         InternalChild = new GridContainer
         {
             RelativeSizeAxes = Axes.Both,
@@ -62,16 +62,24 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
                         RelativeSizeAxes = Axes.Both,
                         RequestSelection = item =>
                         {
-                            Current.Value = item;
+                            Current.Value = EqualityComparer<CultureInfo>.Default.Equals(item, defaultCulture) ? null : item;
                         },
-                        Items = { BindTarget = languages }
                     }
                 }
             }
         };
 
         filter.Current.BindValueChanged(e => languageList.Filter(e.NewValue));
-        Current.BindValueChanged(e => languageList.SelectedSet.Value = e.NewValue);
+        Current.BindValueChanged(e =>
+        {
+            // we need to wait until language list loaded.
+            Schedule(() =>
+            {
+                languageList.SelectedSet.Value = e.NewValue ?? defaultCulture;
+            });
+        }, true);
+
+        reloadLanguageList();
     }
 
     protected override void OnFocus(FocusEvent e)
@@ -79,6 +87,32 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
         base.OnFocus(e);
 
         GetContainingInputManager().ChangeFocus(filter);
+    }
+
+    private bool enableEmptyOption;
+
+    public bool EnableEmptyOption
+    {
+        get => enableEmptyOption;
+        set
+        {
+            enableEmptyOption = value;
+
+            reloadLanguageList();
+        }
+    }
+
+    private void reloadLanguageList()
+    {
+        var languages = CultureInfoUtils.GetAvailableLanguages();
+        languageList.Items.Clear();
+
+        if (EnableEmptyOption)
+        {
+            languageList.Items.Insert(0, defaultCulture);
+        }
+
+        languageList.Items.AddRange(languages);
     }
 
     private partial class LanguageSelectionSearchTextBox : SearchTextBox
@@ -98,21 +132,38 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
 
         private partial class DrawableLanguageListItem : DrawableTextListItem
         {
+            private readonly CultureInfo defaultCulture = new("default");
+
             public DrawableLanguageListItem(CultureInfo item)
                 : base(item)
             {
             }
 
-            public override IEnumerable<LocalisableString> FilterTerms => new[]
+            public override IEnumerable<LocalisableString> FilterTerms
             {
-                new LocalisableString(Model.Name),
-                new LocalisableString(Model.DisplayName),
-                new LocalisableString(Model.EnglishName),
-                new LocalisableString(Model.NativeName)
-            };
+                get
+                {
+                    yield return new LocalisableString(CultureInfoUtils.GetLanguageDisplayText(Model));
+
+                    if (EqualityComparer<CultureInfo>.Default.Equals(Model, defaultCulture))
+                    {
+                        yield return new LocalisableString(string.Empty);
+                    }
+                    else
+                    {
+                        yield return new LocalisableString(Model.Name);
+                        yield return new LocalisableString(Model.DisplayName);
+                        yield return new LocalisableString(Model.EnglishName);
+                    }
+                }
+            }
 
             protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, CultureInfo model)
-                => textFlowContainer.AddText(CultureInfoUtils.GetLanguageDisplayText(model));
+            {
+                textFlowContainer.AddText(EqualityComparer<CultureInfo>.Default.Equals(model, defaultCulture)
+                    ? CultureInfoUtils.GetLanguageDisplayText(null)
+                    : CultureInfoUtils.GetLanguageDisplayText(model));
+            }
         }
     }
 }
