@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
+using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -13,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Localisation;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
+using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 
@@ -31,7 +33,7 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
     private KaraokeChangelogOverlay? changelogOverlay;
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(IPerformFromScreenRunner performer)
     {
         var config = (KaraokeRulesetConfigManager)Config;
 
@@ -87,19 +89,7 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
             {
                 Text = KaraokeSettingsSubsectionStrings.OpenRulesetSettings,
                 TooltipText = KaraokeSettingsSubsectionStrings.OpenRulesetSettingsTooltip,
-                Action = () =>
-                {
-                    try
-                    {
-                        var screenStake = Game.GetScreenStack();
-                        var settingOverlay = Game.GetSettingsOverlay();
-                        screenStake?.Push(new KaraokeSettings());
-                        settingOverlay?.Hide();
-                    }
-                    catch
-                    {
-                    }
-                }
+                Action = () => performer.PerformFromScreen(menu => menu.Push(new KaraokeSettings()))
             },
             new SettingsButton
             {
