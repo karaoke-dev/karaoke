@@ -12,7 +12,7 @@ public partial class LanguageSelectorPopover : OsuPopover
 {
     private readonly LanguageSelector languageSelector;
 
-    public LanguageSelectorPopover(Bindable<CultureInfo> bindable)
+    public LanguageSelectorPopover(Bindable<CultureInfo?> bindable)
     {
         Child = languageSelector = new LanguageSelector
         {
@@ -20,6 +20,12 @@ public partial class LanguageSelectorPopover : OsuPopover
             Height = 600,
             Current = bindable
         };
+    }
+
+    public bool EnableEmptyOption
+    {
+        get => languageSelector.EnableEmptyOption;
+        set => languageSelector.EnableEmptyOption = value;
     }
 
     protected override void LoadComplete()

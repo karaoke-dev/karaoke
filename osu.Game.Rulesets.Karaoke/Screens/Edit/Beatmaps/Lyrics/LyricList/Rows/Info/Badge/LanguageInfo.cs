@@ -58,5 +58,8 @@ public partial class LanguageInfo : SubInfo, IHasPopover
     }
 
     public Popover GetPopover()
-        => new LanguageSelectorPopover(languageBindable);
+        => new LanguageSelectorPopover(languageBindable)
+        {
+            EnableEmptyOption = true
+        };
 }
