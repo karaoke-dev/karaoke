@@ -18,7 +18,7 @@ public partial class TestSceneLanguageSelector : OsuManualInputManagerTestScene
     {
         AddStep("show the selector", () =>
         {
-            var language = new Bindable<CultureInfo>(new CultureInfo("ja"));
+            var language = new Bindable<CultureInfo?>(new CultureInfo("ja"));
             Child = new LanguageSelector
             {
                 RelativeSizeAxes = Axes.Both,
