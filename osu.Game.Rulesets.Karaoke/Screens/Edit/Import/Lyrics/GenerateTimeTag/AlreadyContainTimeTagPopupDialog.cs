@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
@@ -11,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 
 public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
 {
-    public AlreadyContainTimeTagPopupDialog(Action<bool> okAction = null)
+    public AlreadyContainTimeTagPopupDialog(Action<bool> okAction)
     {
         Icon = FontAwesome.Solid.Globe;
         HeaderText = "Already contains time-tag.";
@@ -21,7 +19,7 @@ public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
             new PopupDialogOkButton
             {
                 Text = @"OK",
-                Action = () => okAction?.Invoke(true),
+                Action = () => okAction(true),
             },
         };
     }

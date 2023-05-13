@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.IO;
 using osu.Framework.Allocation;
@@ -21,10 +19,10 @@ public partial class DrawableDragFile : Container
     private const float button_height = 50;
     private const float button_vertical_margin = 15;
 
-    private OsuFileSelector fileSelector;
-    private TextFlowContainer currentFileText;
+    private OsuFileSelector fileSelector = null!;
+    private TextFlowContainer currentFileText = null!;
 
-    private RoundedButton importButton;
+    private RoundedButton importButton = null!;
 
     [BackgroundDependencyLoader]
     private void load(OsuColour colours)
@@ -89,7 +87,14 @@ public partial class DrawableDragFile : Container
                         Height = button_height,
                         Width = 0.9f,
                         Margin = new MarginPadding { Vertical = button_vertical_margin },
-                        Action = () => Import?.Invoke(fileSelector.CurrentFile.Value?.FullName)
+                        Action = () =>
+                        {
+                            string? fileName = fileSelector.CurrentFile.Value?.FullName;
+                            if (string.IsNullOrEmpty(fileName))
+                                return;
+
+                            Import?.Invoke(fileName);
+                        }
                     }
                 }
             }
@@ -99,7 +104,7 @@ public partial class DrawableDragFile : Container
         fileSelector.CurrentPath.BindValueChanged(directoryChanged);
     }
 
-    private void fileChanged(ValueChangedEvent<FileInfo> selectedFile)
+    private void fileChanged(ValueChangedEvent<FileInfo?> selectedFile)
     {
         importButton.Enabled.Value = selectedFile.NewValue != null;
         currentFileText.Text = selectedFile.NewValue?.Name ?? "Select a file or drag to import.";
@@ -111,5 +116,5 @@ public partial class DrawableDragFile : Container
         fileSelector.CurrentFile.Value = null;
     }
 
-    public Action<string> Import { get; set; }
+    public Action<string>? Import { get; set; }
 }

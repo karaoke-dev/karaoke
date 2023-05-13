@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -34,13 +32,13 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
 
     private readonly BindableBeatDivisor beatDivisor = new();
 
-    private EditorBeatmap editorBeatmap;
+    private EditorBeatmap editorBeatmap = null!;
 
-    private ImportLyricManager importManager;
+    private ImportLyricManager importManager = null!;
 
-    private LyricsProvider lyricsProvider;
+    private LyricsProvider lyricsProvider = null!;
 
-    private DependencyContainer dependencies;
+    private DependencyContainer dependencies = null!;
 
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -48,7 +46,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
     // Hide the back button because we cannot show it only in the first step.
     public override bool AllowBackButton => false;
 
-    public event Action<IBeatmap> OnImportFinished;
+    public event Action<IBeatmap>? OnImportFinished;
 
     public LyricImporter()
     {
