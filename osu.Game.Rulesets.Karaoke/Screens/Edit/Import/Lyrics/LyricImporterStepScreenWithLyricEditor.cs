@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -18,7 +16,7 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
     // it's a tricky way to let navigation bar able to get the lyric state.
     // not a good solution, but have no better way now.
     [Cached(typeof(ILyricEditorState))]
-    private ImportLyricEditor lyricEditor { get; set; }
+    private ImportLyricEditor lyricEditor { get; set; } = null!;
 
     [Cached(typeof(ILockChangeHandler))]
     private readonly LockChangeHandler lockChangeHandler;
@@ -54,9 +52,9 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
     private partial class ImportLyricEditor : LyricEditor
     {
         [Resolved]
-        private LyricImporterSubScreenStack screenStack { get; set; }
+        private LyricImporterSubScreenStack screenStack { get; set; } = null!;
 
-        private ILyricSelectionState lyricSelectionState { get; set; }
+        private ILyricSelectionState lyricSelectionState { get; set; } = null!;
 
         public void PrepareAutoGenerate()
         {

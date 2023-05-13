@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,10 +27,10 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
     public IEnumerable<string> HandledExtensions => ImportLyricManager.LyricFormatExtensions;
 
     [Resolved]
-    private ImportLyricManager importManager { get; set; }
+    private ImportLyricManager importManager { get; set; } = null!;
 
     [Resolved]
-    private OsuGameBase game { get; set; }
+    private OsuGameBase game { get; set; } = null!;
 
     public DragFileStepScreen()
     {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -23,10 +21,10 @@ public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporte
     public const double DISAPPEAR_DURATION = 500;
 
     [Resolved]
-    protected LyricImporterSubScreenStack ScreenStack { get; private set; }
+    protected LyricImporterSubScreenStack ScreenStack { get; private set; } = null!;
 
     [Resolved]
-    protected IDialogOverlay DialogOverlay { get; private set; }
+    protected IDialogOverlay DialogOverlay { get; private set; } = null!;
 
     public abstract string ShortTitle { get; }
 
@@ -82,10 +80,7 @@ public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporte
 
     public virtual void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack)
     {
-        DialogOverlay.Push(new RollBackPopupDialog(fromScreen, ok =>
-        {
-            callBack?.Invoke(ok);
-        }));
+        DialogOverlay.Push(new RollBackPopupDialog(fromScreen, callBack));
     }
 
     public override string ToString() => Title;

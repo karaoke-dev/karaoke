@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -22,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
 public abstract partial class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreenWithTopNavigation
 {
-    protected new T Screen => base.Screen as T;
+    protected new T Screen => (T)base.Screen;
 
     protected TopNavigation(T screen)
         : base(screen)
@@ -33,10 +31,10 @@ public abstract partial class TopNavigation<T> : TopNavigation where T : LyricIm
 public abstract partial class TopNavigation : CompositeDrawable
 {
     [Resolved]
-    private OsuColour colours { get; set; }
+    private OsuColour colours { get; set; } = null!;
 
     [Resolved]
-    private EditorBeatmap editorBeatmap { get; set; }
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
 
     protected LyricImporterStepScreen Screen { get; }
 
@@ -179,7 +177,7 @@ public abstract partial class TopNavigation : CompositeDrawable
 
         internal partial class ClickableSpriteText : OsuSpriteText
         {
-            public Action Action { get; set; }
+            public Action? Action { get; set; }
 
             protected override bool OnClick(ClickEvent e)
             {

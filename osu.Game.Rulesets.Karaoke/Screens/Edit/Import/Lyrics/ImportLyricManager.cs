@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -24,10 +22,10 @@ public partial class ImportLyricManager : Component
     private const string backup_lrc_name = "backup.lrc";
 
     [Resolved]
-    private EditorBeatmap editorBeatmap { get; set; }
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
 
     [Resolved]
-    private IBindable<WorkingBeatmap> beatmap { get; set; }
+    private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
 
     public void ImportLrcFile(FileInfo info)
     {
