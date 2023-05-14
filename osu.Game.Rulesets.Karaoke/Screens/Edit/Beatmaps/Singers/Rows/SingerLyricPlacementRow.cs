@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -47,10 +45,10 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
         private const int sub_text_size = 12;
 
         [Resolved]
-        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
+        private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IDialogOverlay dialogOverlay { get; set; }
+        private IDialogOverlay dialogOverlay { get; set; } = null!;
 
         private readonly IBindable<int> bindableOrder = new Bindable<int>();
         private readonly IBindable<float> bindableHue = new Bindable<float>();

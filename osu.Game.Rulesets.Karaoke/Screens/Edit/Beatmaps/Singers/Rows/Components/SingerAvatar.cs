@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,13 +30,13 @@ public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopo
 
     public IEnumerable<string> HandledExtensions => handledExtensions;
 
-    private readonly Bindable<FileInfo> currentFile = new();
+    private readonly Bindable<FileInfo?> currentFile = new();
 
     [Resolved]
-    private OsuGameBase game { get; set; }
+    private OsuGameBase game { get; set; } = null!;
 
     [Resolved]
-    private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; }
+    private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; } = null!;
 
     private readonly Singer singer;
 
@@ -70,7 +68,7 @@ public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopo
         currentFile.BindValueChanged(onFileSelected);
     }
 
-    private void onFileSelected(ValueChangedEvent<FileInfo> file)
+    private void onFileSelected(ValueChangedEvent<FileInfo?> file)
     {
         if (file.NewValue == null)
             return;
@@ -100,7 +98,7 @@ public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopo
 
     private partial class FileChooserPopover : OsuPopover
     {
-        public FileChooserPopover(string[] handledExtensions, Bindable<FileInfo> currentFile)
+        public FileChooserPopover(string[] handledExtensions, Bindable<FileInfo?> currentFile)
         {
             Child = new Container
             {

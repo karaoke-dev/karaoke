@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -25,6 +26,9 @@ public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISin
 
     protected override Drawable CreateContent()
     {
+        if (Model is not Singer singer)
+            throw new InvalidCastException($"Currently we are only able to edit the {nameof(Singer)}.");
+
         return new Container
         {
             Masking = true,
@@ -38,7 +42,7 @@ public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISin
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0
                 },
-                new SingerLyricPlacementColumn(Model as Singer)
+                new SingerLyricPlacementColumn(singer)
                 {
                     RelativeSizeAxes = Axes.Both,
                 }

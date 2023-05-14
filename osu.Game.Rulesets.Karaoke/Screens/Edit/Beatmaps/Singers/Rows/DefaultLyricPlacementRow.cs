@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -22,7 +20,7 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
     public static Singer DefaultSinger { get; } = new(0) { Name = "Default" };
 
     [Resolved]
-    private ISingerScreenScrollingInfoProvider scrollingInfoProvider { get; set; }
+    private ISingerScreenScrollingInfoProvider scrollingInfoProvider { get; set; } = null!;
 
     public DefaultLyricPlacementColumn()
         : base(DefaultSinger)

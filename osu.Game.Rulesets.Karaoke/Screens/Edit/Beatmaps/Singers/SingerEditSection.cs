@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -13,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
 public partial class SingerEditSection : CompositeDrawable
 {
-    private SingerRearrangeableList singerContainers;
+    private SingerRearrangeableList singerContainers = null!;
 
     [BackgroundDependencyLoader]
     private void load(IBeatmapSingersChangeHandler beatmapSingersChangeHandler)
