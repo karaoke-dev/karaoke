@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Globalization;
 using System.Linq;
@@ -33,11 +31,11 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
     private readonly CornerBackground lyricSectionBackground;
     private readonly LanguageDropdown languageDropdown;
 
-    [Cached(typeof(IBindable<CultureInfo>))]
-    private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
+    [Cached(typeof(IBindable<CultureInfo?>))]
+    private readonly IBindable<CultureInfo?> currentLanguage = new Bindable<CultureInfo?>();
 
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
+    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
 
     private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -73,12 +71,12 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                     AutoSizeAxes = Axes.Y,
                     Content = new[]
                     {
-                        new Drawable[]
+                        new[]
                         {
-                            null,
-                            null,
-                            null,
-                            null,
+                            Empty(),
+                            Empty(),
+                            Empty(),
+                            Empty(),
                             new GridContainer
                             {
                                 RelativeSizeAxes = Axes.X,
@@ -97,18 +95,18 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                                 },
                                 Content = new[]
                                 {
-                                    new Drawable[]
+                                    new[]
                                     {
                                         languageDropdown = new LanguageDropdown
                                         {
                                             RelativeSizeAxes = Axes.X,
                                         },
-                                        null,
+                                        Empty(),
                                         new CreateNewLanguageButton
                                         {
                                             Y = 5,
                                         },
-                                        null,
+                                        Empty(),
                                         new RemoveLanguageButton
                                         {
                                             Y = 5,
@@ -175,7 +173,9 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             },
         };
 
+        // todo: should use other way to deal with null case.
         currentLanguage.BindTo(languageDropdown.Current);
+
         bindableLyrics.BindCollectionChanged((_, _) =>
         {
             // just re-create all the view, lazy to save the performance in here.
@@ -202,9 +202,9 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             return new[]
             {
                 createTimeDrawable(x),
-                null,
+                Empty(),
                 createPreviewSpriteText(x),
-                null,
+                Empty(),
                 createTranslateTextBox(x),
             };
         }).ToArray();
@@ -247,10 +247,10 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             CommitOnFocusLost = true,
         };
 
-    public string GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
+    public string? GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
     {
         ArgumentNullException.ThrowIfNull(currentLanguage);
 
-        return lyric.Translates.TryGetValue(cultureInfo, out string translate) ? translate : null;
+        return lyric.Translates.TryGetValue(cultureInfo, out string? translate) ? translate : null;
     }
 }
