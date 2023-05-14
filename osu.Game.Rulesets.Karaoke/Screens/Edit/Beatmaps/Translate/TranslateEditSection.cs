@@ -252,7 +252,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
 
     public string? GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
     {
-        ArgumentNullException.ThrowIfNull(currentLanguage);
+        ArgumentNullException.ThrowIfNull(cultureInfo);
 
         return lyric.Translates.TryGetValue(cultureInfo, out string? translate) ? translate : null;
     }
