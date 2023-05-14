@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -38,13 +36,13 @@ public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBluep
     protected partial class SingerLyricSelectionHandler : EditableTimelineSelectionHandler
     {
         [Resolved]
-        private EditorBeatmap beatmap { get; set; }
+        private EditorBeatmap beatmap { get; set; } = null!;
 
         [Resolved]
-        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private BindableList<Lyric> selectedLyrics { get; set; }
+        private BindableList<Lyric> selectedLyrics { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load()
