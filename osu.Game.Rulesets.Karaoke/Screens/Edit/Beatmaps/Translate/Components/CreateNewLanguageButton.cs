@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -20,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
 public partial class CreateNewLanguageButton : IconButton, IHasPopover
 {
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
+    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
 
-    private readonly Bindable<CultureInfo> currentLanguage = new();
+    private readonly Bindable<CultureInfo?> currentLanguage = new();
 
     public CreateNewLanguageButton()
     {

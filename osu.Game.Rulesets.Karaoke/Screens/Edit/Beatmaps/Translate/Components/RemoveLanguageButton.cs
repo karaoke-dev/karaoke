@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -16,13 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
 public partial class RemoveLanguageButton : IconButton
 {
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; }
+    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private IDialogOverlay dialogOverlay { get; set; }
+    private IDialogOverlay dialogOverlay { get; set; } = null!;
 
     [Resolved]
-    private IBindable<CultureInfo> currentLanguage { get; set; }
+    private IBindable<CultureInfo> currentLanguage { get; set; } = null!;
 
     public RemoveLanguageButton()
     {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -17,15 +15,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
 public partial class LyricTranslateTextBox : OsuTextBox
 {
     [Resolved]
-    private EditorBeatmap beatmap { get; set; }
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     [Resolved]
-    private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; }
+    private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private ITranslateInfoProvider translateInfoProvider { get; set; }
+    private ITranslateInfoProvider translateInfoProvider { get; set; } = null!;
 
-    private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
+    private readonly IBindable<CultureInfo?> currentLanguage = new Bindable<CultureInfo?>();
 
     private readonly Lyric lyric;
 
@@ -35,13 +33,13 @@ public partial class LyricTranslateTextBox : OsuTextBox
 
         currentLanguage.BindValueChanged(v =>
         {
-            bool hasCultureInfo = v.NewValue != null;
+            var cultureInfo = v.NewValue;
 
             // disable and clear text box if contains no language in language list.
-            Text = hasCultureInfo ? translateInfoProvider.GetLyricTranslate(lyric, v.NewValue) : null;
+            Text = cultureInfo != null ? translateInfoProvider.GetLyricTranslate(lyric, cultureInfo) : null;
             ScheduleAfterChildren(() =>
             {
-                Current.Disabled = !hasCultureInfo;
+                Current.Disabled = cultureInfo == null;
             });
         }, true);
 
@@ -61,7 +59,7 @@ public partial class LyricTranslateTextBox : OsuTextBox
     }
 
     [BackgroundDependencyLoader]
-    private void load(IBindable<CultureInfo> currentLanguage)
+    private void load(IBindable<CultureInfo?> currentLanguage)
     {
         this.currentLanguage.BindTo(currentLanguage);
     }
