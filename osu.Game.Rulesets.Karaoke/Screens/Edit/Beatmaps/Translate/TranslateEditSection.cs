@@ -32,7 +32,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
     private readonly LanguageDropdown languageDropdown;
 
     [Cached(typeof(IBindable<CultureInfo?>))]
-    private readonly IBindable<CultureInfo?> currentLanguage = new Bindable<CultureInfo?>();
+    private readonly Bindable<CultureInfo?> currentLanguage = new();
 
     [Resolved]
     private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
@@ -173,8 +173,11 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             },
         };
 
-        // todo: should use other way to deal with null case.
-        currentLanguage.BindTo(languageDropdown.Current);
+        languageDropdown.Current.BindValueChanged(x =>
+        {
+            // should use currentLanguage.BindTo(languageDropdown.Current); once bindable is not nullable again.
+            currentLanguage.Value = x.NewValue;
+        });
 
         bindableLyrics.BindCollectionChanged((_, _) =>
         {
