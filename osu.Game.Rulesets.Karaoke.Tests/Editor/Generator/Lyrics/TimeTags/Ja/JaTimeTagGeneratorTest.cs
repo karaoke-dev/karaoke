@@ -133,13 +133,13 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
                 new RubyTag
                 {
                     StartIndex = 0,
-                    EndIndex = 2,
+                    EndIndex = 1,
                     Text = "あした"
                 },
                 new RubyTag
                 {
                     StartIndex = 7,
-                    EndIndex = 8,
+                    EndIndex = 7,
                     Text = "あそ"
                 }
             }
