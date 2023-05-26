@@ -30,7 +30,7 @@ public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyT
         CheckCanGenerate(lyric, canGenerate, selector);
     }
 
-    [TestCase(17, "花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })] // Japanese
+    [TestCase(17, "花火大会", new[] { "[0,1]:はなび", "[2,3]:たいかい" })] // Japanese
     [TestCase(1041, "はなび", new string[] { })] // Japanese
     public void TestGenerate(int lcid, string text, string[] expectedRubies)
     {

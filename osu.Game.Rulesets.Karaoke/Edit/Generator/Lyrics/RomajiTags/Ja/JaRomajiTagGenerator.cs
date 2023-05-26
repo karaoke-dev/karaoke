@@ -68,7 +68,7 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
                 {
                     Text = romaji,
                     StartIndex = offsetAtt.StartOffset,
-                    EndIndex = offsetAtt.EndOffset
+                    EndIndex = offsetAtt.EndOffset - 1
                 }
             });
         }
