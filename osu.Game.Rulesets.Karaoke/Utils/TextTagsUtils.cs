@@ -37,7 +37,7 @@ public static class TextTagsUtils
         var invalidList = new List<T>();
 
         // check end is less or equal to start index
-        invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex <= x.StartIndex));
+        invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex < x.StartIndex));
 
         // find other is smaller or bigger
         foreach (var textTag in sortedTextTags)
@@ -51,12 +51,12 @@ public static class TextTagsUtils
             {
                 case Sorting.Asc:
                     // start index within tne target
-                    invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
+                    invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex <= textTag.EndIndex));
                     break;
 
                 case Sorting.Desc:
                     // end index within tne target
-                    invalidList.AddRange(checkTags.Where(x => x.EndIndex > textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
+                    invalidList.AddRange(checkTags.Where(x => x.EndIndex >= textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
                     break;
 
                 default:

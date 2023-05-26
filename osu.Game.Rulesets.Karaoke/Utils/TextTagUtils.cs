@@ -14,9 +14,14 @@ public static class TextTagUtils
 
     public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int offset) where T : ITextTag
     {
-        int lyricLength = lyric.Length;
-        int newStartIndex = Math.Clamp(textTag.StartIndex + offset, 0, lyricLength);
-        int newEndIndex = Math.Clamp(textTag.EndIndex + offset, 0, lyricLength);
+        if (string.IsNullOrEmpty(lyric))
+            throw new InvalidOperationException($"{nameof(lyric)} cannot be empty.");
+
+        const int min_index = 0;
+        int maxIndex = lyric.Length - 1;
+
+        int newStartIndex = Math.Clamp(textTag.StartIndex + offset, min_index, maxIndex);
+        int newEndIndex = Math.Clamp(textTag.EndIndex + offset, min_index, maxIndex);
         return new Tuple<int, int>(Math.Min(newStartIndex, newEndIndex), Math.Max(newStartIndex, newEndIndex));
     }
 
@@ -29,14 +34,14 @@ public static class TextTagUtils
     {
         ArgumentNullException.ThrowIfNull(textTag);
 
-        return newStartIndex < textTag.EndIndex;
+        return newStartIndex <= textTag.EndIndex;
     }
 
     public static bool ValidNewEndIndex<T>(T textTag, int newEndIndex) where T : ITextTag
     {
         ArgumentNullException.ThrowIfNull(textTag);
 
-        return newEndIndex > textTag.StartIndex;
+        return newEndIndex >= textTag.StartIndex;
     }
 
     public static bool OutOfRange(string lyric, int index)
@@ -45,7 +50,7 @@ public static class TextTagUtils
             return true;
 
         const int min_index = 0;
-        int maxIndex = lyric.Length;
+        int maxIndex = lyric.Length - 1;
 
         return index < min_index || index > maxIndex;
     }
@@ -74,7 +79,7 @@ public static class TextTagUtils
     public static string GetTextFromLyric<T>(T textTag, string lyric) where T : ITextTag
     {
         (int startIndex, int endIndex) = GetFixedIndex(textTag, lyric);
-        return lyric.Substring(startIndex, endIndex - startIndex);
+        return lyric.Substring(startIndex, endIndex - startIndex + 1);
     }
 
     public static PositionText ToPositionText<T>(T textTag) where T : ITextTag
