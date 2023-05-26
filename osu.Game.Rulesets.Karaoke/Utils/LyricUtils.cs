@@ -57,14 +57,14 @@ public static class LyricUtils
                     tag.StartIndex = position;
                     tag.EndIndex -= count;
                 }
-                else if (tag.EndIndex > position)
+                else if (tag.EndIndex >= position)
                 {
-                    tag.EndIndex = Math.Max(position, tag.EndIndex - count);
+                    tag.EndIndex = Math.Max(position - 1, tag.EndIndex - count);
                 }
             }
 
             // if end index less or equal than start index, means this tag has been deleted.
-            return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
+            return tags.Where(x => x.StartIndex <= x.EndIndex).ToArray();
         }
 
         static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
@@ -103,7 +103,7 @@ public static class LyricUtils
                 {
                     if (x.StartIndex >= position)
                         x.StartIndex += offset;
-                    if (x.EndIndex > position)
+                    if (x.EndIndex >= position)
                         x.EndIndex += offset;
                     return x;
                 })
@@ -165,10 +165,10 @@ public static class LyricUtils
         // should check has ruby in target lyric with target index.
         var matchRuby = lyric.RubyTags.Where(x =>
         {
-            int stringIndex = TextIndexUtils.ToGapIndex(timeTag.Index);
+            int charIndex = TextIndexUtils.ToCharIndex(timeTag.Index);
             return TextIndexUtils.GetValueByState(state,
-                () => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
-                () => x.StartIndex < stringIndex && x.EndIndex >= stringIndex);
+                () => x.StartIndex <= charIndex && x.EndIndex >= charIndex,
+                () => x.StartIndex <= charIndex && x.EndIndex >= charIndex);
         }).FirstOrDefault();
 
         if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
@@ -177,10 +177,10 @@ public static class LyricUtils
         // get all the rubies with same index.
         var timeTagsWithSameIndex = lyric.TimeTags.Where(x =>
         {
-            if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
-                return false;
+            var startTextIndex = new TextIndex(matchRuby.StartIndex);
+            var endTextIndex = new TextIndex(matchRuby.EndIndex, TextIndex.IndexState.End);
 
-            return x.Index.State != TextIndex.IndexState.Start || x.Index.Index != matchRuby.EndIndex;
+            return x.Index >= startTextIndex && x.Index <= endTextIndex;
         }).ToList();
 
         // get ruby text and should notice exceed case if time-tag is more than ruby text.

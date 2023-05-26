@@ -36,11 +36,11 @@ public class LyricUtilsTest
         }
     }
 
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, 2, new[] { "[0,1]:お", "[1,2]:け" })]
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 1, 1, new[] { "[0,1]:か", "[1,2]:お", "[2,3]:け" })]
-    [TestCase(new[] { "[0,2]:から", "[2,4]:おけ" }, 1, 2, new[] { "[0,1]:から", "[1,2]:おけ" })]
-    [TestCase(new[] { "[0,4]:からおけ" }, 0, 1, new[] { "[0,3]:からおけ" })]
-    [TestCase(new[] { "[0,4]:からおけ" }, 1, 2, new[] { "[0,2]:からおけ" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, 2, new[] { "[0]:お", "[1]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 1, 1, new[] { "[0]:か", "[1]:お", "[2]:け" })]
+    [TestCase(new[] { "[0,1]:から", "[2,3]:おけ" }, 1, 2, new[] { "[0]:から", "[1]:おけ" })]
+    [TestCase(new[] { "[0,3]:からおけ" }, 0, 1, new[] { "[0,2]:からおけ" })]
+    [TestCase(new[] { "[0,3]:からおけ" }, 1, 2, new[] { "[0,1]:からおけ" })]
     public void TestRemoveTextRuby(string[] rubies, int position, int count, string[] targetRubies)
     {
         var lyric = new Lyric
@@ -55,8 +55,8 @@ public class LyricUtilsTest
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 0, 2, new[] { "[0,1]:o", "[1,2]:ke" })]
-    [TestCase(new[] { "[0,2]:kara", "[2,4]:oke" }, 1, 2, new[] { "[0,1]:kara", "[1,2]:oke" })]
+    [TestCase(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }, 0, 2, new[] { "[0]:o", "[1]:ke" })]
+    [TestCase(new[] { "[0,1]:kara", "[2,3]:oke" }, 1, 2, new[] { "[0]:kara", "[1]:oke" })]
     public void TestRemoveTextRomaji(string[] romajies, int position, int count, string[] targetRomajies)
     {
         var lyric = new Lyric
@@ -103,9 +103,9 @@ public class LyricUtilsTest
         Assert.AreEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[9,10]:お", "[10,11]:け" })]
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 4, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
     public void TextAddTextRuby(string[] rubies, int position, string addedText, string[] targetRubies)
     {
         var lyric = new Lyric
@@ -120,9 +120,9 @@ public class LyricUtilsTest
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[9,10]:お", "[10,11]:け" })]
-    [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 4, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
     public void TextAddTextRomaji(string[] romajies, int position, string addedText, string[] targetRomajies)
     {
         var lyric = new Lyric
@@ -245,8 +245,8 @@ public class LyricUtilsTest
             }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
             {
-                "[0,1]:か",
-                "[2,4]:おけ",
+                "[0]:か",
+                "[2,3]:おけ",
             })
         };
         var timeTag = lyric.TimeTags[indexOfTimeTag];
