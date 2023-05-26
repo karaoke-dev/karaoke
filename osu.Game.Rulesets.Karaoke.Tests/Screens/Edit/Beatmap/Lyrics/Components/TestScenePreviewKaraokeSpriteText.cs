@@ -288,11 +288,18 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
         showPosition(new RectangleF(position.X - sizing / 2, position.Y - sizing / 2, sizing, sizing));
     }
 
-    private void showPosition(RectangleF position)
+    private void showPosition(RectangleF? position)
     {
-        mask.Position = position.TopLeft;
-        mask.Size = position.Size;
+        if (position == null)
+        {
+            mask.Hide();
+        }
+        else
+        {
+            mask.Position = position.Value.TopLeft;
+            mask.Size = position.Value.Size;
 
-        mask.Show();
+            mask.Show();
+        }
     }
 }
