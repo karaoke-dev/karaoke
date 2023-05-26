@@ -20,7 +20,7 @@ public class RubyTagConverter : JsonConverter<RubyTag>
         if (string.IsNullOrEmpty(value))
             return new RubyTag();
 
-        var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
+        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<ruby>.*$)");
         var result = regex.Match(value);
         if (!result.Success)
             return new RubyTag();
@@ -28,7 +28,7 @@ public class RubyTagConverter : JsonConverter<RubyTag>
         return new RubyTag
         {
             StartIndex = result.GetGroupValue<int>("start"),
-            EndIndex = result.GetGroupValue<int>("end"),
+            EndIndex = result.GetGroupValue<int?>("end") ?? result.GetGroupValue<int>("start"),
             Text = result.GetGroupValue<string>("ruby")
         };
     }
@@ -38,7 +38,9 @@ public class RubyTagConverter : JsonConverter<RubyTag>
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
-        string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
+        string str = value.StartIndex == value.EndIndex
+            ? $"[{value.StartIndex}]:{value.Text}"
+            : $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
         writer.WriteValue(str);
     }
 }

@@ -25,19 +25,19 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
         {
             new RubyTag
             {
-                StartIndex = 2,
-                EndIndex = 3,
+                StartIndex = 1,
+                EndIndex = 1,
                 Text = "ビ"
             },
             new RubyTag
             {
-                StartIndex = 1,
-                EndIndex = 2,
+                StartIndex = 0,
+                EndIndex = 0,
                 Text = "ル"
             },
         };
 
-        const string expected = "[\"[1,2]:ル\",\"[2,3]:ビ\"]";
+        const string expected = "[\"[0]:ル\",\"[1]:ビ\"]";
         string actual = JsonConvert.SerializeObject(timeTags, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -45,20 +45,20 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
     [Test]
     public void TestDeserialize()
     {
-        const string json = "[\"[2,3]:ビ\",\"[1,2]:ル\"]";
+        const string json = "[\"[1]:ビ\",\"[0]:ル\"]";
 
         var expected = new[]
         {
             new RubyTag
             {
-                StartIndex = 1,
-                EndIndex = 2,
+                StartIndex = 0,
+                EndIndex = 0,
                 Text = "ル"
             },
             new RubyTag
             {
-                StartIndex = 2,
-                EndIndex = 3,
+                StartIndex = 1,
+                EndIndex = 1,
                 Text = "ビ"
             },
         };

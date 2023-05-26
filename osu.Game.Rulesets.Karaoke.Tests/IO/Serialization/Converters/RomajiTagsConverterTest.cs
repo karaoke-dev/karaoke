@@ -26,18 +26,18 @@ public class RomajiTagsConverterTest : BaseSingleConverterTest<RomajiTagsConvert
             new RomajiTag
             {
                 StartIndex = 2,
-                EndIndex = 3,
+                EndIndex = 2,
                 Text = "ji"
             },
             new RomajiTag
             {
-                StartIndex = 1,
-                EndIndex = 2,
+                StartIndex = 0,
+                EndIndex = 1,
                 Text = "roma"
             },
         };
 
-        const string expected = "[\"[1,2]:roma\",\"[2,3]:ji\"]";
+        const string expected = "[\"[0,1]:roma\",\"[2]:ji\"]";
         string actual = JsonConvert.SerializeObject(timeTags, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -45,20 +45,20 @@ public class RomajiTagsConverterTest : BaseSingleConverterTest<RomajiTagsConvert
     [Test]
     public void TestDeserialize()
     {
-        const string json = "[\"[2,3]:ji\",\"[1,2]:roma\"]";
+        const string json = "[\"[2]:ji\",\"[0,1]:roma\"]";
 
         var expected = new[]
         {
             new RomajiTag
             {
-                StartIndex = 1,
-                EndIndex = 2,
+                StartIndex = 0,
+                EndIndex = 1,
                 Text = "roma"
             },
             new RomajiTag
             {
                 StartIndex = 2,
-                EndIndex = 3,
+                EndIndex = 2,
                 Text = "ji"
             },
         };

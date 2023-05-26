@@ -12,11 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
 {
-    [TestCase(1, 2, "ルビ", "[1,2]:ルビ")]
-    [TestCase(1, 1, "ルビ", "[1,1]:ルビ")]
+    [TestCase(0, 1, "ルビ", "[0,1]:ルビ")]
+    [TestCase(0, 0, "ルビ", "[0]:ルビ")]
     [TestCase(-1, -2, "ルビ", "[-1,-2]:ルビ")] // Should not check ruby is out of range in here.
-    [TestCase(1, 2, "::[][]", "[1,2]:::[][]")]
-    [TestCase(1, 2, "", "[1,2]:")]
+    [TestCase(0, 1, "::[][]", "[0,1]:::[][]")]
+    [TestCase(0, 1, "", "[0,1]:")]
     public void TestSerialize(int startIndex, int endIndex, string text, string json)
     {
         var rubyTag = new RubyTag
@@ -31,14 +31,14 @@ public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
         Assert.AreEqual(expected, actual);
     }
 
-    [TestCase("[1,2]:ルビ", 1, 2, "ルビ")]
-    [TestCase("[1,1]:ルビ", 1, 1, "ルビ")]
+    [TestCase("[0,1]:ルビ", 0, 1, "ルビ")]
+    [TestCase("[0]:ルビ", 0, 0, "ルビ")]
     [TestCase("[-1,-2]:ルビ", -1, -2, "ルビ")] // Should not check ruby is out of range in here.
-    [TestCase("[1,2]:::[][]", 1, 2, "::[][]")]
-    [TestCase("[1,2]:", 1, 2, null)] // todo: expected value should be string.empty.
-    [TestCase("[1,2]:null", 1, 2, "null")]
+    [TestCase("[0,1]:::[][]", 0, 1, "::[][]")]
+    [TestCase("[0,1]:", 0, 1, null)] // todo: expected value should be string.empty.
+    [TestCase("[0,1]:null", 0, 1, "null")]
     [TestCase("", 0, 0, "")] // Test deal with format is not right below.
-    [TestCase("[1,2]", 0, 0, "")]
+    [TestCase("[0,1]", 0, 0, "")]
     [TestCase("[1,]", 0, 0, "")]
     [TestCase("[,1]", 0, 0, "")]
     [TestCase("[]", 0, 0, "")]
