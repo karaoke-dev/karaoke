@@ -12,7 +12,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.IO.Stores;
 using osu.Framework.Localisation;
-using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Overlays.Settings;
@@ -46,7 +45,6 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke;
 
-[ExcludeFromDynamicCompile]
 public partial class KaraokeRuleset : Ruleset
 {
     public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
