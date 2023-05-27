@@ -107,7 +107,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     public void EditElement(int? id, Action<TStageElement> action)
     {
         var element = getElementById(id);
-        action.Invoke(element);
+        action(element);
 
         TStageElement getElementById(int? elementID) =>
             elementID == null

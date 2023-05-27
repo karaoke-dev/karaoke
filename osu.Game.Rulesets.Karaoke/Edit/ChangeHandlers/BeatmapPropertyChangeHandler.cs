@@ -37,7 +37,7 @@ public partial class BeatmapPropertyChangeHandler : Component
         try
         {
             beatmap.BeginChange();
-            action.Invoke(KaraokeBeatmap);
+            action(KaraokeBeatmap);
             beatmap.EndChange();
         }
         catch

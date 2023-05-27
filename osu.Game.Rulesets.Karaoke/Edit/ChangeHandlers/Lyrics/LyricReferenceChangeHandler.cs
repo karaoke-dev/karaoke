@@ -105,7 +105,7 @@ public partial class LyricReferenceChangeHandler : LyricPropertyChangeHandler, I
             if (lyric.ReferenceLyricConfig is not TConfig config)
                 throw new InvalidOperationException($"{nameof(config)} must be the type of ${typeof(TConfig)}.");
 
-            action.Invoke(config);
+            action(config);
         });
     }
 
