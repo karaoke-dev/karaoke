@@ -45,8 +45,8 @@ public class NoteGenerator : LyricPropertyGenerator<Note[], NoteGeneratorConfig>
             (double _, var textIndex) = timeTag;
             (double _, var nextTextIndex) = timeTags.GetNext(timeTag);
 
-            int startIndex = TextIndexUtils.ToStringIndex(textIndex);
-            int endIndex = TextIndexUtils.ToStringIndex(nextTextIndex);
+            int startIndex = TextIndexUtils.ToGapIndex(textIndex);
+            int endIndex = TextIndexUtils.ToGapIndex(nextTextIndex);
 
             // prevent reverse time-tag to generate the note.
             if (startIndex >= endIndex)

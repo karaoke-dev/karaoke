@@ -138,7 +138,7 @@ public static class LyricUtils
         {
             var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
             int startIndex = index.Index;
-            int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
+            int endIndex = TextIndexUtils.ToGapIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
             return $"{text.Substring(startIndex, endIndex - startIndex)}-";
         }, () =>
         {
@@ -165,7 +165,7 @@ public static class LyricUtils
         // should check has ruby in target lyric with target index.
         var matchRuby = lyric.RubyTags.Where(x =>
         {
-            int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
+            int stringIndex = TextIndexUtils.ToGapIndex(timeTag.Index);
             return TextIndexUtils.GetValueByState(state,
                 () => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
                 () => x.StartIndex < stringIndex && x.EndIndex >= stringIndex);

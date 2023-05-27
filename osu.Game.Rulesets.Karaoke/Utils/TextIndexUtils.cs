@@ -8,8 +8,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils;
 
 public static class TextIndexUtils
 {
-    public static int ToStringIndex(TextIndex index)
+    public static int ToGapIndex(TextIndex index)
         => GetValueByState(index, index.Index, index.Index + 1);
+
+    public static int ToCharIndex(TextIndex index)
+        => index.Index;
 
     public static TextIndex FromStringIndex(int index, bool end)
     {
@@ -23,14 +26,14 @@ public static class TextIndexUtils
 
     public static TextIndex GetPreviousIndex(TextIndex originIndex)
     {
-        int previousIndex = ToStringIndex(originIndex) - 1;
+        int previousIndex = ToGapIndex(originIndex) - 1;
         var previousState = ReverseState(originIndex.State);
         return new TextIndex(previousIndex, previousState);
     }
 
     public static TextIndex GetNextIndex(TextIndex originIndex)
     {
-        int nextIndex = ToStringIndex(originIndex);
+        int nextIndex = ToGapIndex(originIndex);
         var nextState = ReverseState(originIndex.State);
         return new TextIndex(nextIndex, nextState);
     }
