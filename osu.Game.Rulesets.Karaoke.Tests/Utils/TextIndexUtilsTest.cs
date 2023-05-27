@@ -14,11 +14,23 @@ public class TextIndexUtilsTest
     [TestCase(0, TextIndex.IndexState.End, 1)]
     [TestCase(-1, TextIndex.IndexState.Start, -1)] // In utils not checking is index out of range
     [TestCase(-1, TextIndex.IndexState.End, 0)]
-    public void TestToStringIndex(int index, TextIndex.IndexState state, int expected)
+    public void TestToGapIndex(int index, TextIndex.IndexState state, int expected)
     {
         var textIndex = new TextIndex(index, state);
 
-        int actual = TextIndexUtils.ToStringIndex(textIndex);
+        int actual = TextIndexUtils.ToGapIndex(textIndex);
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestCase(0, TextIndex.IndexState.Start, 0)]
+    [TestCase(0, TextIndex.IndexState.End, 0)]
+    [TestCase(-1, TextIndex.IndexState.Start, -1)]
+    [TestCase(-1, TextIndex.IndexState.End, -1)]
+    public void ToCharIndex(int index, TextIndex.IndexState state, int expected)
+    {
+        var textIndex = new TextIndex(index, state);
+
+        int actual = TextIndexUtils.ToCharIndex(textIndex);
         Assert.AreEqual(expected, actual);
     }
 

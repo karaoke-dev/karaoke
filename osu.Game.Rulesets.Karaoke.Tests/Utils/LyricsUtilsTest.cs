@@ -53,12 +53,12 @@ public class LyricsUtilsTest
         TimeTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseTimeTags(secondTimeTags), secondLyric.TimeTags);
     }
 
-    [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2,
-        new[] { "[0,1]:か", "[1,2]:ら" }, new[] { "[0,1]:お", "[1,2]:け" })]
+    [TestCase("カラオケ", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2,
+        new[] { "[0]:か", "[1]:ら" }, new[] { "[0]:お", "[1]:け" })]
+    [TestCase("カラオケ", new[] { "[0,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+    [TestCase("カラオケ", new[] { "[1,3]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+    [TestCase("カラオケ", new[] { "[1,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
     [TestCase("カラオケ", new[] { "[0,3]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[1,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[2,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[0,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
     [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
     public void TestSeparateLyricRubyTag(string text, string[] rubyTags, int splitIndex, string[] firstRubyTags, string[] secondRubyTags)
     {
@@ -74,12 +74,12 @@ public class LyricsUtilsTest
         TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(secondRubyTags), secondLyric.RubyTags);
     }
 
-    [TestCase("カラオケ", new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 2,
-        new[] { "[0,1]:ka", "[1,2]:ra" }, new[] { "[0,1]:o", "[1,2]:ke" })]
+    [TestCase("カラオケ", new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }, 2,
+        new[] { "[0]:ka", "[1]:ra" }, new[] { "[0]:o", "[1]:ke" })]
+    [TestCase("カラオケ", new[] { "[0,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+    [TestCase("カラオケ", new[] { "[1,3]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+    [TestCase("カラオケ", new[] { "[1,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
     [TestCase("カラオケ", new[] { "[0,3]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[1,4]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[2,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[0,4]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
     [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
     public void TestSeparateLyricRomajiTag(string text, string[] romajiTags, int splitIndex, string[] firstRomajiTags, string[] secondRomajiTags)
     {
@@ -197,11 +197,11 @@ public class LyricsUtilsTest
         }
     }
 
-    [TestCase(new[] { "[0,0]:ruby" }, new[] { "[0,0]:ルビ" }, new[] { "[0,0]:ruby", "[7,7]:ルビ" })]
-    [TestCase(new[] { "[0,0]:" }, new[] { "[0,0]:" }, new[] { "[0,0]:", "[7,7]:" })]
-    [TestCase(new[] { "[0,3]:" }, new[] { "[0,3]:" }, new[] { "[0,3]:", "[7,10]:" })]
-    [TestCase(new[] { "[0,10]:" }, new[] { "[0,10]:" }, new[] { "[0,10]:", "[7,14]:" })] // will auto-fix ruby index.
-    [TestCase(new[] { "[-10,0]:" }, new[] { "[-10,0]:" }, new[] { "[-10,0]:", "[0,7]:" })] // will auto-fix ruby index.
+    [TestCase(new[] { "[0]:ruby" }, new[] { "[0]:ルビ" }, new[] { "[0]:ruby", "[7]:ルビ" })]
+    [TestCase(new[] { "[0]:" }, new[] { "[0]:" }, new[] { "[0]:", "[7]:" })]
+    [TestCase(new[] { "[0,2]:" }, new[] { "[0,2]:" }, new[] { "[0,2]:", "[7,9]:" })]
+    [TestCase(new[] { "[0,9]:" }, new[] { "[0,9]:" }, new[] { "[0,9]:", "[7,13]:" })] // will auto-fix ruby index.
+    [TestCase(new[] { "[-10,-1]:" }, new[] { "[-10,-1]:" }, new[] { "[-10,-1]:", "[0,6]:" })] // will auto-fix ruby index.
     public void TestCombineLyricRubyTag(string[] firstRubyTags, string[] secondRubyTags, string[] expectedRubyTags)
     {
         var lyric1 = new Lyric
@@ -222,11 +222,11 @@ public class LyricsUtilsTest
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0,0]:romaji" }, new[] { "[0,0]:ローマ字" }, new[] { "[0,0]:romaji", "[7,7]:ローマ字" })]
-    [TestCase(new[] { "[0,0]:" }, new[] { "[0,0]:" }, new[] { "[0,0]:", "[7,7]:" })]
-    [TestCase(new[] { "[0,3]:" }, new[] { "[0,3]:" }, new[] { "[0,3]:", "[7,10]:" })]
-    [TestCase(new[] { "[0,10]:" }, new[] { "[0,10]:" }, new[] { "[0,10]:", "[7,14]:" })] // will auto-fix romaji index.
-    [TestCase(new[] { "[-10,0]:" }, new[] { "[-10,0]:" }, new[] { "[-10,0]:", "[0,7]:" })] // will auto-fix romaji index.
+    [TestCase(new[] { "[0]:romaji" }, new[] { "[0]:ローマ字" }, new[] { "[0]:romaji", "[7]:ローマ字" })]
+    [TestCase(new[] { "[0]:" }, new[] { "[0]:" }, new[] { "[0]:", "[7]:" })]
+    [TestCase(new[] { "[0,2]:" }, new[] { "[0,2]:" }, new[] { "[0,2]:", "[7,9]:" })]
+    [TestCase(new[] { "[0,9]:" }, new[] { "[0,9]:" }, new[] { "[0,9]:", "[7,13]:" })] // will auto-fix romaji index.
+    [TestCase(new[] { "[-10,-1]:" }, new[] { "[-10,-1]:" }, new[] { "[-10,-1]:", "[0,6]:" })] // will auto-fix romaji index.
     public void TestCombineLyricRomajiTag(string[] firstRomajiTags, string[] secondRomajiTags, string[] expectedRomajiTags)
     {
         var lyric1 = new Lyric

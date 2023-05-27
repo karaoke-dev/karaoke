@@ -18,17 +18,17 @@ public class JaRomajiTagGeneratorTest : BaseRomajiTagGeneratorTest<JaRomajiTagGe
         CheckCanGenerate(text, canGenerate, config);
     }
 
-    [TestCase("花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })]
-    [TestCase("はなび", new[] { "[0,3]:hanabi" })]
-    [TestCase("枯れた世界に輝く", new[] { "[0,3]:kareta", "[3,6]:sekaini", "[6,8]:kagayaku" })]
+    [TestCase("花火大会", new[] { "[0,1]:hanabi", "[2,3]:taikai" })]
+    [TestCase("はなび", new[] { "[0,2]:hanabi" })]
+    [TestCase("枯れた世界に輝く", new[] { "[0,2]:kareta", "[3,5]:sekaini", "[6,7]:kagayaku" })]
     public void TestGenerate(string text, string[] expectedRomajies)
     {
         var config = GeneratorEmptyConfig();
         CheckGenerateResult(text, expectedRomajies, config);
     }
 
-    [TestCase("花火大会", new[] { "[0,2]:HANABI", "[2,4]:TAIKAI" })]
-    [TestCase("はなび", new[] { "[0,3]:HANABI" })]
+    [TestCase("花火大会", new[] { "[0,1]:HANABI", "[2,3]:TAIKAI" })]
+    [TestCase("はなび", new[] { "[0,2]:HANABI" })]
     public void TestGenerateWithUppercase(string text, string[] expectedRomajies)
     {
         var config = GeneratorEmptyConfig(x => x.Uppercase.Value = true);

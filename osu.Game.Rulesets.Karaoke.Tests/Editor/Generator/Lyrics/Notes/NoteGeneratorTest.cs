@@ -34,7 +34,7 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
     [TestCase(new[] { "[3,end]:1000", "[3,start]:2000", "[2,start]:3000", "[1,start]:4000", "[0,start]:5000" }, new string[] { })]
     [TestCase(new[] { "[0,start]:1000", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if time is duplicated.
-    public void TestGenerate(string[] timeTags, string[] expectedNotes)
+    public void TestGenerate(string[] timeTags, string[] expectedNoteTexts)
     {
         var config = GeneratorEmptyConfig();
         var lyric = new Lyric
@@ -42,20 +42,45 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
+
+        var expectedNotes = expectedNoteTexts.Select(x => new Note { Text = x }).ToArray();
         CheckGenerateResult(lyric, expectedNotes, config);
     }
 
-    protected void CheckGenerateResult(Lyric lyric, string[] expectedNotes, NoteGeneratorConfig config)
+    [TestCase(new string[] { }, new[] { "カ", "ラ", "オ", "ケ" })]
+    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, new[] { "カ,か", "ラ,ら", "オ,お", "ケ,け" })]
+    public void TestGenerateWithRuby(string[] rubyTags, string[] expectedNoteTexts)
     {
-        var expected = expectedNotes.Select(x => new Note
+        var config = GeneratorEmptyConfig();
+        var lyric = new Lyric
         {
-            Text = x
+            Text = "カラオケ",
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags)
+        };
+
+        var expectedNotes = expectedNoteTexts.Select(x =>
+        {
+            if (x.Contains(','))
+            {
+                return new Note
+                {
+                    Text = x.Split(',')[0],
+                    RubyText = x.Split(',')[1]
+                };
+            }
+
+            return new Note
+            {
+                Text = x
+            };
         }).ToArray();
-        CheckGenerateResult(lyric, expected, config);
+        CheckGenerateResult(lyric, expectedNotes, config);
     }
 
     protected override void AssertEqual(Note[] expected, Note[] actual)
     {
         Assert.AreEqual(expected.Select(x => x.Text), actual.Select(x => x.Text));
+        Assert.AreEqual(expected.Select(x => x.RubyText), actual.Select(x => x.RubyText));
     }
 }

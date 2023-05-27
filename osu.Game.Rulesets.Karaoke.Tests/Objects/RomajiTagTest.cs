@@ -14,7 +14,7 @@ public class RomajiTagTest
         var romajiTag = new RomajiTag
         {
             Text = "romaji",
-            StartIndex = 1,
+            StartIndex = 0,
             EndIndex = 2
         };
 

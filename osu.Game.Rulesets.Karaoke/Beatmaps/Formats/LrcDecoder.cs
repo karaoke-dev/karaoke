@@ -62,13 +62,13 @@ public class LrcDecoder : Decoder<Beatmap>
             => new()
             {
                 Text = rubyTag.Text,
-                StartIndex = rubyTag.StartIndex,
-                EndIndex = rubyTag.EndIndex
+                StartIndex = rubyTag.StartCharIndex,
+                EndIndex = rubyTag.EndCharIndex
             };
 
         static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
         {
-            int startIndex = rubyTag.StartIndex;
+            int startIndex = rubyTag.StartCharIndex;
             return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<TextIndex, int?>(new TextIndex(startIndex), x.Value))).ToArray();
         }
     }

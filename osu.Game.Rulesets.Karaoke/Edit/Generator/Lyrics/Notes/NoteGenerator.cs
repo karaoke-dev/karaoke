@@ -45,16 +45,16 @@ public class NoteGenerator : LyricPropertyGenerator<Note[], NoteGeneratorConfig>
             (double _, var textIndex) = timeTag;
             (double _, var nextTextIndex) = timeTags.GetNext(timeTag);
 
-            int startIndex = TextIndexUtils.ToStringIndex(textIndex);
-            int endIndex = TextIndexUtils.ToStringIndex(nextTextIndex);
+            int gapIndex = TextIndexUtils.ToGapIndex(textIndex);
+            int nextGapIndex = TextIndexUtils.ToGapIndex(nextTextIndex);
 
             // prevent reverse time-tag to generate the note.
-            if (startIndex >= endIndex)
+            if (gapIndex >= nextGapIndex)
                 continue;
 
             int timeTagIndex = timeTags.IndexOf(timeTag);
-            string text = item.Text[startIndex..endIndex];
-            string? ruby = item.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+            string text = item.Text[gapIndex..nextGapIndex];
+            string? ruby = item.RubyTags?.Where(x => x.StartIndex == gapIndex && x.EndIndex == nextGapIndex - 1).FirstOrDefault()?.Text;
 
             if (!string.IsNullOrEmpty(text))
             {

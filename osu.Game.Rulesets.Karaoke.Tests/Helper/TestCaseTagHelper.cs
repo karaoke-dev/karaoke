@@ -20,6 +20,7 @@ public static class TestCaseTagHelper
     /// Process test case ruby string format into <see cref="RubyTag"/>
     /// </summary>
     /// <example>
+    /// [0]:ruby
     /// [0,3]:ruby
     /// </example>
     /// <param name="str">Ruby tag string format</param>
@@ -29,16 +30,23 @@ public static class TestCaseTagHelper
         if (string.IsNullOrEmpty(str))
             return new RubyTag();
 
-        var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
+        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<ruby>.*$)");
         var result = regex.Match(str);
         if (!result.Success)
             throw new RegexMatchTimeoutException(nameof(str));
 
+        string startValue = result.Groups["start"].Value;
+        string endValue = result.Groups["end"].Value;
+
+        int startIndex = int.Parse(startValue);
+        int endIndex = int.Parse(string.IsNullOrEmpty(endValue) ? startValue : endValue);
+        string text = result.Groups["ruby"].Value;
+
         return new RubyTag
         {
-            StartIndex = result.GetGroupValue<int>("start"),
-            EndIndex = result.GetGroupValue<int>("end"),
-            Text = result.GetGroupValue<string>("ruby")
+            StartIndex = startIndex,
+            EndIndex = endIndex,
+            Text = text
         };
     }
 
@@ -46,6 +54,7 @@ public static class TestCaseTagHelper
     /// Process test case romaji string format into <see cref="RomajiTag"/>
     /// </summary>
     /// <example>
+    /// [0]:romaji
     /// [0,3]:romaji
     /// </example>
     /// <param name="str">Romaji tag string format</param>
@@ -55,16 +64,23 @@ public static class TestCaseTagHelper
         if (string.IsNullOrEmpty(str))
             return new RomajiTag();
 
-        var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
+        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<romaji>.*$)");
         var result = regex.Match(str);
         if (!result.Success)
             throw new RegexMatchTimeoutException(nameof(str));
 
+        string startValue = result.Groups["start"].Value;
+        string endValue = result.Groups["end"].Value;
+
+        int startIndex = int.Parse(startValue);
+        int endIndex = int.Parse(string.IsNullOrEmpty(endValue) ? startValue : endValue);
+        string text = result.Groups["romaji"].Value;
+
         return new RomajiTag
         {
-            StartIndex = result.GetGroupValue<int>("start"),
-            EndIndex = result.GetGroupValue<int>("end"),
-            Text = result.GetGroupValue<string>("romaji")
+            StartIndex = startIndex,
+            EndIndex = endIndex,
+            Text = text
         };
     }
 

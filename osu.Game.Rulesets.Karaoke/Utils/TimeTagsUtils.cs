@@ -46,7 +46,7 @@ public static class TimeTagsUtils
         return new TimeTag(index, time);
 
         static int getTimeCalculationIndex(TextIndex calculationIndex)
-            => TextIndexUtils.ToStringIndex(calculationIndex);
+            => TextIndexUtils.ToGapIndex(calculationIndex);
     }
 
     public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, int index)

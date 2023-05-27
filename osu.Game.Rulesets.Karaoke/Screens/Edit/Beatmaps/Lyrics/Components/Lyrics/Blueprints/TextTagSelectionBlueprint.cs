@@ -73,15 +73,20 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
         {
             var textTagRect = previewLyricPositionProvider.GetTextTagByPosition(Item);
 
-            var startRect = previewLyricPositionProvider.GetRectByCharIndicator(Item.StartIndex);
-            var endRect = previewLyricPositionProvider.GetRectByCharIndicator(Item.EndIndex);
+            if (textTagRect == null)
+            {
+                return;
+            }
+
+            var startRect = previewLyricPositionProvider.GetRectByCharIndex(Item.StartIndex);
+            var endRect = previewLyricPositionProvider.GetRectByCharIndex(Item.EndIndex);
 
             // update select position
-            updateDrawableRect(previewTextArea, textTagRect);
+            updateDrawableRect(previewTextArea, textTagRect.Value);
 
             // update index range position.
-            var indexRangePosition = new Vector2(startRect.Right, textTagRect.Y);
-            var indexRangeSize = new Vector2(endRect.Left - startRect.Right, textTagRect.Height);
+            var indexRangePosition = new Vector2(startRect.Left, textTagRect.Value.Y);
+            var indexRangeSize = new Vector2(endRect.Right - startRect.Left, textTagRect.Value.Height);
             updateDrawableRect(indexRangeBackground, new RectangleF(indexRangePosition, indexRangeSize));
         });
 

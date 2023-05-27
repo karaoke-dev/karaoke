@@ -20,7 +20,7 @@ public class RomajiTagConverter : JsonConverter<RomajiTag>
         if (string.IsNullOrEmpty(value))
             return new RomajiTag();
 
-        var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
+        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<romaji>.*$)");
         var result = regex.Match(value);
         if (!result.Success)
             return new RomajiTag();
@@ -28,7 +28,7 @@ public class RomajiTagConverter : JsonConverter<RomajiTag>
         return new RomajiTag
         {
             StartIndex = result.GetGroupValue<int>("start"),
-            EndIndex = result.GetGroupValue<int>("end"),
+            EndIndex = result.GetGroupValue<int?>("end") ?? result.GetGroupValue<int>("start"),
             Text = result.GetGroupValue<string>("romaji")
         };
     }
@@ -37,7 +37,9 @@ public class RomajiTagConverter : JsonConverter<RomajiTag>
     {
         ArgumentNullException.ThrowIfNull(value);
 
-        string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
+        string str = value.StartIndex == value.EndIndex
+            ? $"[{value.StartIndex}]:{value.Text}"
+            : $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
         writer.WriteValue(str);
     }
 }

@@ -72,7 +72,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         TriggerHandlerChanged(c => c.Add(new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "かぜ",
         }));
 
@@ -98,7 +98,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             new RubyTag
             {
                 StartIndex = 0,
-                EndIndex = 1,
+                EndIndex = 0,
                 Text = "かぜ",
             }
         }));
@@ -117,7 +117,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         var removedTag = new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "かぜ",
         };
 
@@ -145,7 +145,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         var removedTag = new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "か",
         };
 
@@ -159,7 +159,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new()
                 {
                     StartIndex = 1,
-                    EndIndex = 2,
+                    EndIndex = 1,
                     Text = "ら",
                 }
             }
@@ -179,7 +179,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         var targetTag = new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "か",
         };
 
@@ -208,7 +208,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         var targetTag = new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "か",
         };
 
@@ -227,7 +227,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         AssertSelectedHitObject(h =>
         {
             Assert.AreEqual(1, targetTag.StartIndex);
-            Assert.AreEqual(2, targetTag.EndIndex);
+            Assert.AreEqual(1, targetTag.EndIndex);
         });
     }
 
@@ -237,7 +237,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         var targetTag = new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "か",
         };
 
@@ -271,7 +271,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RubyTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "かぜ",
         }));
     }

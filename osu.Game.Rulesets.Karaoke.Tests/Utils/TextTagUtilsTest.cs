@@ -29,9 +29,9 @@ public class TextTagUtilsTest
         TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
         // test romaji tag.
-        var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
+        var romajiTag = TestCaseTagHelper.ParseRomajiTag(textTag);
 
-        var expectedRomajiTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+        var expectedRomajiTag = TestCaseTagHelper.ParseRomajiTag(actualTag);
         var actualRomajiTag = generateFixedTag(romajiTag, lyric);
         TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
 
@@ -47,26 +47,32 @@ public class TextTagUtilsTest
         }
     }
 
-    [TestCase("[0,1]:ka", "karaoke", 1, "[1,2]:ka")]
-    [TestCase("[0,1]:", "karaoke", 1, "[1,2]:")]
-    [TestCase("[0,1]:ka", "karaoke", -1, "[0,0]:ka")]
-    [TestCase("[0,1]:ka", "", -1, "[0,0]:ka")]
-    [TestCase("[0,1]:ka", "", 1, "[0,0]:ka")]
+    [TestCase("[0]:ka", "karaoke", 1, "[1]:ka")]
+    [TestCase("[0]:", "karaoke", 1, "[1]:")]
+    [TestCase("[0]:ka", "karaoke", -1, "[0]:ka")]
+    [TestCase("[0]:ka", "", -1, null)] // should not be able to adjust the time-tag if lyric is empty.
+    [TestCase("[0]:ka", "", 1, null)] // should not be able to adjust the time-tag if lyric is empty.
     [TestCase("[1,0]:ka", "karaoke", 0, "[0,1]:ka")] // will auto fix the position
     [TestCase("[1,0]:ka", "karaoke", 1, "[1,2]:ka")]
-    public void TestGetShiftingIndex(string textTag, string lyric, int offset, string actualTag)
+    public void TestGetShiftingIndex(string textTag, string lyric, int offset, string? actualTag)
     {
-        // test ruby tag.
         var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+        var romajiTag = TestCaseTagHelper.ParseRomajiTag(textTag);
 
+        if (actualTag == null)
+        {
+            Assert.Throws<InvalidOperationException>(() => generateShiftingTag(rubyTag, lyric, offset));
+            Assert.Throws<InvalidOperationException>(() => generateShiftingTag(rubyTag, lyric, offset));
+            return;
+        }
+
+        // test ruby tag.
         var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
         var actualRubyTag = generateShiftingTag(rubyTag, lyric, offset);
         TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
         // test romaji tag.
-        var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
-
-        var expectedRomajiTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+        var expectedRomajiTag = TestCaseTagHelper.ParseRomajiTag(actualTag);
         var actualRomajiTag = generateShiftingTag(romajiTag, lyric, offset);
         TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
 
@@ -96,10 +102,10 @@ public class TextTagUtilsTest
     }
 
     [TestCase("[0,1]:ka", 0, true)]
-    [TestCase("[0,1]:ka", 1, false)]
+    [TestCase("[0,1]:ka", 1, true)]
     [TestCase("[0,1]:ka", -1, true)] // should be ok with negative value because we only check if valid with current text-tag index.
     [TestCase("[2,1]:ka", 0, true)]
-    [TestCase("[2,1]:ka", 1, false)]
+    [TestCase("[2,1]:ka", 1, true)]
     [TestCase("[2,1]:ka", 2, false)]
     public void TestValidNewStartIndex(string textTag, int newStartIndex, bool expected)
     {
@@ -110,11 +116,11 @@ public class TextTagUtilsTest
     }
 
     [TestCase("[0,1]:ka", 1, true)]
-    [TestCase("[0,1]:ka", 0, false)]
+    [TestCase("[0,1]:ka", 0, true)]
     [TestCase("[0,1]:ka", 1000, true)] // should be ok with large value because we only check if valid with current text-tag index.
     [TestCase("[2,1]:ka", 0, false)]
     [TestCase("[2,1]:ka", 1, false)]
-    [TestCase("[2,1]:ka", 2, false)]
+    [TestCase("[2,1]:ka", 2, true)]
     [TestCase("[2,1]:ka", 3, true)]
     public void TestValidNewEndIndex(string textTag, int newEndIndex, bool expected)
     {
@@ -125,9 +131,9 @@ public class TextTagUtilsTest
     }
 
     [TestCase("karaoke", 0, false)]
-    [TestCase("karaoke", 7, false)]
+    [TestCase("karaoke", 6, false)]
     [TestCase("karaoke", -1, true)]
-    [TestCase("karaoke", 8, true)]
+    [TestCase("karaoke", 7, true)]
     [TestCase("", -1, true)]
     [TestCase("", 0, true)]
     [TestCase("", 1, true)]
@@ -161,18 +167,25 @@ public class TextTagUtilsTest
         Assert.AreEqual(expected, actual);
     }
 
-    [TestCase("[0,1]:ka", "カラオケ", "カ")]
-    [TestCase("[0,4]:karaoke", "カラオケ", "カラオケ")]
-    [TestCase("[-1,0]:", "カラオケ", "")]
-    [TestCase("[4,5]:", "カラオケ", "")]
-    [TestCase("[4,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
-    [TestCase("[0,4]:karaoke", "", "")]
-    public void TestGetTextFromLyric(string textTag, string lyric, string expected)
+    [TestCase("[0]:ka", "カラオケ", "カ")]
+    [TestCase("[0,3]:karaoke", "カラオケ", "カラオケ")]
+    [TestCase("[-1,0]:", "カラオケ", "カ")] // will get the first char if out of the range.
+    [TestCase("[4]:", "カラオケ", "ケ")] // will get the last char if out of the range.
+    [TestCase("[3,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
+    [TestCase("[0,3]:karaoke", "", null)]
+    public void TestGetTextFromLyric(string textTag, string lyric, string? expected)
     {
         var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
 
-        string actual = TextTagUtils.GetTextFromLyric(rubyTag, lyric);
-        Assert.AreEqual(expected, actual);
+        if (expected == null)
+        {
+            Assert.Throws<InvalidOperationException>(() => TextTagUtils.GetTextFromLyric(rubyTag, lyric));
+        }
+        else
+        {
+            string actual = TextTagUtils.GetTextFromLyric(rubyTag, lyric);
+            Assert.AreEqual(expected, actual);
+        }
     }
 
     [TestCase("[0,1]:ka")]

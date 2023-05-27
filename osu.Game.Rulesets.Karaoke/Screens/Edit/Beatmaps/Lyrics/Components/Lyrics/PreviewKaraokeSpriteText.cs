@@ -127,7 +127,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #region Ruby/Romaji tag
 
-    public RectangleF GetTextTagByPosition(ITextTag textTag) =>
+    public RectangleF? GetTextTagByPosition(ITextTag textTag) =>
         textTag switch
         {
             RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
@@ -258,10 +258,10 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     public partial class EditorLyricSpriteText : LyricSpriteText
     {
-        public RectangleF GetRubyTagPosition(RubyTag rubyTag)
+        public RectangleF? GetRubyTagPosition(RubyTag rubyTag)
             => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
 
-        public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
+        public RectangleF? GetRomajiTagPosition(RomajiTag romajiTag)
             => GetRomajiTagDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
 
         public Vector2 GetTimeTagPosition(TextIndex index)

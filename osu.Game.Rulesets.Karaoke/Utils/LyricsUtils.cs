@@ -63,16 +63,16 @@ public static class LyricsUtils
         var firstLyric = lyric.DeepClone();
         firstLyric.Text = lyric.Text[..splitIndex];
         firstLyric.TimeTags = firstTimeTag.ToArray();
-        firstLyric.RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray();
-        firstLyric.RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray();
+        firstLyric.RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex < splitIndex).ToArray();
+        firstLyric.RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex < splitIndex).ToArray();
 
         // todo : should implement time and duration
         string secondLyricText = lyric.Text[splitIndex..];
         var secondLyric = lyric.DeepClone();
         secondLyric.Text = secondLyricText;
         secondLyric.TimeTags = shiftingTimeTag(secondTimeTag.ToArray(), -splitIndex);
-        secondLyric.RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex);
-        secondLyric.RomajiTags = shiftingTextTag(lyric.RomajiTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex);
+        secondLyric.RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
+        secondLyric.RomajiTags = shiftingTextTag(lyric.RomajiTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
 
         return new Tuple<Lyric, Lyric>(firstLyric, secondLyric);
     }

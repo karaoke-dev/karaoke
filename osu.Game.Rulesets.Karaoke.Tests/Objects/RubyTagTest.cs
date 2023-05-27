@@ -14,8 +14,8 @@ public class RubyTagTest
         var rubyTag = new RubyTag
         {
             Text = "ruby",
-            StartIndex = 1,
-            EndIndex = 2
+            StartIndex = 0,
+            EndIndex = 1
         };
 
         var clonedRubyTag = rubyTag.DeepClone();

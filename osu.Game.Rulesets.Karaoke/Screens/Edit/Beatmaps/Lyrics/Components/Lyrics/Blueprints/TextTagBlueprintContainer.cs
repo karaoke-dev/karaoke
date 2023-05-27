@@ -71,9 +71,9 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             if (deltaXPosition < 0)
             {
                 var firstTimeTag = SelectedItems.MinBy(x => x.StartIndex) ?? throw new InvalidOperationException();
-                int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
-                int offset = newStartIndex - firstTimeTag.StartIndex;
-                if (offset == 0)
+                int? newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
+                int? offset = newStartIndex - firstTimeTag.StartIndex;
+                if (offset is null or 0)
                     return false;
 
                 SetTextTagShifting(SelectedItems, -1);
@@ -81,9 +81,9 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             else
             {
                 var lastTimeTag = SelectedItems.MaxBy(x => x.EndIndex) ?? throw new InvalidOperationException();
-                int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
-                int offset = newEndIndex - lastTimeTag.EndIndex;
-                if (offset == 0)
+                int? newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
+                int? offset = newEndIndex - lastTimeTag.EndIndex;
+                if (offset is null or 0)
                     return false;
 
                 SetTextTagShifting(SelectedItems, 1);
@@ -104,16 +104,16 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             switch (anchor)
             {
                 case Anchor.CentreLeft:
-                    int newStartIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                    if (!TextTagUtils.ValidNewStartIndex(selectedTextTag, newStartIndex))
+                    int? newStartIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
+                    if (newStartIndex == null || !TextTagUtils.ValidNewStartIndex(selectedTextTag, newStartIndex.Value))
                         return false;
 
                     SetTextTagIndex(selectedTextTag, newStartIndex, null);
                     return true;
 
                 case Anchor.CentreRight:
-                    int newEndIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                    if (!TextTagUtils.ValidNewEndIndex(selectedTextTag, newEndIndex))
+                    int? newEndIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
+                    if (newEndIndex == null || !TextTagUtils.ValidNewEndIndex(selectedTextTag, newEndIndex.Value))
                         return false;
 
                     SetTextTagIndex(selectedTextTag, null, newEndIndex);
@@ -124,20 +124,24 @@ public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintCo
             }
         }
 
-        private int calculateNewIndex(T textTag, float offset, Anchor anchor)
+        private int? calculateNewIndex(T textTag, float offset, Anchor anchor)
         {
             // get real left-side and right-side position
             var rect = previewLyricPositionProvider.GetTextTagByPosition(textTag);
 
+            // todo: need to think about how to handle the case if the text-tag already out of the range of the text.
+            if (rect == null)
+                throw new InvalidOperationException($"{nameof(textTag)} not in the range of the text.");
+
             switch (anchor)
             {
                 case Anchor.CentreLeft:
-                    float leftPosition = rect.Left + offset;
-                    return previewLyricPositionProvider.GetCharIndicatorByPosition(leftPosition);
+                    float leftPosition = rect.Value.Left + offset;
+                    return previewLyricPositionProvider.GetCharIndexByPosition(leftPosition);
 
                 case Anchor.CentreRight:
-                    float rightPosition = rect.Right + offset;
-                    return previewLyricPositionProvider.GetCharIndicatorByPosition(rightPosition);
+                    float rightPosition = rect.Value.Right + offset;
+                    return previewLyricPositionProvider.GetCharIndexByPosition(rightPosition);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(anchor));

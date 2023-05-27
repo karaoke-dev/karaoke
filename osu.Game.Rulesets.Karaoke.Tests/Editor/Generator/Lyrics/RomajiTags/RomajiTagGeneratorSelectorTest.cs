@@ -30,8 +30,8 @@ public class RomajiTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<Rom
         CheckCanGenerate(lyric, canGenerate, selector);
     }
 
-    [TestCase(17, "花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })] // Japanese
-    [TestCase(1041, "はなび", new[] { "[0,3]:hanabi" })] // Japanese
+    [TestCase(17, "花火大会", new[] { "[0,1]:hanabi", "[2,3]:taikai" })] // Japanese
+    [TestCase(1041, "はなび", new[] { "[0,2]:hanabi" })] // Japanese
     public void TestGenerate(int lcid, string text, string[] expectedRomajies)
     {
         var selector = CreateSelector();

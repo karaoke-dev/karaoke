@@ -53,8 +53,8 @@ public class LrcEncoder
             => rubyTags.Select(x => new RubyTag
             {
                 Text = x.Text,
-                StartIndex = x.StartIndex,
-                EndIndex = x.EndIndex
+                StartCharIndex = x.StartIndex,
+                EndCharIndex = x.EndIndex
             }).ToList();
     }
 

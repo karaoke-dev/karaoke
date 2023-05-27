@@ -67,7 +67,7 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             {
                 Text = Config.RubyAsKatakana.Value ? katakana : hiragana,
                 StartIndex = offsetAtt.StartOffset,
-                EndIndex = offsetAtt.EndOffset
+                EndIndex = offsetAtt.EndOffset - 1
             });
         }
 

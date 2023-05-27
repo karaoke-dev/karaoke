@@ -18,7 +18,7 @@ public interface IPreviewLyricPositionProvider
 
     RectangleF GetRectByCharIndicator(int charIndex);
 
-    RectangleF GetTextTagByPosition(ITextTag textTag);
+    RectangleF? GetTextTagByPosition(ITextTag textTag);
 
     TimeTag? GetTimeTagByPosition(float position);
 

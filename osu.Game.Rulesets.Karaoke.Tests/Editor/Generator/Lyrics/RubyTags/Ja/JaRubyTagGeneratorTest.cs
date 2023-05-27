@@ -19,7 +19,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
         CheckCanGenerate(text, canGenerate, config);
     }
 
-    [TestCase("花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })]
+    [TestCase("花火大会", new[] { "[0,1]:はなび", "[2,3]:たいかい" })]
     [TestCase("はなび", new string[] { })]
     public void TestGenerate(string text, string[] expectedRubies)
     {
@@ -27,7 +27,7 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
         CheckGenerateResult(text, expectedRubies, config);
     }
 
-    [TestCase("花火大会", new[] { "[0,2]:ハナビ", "[2,4]:タイカイ" })]
+    [TestCase("花火大会", new[] { "[0,1]:ハナビ", "[2,3]:タイカイ" })]
     [TestCase("ハナビ", new string[] { })]
     public void TestGenerateWithRubyAsKatakana(string text, string[] expectedRubies)
     {
@@ -35,8 +35,8 @@ public class JaRubyTagGeneratorTest : BaseRubyTagGeneratorTest<JaRubyTagGenerato
         CheckGenerateResult(text, expectedRubies, config);
     }
 
-    [TestCase("はなび", new[] { "[0,2]:はな", "[2,3]:び" })]
-    [TestCase("ハナビ", new[] { "[0,3]:はなび" })]
+    [TestCase("はなび", new[] { "[0,1]:はな", "[2]:び" })]
+    [TestCase("ハナビ", new[] { "[0,2]:はなび" })]
     public void TestGenerateWithEnableDuplicatedRuby(string text, string[] expectedRubies)
     {
         var config = GeneratorEmptyConfig(x => x.EnableDuplicatedRuby.Value = true);

@@ -60,13 +60,13 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                 new RubyTag
                 {
                     StartIndex = 0,
-                    EndIndex = 1,
+                    EndIndex = 0,
                     Text = "か"
                 },
                 new RubyTag
                 {
                     StartIndex = 2,
-                    EndIndex = 3,
+                    EndIndex = 2,
                     Text = "お"
                 }
             },
@@ -75,13 +75,13 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                 new RomajiTag
                 {
                     StartIndex = 1,
-                    EndIndex = 2,
+                    EndIndex = 1,
                     Text = "ra"
                 },
                 new RomajiTag
                 {
                     StartIndex = 3,
-                    EndIndex = 4,
+                    EndIndex = 3,
                     Text = "ke"
                 }
             },

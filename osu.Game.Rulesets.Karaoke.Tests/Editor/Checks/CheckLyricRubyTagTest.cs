@@ -12,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
 public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag>
 {
-    [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" })]
-    [TestCase("カラオケ", new[] { "[0,4]:からおけ" })]
+    [TestCase("カラオケ", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
+    [TestCase("カラオケ", new[] { "[0,3]:からおけ" })]
     public void TestCheck(string text, string[] rubies)
     {
         var lyric = new Lyric
@@ -25,8 +25,8 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         AssertOk(lyric);
     }
 
-    [TestCase("カラオケ", new[] { "[-1,1]:か" })]
-    [TestCase("カラオケ", new[] { "[4,5]:け" })]
+    [TestCase("カラオケ", new[] { "[-1]:か" })]
+    [TestCase("カラオケ", new[] { "[4]:け" })]
     public void TestCheckRubyOutOfRange(string text, string[] rubies)
     {
         var lyric = new Lyric
@@ -38,7 +38,7 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyOutOfRange>(lyric);
     }
 
-    [TestCase("カラオケ", new[] { "[0,1]:か", "[0,1]:ら" })]
+    [TestCase("カラオケ", new[] { "[0]:か", "[0]:ら" })]
     [TestCase("カラオケ", new[] { "[0,3]:か", "[1,2]:ら" })]
     public void TestCheckRubyOverlapping(string text, string[] rubies)
     {

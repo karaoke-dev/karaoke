@@ -27,7 +27,7 @@ public class JaTimeTagGenerator : TimeTagGenerator<JaTimeTagGeneratorConfig>
         foreach (var ruby in lyric.RubyTags)
         {
             // remove exist time tag
-            timeTags.RemoveAll(x => x.Index.Index > ruby.StartIndex && x.Index.Index < ruby.EndIndex);
+            timeTags.RemoveAll(x => x.Index > new TextIndex(ruby.StartIndex) && x.Index < new TextIndex(ruby.EndIndex, TextIndex.IndexState.End));
 
             // add new time tags created from ruby
             var rubyTags = generateTimeTagByText(ruby.Text);

@@ -115,13 +115,13 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 new RubyTag
                 {
                     StartIndex = 0,
-                    EndIndex = 1,
+                    EndIndex = 0,
                     Text = "か"
                 },
                 new RubyTag
                 {
                     StartIndex = 2,
-                    EndIndex = 3,
+                    EndIndex = 2,
                     Text = "お"
                 }
             },
@@ -130,7 +130,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 new RomajiTag
                 {
                     StartIndex = 0,
-                    EndIndex = 4,
+                    EndIndex = 3,
                     Text = "karaoke"
                 },
             },

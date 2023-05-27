@@ -12,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
 public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomajiTag>
 {
-    [TestCase("karaoke", new[] { "[0,2]:ka", "[2,4]:ra", "[4,5]:o", "[5,7]:ke" })]
-    [TestCase("karaoke", new[] { "[0,7]:karaoke" })]
+    [TestCase("karaoke", new[] { "[0,1]:ka", "[2,3]:ra", "[4]:o", "[5,6]:ke" })]
+    [TestCase("karaoke", new[] { "[0,6]:karaoke" })]
     public void TestCheck(string text, string[] romajies)
     {
         var lyric = new Lyric
@@ -25,8 +25,8 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         AssertOk(lyric);
     }
 
-    [TestCase("karaoke", new[] { "[-1,2]:ka" })]
-    [TestCase("karaoke", new[] { "[7,8]:ke" })]
+    [TestCase("karaoke", new[] { "[-1]:ka" })]
+    [TestCase("karaoke", new[] { "[7]:ke" })]
     public void TestCheckRomajiOutOfRange(string text, string[] romajies)
     {
         var lyric = new Lyric
@@ -38,8 +38,8 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiOutOfRange>(lyric);
     }
 
-    [TestCase("karaoke", new[] { "[0,2]:ka", "[1,3]:ra" })]
-    [TestCase("karaoke", new[] { "[0,3]:ka", "[1,2]:ra" })]
+    [TestCase("karaoke", new[] { "[0,1]:ka", "[1,2]:ra" })]
+    [TestCase("karaoke", new[] { "[0,2]:ka", "[1]:ra" })]
     public void TestCheckRomajiOverlapping(string text, string[] romajies)
     {
         var lyric = new Lyric
