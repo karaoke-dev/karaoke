@@ -19,12 +19,12 @@ public partial class ConfirmReGeneratePageDialog : PopupDialog
             new PopupDialogOkButton
             {
                 Text = @"Yes. Go for it.",
-                Action = () => okAction.Invoke(true),
+                Action = () => okAction(true),
             },
             new PopupDialogCancelButton
             {
                 Text = @"No! Abort mission!",
-                Action = () => okAction.Invoke(false),
+                Action = () => okAction(false),
             },
         };
     }
