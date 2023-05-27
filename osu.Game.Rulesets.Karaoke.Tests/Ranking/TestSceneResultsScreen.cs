@@ -98,7 +98,7 @@ public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
                 scores.Add(score);
             }
 
-            scoresCallback.Invoke(scores);
+            scoresCallback(scores);
 
             return null;
         }

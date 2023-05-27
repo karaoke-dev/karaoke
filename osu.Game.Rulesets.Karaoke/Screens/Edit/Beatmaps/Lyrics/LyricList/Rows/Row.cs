@@ -126,7 +126,9 @@ public abstract partial class Row : CompositeDrawable
     {
         var mode = bindableMode.Value;
         var backgroundStyle = getBackgroundStyle();
-        var colour = GetBackgroundColour(backgroundStyle, colourProvider).Invoke(mode);
+
+        var backgroundColourFunction = GetBackgroundColour(backgroundStyle, colourProvider);
+        var colour = backgroundColourFunction(mode);
 
         background.Colour = colour;
 

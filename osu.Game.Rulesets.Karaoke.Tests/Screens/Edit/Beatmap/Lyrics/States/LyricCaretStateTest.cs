@@ -348,7 +348,7 @@ public partial class LyricCaretStateTest : OsuTestScene
     {
         AddStep("Assert caret position", () =>
         {
-            caretPosition.Invoke(lyricCaretState.BindableCaretPosition.Value);
+            caretPosition(lyricCaretState.BindableCaretPosition.Value);
         });
     }
 
@@ -356,7 +356,7 @@ public partial class LyricCaretStateTest : OsuTestScene
     {
         AddStep("Assert hover caret position", () =>
         {
-            caretPosition.Invoke(lyricCaretState.BindableHoverCaretPosition.Value);
+            caretPosition(lyricCaretState.BindableHoverCaretPosition.Value);
         });
     }
 

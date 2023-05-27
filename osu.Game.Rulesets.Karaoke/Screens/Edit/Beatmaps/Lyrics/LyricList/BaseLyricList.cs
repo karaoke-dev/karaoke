@@ -78,7 +78,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
 
     protected void AdjustSkin(Action<LyricEditorSkin> action)
     {
-        action.Invoke(skin);
+        action(skin);
     }
 
     protected override void LoadComplete()

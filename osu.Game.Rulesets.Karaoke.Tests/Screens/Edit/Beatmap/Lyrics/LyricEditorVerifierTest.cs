@@ -152,7 +152,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         AddStep("Prepare testing beatmap", () =>
         {
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
-            action.Invoke(editorBeatmap);
+            action(editorBeatmap);
         });
     }
 

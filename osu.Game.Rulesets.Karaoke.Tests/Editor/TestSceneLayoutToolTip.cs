@@ -62,7 +62,7 @@ public partial class TestSceneLayoutToolTip : OsuTestScene
             {
                 Text = "karaoke!"
             };
-            callBack.Invoke(singer);
+            callBack(singer);
             toolTip.SetContent(singer);
         });
     }

@@ -98,7 +98,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         AddStep("Prepare testing beatmap", () =>
         {
             var editorBeatmap = Dependencies.Get<EditorBeatmap>();
-            action.Invoke(editorBeatmap);
+            action(editorBeatmap);
         });
     }
 
@@ -107,7 +107,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         SetUpEditorBeatmap(editorBeatmap =>
         {
             var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
-            action.Invoke(karaokeBeatmap);
+            action(karaokeBeatmap);
         });
     }
 
@@ -145,7 +145,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         AssertEditorBeatmap(editorBeatmap =>
         {
             var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
-            assert.Invoke(karaokeBeatmap);
+            assert(karaokeBeatmap);
         });
     }
 
