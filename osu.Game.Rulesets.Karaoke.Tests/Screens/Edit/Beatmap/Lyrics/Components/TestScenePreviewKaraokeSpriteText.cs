@@ -35,8 +35,8 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
         {
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
-            RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }),
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }),
+            RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }),
         };
     }
 

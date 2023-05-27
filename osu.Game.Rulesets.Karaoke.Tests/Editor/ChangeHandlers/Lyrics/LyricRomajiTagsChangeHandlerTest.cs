@@ -72,7 +72,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         TriggerHandlerChanged(c => c.Add(new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "kaze",
         }));
 
@@ -98,7 +98,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             new RomajiTag
             {
                 StartIndex = 0,
-                EndIndex = 1,
+                EndIndex = 0,
                 Text = "kaze",
             }
         }));
@@ -117,7 +117,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         var removedTag = new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "kaze",
         };
 
@@ -145,7 +145,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         var removedTag = new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "ka",
         };
 
@@ -159,7 +159,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
                 new()
                 {
                     StartIndex = 1,
-                    EndIndex = 2,
+                    EndIndex = 1,
                     Text = "ra",
                 }
             }
@@ -179,7 +179,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         var targetTag = new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "ka",
         };
 
@@ -208,7 +208,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         var targetTag = new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "ka",
         };
 
@@ -227,7 +227,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         AssertSelectedHitObject(h =>
         {
             Assert.AreEqual(1, targetTag.StartIndex);
-            Assert.AreEqual(2, targetTag.EndIndex);
+            Assert.AreEqual(1, targetTag.EndIndex);
         });
     }
 
@@ -237,7 +237,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         var targetTag = new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "ka",
         };
 
@@ -271,7 +271,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
         TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RomajiTag
         {
             StartIndex = 0,
-            EndIndex = 1,
+            EndIndex = 0,
             Text = "kaze",
         }));
     }
