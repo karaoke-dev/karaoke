@@ -85,7 +85,7 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 
     protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CuttingCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndicator(caret.Index);
+        var rect = positionProvider.GetRectByCharIndicator(caret.CharGap);
 
         Position = rect.TopLeft;
         Height = rect.Height;

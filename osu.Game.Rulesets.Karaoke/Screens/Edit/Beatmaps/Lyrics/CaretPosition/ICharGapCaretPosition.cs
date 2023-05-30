@@ -5,5 +5,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 public interface ICharGapCaretPosition : IIndexCaretPosition
 {
-    public int Index { get; }
+    public int CharGap { get; }
 }

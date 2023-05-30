@@ -36,7 +36,7 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
 
     private bool processCreateTimeTagAction(CharIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
     {
-        int index = timeTagIndexCaretPosition.Index;
+        int index = timeTagIndexCaretPosition.GapIndex;
 
         switch (action)
         {

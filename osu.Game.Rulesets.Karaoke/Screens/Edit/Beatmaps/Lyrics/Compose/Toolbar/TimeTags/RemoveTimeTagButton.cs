@@ -35,7 +35,7 @@ public partial class RemoveTimeTagButton : KeyActionButton
             if (lyricCaretState.CaretPosition is not CharIndexCaretPosition charIndexCaretPosition)
                 throw new InvalidOperationException();
 
-            int index = charIndexCaretPosition.Index;
+            int index = charIndexCaretPosition.GapIndex;
             lyricTimeTagsChangeHandler.RemoveByPosition(new TextIndex(index, this.indexState));
         };
     }

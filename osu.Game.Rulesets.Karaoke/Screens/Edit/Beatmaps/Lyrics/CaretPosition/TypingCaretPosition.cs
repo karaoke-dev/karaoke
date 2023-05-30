@@ -10,13 +10,13 @@ public readonly struct TypingCaretPosition : ICharGapCaretPosition
     public TypingCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
     {
         Lyric = lyric;
-        Index = index;
+        CharGap = index;
         GenerateType = generateType;
     }
 
     public Lyric Lyric { get; }
 
-    public int Index { get; }
+    public int CharGap { get; }
 
     public CaretGenerateType GenerateType { get; }
 }

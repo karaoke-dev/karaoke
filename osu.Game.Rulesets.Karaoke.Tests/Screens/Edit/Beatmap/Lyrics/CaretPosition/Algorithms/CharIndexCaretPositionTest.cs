@@ -173,7 +173,7 @@ public class CharIndexCaretPositionTest : BaseIndexCaretPositionAlgorithmTest<Ch
     protected override void AssertEqual(CharIndexCaretPosition expected, CharIndexCaretPosition actual)
     {
         Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.Index, actual.Index);
+        Assert.AreEqual(expected.GapIndex, actual.GapIndex);
     }
 
     private static CharIndexCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)

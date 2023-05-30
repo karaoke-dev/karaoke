@@ -34,7 +34,7 @@ public partial class DrawableCharIndexCaret : DrawableCaret<CharIndexCaretPositi
 
     protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CharIndexCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndex(caret.Index);
+        var rect = positionProvider.GetRectByCharIndex(caret.GapIndex);
 
         Position = rect.TopLeft - new Vector2(border_spacing);
         Size = rect.Size + new Vector2(border_spacing * 2);

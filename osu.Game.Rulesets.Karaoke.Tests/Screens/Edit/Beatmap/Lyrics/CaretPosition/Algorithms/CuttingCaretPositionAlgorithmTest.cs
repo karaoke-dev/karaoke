@@ -177,7 +177,7 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     protected override void AssertEqual(CuttingCaretPosition expected, CuttingCaretPosition actual)
     {
         Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.Index, actual.Index);
+        Assert.AreEqual(expected.CharGap, actual.CharGap);
     }
 
     private static CuttingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)

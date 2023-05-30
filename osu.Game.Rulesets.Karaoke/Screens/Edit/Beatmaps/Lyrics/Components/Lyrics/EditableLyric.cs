@@ -52,7 +52,7 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         switch (position)
         {
             case CuttingCaretPosition cuttingCaretPosition:
-                lyricsChangeHandler.Split(cuttingCaretPosition.Index);
+                lyricsChangeHandler.Split(cuttingCaretPosition.CharGap);
                 return true;
 
             default:
