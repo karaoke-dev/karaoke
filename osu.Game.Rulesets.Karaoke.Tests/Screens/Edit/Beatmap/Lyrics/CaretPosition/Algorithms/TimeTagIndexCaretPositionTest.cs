@@ -173,7 +173,7 @@ public class TimeTagIndexCaretPositionTest : BaseIndexCaretPositionAlgorithmTest
     protected override void AssertEqual(TimeTagIndexCaretPosition expected, TimeTagIndexCaretPosition actual)
     {
         Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.GapIndex, actual.GapIndex);
+        Assert.AreEqual(expected.CharIndex, actual.CharIndex);
     }
 
     private static TimeTagIndexCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)

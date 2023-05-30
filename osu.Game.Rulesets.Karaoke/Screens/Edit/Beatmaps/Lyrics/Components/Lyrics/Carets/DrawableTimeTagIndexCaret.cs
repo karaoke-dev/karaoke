@@ -34,7 +34,7 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
 
     protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagIndexCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndex(caret.GapIndex);
+        var rect = positionProvider.GetRectByCharIndex(caret.CharIndex);
 
         Position = rect.TopLeft - new Vector2(border_spacing);
         Size = rect.Size + new Vector2(border_spacing * 2);

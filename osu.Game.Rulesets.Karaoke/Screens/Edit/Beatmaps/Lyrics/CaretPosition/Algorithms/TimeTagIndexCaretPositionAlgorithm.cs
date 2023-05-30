@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public class TimeTagIndexCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<TimeTagIndexCaretPosition>
+public class TimeTagIndexCaretPositionAlgorithm : CharIndexCaretPositionAlgorithm<TimeTagIndexCaretPosition>
 {
     public TimeTagIndexCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)

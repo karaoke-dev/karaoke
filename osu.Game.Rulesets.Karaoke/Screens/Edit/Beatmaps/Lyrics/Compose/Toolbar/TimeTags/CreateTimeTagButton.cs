@@ -35,7 +35,7 @@ public partial class CreateTimeTagButton : KeyActionButton
             if (lyricCaretState.CaretPosition is not TimeTagIndexCaretPosition charIndexCaretPosition)
                 throw new InvalidOperationException();
 
-            int index = charIndexCaretPosition.GapIndex;
+            int index = charIndexCaretPosition.CharIndex;
             lyricTimeTagsChangeHandler.AddByPosition(new TextIndex(index, this.indexState));
         };
     }
