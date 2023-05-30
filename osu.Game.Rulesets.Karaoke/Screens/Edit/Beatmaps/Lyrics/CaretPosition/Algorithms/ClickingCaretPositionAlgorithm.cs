@@ -5,6 +5,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Algorithm for only accept navigate to the target lyric by mouse click.
+/// </summary>
 public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCaretPosition>
 {
     public ClickingCaretPositionAlgorithm(Lyric[] lyrics)

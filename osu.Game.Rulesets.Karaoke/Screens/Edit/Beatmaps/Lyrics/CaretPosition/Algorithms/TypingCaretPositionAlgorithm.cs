@@ -5,6 +5,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Algorithm for move the caret position indicate the position that type to the <see cref="Lyric.Text"/>.
+/// </summary>
 public class TypingCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<TypingCaretPosition>
 {
     public TypingCaretPositionAlgorithm(Lyric[] lyrics)

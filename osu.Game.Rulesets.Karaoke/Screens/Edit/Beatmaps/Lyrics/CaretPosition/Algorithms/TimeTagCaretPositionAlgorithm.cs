@@ -10,6 +10,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Algorithm for navigate to the <see cref="TimeTag"/> position inside the <see cref="Lyric"/>.
+/// </summary>
 public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTagCaretPosition>
 {
     public MovingTimeTagCaretMode Mode { get; set; }
