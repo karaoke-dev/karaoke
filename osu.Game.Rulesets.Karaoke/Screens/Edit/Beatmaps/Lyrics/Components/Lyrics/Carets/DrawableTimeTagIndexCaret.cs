@@ -10,11 +10,11 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCharIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
+public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
 {
     private const float border_spacing = 5;
 
-    public DrawableCharIndexCaret(DrawableCaretType type)
+    public DrawableTimeTagIndexCaret(DrawableCaretType type)
         : base(type)
     {
         InternalChild = new Container
