@@ -28,13 +28,13 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
 
         return caretPosition switch
         {
-            CharIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
+            TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
             TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
             _ => throw new NotSupportedException(nameof(caretPosition))
         };
     }
 
-    private bool processCreateTimeTagAction(CharIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+    private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
     {
         int index = timeTagIndexCaretPosition.GapIndex;
 

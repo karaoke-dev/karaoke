@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algor
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosition.Algorithms;
 
 [TestFixture]
-public class CharIndexCaretPositionTest : BaseIndexCaretPositionAlgorithmTest<CharIndexCaretPositionAlgorithm, CharIndexCaretPosition>
+public class TimeTagIndexCaretPositionTest : BaseIndexCaretPositionAlgorithmTest<TimeTagIndexCaretPositionAlgorithm, TimeTagIndexCaretPosition>
 {
     #region Lyric
 
@@ -170,22 +170,22 @@ public class CharIndexCaretPositionTest : BaseIndexCaretPositionAlgorithmTest<Ch
 
     #endregion
 
-    protected override void AssertEqual(CharIndexCaretPosition expected, CharIndexCaretPosition actual)
+    protected override void AssertEqual(TimeTagIndexCaretPosition expected, TimeTagIndexCaretPosition actual)
     {
         Assert.AreEqual(expected.Lyric, actual.Lyric);
         Assert.AreEqual(expected.GapIndex, actual.GapIndex);
     }
 
-    private static CharIndexCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
+    private static TimeTagIndexCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);
         if (lyric == null)
             throw new ArgumentNullException();
 
-        return new CharIndexCaretPosition(lyric, index);
+        return new TimeTagIndexCaretPosition(lyric, index);
     }
 
-    private static CharIndexCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
+    private static TimeTagIndexCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
     {
         if (lyricIndex == null || index == null)
             return null;

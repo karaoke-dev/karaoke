@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCharIndexCaret : DrawableCaret<CharIndexCaretPosition>
+public partial class DrawableCharIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
 {
     private const float border_spacing = 5;
 
@@ -32,7 +32,7 @@ public partial class DrawableCharIndexCaret : DrawableCaret<CharIndexCaretPositi
         };
     }
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CharIndexCaretPosition caret)
+    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagIndexCaretPosition caret)
     {
         var rect = positionProvider.GetRectByCharIndex(caret.GapIndex);
 

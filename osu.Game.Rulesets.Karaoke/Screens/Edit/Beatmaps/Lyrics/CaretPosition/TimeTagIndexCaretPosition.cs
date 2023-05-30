@@ -5,9 +5,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-public readonly struct CharIndexCaretPosition : ICharGapCaretPosition
+public readonly struct TimeTagIndexCaretPosition : ICharGapCaretPosition
 {
-    public CharIndexCaretPosition(Lyric lyric, int charIndex, CaretGenerateType generateType = CaretGenerateType.Action)
+    public TimeTagIndexCaretPosition(Lyric lyric, int charIndex, CaretGenerateType generateType = CaretGenerateType.Action)
     {
         Lyric = lyric;
         GapIndex = charIndex;

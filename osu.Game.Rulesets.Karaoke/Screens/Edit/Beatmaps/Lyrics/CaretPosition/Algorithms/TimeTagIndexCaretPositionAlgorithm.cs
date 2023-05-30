@@ -5,14 +5,14 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public class CharIndexCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<CharIndexCaretPosition>
+public class TimeTagIndexCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<TimeTagIndexCaretPosition>
 {
-    public CharIndexCaretPositionAlgorithm(Lyric[] lyrics)
+    public TimeTagIndexCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
     }
 
-    protected override CharIndexCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
+    protected override TimeTagIndexCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
 
     protected override int GetMinIndex(string text) => 0;
 

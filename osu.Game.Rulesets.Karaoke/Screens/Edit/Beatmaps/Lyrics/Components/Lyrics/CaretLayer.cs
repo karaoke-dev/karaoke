@@ -60,7 +60,7 @@ public partial class CaretLayer : BaseLayer
                 // typing
                 TypingCaretPosition => new DrawableTypingCaret(type),
                 // creat time-tag
-                CharIndexCaretPosition => new DrawableCharIndexCaret(type),
+                TimeTagIndexCaretPosition => new DrawableCharIndexCaret(type),
                 // record time-tag
                 TimeTagCaretPosition => new DrawableTimeTagCaret(type),
                 _ => null
