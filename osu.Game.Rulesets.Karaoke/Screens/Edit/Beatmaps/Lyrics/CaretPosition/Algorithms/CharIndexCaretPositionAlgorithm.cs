@@ -9,6 +9,10 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Base class for those algorithms which use char index as index.
+/// </summary>
+/// <typeparam name="TCaretPosition"></typeparam>
 public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ICharIndexCaretPosition
 {
     protected CharIndexCaretPositionAlgorithm(Lyric[] lyrics)

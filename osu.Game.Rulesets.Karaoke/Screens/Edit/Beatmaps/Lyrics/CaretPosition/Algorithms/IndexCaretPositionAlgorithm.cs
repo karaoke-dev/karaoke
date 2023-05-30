@@ -6,6 +6,10 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Base class for move the <see cref="ICaretPosition"/> to the previous or next position with target index.
+/// </summary>
+/// <typeparam name="TCaretPosition"></typeparam>
 public abstract class IndexCaretPositionAlgorithm<TCaretPosition> : CaretPositionAlgorithm<TCaretPosition>, IIndexCaretPositionAlgorithm
     where TCaretPosition : struct, IIndexCaretPosition
 {
