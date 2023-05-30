@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public class CuttingCaretPositionAlgorithm : TextCaretPositionAlgorithm<CuttingCaretPosition>
+public class CuttingCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<CuttingCaretPosition>
 {
     public CuttingCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)

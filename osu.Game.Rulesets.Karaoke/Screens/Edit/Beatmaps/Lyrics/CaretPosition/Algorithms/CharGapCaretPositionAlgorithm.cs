@@ -9,9 +9,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
+public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ICharGapCaretPosition
 {
-    protected TextCaretPositionAlgorithm(Lyric[] lyrics)
+    protected CharGapCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
     }

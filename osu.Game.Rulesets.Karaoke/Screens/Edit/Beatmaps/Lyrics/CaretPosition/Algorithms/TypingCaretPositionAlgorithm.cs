@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public class TypingCaretPositionAlgorithm : TextCaretPositionAlgorithm<TypingCaretPosition>
+public class TypingCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<TypingCaretPosition>
 {
     public TypingCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
