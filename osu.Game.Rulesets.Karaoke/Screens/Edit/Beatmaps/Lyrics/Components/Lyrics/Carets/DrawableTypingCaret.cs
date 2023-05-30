@@ -63,7 +63,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                     if (caretPosition == null)
                         throw new ArgumentNullException(nameof(caretPosition));
 
-                    int index = caretPosition.Value.Index;
+                    int index = caretPosition.Value.CharGap;
                     lyricTextChangeHandler.InsertText(index, text);
 
                     moveCaret(text.Length);
@@ -79,7 +79,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                     if (caretPosition == null)
                         throw new ArgumentNullException(nameof(caretPosition));
 
-                    int index = caretPosition.Value.Index;
+                    int index = caretPosition.Value.CharGap;
                     if (index == 0)
                         return;
 
@@ -96,7 +96,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
             // calculate new caret position.
             var lyric = caretPosition.Value.Lyric;
-            int index = caretPosition.Value.Index + offset;
+            int index = caretPosition.Value.CharGap + offset;
             lyricCaretState.MoveCaretToTargetPosition(lyric, index);
         }
     }
@@ -107,7 +107,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
     {
         caretPosition = caret;
 
-        var rect = positionProvider.GetRectByCharIndicator(caret.Index);
+        var rect = positionProvider.GetRectByCharIndicator(caret.CharGap);
 
         Height = rect.Height;
         var position = rect.TopLeft;

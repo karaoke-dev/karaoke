@@ -9,21 +9,25 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
-public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ITextCaretPosition
+/// <summary>
+/// Base class for those algorithms which use char gap as index.
+/// </summary>
+/// <typeparam name="TCaretPosition"></typeparam>
+public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ICharGapCaretPosition
 {
-    protected TextCaretPositionAlgorithm(Lyric[] lyrics)
+    protected CharGapCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
     }
 
     protected sealed override void Validate(TCaretPosition input)
     {
-        Debug.Assert(indexInTextRange(input.Index, input.Lyric));
+        Debug.Assert(indexInTextRange(input.CharGap, input.Lyric));
     }
 
     protected sealed override bool PositionMovable(TCaretPosition position)
     {
-        return indexInTextRange(position.Index, position.Lyric);
+        return indexInTextRange(position.CharGap, position.Lyric);
     }
 
     protected sealed override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
@@ -37,7 +41,7 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
         if (maxIndex < minIndex)
             return null;
 
-        int index = Math.Clamp(currentPosition.Index, minIndex, maxIndex);
+        int index = Math.Clamp(currentPosition.CharGap, minIndex, maxIndex);
 
         return CreateCaretPosition(lyric, index);
     }
@@ -48,7 +52,7 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
         if (lyric == null)
             return null;
 
-        int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
+        int index = Math.Clamp(currentPosition.CharGap, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
 
         return CreateCaretPosition(lyric, index);
     }
@@ -78,7 +82,7 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
     {
         // get previous caret and make a check is need to change line.
         var lyric = currentPosition.Lyric;
-        int previousIndex = currentPosition.Index - 1;
+        int previousIndex = currentPosition.CharGap - 1;
 
         if (!indexInTextRange(previousIndex, lyric))
             return null;
@@ -90,7 +94,7 @@ public abstract class TextCaretPositionAlgorithm<TCaretPosition> : IndexCaretPos
     {
         // get next caret and make a check is need to change line.
         var lyric = currentPosition.Lyric;
-        int nextIndex = currentPosition.Index + 1;
+        int nextIndex = currentPosition.CharGap + 1;
 
         if (!indexInTextRange(nextIndex, lyric))
             return null;

@@ -7,6 +7,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
+/// <summary>
+/// Algorithm for navigate to the previous/next <see cref="Lyric"/>.
+/// </summary>
 public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCaretPosition>
 {
     public NavigateCaretPositionAlgorithm(Lyric[] lyrics)
