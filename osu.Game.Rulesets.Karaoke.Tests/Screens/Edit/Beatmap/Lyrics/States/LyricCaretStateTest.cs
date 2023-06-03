@@ -211,6 +211,18 @@ public partial class LyricCaretStateTest : OsuTestScene
         movingCaretByLyric(targetLyric, new TextIndex(), () => false);
     }
 
+    [Test]
+    public void AdjustEndCaretPositionWithNotSupportedMode()
+    {
+        changeMode(LyricEditorMode.Texting);
+
+        var targetLyric = getLyricFromBeatmap(1);
+        movingCaretByLyric(targetLyric, () => true);
+
+        // not throw the exception if the caret algorithm does not support the adjust the end index.
+        adjustCaretEndIndex(new TextIndex(), () => true);
+    }
+
     #endregion
 
     #region Moving hover caret by caret position
@@ -301,6 +313,23 @@ public partial class LyricCaretStateTest : OsuTestScene
             try
             {
                 lyricCaretState.MoveCaretToTargetPosition(lyric, item);
+                Assert.IsTrue(expected());
+            }
+            catch
+            {
+                Assert.IsFalse(expected());
+            }
+        });
+    }
+
+    private void adjustCaretEndIndex<TItem>(TItem item, Func<bool> expected)
+        where TItem : notnull
+    {
+        AddStep("Moving caret by caret position", () =>
+        {
+            try
+            {
+                lyricCaretState.AdjustCaretEndIndex(item);
                 Assert.IsTrue(expected());
             }
             catch

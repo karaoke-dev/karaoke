@@ -25,11 +25,13 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition(Lyric lyric);
 
-    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index) where TIndex : notnull;
+    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
+
+    bool AdjustCaretEndIndex<TIndex>(TIndex index) where TIndex : notnull;
 
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 
-    bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index) where TIndex : notnull;
+    bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 
     bool ConfirmHoverCaretPosition();
 
@@ -38,4 +40,6 @@ public interface ILyricCaretState
     void SyncSelectedHitObjectWithCaret();
 
     bool CaretEnabled { get; }
+
+    bool CaretDraggable { get; }
 }

@@ -264,16 +264,26 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveCaretToTargetPosition(caretPosition);
     }
 
-    public bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+    public bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index)
         where TIndex : notnull
     {
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
             return false;
 
-        if (index == null)
+        var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+        return moveCaretToTargetPosition(caretPosition);
+    }
+
+    public bool AdjustCaretEndIndex<TIndex>(TIndex index)
+        where TIndex : notnull
+    {
+        if (algorithm is not IApplicableToEndIndex endIndexCaretPositionAlgorithm)
             return false;
 
-        var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+        if (bindableCaretPosition.Value is not IRangeIndexCaretPosition rangeIndexCaretPosition)
+            throw new InvalidOperationException("Should have the caret position first.");
+
+        var caretPosition = endIndexCaretPositionAlgorithm.AdjustEndIndex(rangeIndexCaretPosition, index);
         return moveCaretToTargetPosition(caretPosition);
     }
 
@@ -296,13 +306,10 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveHoverCaretToTargetPosition(caretPosition);
     }
 
-    public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+    public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index)
         where TIndex : notnull
     {
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
-            return false;
-
-        if (index == null)
             return false;
 
         var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
@@ -343,6 +350,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
     }
 
     public bool CaretEnabled => algorithm != null;
+
+    public bool CaretDraggable => algorithm is IApplicableToEndIndex;
 
     private void postProcess()
     {
