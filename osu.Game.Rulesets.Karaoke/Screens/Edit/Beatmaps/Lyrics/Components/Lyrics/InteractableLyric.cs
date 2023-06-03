@@ -78,38 +78,33 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         if (!lyricCaretState.CaretEnabled)
             return false;
 
-        float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
 
-        switch (lyricCaretState.CaretPosition)
+        object? caretIndex = getCaretIndexByPosition(xPosition);
+
+        if (caretIndex != null)
         {
-            case CuttingCaretPosition:
-                int cuttingLyricStringIndex = karaokeSpriteText.GetCharIndicatorByPosition(position);
-                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, cuttingLyricStringIndex);
-                break;
-
-            case TypingCaretPosition:
-                int typingStringIndex = karaokeSpriteText.GetCharIndicatorByPosition(position);
-                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, typingStringIndex);
-                break;
-
-            case NavigateCaretPosition:
-                lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
-                break;
-
-            case TimeTagIndexCaretPosition:
-                int? charIndex = karaokeSpriteText.GetCharIndexByPosition(position);
-                if (charIndex != null)
-                    lyricCaretState.MoveHoverCaretToTargetPosition(lyric, charIndex);
-                break;
-
-            case TimeTagCaretPosition:
-                var timeTag = karaokeSpriteText.GetTimeTagByPosition(position);
-                lyricCaretState.MoveHoverCaretToTargetPosition(lyric, timeTag);
-                break;
+            lyricCaretState.MoveHoverCaretToTargetPosition(lyric, caretIndex);
+        }
+        else if (lyricCaretState.CaretPosition is not IIndexCaretPosition)
+        {
+            // still need to handle the case with non-index caret position.
+            lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
         }
 
         return base.OnMouseMove(e);
     }
+
+    private object? getCaretIndexByPosition(float position) =>
+        lyricCaretState.CaretPosition switch
+        {
+            CuttingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
+            TypingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
+            NavigateCaretPosition => null,
+            TimeTagIndexCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
+            TimeTagCaretPosition => karaokeSpriteText.GetTimeTagByPosition(position),
+            _ => null
+        };
 
     protected override void OnHoverLost(HoverLostEvent e)
     {

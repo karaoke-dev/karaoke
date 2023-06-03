@@ -15,11 +15,6 @@ public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCar
     {
     }
 
-    protected override void Validate(ClickingCaretPosition input)
-    {
-        // there's no checking rules in this algorithm.
-    }
-
     protected override bool PositionMovable(ClickingCaretPosition position)
     {
         return true;

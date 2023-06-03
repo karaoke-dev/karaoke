@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -13,16 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.A
 /// Base class for those algorithms which use char index as index.
 /// </summary>
 /// <typeparam name="TCaretPosition"></typeparam>
-public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ICharIndexCaretPosition
+public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition, int>
+    where TCaretPosition : struct, ICharIndexCaretPosition
 {
     protected CharIndexCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
-    }
-
-    protected sealed override void Validate(TCaretPosition input)
-    {
-        Debug.Assert(indexInTextRange(input.CharIndex, input.Lyric));
     }
 
     protected sealed override bool PositionMovable(TCaretPosition position)
@@ -76,7 +71,7 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
     }
 
     protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric)
-        => MoveToTargetLyric(lyric, GetMinIndex(lyric.Text));
+        => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
     protected sealed override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
     {
@@ -116,14 +111,6 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         return CreateCaretPosition(lyric, index);
     }
 
-    protected override TCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
-    {
-        if (index is not int value)
-            throw new InvalidCastException();
-
-        return CreateCaretPosition(lyric, value, CaretGenerateType.TargetLyric);
-    }
-
     private bool lyricMovable(Lyric lyric)
     {
         int minIndex = GetMinIndex(lyric.Text);
@@ -135,8 +122,6 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         string text = lyric.Text;
         return index >= GetMinIndex(text) && index <= GetMaxIndex(text);
     }
-
-    protected abstract TCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action);
 
     protected virtual int GetMinIndex(string text) => 0;
 

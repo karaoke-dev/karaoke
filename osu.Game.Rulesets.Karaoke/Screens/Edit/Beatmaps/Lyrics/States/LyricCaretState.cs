@@ -265,8 +265,12 @@ public partial class LyricCaretState : Component, ILyricCaretState
     }
 
     public bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        where TIndex : notnull
     {
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+            return false;
+
+        if (index == null)
             return false;
 
         var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
@@ -293,8 +297,12 @@ public partial class LyricCaretState : Component, ILyricCaretState
     }
 
     public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index)
+        where TIndex : notnull
     {
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+            return false;
+
+        if (index == null)
             return false;
 
         var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);

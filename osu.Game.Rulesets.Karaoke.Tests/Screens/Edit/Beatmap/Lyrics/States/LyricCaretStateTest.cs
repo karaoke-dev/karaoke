@@ -293,7 +293,8 @@ public partial class LyricCaretStateTest : OsuTestScene
         });
     }
 
-    private void movingCaretByLyric<TItem>(Lyric lyric, TItem? item, Func<bool> expected)
+    private void movingCaretByLyric<TItem>(Lyric lyric, TItem item, Func<bool> expected)
+        where TItem : notnull
     {
         AddStep("Moving caret by caret position", () =>
         {
@@ -325,7 +326,8 @@ public partial class LyricCaretStateTest : OsuTestScene
         });
     }
 
-    private void movingHoverCaretByLyric<TItem>(Lyric lyric, TItem? item, Func<bool> expected)
+    private void movingHoverCaretByLyric<TItem>(Lyric lyric, TItem item, Func<bool> expected)
+        where TItem : notnull
     {
         AddStep("Moving hover caret by caret position", () =>
         {

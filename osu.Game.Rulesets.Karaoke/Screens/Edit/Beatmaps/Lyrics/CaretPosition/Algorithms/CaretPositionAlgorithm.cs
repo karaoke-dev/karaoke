@@ -21,8 +21,6 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         Lyrics = lyrics;
     }
 
-    protected abstract void Validate(TCaretPosition input);
-
     protected abstract bool PositionMovable(TCaretPosition position);
 
     protected abstract TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition);
@@ -40,7 +38,7 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         if (currentPosition is not TCaretPosition tCaretPosition)
             throw new InvalidCastException(nameof(currentPosition));
 
-        Validate(tCaretPosition);
+        PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToPreviousLyric(tCaretPosition);
         return PostValidate(movedCaretPosition, CaretGenerateType.Action);
@@ -51,7 +49,7 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         if (currentPosition is not TCaretPosition tCaretPosition)
             throw new InvalidCastException(nameof(currentPosition));
 
-        Validate(tCaretPosition);
+        PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToNextLyric(tCaretPosition);
         return PostValidate(movedCaretPosition, CaretGenerateType.Action);
@@ -75,6 +73,11 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
     }
 
+    protected virtual void PreValidate(TCaretPosition input)
+    {
+        Debug.Assert(PositionMovable(input));
+    }
+
     protected TCaretPosition? PostValidate(TCaretPosition? movedCaretPosition, CaretGenerateType generateType)
     {
         if (movedCaretPosition == null)
@@ -83,7 +86,7 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         if (!PositionMovable(movedCaretPosition.Value))
             return null;
 
-        Validate(movedCaretPosition.Value);
+        PreValidate(movedCaretPosition.Value);
         Debug.Assert(movedCaretPosition.Value.GenerateType == generateType);
 
         return movedCaretPosition;
