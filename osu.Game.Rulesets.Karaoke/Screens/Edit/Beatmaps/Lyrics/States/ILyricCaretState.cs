@@ -40,4 +40,6 @@ public interface ILyricCaretState
     void SyncSelectedHitObjectWithCaret();
 
     bool CaretEnabled { get; }
+
+    bool CaretDraggable { get; }
 }

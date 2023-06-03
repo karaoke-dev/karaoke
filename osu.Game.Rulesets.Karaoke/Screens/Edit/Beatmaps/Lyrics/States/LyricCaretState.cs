@@ -351,6 +351,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
     public bool CaretEnabled => algorithm != null;
 
+    public bool CaretDraggable => algorithm is IApplicableToEndIndex;
+
     private void postProcess()
     {
         SyncSelectedHitObjectWithCaret();
