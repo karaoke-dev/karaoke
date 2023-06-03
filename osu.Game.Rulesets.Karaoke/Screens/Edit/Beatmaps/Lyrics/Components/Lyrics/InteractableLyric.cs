@@ -79,7 +79,6 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             return false;
 
         float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-
         object? caretIndex = getCaretIndexByPosition(xPosition);
 
         if (caretIndex != null)
@@ -93,6 +92,28 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         }
 
         return base.OnMouseMove(e);
+    }
+
+    protected override bool OnDragStart(DragStartEvent e)
+    {
+        // should handle the drag event if the caret algorithm is able to handle it.
+        return lyricCaretState.CaretDraggable;
+    }
+
+    protected override void OnDrag(DragEvent e)
+    {
+        if (!lyricCaretState.CaretEnabled)
+            return;
+
+        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+        object? caretIndex = getCaretIndexByPosition(xPosition);
+
+        if (caretIndex != null)
+        {
+            lyricCaretState.AdjustCaretEndIndex(caretIndex);
+        }
+
+        base.OnDrag(e);
     }
 
     private object? getCaretIndexByPosition(float position) =>
