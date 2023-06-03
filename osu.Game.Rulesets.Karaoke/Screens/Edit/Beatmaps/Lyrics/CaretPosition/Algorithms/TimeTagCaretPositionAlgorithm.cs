@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.A
 /// <summary>
 /// Algorithm for navigate to the <see cref="TimeTag"/> position inside the <see cref="Lyric"/>.
 /// </summary>
-public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTagCaretPosition>
+public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTagCaretPosition, TimeTag>
 {
     public MovingTimeTagCaretMode Mode { get; set; }
 
@@ -106,6 +106,8 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
     protected override TimeTagCaretPosition? MoveToTargetLyric(Lyric lyric)
     {
         var targetTimeTag = lyric.TimeTags.FirstOrDefault(timeTagMovable);
+        if (targetTimeTag == null)
+            return null;
 
         return MoveToTargetLyric(lyric, targetTimeTag);
     }
@@ -158,16 +160,9 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         return caret;
     }
 
-    protected override TimeTagCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+    protected override TimeTagCaretPosition? MoveToTargetLyric(Lyric lyric, TimeTag index)
     {
-        // should not move to lyric if contains no time-tag.
-        if (index is null)
-            return null;
-
-        if (index is not TimeTag timeTag)
-            throw new InvalidCastException();
-
-        return new TimeTagCaretPosition(lyric, timeTag, CaretGenerateType.TargetLyric);
+        return new TimeTagCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
     }
 
     private bool timeTagMovable(TimeTag timeTag)

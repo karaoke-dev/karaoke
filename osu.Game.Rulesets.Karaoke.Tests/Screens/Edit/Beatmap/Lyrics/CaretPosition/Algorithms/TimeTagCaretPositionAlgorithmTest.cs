@@ -201,13 +201,11 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
 
     [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0, 0)]
     [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, 0, 4)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, -1, null, null)] // will check the invalid case.
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 5, null, null)]
     public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int timeTagIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var lyric = lyrics[lyricIndex];
-        var timeTag = lyric.TimeTags.ElementAtOrDefault(timeTagIndex);
+        var timeTag = lyric.TimeTags.ElementAt(timeTagIndex);
         var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
 
         // Check move to target position.

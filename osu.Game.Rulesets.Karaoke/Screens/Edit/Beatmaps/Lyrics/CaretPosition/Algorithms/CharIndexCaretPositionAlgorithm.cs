@@ -13,7 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.A
 /// Base class for those algorithms which use char index as index.
 /// </summary>
 /// <typeparam name="TCaretPosition"></typeparam>
-public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition> where TCaretPosition : struct, ICharIndexCaretPosition
+public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCaretPositionAlgorithm<TCaretPosition, int>
+    where TCaretPosition : struct, ICharIndexCaretPosition
 {
     protected CharIndexCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
@@ -116,12 +117,9 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         return CreateCaretPosition(lyric, index);
     }
 
-    protected override TCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+    protected override TCaretPosition? MoveToTargetLyric(Lyric lyric, int index)
     {
-        if (index is not int value)
-            throw new InvalidCastException();
-
-        return CreateCaretPosition(lyric, value, CaretGenerateType.TargetLyric);
+        return CreateCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
     }
 
     private bool lyricMovable(Lyric lyric)

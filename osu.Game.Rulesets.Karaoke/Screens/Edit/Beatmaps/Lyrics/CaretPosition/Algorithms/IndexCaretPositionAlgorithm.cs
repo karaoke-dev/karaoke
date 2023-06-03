@@ -10,8 +10,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.A
 /// Base class for move the <see cref="ICaretPosition"/> to the previous or next position with target index.
 /// </summary>
 /// <typeparam name="TCaretPosition"></typeparam>
-public abstract class IndexCaretPositionAlgorithm<TCaretPosition> : CaretPositionAlgorithm<TCaretPosition>, IIndexCaretPositionAlgorithm
+/// <typeparam name="TCaretIndex"></typeparam>
+public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> : CaretPositionAlgorithm<TCaretPosition>, IIndexCaretPositionAlgorithm
     where TCaretPosition : struct, IIndexCaretPosition
+    where TCaretIndex : notnull
 {
     protected IndexCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
@@ -26,7 +28,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition> : CaretPositio
 
     protected abstract TCaretPosition? MoveToLastIndex(Lyric lyric);
 
-    protected abstract TCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index);
+    protected abstract TCaretPosition? MoveToTargetLyric(Lyric lyric, TCaretIndex index);
 
     public IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition)
     {
@@ -62,9 +64,12 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition> : CaretPositio
         return PostValidate(movedCaretPosition, CaretGenerateType.Action);
     }
 
-    IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index) where TIndex : default
+    IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToTargetLyric<TIndex>(Lyric lyric, TIndex index)
     {
-        var movedCaretPosition = MoveToTargetLyric(lyric, index);
+        if (index is not TCaretIndex caretIndex)
+            throw new InvalidCastException();
+
+        var movedCaretPosition = MoveToTargetLyric(lyric, caretIndex);
         return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
     }
 }

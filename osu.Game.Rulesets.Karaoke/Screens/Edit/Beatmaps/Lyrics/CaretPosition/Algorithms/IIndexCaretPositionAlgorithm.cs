@@ -15,5 +15,5 @@ public interface IIndexCaretPositionAlgorithm : ICaretPositionAlgorithm
 
     IIndexCaretPosition? MoveToLastIndex(Lyric lyric);
 
-    IIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex? index);
+    IIndexCaretPosition? MoveToTargetLyric<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 }

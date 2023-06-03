@@ -59,7 +59,8 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex? index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+        where TIndex : notnull
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
