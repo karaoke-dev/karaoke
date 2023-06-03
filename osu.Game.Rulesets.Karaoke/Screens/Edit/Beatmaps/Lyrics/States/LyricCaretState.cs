@@ -274,6 +274,19 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveCaretToTargetPosition(caretPosition);
     }
 
+    public bool AdjustCaretEndIndex<TIndex>(TIndex index)
+        where TIndex : notnull
+    {
+        if (algorithm is not IApplicableToEndIndex endIndexCaretPositionAlgorithm)
+            return false;
+
+        if (bindableCaretPosition.Value is not IRangeIndexCaretPosition rangeIndexCaretPosition)
+            throw new InvalidOperationException("Should have the caret position first.");
+
+        var caretPosition = endIndexCaretPositionAlgorithm.AdjustEndIndex(rangeIndexCaretPosition, index);
+        return moveCaretToTargetPosition(caretPosition);
+    }
+
     private bool moveCaretToTargetPosition(ICaretPosition? position)
     {
         if (position == null)
