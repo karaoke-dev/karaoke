@@ -35,7 +35,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
         if (currentPosition is not TCaretPosition tCaretPosition)
             throw new InvalidCastException(nameof(currentPosition));
 
-        Validate(tCaretPosition);
+        PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToPreviousIndex(tCaretPosition);
         return PostValidate(movedCaretPosition, CaretGenerateType.Action);
@@ -46,7 +46,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
         if (currentPosition is not TCaretPosition tCaretPosition)
             throw new InvalidCastException(nameof(currentPosition));
 
-        Validate(tCaretPosition);
+        PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToNextIndex(tCaretPosition);
         return PostValidate(movedCaretPosition, CaretGenerateType.Action);

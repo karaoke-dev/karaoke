@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -19,11 +18,6 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
     protected CharGapCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
-    }
-
-    protected sealed override void Validate(TCaretPosition input)
-    {
-        Debug.Assert(indexInTextRange(input.CharGap, input.Lyric));
     }
 
     protected sealed override bool PositionMovable(TCaretPosition position)

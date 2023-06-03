@@ -22,11 +22,12 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
     {
     }
 
-    protected override void Validate(TimeTagCaretPosition input)
+    protected override void PreValidate(TimeTagCaretPosition input)
     {
         var timeTag = input.TimeTag;
         var lyric = input.Lyric;
 
+        // should only check if the time-tag is in the lyric because previous time-tag position might not match to the mode.
         Debug.Assert(lyric.TimeTags.Contains(timeTag));
     }
 

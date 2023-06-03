@@ -17,11 +17,6 @@ public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCar
     {
     }
 
-    protected override void Validate(NavigateCaretPosition input)
-    {
-        // there's no checking rules in this algorithm.
-    }
-
     protected override bool PositionMovable(NavigateCaretPosition position)
     {
         return true;
