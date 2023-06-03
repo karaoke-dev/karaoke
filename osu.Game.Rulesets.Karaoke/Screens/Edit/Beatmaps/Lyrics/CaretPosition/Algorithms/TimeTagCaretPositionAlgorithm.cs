@@ -55,7 +55,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (upTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(previousLyric, upTimeTag);
+        return CreateCaretPosition(previousLyric, upTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToNextLyric(TimeTagCaretPosition currentPosition)
@@ -74,7 +74,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (downTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(nextLyric, downTimeTag);
+        return CreateCaretPosition(nextLyric, downTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToFirstLyric()
@@ -87,7 +87,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (firstTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(firstLyric, firstTimeTag);
+        return CreateCaretPosition(firstLyric, firstTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToLastLyric()
@@ -100,7 +100,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (lastTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(lastLyric, lastTimeTag);
+        return CreateCaretPosition(lastLyric, lastTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToTargetLyric(Lyric lyric)
@@ -109,7 +109,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (targetTimeTag == null)
             return null;
 
-        return MoveToTargetLyric(lyric, targetTimeTag);
+        return CreateCaretPosition(lyric, targetTimeTag, CaretGenerateType.TargetLyric);
     }
 
     protected override TimeTagCaretPosition? MoveToPreviousIndex(TimeTagCaretPosition currentPosition)
@@ -120,7 +120,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (previousTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(lyric, previousTimeTag);
+        return CreateCaretPosition(lyric, previousTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToNextIndex(TimeTagCaretPosition currentPosition)
@@ -131,7 +131,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (nextTimeTag == null)
             return null;
 
-        return new TimeTagCaretPosition(lyric, nextTimeTag);
+        return CreateCaretPosition(lyric, nextTimeTag);
     }
 
     protected override TimeTagCaretPosition? MoveToFirstIndex(Lyric lyric)
@@ -140,7 +140,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (firstTimeTag == null)
             return null;
 
-        var caret = new TimeTagCaretPosition(lyric, firstTimeTag);
+        var caret = CreateCaretPosition(lyric, firstTimeTag);
         if (!timeTagMovable(firstTimeTag))
             return MoveToNextIndex(caret);
 
@@ -153,17 +153,14 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
         if (lastTimeTag == null)
             return null;
 
-        var caret = new TimeTagCaretPosition(lyric, lastTimeTag);
+        var caret = CreateCaretPosition(lyric, lastTimeTag);
         if (!timeTagMovable(lastTimeTag))
             return MoveToPreviousIndex(caret);
 
         return caret;
     }
 
-    protected override TimeTagCaretPosition? MoveToTargetLyric(Lyric lyric, TimeTag index)
-    {
-        return new TimeTagCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
-    }
+    protected override TimeTagCaretPosition CreateCaretPosition(Lyric lyric, TimeTag index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
 
     private bool timeTagMovable(TimeTag timeTag)
     {

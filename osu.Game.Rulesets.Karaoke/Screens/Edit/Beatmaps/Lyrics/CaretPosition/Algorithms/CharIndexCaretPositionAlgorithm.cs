@@ -77,7 +77,7 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
     }
 
     protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric)
-        => MoveToTargetLyric(lyric, GetMinIndex(lyric.Text));
+        => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
     protected sealed override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
     {
@@ -117,11 +117,6 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         return CreateCaretPosition(lyric, index);
     }
 
-    protected override TCaretPosition? MoveToTargetLyric(Lyric lyric, int index)
-    {
-        return CreateCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
-    }
-
     private bool lyricMovable(Lyric lyric)
     {
         int minIndex = GetMinIndex(lyric.Text);
@@ -133,8 +128,6 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         string text = lyric.Text;
         return index >= GetMinIndex(text) && index <= GetMaxIndex(text);
     }
-
-    protected abstract TCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action);
 
     protected virtual int GetMinIndex(string text) => 0;
 
