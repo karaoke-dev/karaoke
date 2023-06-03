@@ -25,11 +25,11 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition(Lyric lyric);
 
-    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
+    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index) where TIndex : notnull;
 
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 
-    bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index);
+    bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex? index) where TIndex : notnull;
 
     bool ConfirmHoverCaretPosition();
 
