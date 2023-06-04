@@ -71,4 +71,17 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         var actual = algorithm.MoveToTargetLyric(lyric, index) as TCaret?;
         AssertEqual(expected, actual);
     }
+
+    protected void TestAdjustEndIndex<TIndex>(Lyric[] lyrics, IRangeIndexCaretPosition caretPosition, TIndex index, TCaret? expected, Action<IApplicableToEndIndex>? invokeAlgorithm = null)
+        where TIndex : notnull
+    {
+        var algorithm = (IApplicableToEndIndex?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
+        if (algorithm == null)
+            throw new ArgumentNullException();
+
+        invokeAlgorithm?.Invoke(algorithm);
+
+        var actual = algorithm.AdjustEndIndex(caretPosition, index) as TCaret?;
+        AssertEqual(expected, actual);
+    }
 }

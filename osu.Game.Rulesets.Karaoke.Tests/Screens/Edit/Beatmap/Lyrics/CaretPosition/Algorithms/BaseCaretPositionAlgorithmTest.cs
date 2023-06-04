@@ -107,10 +107,24 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
     protected Lyric[] GetLyricsByMethodName(string methodName)
     {
         var thisType = GetType();
-        var theMethod = thisType.GetProperty(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+        var theMethod = getMethod(thisType, methodName);
         if (theMethod == null)
             throw new MissingMethodException("Test method is not exist.");
 
         return (Lyric[])theMethod.GetValue(this)!;
+    }
+
+    private static PropertyInfo? getMethod(Type type, string methodName)
+    {
+        var theMethod = type.GetProperty(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+
+        if (theMethod != null)
+            return theMethod;
+
+        var baseType = type.BaseType;
+        if (baseType == null)
+            return null;
+
+        return getMethod(baseType, methodName);
     }
 }
