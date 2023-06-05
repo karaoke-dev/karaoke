@@ -237,7 +237,7 @@ public partial class KaraokeRuleset : Ruleset
         };
     }
 
-    public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
+    public override StatisticItem[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
     {
         const int fix_height = 560;
         const int text_size = 14;
@@ -245,25 +245,18 @@ public partial class KaraokeRuleset : Ruleset
         const int info_height = 200;
 
         // Always display song info
-        var statistic = new List<StatisticRow>
+        var statistic = new List<StatisticItem>
         {
-            new()
+            new("Info", () => new BeatmapInfoGraph(playableBeatmap)
             {
-                Columns = new[]
-                {
-                    new StatisticItem("Info", () => new BeatmapInfoGraph(playableBeatmap)
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        Height = info_height
-                    }, dimension: new Dimension(GridSizeMode.Relative, 0.6f)),
-                    new StatisticItem(string.Empty, Drawable.Empty, dimension: new Dimension(GridSizeMode.Absolute, 10)),
-                    new StatisticItem("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        Height = info_height
-                    }, dimension: new Dimension())
-                }
-            },
+                RelativeSizeAxes = Axes.X,
+                Height = info_height
+            }),
+            new("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
+            {
+                RelativeSizeAxes = Axes.X,
+                Height = info_height
+            })
         };
 
         // Set component to remain height
@@ -271,31 +264,19 @@ public partial class KaraokeRuleset : Ruleset
 
         if (playableBeatmap.IsScorable())
         {
-            statistic.Add(new StatisticRow
+            statistic.Add(new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
             {
-                Columns = new[]
-                {
-                    new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        Height = remain_height - text_size - spacing
-                    }),
-                }
-            });
+                RelativeSizeAxes = Axes.X,
+                Height = remain_height - text_size - spacing
+            }));
         }
         else
         {
-            statistic.Add(new StatisticRow
+            statistic.Add(new StatisticItem("Result", () => new NotScorableGraph
             {
-                Columns = new[]
-                {
-                    new StatisticItem("Result", () => new NotScorableGraph
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        Height = remain_height - text_size - spacing
-                    })
-                }
-            });
+                RelativeSizeAxes = Axes.X,
+                Height = remain_height - text_size - spacing
+            }));
         }
 
         return statistic.ToArray();
