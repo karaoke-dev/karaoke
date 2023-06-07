@@ -26,10 +26,10 @@ public class CreateRubyTagCaretPositionAlgorithm : CharIndexCaretPositionAlgorit
         if (currentPosition is not CreateRubyTagCaretPosition createRubyTagCaretPosition)
             throw new InvalidCastException(nameof(currentPosition));
 
-        if (index is not int endIndex)
+        if (index is not int charIndex)
             throw new InvalidCastException();
 
-        var movedCaretPosition = new CreateRubyTagCaretPosition(createRubyTagCaretPosition.Lyric, createRubyTagCaretPosition.CharIndex, endIndex, CaretGenerateType.TargetLyric);
+        var movedCaretPosition = new CreateRubyTagCaretPosition(createRubyTagCaretPosition.Lyric, createRubyTagCaretPosition.CharIndex, charIndex, CaretGenerateType.TargetLyric);
         return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
     }
 }

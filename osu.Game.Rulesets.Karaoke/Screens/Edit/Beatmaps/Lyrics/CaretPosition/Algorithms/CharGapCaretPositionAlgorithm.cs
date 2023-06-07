@@ -20,9 +20,9 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
     {
     }
 
-    protected sealed override bool PositionMovable(TCaretPosition position)
+    protected override bool PositionMovable(TCaretPosition position)
     {
-        return indexInTextRange(position.CharGap, position.Lyric);
+        return IndexInTextRange(position.CharGap, position.Lyric);
     }
 
     protected sealed override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
@@ -79,7 +79,7 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
         var lyric = currentPosition.Lyric;
         int previousIndex = currentPosition.CharGap - 1;
 
-        if (!indexInTextRange(previousIndex, lyric))
+        if (!IndexInTextRange(previousIndex, lyric))
             return null;
 
         return CreateCaretPosition(lyric, previousIndex);
@@ -91,7 +91,7 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
         var lyric = currentPosition.Lyric;
         int nextIndex = currentPosition.CharGap + 1;
 
-        if (!indexInTextRange(nextIndex, lyric))
+        if (!IndexInTextRange(nextIndex, lyric))
             return null;
 
         return CreateCaretPosition(lyric, nextIndex);
@@ -114,10 +114,10 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
     private bool lyricMovable(Lyric lyric)
     {
         int minIndex = GetMinIndex(lyric.Text);
-        return indexInTextRange(minIndex, lyric);
+        return IndexInTextRange(minIndex, lyric);
     }
 
-    private bool indexInTextRange(int index, Lyric lyric)
+    protected bool IndexInTextRange(int index, Lyric lyric)
     {
         string text = lyric.Text;
         return index >= GetMinIndex(text) && index <= GetMaxIndex(text);

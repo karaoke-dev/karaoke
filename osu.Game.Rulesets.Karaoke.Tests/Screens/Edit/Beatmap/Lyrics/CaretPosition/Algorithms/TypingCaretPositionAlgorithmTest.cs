@@ -167,6 +167,25 @@ public class TypingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithmT
         TestMoveToTargetLyric(lyrics, lyric, textIndex, expected);
     }
 
+    [TestCase(nameof(singleLyric), 0, 0, 4, 4)]
+    [TestCase(nameof(singleLyric), 0, 4, 0, 0)] // should be OK if the release char index is smaller than char index.
+    [TestCase(nameof(singleLyric), 0, 0, 0, 0)] // should be OK if the release char index is same as char index.
+    [TestCase(nameof(singleLyric), 0, 4, 4, 4)]
+    [TestCase(nameof(singleLyric), 0, 0, -1, null)] // should be invalid if the release char index is out of range.
+    [TestCase(nameof(singleLyric), 0, 0, 5, null)]
+    [TestCase(nameof(singleLyric), 0, -1, 0, null)] // should be invalid if the start char index is out of range.
+    [TestCase(nameof(singleLyric), 0, -1, 4, null)]
+    public void TestAdjustEndIndex(string sourceName, int lyricIndex, int charGap, int releaseCharGap, int? expectedReleaseCharGap)
+    {
+        var lyrics = GetLyricsByMethodName(sourceName);
+
+        var caretPosition = createCaretPosition(lyrics, lyricIndex, charGap);
+        var expected = expectedReleaseCharGap == null ? null : createExpectedCaretPosition(lyrics, lyricIndex, charGap, expectedReleaseCharGap);
+
+        // Check move to target position.
+        TestAdjustEndIndex(lyrics, caretPosition, releaseCharGap, expected);
+    }
+
     #endregion
 
     protected override void AssertEqual(TypingCaretPosition expected, TypingCaretPosition actual)
@@ -175,21 +194,21 @@ public class TypingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithmT
         Assert.AreEqual(expected.CharGap, actual.CharGap);
     }
 
-    private static TypingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
+    private static TypingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index, int? releaseIndex = null)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);
         if (lyric == null)
             throw new ArgumentNullException();
 
-        return new TypingCaretPosition(lyric, index);
+        return new TypingCaretPosition(lyric, index, releaseIndex ?? index);
     }
 
-    private static TypingCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
+    private static TypingCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index, int? releaseIndex = null)
     {
         if (lyricIndex == null || index == null)
             return null;
 
-        return createCaretPosition(lyrics, lyricIndex.Value, index.Value);
+        return createCaretPosition(lyrics, lyricIndex.Value, index.Value, releaseIndex);
     }
 
     #region source
