@@ -214,7 +214,7 @@ public partial class LyricCaretStateTest : OsuTestScene
     [Test]
     public void AdjustEndCaretPositionWithNotSupportedMode()
     {
-        changeMode(LyricEditorMode.Texting);
+        changeMode(LyricEditorMode.EditTimeTag);
 
         var targetLyric = getLyricFromBeatmap(1);
         movingCaretByLyric(targetLyric, () => true);
