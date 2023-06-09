@@ -329,7 +329,7 @@ public partial class LyricCaretStateTest : OsuTestScene
         {
             try
             {
-                lyricCaretState.AdjustCaretEndIndex(item);
+                lyricCaretState.MoveReleaseCaretIndex(item);
                 Assert.IsTrue(expected());
             }
             catch

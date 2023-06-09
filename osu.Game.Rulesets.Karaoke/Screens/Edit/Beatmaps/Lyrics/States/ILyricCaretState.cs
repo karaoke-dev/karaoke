@@ -27,7 +27,7 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 
-    bool AdjustCaretEndIndex<TIndex>(TIndex index) where TIndex : notnull;
+    bool MoveReleaseCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
 
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 

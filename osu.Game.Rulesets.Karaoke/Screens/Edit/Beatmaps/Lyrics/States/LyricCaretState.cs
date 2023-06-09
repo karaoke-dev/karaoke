@@ -274,7 +274,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveCaretToTargetPosition(caretPosition);
     }
 
-    public bool AdjustCaretEndIndex<TIndex>(TIndex index)
+    public bool MoveReleaseCaretIndex<TIndex>(TIndex index)
         where TIndex : notnull
     {
         if (algorithm is not IApplicableToEndIndex endIndexCaretPositionAlgorithm)
