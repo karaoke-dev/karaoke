@@ -13,9 +13,13 @@ public interface ILyricCaretState
 
     ICaretPosition? CaretPosition => BindableCaretPosition.Value;
 
+    ICaretPosition? ReleaseCaretPosition => BindableReleaseCaretPosition.Value;
+
     IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
     IBindable<ICaretPosition?> BindableCaretPosition { get; }
+
+    IBindable<ICaretPosition?> BindableReleaseCaretPosition { get; }
 
     IBindable<Lyric?> BindableFocusedLyric { get; }
 
