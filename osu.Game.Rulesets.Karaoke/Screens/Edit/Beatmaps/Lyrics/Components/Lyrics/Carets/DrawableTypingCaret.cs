@@ -23,85 +23,54 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
     private const float caret_move_time = 60;
     private const float caret_width = 3;
 
-    private Box drawableCaret = null!;
-    private InputCaretTextBox? inputCaretTextBox;
-
-    private Lyric? lyric;
-    private int? startGap;
+    private readonly Box drawableCaret;
+    private readonly TypingCaretEventHandler? typingCaretEventHandler;
 
     public DrawableTypingCaret(DrawableCaretType type)
         : base(type)
     {
-        Width = caret_width;
-    }
-
-    [BackgroundDependencyLoader]
-    private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
-    {
-        InternalChild = drawableCaret = new Box
+        drawableCaret = new Box
         {
             RelativeSizeAxes = Axes.Both,
             Colour = Color4.White,
             Alpha = GetAlpha(Type)
         };
+        AddInternal(drawableCaret);
 
-        if (Type == DrawableCaretType.Caret)
+        if (Type != DrawableCaretType.Caret)
+            return;
+
+        var inputCaretTextBox = new InputCaretTextBox
         {
-            AddInternal(inputCaretTextBox = new InputCaretTextBox
-            {
-                Anchor = Anchor.TopRight,
-                Origin = Anchor.TopLeft,
-                Width = 50,
-                Height = 20,
-                ReleaseFocusOnCommit = false,
-                NewCommitText = text =>
-                {
-                    if (lyricTextChangeHandler.IsSelectionsLocked())
-                    {
-                        editableLyricState.TriggerDisallowEditEffect();
-                        return;
-                    }
+            Anchor = Anchor.TopRight,
+            Origin = Anchor.TopLeft,
+            Width = 50,
+            Height = 20,
+            ReleaseFocusOnCommit = false,
+        };
+        typingCaretEventHandler = new TypingCaretEventHandler(inputCaretTextBox);
 
-                    lyricTextChangeHandler.InsertText(startGap ?? throw new ArgumentNullException(nameof(startGap)), text);
+        AddInternal(inputCaretTextBox);
+        AddInternal(typingCaretEventHandler);
+    }
 
-                    moveCaret(text.Length);
-                },
-                DeleteText = () =>
-                {
-                    if (lyricTextChangeHandler.IsSelectionsLocked())
-                    {
-                        editableLyricState.TriggerDisallowEditEffect();
-                        return;
-                    }
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
-                    if (startGap == 0)
-                        return;
-
-                    lyricTextChangeHandler.DeleteLyricText(startGap ?? throw new ArgumentNullException(nameof(startGap)));
-
-                    moveCaret(-1);
-                }
-            });
-        }
-
-        void moveCaret(int offset)
-        {
-            // calculate new caret position.
-            int index = (startGap ?? throw new ArgumentNullException(nameof(startGap))) + offset;
-            lyricCaretState.MoveCaretToTargetPosition(lyric ?? throw new ArgumentNullException(nameof(lyric)), index);
-        }
+        drawableCaret
+            .Loop(c => c.FadeTo(0.7f).FadeTo(0.4f, 500, Easing.InOutSine));
     }
 
     public override void Hide() => this.FadeOut(200);
 
     protected override void ApplyCaretPosition(TypingCaretPosition caret)
     {
-        lyric = caret.Lyric;
-        startGap = caret.CharGap;
+        typingCaretEventHandler?.ChangeLyric(caret.Lyric);
+        typingCaretEventHandler?.ChangeCharGap(caret.CharGap);
+        typingCaretEventHandler?.FocusInputCaretTextBox();
 
         var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
-
-        Height = rect.Height;
         var position = rect.TopLeft;
 
         bool displayAnimation = Alpha > 0;
@@ -109,25 +78,85 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
         this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
         this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
-
-        drawableCaret
-            .FadeColour(Color4.White, 200, Easing.Out)
-            .Loop(c => c.FadeTo(0.7f).FadeTo(0.4f, 500, Easing.InOutSine));
-
-        if (inputCaretTextBox == null)
-            return;
-
-        // should focus the caret if change the state.
-        Schedule(() =>
-        {
-            inputCaretTextBox.Text = string.Empty;
-            GetContainingInputManager().ChangeFocus(inputCaretTextBox);
-        });
+        Height = rect.Height;
     }
 
     protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
         this.FlashColour(colour.Red, 200);
+    }
+
+    private partial class TypingCaretEventHandler : Component
+    {
+        private readonly InputCaretTextBox inputCaretTextBox;
+
+        public TypingCaretEventHandler(InputCaretTextBox inputCaretTextBox)
+        {
+            this.inputCaretTextBox = inputCaretTextBox;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
+        {
+            inputCaretTextBox.NewCommitText = text =>
+            {
+                if (lyricTextChangeHandler.IsSelectionsLocked())
+                {
+                    editableLyricState.TriggerDisallowEditEffect();
+                    return;
+                }
+
+                lyricTextChangeHandler.InsertText(charGap ?? throw new ArgumentNullException(nameof(charGap)), text);
+
+                moveCaret(text.Length);
+            };
+            inputCaretTextBox.DeleteText = () =>
+            {
+                if (lyricTextChangeHandler.IsSelectionsLocked())
+                {
+                    editableLyricState.TriggerDisallowEditEffect();
+                    return;
+                }
+
+                if (charGap == 0)
+                    return;
+
+                lyricTextChangeHandler.DeleteLyricText(charGap ?? throw new ArgumentNullException(nameof(charGap)));
+
+                moveCaret(-1);
+            };
+
+            void moveCaret(int offset)
+            {
+                // calculate new caret position.
+                int index = (charGap ?? throw new ArgumentNullException(nameof(charGap))) + offset;
+                lyricCaretState.MoveCaretToTargetPosition(lyric ?? throw new ArgumentNullException(nameof(lyric)), index);
+            }
+        }
+
+        private Lyric? lyric;
+
+        public void ChangeLyric(Lyric lyric)
+        {
+            this.lyric = lyric;
+        }
+
+        private int? charGap;
+
+        public void ChangeCharGap(int gap)
+        {
+            charGap = gap;
+        }
+
+        public void FocusInputCaretTextBox()
+        {
+            // Should wait for a while after click event finished in the outside.
+            Schedule(() =>
+            {
+                inputCaretTextBox.Text = string.Empty;
+                GetContainingInputManager().ChangeFocus(inputCaretTextBox);
+            });
+        }
     }
 
     private partial class InputCaretTextBox : BasicTextBox
