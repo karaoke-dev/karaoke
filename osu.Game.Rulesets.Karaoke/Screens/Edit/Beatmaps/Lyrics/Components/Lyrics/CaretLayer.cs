@@ -37,19 +37,19 @@ public partial class CaretLayer : BaseLayer
             var newCaretPosition = e.NewValue;
 
             if (oldCaretPosition?.GetType() != newCaretPosition?.GetType())
-                updateDrawableCaret(caretType);
+                updateDrawableCaret(newCaretPosition, caretType);
 
             applyTheCaretPosition(newCaretPosition, caretType);
         }
     }
 
-    private void updateDrawableCaret(DrawableCaretType type)
+    private void updateDrawableCaret(ICaretPosition? position, DrawableCaretType type)
     {
         var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
         if (oldCaret != null)
             RemoveInternal(oldCaret, true);
 
-        var caret = createCaret(bindableCaretPosition.Value, type);
+        var caret = createCaret(position, type);
         if (caret == null)
             return;
 
