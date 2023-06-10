@@ -10,6 +10,7 @@ using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osuTK;
@@ -25,7 +26,8 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
     private Box drawableCaret = null!;
     private InputCaretTextBox? inputCaretTextBox;
 
-    private TypingCaretPosition? caretPosition;
+    private Lyric? lyric;
+    private int? startGap;
 
     public DrawableTypingCaret(DrawableCaretType type)
         : base(type)
@@ -60,11 +62,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                         return;
                     }
 
-                    if (caretPosition == null)
-                        throw new ArgumentNullException(nameof(caretPosition));
-
-                    int index = caretPosition.Value.CharGap;
-                    lyricTextChangeHandler.InsertText(index, text);
+                    lyricTextChangeHandler.InsertText(startGap ?? throw new ArgumentNullException(nameof(startGap)), text);
 
                     moveCaret(text.Length);
                 },
@@ -76,14 +74,10 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                         return;
                     }
 
-                    if (caretPosition == null)
-                        throw new ArgumentNullException(nameof(caretPosition));
-
-                    int index = caretPosition.Value.CharGap;
-                    if (index == 0)
+                    if (startGap == 0)
                         return;
 
-                    lyricTextChangeHandler.DeleteLyricText(index);
+                    lyricTextChangeHandler.DeleteLyricText(startGap ?? throw new ArgumentNullException(nameof(startGap)));
 
                     moveCaret(-1);
                 }
@@ -92,12 +86,9 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
         void moveCaret(int offset)
         {
-            ArgumentNullException.ThrowIfNull(caretPosition);
-
             // calculate new caret position.
-            var lyric = caretPosition.Value.Lyric;
-            int index = caretPosition.Value.CharGap + offset;
-            lyricCaretState.MoveCaretToTargetPosition(lyric, index);
+            int index = (startGap ?? throw new ArgumentNullException(nameof(startGap))) + offset;
+            lyricCaretState.MoveCaretToTargetPosition(lyric ?? throw new ArgumentNullException(nameof(lyric)), index);
         }
     }
 
@@ -105,7 +96,8 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
     protected override void ApplyCaretPosition(TypingCaretPosition caret)
     {
-        caretPosition = caret;
+        lyric = caret.Lyric;
+        startGap = caret.CharGap;
 
         var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
 
