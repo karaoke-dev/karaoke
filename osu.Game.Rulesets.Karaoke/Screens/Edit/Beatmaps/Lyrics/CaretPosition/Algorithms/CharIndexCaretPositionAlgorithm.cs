@@ -20,9 +20,9 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
     {
     }
 
-    protected override bool PositionMovable(TCaretPosition position)
+    protected sealed override bool PositionMovable(TCaretPosition position)
     {
-        return IndexInTextRange(position.CharIndex, position.Lyric);
+        return indexInTextRange(position.CharIndex, position.Lyric);
     }
 
     protected sealed override TCaretPosition? MoveToPreviousLyric(TCaretPosition currentPosition)
@@ -79,7 +79,7 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         var lyric = currentPosition.Lyric;
         int previousIndex = currentPosition.CharIndex - 1;
 
-        if (!IndexInTextRange(previousIndex, lyric))
+        if (!indexInTextRange(previousIndex, lyric))
             return null;
 
         return CreateCaretPosition(lyric, previousIndex);
@@ -91,7 +91,7 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
         var lyric = currentPosition.Lyric;
         int nextIndex = currentPosition.CharIndex + 1;
 
-        if (!IndexInTextRange(nextIndex, lyric))
+        if (!indexInTextRange(nextIndex, lyric))
             return null;
 
         return CreateCaretPosition(lyric, nextIndex);
@@ -114,10 +114,10 @@ public abstract class CharIndexCaretPositionAlgorithm<TCaretPosition> : IndexCar
     private bool lyricMovable(Lyric lyric)
     {
         int minIndex = getMinIndex(lyric.Text);
-        return IndexInTextRange(minIndex, lyric);
+        return indexInTextRange(minIndex, lyric);
     }
 
-    protected static bool IndexInTextRange(int index, Lyric lyric)
+    private static bool indexInTextRange(int index, Lyric lyric)
     {
         string text = lyric.Text;
         return index >= getMinIndex(text) && index <= getMaxIndex(text);

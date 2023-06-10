@@ -219,8 +219,8 @@ public partial class LyricCaretStateTest : OsuTestScene
         var targetLyric = getLyricFromBeatmap(1);
         movingCaretByLyric(targetLyric, () => true);
 
-        // not throw the exception if the caret algorithm does not support the adjust the end index.
-        adjustCaretEndIndex(new TextIndex(), () => true);
+        // should throw the exception if the caret algorithm does not support the adjust the end index.
+        adjustCaretEndIndex(new TextIndex(), () => false);
     }
 
     #endregion
@@ -329,7 +329,7 @@ public partial class LyricCaretStateTest : OsuTestScene
         {
             try
             {
-                lyricCaretState.AdjustCaretEndIndex(item);
+                lyricCaretState.MoveReleaseCaretIndex(item);
                 Assert.IsTrue(expected());
             }
             catch
