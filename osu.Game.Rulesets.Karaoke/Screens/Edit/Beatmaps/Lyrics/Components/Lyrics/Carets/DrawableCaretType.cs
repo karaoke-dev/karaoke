@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public enum DrawableCaretType
 {
-    Caret,
+    HoverCaret,
 
-    HoverCaret
+    Caret
 }

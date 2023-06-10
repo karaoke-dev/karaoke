@@ -45,8 +45,8 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
         static double getMoveToDuration(DrawableCaretType type) =>
             type switch
             {
-                DrawableCaretType.Caret => 100,
                 DrawableCaretType.HoverCaret => 0,
+                DrawableCaretType.Caret => 100,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
     }

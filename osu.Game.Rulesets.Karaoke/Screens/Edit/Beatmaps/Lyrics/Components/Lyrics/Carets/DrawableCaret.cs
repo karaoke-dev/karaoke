@@ -25,8 +25,8 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
     protected static float GetAlpha(DrawableCaretType type) =>
         type switch
         {
-            DrawableCaretType.Caret => 1,
             DrawableCaretType.HoverCaret => 0.5f,
+            DrawableCaretType.Caret => 1,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 
