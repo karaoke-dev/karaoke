@@ -23,19 +23,24 @@ public partial class CaretLayer : BaseLayer
     {
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            if (e.OldValue?.GetType() != e.NewValue?.GetType())
-                updateDrawableCaret(DrawableCaretType.HoverCaret);
-
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
+            updateCaretTypeAndPosition(e, DrawableCaretType.HoverCaret);
         }, true);
 
         bindableCaretPosition.BindValueChanged(e =>
         {
-            if (e.OldValue?.GetType() != e.NewValue?.GetType())
-                updateDrawableCaret(DrawableCaretType.Caret);
-
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
+            updateCaretTypeAndPosition(e, DrawableCaretType.Caret);
         }, true);
+
+        void updateCaretTypeAndPosition(ValueChangedEvent<ICaretPosition?> e, DrawableCaretType caretType)
+        {
+            var oldCaretPosition = e.OldValue;
+            var newCaretPosition = e.NewValue;
+
+            if (oldCaretPosition?.GetType() != newCaretPosition?.GetType())
+                updateDrawableCaret(caretType);
+
+            applyTheCaretPosition(newCaretPosition, caretType);
+        }
     }
 
     private void updateDrawableCaret(DrawableCaretType type)
