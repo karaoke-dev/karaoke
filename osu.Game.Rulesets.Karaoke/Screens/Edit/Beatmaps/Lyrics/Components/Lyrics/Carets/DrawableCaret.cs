@@ -12,10 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
 {
     [Resolved]
-    private OsuColour colours { get; set; } = null!;
+    protected OsuColour Colours { get; private set; } = null!;
 
     [Resolved]
-    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;
+    protected IPreviewLyricPositionProvider LyricPositionProvider { get; private set; } = null!;
 
     protected DrawableCaret(DrawableCaretType type)
         : base(type)
@@ -25,8 +25,8 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
     protected static float GetAlpha(DrawableCaretType type) =>
         type switch
         {
-            DrawableCaretType.Caret => 1,
             DrawableCaretType.HoverCaret => 0.5f,
+            DrawableCaretType.Caret => 1,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 
@@ -35,15 +35,15 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
         if (caret is not TCaret tCaret)
             throw new InvalidCastException();
 
-        ApplyCaretPosition(previewLyricPositionProvider, colours, tCaret);
+        ApplyCaretPosition(tCaret);
     }
 
     public sealed override void TriggerDisallowEditEffect()
     {
-        TriggerDisallowEditEffect(colours);
+        TriggerDisallowEditEffect(Colours);
     }
 
-    protected abstract void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TCaret caret);
+    protected abstract void ApplyCaretPosition(TCaret caret);
 
     protected abstract void TriggerDisallowEditEffect(OsuColour colour);
 }

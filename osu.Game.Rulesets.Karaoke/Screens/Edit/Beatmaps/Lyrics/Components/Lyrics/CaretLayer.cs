@@ -15,36 +15,41 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class CaretLayer : BaseLayer
 {
-    private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
     private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
+    private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
 
     public CaretLayer(Lyric lyric)
         : base(lyric)
     {
-        bindableCaretPosition.BindValueChanged(e =>
-        {
-            if (e.OldValue?.GetType() != e.NewValue?.GetType())
-                updateDrawableCaret(DrawableCaretType.Caret);
-
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
-        }, true);
-
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            if (e.OldValue?.GetType() != e.NewValue?.GetType())
-                updateDrawableCaret(DrawableCaretType.HoverCaret);
-
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
+            updateCaretTypeAndPosition(e, DrawableCaretType.HoverCaret);
         }, true);
+
+        bindableCaretPosition.BindValueChanged(e =>
+        {
+            updateCaretTypeAndPosition(e, DrawableCaretType.Caret);
+        }, true);
+
+        void updateCaretTypeAndPosition(ValueChangedEvent<ICaretPosition?> e, DrawableCaretType caretType)
+        {
+            var oldCaretPosition = e.OldValue;
+            var newCaretPosition = e.NewValue;
+
+            if (oldCaretPosition?.GetType() != newCaretPosition?.GetType())
+                updateDrawableCaret(newCaretPosition, caretType);
+
+            applyTheCaretPosition(newCaretPosition, caretType);
+        }
     }
 
-    private void updateDrawableCaret(DrawableCaretType type)
+    private void updateDrawableCaret(ICaretPosition? position, DrawableCaretType type)
     {
-        var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+        var oldCaret = getDrawableCaret(type);
         if (oldCaret != null)
             RemoveInternal(oldCaret, true);
 
-        var caret = createCaret(bindableCaretPosition.Value, type);
+        var caret = createCaret(position, type);
         if (caret == null)
             return;
 
@@ -72,7 +77,7 @@ public partial class CaretLayer : BaseLayer
         if (position == null)
             return;
 
-        var caret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+        var caret = getDrawableCaret(type);
         if (caret == null)
             return;
 
@@ -86,11 +91,14 @@ public partial class CaretLayer : BaseLayer
         caret.ApplyCaretPosition(position);
     }
 
+    private DrawableCaret? getDrawableCaret(DrawableCaretType type)
+        => InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+
     [BackgroundDependencyLoader]
     private void load(ILyricCaretState lyricCaretState)
     {
-        bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
+        bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
     }
 
     public override void UpdateDisableEditState(bool editable)

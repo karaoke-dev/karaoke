@@ -63,12 +63,12 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 
         switch (type)
         {
-            case DrawableCaretType.Caret:
-                splitIcon.Hide();
-                break;
-
             case DrawableCaretType.HoverCaret:
                 splitIcon.Show();
+                break;
+
+            case DrawableCaretType.Caret:
+                splitIcon.Hide();
                 break;
 
             default:
@@ -83,9 +83,9 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
         splitIcon.Colour = colours.Yellow;
     }
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CuttingCaretPosition caret)
+    protected override void ApplyCaretPosition(CuttingCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndicator(caret.CharGap);
+        var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
 
         Position = rect.TopLeft;
         Height = rect.Height;

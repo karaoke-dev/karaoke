@@ -103,11 +103,11 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 
     public override void Hide() => this.FadeOut(200);
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TypingCaretPosition caret)
+    protected override void ApplyCaretPosition(TypingCaretPosition caret)
     {
         caretPosition = caret;
 
-        var rect = positionProvider.GetRectByCharIndicator(caret.CharGap);
+        var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
 
         Height = rect.Height;
         var position = rect.TopLeft;

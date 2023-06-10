@@ -30,23 +30,23 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
         };
     }
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagCaretPosition caret)
+    protected override void ApplyCaretPosition(TimeTagCaretPosition caret)
     {
         var timeTag = caret.TimeTag;
         var textIndex = timeTag.Index;
 
-        var position = positionProvider.GetPositionByTimeTag(timeTag);
+        var position = LyricPositionProvider.GetPositionByTimeTag(timeTag);
         this.MoveTo(position, getMoveToDuration(Type), Easing.OutCubic);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
         drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = colour.GetRecordingTimeTagCaretColour(timeTag);
+        drawableTextIndex.Colour = Colours.GetRecordingTimeTagCaretColour(timeTag);
 
         static double getMoveToDuration(DrawableCaretType type) =>
             type switch
             {
-                DrawableCaretType.Caret => 100,
                 DrawableCaretType.HoverCaret => 0,
+                DrawableCaretType.Caret => 100,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
     }
