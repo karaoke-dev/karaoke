@@ -45,7 +45,7 @@ public partial class CaretLayer : BaseLayer
 
     private void updateDrawableCaret(ICaretPosition? position, DrawableCaretType type)
     {
-        var oldCaret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+        var oldCaret = getDrawableCaret(type);
         if (oldCaret != null)
             RemoveInternal(oldCaret, true);
 
@@ -77,7 +77,7 @@ public partial class CaretLayer : BaseLayer
         if (position == null)
             return;
 
-        var caret = InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+        var caret = getDrawableCaret(type);
         if (caret == null)
             return;
 
@@ -90,6 +90,9 @@ public partial class CaretLayer : BaseLayer
         caret.Show();
         caret.ApplyCaretPosition(position);
     }
+
+    private DrawableCaret? getDrawableCaret(DrawableCaretType type)
+        => InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
 
     [BackgroundDependencyLoader]
     private void load(ILyricCaretState lyricCaretState)
