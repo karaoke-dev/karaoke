@@ -78,6 +78,9 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         if (!lyricCaretState.CaretEnabled)
             return false;
 
+        if (IsDragged)
+            return false;
+
         float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
         object? caretIndex = getCaretIndexByPosition(xPosition);
 
