@@ -32,9 +32,9 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
         };
     }
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, TimeTagIndexCaretPosition caret)
+    protected override void ApplyCaretPosition(TimeTagIndexCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndex(caret.CharIndex);
+        var rect = LyricPositionProvider.GetRectByCharIndex(caret.CharIndex);
 
         Position = rect.TopLeft - new Vector2(border_spacing);
         Size = rect.Size + new Vector2(border_spacing * 2);

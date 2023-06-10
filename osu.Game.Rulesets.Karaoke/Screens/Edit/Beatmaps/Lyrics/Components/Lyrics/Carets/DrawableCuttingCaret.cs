@@ -83,9 +83,9 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
         splitIcon.Colour = colours.Yellow;
     }
 
-    protected override void ApplyCaretPosition(IPreviewLyricPositionProvider positionProvider, OsuColour colour, CuttingCaretPosition caret)
+    protected override void ApplyCaretPosition(CuttingCaretPosition caret)
     {
-        var rect = positionProvider.GetRectByCharIndicator(caret.CharGap);
+        var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
 
         Position = rect.TopLeft;
         Height = rect.Height;
