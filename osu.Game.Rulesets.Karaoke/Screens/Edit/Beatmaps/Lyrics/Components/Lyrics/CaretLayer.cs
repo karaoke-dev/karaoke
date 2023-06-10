@@ -15,26 +15,26 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class CaretLayer : BaseLayer
 {
-    private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
     private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
+    private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
 
     public CaretLayer(Lyric lyric)
         : base(lyric)
     {
-        bindableCaretPosition.BindValueChanged(e =>
-        {
-            if (e.OldValue?.GetType() != e.NewValue?.GetType())
-                updateDrawableCaret(DrawableCaretType.Caret);
-
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
-        }, true);
-
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
             if (e.OldValue?.GetType() != e.NewValue?.GetType())
                 updateDrawableCaret(DrawableCaretType.HoverCaret);
 
             applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
+        }, true);
+
+        bindableCaretPosition.BindValueChanged(e =>
+        {
+            if (e.OldValue?.GetType() != e.NewValue?.GetType())
+                updateDrawableCaret(DrawableCaretType.Caret);
+
+            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
         }, true);
     }
 
@@ -89,8 +89,8 @@ public partial class CaretLayer : BaseLayer
     [BackgroundDependencyLoader]
     private void load(ILyricCaretState lyricCaretState)
     {
-        bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
+        bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
     }
 
     public override void UpdateDisableEditState(bool editable)
