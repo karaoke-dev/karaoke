@@ -99,6 +99,9 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
     protected override bool OnDragStart(DragStartEvent e)
     {
+        // confirm the hover caret position before drag start.
+        lyricCaretState.ConfirmHoverCaretPosition();
+
         // should handle the drag event if the caret algorithm is able to handle it.
         return lyricCaretState.CaretDraggable;
     }
