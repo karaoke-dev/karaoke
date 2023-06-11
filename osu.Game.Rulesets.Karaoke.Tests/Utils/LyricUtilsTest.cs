@@ -16,23 +16,23 @@ public class LyricUtilsTest
 
     [TestCase("karaoke", 2, 2, "kaoke")]
     [TestCase("カラオケ", 2, 2, "カラ")]
-    [TestCase("カラオケ", -1, 2, null)] // test start position not in the range
-    [TestCase("カラオケ", 4, 2, "カラオケ")] // test start position not in the range, but it's valid
-    [TestCase("カラオケ", 0, -1, null)] // test end position not in the range
-    [TestCase("カラオケ", 0, 100, "")] // test end position not in the range
+    [TestCase("カラオケ", -1, 2, null)] // test start char gap not in the range
+    [TestCase("カラオケ", 4, 2, "カラオケ")] // test start char gap not in the range, but it's valid
+    [TestCase("カラオケ", 0, -1, null)] // test end char gap not in the range
+    [TestCase("カラオケ", 0, 100, "")] // test end char gap not in the range
     [TestCase("", 0, 0, "")]
-    public void TestRemoveText(string text, int position, int count, string? expected)
+    public void TestRemoveText(string text, int charGap, int count, string? expected)
     {
         var lyric = new Lyric { Text = text };
 
         if (expected != null)
         {
-            LyricUtils.RemoveText(lyric, position, count);
+            LyricUtils.RemoveText(lyric, charGap, count);
             Assert.AreEqual(expected, lyric.Text);
         }
         else
         {
-            Assert.Catch(() => LyricUtils.RemoveText(lyric, position, count));
+            Assert.Catch(() => LyricUtils.RemoveText(lyric, charGap, count));
         }
     }
 
@@ -41,14 +41,14 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0,1]:から", "[2,3]:おけ" }, 1, 2, new[] { "[0]:から", "[1]:おけ" })]
     [TestCase(new[] { "[0,3]:からおけ" }, 0, 1, new[] { "[0,2]:からおけ" })]
     [TestCase(new[] { "[0,3]:からおけ" }, 1, 2, new[] { "[0,1]:からおけ" })]
-    public void TestRemoveTextRuby(string[] rubies, int position, int count, string[] targetRubies)
+    public void TestRemoveTextRuby(string[] rubies, int charGap, int count, string[] targetRubies)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
-        LyricUtils.RemoveText(lyric, position, count);
+        LyricUtils.RemoveText(lyric, charGap, count);
 
         var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
         var actual = lyric.RubyTags;
@@ -57,14 +57,14 @@ public class LyricUtilsTest
 
     [TestCase(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }, 0, 2, new[] { "[0]:o", "[1]:ke" })]
     [TestCase(new[] { "[0,1]:kara", "[2,3]:oke" }, 1, 2, new[] { "[0]:kara", "[1]:oke" })]
-    public void TestRemoveTextRomaji(string[] romajies, int position, int count, string[] targetRomajies)
+    public void TestRemoveTextRomaji(string[] romajies, int charGap, int count, string[] targetRomajies)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
-        LyricUtils.RemoveText(lyric, position, count);
+        LyricUtils.RemoveText(lyric, charGap, count);
 
         var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
         var actual = lyric.RomajiTags;
@@ -74,14 +74,14 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
     [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, 2, new[] { "[0,start]:", "[1,start]:" })]
     [TestCase(new[] { "[0,start]:1000", "[2,start]:3000" }, 1, 2, new[] { "[0,start]:1000" })]
-    public void TestRemoveTextTimeTag(string[] timeTags, int position, int count, string[] actualTimeTags)
+    public void TestRemoveTextTimeTag(string[] timeTags, int charGap, int count, string[] actualTimeTags)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
-        LyricUtils.RemoveText(lyric, position, count);
+        LyricUtils.RemoveText(lyric, charGap, count);
 
         var expected = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
         var actual = lyric.TimeTags;
@@ -91,13 +91,13 @@ public class LyricUtilsTest
     [TestCase("kake", 2, "rao", "karaoke")]
     [TestCase("karaoke", 7, "-", "karaoke-")]
     [TestCase("オケ", 0, "カラ", "カラオケ")]
-    [TestCase("オケ", -1, "カラ", "カラオケ")] // test start position not in the range, but it's valid.
-    [TestCase("カラ", 4, "オケ", "カラオケ")] // test start position not in the range, but it's valid.
+    [TestCase("オケ", -1, "カラ", "カラオケ")] // test start char gap not in the range, but it's valid.
+    [TestCase("カラ", 4, "オケ", "カラオケ")] // test start char gap not in the range, but it's valid.
     [TestCase("", 0, "カラオケ", "カラオケ")]
-    public void TestAddTextText(string text, int position, string addedText, string expected)
+    public void TestAddTextText(string text, int charGap, string addedText, string expected)
     {
         var lyric = new Lyric { Text = text };
-        LyricUtils.AddText(lyric, position, addedText);
+        LyricUtils.AddText(lyric, charGap, addedText);
 
         string actual = lyric.Text;
         Assert.AreEqual(expected, actual);
@@ -106,14 +106,14 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
-    public void TextAddTextRuby(string[] rubies, int position, string addedText, string[] targetRubies)
+    public void TextAddTextRuby(string[] rubies, int charGap, string addedText, string[] targetRubies)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
-        LyricUtils.AddText(lyric, position, addedText);
+        LyricUtils.AddText(lyric, charGap, addedText);
 
         var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
         var actual = lyric.RubyTags;
@@ -123,14 +123,14 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
-    public void TextAddTextRomaji(string[] romajies, int position, string addedText, string[] targetRomajies)
+    public void TextAddTextRomaji(string[] romajies, int charGap, string addedText, string[] targetRomajies)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
-        LyricUtils.AddText(lyric, position, addedText);
+        LyricUtils.AddText(lyric, charGap, addedText);
 
         var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
         var actual = lyric.RomajiTags;
@@ -143,14 +143,14 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, "karaoke", new[] { "[7,start]:", "[8,start]:", "[9,start]:", "[10,start]:" })]
     [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 2, "karaoke", new[] { "[0,start]:", "[1,start]:", "[9,start]:", "[10,start]:" })]
     [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 4, "karaoke", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" })]
-    public void TestAddTextTimeTag(string[] timeTags, int position, string addedText, string[] actualTimeTags)
+    public void TestAddTextTimeTag(string[] timeTags, int charGap, string addedText, string[] actualTimeTags)
     {
         var lyric = new Lyric
         {
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
-        LyricUtils.AddText(lyric, position, addedText);
+        LyricUtils.AddText(lyric, charGap, addedText);
 
         var expected = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
         var actual = lyric.TimeTags;
