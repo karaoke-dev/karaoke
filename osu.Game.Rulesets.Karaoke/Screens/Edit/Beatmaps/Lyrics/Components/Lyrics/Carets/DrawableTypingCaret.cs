@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
 {
+    private const float fading_time = 200;
     private const float caret_move_time = 60;
     private const float caret_width = 3;
 
@@ -62,7 +63,9 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
             .Loop(c => c.FadeTo(0.7f).FadeTo(0.4f, 500, Easing.InOutSine));
     }
 
-    public override void Hide() => this.FadeOut(200);
+    public override void Show() => this.FadeIn(fading_time);
+
+    public override void Hide() => this.FadeOut(fading_time);
 
     protected override void ApplyCaretPosition(TypingCaretPosition caret)
     {
@@ -73,10 +76,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
         var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
         var position = rect.TopLeft;
 
-        bool displayAnimation = Alpha > 0;
-        int time = displayAnimation ? 60 : 0;
-
-        this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
+        this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), caret_move_time, Easing.Out);
         this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
         Height = rect.Height;
     }
