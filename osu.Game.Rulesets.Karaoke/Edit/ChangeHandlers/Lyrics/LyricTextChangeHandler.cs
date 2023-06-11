@@ -10,23 +10,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
 public partial class LyricTextChangeHandler : LyricPropertyChangeHandler, ILyricTextChangeHandler
 {
-    public void InsertText(int index, string text)
+    public void InsertText(int charGap, string text)
     {
         CheckExactlySelectedOneHitObject();
 
         PerformOnSelection(lyric =>
         {
-            LyricUtils.AddText(lyric, index, text);
+            LyricUtils.AddText(lyric, charGap, text);
         });
     }
 
-    public void DeleteLyricText(int index)
+    public void DeleteLyricText(int charGap, int count = 1)
     {
         CheckExactlySelectedOneHitObject();
 
         PerformOnSelection(lyric =>
         {
-            LyricUtils.RemoveText(lyric, index - 1);
+            LyricUtils.RemoveText(lyric, charGap - count, count);
 
             if (!string.IsNullOrEmpty(lyric.Text))
                 return;
