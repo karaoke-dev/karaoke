@@ -56,9 +56,8 @@ public class BindableFontUsage : Bindable<FontUsage>
         var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         var dictionary = regex.Matches(str).ToDictionary(k => k.GetGroupValue<string>("key"), v => v.GetGroupValue<string>("value"));
 
-        if (dictionary.ContainsKey("Font"))
+        if (dictionary.TryGetValue("Font", out string? font))
         {
-            string font = dictionary["Font"];
             string? family = font.Contains('-') ? font.Split('-').FirstOrDefault() : font;
             string? weight = font.Contains('-') ? font.Split('-').LastOrDefault() : string.Empty;
             float size = float.Parse(dictionary["Size"]);
