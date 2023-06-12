@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
 
 public class RubyTagTest
 {
-    [TestCase]
+    [Test]
     public void TestClone()
     {
         var rubyTag = new RubyTag

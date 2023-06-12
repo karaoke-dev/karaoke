@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
 
 public class TimeTagTest
 {
-    [TestCase]
+    [Test]
     public void TestClone()
     {
         var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000);
