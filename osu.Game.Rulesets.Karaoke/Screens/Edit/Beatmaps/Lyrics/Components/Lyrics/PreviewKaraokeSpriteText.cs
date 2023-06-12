@@ -188,8 +188,8 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #endregion
 
-    [BackgroundDependencyLoader(true)]
-    private void load(ISkinSource skin, ShaderManager shaderManager)
+    [BackgroundDependencyLoader]
+    private void load(ISkinSource skin, ShaderManager? shaderManager)
     {
         skin.GetConfig<Lyric, LyricStyle>(HitObject)?.BindValueChanged(lyricStyle =>
         {
