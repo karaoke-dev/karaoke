@@ -96,7 +96,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should works even id is not by order.
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 3, 2, 1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(1), Array.Empty<SingerState>() },
             { new Singer(2), Array.Empty<SingerState>() },
@@ -106,7 +106,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should works if id is duplicated
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 1, 1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(1), Array.Empty<SingerState>() },
         });
@@ -114,7 +114,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
 
         // should works if id is duplicated
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new System.Collections.Generic.Dictionary<Singer, SingerState[]>
+        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer(1), Array.Empty<SingerState>() },
             { new Singer(1), Array.Empty<SingerState>() },
