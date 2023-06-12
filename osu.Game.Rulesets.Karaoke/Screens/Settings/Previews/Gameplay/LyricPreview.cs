@@ -103,7 +103,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
     {
         base.Dispose(isDisposing);
 
-        fontStore?.RemoveStore(localFontStore);
+        fontStore.RemoveStore(localFontStore);
     }
 
     private Lyric createPreviewLyric()

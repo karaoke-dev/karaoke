@@ -39,7 +39,7 @@ public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSe
     internal override void UpdateEditMode(TEditMode mode)
     {
         // should cancel the selection after change to the new edit mode.
-        lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
+        lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
 
         base.UpdateEditMode(mode);
     }

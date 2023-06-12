@@ -58,6 +58,6 @@ public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentCo
     {
         base.Dispose(isDisposing);
 
-        fontStore?.RemoveStore(localFontStore);
+        fontStore.RemoveStore(localFontStore);
     }
 }

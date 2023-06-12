@@ -85,7 +85,7 @@ public partial class NoteEditPopover : OsuPopover
                     return;
 
                 string text = sender.Text.Trim();
-                notePropertyChangeHandler?.ChangeText(text);
+                notePropertyChangeHandler.ChangeText(text);
             };
 
             rubyText.OnCommit += (sender, newText) =>
@@ -94,12 +94,12 @@ public partial class NoteEditPopover : OsuPopover
                     return;
 
                 string text = sender.Text.Trim();
-                notePropertyChangeHandler?.ChangeRubyText(text);
+                notePropertyChangeHandler.ChangeRubyText(text);
             };
 
             display.Current.BindValueChanged(v =>
             {
-                notePropertyChangeHandler?.ChangeDisplayState(v.NewValue);
+                notePropertyChangeHandler.ChangeDisplayState(v.NewValue);
             });
         }
 
