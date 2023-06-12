@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
-using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Extensions;
 
