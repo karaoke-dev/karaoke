@@ -306,7 +306,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
     private class TestApplier : IStageEffectApplier
     {
-        public double PreemptTime { get; } = 0;
+        public double PreemptTime => 0;
 
         public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
         {
