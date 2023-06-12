@@ -129,7 +129,7 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
                     importManager.AbortImport();
                 }
 
-                callBack?.Invoke(ok);
+                callBack(ok);
             }));
         });
     }

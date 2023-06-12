@@ -127,7 +127,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     /// Fetches and shows a specific build from a specific update stream.
     /// </summary>
     /// <param name="build"> Singer <see cref="APIChangelogBuild"/>.</param>
-    public void ShowBuild([NotNull] APIChangelogBuild build)
+    public void ShowBuild(APIChangelogBuild build)
     {
         ArgumentNullException.ThrowIfNull(build);
 

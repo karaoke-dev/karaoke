@@ -373,8 +373,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
     public bool CaretDraggable =>
         algorithm switch
         {
-            TypingCaretPositionAlgorithm _ => true,
-            CreateRubyTagCaretPositionAlgorithm _ => true,
+            TypingCaretPositionAlgorithm => true,
+            CreateRubyTagCaretPositionAlgorithm => true,
             _ => false
         };
 

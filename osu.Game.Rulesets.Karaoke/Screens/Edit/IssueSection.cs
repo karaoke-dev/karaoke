@@ -360,8 +360,8 @@ public abstract partial class IssueSection : EditorSection
             throw new NotImplementedException();
         }
 
-        public CheckMetadata Metadata { get; } = null!;
+        public CheckMetadata Metadata => new(CheckCategory.Metadata, string.Empty);
 
-        public IEnumerable<IssueTemplate> PossibleTemplates { get; } = null!;
+        public IEnumerable<IssueTemplate> PossibleTemplates => Array.Empty<IssueTemplate>();
     }
 }

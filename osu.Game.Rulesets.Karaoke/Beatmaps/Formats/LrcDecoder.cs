@@ -30,13 +30,13 @@ public class LrcDecoder : Decoder<Beatmap>
         string lyricText = stream.ReadToEnd();
         var result = new LrcParser.Parser.Lrc.LrcParser().Decode(lyricText);
 
-        foreach (var lrcLyric in result.Lyrics)
+        var newLyrics = result.Lyrics.Select(lrcLyric =>
         {
             var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToArray();
             var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
             var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
 
-            var lyric = new Lyric
+            return new Lyric
             {
                 ID = output.HitObjects.Count, // id is star from zero.
                 Order = output.HitObjects.Count + 1, // should create default order.
@@ -44,8 +44,9 @@ public class LrcDecoder : Decoder<Beatmap>
                 TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
                 RubyTags = lrcRubies
             };
-            output.HitObjects.Add(lyric);
-        }
+        });
+
+        output.HitObjects.AddRange(newLyrics);
 
         static TimeTag convertTimeTag(KeyValuePair<TextIndex, int?> timeTag)
             => new(convertTextIndex(timeTag.Key), timeTag.Value);

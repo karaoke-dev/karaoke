@@ -169,11 +169,11 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
     private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
     {
         // Cursor
-        rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
+        rulesetConfig.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
 
         // Alpha
-        rulesetConfig?.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
-        rulesetConfig?.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
+        rulesetConfig.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
+        rulesetConfig.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
 
         // Pitch
         session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);

@@ -97,8 +97,8 @@ public abstract partial class LabelledObjectFieldSwitchButton<T> : LabelledSwitc
         private Color4 highLightColour;
         private Color4 enabledColour;
 
-        [BackgroundDependencyLoader(true)]
-        private void load(OverlayColourProvider colourProvider, OsuColour colours)
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider? colourProvider, OsuColour colours)
         {
             highLightColour = colours.Yellow;
 

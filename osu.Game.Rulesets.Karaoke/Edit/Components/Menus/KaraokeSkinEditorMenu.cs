@@ -17,6 +17,6 @@ public class KaraokeSkinEditorMenu : MenuItem
 
     private static void openKaraokeSkin(IScreen screen, ISkin skin)
     {
-        screen?.Push(new KaraokeSkinEditor(skin));
+        screen.Push(new KaraokeSkinEditor(skin));
     }
 }

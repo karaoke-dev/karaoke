@@ -47,7 +47,7 @@ public partial class KaraokeModFlashlight : ModFlashlight<KaraokeHitObject>
 
         var drawableKaraokeRuleset = drawableRuleset as DrawableKaraokeRuleset;
 
-        var notePlayfield = drawableKaraokeRuleset?.Playfield?.NotePlayfield;
+        var notePlayfield = drawableKaraokeRuleset?.Playfield.NotePlayfield;
         if (notePlayfield == null)
             return;
 

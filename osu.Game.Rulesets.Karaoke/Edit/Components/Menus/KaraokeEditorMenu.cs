@@ -16,6 +16,6 @@ public class KaraokeEditorMenu : MenuItem
 
     private static void openKaraokeEditor(IScreen screen)
     {
-        screen?.Push(new KaraokeBeatmapEditor());
+        screen.Push(new KaraokeBeatmapEditor());
     }
 }

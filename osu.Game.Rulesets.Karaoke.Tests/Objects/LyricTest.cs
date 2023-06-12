@@ -16,7 +16,7 @@ public class LyricTest
 {
     #region Clone
 
-    [TestCase]
+    [Test]
     public void TestClone()
     {
         var referencedLyric = new Lyric { ID = 2 };

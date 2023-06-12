@@ -22,13 +22,13 @@ public partial class StyleManager : Component
 
     public void ApplyCurrentStyleChange(Action<LyricStyle> action)
     {
-        action?.Invoke(EditStyle.Value);
+        action(EditStyle.Value);
         EditStyle.TriggerChange();
     }
 
     public void ApplyCurrentNoteStyle(Action<NoteStyle> action)
     {
-        action?.Invoke(EditNoteStyle.Value);
+        action(EditNoteStyle.Value);
         EditNoteStyle.TriggerChange();
     }
 }

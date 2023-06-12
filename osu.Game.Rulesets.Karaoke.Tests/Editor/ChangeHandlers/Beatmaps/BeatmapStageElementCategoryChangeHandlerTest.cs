@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHandlerTest<BeatmapStageElementCategoryChangeHandlerTest.TestBeatmapStageElementCategoryChangeHandler>
 {
     protected override TestBeatmapStageElementCategoryChangeHandler CreateChangeHandler()
-        => new(x => x.OfType<TestStageinfo>().First().Category);
+        => new(x => x.OfType<TestStageInfo>().First().Category);
 
     [Test]
     public void TestAddElement()
@@ -220,7 +220,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     {
         base.SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            var stageInfo = new TestStageinfo();
+            var stageInfo = new TestStageInfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
                 stageInfo
@@ -232,7 +232,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     }
 
     private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
-        => beatmap.StageInfos.OfType<TestStageinfo>().First().Category;
+        => beatmap.StageInfos.OfType<TestStageInfo>().First().Category;
 
     public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
@@ -242,7 +242,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
         }
     }
 
-    private class TestStageinfo : StageInfo
+    private class TestStageInfo : StageInfo
     {
         #region Category
 
@@ -306,7 +306,7 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
     private class TestApplier : IStageEffectApplier
     {
-        public double PreemptTime { get; } = 0;
+        public double PreemptTime => 0;
 
         public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
         {

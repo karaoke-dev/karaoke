@@ -39,7 +39,7 @@ public partial class LyricFontInfoManager : Component
 
     public void ApplyCurrentLyricFontInfoChange(Action<LyricFontInfo> action)
     {
-        action?.Invoke(LoadedLyricFontInfo.Value);
+        action(LoadedLyricFontInfo.Value);
         LoadedLyricFontInfo.TriggerChange();
     }
 }

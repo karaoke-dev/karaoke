@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
 
 public class RomajiTagTest
 {
-    [TestCase]
+    [Test]
     public void TestClone()
     {
         var romajiTag = new RomajiTag

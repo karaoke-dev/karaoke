@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects;
 
 public class NoteTest
 {
-    [TestCase]
+    [Test]
     public void TestClone()
     {
         var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "ノート", 1000, 1000);
@@ -60,7 +60,7 @@ public class NoteTest
         Assert.AreEqual(clonedNote.ReferenceTimeTagIndex, note.ReferenceTimeTagIndex);
     }
 
-    [TestCase]
+    [Test]
     public void TestReferenceTime()
     {
         var note = new Note();

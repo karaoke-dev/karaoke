@@ -42,7 +42,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
     #region Validation
 
-    private bool calcualtedPropertyIsUpdated;
+    private bool calculatedPropertyIsUpdated;
 
     /// <summary>
     /// Mark the stage info's calculated property as invalidate.
@@ -50,14 +50,14 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     /// <returns></returns>
     public void TriggerRecalculate()
     {
-        calcualtedPropertyIsUpdated = false;
+        calculatedPropertyIsUpdated = false;
     }
 
     /// <summary>
     /// Check if the stage info's calculated property is calculated and the value is the latest.
     /// </summary>
     /// <returns></returns>
-    public bool IsUpdated() => calcualtedPropertyIsUpdated;
+    public bool IsUpdated() => calculatedPropertyIsUpdated;
 
     /// <summary>
     /// If the calculated property is not updated, then re-calculate the property inside the stage info in the <see cref="KaraokeBeatmapProcessor"/>
@@ -89,7 +89,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
             lyric.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
         }
 
-        calcualtedPropertyIsUpdated = true;
+        calculatedPropertyIsUpdated = true;
     }
 
     #endregion
