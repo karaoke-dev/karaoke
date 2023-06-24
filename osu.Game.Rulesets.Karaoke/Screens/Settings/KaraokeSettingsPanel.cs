@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -85,7 +86,11 @@ public partial class KaraokeSettingsPanel : SettingsPanel
         void initialSelectionContainer() =>
             SectionsContainer.SelectedSection.ValueChanged += section =>
             {
-                selectedSection.Value = section.NewValue;
+                var newSection = section.NewValue;
+                if (newSection == null)
+                    throw new InvalidOperationException($"{nameof(newSection)} should not be possible to be null.");
+
+                selectedSection.Value = newSection;
             };
 
         void initialContentContainer()

@@ -1,14 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -21,6 +18,12 @@ public partial class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatma
     [Resolved]
     private IBindable<WorkingBeatmap> working { get; set; } = null!;
 
+    public Texture? GetSingerAvatar(ISinger singer)
+    {
+        return null;
+    }
+
+    /*
     public Texture? GetSingerAvatar(ISinger singer)
     {
         var provider = getBeatmapResourceProvider();
@@ -47,4 +50,5 @@ public partial class KaraokeBeatmapResourcesProvider : Component, IKaraokeBeatma
 
         return prop.GetValue(beatmapManager) as WorkingBeatmapCache;
     }
+    */
 }

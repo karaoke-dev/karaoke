@@ -121,7 +121,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
-                languageSpriteText = new OsuSpriteText
+                languageSpriteText = new TruncatingSpriteText
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
@@ -131,7 +131,6 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                         Left = padding,
                         Right = padding * 2 + delete_button_size,
                     },
-                    Truncate = true,
                 },
                 new DeleteIconButton
                 {

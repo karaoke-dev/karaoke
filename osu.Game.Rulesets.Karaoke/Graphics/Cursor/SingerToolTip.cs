@@ -87,30 +87,30 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                                         Spacing = new Vector2(1),
                                         Children = new[]
                                         {
-                                            singerName = new OsuSpriteText
+                                            singerName = new TruncatingSpriteText
                                             {
                                                 Name = "Singer name",
                                                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: main_text_size),
                                                 RelativeSizeAxes = Axes.X,
-                                                Truncate = true,
+                                                ShowTooltip = false,
                                             },
-                                            singerRomajiName = new OsuSpriteText
+                                            singerRomajiName = new TruncatingSpriteText
                                             {
                                                 Name = "Romaji name",
                                                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                                 RelativeSizeAxes = Axes.X,
-                                                Truncate = true,
+                                                ShowTooltip = false,
                                             },
                                         }
                                     },
-                                    singerEnglishName = new OsuSpriteText
+                                    singerEnglishName = new TruncatingSpriteText
                                     {
                                         Name = "English name",
                                         Anchor = Anchor.BottomLeft,
                                         Origin = Anchor.BottomLeft,
                                         Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                         RelativeSizeAxes = Axes.X,
-                                        Truncate = true,
+                                        ShowTooltip = false,
                                     }
                                 }
                             }

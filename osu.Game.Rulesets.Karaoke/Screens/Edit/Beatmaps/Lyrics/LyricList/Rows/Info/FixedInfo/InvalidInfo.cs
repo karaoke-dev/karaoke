@@ -177,12 +177,12 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                         Margin = new MarginPadding { Left = 10 },
                         Issue = issue
                     },
-                    new OsuSpriteText
+                    new TruncatingSpriteText
                     {
                         Text = issue.ToString(),
-                        Truncate = true,
                         RelativeSizeAxes = Axes.X,
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
+                        ShowTooltip = false,
                     },
                 };
 

@@ -196,12 +196,11 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                             Size = new Vector2(24),
                             Icon = FontAwesome.Solid.Microphone
                         },
-                        deviceName = new OsuSpriteText
+                        deviceName = new TruncatingSpriteText
                         {
                             Width = 250,
                             Font = OsuFont.Default.With(size: 20),
                             Text = "Microphone name",
-                            Truncate = true,
                         }
                     }
                 }

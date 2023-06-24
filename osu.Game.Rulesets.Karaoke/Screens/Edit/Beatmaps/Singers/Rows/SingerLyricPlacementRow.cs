@@ -110,19 +110,17 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
                                     Spacing = new Vector2(1),
                                     Children = new Drawable[]
                                     {
-                                        singerName = new OsuSpriteText
+                                        singerName = new TruncatingSpriteText
                                         {
                                             Name = "Singer name",
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: main_text_size),
                                             RelativeSizeAxes = Axes.X,
-                                            Truncate = true,
                                         },
-                                        singerEnglishName = new OsuSpriteText
+                                        singerEnglishName = new TruncatingSpriteText
                                         {
                                             Name = "English name",
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                             RelativeSizeAxes = Axes.X,
-                                            Truncate = true,
                                         }
                                     }
                                 }

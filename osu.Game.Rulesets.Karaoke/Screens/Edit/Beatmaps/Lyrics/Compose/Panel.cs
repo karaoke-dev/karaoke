@@ -107,7 +107,6 @@ public abstract partial class Panel : FocusedOverlayContainer
 
     protected override void PopIn()
     {
-        base.PopIn();
         samplePopIn?.Play();
 
         // todo: adjust the effect.
@@ -120,7 +119,6 @@ public abstract partial class Panel : FocusedOverlayContainer
 
     protected override void PopOut()
     {
-        base.PopOut();
         samplePopOut?.Play();
 
         float width = getHideXPosition();

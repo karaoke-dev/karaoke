@@ -48,10 +48,9 @@ public partial class ReferenceLyricIssueSection : LyricEditorIssueSection
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
-                new OsuSpriteText
+                new TruncatingSpriteText
                 {
                     Text = issue.ToString(),
-                    Truncate = true,
                     RelativeSizeAxes = Axes.X,
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
                 },

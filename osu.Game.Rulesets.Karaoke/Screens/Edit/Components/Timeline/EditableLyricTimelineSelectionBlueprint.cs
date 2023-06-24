@@ -38,14 +38,14 @@ public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineS
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4.Gray,
                 },
-                new OsuSpriteText
+                new TruncatingSpriteText
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     Margin = new MarginPadding { Left = 5 },
                     RelativeSizeAxes = Axes.X,
-                    Truncate = true,
-                    Text = item.Text
+                    Text = item.Text,
+                    ShowTooltip = false,
                 }
             }
         });

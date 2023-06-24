@@ -117,8 +117,6 @@ public abstract partial class SettingOverlay : OsuFocusedOverlayContainer
 
     protected override void PopIn()
     {
-        base.PopIn();
-
         this.MoveToX(0, TRANSITION_LENGTH, Easing.OutQuint);
         this.FadeTo(1, TRANSITION_LENGTH, Easing.OutQuint);
     }
