@@ -59,19 +59,17 @@ public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
                 Direction = FillDirection.Vertical,
                 Children = new Drawable[]
                 {
-                    new OsuSpriteText
+                    new TruncatingSpriteText
                     {
                         Text = new RomanisableString(metadata.TitleUnicode, metadata.Title),
                         Font = OsuFont.Default.With(size: 22.5f, weight: FontWeight.SemiBold),
                         RelativeSizeAxes = Axes.X,
-                        Truncate = true
                     },
-                    new OsuSpriteText
+                    new TruncatingSpriteText
                     {
                         Text = createArtistText(metadata),
                         Font = OsuFont.Default.With(size: 17.5f, weight: FontWeight.SemiBold),
                         RelativeSizeAxes = Axes.X,
-                        Truncate = true
                     },
                     new LinkFlowContainer(s =>
                     {
