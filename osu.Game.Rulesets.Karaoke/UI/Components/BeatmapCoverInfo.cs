@@ -115,7 +115,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
         [BackgroundDependencyLoader]
         private void load(IBindable<WorkingBeatmap> beatmap, LargeTextureStore textures)
         {
-            sprite.Texture = beatmap.Value?.Background ?? textures.Get(fallback_texture_name);
+            sprite.Texture = beatmap.Value?.GetBackground() ?? textures.Get(fallback_texture_name);
         }
     }
 }
