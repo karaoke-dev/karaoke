@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +30,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
     private readonly OverlayColourProvider overlayColourProvider;
 
     [Resolved]
-    private OsuColour colours { get; set; }
+    private OsuColour colours { get; set; } = null!;
 
     private readonly Selection[] selections;
     private readonly DescriptionTextFlowContainer lyricEditorDescription;
@@ -119,7 +117,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
 
     protected partial class Selection : EditorSectionButton
     {
-        public new Action<TEditMode> Action;
+        public new Action<TEditMode>? Action;
 
         public TEditMode Mode { get; set; }
 
