@@ -1,13 +1,10 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -104,7 +101,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
         private const float delete_button_size = 20f;
         private const int padding = 15;
 
-        public Action OnDeleteButtonClick;
+        public Action? OnDeleteButtonClick;
 
         private readonly OsuSpriteText languageSpriteText;
         private readonly Box background;
@@ -146,8 +143,8 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
             };
         }
 
-        [BackgroundDependencyLoader(true)]
-        private void load([CanBeNull] OverlayColourProvider colourProvider)
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider? colourProvider)
         {
             background.Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125");
         }
@@ -162,9 +159,9 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
     {
         private const int padding = 15;
 
-        private readonly Bindable<CultureInfo> current = new();
+        private readonly Bindable<CultureInfo?> current = new();
 
-        public Action<CultureInfo> LanguageSelected;
+        public Action<CultureInfo>? LanguageSelected;
 
         public CreateLanguageSubsection()
         {
@@ -179,8 +176,8 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
             });
         }
 
-        [BackgroundDependencyLoader(true)]
-        private void load([CanBeNull] OverlayColourProvider colourProvider)
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider? colourProvider)
         {
             Masking = true;
             CornerRadius = 15;

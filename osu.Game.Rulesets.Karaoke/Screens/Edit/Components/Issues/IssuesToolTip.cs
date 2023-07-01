@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using System.ComponentModel;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -30,7 +29,7 @@ public partial class IssuesToolTip : BackgroundToolTip<Issue[]>
         };
     }
 
-    private Issue[] lastIssues;
+    private Issue[] lastIssues = Array.Empty<Issue>();
 
     public override void SetContent(Issue[] issues)
     {

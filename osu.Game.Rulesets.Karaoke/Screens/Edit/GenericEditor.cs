@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +40,13 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
 
     public readonly Bindable<TScreenMode> Mode = new();
 
-    private Container<GenericEditorScreen<TScreenMode>> screenContainer;
+    private Container<GenericEditorScreen<TScreenMode>> screenContainer = null!;
 
-    private GenericEditorScreen<TScreenMode> currentScreen;
+    private GenericEditorScreen<TScreenMode>? currentScreen;
 
-    private EditorMenuBar menuBar;
+    private EditorMenuBar menuBar = null!;
 
-    private DependencyContainer dependencies;
+    private DependencyContainer dependencies = null!;
 
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));

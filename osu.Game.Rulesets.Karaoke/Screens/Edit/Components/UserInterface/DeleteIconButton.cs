@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
@@ -15,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.UserInterface;
 public partial class DeleteIconButton : IconButton
 {
     [Resolved]
-    protected OsuColour Colours { get; private set; }
+    protected OsuColour Colours { get; private set; } = null!;
 
-    public Action<bool> Hover;
+    public Action<bool>? Hover;
 
     public DeleteIconButton()
     {

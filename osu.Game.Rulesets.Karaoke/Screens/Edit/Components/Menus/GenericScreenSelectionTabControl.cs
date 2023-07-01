@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -43,7 +41,7 @@ public partial class GenericScreenSelectionTabControl<TScreenMode> : OsuTabContr
         });
     }
 
-    protected override Dropdown<TScreenMode> CreateDropdown() => null;
+    protected override Dropdown<TScreenMode>? CreateDropdown() => null;
 
     protected override TabItem<TScreenMode> CreateTabItem(TScreenMode value) => new TabItem(value);
 
@@ -61,11 +59,6 @@ public partial class GenericScreenSelectionTabControl<TScreenMode> : OsuTabContr
             Text.Font = OsuFont.TorusAlternate;
 
             Bar.Expire();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
-        {
         }
 
         protected override void OnActivated()
