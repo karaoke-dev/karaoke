@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Utils;
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Utils;
 
 [TestFixture]
 public class SingerUtilsTest
