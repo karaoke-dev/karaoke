@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Utils;
+namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Utils;
 
 [TestFixture]
 public class TextTagsUtilsTest

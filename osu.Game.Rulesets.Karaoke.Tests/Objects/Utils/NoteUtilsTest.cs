@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Utils;
+namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Utils;
 
 public class NoteUtilsTest
 {
