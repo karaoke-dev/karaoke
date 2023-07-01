@@ -5,11 +5,11 @@ using System;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
-using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Utils;
+namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Utils;
 
 public class LyricsUtilsTest
 {

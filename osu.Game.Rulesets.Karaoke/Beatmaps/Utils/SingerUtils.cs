@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 
 public static class SingerUtils
 {

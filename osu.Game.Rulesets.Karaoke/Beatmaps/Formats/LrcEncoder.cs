@@ -7,6 +7,7 @@ using System.Linq;
 using LrcParser.Model;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 using RubyTag = LrcParser.Model.RubyTag;

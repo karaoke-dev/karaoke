@@ -8,7 +8,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
 
