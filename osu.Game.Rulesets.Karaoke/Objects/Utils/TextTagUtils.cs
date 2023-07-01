@@ -5,7 +5,7 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 public static class TextTagUtils
 {

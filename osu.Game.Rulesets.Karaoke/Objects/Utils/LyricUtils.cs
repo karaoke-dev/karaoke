@@ -7,10 +7,10 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 public static class LyricUtils
 {

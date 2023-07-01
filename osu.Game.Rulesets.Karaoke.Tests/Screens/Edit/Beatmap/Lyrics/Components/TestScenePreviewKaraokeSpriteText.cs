@@ -11,9 +11,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Tests.Visual;
 using osuTK;
 

@@ -7,10 +7,9 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 public static class LyricsUtils
 {

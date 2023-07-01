@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils;
 

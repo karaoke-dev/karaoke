@@ -6,7 +6,7 @@ using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 

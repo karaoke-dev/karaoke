@@ -7,6 +7,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;

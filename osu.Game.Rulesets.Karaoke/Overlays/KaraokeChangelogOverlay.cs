@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Octokit;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;

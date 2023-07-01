@@ -2,9 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Extensions;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 public static class TimeTagUtils
 {

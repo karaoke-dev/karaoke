@@ -10,7 +10,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 

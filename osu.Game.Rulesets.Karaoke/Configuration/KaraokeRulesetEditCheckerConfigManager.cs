@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration;
 

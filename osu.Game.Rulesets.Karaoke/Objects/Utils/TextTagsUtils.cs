@@ -8,7 +8,7 @@ using System.Data;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Utils;
+namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 public static class TextTagsUtils
 {
