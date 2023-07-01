@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning;
 

@@ -9,7 +9,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
