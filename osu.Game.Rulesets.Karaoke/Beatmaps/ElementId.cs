@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 /// As unique identifier for the elements in the <see cref="KaraokeBeatmap"/>
 /// Like how <see cref="Guid"/> works.
 /// </summary>
-public readonly struct ElementId : IEquatable<ElementId>
+public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatable<ElementId>
 {
     public static readonly ElementId Empty;
 
@@ -48,6 +48,26 @@ public readonly struct ElementId : IEquatable<ElementId>
         string str = Guid.NewGuid().ToString("N");
         string id = str[..length];
         return new ElementId(id);
+    }
+
+    public int CompareTo(ElementId other)
+    {
+        return string.Compare(id, other.id, StringComparison.Ordinal);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj == null)
+        {
+            return 1;
+        }
+
+        if (obj is not ElementId elementId)
+        {
+            throw new ArgumentException("Compared object should be the same type.", nameof(obj));
+        }
+
+        return CompareTo(elementId);
     }
 
     public bool Equals(ElementId other)

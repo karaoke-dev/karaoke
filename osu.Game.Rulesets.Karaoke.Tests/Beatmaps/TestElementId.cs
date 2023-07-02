@@ -60,6 +60,29 @@ public class TestElementId
         Assert.AreEqual(idSet.Count, create_amount);
     }
 
+    [TestCase("1234567", "1234567", 0)]
+    [TestCase("1234567", "2345678", -1)]
+    [TestCase("2345678", "1234567", 1)]
+    public void TestCompareTo(string a, string b, int expected)
+    {
+        var elementIdA = new ElementId(a);
+        var elementIdB = new ElementId(b);
+
+        int actual = elementIdA.CompareTo(elementIdB);
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void TestCompareToOther()
+    {
+        var elementId = new ElementId("1234567");
+
+        Assert.AreEqual(elementId.CompareTo(null), 1);
+        Assert.Throws<ArgumentException>(() => elementId.CompareTo(3)); // should not compare to other type
+        Assert.Throws<ArgumentException>(() => elementId.CompareTo("123")); // should not compare to the string also.
+        Assert.DoesNotThrow(() => elementId.CompareTo(new ElementId("1234567")));
+    }
+
     [TestCase("1234567", "1234567", true)]
     [TestCase("1234567", "7654321", false)]
     public void TestEqual(string a, string b, bool expected)
