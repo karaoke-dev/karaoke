@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics;
@@ -13,14 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSkinElementConverter>
 {
-    protected override JsonConverter[] CreateExtraConverts()
-        => new JsonConverter[]
-        {
-            new ColourConverter(),
-            new Vector2Converter(),
-            new ShaderConverter(),
-            new FontUsageConverter()
-        };
+    protected override IEnumerable<JsonConverter> CreateExtraConverts()
+    {
+        yield return new ColourConverter();
+        yield return new Vector2Converter();
+        yield return new ShaderConverter();
+        yield return new FontUsageConverter();
+    }
 
     [Test]
     public void TestLyricConfigSerializer()

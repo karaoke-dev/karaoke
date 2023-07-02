@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
@@ -14,11 +15,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 [TestFixture]
 public class TimeTagsConverterTest : BaseSingleConverterTest<TimeTagsConverter>
 {
-    protected override JsonConverter[] CreateExtraConverts()
-        => new JsonConverter[]
-        {
-            new TimeTagConverter(),
-        };
+    protected override IEnumerable<JsonConverter> CreateExtraConverts()
+    {
+        yield return new TimeTagConverter();
+    }
 
     [Test]
     public void TestSerialize()

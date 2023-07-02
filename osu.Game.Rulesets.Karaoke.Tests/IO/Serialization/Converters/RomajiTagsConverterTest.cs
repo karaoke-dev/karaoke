@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
@@ -12,11 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class RomajiTagsConverterTest : BaseSingleConverterTest<RomajiTagsConverter>
 {
-    protected override JsonConverter[] CreateExtraConverts()
-        => new JsonConverter[]
-        {
-            new RomajiTagConverter(),
-        };
+    protected override IEnumerable<JsonConverter> CreateExtraConverts()
+    {
+        yield return new RomajiTagConverter();
+    }
 
     [Test]
     public void TestSerialize()

@@ -12,11 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class TranslatesConverterTest : BaseSingleConverterTest<TranslatesConverter>
 {
-    protected override JsonConverter[] CreateExtraConverts()
-        => new JsonConverter[]
-        {
-            new CultureInfoConverter(),
-        };
+    protected override IEnumerable<JsonConverter> CreateExtraConverts()
+    {
+        yield return new CultureInfoConverter();
+    }
 
     [Test]
     public void TestSerialize()
