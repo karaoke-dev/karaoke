@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osuTK;
@@ -18,7 +19,7 @@ public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
     private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; } = null!;
 
     public CreateNewLyricPlacementColumn()
-        : base(new Singer(-1) { Name = "Press to create new singer" })
+        : base(new Singer(ElementId.Empty) { Name = "Press to create new singer" })
     {
     }
 
