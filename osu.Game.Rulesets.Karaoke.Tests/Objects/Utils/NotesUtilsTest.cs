@@ -49,7 +49,7 @@ public class NotesUtilsTest
         const double percentage = 0.3;
 
         var referencedLyric = TestCaseNoteHelper.CreateLyricForNote(2, "Lyric", 1000, 2000);
-        referencedLyric.SingerIds = new[] { 0 };
+        referencedLyric.SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 0 });
 
         var note = new Note
         {

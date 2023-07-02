@@ -30,7 +30,7 @@ public class LyricTest
             RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka", "[1]:ra", "[3]:o", "[4]:ke" }),
             StartTime = 1000,
             Duration = 4000,
-            SingerIds = new[] { 1, 2 },
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
             Translates = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("en-US"), "karaoke" }
@@ -112,7 +112,7 @@ public class LyricTest
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
             RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" }),
-            SingerIds = new[] { 1 },
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" }
@@ -152,7 +152,7 @@ public class LyricTest
         referencedLyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" });
         referencedLyric.RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" });
         referencedLyric.RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" });
-        referencedLyric.SingerIds = new[] { 1 };
+        referencedLyric.SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 });
         referencedLyric.Translates = new Dictionary<CultureInfo, string>
         {
             { new CultureInfo(17), "からおけ" }
@@ -184,7 +184,7 @@ public class LyricTest
             TimeTags = new[] { timeTag },
             RubyTags = new[] { rubyTag },
             RomajiTags = new[] { romajiTag },
-            SingerIds = new[] { 1 },
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" }
@@ -243,7 +243,7 @@ public class LyricTest
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
             RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" }),
-            SingerIds = new[] { 1 },
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" }
