@@ -94,7 +94,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
             return endTime - startTime ?? 0;
         }
 
-        static IDictionary<Singer, SingerState[]> getSingers(KaraokeBeatmap beatmap, IEnumerable<int> singerIds)
+        static IDictionary<Singer, SingerState[]> getSingers(KaraokeBeatmap beatmap, IEnumerable<ElementId> singerIds)
             => beatmap.SingerInfo.GetSingerByIds(singerIds.ToArray());
 
         static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)

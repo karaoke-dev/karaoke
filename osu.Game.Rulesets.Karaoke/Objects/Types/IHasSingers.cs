@@ -2,10 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
 public interface IHasSingers
 {
-    IList<int> SingerIds { get; }
+    IList<ElementId> SingerIds { get; }
 }

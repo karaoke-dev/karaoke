@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 
@@ -45,7 +46,7 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
         var lyricSingerIds = lyric.SingerIds.OrderBy(x => x).Distinct();
         var workingSingerIds = lyric.Singers.ToArray().Select(x =>
         {
-            var ids = new List<int> { x.Key.ID };
+            var ids = new List<ElementId> { x.Key.ID };
             ids.AddRange(x.Value.Select(singer => singer.ID));
             return ids;
         }).SelectMany(x => x).OrderBy(x => x).Distinct();

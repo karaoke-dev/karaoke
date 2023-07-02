@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -99,7 +100,7 @@ public static class LyricsUtils
         double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
         double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
-        var singers = new List<int>();
+        var singers = new List<ElementId>();
         singers.AddRangeWithNullCheck(firstLyric.SingerIds);
         singers.AddRangeWithNullCheck(secondLyric.SingerIds);
 

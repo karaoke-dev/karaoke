@@ -13,12 +13,12 @@ public class Singer : ISinger
     {
     }
 
-    public Singer(int id)
+    public Singer(ElementId id)
     {
         ID = id;
     }
 
-    public int ID { get; protected set; }
+    public ElementId ID { get; protected set; }
 
     [JsonIgnore]
     public readonly Bindable<int> OrderBindable = new();

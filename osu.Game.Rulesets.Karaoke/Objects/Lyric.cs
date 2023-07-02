@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -107,12 +108,12 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public readonly BindableList<int> SingerIdsBindable = new();
+    public readonly BindableList<ElementId> SingerIdsBindable = new();
 
     /// <summary>
     /// Singers
     /// </summary>
-    public IList<int> SingerIds
+    public IList<ElementId> SingerIds
     {
         get => SingerIdsBindable;
         set
