@@ -41,8 +41,7 @@ public class SingerInfo
 
     public Singer AddSinger(Action<Singer>? action = null)
     {
-        var id = getNewSingerId();
-        var singer = new Singer(id);
+        var singer = new Singer();
         action?.Invoke(singer);
 
         Singers.Add(singer);
@@ -55,9 +54,8 @@ public class SingerInfo
         if (!Singers.Contains(singer))
             throw new InvalidOperationException("Main singer must in the singer info.");
 
-        var id = getNewSingerId();
         var mainSingerId = singer.ID;
-        var singerState = new SingerState(id, mainSingerId);
+        var singerState = new SingerState(mainSingerId);
         action?.Invoke(singerState);
 
         Singers.Add(singerState);
@@ -87,10 +85,5 @@ public class SingerInfo
             default:
                 throw new InvalidCastException();
         }
-    }
-
-    private ElementId getNewSingerId()
-    {
-        return ElementId.NewElementId();
     }
 }

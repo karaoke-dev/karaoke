@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows.Components.Timeline;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -18,7 +17,7 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
 {
     protected const int LEFT_MARGIN = 22;
 
-    public static Singer DefaultSinger { get; } = new(ElementId.Empty) { Name = "Default" };
+    public static Singer DefaultSinger { get; } = new() { Name = "Default" };
 
     [Resolved]
     private ISingerScreenScrollingInfoProvider scrollingInfoProvider { get; set; } = null!;

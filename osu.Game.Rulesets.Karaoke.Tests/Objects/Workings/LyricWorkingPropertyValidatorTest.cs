@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
@@ -76,9 +77,9 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId1), Array.Empty<SingerState>() },
-            { new Singer(singerId2), Array.Empty<SingerState>() },
-            { new Singer(singerId3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -86,7 +87,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId1), new SingerState[] { new(singerId2, singerId1), new(singerId3, singerId1) } },
+            { new Singer().ChangeId(singerId1), new[] { new SingerState(singerId1).ChangeId(singerId2), new SingerState(singerId1).ChangeId(singerId3) } },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -94,9 +95,9 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId3), Array.Empty<SingerState>() },
-            { new Singer(singerId2), Array.Empty<SingerState>() },
-            { new Singer(singerId1), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -104,9 +105,9 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId3, singerId2, singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId1), Array.Empty<SingerState>() },
-            { new Singer(singerId2), Array.Empty<SingerState>() },
-            { new Singer(singerId3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -114,7 +115,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId1, singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -122,8 +123,8 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(singerId1), Array.Empty<SingerState>() },
-            { new Singer(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
     }

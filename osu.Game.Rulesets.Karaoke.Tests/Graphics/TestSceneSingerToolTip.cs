@@ -71,7 +71,7 @@ public partial class TestSceneSingerToolTip : OsuTestScene
     {
         AddStep(testName, () =>
         {
-            var singer = new Singer(ElementId.NewElementId());
+            var singer = new Singer();
             callBack(singer);
             toolTip.SetContent(singer);
         });

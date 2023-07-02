@@ -14,8 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
 {
-    private static ElementId singerId = TestCaseElementIdHelper.CreateElementIdByNumber(1);
-    private static ElementId mainSingerId = TestCaseElementIdHelper.CreateElementIdByNumber(2);
+    private static readonly ElementId main_singer_id = TestCaseElementIdHelper.CreateElementIdByNumber(2);
 
     protected override IEnumerable<JsonConverter> CreateExtraConverts()
     {
@@ -25,7 +24,7 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
     [Test]
     public void TestMainSingerSerializer()
     {
-        var singer = new Singer(singerId);
+        var singer = new Singer();
 
         string expected = $"{{\"$type\":\"Singer\",\"id\":\"{singer.ID}\"}}";
         string actual = JsonConvert.SerializeObject(singer, CreateSettings());
@@ -35,7 +34,7 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
     [Test]
     public void TestMainSingerDeserializer()
     {
-        var expected = new Singer(singerId);
+        var expected = new Singer();
 
         string json = $"{{\"$type\":\"Singer\",\"id\":\"{expected.ID}\"}}";
         var actual = (Singer)JsonConvert.DeserializeObject<ISinger>(json, CreateSettings())!;
@@ -46,7 +45,7 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
     [Test]
     public void TestSingerStateSerializer()
     {
-        var singer = new SingerState(singerId, mainSingerId);
+        var singer = new SingerState(main_singer_id);
 
         string expected = $"{{\"$type\":\"SingerState\",\"id\":\"{singer.ID}\",\"main_singer_id\":\"{singer.MainSingerId}\"}}";
         string actual = JsonConvert.SerializeObject(singer, CreateSettings());
@@ -56,7 +55,7 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
     [Test]
     public void TestSingerStateDeserializer()
     {
-        var expected = new SingerState(singerId, mainSingerId);
+        var expected = new SingerState(main_singer_id);
 
         string json = $"{{\"$type\":\"SingerState\",\"id\":\"{expected.ID}\",\"main_singer_id\":\"{expected.MainSingerId}\"}}";
         var actual = (SingerState)JsonConvert.DeserializeObject<ISinger>(json, CreateSettings())!;
@@ -82,9 +81,9 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
     {
         var singerInfo = new SingerInfo();
         var singer = singerInfo.AddSinger();
-        singerInfo.AddSingerState(singer);
+        var singerState = singerInfo.AddSingerState(singer);
 
-        string json = $"{{\"singers\":[{{\"$type\":\"Singer\",\"id\":\"{singerId}\"}},{{\"$type\":\"SingerState\",\"id\":\"{mainSingerId}\",\"main_singer_id\":\"{singerId}\"}}]}}";
+        string json = $"{{\"singers\":[{{\"$type\":\"Singer\",\"id\":\"{singer.ID}\"}},{{\"$type\":\"SingerState\",\"id\":\"{singerState.ID}\",\"main_singer_id\":\"{singerState.MainSingerId}\"}}]}}";
         var actual = JsonConvert.DeserializeObject<SingerInfo>(json, CreateSettings())!;
 
         Assert.AreEqual(singerInfo.Singers.Count, actual.Singers.Count);

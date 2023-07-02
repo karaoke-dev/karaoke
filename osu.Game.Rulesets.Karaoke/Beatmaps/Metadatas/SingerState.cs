@@ -13,13 +13,12 @@ public class SingerState : ISinger
     {
     }
 
-    public SingerState(ElementId id, ElementId mainSingerId)
+    public SingerState(ElementId mainSingerId)
     {
-        ID = id;
         MainSingerId = mainSingerId;
     }
 
-    public ElementId ID { get; protected set; }
+    public ElementId ID { get; protected set; } = ElementId.NewElementId();
 
     public ElementId MainSingerId { get; protected set; }
 
