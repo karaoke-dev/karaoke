@@ -92,7 +92,7 @@ public class SingerInfoTest
         var singer = singerInfo.AddSinger();
 
         Assert.AreEqual(1, singerInfo.Singers.Count);
-        Assert.AreEqual(1, singer.ID);
+        Assert.IsNotEmpty(singer.ID.ToString());
     }
 
     [Test]
@@ -103,7 +103,8 @@ public class SingerInfoTest
         var singerState = singerInfo.AddSingerState(singer);
 
         Assert.AreEqual(2, singerInfo.Singers.Count);
-        Assert.AreEqual(2, singerState.ID);
+        Assert.IsNotEmpty(singerState.ID.ToString());
+        Assert.IsNotEmpty(singerState.MainSingerId.ToString());
     }
 
     [Test]

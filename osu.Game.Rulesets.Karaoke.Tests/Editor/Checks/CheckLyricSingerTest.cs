@@ -5,6 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricSinger;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
@@ -19,7 +20,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            SingerIds = singers
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers)
         };
 
         AssertOk(lyric);
@@ -30,7 +31,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            SingerIds = singers
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers)
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);

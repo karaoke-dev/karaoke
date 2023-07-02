@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 public interface ISinger : IHasOrder
 {
-    int ID { get; }
+    ElementId ID { get; }
 
     float Hue { get; }
 }

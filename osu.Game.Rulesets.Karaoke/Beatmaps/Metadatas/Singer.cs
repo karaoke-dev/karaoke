@@ -9,16 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 public class Singer : ISinger
 {
-    public Singer()
-    {
-    }
-
-    public Singer(int id)
-    {
-        ID = id;
-    }
-
-    public int ID { get; protected set; }
+    public ElementId ID { get; protected set; } = ElementId.NewElementId();
 
     [JsonIgnore]
     public readonly Bindable<int> OrderBindable = new();

@@ -11,6 +11,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -385,7 +386,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return false;
 
             case LyricEditorMode.Singer:
-                int[]? pasteSingerIds = getObjectFromClipboardContent<int[]>();
+                ElementId[]? pasteSingerIds = getObjectFromClipboardContent<ElementId[]>();
                 if (pasteSingerIds == null)
                     return false;
 
@@ -401,7 +402,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
         }
     }
 
-    private IEnumerable<ISinger> getMatchedSinges(IEnumerable<int> singerIds)
+    private IEnumerable<ISinger> getMatchedSinges(IEnumerable<ElementId> singerIds)
     {
         return singersChangeHandler == null ? throw new NullDependencyException($"Missing {nameof(singersChangeHandler)}") : singersChangeHandler.Singers.Where(x => singerIds.Contains(x.ID));
     }

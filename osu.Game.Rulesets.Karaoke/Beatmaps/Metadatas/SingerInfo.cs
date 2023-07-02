@@ -22,7 +22,7 @@ public class SingerInfo
     public IEnumerable<SingerState> GetAllAvailableSingerStates(Singer singer) =>
         Singers.OfType<SingerState>().Where(x => x.MainSingerId == singer.ID).OrderBy(x => x.Order);
 
-    public IDictionary<Singer, SingerState[]> GetSingerByIds(int[] singerIds)
+    public IDictionary<Singer, SingerState[]> GetSingerByIds(ElementId[] singerIds)
     {
         var matchedMainSingers = GetAllSingers().Where(x => singerIds.Contains(x.ID));
         return matchedMainSingers.ToDictionary(k => k, v =>
@@ -41,8 +41,7 @@ public class SingerInfo
 
     public Singer AddSinger(Action<Singer>? action = null)
     {
-        int id = getNewSingerId();
-        var singer = new Singer(id);
+        var singer = new Singer();
         action?.Invoke(singer);
 
         Singers.Add(singer);
@@ -55,9 +54,8 @@ public class SingerInfo
         if (!Singers.Contains(singer))
             throw new InvalidOperationException("Main singer must in the singer info.");
 
-        int id = getNewSingerId();
-        int mainSingerId = singer.ID;
-        var singerState = new SingerState(id, mainSingerId);
+        var mainSingerId = singer.ID;
+        var singerState = new SingerState(mainSingerId);
         action?.Invoke(singerState);
 
         Singers.Add(singerState);
@@ -87,13 +85,5 @@ public class SingerInfo
             default:
                 throw new InvalidCastException();
         }
-    }
-
-    private int getNewSingerId()
-    {
-        if (Singers.Count == 0)
-            return 1;
-
-        return Singers.Max(x => x.ID) + 1;
     }
 }

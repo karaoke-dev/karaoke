@@ -13,15 +13,14 @@ public class SingerState : ISinger
     {
     }
 
-    public SingerState(int id, int mainSingerId)
+    public SingerState(ElementId mainSingerId)
     {
-        ID = id;
         MainSingerId = mainSingerId;
     }
 
-    public int ID { get; protected set; }
+    public ElementId ID { get; protected set; } = ElementId.NewElementId();
 
-    public int MainSingerId { get; protected set; }
+    public ElementId MainSingerId { get; protected set; }
 
     [JsonIgnore]
     public readonly Bindable<int> OrderBindable = new();

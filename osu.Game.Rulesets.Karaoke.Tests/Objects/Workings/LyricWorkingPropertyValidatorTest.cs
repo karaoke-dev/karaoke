@@ -4,12 +4,15 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
@@ -54,70 +57,74 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     {
         var lyric = new Lyric();
 
+        var singerId1 = TestCaseElementIdHelper.CreateElementIdByNumber(1);
+        var singerId2 = TestCaseElementIdHelper.CreateElementIdByNumber(2);
+        var singerId3 = TestCaseElementIdHelper.CreateElementIdByNumber(3);
+
         // should be valid if singer is empty.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int>());
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId>());
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be invalid if assign the singer.
-        Assert.DoesNotThrow(() => lyric.SingerIds.Add(1));
+        Assert.DoesNotThrow(() => lyric.SingerIds.Add(singerId1));
         AssetIsValid(lyric, LyricWorkingProperty.Singers, false);
 
         // should be valid again if remove the singer
-        Assert.DoesNotThrow(() => lyric.SingerIds.Remove(1));
+        Assert.DoesNotThrow(() => lyric.SingerIds.Remove(singerId1));
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be matched if include all singers
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(1), Array.Empty<SingerState>() },
-            { new Singer(2), Array.Empty<SingerState>() },
-            { new Singer(3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be matched if include all singers
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(1), new SingerState[] { new(2, 1), new(3, 1) } },
+            { new Singer().ChangeId(singerId1), new[] { new SingerState(singerId1).ChangeId(singerId2), new SingerState(singerId1).ChangeId(singerId3) } },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works even id is not by order.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 2, 3 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(3), Array.Empty<SingerState>() },
-            { new Singer(2), Array.Empty<SingerState>() },
-            { new Singer(1), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works even id is not by order.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 3, 2, 1 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId3, singerId2, singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(1), Array.Empty<SingerState>() },
-            { new Singer(2), Array.Empty<SingerState>() },
-            { new Singer(3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works if id is duplicated
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1, 1, 1 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId1, singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works if id is duplicated
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<int> { 1 });
+        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1 });
         Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
-            { new Singer(1), Array.Empty<SingerState>() },
-            { new Singer(1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
     }

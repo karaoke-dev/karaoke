@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Helper;
 
@@ -210,7 +212,7 @@ public static class TestCaseTagHelper
     public static Singer ParseSinger(string? str)
     {
         if (string.IsNullOrEmpty(str))
-            return new Singer(0);
+            return new Singer().ChangeId(ElementId.Empty);
 
         var regex = new Regex("(?<id>[-0-9]+)]");
         var result = regex.Match(str);
@@ -220,7 +222,7 @@ public static class TestCaseTagHelper
         // todo : implementation
         int id = result.GetGroupValue<int>("id");
 
-        return new Singer(id);
+        return new Singer().ChangeId(TestCaseElementIdHelper.CreateElementIdByNumber(id));
     }
 
     public static RubyTag[] ParseRubyTags(IEnumerable<string?> strings)

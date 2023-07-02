@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singer
 public partial class SingerEditSection : LyricPropertySection
 {
     private readonly IBindableList<ISinger> bindableSingers = new BindableList<ISinger>();
-    private readonly IBindableList<int> singerIndexes = new BindableList<int>();
+    private readonly IBindableList<ElementId> singerIndexes = new BindableList<ElementId>();
     protected override LocalisableString Title => "Singer";
 
     [Resolved]

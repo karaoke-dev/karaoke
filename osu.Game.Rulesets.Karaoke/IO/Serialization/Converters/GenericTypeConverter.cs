@@ -31,19 +31,19 @@ public abstract class GenericTypeConverter<TType, TTypeName> : JsonConverter<TTy
 
         Type getTypeByProperties(JObject jObj)
         {
-            var elementType = GetValueFromProperty<TTypeName>(jObj, "$type");
+            var elementType = GetValueFromProperty<TTypeName>(serializer, jObj, "$type");
             return GetTypeByName(elementType);
         }
     }
 
-    protected static TPropertyType GetValueFromProperty<TPropertyType>(JObject jObject, string propertyName)
+    protected static TPropertyType GetValueFromProperty<TPropertyType>(JsonSerializer serializer, JObject jObject, string propertyName)
     {
         var jProperties = jObject.Children().OfType<JProperty>().ToArray();
         var value = jProperties.FirstOrDefault(x => x.Name == propertyName)?.Value;
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
-        var elementType = value.ToObject<TPropertyType>();
+        var elementType = value.ToObject<TPropertyType>(serializer);
         if (elementType == null)
             throw new InvalidCastException(nameof(elementType));
 

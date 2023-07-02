@@ -18,7 +18,7 @@ public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
     private IBeatmapSingersChangeHandler beatmapSingersChangeHandler { get; set; } = null!;
 
     public CreateNewLyricPlacementColumn()
-        : base(new Singer(-1) { Name = "Press to create new singer" })
+        : base(new Singer { Name = "Press to create new singer" })
     {
     }
 

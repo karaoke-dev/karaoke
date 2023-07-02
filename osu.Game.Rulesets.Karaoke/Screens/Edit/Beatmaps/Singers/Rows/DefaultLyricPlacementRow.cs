@@ -17,7 +17,7 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
 {
     protected const int LEFT_MARGIN = 22;
 
-    public static Singer DefaultSinger { get; } = new(0) { Name = "Default" };
+    public static Singer DefaultSinger { get; } = new() { Name = "Default" };
 
     [Resolved]
     private ISingerScreenScrollingInfoProvider scrollingInfoProvider { get; set; } = null!;

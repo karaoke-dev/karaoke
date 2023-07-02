@@ -117,13 +117,15 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = "karaoke!",
-            SingerIds = singerIndexes
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singerIndexes)
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
+        var expectedFirstSingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(expectedFirstSingerIndexes);
+        var expectedSecondSingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(expectedSecondSingerIndexes);
 
-        Assert.AreEqual(expectedFirstSingerIndexes, firstLyric.SingerIds);
-        Assert.AreEqual(expectedSecondSingerIndexes, secondLyric.SingerIds);
+        Assert.AreEqual(expectedFirstSingerIds, firstLyric.SingerIds);
+        Assert.AreEqual(expectedSecondSingerIds, secondLyric.SingerIds);
 
         // also should check is not same object as origin lyric for safety purpose.
         Assert.AreNotSame(lyric.SingerIds, firstLyric.SingerIds);
@@ -276,13 +278,14 @@ public class LyricsUtilsTest
     [TestCase(new[] { 1 }, new[] { 2 }, new[] { 1, 2 })]
     [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })] // deal with duplicated case.
     [TestCase(new[] { 1 }, new[] { -2 }, new[] { 1, -2 })] // deal with id not right case.
-    public void TestCombineLyricSinger(int[] firstSingerIndexes, int[] secondSingerIndexes, int[] expected)
+    public void TestCombineLyricSinger(int[] firstSingerIndexes, int[] secondSingerIndexes, int[] combinedSingerIds)
     {
-        var lyric1 = new Lyric { SingerIds = firstSingerIndexes };
-        var lyric2 = new Lyric { SingerIds = secondSingerIndexes };
+        var lyric1 = new Lyric { SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(firstSingerIndexes) };
+        var lyric2 = new Lyric { SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(secondSingerIndexes) };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
 
+        var expected = TestCaseElementIdHelper.CreateElementIdsByNumbers(combinedSingerIds);
         var actual = combineLyric.SingerIds;
         Assert.AreEqual(expected, actual);
     }
