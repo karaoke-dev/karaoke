@@ -18,6 +18,7 @@ public static class KaraokeJsonSerializableExtensions
 
         // hit-object
         globalSetting.Converters.Add(new CultureInfoConverter());
+        globalSetting.Converters.Add(new ElementIdConverter());
         globalSetting.Converters.Add(new RomajiTagConverter());
         globalSetting.Converters.Add(new RomajiTagsConverter());
         globalSetting.Converters.Add(new RubyTagConverter());
