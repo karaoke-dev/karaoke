@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
@@ -18,17 +19,17 @@ public class SingerConverter : GenericTypeConverter<ISinger>
 
     protected override void PostProcessValue(ISinger existingValue, JObject jObject, JsonSerializer serializer)
     {
-        int singerId = GetValueFromProperty<int>(jObject, singer_id_field);
+        var singerId = GetValueFromProperty<ElementId>(serializer, jObject, singer_id_field);
         assignIdToSinger(existingValue, nameof(ISinger.ID), singerId);
 
         if (existingValue is not SingerState singerState)
             return;
 
-        int mainSingerId = GetValueFromProperty<int>(jObject, main_singer_id_field);
+        var mainSingerId = GetValueFromProperty<ElementId>(serializer, jObject, main_singer_id_field);
         assignIdToSinger(singerState, nameof(SingerState.MainSingerId), mainSingerId);
     }
 
-    private static void assignIdToSinger(ISinger singer, string propertyName, int value)
+    private static void assignIdToSinger(ISinger singer, string propertyName, ElementId value)
     {
         var propertyInfo = singer.GetType().GetProperty(propertyName);
         if (propertyInfo == null)
@@ -39,10 +40,10 @@ public class SingerConverter : GenericTypeConverter<ISinger>
 
     protected override void PostProcessJObject(JObject jObject, ISinger value, JsonSerializer serializer)
     {
-        jObject.Add(singer_id_field, value.ID);
+        jObject.Add(singer_id_field, JToken.FromObject(value.ID, serializer));
 
         if (value is SingerState singerState)
-            jObject.Add(main_singer_id_field, singerState.MainSingerId);
+            jObject.Add(main_singer_id_field, JToken.FromObject(singerState.MainSingerId, serializer));
     }
 
     protected override Type GetTypeByName(string name)
