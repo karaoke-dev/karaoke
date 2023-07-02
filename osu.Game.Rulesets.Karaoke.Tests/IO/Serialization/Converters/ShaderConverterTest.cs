@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -14,11 +15,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
 public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
 {
-    protected override JsonConverter[] CreateExtraConverts()
-        => new JsonConverter[]
-        {
-            new ColourConverter(),
-        };
+    protected override IEnumerable<JsonConverter> CreateExtraConverts()
+    {
+        yield return new ColourConverter();
+    }
 
     [Test]
     public void TestSerializer()

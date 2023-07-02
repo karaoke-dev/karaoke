@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using osu.Game.IO.Serialization;
 
@@ -25,5 +26,5 @@ public abstract class BaseSingleConverterTest<TConverter> where TConverter : Jso
         return globalSetting;
     }
 
-    protected virtual JsonConverter[] CreateExtraConverts() => Array.Empty<JsonConverter>();
+    protected virtual IEnumerable<JsonConverter> CreateExtraConverts() => Array.Empty<JsonConverter>();
 }
