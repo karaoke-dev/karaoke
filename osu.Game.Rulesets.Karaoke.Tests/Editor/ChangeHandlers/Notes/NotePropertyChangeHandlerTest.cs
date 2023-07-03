@@ -3,16 +3,19 @@
 
 using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes;
 
 public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<NotePropertyChangeHandler, Note>
 {
-    private const int referenced_lyric_id = 1;
+    private static readonly ElementId referenced_lyric_id = TestCaseElementIdHelper.CreateElementIdByNumber(1);
 
     [Test]
     public void TestChangeText()
@@ -141,9 +144,8 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
             editorBeatmap.Add(new Lyric
             {
-                ID = referenced_lyric_id,
                 Text = "Referenced lyric"
-            });
+            }.ChangeId(referenced_lyric_id));
         });
     }
 }
