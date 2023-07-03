@@ -4,6 +4,7 @@
 using System;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
@@ -20,5 +21,12 @@ public static class SingerExtensions
         propertyInfo.SetValue(singer, id);
 
         return singer;
+    }
+
+    public static TSinger ChangeId<TSinger>(this TSinger singer, int id)
+        where TSinger : ISinger
+    {
+        var elementId = TestCaseElementIdHelper.CreateElementIdByNumber(id);
+        return singer.ChangeId(elementId);
     }
 }
