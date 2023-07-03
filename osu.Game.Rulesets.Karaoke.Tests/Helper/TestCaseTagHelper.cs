@@ -160,7 +160,6 @@ public static class TestCaseTagHelper
 
         return new Lyric
         {
-            ID = id ?? default,
             StartTime = startTime,
             Duration = endTime - startTime,
             Text = text,
@@ -169,7 +168,7 @@ public static class TestCaseTagHelper
                 new TimeTag(new TextIndex(0), startTime),
                 new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime)
             }
-        };
+        }.ChangeId(id != null ? TestCaseElementIdHelper.CreateElementIdByNumber(id.Value) : ElementId.Empty);
     }
 
     /// <summary>

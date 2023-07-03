@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Helper;
 
@@ -13,13 +14,12 @@ public static class TestCaseNoteHelper
     {
         return new Lyric
         {
-            ID = id,
             Text = text,
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(0), startTime),
                 new(new TextIndex(text.Length - 1, TextIndex.IndexState.End), startTime + duration)
             }
-        };
+        }.ChangeId(id);
     }
 }
