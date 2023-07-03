@@ -222,7 +222,7 @@ public static class TestCaseTagHelper
         // todo : implementation
         int id = result.GetGroupValue<int>("id");
 
-        return new Singer().ChangeId(TestCaseElementIdHelper.CreateElementIdByNumber(id));
+        return new Singer().ChangeId(id);
     }
 
     public static RubyTag[] ParseRubyTags(IEnumerable<string?> strings)
