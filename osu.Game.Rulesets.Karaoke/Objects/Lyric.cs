@@ -30,7 +30,8 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     /// <summary>
     /// Primary key.
     /// </summary>
-    public ElementId ID { get; set; }
+    [JsonProperty]
+    public ElementId ID { get; protected set; } = ElementId.NewElementId();
 
     [JsonIgnore]
     public readonly Bindable<string> TextBindable = new(string.Empty);

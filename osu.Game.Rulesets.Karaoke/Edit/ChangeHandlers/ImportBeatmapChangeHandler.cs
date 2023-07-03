@@ -5,8 +5,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -24,12 +22,6 @@ public partial class ImportBeatmapChangeHandler : Component, IImportBeatmapChang
         beatmap.Clear();
 
         var lyrics = newBeatmap.HitObjects.OfType<Lyric>().ToArray();
-
-        foreach (Lyric lyric in lyrics)
-        {
-            lyric.ID = ElementId.NewElementId();
-        }
-
         beatmap.AddRange(lyrics);
 
         beatmap.EndChange();

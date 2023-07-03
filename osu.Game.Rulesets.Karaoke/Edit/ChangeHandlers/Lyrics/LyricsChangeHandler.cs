@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
@@ -26,9 +25,7 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
             // Split lyric
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
             firstLyric.Order = lyric.Order;
-            firstLyric.ID = ElementId.NewElementId();
             secondLyric.Order = lyric.Order + 1;
-            secondLyric.ID = ElementId.NewElementId();
 
             // Add those tho lyric and remove old one.
             Add(secondLyric);
@@ -144,8 +141,6 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
     {
         if (hitObject is Lyric lyric)
         {
-            lyric.ID = ElementId.NewElementId();
-
             base.Insert(index, lyric);
         }
         else

@@ -7,5 +7,5 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
 public interface IHasPrimaryKey
 {
-    ElementId ID { get; set; }
+    ElementId ID { get; }
 }

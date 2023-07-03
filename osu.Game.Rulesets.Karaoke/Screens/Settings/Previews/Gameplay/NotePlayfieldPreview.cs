@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Lists;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Scoring;
@@ -67,7 +66,6 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
 
         var lyric = new Lyric
         {
-            ID = ElementId.NewElementId(),
             StartTime = startTime,
             Duration = duration,
             Text = "Note",
