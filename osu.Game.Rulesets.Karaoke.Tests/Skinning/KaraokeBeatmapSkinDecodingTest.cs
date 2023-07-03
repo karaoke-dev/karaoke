@@ -18,7 +18,7 @@ public class KaraokeBeatmapSkinDecodingTest
         var storage = TestResources.CreateSkinStorageResourceProvider();
         var skin = new KaraokeBeatmapSkin(new SkinInfo { Name = "special-skin" }, storage);
 
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         var testingNote = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
@@ -47,14 +47,8 @@ public class KaraokeBeatmapSkinDecodingTest
         var storage = TestResources.CreateSkinStorageResourceProvider();
         var skin = new KaraokeBeatmapSkin(new SkinInfo { Name = "special-skin" }, storage);
 
-        var firstLyric = new Lyric
-        {
-            ID = 1,
-        };
-        var secondLyric = new Lyric
-        {
-            ID = 2,
-        };
+        var firstLyric = new Lyric();
+        var secondLyric = new Lyric();
 
         // try to get customized value from the skin.
         var firstLyricLayout = skin.GetConfig<Lyric, LyricLayout>(firstLyric)!.Value;

@@ -18,7 +18,7 @@ public class KaraokeSkinDecodingTest
         var storage = TestResources.CreateSkinStorageResourceProvider();
         var skin = new KaraokeSkin(new SkinInfo { Name = "special-skin" }, storage);
 
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         var testingNote = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
