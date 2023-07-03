@@ -31,7 +31,7 @@ public class ClassicLyricTimingInfo
     private readonly Bindable<int> mappingVersion = new();
 
     // todo: should be private.
-    public BindableDictionary<int, int[]> Mappings = new();
+    public BindableDictionary<ElementId, int[]> Mappings = new();
 
     public ClassicLyricTimingInfo()
     {
@@ -114,7 +114,7 @@ public class ClassicLyricTimingInfo
 
     public void AddToMapping(ClassicLyricTimingPoint point, Lyric lyric)
     {
-        int key = lyric.ID;
+        var key = lyric.ID;
         int value = point.ID;
 
         if (!Timings.Contains(point))
@@ -132,7 +132,7 @@ public class ClassicLyricTimingInfo
 
     public void RemoveFromMapping(ClassicLyricTimingPoint point, Lyric lyric)
     {
-        int key = lyric.ID;
+        var key = lyric.ID;
         int value = point.ID;
 
         if (!Timings.Contains(point))
@@ -155,7 +155,7 @@ public class ClassicLyricTimingInfo
     {
         int value = point.ID;
 
-        foreach ((int key, int[]? values) in Mappings)
+        foreach ((var key, int[]? values) in Mappings)
         {
             if (values.All(x => x == point.ID))
             {
@@ -212,7 +212,7 @@ public class ClassicLyricTimingInfo
         return Timings.Any() ? Timings.Max(x => x.Time) : default(double?);
     }
 
-    public IEnumerable<int> GetMatchedLyricIds(ClassicLyricTimingPoint point)
+    public IEnumerable<ElementId> GetMatchedLyricIds(ClassicLyricTimingPoint point)
     {
         return Mappings.Where(x => x.Value.Contains(point.ID)).Select(x => x.Key);
     }

@@ -17,8 +17,6 @@ public partial class ImportBeatmapChangeHandler : Component, IImportBeatmapChang
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
 
-    private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
-
     public void Import(IBeatmap newBeatmap)
     {
         beatmap.BeginChange();
@@ -27,15 +25,12 @@ public partial class ImportBeatmapChangeHandler : Component, IImportBeatmapChang
 
         var lyrics = newBeatmap.HitObjects.OfType<Lyric>().ToArray();
 
-        if (lyrics.Any())
+        foreach (Lyric lyric in lyrics)
         {
-            for (int i = 0; i < lyrics.Length; i++)
-            {
-                lyrics[i].ID = i;
-            }
-
-            beatmap.AddRange(lyrics);
+            lyric.ID = ElementId.NewElementId();
         }
+
+        beatmap.AddRange(lyrics);
 
         beatmap.EndChange();
     }

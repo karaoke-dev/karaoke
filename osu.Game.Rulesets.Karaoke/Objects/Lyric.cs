@@ -30,7 +30,7 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     /// <summary>
     /// Primary key.
     /// </summary>
-    public int ID { get; set; }
+    public ElementId ID { get; set; }
 
     [JsonIgnore]
     public readonly Bindable<string> TextBindable = new(string.Empty);
@@ -175,9 +175,9 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
         set => LockBindable.Value = value;
     }
 
-    private int? referenceLyricId;
+    private ElementId? referenceLyricId;
 
-    public int? ReferenceLyricId
+    public ElementId? ReferenceLyricId
     {
         get => referenceLyricId;
         set

@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Lists;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Scoring;
@@ -63,22 +64,25 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
 
         double startTime = Time.Current + 3000;
         const double duration = 1000;
+
+        var lyric = new Lyric
+        {
+            ID = ElementId.NewElementId(),
+            StartTime = startTime,
+            Duration = duration,
+            Text = "Note",
+            TimeTags = new List<TimeTag>
+            {
+                new(new TextIndex(0), startTime),
+                new(new TextIndex(4), startTime + duration),
+            }
+        };
+
         notePlayfield.Add(new Note
         {
             Text = "Note",
-            ReferenceLyricId = 1,
-            ReferenceLyric = new Lyric
-            {
-                ID = 1,
-                StartTime = startTime,
-                Duration = duration,
-                Text = "Note",
-                TimeTags = new List<TimeTag>
-                {
-                    new(new TextIndex(0), startTime),
-                    new(new TextIndex(4), startTime + duration),
-                }
-            },
+            ReferenceLyricId = lyric.ID,
+            ReferenceLyric = lyric,
             HitWindows = new KaraokeNoteHitWindows(),
         });
 
