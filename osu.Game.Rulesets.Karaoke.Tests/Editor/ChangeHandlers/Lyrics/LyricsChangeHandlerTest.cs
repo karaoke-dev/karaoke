@@ -28,12 +28,10 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
 
             // test property in the first lyric.
             Assert.AreEqual("カラ", firstLyric.Text);
-            Assert.AreEqual(2, firstLyric.ID);
             Assert.AreEqual(0, firstLyric.Order);
 
             // test property in the second lyric.
             Assert.AreEqual("オケ", secondLyric.Text);
-            Assert.AreEqual(1, secondLyric.ID);
             Assert.AreEqual(1, secondLyric.Order);
         });
     }
@@ -44,21 +42,18 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラ",
-            ID = 0,
             Order = 1,
         }, false);
 
         PrepareHitObject(() => new Lyric
         {
             Text = "オケ",
-            ID = 1,
             Order = 2,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            ID = 2,
             Order = 3,
         }, false);
 
@@ -70,12 +65,9 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(2, lyrics.Length);
 
             var combinedLyric = lyrics.First(x => x.Text == "カラオケ");
-            var notAffectedLyric = lyrics.First(x => x.Text == "karaoke");
-
-            Assert.AreEqual(3, combinedLyric.ID);
             Assert.AreEqual(1, combinedLyric.Order);
 
-            Assert.AreEqual(2, notAffectedLyric.ID);
+            var notAffectedLyric = lyrics.First(x => x.Text == "karaoke");
             Assert.AreEqual(2, notAffectedLyric.Order);
         });
     }
@@ -86,14 +78,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 1,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            ID = 2,
             Order = 2,
         }, false);
 
@@ -105,15 +95,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(3, lyrics.Length);
 
             var firstLyric = lyrics.First(x => x.Text == "カラオケ");
-            Assert.AreEqual(1, firstLyric.ID);
             Assert.AreEqual(1, firstLyric.Order);
 
             var secondLyric = lyrics.First(x => x.Text == "New lyric");
-            Assert.AreEqual(3, secondLyric.ID);
             Assert.AreEqual(2, secondLyric.Order);
 
             var thirdLyric = lyrics.First(x => x.Text == "karaoke");
-            Assert.AreEqual(2, thirdLyric.ID);
             Assert.AreEqual(3, thirdLyric.Order);
         });
     }
@@ -124,14 +111,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 1,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            ID = 2,
             Order = 2,
         }, false);
 
@@ -143,15 +128,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(3, lyrics.Length);
 
             var firstLyric = lyrics.First(x => x.Text == "カラオケ");
-            Assert.AreEqual(1, firstLyric.ID);
             Assert.AreEqual(1, firstLyric.Order);
 
             var secondLyric = lyrics.First(x => x.Text == "karaoke");
-            Assert.AreEqual(2, secondLyric.ID);
             Assert.AreEqual(2, secondLyric.Order);
 
             var thirdLyric = lyrics.First(x => x.Text == "New lyric");
-            Assert.AreEqual(3, thirdLyric.ID);
             Assert.AreEqual(3, thirdLyric.Order);
         });
     }
@@ -167,7 +149,6 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(1, lyrics.Length);
 
             var addedLyric = lyrics.First(x => x.Text == "New lyric");
-            Assert.AreEqual(1, addedLyric.ID);
             Assert.AreEqual(1, addedLyric.Order);
         });
     }
@@ -178,14 +159,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 0,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "Last lyric",
-            ID = 1,
             Order = 2,
         }, false);
 
@@ -200,7 +179,6 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(3, lyrics.Length);
 
             var addedLyric = lyrics.First(x => x.Text == "New lyric");
-            Assert.AreEqual(2, addedLyric.ID);
             Assert.AreEqual(2, addedLyric.Order);
         });
     }
@@ -211,14 +189,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 0,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "Last lyric",
-            ID = 1,
             Order = 2,
         }, false);
 
@@ -236,7 +212,6 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(3, lyrics.Length);
 
             var addedLyric = lyrics.First(x => x.Text == "New lyric");
-            Assert.AreEqual(2, addedLyric.ID);
             Assert.AreEqual(2, addedLyric.Order);
         });
     }
@@ -247,14 +222,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 1,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            ID = 2,
             Order = 2,
         }, false);
 
@@ -266,7 +239,6 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(1, lyrics.Length);
 
             var secondLyric = lyrics.First(x => x.Text == "karaoke");
-            Assert.AreEqual(2, secondLyric.ID);
             Assert.AreEqual(1, secondLyric.Order);
         });
     }
@@ -277,14 +249,12 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            ID = 1,
             Order = 1,
         });
 
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            ID = 2,
             Order = 2,
         }, false);
 
@@ -297,11 +267,9 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
             Assert.AreEqual(2, lyrics.Length);
 
             var firstLyric = lyrics.First(x => x.Text == "karaoke");
-            Assert.AreEqual(2, firstLyric.ID);
             Assert.AreEqual(1, firstLyric.Order);
 
             var secondLyric = lyrics.First(x => x.Text == "カラオケ");
-            Assert.AreEqual(1, secondLyric.ID);
             Assert.AreEqual(2, secondLyric.Order);
         });
     }
