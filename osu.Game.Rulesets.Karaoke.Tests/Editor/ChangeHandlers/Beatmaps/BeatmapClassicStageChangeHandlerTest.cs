@@ -193,8 +193,8 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
         Lyric lyric1 = null!;
         Lyric lyric2 = null!;
 
-        PrepareHitObject(() => lyric1 = new Lyric { ID = 1 });
-        PrepareHitObject(() => lyric2 = new Lyric { ID = 2 }, false);
+        PrepareHitObject(() => lyric1 = new Lyric());
+        PrepareHitObject(() => lyric2 = new Lyric(), false);
 
         TriggerHandlerChanged(c =>
         {
@@ -220,8 +220,8 @@ public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTes
         Lyric lyric1 = null!;
         Lyric lyric2 = null!;
 
-        PrepareHitObject(() => lyric1 = new Lyric { ID = 1 });
-        PrepareHitObject(() => lyric2 = new Lyric { ID = 2 }, false);
+        PrepareHitObject(() => lyric1 = new Lyric());
+        PrepareHitObject(() => lyric2 = new Lyric(), false);
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {

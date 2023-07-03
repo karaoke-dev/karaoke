@@ -90,7 +90,7 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
     [Test]
     public void TestClear()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
 
         // note that lyric and notes should in the selection.
         PrepareHitObject(() => referencedLyric);

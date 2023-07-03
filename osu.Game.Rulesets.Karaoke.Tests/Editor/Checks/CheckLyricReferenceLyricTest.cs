@@ -16,7 +16,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheck()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         var lyric = new Lyric
         {
             ReferenceLyricId = referencedLyric.ID,
@@ -44,7 +44,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheckInvalidReferenceLyric()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         var lyric = new Lyric
         {
             ReferenceLyricId = referencedLyric.ID,
@@ -58,7 +58,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
     [Test]
     public void TestCheckNullReferenceLyricConfig()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         var lyric = new Lyric
         {
             ReferenceLyricId = referencedLyric.ID,

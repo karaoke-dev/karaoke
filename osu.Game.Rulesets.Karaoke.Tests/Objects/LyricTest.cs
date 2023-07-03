@@ -19,11 +19,10 @@ public class LyricTest
     [Test]
     public void TestClone()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
 
         var lyric = new Lyric
         {
-            ID = 1,
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
@@ -107,7 +106,6 @@ public class LyricTest
     {
         var referencedLyric = new Lyric
         {
-            ID = 2,
             Text = "karaoke",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
@@ -139,7 +137,7 @@ public class LyricTest
     [Test]
     public void TestReferenceLyricPropertyChanged()
     {
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
 
         var lyric = new Lyric
         {
@@ -179,7 +177,6 @@ public class LyricTest
 
         var referencedLyric = new Lyric
         {
-            ID = 2,
             Text = "karaoke",
             TimeTags = new[] { timeTag },
             RubyTags = new[] { rubyTag },
@@ -238,7 +235,6 @@ public class LyricTest
 
         var referencedLyric = new Lyric
         {
-            ID = 2,
             Text = "karaoke",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
@@ -284,7 +280,7 @@ public class LyricTest
         lyric.Lock = LockState.Partial;
         Assert.AreEqual(1, lyric.LyricPropertyWritableVersion.Value);
 
-        var referencedLyric = new Lyric { ID = 2 };
+        var referencedLyric = new Lyric();
         lyric.ReferenceLyricId = referencedLyric.ID;
         lyric.ReferenceLyric = referencedLyric;
         Assert.AreEqual(2, lyric.LyricPropertyWritableVersion.Value);

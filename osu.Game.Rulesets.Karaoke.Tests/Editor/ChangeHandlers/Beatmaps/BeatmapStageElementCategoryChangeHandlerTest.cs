@@ -122,8 +122,8 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     [Test]
     public void TestOffsetMapping()
     {
-        Lyric lyric = new Lyric { ID = 1 };
-        Lyric unSelectedLyric = new Lyric { ID = 2 };
+        Lyric lyric = new Lyric();
+        Lyric unSelectedLyric = new Lyric();
 
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
