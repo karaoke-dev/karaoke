@@ -18,9 +18,11 @@ public class SingerState : ISinger
         MainSingerId = mainSingerId;
     }
 
-    public ElementId ID { get; protected set; } = ElementId.NewElementId();
+    [JsonProperty]
+    public ElementId ID { get; private set; } = ElementId.NewElementId();
 
-    public ElementId MainSingerId { get; protected set; }
+    [JsonProperty]
+    public ElementId MainSingerId { get; private set; }
 
     [JsonIgnore]
     public readonly Bindable<int> OrderBindable = new();
