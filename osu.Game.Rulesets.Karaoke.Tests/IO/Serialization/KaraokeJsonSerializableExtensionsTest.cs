@@ -16,8 +16,8 @@ public class KaraokeJsonSerializableExtensionsTest
     {
         var lyric = new Lyric();
 
-        const string expected =
-            @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singer_ids"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
+        string expected =
+            @$"{{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""id"":""{lyric.ID}"",""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singer_ids"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}}";
 
         string actual = JsonConvert.SerializeObject(lyric, createSettings());
         Assert.AreEqual(expected, actual);
@@ -26,10 +26,10 @@ public class KaraokeJsonSerializableExtensionsTest
     [Test]
     public void TestDeserializeLyric()
     {
-        const string json =
-            @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singer_ids"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}";
-
         var expected = new Lyric();
+        string json =
+            @$"{{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""id"":""{expected.ID}"",""text"":"""",""time_tags"":[],""ruby_tags"":[],""romaji_tags"":[],""singer_ids"":[],""translates"":[],""samples"":[],""auxiliary_samples"":[]}}";
+
         var actual = JsonConvert.DeserializeObject<Lyric>(json, createSettings())!;
         ObjectAssert.ArePropertyEqual(expected, actual);
     }
