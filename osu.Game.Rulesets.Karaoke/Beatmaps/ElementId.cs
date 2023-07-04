@@ -16,7 +16,7 @@ public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatab
 
     private const int length = 7;
 
-    private readonly string id;
+    private readonly string? id;
 
     public ElementId(string id)
     {
@@ -86,7 +86,7 @@ public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatab
 
     public override int GetHashCode()
     {
-        return id.GetHashCode();
+        return (id ?? string.Empty).GetHashCode();
     }
 
     public override string ToString()
