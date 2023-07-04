@@ -8,19 +8,27 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
-public class ElementIdConverter : JsonConverter<ElementId>
+public class ElementIdConverter : JsonConverter<ElementId?>
 {
-    public override ElementId ReadJson(JsonReader reader, Type objectType, ElementId existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override ElementId? ReadJson(JsonReader reader, Type objectType, ElementId? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         var obj = JToken.Load(reader);
         string? value = obj.Value<string?>();
 
-        return string.IsNullOrEmpty(value) ? ElementId.Empty : new ElementId(value);
+        return createElementId(value);
     }
 
-    public override void WriteJson(JsonWriter writer, ElementId value, JsonSerializer serializer)
+    private static ElementId? createElementId(string? str) =>
+        str switch
+        {
+            null => null,
+            "" => ElementId.Empty,
+            _ => new ElementId(str)
+        };
+
+    public override void WriteJson(JsonWriter writer, ElementId? value, JsonSerializer serializer)
     {
-        string id = value.ToString();
+        string? id = value.ToString();
         writer.WriteValue(id);
     }
 }
