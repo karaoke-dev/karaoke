@@ -3,9 +3,9 @@
 
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
-using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -137,8 +137,9 @@ public partial class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, 
 
     public Note DeepClone()
     {
-        string serializeString = this.Serialize();
-        var note = serializeString.Deserialize<Note>();
+        string serializeString = JsonConvert.SerializeObject(this, KaraokeJsonSerializableExtensions.CreateGlobalSettings());
+        var note = JsonConvert.DeserializeObject<Note>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
+
         note.ReferenceLyric = ReferenceLyric;
 
         return note;
