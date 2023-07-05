@@ -47,7 +47,7 @@ public class LyricTest
 
         var clonedLyric = lyric.DeepClone();
 
-        Assert.AreEqual(clonedLyric.ID, lyric.ID);
+        Assert.AreNotSame(clonedLyric.ID, lyric.ID);
 
         Assert.AreNotSame(clonedLyric.TextBindable, lyric.TextBindable);
         Assert.AreEqual(clonedLyric.Text, lyric.Text);
