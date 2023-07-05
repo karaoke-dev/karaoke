@@ -60,7 +60,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)
             => beatmap.PageInfo.GetPageIndexAt(startTime);
 
-        static Lyric? findLyricById(IBeatmap beatmap, int? id) =>
+        static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
         static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)

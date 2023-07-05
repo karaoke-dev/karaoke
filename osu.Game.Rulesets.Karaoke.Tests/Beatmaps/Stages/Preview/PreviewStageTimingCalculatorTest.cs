@@ -8,6 +8,8 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Stages.Preview;
@@ -38,7 +40,7 @@ public class PreviewStageTimingCalculatorTest
     public void TestGetStartTime(int lyricId, double expected)
     {
         var beatmap = createBeatmap();
-        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
+        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == TestCaseElementIdHelper.CreateElementIdByNumber(lyricId));
 
         var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateStartTime(lyric);
@@ -53,7 +55,7 @@ public class PreviewStageTimingCalculatorTest
     public void TestGetEndTime(int lyricId, double expected)
     {
         var beatmap = createBeatmap();
-        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
+        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == TestCaseElementIdHelper.CreateElementIdByNumber(lyricId));
 
         var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateEndTime(lyric);
@@ -68,7 +70,7 @@ public class PreviewStageTimingCalculatorTest
     public void TestGetTiming(int lyricId, string[] timing)
     {
         var beatmap = createBeatmap();
-        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == lyricId);
+        var lyric = beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == TestCaseElementIdHelper.CreateElementIdByNumber(lyricId));
 
         var calculator = createCalculator(beatmap);
         var expected = convertKeyToDictionary(timing);
@@ -114,12 +116,11 @@ public class PreviewStageTimingCalculatorTest
     {
         return new Lyric
         {
-            ID = id,
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(), startTime),
                 new(new TextIndex(), endTime)
             },
-        };
+        }.ChangeId(id);
     }
 }

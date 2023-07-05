@@ -155,7 +155,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // should be invalid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {
-            lyric.ReferenceLyricId = 1;
+            lyric.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(1);
         });
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
 
@@ -169,21 +169,23 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {
-            lyric.ReferenceLyricId = 1;
-            lyric.ReferenceLyric = new Lyric { ID = 1 };
+            var referencedLyric = new Lyric();
+
+            lyric.ReferenceLyricId = referencedLyric.ID;
+            lyric.ReferenceLyric = referencedLyric;
         });
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() => lyric.ReferenceLyricId = 2);
+        Assert.DoesNotThrow(() => lyric.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2));
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if assign the reference lyric to the matched lyric.
-        Assert.DoesNotThrow(() => lyric.ReferenceLyric = new Lyric { ID = 2 });
+        Assert.DoesNotThrow(() => lyric.ReferenceLyric = new Lyric().ChangeId(2));
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = new Lyric { ID = 3 });
+        Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = new Lyric().ChangeId(3));
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = null);
     }
 

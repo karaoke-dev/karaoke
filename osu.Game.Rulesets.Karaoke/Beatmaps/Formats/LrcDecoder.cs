@@ -38,7 +38,6 @@ public class LrcDecoder : Decoder<Beatmap>
 
             return new Lyric
             {
-                ID = output.HitObjects.Count, // id is star from zero.
                 Order = output.HitObjects.Count + 1, // should create default order.
                 Text = lrcLyric.Text,
                 TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),

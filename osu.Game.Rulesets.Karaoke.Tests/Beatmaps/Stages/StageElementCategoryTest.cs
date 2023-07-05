@@ -57,9 +57,9 @@ public class StageElementCategoryTest
 
         var element1 = category.AddElement();
         var element2 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
-        var lyric2 = new Lyric { ID = 2 };
-        var lyric3 = new Lyric { ID = 3 };
+        var lyric1 = new Lyric();
+        var lyric2 = new Lyric();
+        var lyric3 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.AddToMapping(element1, lyric2);
@@ -85,9 +85,9 @@ public class StageElementCategoryTest
 
         var element1 = category.AddElement();
         var element2 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
-        var lyric2 = new Lyric { ID = 2 };
-        var lyric3 = new Lyric { ID = 3 };
+        var lyric1 = new Lyric();
+        var lyric2 = new Lyric();
+        var lyric3 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.AddToMapping(element1, lyric2);
@@ -112,9 +112,9 @@ public class StageElementCategoryTest
 
         var element1 = category.AddElement();
         var element2 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
-        var lyric2 = new Lyric { ID = 2 };
-        var lyric3 = new Lyric { ID = 3 };
+        var lyric1 = new Lyric();
+        var lyric2 = new Lyric();
+        var lyric3 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.AddToMapping(element1, lyric2);
@@ -132,7 +132,7 @@ public class StageElementCategoryTest
         var category = new TestStageElementCategory();
 
         var element1 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
+        var lyric1 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.RemoveHitObjectFromMapping(lyric1);
@@ -148,7 +148,7 @@ public class StageElementCategoryTest
         var category = new TestStageElementCategory();
 
         var element1 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
+        var lyric1 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.RemoveElementFromMapping(element1);
@@ -164,9 +164,9 @@ public class StageElementCategoryTest
         var category = new TestStageElementCategory();
 
         var element1 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
-        var lyric2 = new Lyric { ID = 2 };
-        var lyric3 = new Lyric { ID = 3 };
+        var lyric1 = new Lyric();
+        var lyric2 = new Lyric();
+        var lyric3 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
         category.AddToMapping(element1, lyric2);
@@ -194,8 +194,8 @@ public class StageElementCategoryTest
         var category = new TestStageElementCategory();
 
         var element1 = category.AddElement();
-        var lyric1 = new Lyric { ID = 1 };
-        var lyric2 = new Lyric { ID = 2 };
+        var lyric1 = new Lyric();
+        var lyric2 = new Lyric();
 
         category.AddToMapping(element1, lyric1);
 

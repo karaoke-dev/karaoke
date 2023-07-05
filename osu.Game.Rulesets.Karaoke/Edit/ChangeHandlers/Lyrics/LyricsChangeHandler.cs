@@ -25,9 +25,7 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
             // Split lyric
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
             firstLyric.Order = lyric.Order;
-            firstLyric.ID = getId();
             secondLyric.Order = lyric.Order + 1;
-            secondLyric.ID = getId() + 1;
 
             // Add those tho lyric and remove old one.
             Add(secondLyric);
@@ -143,8 +141,6 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
     {
         if (hitObject is Lyric lyric)
         {
-            lyric.ID = getId();
-
             base.Insert(index, lyric);
         }
         else
@@ -155,7 +151,4 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
 
     private int getInsertIndex(int order)
         => HitObjects.ToList().FindIndex(x => x.Order == order - 1) + 1;
-
-    private int getId()
-        => HitObjects.Any() ? HitObjects.Max(x => x.ID) + 1 : 1;
 }

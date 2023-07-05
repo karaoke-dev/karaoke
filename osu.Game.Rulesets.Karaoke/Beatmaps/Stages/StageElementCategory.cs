@@ -43,7 +43,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/>
     /// This is the 1st mapping roles.
     /// </summary>
-    public IDictionary<int, int> Mappings { get; protected set; } = new Dictionary<int, int>();
+    public IDictionary<ElementId, int> Mappings { get; protected set; } = new Dictionary<ElementId, int>();
 
     protected StageElementCategory()
     {
@@ -130,7 +130,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     public void AddToMapping(TStageElement element, THitObject hitObject)
     {
-        int key = hitObject.ID;
+        var key = hitObject.ID;
         int value = element.ID;
 
         if (!AvailableElements.Contains(element))
@@ -154,20 +154,20 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     {
         var objectIds = getMappingHitObjectIds(element);
 
-        foreach (int objectId in objectIds)
+        foreach (var objectId in objectIds)
         {
             Mappings.Remove(objectId);
         }
 
-        IEnumerable<int> getMappingHitObjectIds(TStageElement stageElement)
+        IEnumerable<ElementId> getMappingHitObjectIds(TStageElement stageElement)
             => Mappings.Where(x => x.Value == stageElement.ID).Select(x => x.Key).ToArray();
     }
 
-    public void ClearUnusedMapping(Func<int, bool> checkExist)
+    public void ClearUnusedMapping(Func<ElementId, bool> checkExist)
     {
         var unusedIds = Mappings.Select(x => x.Key).Where(x => !checkExist(x));
 
-        foreach (int hitObjectId in unusedIds)
+        foreach (var hitObjectId in unusedIds)
         {
             Mappings.Remove(hitObjectId);
         }
@@ -179,7 +179,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     public TStageElement GetElementByItem(THitObject hitObject)
     {
-        int id = hitObject.ID;
+        var id = hitObject.ID;
 
         if (!Mappings.TryGetValue(id, out int styleId))
             return DefaultElement;

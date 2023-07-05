@@ -8,6 +8,8 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
@@ -39,7 +41,7 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         // should be invalid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {
-            note.ReferenceLyricId = 1;
+            note.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(1);
         });
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
 
@@ -53,21 +55,23 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         // should be valid if change the reference lyric id.
         Assert.DoesNotThrow(() =>
         {
-            note.ReferenceLyricId = 1;
-            note.ReferenceLyric = new Lyric { ID = 1 };
+            var lyric = new Lyric();
+
+            note.ReferenceLyricId = lyric.ID;
+            note.ReferenceLyric = lyric;
         });
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() => note.ReferenceLyricId = 2);
+        Assert.DoesNotThrow(() => note.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2));
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if assign the reference lyric to the matched lyric.
-        Assert.DoesNotThrow(() => note.ReferenceLyric = new Lyric { ID = 2 });
+        Assert.DoesNotThrow(() => note.ReferenceLyric = new Lyric().ChangeId(2));
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = new Lyric { ID = 3 });
+        Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = new Lyric().ChangeId(3));
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = null);
     }
 

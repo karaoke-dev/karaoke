@@ -31,7 +31,7 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
     [Test]
     public void TestCheckMappingHitObjectNotExist()
     {
-        var lyric = new Lyric { ID = 1 };
+        var lyric = new Lyric();
 
         // note that this lyric does not added in to the beatmap.
         var beatmap = createTestingBeatmap(Array.Empty<Lyric>(), category =>
@@ -49,7 +49,7 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
     [Test]
     public void TestCheckMappingItemNotExist()
     {
-        var lyric = new Lyric { ID = 1 };
+        var lyric = new Lyric();
 
         var beatmap = createTestingBeatmap(new[] { lyric }, category =>
         {

@@ -4,6 +4,7 @@
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
@@ -102,9 +103,9 @@ public partial class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, 
         set => EndTimeOffsetBindable.Value = value;
     }
 
-    private int? referenceLyricId;
+    private ElementId? referenceLyricId;
 
-    public int? ReferenceLyricId
+    public ElementId? ReferenceLyricId
     {
         get => referenceLyricId;
         set
