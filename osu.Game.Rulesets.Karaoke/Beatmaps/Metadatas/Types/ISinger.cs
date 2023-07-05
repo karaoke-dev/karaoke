@@ -5,9 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-public interface ISinger : IHasOrder
+public interface ISinger : IHasOrder, IHasPrimaryKey
 {
-    ElementId ID { get; }
-
     float Hue { get; }
 }
