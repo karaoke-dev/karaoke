@@ -4,7 +4,6 @@
 using System;
 using NUnit.Framework;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Tests.Visual;

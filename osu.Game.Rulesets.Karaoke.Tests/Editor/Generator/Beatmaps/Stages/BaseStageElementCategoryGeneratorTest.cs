@@ -3,11 +3,11 @@
 
 using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages;
 
