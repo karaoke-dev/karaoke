@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 /// It's a category to record the list of <typeparamref name="TStageElement"/> and handle the mapping by several rules.
 /// </summary>
 public abstract class StageElementCategory<TStageElement, THitObject>
-    where TStageElement : StageElement, IComparable<TStageElement>
+    where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     /// <summary>
@@ -42,11 +42,11 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/>
     /// This is the 1st mapping roles.
     /// </summary>
-    public IDictionary<ElementId, int> Mappings { get; protected set; } = new Dictionary<ElementId, int>();
+    public IDictionary<ElementId, ElementId> Mappings { get; protected set; } = new Dictionary<ElementId, ElementId>();
 
     protected StageElementCategory()
     {
-        DefaultElement = CreateElement(0);
+        DefaultElement = new TStageElement();
 
         AvailableElements.CollectionChanged += (_, args) =>
         {
@@ -82,33 +82,22 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     #region Edit
 
-    protected abstract TStageElement CreateElement(int id);
-
     public TStageElement AddElement(Action<TStageElement>? action = null)
     {
-        int id = getNewElementId();
-        var element = CreateElement(id);
+        var element = new TStageElement();
 
         action?.Invoke(element);
         AvailableElements.Add(element);
 
         return element;
-
-        int getNewElementId()
-        {
-            if (AvailableElements.Count == 0)
-                return 1;
-
-            return AvailableElements.Max(x => x.ID) + 1;
-        }
     }
 
-    public void EditElement(int? id, Action<TStageElement> action)
+    public void EditElement(ElementId? id, Action<TStageElement> action)
     {
         var element = getElementById(id);
         action(element);
 
-        TStageElement getElementById(int? elementID) =>
+        TStageElement getElementById(ElementId? elementID) =>
             elementID == null
                 ? DefaultElement
                 : AvailableElements.First(x => x.ID == elementID);
@@ -130,7 +119,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     public void AddToMapping(TStageElement element, THitObject hitObject)
     {
         var key = hitObject.ID;
-        int value = element.ID;
+        var value = element.ID;
 
         if (!AvailableElements.Contains(element))
             throw new InvalidOperationException();
@@ -180,7 +169,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     {
         var id = hitObject.ID;
 
-        if (!Mappings.TryGetValue(id, out int elementId))
+        if (!Mappings.TryGetValue(id, out var elementId))
             return DefaultElement;
 
         var matchedElements = AvailableElements.FirstOrDefault(x => x.ID == elementId);

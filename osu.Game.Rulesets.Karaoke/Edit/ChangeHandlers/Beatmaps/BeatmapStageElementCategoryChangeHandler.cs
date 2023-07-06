@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IBeatmapStageElementCategoryChangeHandler<TStageElement>
-    where TStageElement : StageElement, IComparable<TStageElement>
+    where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     private readonly Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction;
@@ -29,7 +29,7 @@ public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THi
         });
     }
 
-    public void EditElement(int? id, Action<TStageElement> action)
+    public void EditElement(ElementId? id, Action<TStageElement> action)
     {
         performStageInfoChanged(s =>
         {

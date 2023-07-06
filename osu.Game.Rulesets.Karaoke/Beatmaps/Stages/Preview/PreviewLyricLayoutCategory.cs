@@ -7,5 +7,4 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 public class PreviewLyricLayoutCategory : StageElementCategory<PreviewLyricLayout, Lyric>
 {
-    protected override PreviewLyricLayout CreateElement(int id) => new(id);
 }

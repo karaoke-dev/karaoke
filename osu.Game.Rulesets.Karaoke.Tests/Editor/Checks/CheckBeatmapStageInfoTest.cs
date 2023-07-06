@@ -58,7 +58,7 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
             category.AddElement();
 
             // write value to the mapping directly to reproduce the behavior like loading value from the beatmap.
-            category.Mappings.Add(lyric.ID, 3);
+            category.Mappings.Add(lyric.ID, ElementId.NewElementId());
         });
         AssertNotOk<IssueTemplateMappingItemNotExist>(getContext(beatmap));
     }

@@ -15,7 +15,7 @@ public abstract class BaseLyricStageElementCategoryGeneratorTest<TGenerator, TOb
     : BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, Lyric, TConfig>
     where TGenerator : BeatmapPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, Lyric>
-    where TStageElement : StageElement, IComparable<TStageElement>
+    where TStageElement : StageElement, IComparable<TStageElement>, new()
     where TConfig : GeneratorConfig, new()
 {
 }
@@ -24,7 +24,7 @@ public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject,
     : BaseBeatmapGeneratorTest<TGenerator, TObject, TConfig>
     where TGenerator : BeatmapPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, THitObject>
-    where TStageElement : StageElement, IComparable<TStageElement>
+    where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
     where TConfig : GeneratorConfig, new()
 {

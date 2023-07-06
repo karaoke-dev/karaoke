@@ -286,16 +286,10 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
 
     private class TestCategory : StageElementCategory<TestStageElement, Lyric>
     {
-        protected override TestStageElement CreateElement(int id) => new(id);
     }
 
     public class TestStageElement : StageElement, IComparable<TestStageElement>
     {
-        public TestStageElement(int id)
-            : base(id)
-        {
-        }
-
         public int CompareTo(TestStageElement? other)
         {
             return ComparableUtils.CompareByProperty(this, other,

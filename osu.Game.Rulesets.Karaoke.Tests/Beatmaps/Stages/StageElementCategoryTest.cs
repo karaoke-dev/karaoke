@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -18,19 +19,19 @@ public class StageElementCategoryTest
     public void TestAddElement()
     {
         var category = new TestStageElementCategory();
-        category.AddElement(x =>
+        var element = category.AddElement(x =>
         {
             x.Name = "Element 1";
         });
 
         Assert.AreEqual(1, category.AvailableElements.Count);
-        Assert.AreEqual(1, category.AvailableElements[0].ID);
+        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[0].ID);
         Assert.AreEqual("Element 1", category.AvailableElements[0].Name);
 
         category.AddElement();
 
         Assert.AreEqual(2, category.AvailableElements.Count);
-        Assert.AreEqual(2, category.AvailableElements[1].ID);
+        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[1].ID);
     }
 
     [Test]
@@ -39,14 +40,14 @@ public class StageElementCategoryTest
         var category = new TestStageElementCategory();
         var element = category.AddElement();
 
-        int id = element.ID;
+        var id = element.ID;
         category.EditElement(id, x =>
         {
             x.Name = "Element 1";
         });
 
         Assert.AreEqual(1, category.AvailableElements.Count);
-        Assert.AreEqual(1, category.AvailableElements[0].ID);
+        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[0].ID);
         Assert.AreEqual("Element 1", category.AvailableElements[0].Name);
     }
 
@@ -234,7 +235,7 @@ public class StageElementCategoryTest
         int? existElementOrder = category.GetElementOrder(element);
         Assert.AreEqual(1, existElementOrder);
 
-        var notExistElement = new TestStageElement(-1);
+        var notExistElement = new TestStageElement();
         int? notExistElementOrder = category.GetElementOrder(notExistElement);
         Assert.IsNull(notExistElementOrder);
     }
@@ -243,11 +244,6 @@ public class StageElementCategoryTest
 
     private class TestStageElement : StageElement, IComparable<TestStageElement>
     {
-        public TestStageElement(int id)
-            : base(id)
-        {
-        }
-
         public int CompareTo(TestStageElement? other)
         {
             return ComparableUtils.CompareByProperty(this, other,
@@ -258,6 +254,5 @@ public class StageElementCategoryTest
 
     private class TestStageElementCategory : StageElementCategory<TestStageElement, Lyric>
     {
-        protected override TestStageElement CreateElement(int id) => new(id);
     }
 }

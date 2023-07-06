@@ -8,5 +8,4 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 // todo: get the note style by throwing reference lyric.
 public class ClassicStyleCategory : StageElementCategory<ClassicStyle, Lyric>
 {
-    protected override ClassicStyle CreateElement(int id) => new(id);
 }
