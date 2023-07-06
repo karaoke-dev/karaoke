@@ -11,11 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
 public class ClassicStyle : StageElement, IComparable<ClassicStyle>
 {
-    public ClassicStyle(int id)
-        : base(id)
-    {
-    }
-
     [JsonIgnore]
     public readonly Bindable<int?> LyricStyleIndexBindable = new();
 

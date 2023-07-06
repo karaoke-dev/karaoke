@@ -10,11 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 public class PreviewLyricLayout : StageElement, IComparable<PreviewLyricLayout>
 {
-    public PreviewLyricLayout(int id)
-        : base(id)
-    {
-    }
-
     /// <summary>
     /// <see cref="Lyric"/>'s timing with row index.
     /// </summary>
