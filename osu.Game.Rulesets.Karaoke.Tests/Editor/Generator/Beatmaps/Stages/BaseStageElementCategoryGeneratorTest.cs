@@ -36,9 +36,11 @@ public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject,
             var actualElement = actual.AvailableElements[i];
 
             AssertEqual(expectedElement, actualElement);
-        }
 
-        Assert.AreEqual(expected.Mappings, actual.Mappings);
+            var expectedHitObjectIds = expected.GetHitObjectIdsByElement(expectedElement);
+            var actualHitObjectIds = actual.GetHitObjectIdsByElement(actualElement);
+            Assert.AreEqual(expectedHitObjectIds, actualHitObjectIds);
+        }
     }
 
     protected abstract void AssertEqual(TStageElement expected, TStageElement actual);

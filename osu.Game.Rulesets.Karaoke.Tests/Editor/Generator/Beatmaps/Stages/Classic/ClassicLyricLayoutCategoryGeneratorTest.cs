@@ -61,8 +61,8 @@ public class ClassicLyricLayoutCategoryGeneratorTest
         };
 
         var expected = new ClassicLyricLayoutCategory();
-        var layout1 = expected.AddElement();
-        var layout2 = expected.AddElement();
+        var layout1 = expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Left);
+        var layout2 = expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Right);
         expected.AddToMapping(layout1, lyric1);
         expected.AddToMapping(layout2, lyric2);
         expected.AddToMapping(layout1, lyric3);
@@ -94,9 +94,9 @@ public class ClassicLyricLayoutCategoryGeneratorTest
         };
 
         var expected = new ClassicLyricLayoutCategory();
-        var layout1 = expected.AddElement();
-        var layout2 = expected.AddElement();
-        var layout3 = expected.AddElement();
+        var layout1 = expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Left);
+        var layout2 = expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Center);
+        var layout3 = expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Right);
         expected.AddToMapping(layout1, lyric1);
         expected.AddToMapping(layout2, lyric2);
         expected.AddToMapping(layout3, lyric3);
@@ -127,15 +127,14 @@ public class ClassicLyricLayoutCategoryGeneratorTest
         };
 
         var expected = new ClassicLyricLayoutCategory();
-        expected.AddElement();
-        expected.AddElement();
+        expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Left);
+        expected.AddElement(x => x.Alignment = ClassicLyricLayoutAlignment.Right);
 
         CheckGenerateResult(beatmap, expected, config);
     }
 
     protected override void AssertEqual(ClassicLyricLayout expected, ClassicLyricLayout actual)
     {
-        // we did not care about the default value that generator created.
-        Assert.AreEqual(expected.ID, actual.ID);
+        Assert.AreEqual(expected.Alignment, actual.Alignment);
     }
 }
