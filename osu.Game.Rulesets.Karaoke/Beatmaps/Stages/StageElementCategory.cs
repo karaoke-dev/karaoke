@@ -187,6 +187,11 @@ public abstract class StageElementCategory<TStageElement, THitObject>
         return matchedElements ?? DefaultElement;
     }
 
+    public IEnumerable<ElementId> GetHitObjectIdsByElement(TStageElement element)
+    {
+        return Mappings.Where(x => x.Value == element.ID).Select(x => x.Key);
+    }
+
     public int? GetElementOrder(TStageElement element)
     {
         int index = SortedElements.IndexOf(element);
