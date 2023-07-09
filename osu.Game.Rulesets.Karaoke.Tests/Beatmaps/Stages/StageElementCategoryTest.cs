@@ -208,6 +208,24 @@ public class StageElementCategoryTest
     }
 
     [Test]
+    public void TestGetHitObjectIdsByElement()
+    {
+        var category = new TestStageElementCategory();
+
+        var element1 = category.AddElement();
+        var lyric1 = new Lyric();
+
+        category.AddToMapping(element1, lyric1);
+
+        // Should get the matched element.
+        Assert.AreEqual(new[] { lyric1.ID }, category.GetHitObjectIdsByElement(element1));
+
+        // Should get the default element because it's not in the mapping list.
+        var defaultElement = category.DefaultElement;
+        Assert.IsEmpty(category.GetHitObjectIdsByElement(defaultElement));
+    }
+
+    [Test]
     public void TestGetElementOrder()
     {
         var category = new TestStageElementCategory();
