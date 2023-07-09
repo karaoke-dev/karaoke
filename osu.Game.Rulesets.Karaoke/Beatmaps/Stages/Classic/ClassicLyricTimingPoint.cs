@@ -2,25 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
-public class ClassicLyricTimingPoint : IDeepCloneable<ClassicLyricTimingPoint>, IComparable<ClassicLyricTimingPoint>
+public class ClassicLyricTimingPoint : IDeepCloneable<ClassicLyricTimingPoint>, IComparable<ClassicLyricTimingPoint>, IHasPrimaryKey
 {
-    public ClassicLyricTimingPoint()
-    {
-    }
-
-    public ClassicLyricTimingPoint(int id)
-    {
-        ID = id;
-    }
-
-    public int ID { get; protected set; }
+    [JsonProperty]
+    public ElementId ID { get; private set; } = ElementId.NewElementId();
 
     [JsonIgnore]
     public readonly Bindable<double> TimeBindable = new();
