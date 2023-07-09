@@ -130,7 +130,7 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
             timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
 
             // should have error because mapping value is empty.
-            timingInfos.Mappings.Add(lyrics.First().ID, Array.Empty<int>());
+            timingInfos.Mappings.Add(lyrics.First().ID, Array.Empty<ElementId>());
         });
         AssertNotOk<IssueTemplateTimingInfoMappingHasNoTiming>(getContext(beatmap));
     }
@@ -150,7 +150,7 @@ public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBe
             timingInfos.AddTimingPoint(x => x.Time = MIN_TIMING_INTERVAL + 1);
 
             // should have error because mapping value is not exist.
-            timingInfos.Mappings.Add(lyrics.First().ID, new[] { 100 });
+            timingInfos.Mappings.Add(lyrics.First().ID, new[] { ElementId.NewElementId() });
         });
         AssertNotOk<IssueTemplateTimingInfoTimingNotExist>(getContext(beatmap));
     }
