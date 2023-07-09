@@ -87,7 +87,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
             },
             EffectApplier = new LyricPreviewStageEffectApplier(new[]
             {
-                new PreviewLyricLayout(1)
+                new PreviewLyricLayout
                 {
                     StartTime = startTime,
                     EndTime = startTime + duration,

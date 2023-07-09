@@ -11,11 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 
 public class ClassicLyricLayout : StageElement, IComparable<ClassicLyricLayout>
 {
-    public ClassicLyricLayout(int id)
-        : base(id)
-    {
-    }
-
     [JsonIgnore]
     public readonly Bindable<ClassicLyricLayoutAlignment> AlignmentBindable = new(ClassicLyricLayoutAlignment.Center);
 

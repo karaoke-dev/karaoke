@@ -9,11 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 
 public class PreviewStyle : StageElement, IComparable<PreviewStyle>
 {
-    public PreviewStyle(int id)
-        : base(id)
-    {
-    }
-
     /// <summary>
     /// <see cref="Lyric"/>'s skin lookup index.
     /// </summary>

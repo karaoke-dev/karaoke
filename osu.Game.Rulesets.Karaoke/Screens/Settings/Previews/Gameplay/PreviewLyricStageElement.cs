@@ -7,8 +7,4 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 public class PreviewLyricStageElement : StageElement
 {
-    public PreviewLyricStageElement()
-        : base(0)
-    {
-    }
 }

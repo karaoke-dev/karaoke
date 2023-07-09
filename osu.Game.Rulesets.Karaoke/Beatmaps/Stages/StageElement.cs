@@ -6,21 +6,17 @@ using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 
-public abstract class StageElement
+public abstract class StageElement : IHasPrimaryKey
 {
     private readonly Bindable<int> orderVersion = new();
 
     public IBindable<int> OrderVersion => orderVersion;
 
-    protected StageElement(int id)
-    {
-        ID = id;
-    }
-
     /// <summary>
     /// Index of the element.
     /// </summary>
-    public int ID { get; protected set; }
+    [JsonProperty]
+    public ElementId ID { get; private set; } = ElementId.NewElementId();
 
     [JsonIgnore]
     public readonly Bindable<string> NameBindable = new();
