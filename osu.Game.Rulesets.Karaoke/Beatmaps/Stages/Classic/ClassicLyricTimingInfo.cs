@@ -30,8 +30,12 @@ public class ClassicLyricTimingInfo
 
     private readonly Bindable<int> mappingVersion = new();
 
-    // todo: should be private.
-    public BindableDictionary<ElementId, int[]> Mappings = new();
+    /// <summary>
+    /// Mapping between <see cref="Lyric.ID"/> and <see cref="ClassicLyricTimingPoint.ID"/>
+    /// This is the 1st mapping roles.
+    /// todo: should be private.
+    /// </summary>
+    public BindableDictionary<ElementId, ElementId[]> Mappings = new();
 
     public ClassicLyricTimingInfo()
     {
@@ -88,21 +92,12 @@ public class ClassicLyricTimingInfo
 
     public ClassicLyricTimingPoint AddTimingPoint(Action<ClassicLyricTimingPoint>? action = null)
     {
-        int id = getNewTimingPointId();
-        var timingPoint = new ClassicLyricTimingPoint(id);
+        var timingPoint = new ClassicLyricTimingPoint();
 
         action?.Invoke(timingPoint);
         Timings.Add(timingPoint);
 
         return timingPoint;
-
-        int getNewTimingPointId()
-        {
-            if (Timings.Count == 0)
-                return 1;
-
-            return Timings.Max(x => x.ID) + 1;
-        }
     }
 
     public void RemoveTimingPoint(ClassicLyricTimingPoint point)
@@ -115,12 +110,12 @@ public class ClassicLyricTimingInfo
     public void AddToMapping(ClassicLyricTimingPoint point, Lyric lyric)
     {
         var key = lyric.ID;
-        int value = point.ID;
+        var value = point.ID;
 
         if (!Timings.Contains(point))
             throw new InvalidOperationException($"{nameof(point)} does ont in the {nameof(point)}.");
 
-        if (Mappings.TryGetValue(key, out int[]? timingIds))
+        if (Mappings.TryGetValue(key, out ElementId[]? timingIds))
         {
             Mappings[key] = timingIds.Concat(new[] { value }).ToArray();
         }
@@ -133,12 +128,12 @@ public class ClassicLyricTimingInfo
     public void RemoveFromMapping(ClassicLyricTimingPoint point, Lyric lyric)
     {
         var key = lyric.ID;
-        int value = point.ID;
+        var value = point.ID;
 
         if (!Timings.Contains(point))
             throw new InvalidOperationException($"{nameof(point)} does ont in the {nameof(point)}.");
 
-        if (!Mappings.TryGetValue(key, out int[]? values))
+        if (!Mappings.TryGetValue(key, out ElementId[]? values))
             return;
 
         if (values.All(x => x == point.ID))
@@ -153,9 +148,9 @@ public class ClassicLyricTimingInfo
 
     public void ClearTimingPointFromMapping(ClassicLyricTimingPoint point)
     {
-        int value = point.ID;
+        var value = point.ID;
 
-        foreach ((var key, int[]? values) in Mappings)
+        foreach ((var key, ElementId[]? values) in Mappings)
         {
             if (values.All(x => x == point.ID))
             {
@@ -185,7 +180,7 @@ public class ClassicLyricTimingInfo
 
     public IEnumerable<ClassicLyricTimingPoint> GetLyricTimingPoints(Lyric lyric)
     {
-        if (!Mappings.TryGetValue(lyric.ID, out int[]? ids))
+        if (!Mappings.TryGetValue(lyric.ID, out ElementId[]? ids))
             return Array.Empty<ClassicLyricTimingPoint>();
 
         return SortedTimings.Where(x => ids.Contains(x.ID));
