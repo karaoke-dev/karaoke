@@ -180,11 +180,11 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     {
         var id = hitObject.ID;
 
-        if (!Mappings.TryGetValue(id, out int styleId))
+        if (!Mappings.TryGetValue(id, out int elementId))
             return DefaultElement;
 
-        var matchedStyle = AvailableElements.FirstOrDefault(x => x.ID == styleId);
-        return matchedStyle ?? DefaultElement;
+        var matchedElements = AvailableElements.FirstOrDefault(x => x.ID == elementId);
+        return matchedElements ?? DefaultElement;
     }
 
     public int? GetElementOrder(TStageElement element)
