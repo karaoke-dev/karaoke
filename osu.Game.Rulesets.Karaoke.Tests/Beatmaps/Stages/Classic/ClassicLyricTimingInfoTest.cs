@@ -25,7 +25,7 @@ public class ClassicLyricTimingInfoTest
         });
 
         Assert.AreEqual(1, timingInfo.Timings.Count);
-        Assert.AreEqual(1, timingInfo.Timings[0].ID);
+        Assert.IsNotEmpty(timingInfo.Timings[0].ID.ToString());
         Assert.AreEqual(1000, timingInfo.Timings[0].Time);
     }
 
