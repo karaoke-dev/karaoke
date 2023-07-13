@@ -133,7 +133,7 @@ public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<S
     {
         public ITooltip<ISinger> GetCustomTooltip() => new SingerToolTip();
 
-        public ISinger TooltipContent => Singer;
+        public ISinger? TooltipContent => Singer;
     }
 }
 
