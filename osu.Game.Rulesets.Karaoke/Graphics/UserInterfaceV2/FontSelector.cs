@@ -30,7 +30,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
 {
     private readonly SpriteText previewText;
     private readonly FontFamilyPropertyList familyProperty;
-    private readonly FontPropertyList<string> weightProperty;
+    private readonly FontPropertyList<string?> weightProperty;
     private readonly FontPropertyList<float> fontSizeProperty;
     private readonly OsuCheckbox fixedWidthCheckbox;
 
@@ -108,7 +108,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                                         Name = "Font family selection area",
                                         RelativeSizeAxes = Axes.Both
                                     },
-                                    weightProperty = new FontPropertyList<string>
+                                    weightProperty = new FontPropertyList<string?>
                                     {
                                         Name = "Font widget selection area",
                                         RelativeSizeAxes = Axes.Both
@@ -170,7 +170,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                 }
 
                 // should reset family selection if user select the font that will be removed or added.
-                string currentFamily = familyProperty.Current.Value;
+                string? currentFamily = familyProperty.Current.Value;
                 bool resetFamily = oldFamilies?.Contains(currentFamily) ?? false;
 
                 if (resetFamily)
@@ -232,8 +232,8 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
 
     private FontUsage generateFontUsage()
     {
-        string family = familyProperty.Current.Value;
-        string weight = weightProperty.Current.Value;
+        string? family = familyProperty.Current.Value;
+        string? weight = weightProperty.Current.Value;
         float size = fontSizeProperty.Current.Value;
         bool fixedWidth = fixedWidthCheckbox.Current.Value;
         return new FontUsage(family, size, weight, false, fixedWidth);
@@ -246,14 +246,14 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
         fontStore?.RemoveStore(localFontStore);
     }
 
-    internal partial class FontFamilyPropertyList : FontPropertyList<string>
+    internal partial class FontFamilyPropertyList : FontPropertyList<string?>
     {
-        protected override RearrangeableTextFlowListContainer<string> CreateRearrangeableListContainer()
+        protected override RearrangeableTextFlowListContainer<string?> CreateRearrangeableListContainer()
             => new RearrangeableFontFamilyListContainer();
 
-        private partial class RearrangeableFontFamilyListContainer : RearrangeableTextFlowListContainer<string>
+        private partial class RearrangeableFontFamilyListContainer : RearrangeableTextFlowListContainer<string?>
         {
-            protected override DrawableTextListItem CreateDrawable(string item)
+            protected override DrawableTextListItem CreateDrawable(string? item)
                 => new DrawableFontFamilyListItem(item);
 
             private partial class DrawableFontFamilyListItem : DrawableTextListItem
@@ -261,15 +261,15 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                 [Resolved]
                 private FontManager fontManager { get; set; } = null!;
 
-                public DrawableFontFamilyListItem(string item)
+                public DrawableFontFamilyListItem(string? item)
                     : base(item)
                 {
                 }
 
-                protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, string model)
+                protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, string? model)
                 {
                     textFlowContainer.TextAnchor = Anchor.BottomLeft;
-                    textFlowContainer.AddText(model);
+                    textFlowContainer.AddText(model ?? string.Empty);
 
                     var matchedFormat = fontManager.Fonts
                                                    .Where(x => x.Family == Model).Select(x => x.FontFormat)
