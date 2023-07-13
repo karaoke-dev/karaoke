@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
@@ -15,14 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers;
 public partial class MessageContainer : OsuTextFlowContainer
 {
     [Resolved]
-    private OsuColour colours { get; set; }
+    private OsuColour colours { get; set; } = null!;
 
-    public MessageContainer(Action<SpriteText> defaultCreationParameters = null)
+    public MessageContainer(Action<SpriteText>? defaultCreationParameters = null)
         : base(defaultCreationParameters)
     {
     }
 
-    public void AddSuccessParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddSuccessParagraph(string text, Action<SpriteText>? creationParameters = null)
     {
         NewParagraph();
         AddIcon(FontAwesome.Solid.Check, icon =>
@@ -32,7 +30,7 @@ public partial class MessageContainer : OsuTextFlowContainer
         AddText($" {text}", creationParameters);
     }
 
-    public void AddWarningParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddWarningParagraph(string text, Action<SpriteText>? creationParameters = null)
     {
         NewParagraph();
         AddIcon(FontAwesome.Solid.ExclamationTriangle, icon =>
@@ -43,7 +41,7 @@ public partial class MessageContainer : OsuTextFlowContainer
         AddText($" {text}", creationParameters);
     }
 
-    public void AddAlertParagraph(string text, Action<SpriteText> creationParameters = null)
+    public void AddAlertParagraph(string text, Action<SpriteText>? creationParameters = null)
     {
         NewParagraph();
         AddIcon(FontAwesome.Solid.TimesCircle, icon =>
@@ -53,7 +51,7 @@ public partial class MessageContainer : OsuTextFlowContainer
         AddText($" {text}", creationParameters);
     }
 
-    public void AddHighlightText(string text, Action<SpriteText> creationParameters = null)
+    public void AddHighlightText(string text, Action<SpriteText>? creationParameters = null)
     {
         AddText($" {text}", c =>
         {

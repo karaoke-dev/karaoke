@@ -234,7 +234,7 @@ public abstract partial class IssueSection : EditorSection
             };
 
         private Colour4 getColourByIssueType(IssueType issueType) =>
-            new IssueTemplate(new EmptyCheck(), issueType, "").Colour;
+            new IssueTemplate(new EmptyCheck(), issueType, string.Empty).Colour;
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)

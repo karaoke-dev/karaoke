@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -34,8 +32,8 @@ public partial class LabelledColourSelector : LabelledComponent<LabelledColourSe
     {
         private readonly BindableWithCurrent<Colour4> current = new();
 
-        private Box fill;
-        private OsuSpriteText colourHexCode;
+        private Box fill = null!;
+        private OsuSpriteText colourHexCode = null!;
 
         public Bindable<Colour4> Current
         {

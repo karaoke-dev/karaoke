@@ -117,7 +117,7 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
 
             public override IEnumerable<LocalisableString> FilterTerms => new[]
             {
-                new LocalisableString(Model?.Text ?? ""),
+                new LocalisableString(Model?.Text ?? string.Empty),
             };
 
             protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, Lyric? model)

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using osu.Framework.Bindables;
@@ -135,7 +133,7 @@ public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<S
     {
         public ITooltip<ISinger> GetCustomTooltip() => new SingerToolTip();
 
-        public ISinger TooltipContent => Singer;
+        public ISinger? TooltipContent => Singer;
     }
 }
 

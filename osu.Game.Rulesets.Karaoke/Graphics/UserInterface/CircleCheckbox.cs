@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
@@ -28,8 +26,8 @@ public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     private readonly SpriteIcon border;
     private readonly SpriteIcon selectedIcon;
 
-    private Sample sampleChecked;
-    private Sample sampleUnchecked;
+    private Sample? sampleChecked;
+    private Sample? sampleUnchecked;
 
     /// <summary>
     /// Whether to play sounds when the state changes as a result of user interaction.
