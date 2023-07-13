@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
@@ -29,7 +31,9 @@ public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearr
         {
             // should get the event if user change the position.
             case NotifyCollectionChangedAction.Move:
-                var item = (TModel)e.NewItems[0];
+                Debug.Assert(e.NewItems != null);
+
+                var item = e.NewItems.OfType<TModel>().First();
                 int newIndex = e.NewStartingIndex;
                 OnOrderChanged?.Invoke(item, newIndex);
                 break;

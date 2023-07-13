@@ -185,7 +185,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
             performChange();
 
             // re-calculate if family changed.
-            string[] weight = fonts.Where(f => f.Family == x.NewValue).Select(f => f.Weight).Where(s => !string.IsNullOrEmpty(s)).Distinct().ToArray();
+            string[] weight = fonts.Where(f => f.Family == x.NewValue).Select(f => f.Weight).OfType<string>().Distinct().ToArray();
             weightProperty.Items.Clear();
             weightProperty.Items.AddRange(weight);
 
