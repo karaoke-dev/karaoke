@@ -81,7 +81,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             }
         });
 
-        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), ""));
+        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
 
         AssertSelectedHitObject(h =>
         {
