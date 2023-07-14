@@ -206,12 +206,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
             },
         };
 
-        var extraItems = GenerateMenuItems(screenMode);
-
-        if (extraItems != null)
-        {
-            menuItems.AddRange(extraItems);
-        }
+        menuItems.AddRange(GenerateMenuItems(screenMode));
 
         menuBar.Items = menuItems;
     }

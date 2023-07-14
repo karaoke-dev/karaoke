@@ -123,8 +123,7 @@ public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
     {
         base.Dispose(isDisposing);
 
-        if (keyCombinationProvider != null)
-            keyCombinationProvider.KeymapChanged -= updateDisplayText;
+        keyCombinationProvider.KeymapChanged -= updateDisplayText;
     }
 
     private partial class PopoverKeyBindingsSubsection : VariantBindingsSubsection
