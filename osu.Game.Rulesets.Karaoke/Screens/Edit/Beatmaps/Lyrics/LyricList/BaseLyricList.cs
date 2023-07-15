@@ -48,14 +48,14 @@ public abstract partial class BaseLyricList : CompositeDrawable
                         Child = container = CreateDrawableLyricList().With(x =>
                         {
                             x.RelativeSizeAxes = Axes.Both;
-                        })
+                        }),
                     },
                 },
                 new Drawable[]
                 {
                     new ApplySelectingArea(),
-                }
-            }
+                },
+            },
         };
 
         container.OnOrderChanged += (x, nowOrder) =>

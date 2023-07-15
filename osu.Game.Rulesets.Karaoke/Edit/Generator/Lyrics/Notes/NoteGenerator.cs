@@ -66,7 +66,7 @@ public class NoteGenerator : LyricPropertyGenerator<Note[], NoteGeneratorConfig>
                     ReferenceLyricId = item.ID,
                     // technically this property should be assigned by beatmap processor, but should be OK to assign here for testing purpose.
                     ReferenceLyric = item,
-                    ReferenceTimeTagIndex = timeTagIndex
+                    ReferenceTimeTagIndex = timeTagIndex,
                 });
             }
         }

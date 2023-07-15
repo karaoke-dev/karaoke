@@ -55,10 +55,10 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Y,
                         Width = 2,
-                        EdgeSmoothness = new Vector2(1, 0)
-                    }
-                }
-            }
+                        EdgeSmoothness = new Vector2(1, 0),
+                    },
+                },
+            },
         };
 
         switch (type)

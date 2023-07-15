@@ -24,7 +24,7 @@ public class NotePositionCalculatorTest
         var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
         var note = new Note
         {
-            Tone = TestCaseToneHelper.NumberToTone(scale)
+            Tone = TestCaseToneHelper.NumberToTone(scale),
         };
 
         float actual = calculator.YPositionAt(note);
@@ -51,7 +51,7 @@ public class NotePositionCalculatorTest
         var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
         var action = new KaraokeScoringAction
         {
-            Scale = scale
+            Scale = scale,
         };
 
         float actual = calculator.YPositionAt(action);

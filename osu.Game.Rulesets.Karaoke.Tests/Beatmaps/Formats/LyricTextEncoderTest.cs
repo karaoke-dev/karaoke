@@ -20,7 +20,7 @@ public class LyricTextEncoderTest
         var encoder = new LyricTextEncoder();
         var beatmap = new KaraokeBeatmap
         {
-            HitObjects = TestCaseTagHelper.ParseLyrics(lyrics).OfType<KaraokeHitObject>().ToList()
+            HitObjects = TestCaseTagHelper.ParseLyrics(lyrics).OfType<KaraokeHitObject>().ToList(),
         };
 
         string actual = encoder.Encode(beatmap);

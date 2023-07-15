@@ -71,7 +71,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
             RowDimensions = new[]
             {
                 new Dimension(GridSizeMode.Relative, 0.4f),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -81,8 +81,8 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Text = "カラオケ, karaoke"
-                    }
+                        Text = "カラオケ, karaoke",
+                    },
                 },
                 new Drawable[]
                 {
@@ -106,12 +106,12 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                                     familyProperty = new FontFamilyPropertyList
                                     {
                                         Name = "Font family selection area",
-                                        RelativeSizeAxes = Axes.Both
+                                        RelativeSizeAxes = Axes.Both,
                                     },
                                     weightProperty = new FontPropertyList<string?>
                                     {
                                         Name = "Font widget selection area",
-                                        RelativeSizeAxes = Axes.Both
+                                        RelativeSizeAxes = Axes.Both,
                                     },
                                     new GridContainer
                                     {
@@ -140,15 +140,15 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                                                     Padding = new MarginPadding(10),
                                                     LabelText = "FixedWidth",
                                                 },
-                                            }
-                                        }
-                                    }
+                                            },
+                                        },
+                                    },
                                 },
-                            }
-                        }
-                    }
-                }
-            }
+                            },
+                        },
+                    },
+                },
+            },
         };
 
         fonts.BindCollectionChanged((_, b) =>
@@ -302,7 +302,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                 {
                     box = new Box
                     {
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
                     },
                     badgeText = new OsuSpriteText
                     {
@@ -310,9 +310,9 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                         Margin = new MarginPadding
                         {
                             Vertical = 1,
-                            Horizontal = 3
+                            Horizontal = 3,
                         },
-                    }
+                    },
                 };
             }
 
@@ -324,7 +324,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                     FontFormat.Internal => colours.Gray7,
                     FontFormat.Fnt => colours.Pink,
                     FontFormat.Ttf => colours.Blue,
-                    _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
+                    _ => throw new ArgumentOutOfRangeException(nameof(fontFormat)),
                 };
 
                 // todo : might apply translate.
@@ -359,7 +359,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                 {
                     background = new CornerBackground
                     {
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
                     },
                     new GridContainer
                     {
@@ -367,7 +367,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                         RowDimensions = new[]
                         {
                             new Dimension(GridSizeMode.Absolute, 40),
-                            new Dimension()
+                            new Dimension(),
                         },
                         Content = new[]
                         {
@@ -376,7 +376,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                                 filter = new TextPropertySearchTextBox
                                 {
                                     RelativeSizeAxes = Axes.X,
-                                }
+                                },
                             },
                             new Drawable[]
                             {
@@ -387,11 +387,11 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                                     {
                                         Current.Value = item;
                                     };
-                                })
-                            }
-                        }
-                    }
-                }
+                                }),
+                            },
+                        },
+                    },
+                },
             };
 
             filter.Current.BindValueChanged(e => propertyFlowList.Filter(e.NewValue));

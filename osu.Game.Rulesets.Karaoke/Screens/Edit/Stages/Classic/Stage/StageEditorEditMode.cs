@@ -7,5 +7,5 @@ public enum StageEditorEditMode
 {
     Edit,
 
-    Verify
+    Verify,
 }

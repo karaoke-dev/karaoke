@@ -31,8 +31,8 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(100)
-            }
+                Size = new Vector2(100),
+            },
         };
     });
 
@@ -43,7 +43,7 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
         {
             lyricEditorDescriptionTextFlowContainer.Description = new DescriptionFormat
             {
-                Text = "Test description with `Markdown` format."
+                Text = "Test description with `Markdown` format.",
             };
         });
     }
@@ -63,11 +63,11 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
                         {
                             AdjustableActions = new[]
                             {
-                                KaraokeEditAction.SetTime
-                            }
+                                KaraokeEditAction.SetTime,
+                            },
                         }
-                    }
-                }
+                    },
+                },
             };
         });
 
@@ -84,11 +84,11 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
                             Text = "set time key.",
                             AdjustableActions = new[]
                             {
-                                KaraokeEditAction.SetTime
-                            }
+                                KaraokeEditAction.SetTime,
+                            },
                         }
-                    }
-                }
+                    },
+                },
             };
         });
     }

@@ -31,7 +31,7 @@ public partial class TestSceneControlLayer : OsuTestScene
             Child = SettingOverlayContainer = new SettingOverlayContainer
             {
                 RelativeSizeAxes = Axes.Both,
-            }
+            },
         });
 
         AddStep("Toggle setting", SettingOverlayContainer.ToggleGeneralSettingsOverlay);

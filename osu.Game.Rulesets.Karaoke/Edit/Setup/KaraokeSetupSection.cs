@@ -32,15 +32,15 @@ public partial class KaraokeSetupSection : RulesetSetupSection
             {
                 Label = "Scorable",
                 Description = "Will not show score playfield if the option is unchecked.",
-                Current = { Value = true }
+                Current = { Value = true },
             },
             singerList = new LabelledSingerList
             {
                 Label = "Singer list",
                 Description = "All the singers in beatmap.",
                 FixedLabelWidth = LABEL_WIDTH,
-                SingerNamePrefix = "#"
-            }
+                SingerNamePrefix = "#",
+            },
         };
     }
 

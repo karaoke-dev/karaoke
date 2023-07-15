@@ -37,7 +37,7 @@ public abstract partial class TextTagEditSection<TTextTag> : LyricPropertiesSect
                 Text = CreateNewTextTagButtonText(),
                 LabelledTextBoxLabel = CreateNewTextTagTitle(),
                 LabelledTextBoxDescription = CreateNewTextTagDescription(),
-                Action = AddTextTag
+                Action = AddTextTag,
             };
         }
 

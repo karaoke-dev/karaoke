@@ -51,7 +51,7 @@ public partial class KaraokeSelectionHandler : EditorSelectionHandler
         {
             return new[]
             {
-                createSingerMenuItem()
+                createSingerMenuItem(),
             };
         }
 
@@ -133,7 +133,7 @@ public partial class KaraokeSelectionHandler : EditorSelectionHandler
         {
             > trigger_height => -new Tone { Half = true },
             < 0 => new Tone { Half = true },
-            _ => default
+            _ => default,
         };
 
         if (offset == default(Tone))

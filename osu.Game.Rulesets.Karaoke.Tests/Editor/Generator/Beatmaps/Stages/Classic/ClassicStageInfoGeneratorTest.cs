@@ -25,7 +25,7 @@ public class ClassicStageInfoGeneratorTest : BaseStageInfoGeneratorTest<ClassicS
                 TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2"),
                 TestCaseTagHelper.ParseLyric("[7000,9000]:lyric3"),
                 TestCaseTagHelper.ParseLyric("[10000,12000]:lyric4"),
-            }
+            },
         };
 
         CheckCanGenerate(beatmap, true, config);
@@ -56,7 +56,7 @@ public class ClassicStageInfoGeneratorTest : BaseStageInfoGeneratorTest<ClassicS
                 lyric2,
                 lyric3,
                 lyric4,
-            }
+            },
         };
 
         // Note: we did not care about the generator result here.

@@ -24,10 +24,10 @@ public partial class LanguageAutoGenerateSubsection : LyricEditorAutoGenerateSub
                     typing_mode, new SwitchModeDescriptionAction
                     {
                         Text = "typing mode",
-                        Mode = LyricEditorMode.Texting
+                        Mode = LyricEditorMode.Texting,
                     }
-                }
-            }
+                },
+            },
         };
 
     protected override ConfigButton CreateConfigButton()

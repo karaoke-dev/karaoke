@@ -14,7 +14,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラ"
+            Text = "カラ",
         });
 
         TriggerHandlerChanged(c => c.InsertText(2, "オケ"));
@@ -30,7 +30,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         });
 
         TriggerHandlerChanged(c => c.DeleteLyricText(4));
@@ -46,7 +46,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カ"
+            Text = "カ",
         });
 
         TriggerHandlerChanged(c => c.DeleteLyricText(1));
@@ -59,7 +59,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
     {
         PrepareLyricWithSyncConfig(new Lyric
         {
-            Text = "カラ"
+            Text = "カラ",
         });
 
         TriggerHandlerChangedWithChangeForbiddenException(c => c.InsertText(2, "オケ"));

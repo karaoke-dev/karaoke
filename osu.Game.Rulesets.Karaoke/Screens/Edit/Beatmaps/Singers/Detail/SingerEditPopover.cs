@@ -29,8 +29,8 @@ public partial class SingerEditPopover : OsuPopover
                 {
                     new AvatarSection(singer),
                     new MetadataSection(singer),
-                }
-            }
+                },
+            },
         };
     }
 }

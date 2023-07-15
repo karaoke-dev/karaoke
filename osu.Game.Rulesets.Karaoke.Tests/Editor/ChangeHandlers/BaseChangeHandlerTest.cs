@@ -52,7 +52,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         Children = new Drawable[]
         {
             editorBeatmap,
-            changeHandler = CreateChangeHandler()
+            changeHandler = CreateChangeHandler(),
         };
     }
 
@@ -240,7 +240,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
             {
                 Lyric lyric => lyric.GetAllInvalidWorkingProperties().Length == 0,
                 Note note => note.GetAllInvalidWorkingProperties().Length == 0,
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException(),
             });
         });
     }

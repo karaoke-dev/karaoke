@@ -45,12 +45,12 @@ public partial class DefaultBodyPiece : Container
         {
             Background = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             Foreground = new Box
             {
-                RelativeSizeAxes = Axes.Both
-            }
+                RelativeSizeAxes = Axes.Both,
+            },
         };
 
         var note = (DrawableNote)drawableObject;

@@ -16,7 +16,7 @@ public abstract partial class LyricImporterStepScreenWithTopNavigation : LyricIm
             RowDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, 40),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -27,8 +27,8 @@ public abstract partial class LyricImporterStepScreenWithTopNavigation : LyricIm
                 new[]
                 {
                     CreateContent(),
-                }
-            }
+                },
+            },
         };
     }
 

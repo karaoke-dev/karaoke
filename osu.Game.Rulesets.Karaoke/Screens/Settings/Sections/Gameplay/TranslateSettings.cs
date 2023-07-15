@@ -26,13 +26,13 @@ public partial class TranslateSettings : KaraokeSettingsSubsection
             new SettingsCheckbox
             {
                 LabelText = "Translate",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate),
             },
             new SettingsLanguage
             {
                 LabelText = "Prefer language",
                 TooltipText = "Select prefer translate language.",
-                Current = Config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
+                Current = Config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage),
             },
         };
     }

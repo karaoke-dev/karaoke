@@ -38,14 +38,14 @@ public partial class TestSceneBeatmapMetadataGraph : OsuTestScene
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4Extensions.FromHex("#333")
+                Colour = Color4Extensions.FromHex("#333"),
             },
             new BeatmapMetadataGraph(beatmap)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(600, 200)
-            }
+                Size = new Vector2(600, 200),
+            },
         };
     });
 

@@ -22,7 +22,7 @@ public class KaraokeBeatmapSkinDecodingTest
         var testingNote = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         };
 
         // try to get default value from the skin.

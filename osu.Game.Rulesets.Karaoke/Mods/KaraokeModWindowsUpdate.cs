@@ -42,7 +42,7 @@ public partial class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
         {
             overlay.Add(windowsUpdateContainer = new WindowsUpdateContainer
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             });
         }
 
@@ -59,7 +59,7 @@ public partial class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
                 {
                     Name = "Background",
                     RelativeSizeAxes = Axes.Both,
-                    Colour = new Color4(0, 120, 215, 255)
+                    Colour = new Color4(0, 120, 215, 255),
                 },
                 new LoadingIcon
                 {
@@ -94,7 +94,7 @@ public partial class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
                     Origin = Anchor.Centre,
                     Scale = new Vector2(1.3f),
                     Y = -30,
-                }
+                },
             };
         }
 

@@ -26,10 +26,10 @@ public class KaraokeFramedReplayInputHandler : FramedReplayInputHandler<KaraokeR
                 {
                     new()
                     {
-                        Scale = CurrentFrame.Scale
-                    }
+                        Scale = CurrentFrame.Scale,
+                    },
                 }
-                : new List<KaraokeScoringAction>()
+                : new List<KaraokeScoringAction>(),
         });
     }
 }

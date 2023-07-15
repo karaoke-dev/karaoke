@@ -66,11 +66,11 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
+                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both },
                     },
                     new Header(ScreenStack),
-                }
-            }
+                },
+            },
         };
 
         ScreenStack.Push(LyricImporterStep.ImportLyric);

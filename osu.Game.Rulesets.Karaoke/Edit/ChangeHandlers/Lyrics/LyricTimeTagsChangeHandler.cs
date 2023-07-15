@@ -233,7 +233,7 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
                 {
                     ShiftingType.Index => TextIndexUtils.ShiftingIndex(originIndex, direction == ShiftingDirection.Left ? -1 : 1),
                     ShiftingType.State => direction == ShiftingDirection.Left ? TextIndexUtils.GetPreviousIndex(originIndex) : TextIndexUtils.GetNextIndex(originIndex),
-                    _ => throw new InvalidOperationException()
+                    _ => throw new InvalidOperationException(),
                 };
         }
     }
@@ -293,6 +293,6 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
     {
         Start,
 
-        End
+        End,
     }
 }

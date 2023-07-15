@@ -30,7 +30,7 @@ public partial class LockChangeHandler : HitObjectPropertyChangeHandler<KaraokeH
         {
             Lyric lyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Lock)),
             Note note => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Lyric.Lock)),
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
     }
 }

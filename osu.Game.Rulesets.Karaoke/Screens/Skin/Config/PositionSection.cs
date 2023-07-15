@@ -24,7 +24,7 @@ internal partial class PositionSection : LyricConfigSection
             {
                 Label = "Smart horizon",
                 Description = "Smart horizon section",
-            }
+            },
         };
     }
 

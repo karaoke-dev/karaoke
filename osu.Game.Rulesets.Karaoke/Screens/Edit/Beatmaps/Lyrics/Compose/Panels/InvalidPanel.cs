@@ -16,6 +16,6 @@ public partial class InvalidPanel : Panel
     protected override IReadOnlyList<Drawable> CreateSections() =>
         new Drawable[]
         {
-            new IssueSection()
+            new IssueSection(),
         };
 }

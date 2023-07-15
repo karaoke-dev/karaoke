@@ -7,5 +7,5 @@ public enum DrawableCaretType
 {
     HoverCaret,
 
-    Caret
+    Caret,
 }

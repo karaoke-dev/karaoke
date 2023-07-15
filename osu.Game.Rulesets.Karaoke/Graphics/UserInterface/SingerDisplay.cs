@@ -74,7 +74,7 @@ public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<S
                 {
                     Singer = singer,
                     Name = "Avatar",
-                    Size = new Vector2(32)
+                    Size = new Vector2(32),
                 });
             }
 
@@ -152,5 +152,5 @@ public enum ExpansionMode
     /// <summary>
     /// The <see cref="SingerDisplay"/> will always be contracted.
     /// </summary>
-    AlwaysContracted
+    AlwaysContracted,
 }

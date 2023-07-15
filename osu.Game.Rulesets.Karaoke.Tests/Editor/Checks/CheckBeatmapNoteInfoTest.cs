@@ -41,8 +41,8 @@ public class CheckBeatmapNoteInfoTest : BeatmapPropertyCheckTest<CheckBeatmapNot
         {
             new Note
             {
-                Tone = new Tone(-MIN_COLUMNS)
-            }
+                Tone = new Tone(-MIN_COLUMNS),
+            },
         });
         AssertNotOk<NoteIssue, IssueTemplateNoteToneTooLow>(getContext(beatmap));
     }
@@ -54,8 +54,8 @@ public class CheckBeatmapNoteInfoTest : BeatmapPropertyCheckTest<CheckBeatmapNot
         {
             new Note
             {
-                Tone = new Tone(MIN_COLUMNS)
-            }
+                Tone = new Tone(MIN_COLUMNS),
+            },
         });
         AssertNotOk<NoteIssue, IssueTemplateNoteToneTooHigh>(getContext(beatmap));
     }

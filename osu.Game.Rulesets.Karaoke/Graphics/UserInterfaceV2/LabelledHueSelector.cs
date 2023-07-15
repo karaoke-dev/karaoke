@@ -28,7 +28,7 @@ public partial class LabelledHueSelector : LabelledComponent<LabelledHueSelector
         Type = EdgeEffectType.Shadow,
         Offset = new Vector2(0, 1),
         Radius = 3,
-        Colour = Colour4.Black.Opacity(0.3f)
+        Colour = Colour4.Black.Opacity(0.3f),
     };
 
     /// <summary>
@@ -80,8 +80,8 @@ public partial class LabelledHueSelector : LabelledComponent<LabelledHueSelector
                     EdgeEffect = createShadowParameters(),
                     Child = fill = new Box
                     {
-                        RelativeSizeAxes = Axes.Both
-                    }
+                        RelativeSizeAxes = Axes.Both,
+                    },
                 };
             }
 

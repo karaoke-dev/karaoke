@@ -39,6 +39,6 @@ public partial class RubyTagSettings : TextTagSettings<RubyTagEditMode>
             new RubyTagEditModeSection(),
             new RubyTagIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

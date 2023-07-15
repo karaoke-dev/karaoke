@@ -20,6 +20,6 @@ public struct DescriptionFormat
 
     public static implicit operator DescriptionFormat(LocalisableString text) => new()
     {
-        Text = text
+        Text = text,
     };
 }

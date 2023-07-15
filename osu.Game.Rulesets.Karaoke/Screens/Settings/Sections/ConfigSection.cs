@@ -14,7 +14,7 @@ public partial class ConfigSection : KaraokeSettingsSection
 
     public override Drawable CreateIcon() => new SpriteIcon
     {
-        Icon = FontAwesome.Solid.Cog
+        Icon = FontAwesome.Solid.Cog,
     };
 
     public ConfigSection()

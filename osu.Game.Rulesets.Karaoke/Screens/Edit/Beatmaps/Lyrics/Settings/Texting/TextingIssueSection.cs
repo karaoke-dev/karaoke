@@ -52,7 +52,7 @@ public partial class TextingIssueSection : LyricEditorIssueSection
                 {
                     Text = issue.ToString(),
                     RelativeSizeAxes = Axes.X,
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
             };
         }

@@ -25,10 +25,10 @@ public abstract partial class TextTagAutoGenerateSection : AutoGenerateSection
                         language_mode, new SwitchModeDescriptionAction
                         {
                             Text = "edit language mode",
-                            Mode = LyricEditorMode.Language
+                            Mode = LyricEditorMode.Language,
                         }
-                    }
-                }
+                    },
+                },
             };
     }
 }

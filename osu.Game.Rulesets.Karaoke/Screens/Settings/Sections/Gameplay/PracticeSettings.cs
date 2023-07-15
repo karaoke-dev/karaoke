@@ -23,7 +23,7 @@ public partial class PracticeSettings : KaraokeSettingsSubsection
             new SettingsSlider<double, TimeSlider>
             {
                 LabelText = KaraokeSettingsSubsectionStrings.PracticePreemptTime,
-                Current = Config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
+                Current = Config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime),
             },
         };
     }

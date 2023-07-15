@@ -65,7 +65,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceLyricConfig = new SyncLyricConfig()
+            ReferenceLyricConfig = new SyncLyricConfig(),
         };
 
         string expected =
@@ -82,7 +82,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceLyricConfig = new ReferenceLyricConfig()
+            ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
 
         string expected =

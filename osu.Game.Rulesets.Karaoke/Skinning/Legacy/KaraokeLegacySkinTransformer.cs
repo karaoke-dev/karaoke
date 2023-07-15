@@ -49,7 +49,7 @@ public class KaraokeLegacySkinTransformer : KaraokeDefaultSkinTransformer
                     KaraokeSkinComponents.JudgementLine => new LegacyJudgementLine(),
                     KaraokeSkinComponents.Note => new LegacyNotePiece(),
                     KaraokeSkinComponents.HitExplosion => new LegacyHitExplosion(),
-                    _ => throw new InvalidEnumArgumentException(nameof(karaokeComponent.Component))
+                    _ => throw new InvalidEnumArgumentException(nameof(karaokeComponent.Component)),
                 };
 
             default:

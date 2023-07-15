@@ -46,8 +46,8 @@ public partial class NoteSettings : LyricEditorSettings
         NoteEditMode.Verify => new Drawable[]
         {
             new NoteEditModeSection(),
-            new NoteIssueSection()
+            new NoteIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

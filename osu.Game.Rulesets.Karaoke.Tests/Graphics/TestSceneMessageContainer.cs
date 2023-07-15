@@ -21,7 +21,7 @@ public partial class TestSceneMessageContainer : OsuTestScene
         {
             Width = 300,
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
     });
 

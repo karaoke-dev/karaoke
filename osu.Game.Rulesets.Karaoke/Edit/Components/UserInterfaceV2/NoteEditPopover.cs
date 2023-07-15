@@ -33,8 +33,8 @@ public partial class NoteEditPopover : OsuPopover
                 Children = new Section[]
                 {
                     new NoteSection(note),
-                }
-            }
+                },
+            },
         };
     }
 
@@ -57,21 +57,21 @@ public partial class NoteEditPopover : OsuPopover
                     Label = "Text",
                     Description = "The text display on the note.",
                     Current = note.TextBindable,
-                    TabbableContentContainer = this
+                    TabbableContentContainer = this,
                 },
                 rubyText = new LabelledTextBox
                 {
                     Label = "Ruby text",
                     Description = "Should place something like ruby, 拼音 or ふりがな.",
                     Current = note.RubyTextBindable,
-                    TabbableContentContainer = this
+                    TabbableContentContainer = this,
                 },
                 display = new LabelledSwitchButton
                 {
                     Label = "Display",
                     Description = "This note will be hidden and not scorable if not display.",
                     Current = note.DisplayBindable,
-                }
+                },
             };
 
             ScheduleAfterChildren(() =>

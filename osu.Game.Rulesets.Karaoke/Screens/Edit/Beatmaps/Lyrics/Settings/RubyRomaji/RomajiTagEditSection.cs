@@ -28,7 +28,7 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Romaji is sync to another romaji.",
             LockLyricPropertyBy.LockState => "Romaji is locked.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
@@ -36,7 +36,7 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the romaji because it's sync to another lyric's text.",
             LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the romaji.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     private partial class RomajiTagsEditor : TextTagsEditor

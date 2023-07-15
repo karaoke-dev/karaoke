@@ -29,10 +29,10 @@ public partial class TimeTagAutoGenerateSection : AutoGenerateSection
                         language_mode, new SwitchModeDescriptionAction
                         {
                             Text = "edit language mode",
-                            Mode = LyricEditorMode.Language
+                            Mode = LyricEditorMode.Language,
                         }
-                    }
-                }
+                    },
+                },
             };
 
         protected override ConfigButton CreateConfigButton()
@@ -51,7 +51,7 @@ public partial class TimeTagAutoGenerateSection : AutoGenerateSection
                 {
                     KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => "Japanese",
                     KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => "Chinese",
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    _ => throw new ArgumentOutOfRangeException(nameof(setting)),
                 };
         }
     }

@@ -50,7 +50,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
                             new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
-                        }
+                        },
                     },
                     new LyricEditorModeMenu(new Bindable<LyricEditorMode>(), "Mode"),
                     new MenuItem("View")
@@ -59,7 +59,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                         {
                             new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),
                             new AutoFocusToEditLyricMenu(lyricEditorConfig, "Auto focus to edit lyric"),
-                        }
+                        },
                     },
                     new MenuItem("Config")
                     {
@@ -68,17 +68,17 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                             new EditorMenuItem("Lyric editor"),
                             new GeneratorConfigMenu("Auto-generator"),
                             new LockStateMenu(lyricEditorConfig, "Lock"),
-                        }
+                        },
                     },
                     new MenuItem("Tools")
                     {
                         Items = new MenuItem[]
                         {
                             new KaraokeSkinEditorMenu(null!, null!, "Skin editor"),
-                        }
+                        },
                     },
-                }
-            }
+                },
+            },
         });
     }
 }

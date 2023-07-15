@@ -25,7 +25,7 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
         PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
-            ReferenceLyricId = referencedLyric.ID
+            ReferenceLyricId = referencedLyric.ID,
         });
 
         TriggerHandlerChanged(c => c.Lock(LockState.Full));
@@ -51,7 +51,7 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
         PrepareHitObject(() => new Note
         {
             Text = "カラオケ",
-            ReferenceLyricId = referencedLyric.ID
+            ReferenceLyricId = referencedLyric.ID,
         });
 
         TriggerHandlerChanged(c => c.Unlock());

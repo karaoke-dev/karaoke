@@ -58,7 +58,7 @@ public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
                 Icon = FontAwesome.Solid.Check,
                 Scale = new Vector2(0),
             },
-            new HoverSounds()
+            new HoverSounds(),
         };
 
         Current.DisabledChanged += disabled =>

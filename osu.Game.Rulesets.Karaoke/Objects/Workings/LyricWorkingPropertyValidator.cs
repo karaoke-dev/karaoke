@@ -25,7 +25,7 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
             LyricWorkingProperty.Page => false,
             LyricWorkingProperty.ReferenceLyric => true,
             LyricWorkingProperty.EffectApplier => false,
-            _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
     protected override bool IsWorkingPropertySynced(Lyric hitObject, LyricWorkingProperty flags) =>
@@ -38,7 +38,7 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
             LyricWorkingProperty.Page => true,
             LyricWorkingProperty.ReferenceLyric => isReferenceLyricSynced(hitObject),
             LyricWorkingProperty.EffectApplier => true,
-            _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
     private bool isWorkingSingerSynced(Lyric lyric)

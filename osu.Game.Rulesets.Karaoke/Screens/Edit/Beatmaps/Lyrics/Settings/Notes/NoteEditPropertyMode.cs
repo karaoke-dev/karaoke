@@ -9,5 +9,5 @@ public enum NoteEditPropertyMode
 
     RubyText,
 
-    Display
+    Display,
 }

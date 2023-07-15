@@ -27,13 +27,13 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
             {
                 StartIndex = 1,
                 EndIndex = 1,
-                Text = "ビ"
+                Text = "ビ",
             },
             new RubyTag
             {
                 StartIndex = 0,
                 EndIndex = 0,
-                Text = "ル"
+                Text = "ル",
             },
         };
 
@@ -53,13 +53,13 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
             {
                 StartIndex = 0,
                 EndIndex = 0,
-                Text = "ル"
+                Text = "ル",
             },
             new RubyTag
             {
                 StartIndex = 1,
                 EndIndex = 1,
-                Text = "ビ"
+                Text = "ビ",
             },
         };
         var actual = JsonConvert.DeserializeObject<RubyTag[]>(json, CreateSettings()) ?? throw new InvalidCastException();

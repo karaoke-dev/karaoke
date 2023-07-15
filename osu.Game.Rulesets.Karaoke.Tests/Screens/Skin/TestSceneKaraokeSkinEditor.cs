@@ -54,7 +54,7 @@ public partial class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEdi
             Name = "karaoke! (default skin)",
             Creator = "team karaoke!",
             Protected = true,
-            InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo()
+            InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo(),
         };
 
         public TestingSkin(IStorageResourceProvider? resources)

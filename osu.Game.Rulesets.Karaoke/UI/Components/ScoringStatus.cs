@@ -42,8 +42,8 @@ public partial class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
             messageText = new OsuMarkdownTextFlowContainer
             {
                 RelativeSizeAxes = Axes.None,
-                AutoSizeAxes = Axes.Both
-            }
+                AutoSizeAxes = Axes.Both,
+            },
         };
     }
 
@@ -88,7 +88,7 @@ public partial class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
             ScoringStatusMode.Edit => "Edit mode.",
             ScoringStatusMode.Scoring => "Scoring...",
             ScoringStatusMode.NotInitialized => "Seems microphone device is not ready.",
-            _ => "Weird... Should not goes to here either :oops:"
+            _ => "Weird... Should not goes to here either :oops:",
         };
     }
 }

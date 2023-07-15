@@ -17,7 +17,7 @@ public class CheckLyricTime : CheckHitObjectProperty<Lyric>
     {
         new IssueTemplateLyricTimeOverlapping(this),
         new IssueTemplateLyricStartTimeInvalid(this),
-        new IssueTemplateLyricEndTimeInvalid(this)
+        new IssueTemplateLyricEndTimeInvalid(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)

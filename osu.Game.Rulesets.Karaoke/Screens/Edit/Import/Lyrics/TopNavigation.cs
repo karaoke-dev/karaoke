@@ -74,8 +74,8 @@ public abstract partial class TopNavigation : CompositeDrawable
                     {
                         CompleteClicked();
                     }
-                }
-            }
+                },
+            },
         };
     }
 
@@ -171,7 +171,7 @@ public abstract partial class TopNavigation : CompositeDrawable
             {
                 Font = new FontUsage(size: 20),
                 Text = text,
-                Action = action
+                Action = action,
             });
         }
 
@@ -202,5 +202,5 @@ public enum NavigationState
 
     Done,
 
-    Error
+    Error,
 }

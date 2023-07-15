@@ -41,7 +41,7 @@ public class KaraokeBeatmapConversionTest : BeatmapConversionTest<ConvertValue>
         {
             StartTime = obj.StartTime,
             EndTime = obj.EndTime,
-            Lyric = obj.Text
+            Lyric = obj.Text,
         };
     }
 

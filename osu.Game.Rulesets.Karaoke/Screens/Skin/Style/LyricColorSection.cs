@@ -29,7 +29,7 @@ internal partial class LyricColorSection : StyleSection
             {
                 Label = "Color",
                 Description = "Select color.",
-            }
+            },
         };
     }
 
@@ -51,5 +51,5 @@ public enum ColorArea
 
     Back_Border,
 
-    Back_Shadow
+    Back_Shadow,
 }

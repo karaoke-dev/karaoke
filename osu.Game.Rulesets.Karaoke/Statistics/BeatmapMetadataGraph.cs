@@ -57,20 +57,20 @@ public partial class BeatmapMetadataGraph : Container
                     {
                         new TextMetadataSection("Description")
                         {
-                            Text = beatmapInfo?.DifficultyName ?? string.Empty
+                            Text = beatmapInfo?.DifficultyName ?? string.Empty,
                         },
                         new TextMetadataSection("Source")
                         {
-                            Text = beatmapInfo?.Metadata.Source ?? string.Empty
+                            Text = beatmapInfo?.Metadata.Source ?? string.Empty,
                         },
                         new TextMetadataSection("Tags")
                         {
-                            Text = beatmapInfo?.Metadata.Tags ?? string.Empty
+                            Text = beatmapInfo?.Metadata.Tags ?? string.Empty,
                         },
                         new SingerMetadataSection("Singer")
                         {
-                            Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray() ?? Array.Empty<Singer>()
-                        }
+                            Singers = karaokeBeatmap?.SingerInfo.GetAllSingers().ToArray() ?? Array.Empty<Singer>(),
+                        },
                     },
                 },
             },
@@ -141,7 +141,7 @@ public partial class BeatmapMetadataGraph : Container
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
                 Colour = Color4.White.Opacity(0.75f),
-                Text = text
+                Text = text,
             });
         }
     }
@@ -186,7 +186,7 @@ public partial class BeatmapMetadataGraph : Container
             {
                 textFlow.Add(new SingerSpriteText
                 {
-                    Singer = singer
+                    Singer = singer,
                 });
             }
         }
@@ -202,8 +202,8 @@ public partial class BeatmapMetadataGraph : Container
                 {
                     osuSpriteText = new OsuSpriteText
                     {
-                        Font = OsuFont.GetFont(size: 14)
-                    }
+                        Font = OsuFont.GetFont(size: 14),
+                    },
                 };
             }
 

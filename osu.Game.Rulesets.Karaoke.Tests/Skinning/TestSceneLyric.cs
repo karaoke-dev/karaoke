@@ -61,14 +61,14 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                 {
                     StartIndex = 0,
                     EndIndex = 0,
-                    Text = "か"
+                    Text = "か",
                 },
                 new RubyTag
                 {
                     StartIndex = 2,
                     EndIndex = 2,
-                    Text = "お"
-                }
+                    Text = "お",
+                },
             },
             RomajiTags = new[]
             {
@@ -76,14 +76,14 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                 {
                     StartIndex = 1,
                     EndIndex = 1,
-                    Text = "ra"
+                    Text = "ra",
                 },
                 new RomajiTag
                 {
                     StartIndex = 3,
                     EndIndex = 3,
-                    Text = "ke"
-                }
+                    Text = "ke",
+                },
             },
             EffectApplier = new LyricPreviewStageEffectApplier(new[]
             {
@@ -93,10 +93,10 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                     EndTime = startTime + duration,
                     Timings = new Dictionary<int, double>
                     {
-                        { 0, startTime }
-                    }
-                }
-            }, new PreviewStageDefinition())
+                        { 0, startTime },
+                    },
+                },
+            }, new PreviewStageDefinition()),
         };
 
         lyric.Translates.Add(cultureInfo, "karaoke");
@@ -117,7 +117,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Depth = depthIndex++
+            Depth = depthIndex++,
         };
 
     protected partial class TestDrawableLyric : DrawableLyric

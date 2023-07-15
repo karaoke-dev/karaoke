@@ -61,7 +61,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
             new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.StageBackground))
             {
                 Depth = 2,
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             new Box
             {
@@ -69,13 +69,13 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
                 Name = "Background",
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.Black,
-                Alpha = 0.5f
+                Alpha = 0.5f,
             },
             centerLine = new CenterLine
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-            }
+            },
         });
 
         HitObjectLayer.Add(judgementArea = new Container
@@ -89,7 +89,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     AutoSizeAxes = Axes.Both,
-                    BypassAutoSizeAxes = Axes.Both
+                    BypassAutoSizeAxes = Axes.Both,
                 },
                 judgementLine = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
                 {
@@ -99,9 +99,9 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
                 },
                 scoringMarker = new ScoringMarker
                 {
-                    Alpha = 0
-                }
-            }
+                    Alpha = 0,
+                },
+            },
         });
 
         HitObjectArea.AddRange(new Drawable[]
@@ -111,7 +111,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
             {
                 Name = "Replay scoring Visualization",
                 RelativeSizeAxes = Axes.Both,
-                Alpha = 0.6f
+                Alpha = 0.6f,
             },
             realTimeScoringVisualization = new RealTimeScoringVisualization
             {
@@ -190,7 +190,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone + 2)
+            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone + 2),
         });
 
         // Add hit explosion
@@ -200,7 +200,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         var explosion = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion), _ =>
             new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
         {
-            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject)
+            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject),
         };
 
         // todo : should be added into hitObjectArea.Explosions

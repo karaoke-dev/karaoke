@@ -56,7 +56,7 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
         {
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags),
         };
 
         var expectedNotes = expectedNoteTexts.Select(x =>
@@ -66,13 +66,13 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
                 return new Note
                 {
                     Text = x.Split(',')[0],
-                    RubyText = x.Split(',')[1]
+                    RubyText = x.Split(',')[1],
                 };
             }
 
             return new Note
             {
-                Text = x
+                Text = x,
             };
         }).ToArray();
         CheckGenerateResult(lyric, expectedNotes, config);

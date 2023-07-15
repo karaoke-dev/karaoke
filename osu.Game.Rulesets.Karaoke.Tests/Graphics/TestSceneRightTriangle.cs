@@ -36,9 +36,9 @@ public partial class TestSceneRightTriangle : OsuTestScene
                 rightTriangle = new RightTriangle
                 {
                     Size = new Vector2(100),
-                    Colour = colours.Yellow
-                }
-            }
+                    Colour = colours.Yellow,
+                },
+            },
         };
     }
 

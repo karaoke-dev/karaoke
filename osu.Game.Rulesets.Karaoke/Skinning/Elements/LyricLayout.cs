@@ -46,7 +46,7 @@ public class LyricLayout : IKaraokeSkinElement
             Left = Alignment.HasFlagFast(Anchor.x0) ? HorizontalMargin : 0,
             Right = Alignment.HasFlagFast(Anchor.x2) ? HorizontalMargin : 0,
             Top = Alignment.HasFlagFast(Anchor.y0) ? VerticalMargin : 0,
-            Bottom = Alignment.HasFlagFast(Anchor.y2) ? VerticalMargin : 0
+            Bottom = Alignment.HasFlagFast(Anchor.y2) ? VerticalMargin : 0,
         };
     }
 }

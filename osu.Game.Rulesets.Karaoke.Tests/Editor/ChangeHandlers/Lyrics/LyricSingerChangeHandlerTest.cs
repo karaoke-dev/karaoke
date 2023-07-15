@@ -81,7 +81,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
             {
                 singer.ID,
                 anotherSinger.ID,
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.Remove(singer));
@@ -122,7 +122,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
             {
                 singer.ID,
                 anotherSinger.ID,
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.RemoveRange(new[] { singer }));
@@ -156,7 +156,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
             SingerIds = new[]
             {
                 singer.ID,
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.Clear());
@@ -181,7 +181,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         });
         PrepareLyricWithSyncConfig(new Lyric(), new SyncLyricConfig
         {
-            SyncSingerProperty = syncSinger
+            SyncSingerProperty = syncSinger,
         });
 
         if (syncSinger)

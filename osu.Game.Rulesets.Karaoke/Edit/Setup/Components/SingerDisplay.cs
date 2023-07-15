@@ -58,14 +58,14 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
                 new SingerCircle
                 {
                     Current = { BindTarget = Current },
-                    DeleteRequested = () => DeleteRequested?.Invoke(this)
+                    DeleteRequested = () => DeleteRequested?.Invoke(this),
                 },
                 singerName = new OsuSpriteText
                 {
                     Anchor = Anchor.TopCentre,
-                    Origin = Anchor.TopCentre
-                }
-            }
+                    Origin = Anchor.TopCentre,
+                },
+            },
         };
 
         Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name ?? "unknown singer", true);
@@ -101,7 +101,7 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                }
+                },
             };
         }
 
@@ -120,7 +120,7 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
 
         public MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem("Delete", MenuItemType.Destructive, () => DeleteRequested?.Invoke())
+            new OsuMenuItem("Delete", MenuItemType.Destructive, () => DeleteRequested?.Invoke()),
         };
 
         public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();

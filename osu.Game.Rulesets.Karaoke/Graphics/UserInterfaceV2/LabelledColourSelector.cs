@@ -67,18 +67,18 @@ public partial class LabelledColourSelector : LabelledComponent<LabelledColourSe
                         {
                             fill = new Box
                             {
-                                RelativeSizeAxes = Axes.Both
+                                RelativeSizeAxes = Axes.Both,
                             },
                             colourHexCode = new OsuSpriteText
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                Font = OsuFont.Default.With(size: 12)
-                            }
+                                Font = OsuFont.Default.With(size: 12),
+                            },
                         },
-                        Action = this.ShowPopover
+                        Action = this.ShowPopover,
                     },
-                }
+                },
             };
         }
 
@@ -100,8 +100,8 @@ public partial class LabelledColourSelector : LabelledComponent<LabelledColourSe
         {
             Child = new OsuColourPicker
             {
-                Current = { BindTarget = Current }
-            }
+                Current = { BindTarget = Current },
+            },
         };
     }
 }

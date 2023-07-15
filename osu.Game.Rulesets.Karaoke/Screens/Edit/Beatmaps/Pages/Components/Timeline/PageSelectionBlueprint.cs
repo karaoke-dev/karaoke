@@ -95,7 +95,7 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
                     Padding = new MarginPadding(3),
                     Font = OsuFont.Default.With(size: 14, weight: FontWeight.SemiBold),
                     Colour = colours.B5,
-                }
+                },
             };
 
             pagesVersion.BindTo(pageStateProvider.PageInfo.PagesVersion);

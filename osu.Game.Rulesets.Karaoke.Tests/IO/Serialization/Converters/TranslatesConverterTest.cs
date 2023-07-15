@@ -23,7 +23,7 @@ public class TranslatesConverterTest : BaseSingleConverterTest<TranslatesConvert
         var translates = new Dictionary<CultureInfo, string>
         {
             { new CultureInfo("en-US"), "karaoke" },
-            { new CultureInfo("Ja-jp"), "カラオケ" }
+            { new CultureInfo("Ja-jp"), "カラオケ" },
         };
 
         const string expected = "[{\"key\":1033,\"value\":\"karaoke\"},{\"key\":1041,\"value\":\"カラオケ\"}]";
@@ -39,7 +39,7 @@ public class TranslatesConverterTest : BaseSingleConverterTest<TranslatesConvert
         var expected = new Dictionary<CultureInfo, string>
         {
             { new CultureInfo("en-US"), "karaoke" },
-            { new CultureInfo("Ja-jp"), "カラオケ" }
+            { new CultureInfo("Ja-jp"), "カラオケ" },
         };
 
         var actual = JsonConvert.DeserializeObject<Dictionary<CultureInfo, string>>(json, CreateSettings()) ?? throw new InvalidCastException();

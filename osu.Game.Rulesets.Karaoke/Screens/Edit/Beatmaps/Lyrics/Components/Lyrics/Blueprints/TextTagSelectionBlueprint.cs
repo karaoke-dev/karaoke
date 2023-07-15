@@ -45,7 +45,7 @@ public abstract partial class TextTagSelectionBlueprint<T> : SelectionBlueprint<
                         Alpha = 0f,
                         AlwaysPresent = true,
                     },
-                }
+                },
             },
         };
     }

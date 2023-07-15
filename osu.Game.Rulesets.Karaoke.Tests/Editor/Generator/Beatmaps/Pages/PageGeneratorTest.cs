@@ -44,13 +44,13 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
         {
             HitObjects = new List<KaraokeHitObject>
             {
-                TestCaseTagHelper.ParseLyric(lyric)
-            }
+                TestCaseTagHelper.ParseLyric(lyric),
+            },
         };
 
         var expectedPages = expectedTimes.Select(x => new Page
         {
-            Time = x
+            Time = x,
         }).ToArray();
 
         CheckGenerateResult(beatmap, expectedPages, config);
@@ -69,13 +69,13 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
             HitObjects = new List<KaraokeHitObject>
             {
                 TestCaseTagHelper.ParseLyric(firstLyric),
-                TestCaseTagHelper.ParseLyric(secondLyric)
-            }
+                TestCaseTagHelper.ParseLyric(secondLyric),
+            },
         };
 
         var expectedPages = expectedTimes.Select(x => new Page
         {
-            Time = x
+            Time = x,
         }).ToArray();
 
         CheckGenerateResult(beatmap, expectedPages, config);

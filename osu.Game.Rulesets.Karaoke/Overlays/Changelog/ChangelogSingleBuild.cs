@@ -62,12 +62,12 @@ public partial class ChangelogSingleBuild : ChangelogContent
             fill.Insert(-1, new NavigationIconButton(Build.Versions.Next)
             {
                 Icon = FontAwesome.Solid.ChevronLeft,
-                SelectBuild = b => SelectBuild?.Invoke(b)
+                SelectBuild = b => SelectBuild?.Invoke(b),
             });
             fill.Insert(1, new NavigationIconButton(Build.Versions.Previous)
             {
                 Icon = FontAwesome.Solid.ChevronRight,
-                SelectBuild = b => SelectBuild?.Invoke(b)
+                SelectBuild = b => SelectBuild?.Invoke(b),
             });
 
             return fill;

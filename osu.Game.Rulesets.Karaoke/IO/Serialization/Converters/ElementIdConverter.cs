@@ -23,7 +23,7 @@ public class ElementIdConverter : JsonConverter<ElementId?>
         {
             null => null,
             "" => ElementId.Empty,
-            _ => new ElementId(str)
+            _ => new ElementId(str),
         };
 
     public override void WriteJson(JsonWriter writer, ElementId? value, JsonSerializer serializer)

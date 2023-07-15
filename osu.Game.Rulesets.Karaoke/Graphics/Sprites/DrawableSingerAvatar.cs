@@ -26,7 +26,7 @@ public partial class DrawableSingerAvatar : CompositeDrawable
             RelativeSizeAxes = Axes.Both,
             FillMode = FillMode.Fit,
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
     }
 

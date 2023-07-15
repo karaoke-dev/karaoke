@@ -51,9 +51,9 @@ public partial class ChangelogSection : CompositeDrawable
                 new PostsContainer
                 {
                     Expanded = { BindTarget = Expanded },
-                    Children = posts.Select(p => new PostButton(p)).ToArray()
-                }
-            }
+                    Children = posts.Select(p => new PostButton(p)).ToArray(),
+                },
+            },
         };
     }
 
@@ -74,7 +74,7 @@ public partial class ChangelogSection : CompositeDrawable
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Text = post.DisplayVersion
+                Text = post.DisplayVersion,
             };
         }
 
@@ -121,7 +121,7 @@ public partial class ChangelogSection : CompositeDrawable
                 AutoSizeAxes = Axes.Y,
                 Direction = FillDirection.Vertical,
                 Spacing = new Vector2(0, 5),
-                Alpha = 0
+                Alpha = 0,
             };
         }
 

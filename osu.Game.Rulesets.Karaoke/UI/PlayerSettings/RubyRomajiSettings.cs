@@ -20,11 +20,11 @@ public partial class RubyRomajiSettings : PlayerSettingsGroup
         {
             displayRubyCheckBox = new PlayerCheckbox
             {
-                LabelText = "Display ruby"
+                LabelText = "Display ruby",
             },
             displayRomajiCheckBox = new PlayerCheckbox
             {
-                LabelText = "Display romaji"
+                LabelText = "Display romaji",
             },
         };
     }

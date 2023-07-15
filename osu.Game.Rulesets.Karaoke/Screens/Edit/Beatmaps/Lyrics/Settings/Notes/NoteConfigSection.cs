@@ -25,8 +25,8 @@ public partial class NoteConfigSection : EditorSection
             {
                 Label = "Time range",
                 Description = "Change time-range to zoom-in/zoom-out the notes.",
-                Current = bindableDouble
-            }
+                Current = bindableDouble,
+            },
         };
     }
 }

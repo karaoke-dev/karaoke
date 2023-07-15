@@ -29,14 +29,14 @@ public partial class KaraokeModFlashlight : ModFlashlight<KaraokeHitObject>
         MaxValue = 3f,
         Default = 1f,
         Value = 1f,
-        Precision = 0.1f
+        Precision = 0.1f,
     };
 
     [SettingSource("Change size based on combo", "Decrease the flashlight size as combo increases.")]
     public override BindableBool ComboBasedSize { get; } = new()
     {
         Default = false,
-        Value = false
+        Value = false,
     };
 
     public override float DefaultFlashlightSize => 50;

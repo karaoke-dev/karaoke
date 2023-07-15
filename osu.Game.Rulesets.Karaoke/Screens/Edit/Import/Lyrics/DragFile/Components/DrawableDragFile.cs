@@ -39,7 +39,7 @@ public partial class DrawableDragFile : Container
             fileSelector = new OsuFileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
             {
                 RelativeSizeAxes = Axes.Both,
-                Width = 0.6f
+                Width = 0.6f,
             },
             new Container
             {
@@ -52,7 +52,7 @@ public partial class DrawableDragFile : Container
                     new Box
                     {
                         Colour = colours.GreySeaFoamDarker,
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
                     },
                     new Container
                     {
@@ -69,13 +69,13 @@ public partial class DrawableDragFile : Container
                                 RelativeSizeAxes = Axes.X,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                                TextAnchor = Anchor.Centre
+                                TextAnchor = Anchor.Centre,
                             },
                             ScrollContent =
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
-                            }
+                            },
                         },
                     },
                     importButton = new RoundedButton
@@ -94,10 +94,10 @@ public partial class DrawableDragFile : Container
                                 return;
 
                             Import?.Invoke(fileName);
-                        }
-                    }
-                }
-            }
+                        },
+                    },
+                },
+            },
         };
 
         fileSelector.CurrentFile.BindValueChanged(fileChanged, true);

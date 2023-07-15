@@ -36,7 +36,7 @@ public class ClassicStageInfoGenerator : StageInfoGenerator<ClassicStageInfoGene
             LyricRowAmount =
             {
                 Value = lyricRowAmount,
-            }
+            },
         });
 
         // it's OK not to get the config in the config manager.
@@ -45,7 +45,7 @@ public class ClassicStageInfoGenerator : StageInfoGenerator<ClassicStageInfoGene
             LyricRowAmount =
             {
                 Value = lyricRowAmount,
-            }
+            },
         });
 
         return new ClassicStageInfo

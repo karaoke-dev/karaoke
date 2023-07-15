@@ -18,10 +18,10 @@ public partial class PracticeOverlay : SettingOverlay
             {
                 Expanded =
                 {
-                    Value = true
+                    Value = true,
                 },
-                Width = 400
-            }
+                Width = 400,
+            },
         };
     }
 
@@ -30,6 +30,6 @@ public partial class PracticeOverlay : SettingOverlay
         Name = "Toggle Practice",
         Text = "Practice",
         TooltipText = "Open/Close practice overlay",
-        Action = ToggleVisibility
+        Action = ToggleVisibility,
     };
 }

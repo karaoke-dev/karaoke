@@ -101,7 +101,7 @@ public class ClassicLyricLayoutCategoryGenerator : BeatmapPropertyGenerator<Clas
                 ClassicLyricLayoutAlignment.Left => "Left",
                 ClassicLyricLayoutAlignment.Center => "Center",
                 ClassicLyricLayoutAlignment.Right => "Right",
-                _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null),
             };
     }
 }

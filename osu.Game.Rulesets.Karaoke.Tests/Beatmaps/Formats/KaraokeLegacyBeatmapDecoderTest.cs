@@ -145,7 +145,7 @@ public class KaraokeLegacyBeatmapDecoderTest
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = 0
+            ReferenceTimeTagIndex = 0,
         };
 
         if (expected != null)

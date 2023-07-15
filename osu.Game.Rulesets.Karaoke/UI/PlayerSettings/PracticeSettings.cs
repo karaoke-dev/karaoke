@@ -22,18 +22,18 @@ public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<
         {
             new OsuSpriteText
             {
-                Text = "Practice preempt time:"
+                Text = "Practice preempt time:",
             },
             preemptTimeSliderBar = new PlayerSliderBar<double>(),
             new OsuSpriteText
             {
-                Text = "Lyric:"
+                Text = "Lyric:",
             },
             new LyricsPreview
             {
                 Height = 580,
                 RelativeSizeAxes = Axes.X,
-            }
+            },
         };
     }
 

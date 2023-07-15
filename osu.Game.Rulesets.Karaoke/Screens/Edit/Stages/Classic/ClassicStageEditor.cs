@@ -20,14 +20,14 @@ public partial class ClassicStageEditor : GenericEditor<ClassicStageEditorScreen
         {
             ClassicStageEditorScreenMode.Stage => new StageScreen(),
             ClassicStageEditorScreenMode.Config => new ConfigScreen(),
-            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };
 
     protected override MenuItem[] GenerateMenuItems(ClassicStageEditorScreenMode screenMode)
     {
         return screenMode switch
         {
-            _ => Array.Empty<MenuItem>()
+            _ => Array.Empty<MenuItem>(),
         };
     }
 }

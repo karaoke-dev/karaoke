@@ -46,8 +46,8 @@ public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineS
                     RelativeSizeAxes = Axes.X,
                     Text = item.Text,
                     ShowTooltip = false,
-                }
-            }
+                },
+            },
         });
     }
 

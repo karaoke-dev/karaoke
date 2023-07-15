@@ -69,7 +69,7 @@ public partial class PageEditorIssueSection : IssueSection
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
                     Margin = new MarginPadding { Left = 10 },
-                    Issue = issue
+                    Issue = issue,
                 },
                 new OsuSpriteText
                 {
@@ -81,7 +81,7 @@ public partial class PageEditorIssueSection : IssueSection
                 {
                     Text = issue.ToString(),
                     RelativeSizeAxes = Axes.X,
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
             };
         }

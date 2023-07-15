@@ -34,7 +34,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
         {
             RelativeSizeAxes = Axes.Both,
             Colour = Color4.White,
-            Alpha = GetAlpha(Type)
+            Alpha = GetAlpha(Type),
         };
         AddInternal(drawableCaret);
 
@@ -214,7 +214,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                 {
                     // Deletion
                     PlatformAction.DeleteBackwardChar => true,
-                    _ => false
+                    _ => false,
                 };
 
             static bool processTriggerMoveText(PlatformAction action) =>
@@ -227,7 +227,7 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                     PlatformAction.MoveForwardWord => true,
                     PlatformAction.MoveBackwardLine => true,
                     PlatformAction.MoveForwardLine => true,
-                    _ => false
+                    _ => false,
                 };
         }
     }

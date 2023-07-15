@@ -51,7 +51,7 @@ public abstract partial class Panel : FocusedOverlayContainer
                     Direction = FillDirection.Vertical,
                     Spacing = new Vector2(10),
                 },
-            }
+            },
         };
     }
 
@@ -135,6 +135,6 @@ public abstract partial class Panel : FocusedOverlayContainer
         {
             PanelDirection.Left => -DrawWidth,
             PanelDirection.Right => DrawWidth,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 }

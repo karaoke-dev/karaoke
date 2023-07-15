@@ -23,7 +23,7 @@ public class Page : IDeepCloneable<Page>, IComparable<Page>
     {
         return new Page
         {
-            Time = Time
+            Time = Time,
         };
     }
 

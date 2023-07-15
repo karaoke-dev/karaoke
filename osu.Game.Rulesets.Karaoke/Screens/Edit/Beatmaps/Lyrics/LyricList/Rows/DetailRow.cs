@@ -24,7 +24,7 @@ public abstract partial class DetailRow : Row
         new[]
         {
             new Dimension(GridSizeMode.Absolute, TIMING_WIDTH),
-            new Dimension()
+            new Dimension(),
         };
 
     protected override Dimension GetRowDimensions()
@@ -34,7 +34,7 @@ public abstract partial class DetailRow : Row
         new[]
         {
             CreateTimingInfo(lyric),
-            CreateContent(lyric)
+            CreateContent(lyric),
         };
 
     protected override bool HighlightBackgroundWhenSelected(ICaretPosition? caretPosition) => true;
@@ -45,7 +45,7 @@ public abstract partial class DetailRow : Row
             BackgroundStyle.Idle => _ => new Color4(), // should not have background if not hover.
             BackgroundStyle.Hover => colourProvider.Background2, // follow the colour in the editor table.
             BackgroundStyle.Focus => colourProvider.Background1, // follow the colour in the editor table.
-            _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(style), style, null),
         };
 
     protected abstract Drawable CreateTimingInfo(Lyric lyric);

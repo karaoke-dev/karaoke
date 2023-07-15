@@ -23,7 +23,7 @@ public partial class KaraokeBlueprintContainer : ComposeBlueprintContainer
         {
             Note note => new NoteSelectionBlueprint(note),
             Lyric lyric => new LyricSelectionBlueprint(lyric),
-            _ => throw new ArgumentOutOfRangeException(nameof(hitObject))
+            _ => throw new ArgumentOutOfRangeException(nameof(hitObject)),
         };
 
     protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();

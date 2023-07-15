@@ -18,7 +18,7 @@ public partial class TestSceneBeatmapCoverInfo : OsuTestScene
         Add(beatmapCoverInfo = new BeatmapCoverInfo
         {
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         });
     }
 

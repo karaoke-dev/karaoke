@@ -36,8 +36,8 @@ public partial class CreateNewLyricPlacementColumn : LyricPlacementColumn
                 Action = () =>
                 {
                     beatmapSingersChangeHandler.Add();
-                }
-            }
+                },
+            },
         };
     }
 

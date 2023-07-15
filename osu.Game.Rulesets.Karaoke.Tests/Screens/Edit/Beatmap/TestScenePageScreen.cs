@@ -38,7 +38,7 @@ public partial class TestScenePageScreen : BeatmapEditorScreenTestScene<PageScre
             new()
             {
                 Time = 3000,
-            }
+            },
         });
 
         return karaokeBeatmap;
@@ -54,7 +54,7 @@ public partial class TestScenePageScreen : BeatmapEditorScreenTestScene<PageScre
         {
             Content,
             dialogOverlay = new DialogOverlay(),
-            lyricsProvider = new LyricsProvider()
+            lyricsProvider = new LyricsProvider(),
         });
 
         Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);

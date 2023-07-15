@@ -106,7 +106,7 @@ public partial class InputKeyText : OsuMarkdownLinkText, IHasPopover
             {
                 Width = 300,
                 RelativeSizeAxes = Axes.None,
-            }
+            },
         };
 
         // because it's not possible to get the key change event, so at least update the key after popover closed.

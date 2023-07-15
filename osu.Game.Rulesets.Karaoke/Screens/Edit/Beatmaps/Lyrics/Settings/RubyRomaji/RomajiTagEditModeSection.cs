@@ -19,7 +19,7 @@ public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRoma
             RomajiTagEditMode.Generate => new Selection(),
             RomajiTagEditMode.Edit => new Selection(),
             RomajiTagEditMode.Verify => new RomajiTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(RomajiTagEditMode mode) =>
@@ -28,7 +28,7 @@ public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRoma
             RomajiTagEditMode.Generate => "Generate",
             RomajiTagEditMode.Edit => "Edit",
             RomajiTagEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, RomajiTagEditMode mode, bool active) =>
@@ -37,7 +37,7 @@ public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRoma
             RomajiTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
             RomajiTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
             RomajiTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(RomajiTagEditMode mode) =>
@@ -59,8 +59,8 @@ public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRoma
                             AdjustableActions = new List<KaraokeEditAction>
                             {
                                 KaraokeEditAction.MoveToPreviousLyric,
-                                KaraokeEditAction.MoveToNextLyric
-                            }
+                                KaraokeEditAction.MoveToNextLyric,
+                            },
                         }
                     },
                     {
@@ -73,13 +73,13 @@ public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRoma
                                 KaraokeEditAction.EditTextTagIncreaseStartIndex,
                                 KaraokeEditAction.EditTextTagReduceEndIndex,
                                 KaraokeEditAction.EditTextTagIncreaseEndIndex,
-                            }
+                            },
                         }
-                    }
-                }
+                    },
+                },
             },
             RomajiTagEditMode.Verify => "Check invalid romajies in here.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class RomajiTagVerifySelection : LyricEditorVerifySelection

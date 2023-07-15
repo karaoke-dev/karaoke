@@ -31,6 +31,6 @@ public class ClassicLyricLayoutCategoryGeneratorConfig : GeneratorConfig
     public BindableFloat HorizontalMargin { get; } = new()
     {
         MinValue = 32,
-        MaxValue = 100
+        MaxValue = 100,
     };
 }

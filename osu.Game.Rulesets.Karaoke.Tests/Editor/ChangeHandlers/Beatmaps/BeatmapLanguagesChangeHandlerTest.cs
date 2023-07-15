@@ -20,7 +20,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
         {
             karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
             {
-                new("zh-TW")
+                new("zh-TW"),
             };
         });
 
@@ -45,7 +45,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
             karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
             {
                 new("zh-TW"),
-                new("Ja-jp")
+                new("Ja-jp"),
             };
         });
 
@@ -69,7 +69,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
             karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
             {
                 new("zh-TW"),
-                new("Ja-jp")
+                new("Ja-jp"),
             };
         });
 
@@ -79,8 +79,8 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
             {
                 {
                     new("zh-TW"), "卡拉 OK"
-                }
-            }
+                },
+            },
         });
 
         TriggerHandlerChanged(c =>

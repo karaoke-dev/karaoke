@@ -27,7 +27,7 @@ public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
         var build = new APIChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
         {
             Path = "content/changelog/2020.0620",
-            RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/content/changelog/2020.0620"
+            RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/content/changelog/2020.0620",
         };
 
         Children = new Drawable[]
@@ -44,9 +44,9 @@ public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
                 Child = markdownContainer = new ChangeLogMarkdownContainer(build)
                 {
                     RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y
-                }
-            }
+                    AutoSizeAxes = Axes.Y,
+                },
+            },
         };
     });
 

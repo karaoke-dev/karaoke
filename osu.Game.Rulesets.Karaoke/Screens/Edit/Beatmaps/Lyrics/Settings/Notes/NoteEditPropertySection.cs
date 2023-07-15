@@ -29,7 +29,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Notes is sync to another notes.",
             LockLyricPropertyBy.LockState => "Notes is locked.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
@@ -37,7 +37,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the notes because it's sync to another lyric's notes.",
             LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the note.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     private partial class NotePropertiesEditor : LyricPropertiesEditor
@@ -70,18 +70,18 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
                 NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(item)
                 {
                     Label = $"#{index + 1}",
-                    TabbableContentContainer = this
+                    TabbableContentContainer = this,
                 },
                 NoteEditPropertyMode.RubyText => new LabelledNoteRubyTextTextBox(item)
                 {
                     Label = item.Text,
-                    TabbableContentContainer = this
+                    TabbableContentContainer = this,
                 },
                 NoteEditPropertyMode.Display => new LabelledNoteDisplaySwitchButton(item)
                 {
                     Label = item.Text,
                 },
-                _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value))
+                _ => throw new ArgumentOutOfRangeException(nameof(bindableNoteEditPropertyMode.Value)),
             };
         }
 

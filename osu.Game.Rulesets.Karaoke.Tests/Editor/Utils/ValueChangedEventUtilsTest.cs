@@ -18,7 +18,7 @@ public class ValueChangedEventUtilsTest
     {
         var lyric1 = new Lyric
         {
-            Text = "lyric 1"
+            Text = "lyric 1",
         };
 
         var oldCaret = new ClickingCaretPosition(lyric1);
@@ -32,12 +32,12 @@ public class ValueChangedEventUtilsTest
     {
         var lyric1 = new Lyric
         {
-            Text = "lyric 1"
+            Text = "lyric 1",
         };
 
         var lyric2 = new Lyric
         {
-            Text = "lyric 2"
+            Text = "lyric 2",
         };
 
         var oldCaret = new ClickingCaretPosition(lyric1);
@@ -51,7 +51,7 @@ public class ValueChangedEventUtilsTest
     {
         var lyric1 = new Lyric
         {
-            Text = "lyric 1"
+            Text = "lyric 1",
         };
 
         var oldCaret = new ClickingCaretPosition(lyric1);
@@ -66,7 +66,7 @@ public class ValueChangedEventUtilsTest
         var oldMode = default(ModeWithSubMode);
         var newMode = new ModeWithSubMode
         {
-            Mode = LyricEditorMode.View
+            Mode = LyricEditorMode.View,
         };
 
         Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
@@ -77,11 +77,11 @@ public class ValueChangedEventUtilsTest
     {
         var oldMode = new ModeWithSubMode
         {
-            Mode = LyricEditorMode.View
+            Mode = LyricEditorMode.View,
         };
         var newMode = new ModeWithSubMode
         {
-            Mode = LyricEditorMode.View
+            Mode = LyricEditorMode.View,
         };
 
         Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));

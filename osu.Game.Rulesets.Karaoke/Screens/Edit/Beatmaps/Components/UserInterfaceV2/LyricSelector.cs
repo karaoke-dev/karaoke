@@ -46,7 +46,7 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
             RowDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, 40),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -55,7 +55,7 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
                     filter = new LyricSelectionSearchTextBox
                     {
                         RelativeSizeAxes = Axes.X,
-                    }
+                    },
                 },
                 new Drawable[]
                 {
@@ -66,9 +66,9 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
                         {
                             Current.Value = item;
                         };
-                    })
-                }
-            }
+                    }),
+                },
+            },
         };
 
         filter.Current.BindValueChanged(e => lyricList.Filter(e.NewValue));

@@ -42,5 +42,5 @@ public enum LegacyKaraokeSkinNoteLayer
 {
     Border,
     Foreground,
-    Background
+    Background,
 }

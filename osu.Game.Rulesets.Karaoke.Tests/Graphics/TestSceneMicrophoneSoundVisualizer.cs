@@ -23,8 +23,8 @@ public partial class TestSceneMicrophoneSoundVisualizer : OsuTestScene
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                DeviceName = "Super large microphone device name : )"
-            }
+                DeviceName = "Super large microphone device name : )",
+            },
         };
     });
 }

@@ -102,7 +102,7 @@ public class PreviewStageTimingCalculatorTest
             createLyric(lyric_2_id, 2100, 3000),
             createLyric(lyric_3_id, 3100, 4000),
             createLyric(lyric_4_id, 4100, 5000),
-            createLyric(lyric_5_id, 5100, 6000)
+            createLyric(lyric_5_id, 5100, 6000),
         };
 
         lyrics.Reverse();
@@ -119,7 +119,7 @@ public class PreviewStageTimingCalculatorTest
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(), startTime),
-                new(new TextIndex(), endTime)
+                new(new TextIndex(), endTime),
             },
         }.ChangeId(id);
     }

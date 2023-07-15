@@ -45,8 +45,8 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
                 Items = new[]
                 {
                     sync,
-                    reference
-                }
+                    reference,
+                },
             },
             labelledSyncEverything = new LabelledSwitchButton
             {
@@ -55,8 +55,8 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
                 Current =
                 {
                     Value = true,
-                    Disabled = true
-                }
+                    Disabled = true,
+                },
             },
             labelledSyncSinger = new LabelledSwitchButton
             {
@@ -67,7 +67,7 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
             {
                 Label = "Sync time-tags.",
                 Description = "Un-select the selection if want to customize the time-tag.",
-            }
+            },
         };
 
         bindableReferenceLyricPropertyConfig.BindValueChanged(e =>
@@ -123,14 +123,14 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
         lockLyricPropertyBy switch
         {
             // technically the property is always editable.
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
         lockLyricPropertyBy switch
         {
             // technically the property is always editable.
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     private void onConfigChanged()

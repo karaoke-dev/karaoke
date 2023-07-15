@@ -41,7 +41,7 @@ public class LrcDecoder : Decoder<Beatmap>
                 Order = output.HitObjects.Count + 1, // should create default order.
                 Text = lrcLyric.Text,
                 TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
-                RubyTags = lrcRubies
+                RubyTags = lrcRubies,
             };
         });
 
@@ -63,7 +63,7 @@ public class LrcDecoder : Decoder<Beatmap>
             {
                 Text = rubyTag.Text,
                 StartIndex = rubyTag.StartCharIndex,
-                EndIndex = rubyTag.EndCharIndex
+                EndIndex = rubyTag.EndCharIndex,
             };
 
         static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)

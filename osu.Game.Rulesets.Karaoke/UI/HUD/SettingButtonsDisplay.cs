@@ -48,7 +48,7 @@ public partial class SettingButtonsDisplay : CompositeDrawable, ISerialisableDra
                 Spacing = new Vector2(10),
                 Margin = new MarginPadding(10),
                 Direction = FillDirection.Vertical,
-                AlwaysPresent = true
+                AlwaysPresent = true,
             },
         };
     }
@@ -85,8 +85,8 @@ public partial class SettingButtonsDisplay : CompositeDrawable, ISerialisableDra
                     {
                         var button = overlay.CreateToggleButton();
                         triggerButtons.Add(button);
-                    }
-                }
+                    },
+                },
             });
         });
 

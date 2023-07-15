@@ -27,7 +27,7 @@ public partial class CreateNewLyricDetailRow : DetailRow
         new[]
         {
             new Dimension(GridSizeMode.Absolute, TIMING_WIDTH),
-            new Dimension()
+            new Dimension(),
         };
 
     protected override Drawable CreateTimingInfo(Lyric lyric)
@@ -45,7 +45,7 @@ public partial class CreateNewLyricDetailRow : DetailRow
             Action = () =>
             {
                 lyricsChangeHandler.CreateAtLast();
-            }
+            },
         };
     }
 }

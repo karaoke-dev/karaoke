@@ -19,7 +19,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
     {
         var detectedLyric = new Lyric
         {
-            Text = detectedLyricText
+            Text = detectedLyricText,
         };
 
         var lyrics = new[]
@@ -28,7 +28,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
             {
                 Text = lyricText,
             },
-            detectedLyric
+            detectedLyric,
         };
         var config = GeneratorEmptyConfig();
         CheckCanDetect(lyrics, detectedLyric, canDetect, config);
@@ -49,7 +49,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
     {
         var detectedLyric = new Lyric
         {
-            Text = detectedLyricText
+            Text = detectedLyricText,
         };
 
         var lyrics = new[]
@@ -58,7 +58,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
             {
                 Text = lyricText,
             },
-            detectedLyric
+            detectedLyric,
         };
         var config = GeneratorEmptyConfig(x => x.IgnorePrefixAndPostfixSymbol.Value = true);
         CheckCanDetect(lyrics, detectedLyric, canDetect, config);
@@ -75,7 +75,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
         var secondLyric = new Lyric
         {
             Text = secondLyricText,
-            Order = 2
+            Order = 2,
         };
 
         var config = GeneratorEmptyConfig();

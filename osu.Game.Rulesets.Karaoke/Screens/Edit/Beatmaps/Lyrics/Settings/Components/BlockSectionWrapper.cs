@@ -35,14 +35,14 @@ public partial class BlockSectionWrapper : CompositeDrawable, IHasTooltip
                 {
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0.3f,
-                    Colour = Color4.Black
+                    Colour = Color4.Black,
                 },
             },
             new BlockSectionMessage(iconUsage, name, description)
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            }
+                Origin = Anchor.Centre,
+            },
         };
     }
 
@@ -114,9 +114,9 @@ public partial class BlockSectionWrapper : CompositeDrawable, IHasTooltip
                                     Text = description,
                                     Font = OsuFont.GetFont(size: 14),
                                 },
-                            }
+                            },
                         },
-                    }
+                    },
                 },
             };
         }

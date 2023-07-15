@@ -44,6 +44,6 @@ public partial class PageSettings : EditorSettings
             new PageEditorEditModeSection(),
             new PageEditorIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

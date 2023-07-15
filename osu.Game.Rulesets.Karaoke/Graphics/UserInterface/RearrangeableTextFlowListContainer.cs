@@ -110,7 +110,7 @@ public partial class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeab
 
         public virtual IEnumerable<LocalisableString> FilterTerms => new[]
         {
-            new LocalisableString(Model?.ToString() ?? string.Empty)
+            new LocalisableString(Model?.ToString() ?? string.Empty),
         };
 
         protected virtual void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, TModel model)

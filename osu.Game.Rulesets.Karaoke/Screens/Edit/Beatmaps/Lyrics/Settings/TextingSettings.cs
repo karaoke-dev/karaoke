@@ -46,6 +46,6 @@ public partial class TextingSettings : LyricEditorSettings
             new TextingEditModeSection(),
             new TextingIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

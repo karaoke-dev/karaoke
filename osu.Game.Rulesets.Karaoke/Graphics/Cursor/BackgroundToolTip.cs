@@ -32,7 +32,7 @@ public abstract partial class BackgroundToolTip<T> : VisibilityContainer, IToolt
         {
             background = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             SetBackground(),
             content = new Container
@@ -40,8 +40,8 @@ public abstract partial class BackgroundToolTip<T> : VisibilityContainer, IToolt
                 AutoSizeAxes = Axes.Both,
                 AutoSizeDuration = 200,
                 AutoSizeEasing = Easing.OutQuint,
-                Padding = new MarginPadding(ContentPadding)
-            }
+                Padding = new MarginPadding(ContentPadding),
+            },
         };
     }
 

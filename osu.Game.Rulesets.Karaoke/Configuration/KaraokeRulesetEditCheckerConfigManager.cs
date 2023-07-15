@@ -25,5 +25,5 @@ public enum KaraokeRulesetEditCheckerSetting
     LyricRubyPositionSorting,
     LyricRomajiPositionSorting,
     LyricTimeTagTimeSelfCheck,
-    LyricTimeTagTimeGroupCheck
+    LyricTimeTagTimeGroupCheck,
 }

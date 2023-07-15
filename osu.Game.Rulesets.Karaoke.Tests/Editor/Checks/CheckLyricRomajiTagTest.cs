@@ -19,7 +19,7 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         var lyric = new Lyric
         {
             Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
 
         AssertOk(lyric);
@@ -32,7 +32,7 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         var lyric = new Lyric
         {
             Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
 
         AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiOutOfRange>(lyric);
@@ -45,7 +45,7 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         var lyric = new Lyric
         {
             Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
 
         AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiOverlapping>(lyric);
@@ -59,7 +59,7 @@ public class CheckLyricRomajiTagTest : HitObjectCheckTest<Lyric, CheckLyricRomaj
         var lyric = new Lyric
         {
             Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
         };
 
         AssertNotOk<LyricRomajiTagIssue, IssueTemplateLyricRomajiEmptyText>(lyric);

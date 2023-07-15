@@ -15,7 +15,7 @@ public class RomajiTagTest
         {
             Text = "romaji",
             StartIndex = 0,
-            EndIndex = 2
+            EndIndex = 2,
         };
 
         var clonedRomajiTag = romajiTag.DeepClone();

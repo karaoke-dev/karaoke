@@ -50,7 +50,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                 AutoSizeAxes = Axes.Both,
                 Padding = new MarginPadding(5),
                 Spacing = new Vector2(SPACING),
-            }
+            },
         };
     }
 
@@ -118,7 +118,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
             LyricEditorMode.EditTimeTag => createItemsForEditTimeTagMode(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
             LyricEditorMode.EditNote => createItemsForEditNoteMode(modeWithSubMode.GetSubMode<NoteEditMode>()),
             LyricEditorMode.Singer => Array.Empty<Drawable>(),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
         static IEnumerable<Drawable> createItemsForTextingMode(TextingEditMode textingEditMode)
@@ -175,7 +175,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                 {
                     new PlaybackSwitchButton(),
                 },
-                _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null),
             };
 
         static IEnumerable<Drawable> createItemsForEditNoteMode(NoteEditMode noteEditMode) =>
@@ -184,7 +184,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                 NoteEditMode.Generate => Array.Empty<Drawable>(),
                 NoteEditMode.Edit => Array.Empty<Drawable>(),
                 NoteEditMode.Verify => Array.Empty<Drawable>(),
-                _ => throw new ArgumentOutOfRangeException(nameof(noteEditMode), noteEditMode, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(noteEditMode), noteEditMode, null),
             };
     }
 }

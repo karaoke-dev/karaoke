@@ -45,7 +45,7 @@ public partial class StyleScreen : KaraokeSkinEditorScreen
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             Size = new Vector2(0.95f),
-            RelativeSizeAxes = Axes.Both
+            RelativeSizeAxes = Axes.Both,
         };
 
     /*
@@ -67,5 +67,5 @@ public enum Style
     Lyric,
 
     [Description("Note")]
-    Note
+    Note,
 }

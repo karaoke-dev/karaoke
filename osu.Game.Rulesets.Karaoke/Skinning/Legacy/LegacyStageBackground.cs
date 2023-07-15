@@ -28,7 +28,7 @@ public partial class LegacyStageBackground : LegacyKaraokeElement
         {
             Anchor = Anchor.BottomRight,
             Origin = Anchor.BottomRight,
-            Texture = getTexture(skin)
+            Texture = getTexture(skin),
         };
 
         direction.BindTo(scrollingInfo.Direction);

@@ -26,7 +26,7 @@ public partial class PageAutoGenerateSection : AutoGenerateSection
         protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
             {
-                Text = "Seems have some time-related issues in the lyrics. Go to lyric editor to fix them."
+                Text = "Seems have some time-related issues in the lyrics. Go to lyric editor to fix them.",
             };
 
         protected override ConfigButton CreateConfigButton()

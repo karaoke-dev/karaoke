@@ -61,7 +61,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                 {
                     RelativeSizeAxes = Axes.X,
                     Text = $"#{i} - {CultureInfoUtils.GetLanguageDisplayText(cultureInfo)}",
-                    OnDeleteButtonClick = () => removeCultureInfo(cultureInfo)
+                    OnDeleteButtonClick = () => removeCultureInfo(cultureInfo),
                 });
             }
         });
@@ -71,7 +71,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
         {
             RelativeSizeAxes = Axes.X,
             Height = 300,
-            LanguageSelected = addCultureInfo
+            LanguageSelected = addCultureInfo,
         });
     }
 
@@ -139,7 +139,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                     },
                     Size = new Vector2(delete_button_size),
                     Action = () => OnDeleteButtonClick?.Invoke(),
-                }
+                },
             };
         }
 
@@ -186,7 +186,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125")
+                    Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125"),
                 },
                 new Container
                 {
@@ -195,9 +195,9 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                     Child = new LanguageSelector
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Current = current
-                    }
-                }
+                        Current = current,
+                    },
+                },
             };
         }
     }

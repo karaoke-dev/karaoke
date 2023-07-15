@@ -49,8 +49,8 @@ public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopo
             new DrawableSingerAvatar
             {
                 RelativeSizeAxes = Axes.Both,
-                Singer = singer
-            }
+                Singer = singer,
+            },
         };
     }
 
@@ -106,7 +106,7 @@ public partial class SingerAvatar : CompositeDrawable, ICanAcceptFiles, IHasPopo
                 Child = new OsuFileSelector(currentFile.Value?.DirectoryName, handledExtensions)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    CurrentFile = { BindTarget = currentFile }
+                    CurrentFile = { BindTarget = currentFile },
                 },
             };
         }

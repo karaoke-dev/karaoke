@@ -83,10 +83,10 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
                             new GenerateRowContainer(GenerateDirection.RightToLeft),
                             new GenerateRowContainer(GenerateDirection.LeftToRight),
                             new GenerateRowContainer(GenerateDirection.RightToLeft),
-                        }
-                    }
-                }
-            }
+                        },
+                    },
+                },
+            },
         };
 
         foreach (var row in textContainer.Children)
@@ -281,8 +281,8 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
                 {
                     Origin = Anchor.BottomCentre,
                     Y = yOffset,
-                    Texture = texture
-                }
+                    Texture = texture,
+                },
             };
             Add(drawableEgg);
 

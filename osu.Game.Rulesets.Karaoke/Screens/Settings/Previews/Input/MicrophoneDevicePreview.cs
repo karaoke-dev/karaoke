@@ -37,7 +37,7 @@ public partial class MicrophoneDevicePreview : SettingsSubsectionPreview
                     Origin = Anchor.Centre,
                     HasDevice = hasDevice,
                     DeviceName = deviceName,
-                }
+                },
             };
         }, true);
     }

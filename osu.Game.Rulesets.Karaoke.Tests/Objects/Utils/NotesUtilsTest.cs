@@ -58,7 +58,7 @@ public class NotesUtilsTest
             Tone = new Tone(-1, true),
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = 0
+            ReferenceTimeTagIndex = 0,
         };
 
         // create other property and make sure other class is applied value.

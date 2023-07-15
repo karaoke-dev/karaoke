@@ -43,8 +43,8 @@ internal partial class RubyRomajiSection : LyricConfigSection
                     MinValue = 0,
                     MaxValue = 30,
                     Value = 10,
-                    Default = 10
-                }
+                    Default = 10,
+                },
             },
             romajiMarginSliderBar = new LabelledRealTimeSliderBar<int>
             {
@@ -55,9 +55,9 @@ internal partial class RubyRomajiSection : LyricConfigSection
                     MinValue = 0,
                     MaxValue = 30,
                     Value = 10,
-                    Default = 10
-                }
-            }
+                    Default = 10,
+                },
+            },
         };
     }
 

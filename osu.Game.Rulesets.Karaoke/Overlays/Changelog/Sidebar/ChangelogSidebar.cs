@@ -34,7 +34,7 @@ public partial class ChangelogSidebar : CompositeDrawable
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = colourProvider.Background4
+                Colour = colourProvider.Background4,
             },
             new Box
             {
@@ -43,7 +43,7 @@ public partial class ChangelogSidebar : CompositeDrawable
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
                 Colour = colourProvider.Background3,
-                Alpha = 0.5f
+                Alpha = 0.5f,
             },
             new Container
             {
@@ -65,7 +65,7 @@ public partial class ChangelogSidebar : CompositeDrawable
                             {
                                 Vertical = 20,
                                 Left = 50,
-                                Right = 30
+                                Right = 30,
                             },
                             Child = new FillFlowContainer
                             {
@@ -81,14 +81,14 @@ public partial class ChangelogSidebar : CompositeDrawable
                                         AutoSizeAxes = Axes.Y,
                                         RelativeSizeAxes = Axes.X,
                                         Direction = FillDirection.Vertical,
-                                        Spacing = new Vector2(0, 10)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                        Spacing = new Vector2(0, 10),
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         };
 
         // should switch year selection if user switch changelog and the new changelog is not current year.

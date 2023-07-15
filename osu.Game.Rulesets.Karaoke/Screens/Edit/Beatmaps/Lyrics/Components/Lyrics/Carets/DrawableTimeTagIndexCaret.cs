@@ -28,7 +28,7 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
                 RelativeSizeAxes = Axes.Both,
                 Colour = Colour4.White,
                 Alpha = 0.1f,
-            }
+            },
         };
     }
 

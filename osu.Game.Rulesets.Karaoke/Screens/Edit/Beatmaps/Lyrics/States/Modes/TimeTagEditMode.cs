@@ -9,5 +9,5 @@ public enum TimeTagEditMode
 
     Recording,
 
-    Adjust
+    Adjust,
 }

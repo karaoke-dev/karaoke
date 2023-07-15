@@ -12,7 +12,7 @@ public class NoteInfo
     public Tone MaxTone =>
         new()
         {
-            Scale = Columns / 2
+            Scale = Columns / 2,
         };
 
     public Tone MinTone => -MaxTone;

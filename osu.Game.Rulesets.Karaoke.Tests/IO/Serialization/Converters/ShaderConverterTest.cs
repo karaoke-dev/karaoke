@@ -61,8 +61,8 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
                 {
                     ShadowOffset = new Vector2(3),
                     ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
-                }
-            }
+                },
+            },
         };
 
         const string expected =
@@ -86,8 +86,8 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
                 {
                     ShadowOffset = new Vector2(3),
                     ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
-                }
-            }
+                },
+            },
         };
         var actual = (StepShader)JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings())!;
 

@@ -170,7 +170,7 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
             MovingTimeTagCaretMode.None => true,
             MovingTimeTagCaretMode.OnlyStartTag => timeTag.Index.State == TextIndex.IndexState.Start,
             MovingTimeTagCaretMode.OnlyEndTag => timeTag.Index.State == TextIndex.IndexState.End,
-            _ => throw new InvalidOperationException(nameof(MovingTimeTagCaretMode))
+            _ => throw new InvalidOperationException(nameof(MovingTimeTagCaretMode)),
         };
     }
 }

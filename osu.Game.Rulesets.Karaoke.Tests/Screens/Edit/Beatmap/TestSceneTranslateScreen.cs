@@ -29,7 +29,7 @@ public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<Tra
         {
             new("zh-TW"),
             new("en-US"),
-            new("ja-JP")
+            new("ja-JP"),
         };
 
         return karaokeBeatmap;
@@ -45,7 +45,7 @@ public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<Tra
         {
             Content,
             dialogOverlay = new DialogOverlay(),
-            lyricsProvider = new LyricsProvider()
+            lyricsProvider = new LyricsProvider(),
         });
 
         Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);

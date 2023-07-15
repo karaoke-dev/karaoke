@@ -41,7 +41,7 @@ public abstract partial class KaraokeSkinnableColumnTestScene : KaraokeSkinnable
         {
             RelativeSizeAxes = Axes.Both,
             Colour = Color4.SlateGray.Opacity(0.2f),
-            Depth = 1
+            Depth = 1,
         });
     }
 

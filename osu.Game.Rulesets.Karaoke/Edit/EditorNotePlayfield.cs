@@ -28,7 +28,7 @@ public partial class EditorNotePlayfield : ScrollingNotePlayfield
                 Name = "Background",
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.Black,
-                Alpha = 0.5f
+                Alpha = 0.5f,
             },
         });
 
@@ -36,7 +36,7 @@ public partial class EditorNotePlayfield : ScrollingNotePlayfield
         {
             Name = "Scoring Visualization",
             RelativeSizeAxes = Axes.Both,
-            Alpha = 0.6f
+            Alpha = 0.6f,
         });
     }
 

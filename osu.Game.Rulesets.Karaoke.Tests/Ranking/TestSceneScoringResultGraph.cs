@@ -31,14 +31,14 @@ public partial class TestSceneScoringResultGraph : OsuTestScene
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4Extensions.FromHex("#333")
+                Colour = Color4Extensions.FromHex("#333"),
             },
             new ScoringResultGraph(score, beatmap)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(600, 130)
-            }
+                Size = new Vector2(600, 130),
+            },
         };
     });
 }

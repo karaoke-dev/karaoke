@@ -76,8 +76,8 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
                     Child = screenContainer = new Container<GenericEditorScreen<TScreenMode>>
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Masking = true
-                    }
+                        Masking = true,
+                    },
                 },
                 new Container
                 {
@@ -113,7 +113,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
                         new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = colours.Gray2
+                            Colour = colours.Gray2,
                         },
                         new Container
                         {
@@ -149,12 +149,12 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
                                             Child = new PlaybackControl { RelativeSizeAxes = Axes.Both },
                                         },
                                     },
-                                }
+                                },
                             },
-                        }
-                    }
+                        },
+                    },
                 },
-            }
+            },
         });
 
         Mode.BindValueChanged(onModeChanged, true);
@@ -202,7 +202,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
                 {
                     new EditorMenuItem("Save"),
                     new EditorMenuItem("Back", MenuItemType.Standard, this.Exit),
-                }
+                },
             },
         };
 

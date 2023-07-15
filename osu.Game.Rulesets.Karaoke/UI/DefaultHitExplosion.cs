@@ -112,7 +112,7 @@ public partial class DefaultHitExplosion : CompositeDrawable
                     Roundness = roundness,
                     Radius = 40,
                 },
-            }
+            },
         };
     }
 

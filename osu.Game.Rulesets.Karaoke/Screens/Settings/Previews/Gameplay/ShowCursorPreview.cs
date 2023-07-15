@@ -24,15 +24,15 @@ public partial class ShowCursorPreview : SettingsSubsectionPreview
             cursor = new MenuCursorContainer.Cursor
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
+                Origin = Anchor.Centre,
             },
             new OsuSpriteText
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Y = 30,
-                Text = "Wanna show this while gameplay?"
-            }
+                Text = "Wanna show this while gameplay?",
+            },
         };
 
         bindableShowCursor.BindValueChanged(e =>

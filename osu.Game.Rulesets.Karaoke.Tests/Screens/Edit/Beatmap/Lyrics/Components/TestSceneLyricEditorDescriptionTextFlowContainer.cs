@@ -33,8 +33,8 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(100)
-            }
+                Size = new Vector2(100),
+            },
         };
     });
 
@@ -52,10 +52,10 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
                         "singer_mode", new SwitchModeDescriptionAction
                         {
                             Text = "edit text mode",
-                            Mode = LyricEditorMode.Singer
+                            Mode = LyricEditorMode.Singer,
                         }
-                    }
-                }
+                    },
+                },
             };
         });
     }

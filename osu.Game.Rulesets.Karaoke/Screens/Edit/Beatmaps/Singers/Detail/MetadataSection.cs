@@ -20,25 +20,25 @@ internal partial class MetadataSection : EditSingerSection
             {
                 Label = "Singer",
                 Current = singer.NameBindable,
-                TabbableContentContainer = this
+                TabbableContentContainer = this,
             },
             new LabelledTextBox
             {
                 Label = "Romaji name",
                 Current = singer.RomajiNameBindable,
-                TabbableContentContainer = this
+                TabbableContentContainer = this,
             },
             new LabelledTextBox
             {
                 Label = "English name",
                 Current = singer.EnglishNameBindable,
-                TabbableContentContainer = this
+                TabbableContentContainer = this,
             },
             new LabelledTextBox
             {
                 Label = "Description",
                 Current = singer.DescriptionBindable,
-                TabbableContentContainer = this
+                TabbableContentContainer = this,
             },
         };
 

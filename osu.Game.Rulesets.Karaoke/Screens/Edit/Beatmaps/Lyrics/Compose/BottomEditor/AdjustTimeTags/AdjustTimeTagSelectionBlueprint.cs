@@ -48,12 +48,12 @@ public partial class AdjustTimeTagSelectionBlueprint : EditableTimelineSelection
             timeTagPiece = new TimeTagPiece(item)
             {
                 Anchor = Anchor.CentreLeft,
-                Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.CentreLeft, Anchor.CentreRight)
+                Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.CentreLeft, Anchor.CentreRight),
             },
             timeTagWithNoTimePiece = new TimeTagWithNoTimePiece(item)
             {
                 Anchor = Anchor.BottomLeft,
-                Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.BottomLeft, Anchor.BottomRight)
+                Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.BottomLeft, Anchor.BottomRight),
             },
             timeTagText = new OsuSpriteText
             {
@@ -61,7 +61,7 @@ public partial class AdjustTimeTagSelectionBlueprint : EditableTimelineSelection
                 Anchor = Anchor.BottomLeft,
                 Origin = TextIndexUtils.GetValueByState(item.Index, Anchor.TopLeft, Anchor.TopRight),
                 Y = 10,
-            }
+            },
         });
     }
 
@@ -143,8 +143,8 @@ public partial class AdjustTimeTagSelectionBlueprint : EditableTimelineSelection
                     Size = new Vector2(time_tag_triangle_size),
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
-                    State = textIndex.State
-                }
+                    State = textIndex.State,
+                },
             };
         }
 
@@ -166,8 +166,8 @@ public partial class AdjustTimeTagSelectionBlueprint : EditableTimelineSelection
                     Size = new Vector2(time_tag_triangle_size),
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
-                    State = state
-                }
+                    State = state,
+                },
             };
         }
     }

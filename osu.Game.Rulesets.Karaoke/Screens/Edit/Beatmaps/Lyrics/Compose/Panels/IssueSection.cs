@@ -46,7 +46,7 @@ public partial class IssueSection : PanelSection
                 AutoSizeAxes = Axes.Y,
                 Padding = new MarginPadding(10),
             },
-            issueTable = new SingleLyricIssueTable()
+            issueTable = new SingleLyricIssueTable(),
         };
 
         AddInternal(reloadButton = new IconButton
@@ -61,7 +61,7 @@ public partial class IssueSection : PanelSection
                     throw new ArgumentNullException(nameof(Lyric));
 
                 verifier.RefreshByHitObject(Lyric);
-            }
+            },
         });
 
         bindableIssues.BindCollectionChanged((_, _) =>
@@ -126,7 +126,7 @@ public partial class IssueSection : PanelSection
                         Text = "Click this area to re-check again.",
                         Font = OsuFont.GetFont(size: 14),
                     },
-                }
+                },
             };
 
             AddInternal(new HoverClickSounds(HoverSampleSet.Button));
@@ -166,13 +166,13 @@ public partial class IssueSection : PanelSection
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
                     Margin = new MarginPadding { Left = 10 },
-                    Issue = issue
+                    Issue = issue,
                 },
                 new TruncatingSpriteText
                 {
                     Text = issue.ToString(),
                     RelativeSizeAxes = Axes.X,
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
             };
     }

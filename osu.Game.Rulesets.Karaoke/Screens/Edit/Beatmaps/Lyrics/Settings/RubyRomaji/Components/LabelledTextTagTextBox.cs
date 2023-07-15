@@ -62,8 +62,8 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                         // trigger selected if hover on delete button.
                         TriggerSelect(textTag);
                     }
-                }
-            }
+                },
+            },
         });
 
         // add the index shifting component at the bottom of the text box.
@@ -114,7 +114,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                         {
                             AdjustIndex.Start => textTag.StartIndex,
                             AdjustIndex.End => textTag.EndIndex,
-                            _ => throw new InvalidOperationException()
+                            _ => throw new InvalidOperationException(),
                         };
 
                     static int calculateNewIndex(int index, AdjustAction action) =>
@@ -122,10 +122,10 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                         {
                             AdjustAction.Decrease => index - 1,
                             AdjustAction.Increase => index + 1,
-                            _ => throw new InvalidOperationException()
+                            _ => throw new InvalidOperationException(),
                         };
                 },
-            }
+            },
         });
     }
 
@@ -191,7 +191,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Icon = FontAwesome.Regular.CaretSquareLeft,
-                            Action = () => Action?.Invoke(AdjustIndex.Start, AdjustAction.Decrease)
+                            Action = () => Action?.Invoke(AdjustIndex.Start, AdjustAction.Decrease),
                         },
                         increaseStartIndexButton = new IconButton
                         {
@@ -200,7 +200,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                             Origin = Anchor.CentreLeft,
                             X = button_size + button_spacing,
                             Icon = FontAwesome.Regular.CaretSquareRight,
-                            Action = () => Action?.Invoke(AdjustIndex.Start, AdjustAction.Increase)
+                            Action = () => Action?.Invoke(AdjustIndex.Start, AdjustAction.Increase),
                         },
                         reduceEndIndexButton = new IconButton
                         {
@@ -209,7 +209,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                             Origin = Anchor.CentreRight,
                             X = -button_size - button_spacing,
                             Icon = FontAwesome.Regular.CaretSquareLeft,
-                            Action = () => Action?.Invoke(AdjustIndex.End, AdjustAction.Decrease)
+                            Action = () => Action?.Invoke(AdjustIndex.End, AdjustAction.Decrease),
                         },
                         increaseEndIndexButton = new IconButton
                         {
@@ -217,10 +217,10 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                             Anchor = Anchor.CentreRight,
                             Origin = Anchor.CentreRight,
                             Icon = FontAwesome.Regular.CaretSquareRight,
-                            Action = () => Action?.Invoke(AdjustIndex.End, AdjustAction.Increase)
+                            Action = () => Action?.Invoke(AdjustIndex.End, AdjustAction.Increase),
                         },
-                    }
-                }
+                    },
+                },
             };
         }
 
@@ -255,7 +255,7 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                 KaraokeEditAction.EditTextTagIncreaseStartIndex => increaseStartIndexButton.TriggerClick(),
                 KaraokeEditAction.EditTextTagReduceEndIndex => reduceEndIndexButton.TriggerClick(),
                 KaraokeEditAction.EditTextTagIncreaseEndIndex => increaseEndIndexButton.TriggerClick(),
-                _ => false
+                _ => false,
             };
         }
 
@@ -268,13 +268,13 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
     {
         Start,
 
-        End
+        End,
     }
 
     private enum AdjustAction
     {
         Decrease,
 
-        Increase
+        Increase,
     }
 }

@@ -47,7 +47,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
             {
                 DrawableCaretType.HoverCaret => 0,
                 DrawableCaretType.Caret => 100,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
             };
     }
 

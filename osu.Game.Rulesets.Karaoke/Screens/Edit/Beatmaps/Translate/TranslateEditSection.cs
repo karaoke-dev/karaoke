@@ -49,7 +49,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             new Dimension(GridSizeMode.Absolute, column_spacing),
             new Dimension(GridSizeMode.Absolute, 400),
             new Dimension(GridSizeMode.Absolute, column_spacing),
-            new Dimension()
+            new Dimension(),
         };
         GridContainer translateGrid;
 
@@ -64,7 +64,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                     Name = "LanguageSelection",
                     RowDimensions = new[]
                     {
-                        new Dimension(GridSizeMode.AutoSize)
+                        new Dimension(GridSizeMode.AutoSize),
                     },
                     ColumnDimensions = columnDimensions,
                     RelativeSizeAxes = Axes.X,
@@ -111,11 +111,11 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                                         {
                                             Y = 5,
                                         },
-                                    }
-                                }
-                            }
+                                    },
+                                },
+                            },
                         },
-                    }
+                    },
                 },
                 new Container
                 {
@@ -128,7 +128,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                             Name = "Background",
                             RowDimensions = new[]
                             {
-                                new Dimension(GridSizeMode.AutoSize)
+                                new Dimension(GridSizeMode.AutoSize),
                             },
                             ColumnDimensions = columnDimensions,
                             RelativeSizeAxes = Axes.Both,
@@ -149,17 +149,17 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                                 {
                                     timeSectionBackground = new CornerBackground
                                     {
-                                        RelativeSizeAxes = Axes.Both
+                                        RelativeSizeAxes = Axes.Both,
                                     },
                                     null,
                                     lyricSectionBackground = new CornerBackground
                                     {
-                                        RelativeSizeAxes = Axes.Both
+                                        RelativeSizeAxes = Axes.Both,
                                     },
                                     null,
                                     null,
                                 },
-                            }
+                            },
                         },
                         translateGrid = new GridContainer
                         {
@@ -167,9 +167,9 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                             ColumnDimensions = columnDimensions,
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             },
         };
 
@@ -222,7 +222,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             Origin = Anchor.CentreLeft,
             Margin = new MarginPadding { Left = row_inner_spacing },
             Font = OsuFont.GetFont(size: 18, fixedWidth: true),
-            AllowMultiline = false
+            AllowMultiline = false,
         };
     }
 

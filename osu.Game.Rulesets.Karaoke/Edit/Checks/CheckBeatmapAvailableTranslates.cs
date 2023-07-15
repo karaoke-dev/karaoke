@@ -19,7 +19,7 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
     {
         new IssueTemplateMissingTranslate(this),
         new IssueTemplateMissingPartialTranslate(this),
-        new IssueTemplateContainsNotListedLanguage(this)
+        new IssueTemplateContainsNotListedLanguage(this),
     };
 
     protected override IList<CultureInfo> GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)

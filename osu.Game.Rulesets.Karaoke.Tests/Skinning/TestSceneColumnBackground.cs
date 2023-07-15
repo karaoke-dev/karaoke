@@ -31,8 +31,8 @@ public partial class TestSceneColumnBackground : KaraokeSkinnableColumnTestScene
                     Height = 0.5f,
                     Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(0))
                     {
-                        RelativeSizeAxes = Axes.Both
-                    }
+                        RelativeSizeAxes = Axes.Both,
+                    },
                 },
                 new NotePlayfieldTestContainer(1)
                 {
@@ -40,10 +40,10 @@ public partial class TestSceneColumnBackground : KaraokeSkinnableColumnTestScene
                     Height = 0.5f,
                     Child = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.ColumnBackground), _ => new DefaultColumnBackground(1))
                     {
-                        RelativeSizeAxes = Axes.Both
-                    }
-                }
-            }
+                        RelativeSizeAxes = Axes.Both,
+                    },
+                },
+            },
         });
     }
 }

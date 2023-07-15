@@ -32,10 +32,10 @@ public partial class NoteAutoGenerateSubsection : LyricEditorAutoGenerateSubsect
                     create_time_tag_mode, new SwitchModeDescriptionAction
                     {
                         Text = "adjust time-tag mode",
-                        Mode = LyricEditorMode.EditTimeTag
+                        Mode = LyricEditorMode.EditTimeTag,
                     }
-                }
-            }
+                },
+            },
         };
 
     protected override ConfigButton CreateConfigButton()

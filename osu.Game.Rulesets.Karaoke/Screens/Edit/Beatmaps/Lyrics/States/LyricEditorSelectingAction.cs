@@ -7,5 +7,5 @@ public enum LyricEditorSelectingAction
 {
     Apply,
 
-    Cancel
+    Cancel,
 }

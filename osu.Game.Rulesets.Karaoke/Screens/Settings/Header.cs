@@ -59,7 +59,7 @@ public partial class Header : Container
                         Anchor = Anchor.BottomLeft,
                         Origin = Anchor.BottomLeft,
                         RelativeSizeAxes = Axes.X,
-                        Scale = new Vector2(1.5f)
+                        Scale = new Vector2(1.5f),
                     },
                 },
             },
@@ -111,22 +111,22 @@ public partial class Header : Container
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                            Text = "Karaoke"
+                            Text = "Karaoke",
                         },
                         dot = new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                            Text = "·"
+                            Text = "·",
                         },
                         pageTitle = new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                        }
-                    }
+                        },
+                    },
                 },
             };
         }

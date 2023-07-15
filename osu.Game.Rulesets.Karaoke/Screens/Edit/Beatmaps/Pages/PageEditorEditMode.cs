@@ -9,5 +9,5 @@ public enum PageEditorEditMode
 
     Edit,
 
-    Verify
+    Verify,
 }

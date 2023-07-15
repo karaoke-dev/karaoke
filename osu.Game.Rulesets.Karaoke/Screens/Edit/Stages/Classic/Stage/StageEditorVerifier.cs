@@ -18,7 +18,7 @@ public partial class StageEditorVerifier : EditorVerifier<StageEditorEditCategor
             StageEditorEditCategory.Layout => new ICheck[] { new CheckBeatmapClassicStageInfo() },
             StageEditorEditCategory.Timing => new ICheck[] { new CheckBeatmapClassicStageInfo() },
             StageEditorEditCategory.Style => new ICheck[] { new CheckBeatmapClassicStageInfo() },
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 
     protected override StageEditorEditCategory ClassifyIssue(Issue issue)

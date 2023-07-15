@@ -49,7 +49,7 @@ public abstract partial class IssueSection : EditorSection
             }),
 
             issueNavigator = CreateIssueNavigator(),
-            issueTable = CreateIssueTable()
+            issueTable = CreateIssueTable(),
         };
 
         Issues.BindCollectionChanged((_, _) =>
@@ -129,9 +129,9 @@ public abstract partial class IssueSection : EditorSection
                                 Text = "Click this area to re-check again.",
                                 Font = OsuFont.GetFont(size: 14),
                             },
-                        }
+                        },
                     },
-                }
+                },
             };
 
             AddInternal(new HoverClickSounds(HoverSampleSet.Button));
@@ -195,7 +195,7 @@ public abstract partial class IssueSection : EditorSection
                         Padding = new MarginPadding(10),
                         Direction = FillDirection.Horizontal,
                         Spacing = new Vector2(5),
-                        Children = createCategory()
+                        Children = createCategory(),
                     },
                     BlockBox = new Box
                     {
@@ -210,8 +210,8 @@ public abstract partial class IssueSection : EditorSection
                         Origin = Anchor.CentreRight,
                         X = -5,
                         Icon = FontAwesome.Solid.Redo,
-                    }
-                }
+                    },
+                },
             };
         }
 
@@ -220,7 +220,7 @@ public abstract partial class IssueSection : EditorSection
             {
                 Type = type,
                 Text = getTextByIssueType(type),
-                IssueColour = getColourByIssueType(type)
+                IssueColour = getColourByIssueType(type),
             }).ToArray();
 
         private LocalisableString getTextByIssueType(IssueType issueType) =>
@@ -230,7 +230,7 @@ public abstract partial class IssueSection : EditorSection
                 IssueType.Warning => "Warning",
                 IssueType.Error => "Internal error",
                 IssueType.Negligible => "Suggestion",
-                _ => throw new ArgumentOutOfRangeException(nameof(issueType), issueType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(issueType), issueType, null),
             };
 
         private Colour4 getColourByIssueType(IssueType issueType) =>
@@ -294,7 +294,7 @@ public abstract partial class IssueSection : EditorSection
                             Spacing = new Vector2(5),
                             Padding = new MarginPadding
                             {
-                                Horizontal = 5
+                                Horizontal = 5,
                             },
                             Children = new[]
                             {
@@ -309,10 +309,10 @@ public abstract partial class IssueSection : EditorSection
                                     Anchor = Anchor.CentreLeft,
                                     Origin = Anchor.CentreLeft,
                                     Font = OsuFont.GetFont(size: text_size, weight: FontWeight.Bold),
-                                }
-                            }
-                        }
-                    }
+                                },
+                            },
+                        },
+                    },
                 };
             }
 

@@ -19,7 +19,7 @@ public class KaraokeNoteHitWindows : KaraokeHitWindows
         {
             HitResult.Perfect => true,
             HitResult.Meh => true,
-            _ => false
+            _ => false,
         };
 
     protected override DifficultyRange[] GetRanges() => karaoke_ranges;

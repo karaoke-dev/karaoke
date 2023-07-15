@@ -44,7 +44,7 @@ public partial class TimeTagRecordingConfigSection : EditorSection
             {
                 Label = "Time range",
                 Description = "Change time-range to zoom-in/zoom-out the recording area.",
-                Current = timeTagModeState.BindableRecordZoom
+                Current = timeTagModeState.BindableRecordZoom,
             },
             new LabelledOpacityAdjustment
             {
@@ -59,7 +59,7 @@ public partial class TimeTagRecordingConfigSection : EditorSection
                 Description = "Show/hide or change the opacity of the ticks.",
                 Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick),
                 Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity),
-            }
+            },
         };
     }
 }

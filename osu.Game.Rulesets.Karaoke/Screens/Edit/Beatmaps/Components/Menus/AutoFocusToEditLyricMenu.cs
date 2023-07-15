@@ -23,7 +23,7 @@ public class AutoFocusToEditLyricMenu : MenuItem
     {
         var selections = new List<MenuItem>
         {
-            new ToggleMenuItem(getName(disable_selection_index), MenuItemType.Standard, _ => updateAutoFocusToEditLyric())
+            new ToggleMenuItem(getName(disable_selection_index), MenuItemType.Standard, _ => updateAutoFocusToEditLyric()),
         };
         selections.AddRange(Enumerable.Range(0, 4).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => updateAutoFocusToEditLyricSkipRows(x))));
         Items = selections;
@@ -50,7 +50,7 @@ public class AutoFocusToEditLyricMenu : MenuItem
         {
             disable_selection_index => "Disable",
             0 => "Enable",
-            _ => $"Enable (skip {number} rows)"
+            _ => $"Enable (skip {number} rows)",
         };
     }
 

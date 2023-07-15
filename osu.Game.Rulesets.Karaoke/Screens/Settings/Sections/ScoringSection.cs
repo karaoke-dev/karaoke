@@ -15,7 +15,7 @@ public partial class ScoringSection : KaraokeSettingsSection
 
     public override Drawable CreateIcon() => new SpriteIcon
     {
-        Icon = FontAwesome.Solid.Gamepad
+        Icon = FontAwesome.Solid.Gamepad,
     };
 
     public ScoringSection()

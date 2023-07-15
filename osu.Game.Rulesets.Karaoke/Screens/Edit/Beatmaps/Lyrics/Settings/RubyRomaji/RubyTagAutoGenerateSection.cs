@@ -29,7 +29,7 @@ public partial class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
                 setting switch
                 {
                     KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => "Japanese",
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    _ => throw new ArgumentOutOfRangeException(nameof(setting)),
                 };
         }
     }

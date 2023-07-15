@@ -53,8 +53,8 @@ public partial class NoteStylePreview : Container
             new PreviewDrawableNoteArea
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            }
+                Origin = Anchor.Centre,
+            },
         };
     }
 

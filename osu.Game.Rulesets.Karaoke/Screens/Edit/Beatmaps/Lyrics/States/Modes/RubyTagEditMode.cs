@@ -9,5 +9,5 @@ public enum RubyTagEditMode
 
     Edit,
 
-    Verify
+    Verify,
 }

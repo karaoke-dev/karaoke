@@ -38,8 +38,8 @@ public partial class DefaultJudgementLine : CompositeDrawable
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.BottomCentre,
                 Size = new Vector2(triangle_width, triangle_height),
-                Scale = new Vector2(1, -1)
-            }
+                Scale = new Vector2(1, -1),
+            },
         };
     }
 

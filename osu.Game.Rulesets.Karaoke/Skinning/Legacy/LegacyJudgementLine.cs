@@ -40,7 +40,7 @@ public partial class LegacyJudgementLine : LegacyKaraokeElement
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Name = "Judgement line head",
-                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage)
+                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage),
             },
             judgementLineBodySprite = new Sprite
             {
@@ -51,15 +51,15 @@ public partial class LegacyJudgementLine : LegacyKaraokeElement
                 Size = Vector2.One,
                 FillMode = FillMode.Stretch,
                 Depth = 1,
-                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage)
+                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage),
             },
             new Sprite
             {
                 Anchor = Anchor.BottomCentre,
                 Origin = Anchor.Centre,
                 Name = "Judgement line tail",
-                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage)
-            }
+                Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage),
+            },
         };
 
         direction.BindTo(scrollingInfo.Direction);
@@ -98,7 +98,7 @@ public partial class LegacyJudgementLine : LegacyKaraokeElement
             LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage => "body",
             LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage => "head",
             LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage => "tail",
-            _ => throw new ArgumentOutOfRangeException(nameof(lookup))
+            _ => throw new ArgumentOutOfRangeException(nameof(lookup)),
         };
 
         return $"karaoke-judgement-line-{suffix}";

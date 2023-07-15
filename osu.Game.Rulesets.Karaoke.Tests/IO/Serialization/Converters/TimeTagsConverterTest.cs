@@ -26,7 +26,7 @@ public class TimeTagsConverterTest : BaseSingleConverterTest<TimeTagsConverter>
         var timeTags = new[]
         {
             new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 1000),
-            new TimeTag(new TextIndex(0), 0)
+            new TimeTag(new TextIndex(0), 0),
         };
 
         const string expected = "[\"[0,start]:0\",\"[0,end]:1000\"]";

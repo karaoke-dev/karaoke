@@ -25,7 +25,7 @@ public partial class TestSceneLanguageSelector : OsuManualInputManagerTestScene
                 Size = new Vector2(0.5f, 0.8f),
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Current = language
+                Current = language,
             };
         });
     }

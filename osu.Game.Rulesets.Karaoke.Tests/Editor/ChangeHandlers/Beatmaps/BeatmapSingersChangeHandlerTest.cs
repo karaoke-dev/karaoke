@@ -90,8 +90,8 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
             {
                 new Lyric
                 {
-                    SingerIds = { firstSinger.ID }
-                }
+                    SingerIds = { firstSinger.ID },
+                },
             };
         });
 

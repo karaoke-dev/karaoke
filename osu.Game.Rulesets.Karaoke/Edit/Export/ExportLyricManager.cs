@@ -38,7 +38,7 @@ public partial class ExportLyricManager : Component
             var encoder = new LrcEncoder();
             sw.WriteLine(encoder.Encode(new Beatmap
             {
-                HitObjects = beatmap.HitObjects.ToList()
+                HitObjects = beatmap.HitObjects.ToList(),
             }));
         }
 
@@ -56,7 +56,7 @@ public partial class ExportLyricManager : Component
             var encoder = new LyricTextEncoder();
             sw.WriteLine(encoder.Encode(new Beatmap
             {
-                HitObjects = beatmap.HitObjects.ToList()
+                HitObjects = beatmap.HitObjects.ToList(),
             }));
         }
 

@@ -30,7 +30,7 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
         {
             TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
             TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
-            _ => throw new NotSupportedException(nameof(caretPosition))
+            _ => throw new NotSupportedException(nameof(caretPosition)),
         };
     }
 
@@ -103,7 +103,7 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
                 KaraokeEditAction.ShiftTheTimeTagRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.Index),
                 KaraokeEditAction.ShiftTheTimeTagStateLeft => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Left, ShiftingType.State),
                 KaraokeEditAction.ShiftTheTimeTagStateRight => new Tuple<ShiftingDirection, ShiftingType>(ShiftingDirection.Right, ShiftingType.State),
-                _ => null
+                _ => null,
             };
     }
 

@@ -9,5 +9,5 @@ public enum NoteEditMode
 
     Edit,
 
-    Verify
+    Verify,
 }

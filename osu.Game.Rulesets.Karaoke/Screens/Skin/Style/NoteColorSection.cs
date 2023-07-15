@@ -29,7 +29,7 @@ internal partial class NoteColorSection : StyleSection
             {
                 Label = "Blink color",
                 Description = "Select color.",
-            }
+            },
         };
     }
 

@@ -46,7 +46,7 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
                 {
                     await Import(path).ConfigureAwait(false);
                 }, TaskCreationOptions.LongRunning);
-            }
+            },
         };
     }
 
@@ -187,7 +187,7 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
         {
             Icon = FontAwesome.Solid.Bug,
             HeaderText = @"Unknown error",
-            BodyText = @"Unknown error QAQa."
+            BodyText = @"Unknown error QAQa.",
         };
 
     private PopupDialog createCompleteDialog()
@@ -195,6 +195,6 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
         {
             Icon = FontAwesome.Regular.CheckCircle,
             HeaderText = @"Import success",
-            BodyText = "Lyrics has been imported."
+            BodyText = "Lyrics has been imported.",
         };
 }

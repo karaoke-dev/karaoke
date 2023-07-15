@@ -53,7 +53,7 @@ public class LyricEditorSkin : KaraokeSkin
                 {
                     Radius = 2,
                     Colour = Color4Extensions.FromHex("#3D2D6B"),
-                    OutlineColour = Color4Extensions.FromHex("#CCA532")
+                    OutlineColour = Color4Extensions.FromHex("#CCA532"),
                 },
             },
             RightLyricTextShaders = new List<ICustomizedShader>
@@ -61,9 +61,9 @@ public class LyricEditorSkin : KaraokeSkin
                 new OutlineShader
                 {
                     Radius = 2,
-                    OutlineColour = Color4Extensions.FromHex("#5932CC")
+                    OutlineColour = Color4Extensions.FromHex("#5932CC"),
                 },
-            }
+            },
         };
         DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
 

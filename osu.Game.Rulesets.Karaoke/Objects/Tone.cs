@@ -40,7 +40,7 @@ public struct Tone : IComparable<Tone>, IComparable<int>, IEquatable<Tone>, IEqu
         {
             Tone tone => Equals(tone),
             int intValue => Equals(intValue),
-            _ => false
+            _ => false,
         };
     }
 
@@ -53,7 +53,7 @@ public struct Tone : IComparable<Tone>, IComparable<int>, IEquatable<Tone>, IEqu
     private static Tone add(Tone tone1, Tone tone2) => new()
     {
         Scale = tone1.Scale + tone2.Scale + (tone1.Half && tone2.Half ? 1 : 0),
-        Half = tone1.Half ^ tone2.Half
+        Half = tone1.Half ^ tone2.Half,
     };
 
     public static Tone operator -(Tone tone1, Tone tone2) => subtract(tone1, tone2);
@@ -66,7 +66,7 @@ public struct Tone : IComparable<Tone>, IComparable<int>, IEquatable<Tone>, IEqu
 
     private static Tone negate(Tone tone) => tone with
     {
-        Scale = -tone.Scale + (tone.Half ? -1 : 0)
+        Scale = -tone.Scale + (tone.Half ? -1 : 0),
     };
 
     public static bool operator ==(Tone tone1, Tone tone2) => tone1.Equals(tone2);

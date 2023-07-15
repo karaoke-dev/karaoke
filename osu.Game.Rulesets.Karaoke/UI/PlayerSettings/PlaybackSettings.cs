@@ -22,7 +22,7 @@ public partial class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<
         {
             new OsuSpriteText
             {
-                Text = "Playback:"
+                Text = "Playback:",
             },
             playBackSliderBar = new ClickablePlayerSliderBar(),
         };

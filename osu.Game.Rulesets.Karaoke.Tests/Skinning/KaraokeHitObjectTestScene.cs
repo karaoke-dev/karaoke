@@ -46,9 +46,9 @@ public abstract partial class KaraokeHitObjectTestScene : KaraokeSkinnableColumn
                         {
                             h.AccentColour.Value = Color4.Orange;
                         }));
-                    })
+                    }),
                 },
-            }
+            },
         });
     }
 

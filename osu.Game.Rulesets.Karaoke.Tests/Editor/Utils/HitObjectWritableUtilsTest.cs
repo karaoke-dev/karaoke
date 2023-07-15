@@ -27,7 +27,7 @@ public class HitObjectWritableUtilsTest
         {
             test(new Lyric
             {
-                Lock = lockState
+                Lock = lockState,
             });
         }
 
@@ -64,7 +64,7 @@ public class HitObjectWritableUtilsTest
         {
             test(new Lyric
             {
-                Lock = lockState
+                Lock = lockState,
             });
         }
 
@@ -104,7 +104,7 @@ public class HitObjectWritableUtilsTest
         {
             test(new Lyric
             {
-                Lock = lockState
+                Lock = lockState,
             });
         }
 

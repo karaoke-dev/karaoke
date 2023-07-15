@@ -48,17 +48,17 @@ public partial class KaraokeVersionManager : VisibilityContainer
                             new OsuSpriteText
                             {
                                 Font = OsuFont.GetFont(weight: FontWeight.Bold),
-                                Text = new KaraokeRuleset().ShortName
+                                Text = new KaraokeRuleset().ShortName,
                             },
                             new OsuSpriteText
                             {
                                 Colour = DebugUtils.IsDebugBuild ? colours.Red : Color4.White,
-                                Text = VersionUtils.DisplayVersion
+                                Text = VersionUtils.DisplayVersion,
                             },
-                        }
+                        },
                     },
-                }
-            }
+                },
+            },
         };
 
         if (!VersionUtils.IsDeployedBuild)
@@ -71,7 +71,7 @@ public partial class KaraokeVersionManager : VisibilityContainer
                     Origin = Anchor.TopCentre,
                     Font = OsuFont.Numeric.With(size: 12),
                     Colour = colours.Yellow,
-                    Text = @"Development Build"
+                    Text = @"Development Build",
                 },
                 new Sprite
                 {

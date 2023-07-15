@@ -27,7 +27,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());
@@ -54,7 +54,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             new Lyric
             {
                 Text = string.Empty,
-                Language = new CultureInfo(17)
+                Language = new CultureInfo(17),
             },
         });
 
@@ -72,8 +72,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             Text = "カラオケ",
             TimeTags = new[]
             {
-                timeTag
-            }
+                timeTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.SetTimeTagTime(timeTag, 2000));
@@ -95,8 +95,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             TimeTags = new[]
             {
                 timeTag,
-                timeTagWithTime
-            }
+                timeTagWithTime,
+            },
         });
 
         TriggerHandlerChanged(c => c.ShiftingTimeTagTime(new[] { timeTag, timeTagWithTime }, 2000));
@@ -127,8 +127,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             Text = "カラオケ",
             TimeTags = new[]
             {
-                timeTag
-            }
+                timeTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.ClearTimeTagTime(timeTag));
@@ -150,7 +150,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new TimeTag(new TextIndex()), // without time.
                 new TimeTag(new TextIndex(), 1000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 3000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.ClearAllTimeTagTime());
@@ -206,7 +206,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             TimeTags = new[]
             {
                 removedTag,
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.Remove(removedTag));
@@ -228,7 +228,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             TimeTags = new[]
             {
                 removedTag,
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
@@ -270,7 +270,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End)),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 5000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.RemoveByPosition(new TextIndex(3, TextIndex.IndexState.End)));
@@ -296,7 +296,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             {
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 5000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.RemoveByPosition(new TextIndex(3, TextIndex.IndexState.End)));
@@ -328,7 +328,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new TimeTag(new TextIndex(2), 4000), // target.
                 new TimeTag(new TextIndex(2, TextIndex.IndexState.End)),
                 new TimeTag(new TextIndex(3)),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -357,7 +357,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             {
                 new TimeTag(new TextIndex(1)), // target.
                 new TimeTag(new TextIndex(3)),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -386,7 +386,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             {
                 new TimeTag(new TextIndex(0)),
                 new TimeTag(new TextIndex(2)), // target.
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -416,7 +416,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new TimeTag(new TextIndex(0)),
                 new TimeTag(new TextIndex(2), 4000), // target.
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End)),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -444,7 +444,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             TimeTags = new[]
             {
                 new TimeTag(new TextIndex(2), 4000), // target.
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -475,7 +475,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
                 new TimeTag(new TextIndex(2), 3000),
                 new TimeTag(new TextIndex(2), 4000), // target.
                 new TimeTag(new TextIndex(2), 5000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -505,7 +505,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             TimeTags = new[]
             {
                 new TimeTag(new TextIndex(0, state), 5000), // target.
-            }
+            },
         });
 
         // will have exception because the time-tag cannot move right.
@@ -529,11 +529,11 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             Text = "カラオケ",
             TimeTags = new[]
             {
-                new TimeTag(new TextIndex(), 1000)
-            }
+                new TimeTag(new TextIndex(), 1000),
+            },
         }, new SyncLyricConfig
         {
-            SyncTimeTagProperty = syncTimeTag
+            SyncTimeTagProperty = syncTimeTag,
         });
 
         // should add the time-tag by hand because it does not sync from thr referenced lyric.
@@ -541,7 +541,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
         {
             lyric.TimeTags = new[]
             {
-                new TimeTag(new TextIndex(), 2000)
+                new TimeTag(new TextIndex(), 2000),
             };
         }
 

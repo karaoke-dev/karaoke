@@ -80,7 +80,7 @@ public partial class InfoControl : Container, IHasContextMenu
                         {
                             headerBackground = new Box
                             {
-                                RelativeSizeAxes = Axes.Both
+                                RelativeSizeAxes = Axes.Both,
                             },
                             timeRange = new OsuSpriteText
                             {
@@ -97,7 +97,7 @@ public partial class InfoControl : Container, IHasContextMenu
                                 Scale = new Vector2(1.3f),
                                 Y = 1,
                             },
-                        }
+                        },
                     },
                     new GridContainer
                     {
@@ -114,7 +114,7 @@ public partial class InfoControl : Container, IHasContextMenu
                             {
                                 subInfoContainer = new Container
                                 {
-                                    RelativeSizeAxes = Axes.X
+                                    RelativeSizeAxes = Axes.X,
                                 },
                                 new FillFlowContainer
                                 {
@@ -126,12 +126,12 @@ public partial class InfoControl : Container, IHasContextMenu
                                     {
                                         new OrderInfo(lyric),
                                         new LockInfo(lyric),
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             },
         };
 
@@ -235,7 +235,7 @@ public partial class InfoControl : Container, IHasContextMenu
                 new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
                 {
                     lyricsChangeHandler.CreateAtPosition();
-                })
+                }),
             };
 
             // use lazy way to check lyric is not in first

@@ -81,9 +81,9 @@ public partial class LyricComposer : CompositeDrawable
                                         Anchor = Anchor.BottomCentre,
                                         Origin = Anchor.BottomCentre,
                                     },
-                                }
-                            }
-                        }
+                                },
+                            },
+                        },
                     },
                 },
                 new Drawable[]
@@ -103,11 +103,11 @@ public partial class LyricComposer : CompositeDrawable
                             bottomEditorContainer = new Container<BaseBottomEditor>
                             {
                                 RelativeSizeAxes = Axes.Both,
-                            }
-                        }
+                            },
+                        },
                     },
-                }
-            }
+                },
+            },
         };
 
         bindableModeAndSubMode.BindValueChanged(e =>
@@ -188,7 +188,7 @@ public partial class LyricComposer : CompositeDrawable
             {
                 PanelType.Property => new PropertyPanel(),
                 PanelType.InvalidInfo => new InvalidPanel(),
-                _ => throw new ArgumentOutOfRangeException(nameof(panelType), panelType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(panelType), panelType, null),
             };
     }
 
@@ -294,7 +294,7 @@ public partial class LyricComposer : CompositeDrawable
                 LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
                 LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
                 LyricEditorMode.EditNote => BottomEditorType.Note,
-                _ => null
+                _ => null,
             };
     }
 
@@ -343,7 +343,7 @@ public partial class LyricComposer : CompositeDrawable
                 BottomEditorType.RecordingTimeTag => new RecordingTimeTagBottomEditor(),
                 BottomEditorType.AdjustTimeTags => new AdjustTimeTagBottomEditor(),
                 BottomEditorType.Note => new NoteBottomEditor(),
-                _ => null
+                _ => null,
             };
 
         void updateBottomEditAreaSize(BaseBottomEditor? bottomEditor)
@@ -352,7 +352,7 @@ public partial class LyricComposer : CompositeDrawable
             gridContainer.RowDimensions = new[]
             {
                 new Dimension(),
-                new Dimension(GridSizeMode.Absolute, bottomEditorHeight)
+                new Dimension(GridSizeMode.Absolute, bottomEditorHeight),
             };
         }
     }

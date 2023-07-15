@@ -21,7 +21,7 @@ public class ToneConverter : JsonConverter<Tone>
         return new Tone
         {
             Scale = scale,
-            Half = half
+            Half = half,
         };
     }
 

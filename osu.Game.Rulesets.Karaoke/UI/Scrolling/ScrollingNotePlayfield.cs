@@ -68,10 +68,10 @@ public abstract partial class ScrollingNotePlayfield : ScrollingPlayfield
                                 AutoSizeAxes = Axes.Y,
                                 Direction = FillDirection.Vertical,
                                 Padding = new MarginPadding { Top = COLUMN_SPACING, Bottom = COLUMN_SPACING },
-                                Spacing = new Vector2(0, COLUMN_SPACING)
+                                Spacing = new Vector2(0, COLUMN_SPACING),
                             },
                             // center line
-                        }
+                        },
                     },
                     HitObjectLayer = new Container
                     {
@@ -90,14 +90,14 @@ public abstract partial class ScrollingNotePlayfield : ScrollingPlayfield
                                     {
                                         Name = "Hit objects",
                                         RelativeSizeAxes = Axes.Both,
-                                        Child = HitObjectContainer
+                                        Child = HitObjectContainer,
                                     },
                                     // scoring visualization
-                                }
-                            }
+                                },
+                            },
                         },
                     },
-                }
+                },
             },
             // other things like microphone status
         };
@@ -106,7 +106,7 @@ public abstract partial class ScrollingNotePlayfield : ScrollingPlayfield
         {
             var column = new DefaultColumnBackground(i)
             {
-                IsSpecial = i % 2 == 0
+                IsSpecial = i % 2 == 0,
             };
 
             columnFlow.Add(column);

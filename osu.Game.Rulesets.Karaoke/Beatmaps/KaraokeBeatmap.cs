@@ -44,13 +44,13 @@ public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
             {
                 Name = @"Singer",
                 Content = singers.ToString(),
-                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User }
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User },
             },
             new()
             {
                 Name = @"Lyric",
                 Content = lyrics.ToString(),
-                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.AlignLeft }
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.AlignLeft },
             },
         };
 
@@ -61,7 +61,7 @@ public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
             {
                 Name = @"Note",
                 Content = notes.ToString(),
-                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music }
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music },
             });
         }
         else
@@ -70,7 +70,7 @@ public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
             {
                 Name = @"This beatmap is not scorable.",
                 Content = @"This beatmap is not scorable.",
-                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times }
+                CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times },
             });
         }
 

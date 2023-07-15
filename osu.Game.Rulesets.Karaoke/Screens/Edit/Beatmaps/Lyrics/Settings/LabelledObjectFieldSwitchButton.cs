@@ -67,7 +67,7 @@ public abstract partial class LabelledObjectFieldSwitchButton<T> : LabelledSwitc
         {
             if (selected)
                 TriggerSelect();
-        }
+        },
     };
 
     protected partial class ObjectFieldSwitchButton : SwitchButton

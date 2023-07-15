@@ -32,7 +32,7 @@ public class LyricTest
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo("en-US"), "karaoke" }
+                { new CultureInfo("en-US"), "karaoke" },
             },
             Language = new CultureInfo("ja-JP"),
             Order = 1,
@@ -41,8 +41,8 @@ public class LyricTest
             ReferenceLyric = referencedLyric,
             ReferenceLyricConfig = new ReferenceLyricConfig
             {
-                OffsetTime = 100
-            }
+                OffsetTime = 100,
+            },
         };
 
         var clonedLyric = lyric.DeepClone();
@@ -113,9 +113,9 @@ public class LyricTest
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
+                { new CultureInfo(17), "からおけ" },
             },
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         };
 
         var lyric = new Lyric
@@ -153,7 +153,7 @@ public class LyricTest
         referencedLyric.SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 });
         referencedLyric.Translates = new Dictionary<CultureInfo, string>
         {
-            { new CultureInfo(17), "からおけ" }
+            { new CultureInfo(17), "からおけ" },
         };
         referencedLyric.Language = new CultureInfo(17);
 
@@ -184,9 +184,9 @@ public class LyricTest
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
+                { new CultureInfo(17), "からおけ" },
             },
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         };
 
         var lyric = new Lyric
@@ -242,16 +242,16 @@ public class LyricTest
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
+                { new CultureInfo(17), "からおけ" },
             },
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         };
 
         var lyric = new Lyric
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceLyricConfig = config
+            ReferenceLyricConfig = config,
         };
 
         // the property should not same as the reference reference because those properties are not sync.

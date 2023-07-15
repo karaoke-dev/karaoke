@@ -12,14 +12,14 @@ public class PageGeneratorConfig : GeneratorConfig
     public Bindable<double> MinTime { get; } = new BindableDouble(CheckBeatmapPageInfo.MIN_INTERVAL)
     {
         MinValue = CheckBeatmapPageInfo.MIN_INTERVAL,
-        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL
+        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL,
     };
 
     [ConfigSource("Max time", "Max interval between pages.")]
     public Bindable<double> MaxTime { get; } = new BindableDouble(CheckBeatmapPageInfo.MAX_INTERVAL)
     {
         MinValue = CheckBeatmapPageInfo.MIN_INTERVAL,
-        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL
+        MaxValue = CheckBeatmapPageInfo.MAX_INTERVAL,
     };
 
     [ConfigSource("Clear the exist page.", "Clear the exist page after generated.")]

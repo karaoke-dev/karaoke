@@ -41,6 +41,6 @@ public partial class LanguageSettings : LyricEditorSettings
             new LanguageEditModeSection(),
             new LanguageIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

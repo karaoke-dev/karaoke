@@ -48,13 +48,13 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4.Black
+                Colour = Color4.Black,
             },
             new Box
             {
                 RelativeSizeAxes = Axes.X,
                 Height = leftLineWidth,
-                Alpha = hasLeftLine ? 1 : 0
+                Alpha = hasLeftLine ? 1 : 0,
             },
             new Box
             {
@@ -62,7 +62,7 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
                 Origin = Anchor.BottomRight,
                 RelativeSizeAxes = Axes.X,
                 Height = rightLineWidth,
-                Alpha = hasRightLine ? 1 : 0
+                Alpha = hasRightLine ? 1 : 0,
             },
             lightContainer = new Container
             {
@@ -76,9 +76,9 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
                     Texture = skin.GetTexture(lightImage),
                     RelativeSizeAxes = Axes.Y,
                     Height = 1,
-                    Alpha = 0
-                }
-            }
+                    Alpha = 0,
+                },
+            },
         };
 
         direction.BindTo(scrollingInfo.Direction);

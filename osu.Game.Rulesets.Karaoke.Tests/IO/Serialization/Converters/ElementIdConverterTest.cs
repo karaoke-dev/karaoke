@@ -35,6 +35,6 @@ public class ElementIdConverterTest : BaseSingleConverterTest<ElementIdConverter
         {
             null => null,
             "" => ElementId.Empty,
-            _ => new ElementId(str)
+            _ => new ElementId(str),
         };
 }

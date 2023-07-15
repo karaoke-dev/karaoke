@@ -44,7 +44,7 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
@@ -65,7 +65,7 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = text,
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags),
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
@@ -86,7 +86,7 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags),
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
@@ -117,7 +117,7 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = "karaoke!",
-            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singerIndexes)
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singerIndexes),
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
@@ -145,7 +145,7 @@ public class LyricsUtilsTest
         var lyric = new Lyric
         {
             Text = "karaoke!",
-            Language = cultureInfo
+            Language = cultureInfo,
         };
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
@@ -180,12 +180,12 @@ public class LyricsUtilsTest
         var lyric1 = new Lyric
         {
             Text = "karaoke",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(firstTimeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(firstTimeTags),
         };
         var lyric2 = new Lyric
         {
             Text = "karaoke",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(secondTimeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(secondTimeTags),
         };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
@@ -209,12 +209,12 @@ public class LyricsUtilsTest
         var lyric1 = new Lyric
         {
             Text = "karaoke",
-            RubyTags = TestCaseTagHelper.ParseRubyTags(firstRubyTags)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(firstRubyTags),
         };
         var lyric2 = new Lyric
         {
             Text = "karaoke",
-            RubyTags = TestCaseTagHelper.ParseRubyTags(secondRubyTags)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(secondRubyTags),
         };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
@@ -234,12 +234,12 @@ public class LyricsUtilsTest
         var lyric1 = new Lyric
         {
             Text = "karaoke",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(firstRomajiTags)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(firstRomajiTags),
         };
         var lyric2 = new Lyric
         {
             Text = "karaoke",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(secondRomajiTags)
+            RomajiTags = TestCaseTagHelper.ParseRomajiTags(secondRomajiTags),
         };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);

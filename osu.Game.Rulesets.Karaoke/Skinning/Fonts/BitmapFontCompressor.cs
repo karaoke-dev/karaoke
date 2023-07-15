@@ -23,7 +23,7 @@ public static class BitmapFontCompressor
             Common = copyObject(bitmapFont.Common),
             Pages = GeneratePages(bitmapFont.Pages, characters.Values.ToArray()),
             Characters = characters,
-            KerningPairs = GenerateKerningPairs(bitmapFont.KerningPairs, chars)
+            KerningPairs = GenerateKerningPairs(bitmapFont.KerningPairs, chars),
         };
     }
 
@@ -118,7 +118,7 @@ public static class BitmapFontCompressor
             // assign next position for drawing.
             currentTopLeftPosition = currentTopLeftPosition with
             {
-                X = currentTopLeftPosition.X + character.Width + spacing.X
+                X = currentTopLeftPosition.X + character.Width + spacing.X,
             };
         }
 

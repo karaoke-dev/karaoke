@@ -29,7 +29,7 @@ public class RubyTagConverter : JsonConverter<RubyTag>
         {
             StartIndex = result.GetGroupValue<int>("start"),
             EndIndex = result.GetGroupValue<int?>("end") ?? result.GetGroupValue<int>("start"),
-            Text = result.GetGroupValue<string>("ruby")
+            Text = result.GetGroupValue<string>("ruby"),
         };
     }
 

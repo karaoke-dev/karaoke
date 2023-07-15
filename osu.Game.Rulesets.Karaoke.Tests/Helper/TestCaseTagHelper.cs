@@ -48,7 +48,7 @@ public static class TestCaseTagHelper
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
     }
 
@@ -82,7 +82,7 @@ public static class TestCaseTagHelper
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
     }
 
@@ -166,8 +166,8 @@ public static class TestCaseTagHelper
             TimeTags = new[]
             {
                 new TimeTag(new TextIndex(0), startTime),
-                new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime)
-            }
+                new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime),
+            },
         }.ChangeId(id != null ? TestCaseElementIdHelper.CreateElementIdByNumber(id.Value) : ElementId.Empty);
     }
 

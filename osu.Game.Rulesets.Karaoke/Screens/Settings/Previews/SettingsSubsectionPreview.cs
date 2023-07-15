@@ -49,8 +49,8 @@ public abstract partial class SettingsSubsectionPreview : Container
                     content = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
-                    }
-                }
+                    },
+                },
             },
         };
     }

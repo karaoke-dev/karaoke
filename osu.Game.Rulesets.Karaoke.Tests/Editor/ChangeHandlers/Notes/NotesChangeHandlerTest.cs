@@ -20,7 +20,7 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
         {
             Text = "カラオケ",
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         });
 
         TriggerHandlerChanged(c => c.Split());
@@ -60,7 +60,7 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
                 RubyText = "から",
                 ReferenceLyricId = referencedLyric.ID,
                 ReferenceLyric = referencedLyric,
-                ReferenceTimeTagIndex = 0
+                ReferenceTimeTagIndex = 0,
             },
             new Note
             {
@@ -68,8 +68,8 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
                 RubyText = "おけ",
                 ReferenceLyricId = referencedLyric.ID,
                 ReferenceLyric = referencedLyric,
-                ReferenceTimeTagIndex = 0
-            }
+                ReferenceTimeTagIndex = 0,
+            },
         });
 
         TriggerHandlerChanged(c => c.Combine());
@@ -109,7 +109,7 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
                 RubyText = "おけ",
                 ReferenceLyricId = referencedLyric.ID,
                 ReferenceLyric = referencedLyric,
-            }
+            },
         }, false);
 
         TriggerHandlerChanged(c => c.Clear());

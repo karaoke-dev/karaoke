@@ -22,7 +22,7 @@ public partial class ClickablePlayerSliderBar : SettingsSlider<int>
     protected override Drawable CreateControl() => new ClickableSliderBar
     {
         Margin = new MarginPadding { Top = 5, Bottom = 5 },
-        RelativeSizeAxes = Axes.X
+        RelativeSizeAxes = Axes.X,
     };
 
     public ClickablePlayerSliderBar()
@@ -56,7 +56,7 @@ public partial class ClickablePlayerSliderBar : SettingsSlider<int>
                 Height = BUTTON_SIZE,
                 Text = "-",
                 TooltipText = "Decrease",
-                Action = () => Current.Value -= (int)KeyboardStep
+                Action = () => Current.Value -= (int)KeyboardStep,
             });
 
             Add(increaseButton = new ToolTipButton
@@ -68,7 +68,7 @@ public partial class ClickablePlayerSliderBar : SettingsSlider<int>
                 Height = BUTTON_SIZE,
                 Text = "+",
                 TooltipText = "Increase",
-                Action = () => Current.Value += (int)KeyboardStep
+                Action = () => Current.Value += (int)KeyboardStep,
             });
         }
 

@@ -20,12 +20,12 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         }, false);
 
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());
@@ -42,12 +42,12 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         }, false);
 
         PrepareHitObject(() => new Lyric
         {
-            Text = "???"
+            Text = "???",
         });
 
         TriggerHandlerChangedWithException<DetectorNotSupportedException>(c => c.AutoGenerate());
@@ -60,14 +60,14 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var referencedLyric = new Lyric
         {
-            Text = "Referenced lyric"
+            Text = "Referenced lyric",
         };
 
         PrepareHitObject(() => referencedLyric, false);
 
         PrepareHitObject(() => new Lyric
         {
-            Text = "I need the reference lyric."
+            Text = "I need the reference lyric.",
         });
 
         TriggerHandlerChanged(c => c.UpdateReferenceLyric(referencedLyric));
@@ -84,14 +84,14 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var referencedLyric = new Lyric
         {
-            Text = "Referenced lyric"
+            Text = "Referenced lyric",
         };
 
         PrepareHitObject(() => new Lyric
         {
             Text = "Lyric",
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         });
 
         TriggerHandlerChanged(c => c.SwitchToReferenceLyricConfig());
@@ -108,14 +108,14 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var referencedLyric = new Lyric
         {
-            Text = "Referenced lyric"
+            Text = "Referenced lyric",
         };
 
         PrepareHitObject(() => new Lyric
         {
             Text = "Lyric",
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         });
 
         TriggerHandlerChanged(c => c.SwitchToSyncLyricConfig());
@@ -132,7 +132,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var referencedLyric = new Lyric
         {
-            Text = "Referenced lyric"
+            Text = "Referenced lyric",
         };
 
         PrepareHitObject(() => new Lyric
@@ -162,7 +162,7 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
     {
         var lyric = new Lyric
         {
-            Text = "Referenced lyric"
+            Text = "Referenced lyric",
         };
 
         PrepareHitObject(() => lyric, false);

@@ -60,7 +60,7 @@ public partial class SingerList : CompositeDrawable
             RelativeSizeAxes = Axes.X,
             AutoSizeAxes = Axes.Y,
             Spacing = new Vector2(10),
-            Direction = FillDirection.Full
+            Direction = FillDirection.Full,
         };
     }
 
@@ -90,7 +90,7 @@ public partial class SingerList : CompositeDrawable
 
             singers.Add(display = new SingerDisplay
             {
-                Current = { Value = Singers[singerIndex] }
+                Current = { Value = Singers[singerIndex] },
             });
 
             // todo : might check does this like works because singer is object.
@@ -103,8 +103,8 @@ public partial class SingerList : CompositeDrawable
             // todo : use better way to create singer with right id.
             Action = () => Singers.Add(new Singer
             {
-                Name = "New singer"
-            })
+                Name = "New singer",
+            }),
         });
 
         reindexItems();
@@ -159,24 +159,24 @@ public partial class SingerList : CompositeDrawable
                             {
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = Colour4.Transparent,
-                                AlwaysPresent = true
+                                AlwaysPresent = true,
                             },
                             new SpriteIcon
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Size = new Vector2(20),
-                                Icon = FontAwesome.Solid.Plus
-                            }
-                        }
+                                Icon = FontAwesome.Solid.Plus,
+                            },
+                        },
                     },
                     new OsuSpriteText
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
-                        Text = "New"
-                    }
-                }
+                        Text = "New",
+                    },
+                },
             };
         }
 

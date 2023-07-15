@@ -36,8 +36,8 @@ internal partial class LyricShadowSection : StyleSection
                 {
                     Value = 10,
                     MinValue = 0,
-                    MaxValue = 20
-                }
+                    MaxValue = 20,
+                },
             },
             shadowYSliderBar = new LabelledRealTimeSliderBar<float>
             {
@@ -47,9 +47,9 @@ internal partial class LyricShadowSection : StyleSection
                 {
                     Value = 10,
                     MinValue = 0,
-                    MaxValue = 20
-                }
-            }
+                    MaxValue = 20,
+                },
+            },
         };
     }
 

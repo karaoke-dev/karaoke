@@ -36,8 +36,8 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
                 Child = screenContainer = new Container<WorkspaceScreen<TItem>>
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Masking = true
-                }
+                    Masking = true,
+                },
             },
             new Container
             {
@@ -50,7 +50,7 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
                     {
                         x.RelativeSizeAxes = Axes.X;
                         x.Height = 36;
-                    })
+                    }),
                 },
             },
         };
@@ -103,7 +103,7 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
 
         protected override TabItem<TItem> CreateTabItem(TItem value) => new WorkspaceScreenStackTabItem(value)
         {
-            AccentColour = AccentColour
+            AccentColour = AccentColour,
         };
 
         private partial class WorkspaceScreenStackTabItem : OverlayTabItem
@@ -117,7 +117,7 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
                     IHasDescription hasDescription => hasDescription.GetDescription(),
                     Enum e => e.GetLocalisableDescription(),
                     LocalisableString l => l,
-                    _ => value?.ToString() ?? string.Empty
+                    _ => value?.ToString() ?? string.Empty,
                 };
             }
         }

@@ -44,11 +44,11 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                     {
                         new Dimension(),
                         new Dimension(GridSizeMode.Absolute, 5),
-                        new Dimension(GridSizeMode.Absolute, 36)
+                        new Dimension(GridSizeMode.Absolute, 36),
                     },
                     RowDimensions = new[]
                     {
-                        new Dimension(GridSizeMode.AutoSize)
+                        new Dimension(GridSizeMode.AutoSize),
                     },
                     Content = new[]
                     {
@@ -61,8 +61,8 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                                 x.Anchor = Anchor.Centre;
                                 x.Origin = Anchor.Centre;
                                 x.Size = new Vector2(36);
-                            })
-                        }
+                            }),
+                        },
                     },
                 },
                 CreateDescriptionTextFlowContainer().With(x =>
@@ -71,7 +71,7 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                     x.AutoSizeAxes = Axes.Y;
                     x.Padding = new MarginPadding { Horizontal = horizontal_padding };
                     x.Description = CreateInvalidDescriptionFormat();
-                })
+                }),
             };
         });
     }
@@ -143,8 +143,8 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                                 selectedSetting = null;
                             },
                         };
-                    }).ToList()
-                }
+                    }).ToList(),
+                },
             };
 
         private partial class AutoGenerateButton : EditorSectionButton

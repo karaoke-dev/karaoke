@@ -15,6 +15,6 @@ public partial class TestSceneKaraokeModAutoplayBySinger : KaraokeModTestScene
         Mod = new KaraokeModAutoplayBySinger(),
         Autoplay = true,
         Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-        PassCondition = () => true
+        PassCondition = () => true,
     });
 }

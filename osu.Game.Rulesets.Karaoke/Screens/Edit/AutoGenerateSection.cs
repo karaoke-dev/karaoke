@@ -13,7 +13,7 @@ public abstract partial class AutoGenerateSection : EditorSection
     {
         Children = new[]
         {
-            CreateAutoGenerateSubsection()
+            CreateAutoGenerateSubsection(),
         };
     }
 

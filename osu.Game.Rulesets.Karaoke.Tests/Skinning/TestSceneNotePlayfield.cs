@@ -13,7 +13,7 @@ public partial class TestSceneNotePlayfield : KaraokeSkinnableColumnTestScene
     {
         SetContents(_ => new KaraokeInputManager(new KaraokeRuleset().RulesetInfo)
         {
-            Child = new NotePlayfield(COLUMNS)
+            Child = new NotePlayfield(COLUMNS),
         });
     }
 }

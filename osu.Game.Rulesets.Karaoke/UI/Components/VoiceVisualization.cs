@@ -129,7 +129,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
         {
             ScrollingDirection.Left => path.OriginPosition.X,
             ScrollingDirection.Right => path.DrawWidth - path.OriginPosition.X,
-            _ => 0.0f
+            _ => 0.0f,
         };
 
         path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);

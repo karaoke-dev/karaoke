@@ -29,8 +29,8 @@ internal partial class IntervalSection : LyricConfigSection
                     MinValue = 0,
                     MaxValue = 30,
                     Value = 10,
-                    Default = 10
-                }
+                    Default = 10,
+                },
             },
             rubyIntervalSliderBar = new LabelledRealTimeSliderBar<int>
             {
@@ -41,8 +41,8 @@ internal partial class IntervalSection : LyricConfigSection
                     MinValue = 0,
                     MaxValue = 30,
                     Value = 10,
-                    Default = 10
-                }
+                    Default = 10,
+                },
             },
             romajiIntervalSliderBar = new LabelledRealTimeSliderBar<int>
             {
@@ -53,9 +53,9 @@ internal partial class IntervalSection : LyricConfigSection
                     MinValue = 0,
                     MaxValue = 30,
                     Value = 10,
-                    Default = 10
-                }
-            }
+                    Default = 10,
+                },
+            },
         };
     }
 

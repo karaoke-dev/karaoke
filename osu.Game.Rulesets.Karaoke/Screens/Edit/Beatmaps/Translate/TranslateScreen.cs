@@ -40,7 +40,7 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
                 },
-            }
+            },
         });
     }
 

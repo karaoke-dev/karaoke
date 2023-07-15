@@ -30,8 +30,8 @@ public partial class NotScorableGraph : Container
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
-                Text = "Sorry, this beatmap is not scorable."
-            }
+                Text = "Sorry, this beatmap is not scorable.",
+            },
         };
     }
 }

@@ -49,7 +49,7 @@ public partial class DescriptionTextFlowContainer : Container, IMarkdownTextComp
 
     public SpriteText CreateSpriteText() => new OsuSpriteText
     {
-        Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
+        Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular),
     };
 
     private OsuMarkdownLinkText? processLinkText(string text, string? url)
@@ -69,7 +69,7 @@ public partial class DescriptionTextFlowContainer : Container, IMarkdownTextComp
         {
             InputKeyDescriptionAction inputKey => new InputKeyText(inputKey),
             SwitchModeDescriptionAction switchMode => new SwitchMoteText(switchMode),
-            _ => throw new InvalidCastException()
+            _ => throw new InvalidCastException(),
         };
 
     internal partial class DescriptionMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer

@@ -39,7 +39,7 @@ public partial class TestSceneFontSelector : OsuManualInputManagerTestScene
             var language = new BindableFontUsage
             {
                 MinFontSize = 32,
-                MaxFontSize = 72
+                MaxFontSize = 72,
             };
             Child = new FontSelector
             {
@@ -47,7 +47,7 @@ public partial class TestSceneFontSelector : OsuManualInputManagerTestScene
                 Size = new Vector2(0.6f, 0.8f),
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Current = language
+                Current = language,
             };
         });
     }

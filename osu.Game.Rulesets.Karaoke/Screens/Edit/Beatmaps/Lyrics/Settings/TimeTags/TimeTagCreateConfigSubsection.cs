@@ -68,7 +68,7 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                         AutoSizeAxes = Axes.Y,
                         RowDimensions = new[]
                         {
-                            new Dimension(GridSizeMode.AutoSize)
+                            new Dimension(GridSizeMode.AutoSize),
                         },
                         Content = new[]
                         {
@@ -79,16 +79,16 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                                 Padding = new MarginPadding { Horizontal = horizontal_padding },
                                 Action = () => current.Value = x,
                             }).ToArray(),
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             },
             lyricEditorDescription = new LyricEditorDescriptionTextFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
                 Padding = new MarginPadding { Horizontal = horizontal_padding },
-            }
+            },
         };
 
         current.BindValueChanged(e =>
@@ -125,7 +125,7 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
         {
             CreateTimeTagEditMode.Create => "Create",
             CreateTimeTagEditMode.Modify => "Modify",
-            _ => throw new InvalidOperationException(nameof(mode))
+            _ => throw new InvalidOperationException(nameof(mode)),
         };
 
     private Color4 getButtonColour(CreateTimeTagEditMode mode, bool active)
@@ -133,7 +133,7 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
         {
             CreateTimeTagEditMode.Create => active ? colours.Green : colours.GreenDarker,
             CreateTimeTagEditMode.Modify => active ? colours.Pink : colours.PinkDarker,
-            _ => throw new InvalidOperationException(nameof(mode))
+            _ => throw new InvalidOperationException(nameof(mode)),
         };
 
     private DescriptionFormat getDescription(CreateTimeTagEditMode mode) =>
@@ -152,8 +152,8 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                             AdjustableActions = new List<KaraokeEditAction>
                             {
                                 KaraokeEditAction.CreateStartTimeTag,
-                                KaraokeEditAction.CreateEndTimeTag
-                            }
+                                KaraokeEditAction.CreateEndTimeTag,
+                            },
                         }
                     },
                     {
@@ -163,11 +163,11 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                             AdjustableActions = new List<KaraokeEditAction>
                             {
                                 KaraokeEditAction.RemoveStartTimeTag,
-                                KaraokeEditAction.RemoveEndTimeTag
-                            }
+                                KaraokeEditAction.RemoveEndTimeTag,
+                            },
                         }
-                    }
-                }
+                    },
+                },
             },
             CreateTimeTagEditMode.Modify => new DescriptionFormat
             {
@@ -185,14 +185,14 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                                 KaraokeEditAction.ShiftTheTimeTagRight,
                                 KaraokeEditAction.ShiftTheTimeTagStateLeft,
                                 KaraokeEditAction.ShiftTheTimeTagStateRight,
-                            }
+                            },
                         }
                     },
                     { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateStartTimeTag, KaraokeEditAction.CreateEndTimeTag } } },
-                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag } } }
-                }
+                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag } } },
+                },
             },
-            _ => throw new InvalidOperationException(nameof(mode))
+            _ => throw new InvalidOperationException(nameof(mode)),
         };
 
     private partial class EditModeButton : EditorSectionButton

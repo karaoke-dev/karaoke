@@ -20,7 +20,7 @@ public partial class TestSceneIssuesToolTip : OsuTestScene
         Child = toolTip = new IssuesToolTip
         {
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
         toolTip.Show();
     });

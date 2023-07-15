@@ -64,7 +64,7 @@ public partial class TimeTagIssueSection : LyricEditorIssueSection
                     {
                         Text = issue.ToString(),
                         RelativeSizeAxes = Axes.X,
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                     },
                 };
             }
@@ -78,7 +78,7 @@ public partial class TimeTagIssueSection : LyricEditorIssueSection
                     Size = new Vector2(10),
                     Colour = issue.Template.Colour,
                     Margin = new MarginPadding { Left = 10 },
-                    Icon = FontAwesome.Solid.AlignLeft
+                    Icon = FontAwesome.Solid.AlignLeft,
                 },
                 new OsuSpriteText
                 {
@@ -95,7 +95,7 @@ public partial class TimeTagIssueSection : LyricEditorIssueSection
                 {
                     Text = issue.ToString(),
                     RelativeSizeAxes = Axes.X,
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
             };
         }
@@ -105,7 +105,7 @@ public partial class TimeTagIssueSection : LyricEditorIssueSection
             {
                 LyricTimeTagIssue timeTagIssue => new Tuple<Lyric, TimeTag?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
                 LyricIssue lyricIssue => new Tuple<Lyric, TimeTag?>(lyricIssue.Lyric, null),
-                _ => throw new InvalidCastException()
+                _ => throw new InvalidCastException(),
             };
     }
 }

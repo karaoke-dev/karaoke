@@ -89,7 +89,7 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
             Child = lyricEditor = new FullScreenLyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
-            }
+            },
         });
     }
 

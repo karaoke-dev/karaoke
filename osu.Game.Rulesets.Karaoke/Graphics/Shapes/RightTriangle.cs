@@ -50,7 +50,7 @@ public partial class RightTriangle : Sprite
             TriangleRightAngleDirection.TopRight => new Triangle(q.TopLeft, q.TopRight, q.BottomRight),
             TriangleRightAngleDirection.BottomLeft => new Triangle(q.TopLeft, q.BottomLeft, q.BottomRight),
             TriangleRightAngleDirection.BottomRight => new Triangle(q.TopRight, q.BottomLeft, q.BottomRight),
-            _ => throw new ArgumentOutOfRangeException(nameof(rightAngleDirection), rightAngleDirection, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(rightAngleDirection), rightAngleDirection, null),
         };
 
     public override bool Contains(Vector2 screenSpacePos) => toTriangle(ScreenSpaceDrawQuad, RightAngleDirection).Contains(screenSpacePos);

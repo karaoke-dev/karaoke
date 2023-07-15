@@ -34,7 +34,7 @@ public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<Kara
             karaokePlayfield.DisplayCursor = new BindableBool
             {
                 Default = true,
-                Value = true
+                Value = true,
             };
         }
     }
@@ -49,8 +49,8 @@ public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<Kara
         {
             Expanded =
             {
-                Value = false
-            }
+                Value = false,
+            },
         });
     }
 }

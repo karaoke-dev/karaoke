@@ -23,14 +23,14 @@ public partial class TransparentSettings : KaraokeSettingsSubsection
                 LabelText = "Lyric playfield alpha",
                 Current = Config.GetBindable<double>(KaraokeRulesetSetting.LyricAlpha),
                 KeyboardStep = 0.01f,
-                DisplayAsPercentage = true
+                DisplayAsPercentage = true,
             },
             new SettingsSlider<double>
             {
                 LabelText = "Note playfield alpha",
                 Current = Config.GetBindable<double>(KaraokeRulesetSetting.NoteAlpha),
                 KeyboardStep = 0.01f,
-                DisplayAsPercentage = true
+                DisplayAsPercentage = true,
             },
         };
     }

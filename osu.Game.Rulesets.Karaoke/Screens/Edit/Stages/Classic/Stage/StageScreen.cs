@@ -70,7 +70,7 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
                     },
                     new StageSettings(),
                 },
-            }
+            },
         };
     }
 

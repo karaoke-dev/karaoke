@@ -16,7 +16,7 @@ public abstract partial class LyricPropertyChangeHandlerTest<TChangeHandler> : B
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceLyricConfig = config ?? new SyncLyricConfig()
+            ReferenceLyricConfig = config ?? new SyncLyricConfig(),
         };
 
         PrepareHitObjects(() => new[] { lyric }, selected);

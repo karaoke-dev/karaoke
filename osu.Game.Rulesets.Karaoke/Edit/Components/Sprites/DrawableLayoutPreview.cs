@@ -31,17 +31,17 @@ public partial class DrawableLayoutPreview : CompositeDrawable
         {
             background = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             previewLyric = new Box
             {
-                Height = 15
+                Height = 15,
             },
             notSupportText = new OsuSpriteText
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-            }
+            },
         };
 
         previewLyric.Hide();
@@ -114,7 +114,7 @@ public partial class DrawableLayoutPreview : CompositeDrawable
                 Left = Layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
                 Right = Layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
                 Top = Layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
-                Bottom = Layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
+                Bottom = Layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0,
             };
         }
     }

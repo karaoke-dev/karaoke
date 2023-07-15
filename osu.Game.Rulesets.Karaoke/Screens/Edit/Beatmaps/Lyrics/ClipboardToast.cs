@@ -34,5 +34,5 @@ public enum ClipboardAction
     Copy,
 
     [Description("Paste")]
-    Paste
+    Paste,
 }

@@ -32,8 +32,8 @@ public partial class ManageFontSettings : KaraokeSettingsSubsection
             new SettingsButton
             {
                 Text = "Import file",
-                TooltipText = "If some font is placed into folder but not import, press here to try again."
-            }
+                TooltipText = "If some font is placed into folder but not import, press here to try again.",
+            },
         };
     }
 }

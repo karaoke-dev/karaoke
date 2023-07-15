@@ -22,7 +22,7 @@ public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextin
             TextingEditMode.Typing => new Selection(),
             TextingEditMode.Split => new Selection(),
             TextingEditMode.Verify => new TextingVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(TextingEditMode mode) =>
@@ -31,7 +31,7 @@ public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextin
             TextingEditMode.Typing => "Typing",
             TextingEditMode.Split => "Split",
             TextingEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, TextingEditMode mode, bool active) =>
@@ -40,7 +40,7 @@ public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextin
             TextingEditMode.Typing => active ? colours.Blue : colours.BlueDarker,
             TextingEditMode.Split => active ? colours.Red : colours.RedDarker,
             TextingEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(TextingEditMode mode) =>
@@ -49,7 +49,7 @@ public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextin
             TextingEditMode.Typing => "Edit the lyric text.",
             TextingEditMode.Split => "Create/delete or split/combine the lyric.",
             TextingEditMode.Verify => "Check if have lyric with no text.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class TextingVerifySelection : LyricEditorVerifySelection

@@ -130,7 +130,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             NavigateCaretPosition => null,
             TimeTagIndexCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
             TimeTagCaretPosition => karaokeSpriteText.GetTimeTagByPosition(position),
-            _ => null
+            _ => null,
         };
 
     protected override void OnHoverLost(HoverLostEvent e)
@@ -170,7 +170,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
             LockLyricPropertyBy.LockState => "This property is locked and not editable",
             null => default(LocalisableString?),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
     }
 
@@ -187,7 +187,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
             LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
             LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds)),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
     }
 }

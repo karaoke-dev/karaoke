@@ -22,7 +22,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         PrepareHitObject(() => new Lyric
         {
             Text = "風",
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());
@@ -51,7 +51,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             new Lyric
             {
                 Text = string.Empty,
-                Language = new CultureInfo(17)
+                Language = new CultureInfo(17),
             },
         });
 
@@ -66,7 +66,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         PrepareHitObject(() => new Lyric
         {
             Text = "風",
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         });
 
         TriggerHandlerChanged(c => c.Add(new RubyTag
@@ -90,7 +90,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         PrepareHitObject(() => new Lyric
         {
             Text = "風",
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         });
 
         TriggerHandlerChanged(c => c.AddRange(new[]
@@ -100,7 +100,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
                 StartIndex = 0,
                 EndIndex = 0,
                 Text = "かぜ",
-            }
+            },
         }));
 
         AssertSelectedHitObject(h =>
@@ -127,8 +127,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             Language = new CultureInfo(17),
             RubyTags = new List<RubyTag>
             {
-                removedTag
-            }
+                removedTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.Remove(removedTag));
@@ -161,8 +161,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
                     StartIndex = 1,
                     EndIndex = 1,
                     Text = "ら",
-                }
-            }
+                },
+            },
         });
 
         TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
@@ -189,8 +189,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             Language = new CultureInfo(17),
             RubyTags = new List<RubyTag>
             {
-                targetTag
-            }
+                targetTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.SetIndex(targetTag, 1, 2));
@@ -218,8 +218,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             Language = new CultureInfo(17),
             RubyTags = new List<RubyTag>
             {
-                targetTag
-            }
+                targetTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.ShiftingIndex(new[] { targetTag }, 1));
@@ -247,8 +247,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
             Language = new CultureInfo(17),
             RubyTags = new List<RubyTag>
             {
-                targetTag
-            }
+                targetTag,
+            },
         });
 
         TriggerHandlerChanged(c => c.SetText(targetTag, "からおけ"));
@@ -265,7 +265,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         PrepareLyricWithSyncConfig(new Lyric
         {
             Text = "風",
-            Language = new CultureInfo(17)
+            Language = new CultureInfo(17),
         });
 
         TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RubyTag

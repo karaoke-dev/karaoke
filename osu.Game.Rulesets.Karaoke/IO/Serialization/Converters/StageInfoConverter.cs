@@ -19,7 +19,7 @@ public class StageInfoConverter : GenericTypeConverter<StageInfo>
         {
             Type t when t == typeof(ClassicStageInfo) => classic_stage,
             Type t when t == typeof(PreviewStageInfo) => preview_stage,
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException(),
         };
 
     protected override Type GetTypeByName(string name) =>
@@ -27,6 +27,6 @@ public class StageInfoConverter : GenericTypeConverter<StageInfo>
         {
             classic_stage => typeof(ClassicStageInfo),
             preview_stage => typeof(PreviewStageInfo),
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException(),
         };
 }

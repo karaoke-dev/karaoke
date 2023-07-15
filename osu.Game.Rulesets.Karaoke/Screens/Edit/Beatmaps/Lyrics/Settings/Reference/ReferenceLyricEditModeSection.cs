@@ -21,7 +21,7 @@ public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<
         {
             ReferenceLyricEditMode.Edit => new Selection(),
             ReferenceLyricEditMode.Verify => new ReferenceLyricVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(ReferenceLyricEditMode mode) =>
@@ -29,7 +29,7 @@ public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<
         {
             ReferenceLyricEditMode.Edit => "Edit",
             ReferenceLyricEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, ReferenceLyricEditMode mode, bool active) =>
@@ -37,7 +37,7 @@ public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<
         {
             ReferenceLyricEditMode.Edit => active ? colours.Blue : colours.BlueDarker,
             ReferenceLyricEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(ReferenceLyricEditMode mode) =>
@@ -45,7 +45,7 @@ public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<
         {
             ReferenceLyricEditMode.Edit => "Assign the reference lyrics.",
             ReferenceLyricEditMode.Verify => "Check any invalid reference lyric issue.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class ReferenceLyricVerifySelection : LyricEditorVerifySelection

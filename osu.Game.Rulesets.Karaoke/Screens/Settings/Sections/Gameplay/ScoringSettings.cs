@@ -23,32 +23,32 @@ public partial class ScoringSettings : KaraokeSettingsSubsection
             new SettingsCheckbox
             {
                 LabelText = "Override pitch at gameplay",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay),
             },
             new SettingsSlider<int, PitchSlider>
             {
                 LabelText = "Pitch",
-                Current = Config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
+                Current = Config.GetBindable<int>(KaraokeRulesetSetting.Pitch),
             },
             new SettingsCheckbox
             {
                 LabelText = "Override vocal pitch at gameplay",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay),
             },
             new SettingsSlider<int, PitchSlider>
             {
                 LabelText = "Vocal pitch",
-                Current = Config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
+                Current = Config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch),
             },
             new SettingsCheckbox
             {
                 LabelText = "Override scoring pitch at gameplay",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay),
             },
             new SettingsSlider<int, PitchSlider>
             {
                 LabelText = "scoring pitch",
-                Current = Config.GetBindable<int>(KaraokeRulesetSetting.ScoringPitch)
+                Current = Config.GetBindable<int>(KaraokeRulesetSetting.ScoringPitch),
             },
         };
     }

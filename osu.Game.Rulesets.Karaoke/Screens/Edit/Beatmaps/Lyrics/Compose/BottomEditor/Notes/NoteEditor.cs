@@ -60,7 +60,7 @@ public partial class NoteEditor : Container
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                 },
-            }
+            },
         };
 
         bindableFocusedLyric.BindValueChanged(e =>

@@ -25,7 +25,7 @@ public class ConfigCategoryAttribute : Attribute, IEquatable<ConfigCategoryAttri
         return obj switch
         {
             ConfigCategoryAttribute category => Equals(category),
-            _ => false
+            _ => false,
         };
     }
 

@@ -28,15 +28,15 @@ public class LyricStyle : IKaraokeSkinElement
                     new OutlineShader
                     {
                         Radius = 3,
-                        OutlineColour = Color4Extensions.FromHex("#CCA532")
+                        OutlineColour = Color4Extensions.FromHex("#CCA532"),
                     },
                     new ShadowShader
                     {
                         ShadowColour = Color4Extensions.FromHex("#6B5B2D"),
-                        ShadowOffset = new Vector2(3)
-                    }
-                }
-            }
+                        ShadowOffset = new Vector2(3),
+                    },
+                },
+            },
         },
         RightLyricTextShaders = new ICustomizedShader[]
         {
@@ -48,16 +48,16 @@ public class LyricStyle : IKaraokeSkinElement
                     new OutlineShader
                     {
                         Radius = 3,
-                        OutlineColour = Color4Extensions.FromHex("#5932CC")
+                        OutlineColour = Color4Extensions.FromHex("#5932CC"),
                     },
                     new ShadowShader
                     {
                         ShadowColour = Color4Extensions.FromHex("#3D2D6B"),
-                        ShadowOffset = new Vector2(3)
-                    }
-                }
-            }
-        }
+                        ShadowOffset = new Vector2(3),
+                    },
+                },
+            },
+        },
     };
 
     public int ID { get; set; }

@@ -26,12 +26,12 @@ public partial class LyricFontSettings : KaraokeSettingsSubsection
             new SettingsFont
             {
                 LabelText = "Default main font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.MainFont)
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.MainFont),
             },
             new SettingsFont
             {
                 LabelText = "Default ruby font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RubyFont)
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RubyFont),
             },
             new SettingsSlider<int>
             {
@@ -42,7 +42,7 @@ public partial class LyricFontSettings : KaraokeSettingsSubsection
             new SettingsFont
             {
                 LabelText = "Default romaji font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomajiFont)
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomajiFont),
             },
             new SettingsSlider<int>
             {
@@ -54,19 +54,19 @@ public partial class LyricFontSettings : KaraokeSettingsSubsection
             {
                 LabelText = "Force use default lyric font.",
                 TooltipText = "Force use default font even has customize font in skin or beatmap.",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultFont)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultFont),
             },
             new SettingsFont
             {
                 LabelText = "Translate font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.TranslateFont)
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.TranslateFont),
             },
             new SettingsCheckbox
             {
                 LabelText = "Force use default translate font.",
                 TooltipText = "Force use default font even has customize font in skin or beatmap.",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont)
-            }
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont),
+            },
         };
     }
 }

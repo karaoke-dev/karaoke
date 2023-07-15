@@ -77,7 +77,7 @@ public partial class SettingsFont : SettingsItem<FontUsage>
                 AutoSizeAxes = Axes.Y,
                 RowDimensions = new[]
                 {
-                    new Dimension(GridSizeMode.AutoSize)
+                    new Dimension(GridSizeMode.AutoSize),
                 },
                 Content = new[]
                 {
@@ -88,7 +88,7 @@ public partial class SettingsFont : SettingsItem<FontUsage>
                             RelativeSizeAxes = Axes.X,
                             Padding = new MarginPadding { Left = SettingsPanel.CONTENT_MARGINS },
                             Height = height,
-                            Action = this.ShowPopover
+                            Action = this.ShowPopover,
                         },
                         null,
                         decreaseFontSizeButton = new SettingsButton
@@ -105,7 +105,7 @@ public partial class SettingsFont : SettingsItem<FontUsage>
                                     return;
 
                                 current.Value = current.Value.With(size: nextSize);
-                            }
+                            },
                         },
                         null,
                         increaseFontSizeButton = new SettingsButton
@@ -122,10 +122,10 @@ public partial class SettingsFont : SettingsItem<FontUsage>
                                     return;
 
                                 current.Value = current.Value.With(size: nextSize);
-                            }
-                        }
+                            },
+                        },
                     },
-                }
+                },
             };
 
             Current.BindValueChanged(e =>
@@ -154,7 +154,7 @@ public partial class SettingsFont : SettingsItem<FontUsage>
             {
                 Width = 1000,
                 Height = 600,
-                Current = bindableFontUsage
+                Current = bindableFontUsage,
             };
         }
     }

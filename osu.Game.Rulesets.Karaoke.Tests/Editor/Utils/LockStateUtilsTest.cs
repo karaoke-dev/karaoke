@@ -18,7 +18,7 @@ public class LockStateUtilsTest
         var lyrics = lockStates.Select(x => new Lyric
         {
             Text = "karaoke",
-            Lock = x
+            Lock = x,
         });
 
         int actual = LockStateUtils.FindUnlockObjects(lyrics).Length;

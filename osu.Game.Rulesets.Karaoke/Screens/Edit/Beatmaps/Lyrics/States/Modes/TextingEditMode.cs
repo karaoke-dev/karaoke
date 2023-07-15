@@ -9,5 +9,5 @@ public enum TextingEditMode
 
     Split,
 
-    Verify
+    Verify,
 }

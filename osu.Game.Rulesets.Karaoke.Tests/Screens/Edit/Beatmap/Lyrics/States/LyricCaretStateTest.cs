@@ -46,13 +46,13 @@ public partial class LyricCaretStateTest : OsuTestScene
                 },
                 new Lyric
                 {
-                    Text = "Second lyric"
+                    Text = "Second lyric",
                 },
                 new Lyric
                 {
-                    Text = "Third lyric"
+                    Text = "Third lyric",
                 },
-            }
+            },
         };
     }
 
@@ -72,7 +72,7 @@ public partial class LyricCaretStateTest : OsuTestScene
         Children = new Drawable[]
         {
             lyricsProvider,
-            lyricCaretState = new LyricCaretState()
+            lyricCaretState = new LyricCaretState(),
         };
     }
 
@@ -411,7 +411,7 @@ public partial class LyricCaretStateTest : OsuTestScene
             bindableModeWitSubMode.Value = bindableModeWitSubMode.Value with
             {
                 Mode = mode,
-                SubMode = getTheSubMode(mode)
+                SubMode = getTheSubMode(mode),
             };
         }
 
@@ -427,7 +427,7 @@ public partial class LyricCaretStateTest : OsuTestScene
                 LyricEditorMode.EditTimeTag => TimeTagEditMode.Create,
                 LyricEditorMode.EditNote => NoteEditMode.Generate,
                 LyricEditorMode.Singer => null,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
 
         public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum

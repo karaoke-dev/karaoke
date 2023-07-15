@@ -90,7 +90,7 @@ public static class HitObjectWritableUtils
             // base class
             nameof(Lyric.Samples) => false,
             nameof(Lyric.LegacyBpmMultiplier) => false,
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
     }
 
@@ -118,10 +118,10 @@ public static class HitObjectWritableUtils
                 // base class
                 nameof(Lyric.Samples) => false,
                 nameof(Lyric.LegacyBpmMultiplier) => false,
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException(),
             },
             null => false,
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
     }
 
@@ -149,7 +149,7 @@ public static class HitObjectWritableUtils
             ReferenceLyricConfig => false,
             SyncLyricConfig => true,
             null => false,
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
     }
 

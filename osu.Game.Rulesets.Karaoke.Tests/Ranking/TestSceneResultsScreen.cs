@@ -30,7 +30,7 @@ public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
 
     private static TestResultsScreen createResultsScreen() => new(new TestKaraokeScoreInfo
     {
-        HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
+        HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents(),
     });
 
     [Test]

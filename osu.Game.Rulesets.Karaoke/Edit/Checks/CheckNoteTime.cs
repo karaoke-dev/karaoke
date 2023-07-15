@@ -20,7 +20,7 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
     {
         new IssueTemplateNoteInvalidReferenceTimeTagTime(this),
         new IssueTemplateNoteDurationTooShort(this),
-        new IssueTemplateNoteDurationTooLong(this)
+        new IssueTemplateNoteDurationTooLong(this),
     };
 
     protected override IEnumerable<Issue> Check(Note note)
