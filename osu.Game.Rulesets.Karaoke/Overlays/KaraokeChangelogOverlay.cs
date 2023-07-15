@@ -180,8 +180,8 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
 
     private Task? initialFetchTask;
 
-    private void performAfterFetch(Action action) => fetchListing()?.ContinueWith(_ =>
-        Schedule(action), TaskContinuationOptions.OnlyOnRanToCompletion);
+    private void performAfterFetch(Action action) => fetchListing()
+        .ContinueWith(_ => Schedule(action), TaskContinuationOptions.OnlyOnRanToCompletion);
 
     private Task fetchListing()
     {
