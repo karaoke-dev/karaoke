@@ -24,7 +24,7 @@ public partial class MicrophoneSettings : KaraokeSettingsSubsection
             new SettingsMicrophoneDeviceDropdown
             {
                 LabelText = "Microphone devices",
-                Current = Config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
+                Current = Config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice),
             },
         };
     }

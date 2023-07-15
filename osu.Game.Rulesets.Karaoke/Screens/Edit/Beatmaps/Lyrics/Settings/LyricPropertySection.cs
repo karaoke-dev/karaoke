@@ -94,7 +94,7 @@ public abstract partial class LyricPropertySection : EditorSection
             {
                 LockLyricPropertyBy.ReferenceLyricConfig => FontAwesome.Solid.Chair,
                 LockLyricPropertyBy.LockState => FontAwesome.Solid.Lock,
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
             };
 
         static LocalisableString getWriteLyricPropertyLockedDescriptionTitle(LockLyricPropertyBy lockLyricPropertyBy) =>
@@ -102,7 +102,7 @@ public abstract partial class LyricPropertySection : EditorSection
             {
                 LockLyricPropertyBy.ReferenceLyricConfig => "Sync",
                 LockLyricPropertyBy.LockState => "Locked",
-                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
             };
     }
 

@@ -56,7 +56,7 @@ public class LyricClassicStageEffectApplier : LyricStageEffectApplier<ClassicSta
                 ClassicLyricLayoutAlignment.Left => Anchor.BottomLeft,
                 ClassicLyricLayoutAlignment.Center => Anchor.BottomCentre,
                 ClassicLyricLayoutAlignment.Right => Anchor.BottomRight,
-                _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(alignment), alignment, null),
             };
 
         static MarginPadding getPosition(ClassicStageDefinition definition, ClassicLyricLayout layout)

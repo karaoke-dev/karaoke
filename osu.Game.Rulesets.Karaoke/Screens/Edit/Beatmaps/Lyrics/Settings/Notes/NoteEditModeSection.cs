@@ -22,7 +22,7 @@ public partial class NoteEditModeSection : LyricEditorEditModeSection<IEditNoteM
             NoteEditMode.Generate => new Selection(),
             NoteEditMode.Edit => new Selection(),
             NoteEditMode.Verify => new NoteVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(NoteEditMode mode) =>
@@ -31,7 +31,7 @@ public partial class NoteEditModeSection : LyricEditorEditModeSection<IEditNoteM
             NoteEditMode.Generate => "Generate",
             NoteEditMode.Edit => "Edit",
             NoteEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, NoteEditMode mode, bool active) =>
@@ -40,7 +40,7 @@ public partial class NoteEditModeSection : LyricEditorEditModeSection<IEditNoteM
             NoteEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
             NoteEditMode.Edit => active ? colours.Red : colours.RedDarker,
             NoteEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(NoteEditMode mode) =>
@@ -49,7 +49,7 @@ public partial class NoteEditModeSection : LyricEditorEditModeSection<IEditNoteM
             NoteEditMode.Generate => "Using time-tag to create default notes.",
             NoteEditMode.Edit => "Batch edit note property in here.",
             NoteEditMode.Verify => "Check invalid notes in here.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class NoteVerifySelection : LyricEditorVerifySelection

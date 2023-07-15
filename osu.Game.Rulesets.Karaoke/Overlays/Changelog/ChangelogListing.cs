@@ -46,7 +46,7 @@ public partial class ChangelogListing : ChangelogContent
                 Masking = true,
                 AutoSizeAxes = Axes.None,
                 Height = 300,
-                SelectBuild = SelectBuild
+                SelectBuild = SelectBuild,
             });
         }
 

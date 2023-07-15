@@ -29,7 +29,7 @@ public partial class KaraokeSkinEditor : GenericEditor<KaraokeSkinEditorScreenMo
         {
             KaraokeSkinEditorScreenMode.Config => new ConfigScreen(skin),
             KaraokeSkinEditorScreenMode.Style => new StyleScreen(skin),
-            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };
 
     protected override MenuItem[] GenerateMenuItems(KaraokeSkinEditorScreenMode screenMode)

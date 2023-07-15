@@ -80,7 +80,7 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
             KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
             KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
             KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
-            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };
 
     protected override MenuItem[] GenerateMenuItems(KaraokeBeatmapEditorScreenMode screenMode)
@@ -100,7 +100,7 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                         new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
                         new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
                         new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
-                    }
+                    },
                 },
                 new LyricEditorModeMenu(bindableLyricEditorMode, "Mode"),
                 new("View")
@@ -110,14 +110,14 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                         new LyricEditorPreferLayoutMenu(lyricEditorConfigManager, "Layout"),
                         new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
                         new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
-                    }
+                    },
                 },
                 new("Config")
                 {
-                    Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock") }
+                    Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock") },
                 },
             },
-            _ => Array.Empty<MenuItem>()
+            _ => Array.Empty<MenuItem>(),
         };
     }
 }

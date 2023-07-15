@@ -28,7 +28,7 @@ public partial class ImportBeatmapChangeHandlerTest : BaseChangeHandlerTest<Impo
                     new Lyric(),
                     new Lyric(),
                     new Note(),
-                }
+                },
             };
             c.Import(beatmap);
         });

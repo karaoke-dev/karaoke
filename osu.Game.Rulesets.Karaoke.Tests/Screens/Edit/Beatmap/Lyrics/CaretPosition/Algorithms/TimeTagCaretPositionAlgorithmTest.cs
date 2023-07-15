@@ -254,22 +254,22 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
                 "[1,start]:2000",
                 "[2,start]:3000",
                 "[3,start]:4000",
-                "[3,end]:5000"
-            })
-        }
+                "[3,end]:5000",
+            }),
+        },
     };
 
     private static Lyric[] singleLyricWithoutTimeTag => new[]
     {
         new Lyric
         {
-            Text = "カラオケ"
-        }
+            Text = "カラオケ",
+        },
     };
 
     private static Lyric[] singleLyricWithNoText => new[]
     {
-        new Lyric()
+        new Lyric(),
     };
 
     private static Lyric[] twoLyricsWithText => new[]
@@ -283,8 +283,8 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
                 "[1,start]:2000",
                 "[2,start]:3000",
                 "[3,start]:4000",
-                "[3,end]:5000"
-            })
+                "[3,end]:5000",
+            }),
         },
         new Lyric
         {
@@ -294,9 +294,9 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
                 "[0,start]:1000",
                 "[1,start]:2000",
                 "[2,start]:3000",
-                "[2,end]:5000"
-            })
-        }
+                "[2,end]:5000",
+            }),
+        },
     };
 
     private static Lyric[] threeLyricsWithSpacing => new[]
@@ -310,8 +310,8 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
                 "[1,start]:2000",
                 "[2,start]:3000",
                 "[3,start]:4000",
-                "[3,end]:5000"
-            })
+                "[3,end]:5000",
+            }),
         },
         new Lyric(),
         new Lyric
@@ -322,9 +322,9 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
                 "[0,start]:1000",
                 "[1,start]:2000",
                 "[2,start]:3000",
-                "[2,end]:5000"
-            })
-        }
+                "[2,end]:5000",
+            }),
+        },
     };
 
     #endregion

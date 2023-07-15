@@ -21,7 +21,7 @@ public partial class TestSceneTimeTagTooltip : OsuTestScene
         Child = toolTip = new TimeTagTooltip
         {
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
         toolTip.Show();
     });

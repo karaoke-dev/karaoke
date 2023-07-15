@@ -38,7 +38,7 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4Extensions.FromHex("333")
+                Colour = Color4Extensions.FromHex("333"),
             },
             new Container<TimelineButton>
             {
@@ -54,7 +54,7 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
                         RelativeSizeAxes = Axes.Y,
                         Height = 0.5f,
                         Icon = FontAwesome.Solid.SearchPlus,
-                        Action = () => changeZoom(1)
+                        Action = () => changeZoom(1),
                     },
                     new TimelineButton
                     {
@@ -63,10 +63,10 @@ public partial class DefaultLyricPlacementColumn : LyricPlacementColumn
                         RelativeSizeAxes = Axes.Y,
                         Height = 0.5f,
                         Icon = FontAwesome.Solid.SearchMinus,
-                        Action = () => changeZoom(-1)
+                        Action = () => changeZoom(-1),
                     },
-                }
-            }
+                },
+            },
         },
     };
 

@@ -75,8 +75,8 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
                         },
                         new PageSettings(),
                     },
-                }
-            }
+                },
+            },
         });
     }
 
@@ -104,7 +104,7 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
             {
                 Masking = true,
                 RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding { Top = 55 }
+                Padding = new MarginPadding { Top = 55 },
             });
         }
     }

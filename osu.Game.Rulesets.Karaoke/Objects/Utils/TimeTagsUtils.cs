@@ -306,7 +306,7 @@ public enum GroupCheck
     /// <summary>
     /// Mark previous tag is error if conflict.
     /// </summary>
-    Desc
+    Desc,
 }
 
 public enum SelfCheck

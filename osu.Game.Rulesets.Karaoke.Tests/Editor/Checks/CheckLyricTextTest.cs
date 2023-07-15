@@ -19,7 +19,7 @@ public class CheckLyricTextTest : HitObjectCheckTest<Lyric, CheckLyricText>
     {
         var lyric = new Lyric
         {
-            Text = text
+            Text = text,
         };
 
         AssertOk(lyric);
@@ -33,7 +33,7 @@ public class CheckLyricTextTest : HitObjectCheckTest<Lyric, CheckLyricText>
     {
         var lyric = new Lyric
         {
-            Text = text
+            Text = text,
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricNoText>(lyric);

@@ -64,6 +64,6 @@ public partial class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     public Popover GetPopover()
         => new LanguageSelectorPopover(bindableLanguage)
         {
-            EnableEmptyOption = true
+            EnableEmptyOption = true,
         };
 }

@@ -38,7 +38,7 @@ public abstract partial class ToolbarButton : OsuClickableContainer
     public void SetIcon(IconUsage iconUsage) =>
         SetIcon(new SpriteIcon
         {
-            Icon = iconUsage
+            Icon = iconUsage,
         });
 
     protected void SetState(bool enabled)

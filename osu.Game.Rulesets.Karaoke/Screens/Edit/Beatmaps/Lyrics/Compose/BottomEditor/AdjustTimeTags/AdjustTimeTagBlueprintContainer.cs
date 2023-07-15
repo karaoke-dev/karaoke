@@ -126,7 +126,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
                         timeTags.ForEach(x => x.Time = null);
 
                         // todo : should re-calculate all preview position because some time-tag without position might be affected.
-                    })
+                    }),
                 };
             }
 
@@ -148,7 +148,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
         protected override Drawable CreateBox() => new Box
         {
             RelativeSizeAxes = Axes.Y,
-            Alpha = 0.3f
+            Alpha = 0.3f,
         };
 
         public override void HandleDrag(MouseButtonEvent e)

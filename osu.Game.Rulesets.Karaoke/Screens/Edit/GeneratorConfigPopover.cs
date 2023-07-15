@@ -43,7 +43,7 @@ public partial class GeneratorConfigPopover : OsuPopover
                 Direction = FillDirection.Vertical,
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-            }
+            },
         };
     }
 
@@ -67,7 +67,7 @@ public partial class GeneratorConfigPopover : OsuPopover
                 {
                     object value = x.Item2.GetValue(config)!;
                     return createControl(value, x.Item1);
-                }).ToArray()
+                }).ToArray(),
             };
         }
     }
@@ -98,13 +98,13 @@ public partial class GeneratorConfigPopover : OsuPopover
             {
                 Label = attribute.Label,
                 Description = attribute.Description,
-                Current = bBool
+                Current = bBool,
             },
             Bindable<CultureInfo[]> bCultureInfos => new LanguagesSelector
             {
-                Current = bCultureInfos
+                Current = bCultureInfos,
             },
-            _ => throw new InvalidOperationException($"{nameof(SettingSourceAttribute)} was attached to an unsupported type ({value})")
+            _ => throw new InvalidOperationException($"{nameof(SettingSourceAttribute)} was attached to an unsupported type ({value})"),
         };
     }
 
@@ -140,8 +140,8 @@ public partial class GeneratorConfigPopover : OsuPopover
                     AutoSizeAxes = Axes.Y,
                     Spacing = new Vector2(10),
                     Direction = FillDirection.Vertical,
-                    Margin = new MarginPadding { Top = 30 }
-                }
+                    Margin = new MarginPadding { Top = 30 },
+                },
             };
         }
     }

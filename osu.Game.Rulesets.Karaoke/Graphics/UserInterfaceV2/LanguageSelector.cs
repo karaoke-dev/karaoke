@@ -43,7 +43,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
             RowDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, 40),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -52,7 +52,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
                     filter = new LanguageSelectionSearchTextBox
                     {
                         RelativeSizeAxes = Axes.X,
-                    }
+                    },
                 },
                 new Drawable[]
                 {
@@ -63,9 +63,9 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
                         {
                             Current.Value = item.CultureInfo;
                         },
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         filter.Current.BindValueChanged(e => languageList.Filter(e.NewValue));

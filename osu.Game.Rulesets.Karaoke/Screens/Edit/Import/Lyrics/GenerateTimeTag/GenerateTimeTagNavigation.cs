@@ -41,7 +41,7 @@ public partial class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagSt
             NavigationState.Working => $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]",
             NavigationState.Done => $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]",
             NavigationState.Error => "Oops, seems cause some error in here.",
-            _ => throw new ArgumentOutOfRangeException(nameof(value))
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
 
     protected override bool AbleToNextStep(NavigationState value)

@@ -29,7 +29,7 @@ internal partial class LyricStylePreview : Container
                 RelativeSizeAxes = Axes.Both,
                 Colour = colourProvider.Background1,
             },
-            new PreviewDrawableLyricLine(createDefaultLyricLine())
+            new PreviewDrawableLyricLine(createDefaultLyricLine()),
         };
     }
 
@@ -57,14 +57,14 @@ internal partial class LyricStylePreview : Container
                 {
                     StartIndex = 0,
                     EndIndex = 0,
-                    Text = "か"
+                    Text = "か",
                 },
                 new RubyTag
                 {
                     StartIndex = 2,
                     EndIndex = 2,
-                    Text = "お"
-                }
+                    Text = "お",
+                },
             },
             RomajiTags = new[]
             {
@@ -72,15 +72,15 @@ internal partial class LyricStylePreview : Container
                 {
                     StartIndex = 1,
                     EndIndex = 1,
-                    Text = "ra"
+                    Text = "ra",
                 },
                 new RomajiTag
                 {
                     StartIndex = 3,
                     EndIndex = 3,
-                    Text = "ke"
-                }
-            }
+                    Text = "ke",
+                },
+            },
         };
     }
 

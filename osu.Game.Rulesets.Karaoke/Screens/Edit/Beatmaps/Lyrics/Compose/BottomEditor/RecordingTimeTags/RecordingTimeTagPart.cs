@@ -159,14 +159,14 @@ public partial class RecordingTimeTagPart : TimelinePart
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                    State = textIndex.State
+                    State = textIndex.State,
                 },
                 new OsuSpriteText
                 {
                     Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag),
                     Anchor = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight),
                     Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.TopLeft, Anchor.TopRight),
-                }
+                },
             };
         }
 
@@ -221,7 +221,7 @@ public partial class RecordingTimeTagPart : TimelinePart
                 new OsuMenuItem("Clear time", MenuItemType.Destructive, () =>
                 {
                     lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
-                })
+                }),
             };
     }
 

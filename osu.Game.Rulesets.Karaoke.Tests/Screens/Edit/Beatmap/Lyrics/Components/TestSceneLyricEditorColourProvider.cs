@@ -41,7 +41,7 @@ public partial class TestSceneLyricEditorColourProvider : OsuTestScene
         {
             var editMOdeColumns = new TableColumn[]
             {
-                new TitleTableColumn("Edit mode")
+                new TitleTableColumn("Edit mode"),
             };
             var editModeContent = types.Select(type =>
             {
@@ -49,8 +49,8 @@ public partial class TestSceneLyricEditorColourProvider : OsuTestScene
                 {
                     new OsuSpriteText
                     {
-                        Text = type.ToString()
-                    }
+                        Text = type.ToString(),
+                    },
                 };
             }).To2DArray();
 
@@ -89,10 +89,10 @@ public partial class TestSceneLyricEditorColourProvider : OsuTestScene
                         Content = content,
                         Margin = new MarginPadding
                         {
-                            Left = edit_mode_name_width
-                        }
-                    }
-                }
+                            Left = edit_mode_name_width,
+                        },
+                    },
+                },
             };
         });
     }
@@ -129,7 +129,7 @@ public partial class TestSceneLyricEditorColourProvider : OsuTestScene
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Text = color.ToHex(),
-                }
+                },
             };
         }
 

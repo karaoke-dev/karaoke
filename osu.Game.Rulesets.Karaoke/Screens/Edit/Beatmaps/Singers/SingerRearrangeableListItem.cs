@@ -40,13 +40,13 @@ public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISin
                 dragAlert = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0
+                    Alpha = 0,
                 },
                 new SingerLyricPlacementColumn(singer)
                 {
                     RelativeSizeAxes = Axes.Both,
-                }
-            }
+                },
+            },
         };
     }
 

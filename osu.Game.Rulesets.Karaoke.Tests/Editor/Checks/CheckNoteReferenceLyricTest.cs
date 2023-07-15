@@ -24,13 +24,13 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = referenceTimeTagIndex
+            ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
         AssertOk(new HitObject[] { referencedLyric, note });
@@ -42,7 +42,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var note = new Note
         {
             ReferenceLyricId = null,
-            ReferenceLyric = null // reference should not be null.
+            ReferenceLyric = null, // reference should not be null.
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteNullReferenceLyric>(note);
@@ -54,7 +54,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[3,end]:5000" })
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[3,end]:5000" }),
         };
         var note = new Note
         {
@@ -76,7 +76,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
@@ -95,13 +95,13 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = referenceTimeTagIndex
+            ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteMissingStartReferenceTimeTag>(new HitObject[] { referencedLyric, note });
@@ -115,13 +115,13 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = referenceTimeTagIndex
+            ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteStartReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });
@@ -134,13 +134,13 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = referenceTimeTagIndex
+            ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteMissingEndReferenceTimeTag>(new HitObject[] { referencedLyric, note });
@@ -154,13 +154,13 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var note = new Note
         {
             ReferenceLyricId = referencedLyric.ID,
             ReferenceLyric = referencedLyric,
-            ReferenceTimeTagIndex = referenceTimeTagIndex
+            ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteEndReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });

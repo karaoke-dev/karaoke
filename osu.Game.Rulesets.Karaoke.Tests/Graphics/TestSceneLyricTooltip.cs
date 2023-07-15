@@ -22,7 +22,7 @@ public partial class TestSceneLyricTooltip : OsuTestScene
         Child = toolTip = new LyricTooltip
         {
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
         toolTip.Show();
     });

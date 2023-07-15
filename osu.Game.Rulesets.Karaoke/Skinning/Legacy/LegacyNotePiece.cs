@@ -56,7 +56,7 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
         {
             background = createLayer("Background layer", skin, LegacyKaraokeSkinNoteLayer.Background),
             foreground = createLayer("Foreground layer", skin, LegacyKaraokeSkinNoteLayer.Foreground),
-            border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border)
+            border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border),
         };
 
         var note = (DrawableNote)drawableObject;
@@ -173,7 +173,7 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
                     d.Anchor = Anchor.CentreRight;
                     d.Origin = Anchor.Centre;
                 }),
-            }
+            },
         };
 
     private static Sprite? getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
@@ -216,14 +216,14 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
             LegacyKaraokeSkinConfigurationLookups.NoteBodyImage => "body",
             LegacyKaraokeSkinConfigurationLookups.NoteHeadImage => "head",
             LegacyKaraokeSkinConfigurationLookups.NoteTailImage => "tail",
-            _ => throw new ArgumentOutOfRangeException(nameof(lookup))
+            _ => throw new ArgumentOutOfRangeException(nameof(lookup)),
         };
 
         string layerSuffix = layer switch
         {
             LegacyKaraokeSkinNoteLayer.Border => "border",
             LegacyKaraokeSkinNoteLayer.Background => "background",
-            _ => string.Empty
+            _ => string.Empty,
         };
 
         return $"karaoke-note-{layerSuffix}-{suffix}";

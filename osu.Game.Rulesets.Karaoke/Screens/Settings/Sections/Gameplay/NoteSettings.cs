@@ -27,17 +27,17 @@ public partial class NoteSettings : KaraokeSettingsSubsection
             new SettingsEnumDropdown<KaraokeScrollingDirection>
             {
                 LabelText = "Scrolling direction",
-                Current = Config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
+                Current = Config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection),
             },
             new SettingsSlider<double, TimeSlider>
             {
                 LabelText = "Scroll speed",
-                Current = Config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
+                Current = Config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime),
             },
             new SettingsCheckbox
             {
                 LabelText = "Display ruby text",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayNoteRubyText)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayNoteRubyText),
             },
         };
     }

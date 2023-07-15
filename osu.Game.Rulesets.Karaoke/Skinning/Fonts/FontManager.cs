@@ -187,7 +187,7 @@ public partial class FontManager : Component
         {
             FontFormat.Fnt => getFntGlyphStore(fontName),
             FontFormat.Ttf => getTtfGlyphStore(fontName),
-            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
+            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(fontFormat)),
         };
     }
 
@@ -220,7 +220,7 @@ public partial class FontManager : Component
         {
             FontFormat.Fnt => "fnt",
             FontFormat.Ttf => "ttf",
-            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
+            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type)),
         };
 
     private static string getExtensionByFontType(FontFormat type) =>
@@ -228,7 +228,7 @@ public partial class FontManager : Component
         {
             FontFormat.Fnt => "zipfnt",
             FontFormat.Ttf => "ttf",
-            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
+            FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type)),
         };
 
     private static FontFormat getFontTypeByExtension(string extension) =>

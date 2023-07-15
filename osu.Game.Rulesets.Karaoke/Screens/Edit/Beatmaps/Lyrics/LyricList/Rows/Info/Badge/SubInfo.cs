@@ -35,17 +35,17 @@ public abstract partial class SubInfo : Container
         {
             box = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             badgeText = new OsuSpriteText
             {
                 Margin = new MarginPadding
                 {
                     Vertical = 2,
-                    Horizontal = 5
+                    Horizontal = 5,
                 },
-                Text = "Badge"
-            }
+                Text = "Badge",
+            },
         };
     }
 

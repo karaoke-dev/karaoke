@@ -47,7 +47,7 @@ public partial class AdjustFontSizeButton : CompositeDrawable
                             return;
 
                         bindableFontSize.Value = previousSize;
-                    }
+                    },
                 },
                 new Container
                 {
@@ -70,9 +70,9 @@ public partial class AdjustFontSizeButton : CompositeDrawable
                             return;
 
                         bindableFontSize.Value = nextSize;
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         bindableFontSize.BindValueChanged(e =>

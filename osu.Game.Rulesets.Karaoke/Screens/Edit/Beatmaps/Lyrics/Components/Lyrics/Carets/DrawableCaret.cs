@@ -27,7 +27,7 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
         {
             DrawableCaretType.HoverCaret => 0.5f,
             DrawableCaretType.Caret => 1,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 
     public sealed override void ApplyCaretPosition(ICaretPosition caret)

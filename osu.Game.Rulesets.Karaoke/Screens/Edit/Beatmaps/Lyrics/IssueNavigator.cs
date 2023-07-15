@@ -114,7 +114,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
             LyricTimeTagIssue timeTagIssue => new Tuple<Lyric?, object?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
             LyricIssue lyricIssue => new Tuple<Lyric?, object?>(lyricIssue.Lyric, null),
             NoteIssue noteIssue => new Tuple<Lyric?, object?>(noteIssue.Note.ReferenceLyric, null),
-            _ => new Tuple<Lyric?, object?>(null, null)
+            _ => new Tuple<Lyric?, object?>(null, null),
         };
 
     private IHasBlueprintSelection<TItem>? getBlueprintSelection<TItem>(TItem item) where TItem : class
@@ -124,7 +124,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
             editRubyModeState,
             editRomajiModeState,
             timeTagModeState,
-            noteModeState
+            noteModeState,
         };
 
         return availableEditModes.OfType<IHasBlueprintSelection<TItem>>().FirstOrDefault();

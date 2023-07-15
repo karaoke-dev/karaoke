@@ -57,8 +57,8 @@ public abstract partial class SettingOverlay : OsuFocusedOverlayContainer
                     Direction = FillDirection.Vertical,
                     Spacing = new Vector2(SETTING_SPACING),
                     Margin = new MarginPadding(SETTING_MARGIN),
-                }
-            }
+                },
+            },
         };
     }
 
@@ -135,7 +135,7 @@ public abstract partial class SettingOverlay : OsuFocusedOverlayContainer
         {
             OverlayDirection.Left => -DrawWidth,
             OverlayDirection.Right => DrawWidth,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(),
         };
 
     public SettingButton CreateToggleButton()
@@ -151,5 +151,5 @@ public enum OverlayDirection
 {
     Left,
 
-    Right
+    Right,
 }

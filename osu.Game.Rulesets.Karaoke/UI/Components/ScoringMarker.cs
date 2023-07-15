@@ -23,8 +23,8 @@ public partial class ScoringMarker : CompositeDrawable
             new Triangle
             {
                 Size = new Vector2(triangle_width, triangle_height),
-                Rotation = 90
-            }
+                Rotation = 90,
+            },
         };
     }
 

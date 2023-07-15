@@ -32,23 +32,23 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
             {
                 Expanded =
                 {
-                    Value = false
-                }
+                    Value = false,
+                },
             },
             new PitchSettings
             {
                 Expanded =
                 {
-                    Value = false
-                }
+                    Value = false,
+                },
             },
             new RubyRomajiSettings
             {
                 Expanded =
                 {
-                    Value = false
-                }
-            }
+                    Value = false,
+                },
+            },
         };
     }
 
@@ -57,7 +57,7 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
         Name = "Toggle setting button",
         Text = "Settings",
         TooltipText = "Open/Close setting",
-        Action = ToggleVisibility
+        Action = ToggleVisibility,
     };
 
     // should be able to get the key event.
@@ -134,8 +134,8 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
             {
                 Expanded =
                 {
-                    Value = false
-                }
+                    Value = false,
+                },
             });
         }
 

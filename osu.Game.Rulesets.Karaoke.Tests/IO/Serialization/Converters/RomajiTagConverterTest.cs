@@ -24,7 +24,7 @@ public class RomajiTagConverterTest : BaseSingleConverterTest<RomajiTagConverter
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
 
         string expected = $"\"{json}\"";
@@ -49,7 +49,7 @@ public class RomajiTagConverterTest : BaseSingleConverterTest<RomajiTagConverter
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
         var actual = JsonConvert.DeserializeObject<RomajiTag>($"\"{json}\"", CreateSettings()) ?? throw new InvalidCastException();
         TextTagAssert.ArePropertyEqual(expected, actual);

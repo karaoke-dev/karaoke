@@ -14,7 +14,7 @@ public partial class StyleSection : KaraokeSettingsSection
 
     public override Drawable CreateIcon() => new SpriteIcon
     {
-        Icon = FontAwesome.Solid.PaintBrush
+        Icon = FontAwesome.Solid.PaintBrush,
     };
 
     public StyleSection()

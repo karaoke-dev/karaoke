@@ -36,13 +36,13 @@ public partial class ReferenceSettings : LyricEditorSettings
             new ReferenceLyricEditModeSection(),
             new ReferenceLyricAutoGenerateSection(),
             new ReferenceLyricSection(),
-            new ReferenceLyricConfigSection()
+            new ReferenceLyricConfigSection(),
         },
         ReferenceLyricEditMode.Verify => new Drawable[]
         {
             new ReferenceLyricEditModeSection(),
             new ReferenceLyricIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

@@ -36,7 +36,7 @@ public partial class TimeTagLayer : BaseLayer
             var position = previewLyricPositionProvider.GetPositionByTimeTag(timeTag);
             AddInternal(new DrawableTimeTag(timeTag)
             {
-                Position = position
+                Position = position,
             });
         }
     }

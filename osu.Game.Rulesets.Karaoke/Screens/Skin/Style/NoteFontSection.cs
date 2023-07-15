@@ -30,7 +30,7 @@ internal partial class NoteFontSection : StyleSection
             {
                 Label = "Bold",
                 Description = "Select bold or not.",
-            }
+            },
         };
     }
 

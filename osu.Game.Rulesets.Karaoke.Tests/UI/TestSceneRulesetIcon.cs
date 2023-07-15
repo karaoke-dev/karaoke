@@ -28,7 +28,7 @@ public partial class TestSceneRulesetIcon : OsuTestScene
                 Radius = 15,
                 Roundness = 15,
             },
-            Size = new Vector2(40)
+            Size = new Vector2(40),
         };
     }
 }

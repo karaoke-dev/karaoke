@@ -47,7 +47,7 @@ public partial class IssueIcon : CompositeDrawable
 
             return new SpriteIcon
             {
-                Icon = GetIconByIssueTemplate(issue.Template)
+                Icon = GetIconByIssueTemplate(issue.Template),
             };
         }
     }
@@ -56,7 +56,7 @@ public partial class IssueIcon : CompositeDrawable
         issue switch
         {
             LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
-            _ => null
+            _ => null,
         };
 
     internal static IconUsage GetIconByIssueTemplate(IssueTemplate issueTemplate)
@@ -87,6 +87,6 @@ public partial class IssueIcon : CompositeDrawable
             CheckNoteReferenceLyric => FontAwesome.Solid.Link,
             CheckNoteText => FontAwesome.Solid.Link,
             CheckNoteTime => FontAwesome.Solid.Times,
-            _ => throw new ArgumentOutOfRangeException(nameof(check), check, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(check), check, null),
         };
 }

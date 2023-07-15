@@ -126,7 +126,7 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                 {
                     new SingleLyricIssueTable
                     {
-                        Issues = issues
+                        Issues = issues,
                     },
                     new IconButton
                     {
@@ -142,9 +142,9 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                             // should close the popover if has no issue.
                             if (!issues.Any())
                                 this.HidePopover();
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
         }
 
@@ -175,7 +175,7 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                         Origin = Anchor.Centre,
                         Size = new Vector2(10),
                         Margin = new MarginPadding { Left = 10 },
-                        Issue = issue
+                        Issue = issue,
                     },
                     new TruncatingSpriteText
                     {

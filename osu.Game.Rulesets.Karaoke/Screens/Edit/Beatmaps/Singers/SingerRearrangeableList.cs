@@ -42,8 +42,8 @@ public partial class SingerRearrangeableList : OrderRearrangeableListContainer<I
                 Child = new CreateNewLyricPlacementColumn
                 {
                     RelativeSizeAxes = Axes.Both,
-                }
-            }
+                },
+            },
         };
     }
 }

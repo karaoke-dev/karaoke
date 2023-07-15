@@ -61,7 +61,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
             { "launcher", "https://github.com/karaoke-dev/launcher/" },
             { "sample", "https://github.com/karaoke-dev/sample-beatmap/" },
             { "microphone-package", "https://github.com/karaoke-dev/osu-framework-microphone/" },
-            { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" }
+            { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" },
         };
 
         protected override void AddLinkText(string text, LinkInline linkInline)
@@ -98,7 +98,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
 
                     AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
                     {
-                        Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
+                        Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri,
                     }));
 
                     if (issue != issues.LastOrDefault())
@@ -124,7 +124,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
                 });
                 AddDrawable(new UserLinkText(user, new LinkInline
                 {
-                    Url = $"https://github.com/{user}"
+                    Url = $"https://github.com/{user}",
                 })
                 {
                     Scale = textScale,

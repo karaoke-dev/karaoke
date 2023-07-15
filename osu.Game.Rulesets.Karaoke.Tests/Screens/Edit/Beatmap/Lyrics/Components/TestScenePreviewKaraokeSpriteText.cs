@@ -73,16 +73,16 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
                     {
                         RelativeSizeAxes = Axes.Both,
                         Colour = colour.RedDarker,
-                        Alpha = 0.3f
-                    }
+                        Alpha = 0.3f,
+                    },
                 },
                 spriteText = new OsuSpriteText
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     Font = OsuFont.GetFont(size: 20),
-                }
-            }
+                },
+            },
         };
     }
 

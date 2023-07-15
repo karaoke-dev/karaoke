@@ -7,5 +7,5 @@ public enum ReferenceLyricEditMode
 {
     Edit,
 
-    Verify
+    Verify,
 }

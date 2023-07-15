@@ -48,7 +48,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-            }
+            },
         };
         lyricPlayfield.Add(lyric = createPreviewLyric());
 
@@ -116,14 +116,14 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 {
                     StartIndex = 0,
                     EndIndex = 0,
-                    Text = "か"
+                    Text = "か",
                 },
                 new RubyTag
                 {
                     StartIndex = 2,
                     EndIndex = 2,
-                    Text = "お"
-                }
+                    Text = "お",
+                },
             },
             RomajiTags = new[]
             {
@@ -131,7 +131,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 {
                     StartIndex = 0,
                     EndIndex = 3,
-                    Text = "karaoke"
+                    Text = "karaoke",
                 },
             },
             StartTime = 0,
@@ -154,7 +154,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         {
             "ja" or "Ja-jp" => "カラオケ",
             "zh-Hant" or "zh-TW" => "卡拉OK",
-            _ => "karaoke"
+            _ => "karaoke",
         };
 
         return new Dictionary<CultureInfo, string>

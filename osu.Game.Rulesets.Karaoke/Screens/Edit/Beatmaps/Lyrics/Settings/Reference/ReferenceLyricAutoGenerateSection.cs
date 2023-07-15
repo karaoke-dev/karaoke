@@ -18,7 +18,7 @@ public partial class ReferenceLyricAutoGenerateSection : AutoGenerateSection
         protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
             {
-                Text = "Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands."
+                Text = "Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands.",
             };
 
         protected override ConfigButton CreateConfigButton()

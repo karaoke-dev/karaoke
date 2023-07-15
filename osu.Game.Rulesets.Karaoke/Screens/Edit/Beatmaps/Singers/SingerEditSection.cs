@@ -22,7 +22,7 @@ public partial class SingerEditSection : CompositeDrawable
             RowDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, 100),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -32,7 +32,7 @@ public partial class SingerEditSection : CompositeDrawable
                     {
                         Name = "Default",
                         RelativeSizeAxes = Axes.Both,
-                    }
+                    },
                 },
                 new Drawable[]
                 {
@@ -41,9 +41,9 @@ public partial class SingerEditSection : CompositeDrawable
                         Name = "List of singer",
                         RelativeSizeAxes = Axes.Both,
                         DisplayBottomDrawable = true,
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         singerContainers.Items.BindTo(beatmapSingersChangeHandler.Singers);

@@ -44,40 +44,40 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
                 ClassicDefault = KaraokeScrollingDirection.Left,
                 LabelText = KaraokeSettingsSubsectionStrings.ScrollingDirection,
                 TooltipText = KaraokeSettingsSubsectionStrings.ScrollingDirectionTooltip,
-                Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
+                Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection),
             },
             new SettingsSlider<double, TimeSlider>
             {
                 LabelText = KaraokeSettingsSubsectionStrings.ScrollSpeed,
-                Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
+                Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime),
             },
             // Gameplay
             new SettingsCheckbox
             {
                 LabelText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlaying,
                 TooltipText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlayingTooltip,
-                Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+                Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor),
             },
             // Translate
             new SettingsCheckbox
             {
                 LabelText = KaraokeSettingsSubsectionStrings.Translate,
                 TooltipText = KaraokeSettingsSubsectionStrings.TranslateTooltip,
-                Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
+                Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate),
             },
             // Device
             new SettingsMicrophoneDeviceDropdown
             {
                 ClassicDefault = string.Empty,
                 LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevice,
-                Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
+                Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice),
             },
             // Practice
             new DangerousSettingsButton
             {
                 Text = KaraokeSettingsSubsectionStrings.OpenRulesetSettings,
                 TooltipText = KaraokeSettingsSubsectionStrings.OpenRulesetSettingsTooltip,
-                Action = () => performer.PerformFromScreen(menu => menu.Push(new KaraokeSettings()))
+                Action = () => performer.PerformFromScreen(menu => menu.Push(new KaraokeSettings())),
             },
             new SettingsButton
             {
@@ -102,8 +102,8 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
                     {
                         // maybe this overlay has been moved into internal.
                     }
-                }
-            }
+                },
+            },
         };
     }
 

@@ -124,7 +124,7 @@ public partial class KaraokeInputManager : RulesetInputManager<KaraokeScoringAct
 
                 var action = new KaraokeScoringAction
                 {
-                    Scale = scale
+                    Scale = scale,
                 };
 
                 if (lastVoice.HasVoice && !voice.HasVoice)

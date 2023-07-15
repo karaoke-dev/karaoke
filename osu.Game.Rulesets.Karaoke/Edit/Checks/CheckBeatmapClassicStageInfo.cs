@@ -34,7 +34,7 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
         new IssueTemplateTimingInfoMappingHasNoTiming(this),
         new IssueTemplateTimingInfoTimingNotExist(this),
         new IssueTemplateTimingInfoLyricNotHaveTwoTiming(this),
-        new IssueTemplateLyricLayoutInvalidLineNumber(this)
+        new IssueTemplateLyricLayoutInvalidLineNumber(this),
     };
 
     public CheckBeatmapClassicStageInfo()

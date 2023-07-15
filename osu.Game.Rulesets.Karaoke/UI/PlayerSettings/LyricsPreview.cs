@@ -40,8 +40,8 @@ public partial class LyricsPreview : CompositeDrawable
                 AutoSizeAxes = Axes.Y,
                 RelativeSizeAxes = Axes.X,
                 Direction = FillDirection.Vertical,
-                Spacing = new Vector2(15)
-            }
+                Spacing = new Vector2(15),
+            },
         };
 
         singingLyrics.BindValueChanged(value =>
@@ -127,7 +127,7 @@ public partial class LyricsPreview : CompositeDrawable
                     Font = new FontUsage(size: 25),
                     RubyFont = new FontUsage(size: 10),
                     RomajiFont = new FontUsage(size: 10),
-                    Margin = new MarginPadding { Left = 25 }
+                    Margin = new MarginPadding { Left = 25 },
                 },
             };
         }

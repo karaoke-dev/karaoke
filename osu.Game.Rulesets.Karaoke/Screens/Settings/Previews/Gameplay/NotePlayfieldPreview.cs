@@ -46,7 +46,7 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-            }
+            },
         };
     }
 
@@ -73,7 +73,7 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
             {
                 new(new TextIndex(0), startTime),
                 new(new TextIndex(4), startTime + duration),
-            }
+            },
         };
 
         notePlayfield.Add(new Note
@@ -87,7 +87,7 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
         notePlayfield.Add(new BarLine
         {
             StartTime = startTime,
-            Major = true
+            Major = true,
         });
     }
 

@@ -58,7 +58,7 @@ public partial class UnderConstructionPreview : SettingsSubsectionPreview
                     Text = "please check back a bit later.",
                     Font = OsuFont.GetFont(size: 14),
                 },
-            }
+            },
         };
     }
 

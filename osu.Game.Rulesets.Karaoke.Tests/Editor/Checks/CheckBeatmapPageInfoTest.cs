@@ -72,8 +72,8 @@ public class CheckBeatmapPageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapPag
             {
                 TimeTags = new List<TimeTag>
                 {
-                    new(new TextIndex(), 500)
-                }
+                    new(new TextIndex(), 500),
+                },
             },
         };
 
@@ -103,8 +103,8 @@ public class CheckBeatmapPageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapPag
             {
                 TimeTags = new List<TimeTag>
                 {
-                    new(new TextIndex(), 1000)
-                }
+                    new(new TextIndex(), 1000),
+                },
             },
         };
 
@@ -155,16 +155,16 @@ public class CheckBeatmapPageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapPag
             {
                 TimeTags = new List<TimeTag>
                 {
-                    new(new TextIndex(), MIN_INTERVAL - 1)
-                }
+                    new(new TextIndex(), MIN_INTERVAL - 1),
+                },
             },
             // another lyric's time is adjustable.
             new()
             {
                 TimeTags = new List<TimeTag>
                 {
-                    timeTag
-                }
+                    timeTag,
+                },
             },
         };
 
@@ -191,7 +191,7 @@ public class CheckBeatmapPageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapPag
             {
                 Ruleset = new KaraokeRuleset().RulesetInfo,
             },
-            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
+            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>(),
         };
         karaokeBeatmap.PageInfo.Pages.AddRange(pages ?? new List<Page>());
         return new EditorBeatmap(karaokeBeatmap);

@@ -24,7 +24,7 @@ public partial class GeneralSettings : KaraokeSettingsSubsection
             new SettingsCheckbox
             {
                 LabelText = "Show cursor while playing",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor),
             },
         };
     }

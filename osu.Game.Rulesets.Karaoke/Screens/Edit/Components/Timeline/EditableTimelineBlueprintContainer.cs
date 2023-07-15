@@ -100,7 +100,7 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
         protected override Drawable CreateBox() => new Box
         {
             RelativeSizeAxes = Axes.Y,
-            Alpha = 0.3f
+            Alpha = 0.3f,
         };
 
         public override void HandleDrag(MouseButtonEvent e)

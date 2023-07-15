@@ -216,7 +216,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
                 return new Tone
                 {
                     Scale = scale,
-                    Half = half
+                    Half = half,
                 };
             }
         }
@@ -230,7 +230,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
         var translations = translateLines.Select(translate => new
         {
             key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
-            value = translate.Split('=').LastOrDefault() ?? string.Empty
+            value = translate.Split('=').LastOrDefault() ?? string.Empty,
         }).GroupBy(x => x.key, y => y.value).ToList();
 
         foreach (var translation in translations)
@@ -255,7 +255,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
         var dictionary = new LegacyProperties
         {
-            AvailableTranslates = availableTranslates
+            AvailableTranslates = availableTranslates,
         };
 
         beatmap.HitObjects.Add(dictionary);

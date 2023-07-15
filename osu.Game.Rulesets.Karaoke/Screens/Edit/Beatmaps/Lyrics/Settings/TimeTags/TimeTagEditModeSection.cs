@@ -23,7 +23,7 @@ public partial class TimeTagEditModeSection : LyricEditorEditModeSection<ITimeTa
             TimeTagEditMode.Create => new Selection(),
             TimeTagEditMode.Recording => new Selection(),
             TimeTagEditMode.Adjust => new TimeTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(TimeTagEditMode mode) =>
@@ -32,7 +32,7 @@ public partial class TimeTagEditModeSection : LyricEditorEditModeSection<ITimeTa
             TimeTagEditMode.Create => "Create",
             TimeTagEditMode.Recording => "Recording",
             TimeTagEditMode.Adjust => "Adjust",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, TimeTagEditMode mode, bool active) =>
@@ -41,7 +41,7 @@ public partial class TimeTagEditModeSection : LyricEditorEditModeSection<ITimeTa
             TimeTagEditMode.Create => active ? colours.Blue : colours.BlueDarker,
             TimeTagEditMode.Recording => active ? colours.Red : colours.RedDarker,
             TimeTagEditMode.Adjust => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(TimeTagEditMode mode) =>
@@ -57,19 +57,19 @@ public partial class TimeTagEditModeSection : LyricEditorEditModeSection<ITimeTa
                     {
                         "set_time_tag_time", new InputKeyDescriptionAction
                         {
-                            AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
+                            AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime },
                         }
                     },
                     {
                         "clear_time_tag_time", new InputKeyDescriptionAction
                         {
-                            AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
+                            AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime },
                         }
-                    }
-                }
+                    },
+                },
             },
             TimeTagEditMode.Adjust => "Drag to adjust time-tag time precisely.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class TimeTagVerifySelection : LyricEditorVerifySelection

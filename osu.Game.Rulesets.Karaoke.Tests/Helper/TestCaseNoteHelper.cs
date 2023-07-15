@@ -18,8 +18,8 @@ public static class TestCaseNoteHelper
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(0), startTime),
-                new(new TextIndex(text.Length - 1, TextIndex.IndexState.End), startTime + duration)
-            }
+                new(new TextIndex(text.Length - 1, TextIndex.IndexState.End), startTime + duration),
+            },
         }.ChangeId(id);
     }
 }

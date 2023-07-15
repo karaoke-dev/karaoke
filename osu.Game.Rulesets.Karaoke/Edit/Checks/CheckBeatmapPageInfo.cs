@@ -25,7 +25,7 @@ public class CheckBeatmapPageInfo : CheckBeatmapProperty<PageInfo, Lyric>
         new IssueTemplatePageIntervalTooShort(this),
         new IssueTemplatePageIntervalTooLong(this),
         new IssueTemplatePageIntervalShouldHaveAtLeastOneLyric(this),
-        new IssueTemplateLyricNotWrapIntoTime(this)
+        new IssueTemplateLyricNotWrapIntoTime(this),
     };
 
     protected override PageInfo GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)

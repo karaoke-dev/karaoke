@@ -27,6 +27,6 @@ public partial class TestSceneKaraokeModPractice : KaraokeModTestScene
             var hud = skinnableTargetContainers?.Components.OfType<SettingButtonsDisplay>().FirstOrDefault();
             return true;
             //return hud != null;
-        }
+        },
     });
 }

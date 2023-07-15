@@ -30,7 +30,7 @@ public partial class KaraokeSettingsPanel : SettingsPanel
     {
         new ConfigSection(),
         new StyleSection(),
-        new ScoringSection()
+        new ScoringSection(),
     };
 
     protected override Drawable CreateFooter() => new Container

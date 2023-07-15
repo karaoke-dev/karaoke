@@ -82,7 +82,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
                         d.AddText("mapped by ", t => t.Colour = colours.GrayB);
                         d.AddUserLink(metadata.Author);
                     }),
-                }
+                },
             },
         };
     }

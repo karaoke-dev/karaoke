@@ -15,7 +15,7 @@ public class ReferenceLyricPropertyConfigConverterTest : BaseSingleConverterTest
     {
         var config = new ReferenceLyricConfig
         {
-            OffsetTime = 100
+            OffsetTime = 100,
         };
 
         const string expected = "{\"$type\":\"ReferenceLyricConfig\",\"offset_time\":100.0}";
@@ -30,7 +30,7 @@ public class ReferenceLyricPropertyConfigConverterTest : BaseSingleConverterTest
 
         var expected = new ReferenceLyricConfig
         {
-            OffsetTime = 100
+            OffsetTime = 100,
         };
         var actual = (ReferenceLyricConfig)JsonConvert.DeserializeObject<IReferenceLyricPropertyConfig>(json, CreateSettings())!;
         Assert.AreEqual(expected.OffsetTime, actual.OffsetTime);
@@ -43,7 +43,7 @@ public class ReferenceLyricPropertyConfigConverterTest : BaseSingleConverterTest
         {
             OffsetTime = 100,
             SyncSingerProperty = true,
-            SyncTimeTagProperty = false
+            SyncTimeTagProperty = false,
         };
 
         const string expected = "{\"$type\":\"SyncLyricConfig\",\"offset_time\":100.0,\"sync_time_tag_property\":false}";
@@ -60,7 +60,7 @@ public class ReferenceLyricPropertyConfigConverterTest : BaseSingleConverterTest
         {
             OffsetTime = 100,
             SyncSingerProperty = true,
-            SyncTimeTagProperty = false
+            SyncTimeTagProperty = false,
         };
         var actual = (SyncLyricConfig)JsonConvert.DeserializeObject<IReferenceLyricPropertyConfig>(json, CreateSettings())!;
         Assert.AreEqual(expected.OffsetTime, actual.OffsetTime);

@@ -30,7 +30,7 @@ public partial class PlaybackSwitchButton : CompositeDrawable
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
-            Current = freqAdjust
+            Current = freqAdjust,
         };
 
         track.BindValueChanged(tr =>

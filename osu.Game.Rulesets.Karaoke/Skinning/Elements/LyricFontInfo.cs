@@ -26,7 +26,7 @@ public class LyricFontInfo : IKaraokeSkinElement
         RomajiMargin = 4,
         MainTextFont = new FontUsage("Torus", 48, "Bold"),
         RubyTextFont = new FontUsage("Torus", 20, "Bold"),
-        RomajiTextFont = new FontUsage("Torus", 20, "Bold")
+        RomajiTextFont = new FontUsage("Torus", 20, "Bold"),
     };
 
     public int ID { get; set; }

@@ -22,7 +22,7 @@ public abstract partial class KaraokeModStageTestScene<TModStage, TStageInfo> : 
         {
             Mod = new TModStage(),
             Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () => true
+            PassCondition = () => true,
         });
     }
 
@@ -34,7 +34,7 @@ public abstract partial class KaraokeModStageTestScene<TModStage, TStageInfo> : 
             Mod = new TModStage(),
             // todo: add the stage info to beatmap.
             Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-            PassCondition = () => true
+            PassCondition = () => true,
         });
     }
 }

@@ -30,7 +30,7 @@ public class FontUsageConverter : JsonConverter<FontUsage>
             "size" => current.With(size: property.Value.ToObject<float>()),
             "italics" => current.With(italics: property.Value.ToObject<bool>()),
             "fixedWidth" => current.With(fixedWidth: property.Value.ToObject<bool>()),
-            _ => current
+            _ => current,
         });
     }
 

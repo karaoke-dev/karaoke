@@ -81,7 +81,7 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
             Type t when t == typeof(JaRubyTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
             Type t when t == typeof(JaTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
             Type t when t == typeof(ZhTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
 
     public TValue Get<TValue>() where TValue : GeneratorConfig, new()
@@ -133,5 +133,5 @@ public enum KaraokeRulesetEditGeneratorSetting
 
     // Time tag generator
     JaTimeTagGeneratorConfig,
-    ZhTimeTagGeneratorConfig
+    ZhTimeTagGeneratorConfig,
 }

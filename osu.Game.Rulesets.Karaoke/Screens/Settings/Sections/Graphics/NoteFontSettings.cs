@@ -22,14 +22,14 @@ public partial class NoteFontSettings : KaraokeSettingsSubsection
             new SettingsFont
             {
                 LabelText = "Note font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.NoteFont)
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.NoteFont),
             },
             new SettingsCheckbox
             {
                 LabelText = "Force use default note font.",
                 TooltipText = "Override any custom font in skin or beatmap.",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultNoteFont)
-            }
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultNoteFont),
+            },
         };
     }
 }

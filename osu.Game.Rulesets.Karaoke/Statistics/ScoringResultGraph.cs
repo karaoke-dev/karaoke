@@ -51,7 +51,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                         RelativeSizeAxes = Axes.Both,
                         Spacing = new Vector2(5),
                     },
-                    noteGraph = new NoteGraph(score)
+                    noteGraph = new NoteGraph(score),
                 },
             },
         };
@@ -89,8 +89,8 @@ public partial class ScoringResultGraph : CompositeDrawable
                     {
                         c.Selected = false;
                         c.Action = () => triggerLyric(x);
-                    })).ToList()
-                }
+                    })).ToList(),
+                },
             };
 
             SelectedLyric.BindValueChanged(value =>
@@ -146,7 +146,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                 {
                     background = new Box
                     {
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
                     },
                     icon = CreateIcon(),
                     drawableLyric = CreateLyric(lyric),
@@ -158,7 +158,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                 Font = new FontUsage(size: 25),
                 RubyFont = new FontUsage(size: 10),
                 RomajiFont = new FontUsage(size: 10),
-                Margin = new MarginPadding { Left = 25 }
+                Margin = new MarginPadding { Left = 25 },
             };
 
             protected virtual Drawable CreateIcon() => new SpriteIcon
@@ -167,7 +167,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                 Origin = Anchor.CentreLeft,
                 Size = new Vector2(15),
                 Icon = FontAwesome.Solid.Play,
-                Margin = new MarginPadding { Left = 5 }
+                Margin = new MarginPadding { Left = 5 },
             };
 
             private bool selected;
@@ -225,7 +225,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                     Font = new FontUsage(size: 15),
                     RubyFont = new FontUsage(size: 7),
                     RomajiFont = new FontUsage(size: 7),
-                    Margin = new MarginPadding { Left = 5 }
+                    Margin = new MarginPadding { Left = 5 },
                 };
 
             protected override Drawable CreateIcon()

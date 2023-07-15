@@ -27,11 +27,11 @@ public partial class TranslateSettings : PlayerSettingsGroup
         {
             translateCheckBox = new PlayerCheckbox
             {
-                LabelText = "Translate"
+                LabelText = "Translate",
             },
             translateText = new OsuSpriteText
             {
-                Text = "Translate language"
+                Text = "Translate language",
             },
             translateDropDown = new OsuDropdown<CultureInfo>
             {

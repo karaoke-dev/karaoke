@@ -24,12 +24,12 @@ public partial class LyricSettings : KaraokeSettingsSubsection
             new SettingsCheckbox
             {
                 LabelText = "Display ruby",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRuby)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRuby),
             },
             new SettingsCheckbox
             {
                 LabelText = "Display romaji",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRomaji)
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRomaji),
             },
         };
     }

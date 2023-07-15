@@ -28,7 +28,7 @@ public abstract partial class PreviewRow : Row
         new[]
         {
             new Dimension(GridSizeMode.Absolute, info_part_spacing),
-            new Dimension()
+            new Dimension(),
         };
 
     protected override Dimension GetRowDimensions() => new(GridSizeMode.AutoSize, minSize: min_height, maxSize: max_height);
@@ -37,7 +37,7 @@ public abstract partial class PreviewRow : Row
         new[]
         {
             CreateLyricInfo(lyric),
-            CreateContent(lyric)
+            CreateContent(lyric),
         };
 
     protected override bool HighlightBackgroundWhenSelected(ICaretPosition? caretPosition)
@@ -55,7 +55,7 @@ public abstract partial class PreviewRow : Row
             BackgroundStyle.Idle => colourProvider.Background5,
             BackgroundStyle.Hover => colourProvider.Background4,
             BackgroundStyle.Focus => colourProvider.Background3,
-            _ => throw new ArgumentOutOfRangeException(nameof(style), style, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(style), style, null),
         };
 
     protected abstract Drawable CreateLyricInfo(Lyric lyric);

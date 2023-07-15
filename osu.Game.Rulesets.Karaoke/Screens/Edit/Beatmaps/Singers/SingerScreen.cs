@@ -59,7 +59,7 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
-            }
+            },
         });
     }
 
@@ -84,7 +84,7 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
             {
                 Masking = true,
                 RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding { Top = 55 }
+                Padding = new MarginPadding { Top = 55 },
             });
         }
     }

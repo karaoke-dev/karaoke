@@ -158,7 +158,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                     Items = new MenuItem[]
                     {
                         new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
-                    }
+                    },
                 },
                 new("Tools")
                 {
@@ -166,16 +166,16 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                     {
                         // todo: remove this menu until we have a better way to edit skin.
                         new KaraokeSkinEditorMenu(editor, null!, "Skin editor"),
-                        new KaraokeEditorMenu(editor, "Karaoke editor")
-                    }
+                        new KaraokeEditorMenu(editor, "Karaoke editor"),
+                    },
                 },
                 new("Debug")
                 {
                     Items = new MenuItem[]
                     {
                         new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
-                    }
-                }
+                    },
+                },
             };
         });
     }

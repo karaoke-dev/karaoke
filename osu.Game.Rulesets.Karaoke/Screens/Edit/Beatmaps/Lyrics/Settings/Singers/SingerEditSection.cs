@@ -99,7 +99,7 @@ public partial class SingerEditSection : LyricPropertySection
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Singers is sync to another notes.",
             LockLyricPropertyBy.LockState => "Singers is locked.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
@@ -107,7 +107,7 @@ public partial class SingerEditSection : LyricPropertySection
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the singers because it's sync to another lyric's singers.",
             LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the singers.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     public partial class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<ISinger>
@@ -148,7 +148,7 @@ public partial class SingerEditSection : LyricPropertySection
                 Margin = new MarginPadding
                 {
                     Left = CONTENT_PADDING_HORIZONTAL,
-                }
+                },
             });
 
             bindableName.BindValueChanged(e => Label = e.NewValue, true);

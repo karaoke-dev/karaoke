@@ -59,9 +59,9 @@ public abstract partial class KaraokeSkinEditorScreen : GenericEditorScreen<Kara
                                 RelativeSizeAxes = Axes.X,
                                 AutoSizeAxes = Axes.Y,
                                 Children = CreateSelectionContainer(),
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 },
                 new Container
                 {
@@ -87,17 +87,17 @@ public abstract partial class KaraokeSkinEditorScreen : GenericEditorScreen<Kara
                                 RelativeSizeAxes = Axes.X,
                                 AutoSizeAxes = Axes.Y,
                                 Children = CreatePropertiesContainer(),
-                            }
-                        }
-                    }
+                            },
+                        },
+                    },
                 },
                 new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Padding = new MarginPadding { Left = left_column_width, Right = right_column_width },
                     Child = CreatePreviewArea(),
-                }
-            }
+                },
+            },
         });
     }
 

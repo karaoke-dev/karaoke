@@ -131,7 +131,7 @@ public static class LyricsUtils
             {
                 Text = t.Text,
                 StartIndex = startIndex,
-                EndIndex = endIndex
+                EndIndex = endIndex,
             };
         }).ToArray();
 

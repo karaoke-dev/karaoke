@@ -17,7 +17,7 @@ public static class TextTagsUtils
         {
             Sorting.Asc => textTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
             Sorting.Desc => textTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
-            _ => throw new InvalidEnumArgumentException(nameof(sorting))
+            _ => throw new InvalidEnumArgumentException(nameof(sorting)),
         };
 
     public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
@@ -96,7 +96,7 @@ public static class TextTagsUtils
         {
             StartIndex = firstValue.StartIndex,
             EndIndex = lastValue.EndIndex,
-            Text = string.Join(string.Empty, sortingValue.Select(x => x.Text))
+            Text = string.Join(string.Empty, sortingValue.Select(x => x.Text)),
         };
     }
 
@@ -110,6 +110,6 @@ public static class TextTagsUtils
         /// <summary>
         /// Mark previous tag is error if conflict.
         /// </summary>
-        Desc
+        Desc,
     }
 }

@@ -30,7 +30,7 @@ public partial class TestSceneAutoGeneration : OsuTestScene
             Display = true,
             Tone = new Tone(0, true),
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -58,7 +58,7 @@ public partial class TestSceneAutoGeneration : OsuTestScene
             Display = true,
             Tone = new Tone(0, true),
             ReferenceLyricId = referencedLyric.ID,
-            ReferenceLyric = referencedLyric
+            ReferenceLyric = referencedLyric,
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -87,7 +87,7 @@ public partial class TestSceneAutoGeneration : OsuTestScene
             Display = true,
             Tone = new Tone(0, true),
             ReferenceLyricId = firstReferencedLyric.ID,
-            ReferenceLyric = firstReferencedLyric
+            ReferenceLyric = firstReferencedLyric,
         });
         beatmap.HitObjects.Add(new Note
         {
@@ -95,7 +95,7 @@ public partial class TestSceneAutoGeneration : OsuTestScene
             Display = true,
             Tone = new Tone(1, true),
             ReferenceLyricId = secondReferencedLyric.ID,
-            ReferenceLyric = secondReferencedLyric
+            ReferenceLyric = secondReferencedLyric,
         });
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();

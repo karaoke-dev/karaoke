@@ -19,7 +19,7 @@ public partial class StageEditor : CompositeDrawable
         {
             background = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             new StageCategoryScreenStack
             {
@@ -27,7 +27,7 @@ public partial class StageEditor : CompositeDrawable
                 Origin = Anchor.BottomCentre,
                 RelativeSizeAxes = Axes.X,
                 Height = 250,
-            }
+            },
         };
     }
 

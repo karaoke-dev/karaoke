@@ -37,7 +37,7 @@ public partial class EditableTimeline : BindableScrollContainer, IPositionSnapPr
                 c.RelativeSizeAxes = Axes.X;
                 c.Depth = float.MaxValue;
                 c.Children = CreateBlueprintContainer().ToList();
-            })
+            }),
         });
     }
 

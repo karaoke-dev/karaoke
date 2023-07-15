@@ -133,7 +133,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
         {
             RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
             RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
-            _ => throw new ArgumentOutOfRangeException(nameof(textTag))
+            _ => throw new ArgumentOutOfRangeException(nameof(textTag)),
         };
 
     #endregion

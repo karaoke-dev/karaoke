@@ -9,5 +9,5 @@ public enum TextingEditModeSpecialAction
 
     Delete,
 
-    Move
+    Move,
 }

@@ -100,9 +100,9 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
             },
             StageInfos = new List<StageInfo>
             {
-                stageInfo
+                stageInfo,
             },
-            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
+            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>(),
         };
         return new EditorBeatmap(karaokeBeatmap);
     }

@@ -29,7 +29,7 @@ public class RomajiTagConverter : JsonConverter<RomajiTag>
         {
             StartIndex = result.GetGroupValue<int>("start"),
             EndIndex = result.GetGroupValue<int?>("end") ?? result.GetGroupValue<int>("start"),
-            Text = result.GetGroupValue<string>("romaji")
+            Text = result.GetGroupValue<string>("romaji"),
         };
     }
 

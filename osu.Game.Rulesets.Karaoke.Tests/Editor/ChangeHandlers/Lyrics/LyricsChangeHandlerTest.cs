@@ -15,7 +15,7 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         });
 
         TriggerHandlerChanged(c => c.Split(2));
@@ -170,7 +170,7 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
 
         TriggerHandlerChanged(c => c.AddBelowToSelection(new Lyric
         {
-            Text = "New lyric"
+            Text = "New lyric",
         }));
 
         AssertHitObjects(hitObjects =>
@@ -202,8 +202,8 @@ public partial class LyricsChangeHandlerTest : BaseHitObjectChangeHandlerTest<Ly
         {
             new Lyric
             {
-                Text = "New lyric"
-            }
+                Text = "New lyric",
+            },
         }));
 
         AssertHitObjects(hitObjects =>

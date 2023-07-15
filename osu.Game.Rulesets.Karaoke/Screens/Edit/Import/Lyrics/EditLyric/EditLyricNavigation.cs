@@ -56,7 +56,7 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
                     TextingEditMode.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
                     TextingEditMode.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
                     TextingEditMode.Verify => $"Cool! Try switching to [{split_mode}] or [{typing_mode}] if you want to fix the issue.",
-                    _ => throw new InvalidEnumArgumentException(nameof(mode))
+                    _ => throw new InvalidEnumArgumentException(nameof(mode)),
                 };
 
             case NavigationState.Error:

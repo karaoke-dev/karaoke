@@ -22,7 +22,7 @@ public abstract class StageInfo
         {
             Lyric => ConvertToLyricStageAppliers(elements),
             Note => ConvertToNoteStageAppliers(elements),
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException(),
         };
     }
 
@@ -31,14 +31,14 @@ public abstract class StageInfo
         {
             Lyric lyric => GetLyricStageElements(lyric),
             Note note => GetNoteStageElements(note),
-            _ => Array.Empty<StageElement>()
+            _ => Array.Empty<StageElement>(),
         };
 
     public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
         hitObject switch
         {
             Lyric lyric => GetStartAndEndTime(lyric),
-            _ => throw new InvalidOperationException()
+            _ => throw new InvalidOperationException(),
         };
 
     #region Stage element

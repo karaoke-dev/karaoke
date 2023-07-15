@@ -62,7 +62,7 @@ public partial class TestSceneOverlayColourProvider : OsuTestScene
                     AutoSizeAxes = Axes.X,
                     Columns = columns,
                     Content = content,
-                }
+                },
             };
         });
     }
@@ -99,7 +99,7 @@ public partial class TestSceneOverlayColourProvider : OsuTestScene
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Text = color.ToHex(),
-                }
+                },
             };
         }
 

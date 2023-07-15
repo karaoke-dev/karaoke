@@ -26,7 +26,7 @@ public abstract partial class BaseBottomEditor : CompositeDrawable
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = colourProvider.Background5(state.Mode)
+                Colour = colourProvider.Background5(state.Mode),
             },
             new GridContainer
             {
@@ -34,7 +34,7 @@ public abstract partial class BaseBottomEditor : CompositeDrawable
                 ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Absolute, info_part_spacing),
-                    new Dimension()
+                    new Dimension(),
                 },
                 Content = new[]
                 {
@@ -52,10 +52,10 @@ public abstract partial class BaseBottomEditor : CompositeDrawable
                             {
                                 x.RelativeSizeAxes = Axes.Both;
                             }),
-                        }
-                    }
-                }
-            }
+                        },
+                    },
+                },
+            },
         };
     }
 

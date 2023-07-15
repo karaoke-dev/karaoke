@@ -21,7 +21,7 @@ public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILangu
         {
             LanguageEditMode.Generate => new Selection(),
             LanguageEditMode.Verify => new LanguageVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(LanguageEditMode mode) =>
@@ -29,7 +29,7 @@ public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILangu
         {
             LanguageEditMode.Generate => "Generate",
             LanguageEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, LanguageEditMode mode, bool active) =>
@@ -37,7 +37,7 @@ public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILangu
         {
             LanguageEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
             LanguageEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(LanguageEditMode mode) =>
@@ -45,7 +45,7 @@ public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILangu
         {
             LanguageEditMode.Generate => "Auto-generate language with just a click.",
             LanguageEditMode.Verify => "Check if have lyric with no language.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class LanguageVerifySelection : LyricEditorVerifySelection

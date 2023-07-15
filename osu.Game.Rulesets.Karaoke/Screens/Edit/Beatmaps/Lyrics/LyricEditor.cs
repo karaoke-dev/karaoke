@@ -132,14 +132,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                             {
                                 Depth = int.MinValue,
                             },
-                        }
+                        },
                     },
                     rightSideSettings = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                }
-            }
+                },
+            },
         });
 
         BindableMode.BindValueChanged(e =>
@@ -210,7 +210,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditMode.Value,
                 LyricEditorMode.EditNote => editNoteModeState.BindableEditMode.Value,
                 LyricEditorMode.Singer => null,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
 
@@ -261,7 +261,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
                 LyricEditorMode.EditNote => new NoteSettings(),
                 LyricEditorMode.Singer => new SingerSettings(),
-                _ => null
+                _ => null,
             };
 
         bool checkDuplicatedWithExistSettings(LyricEditorSettings lyricEditorSettings)
@@ -296,7 +296,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
                 LyricEditorMode.EditNote => LyricEditorLayout.Detail,
                 LyricEditorMode.Singer => LyricEditorLayout.Preview,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
 
@@ -350,9 +350,9 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                     {
                         new PreviewLyricList
                         {
-                            RelativeSizeAxes = Axes.Both
-                        }
-                    }
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                    },
                 },
                 LyricEditorLayout.Detail => new Container
                 {
@@ -361,18 +361,18 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                         new LyricComposer
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Size = new Vector2(1, 0.6f)
+                            Size = new Vector2(1, 0.6f),
                         },
                         new DetailLyricList
                         {
                             RelativePositionAxes = Axes.Y,
                             Position = new Vector2(0, 0.6f),
                             Size = new Vector2(1, 0.4f),
-                            RelativeSizeAxes = Axes.Both
+                            RelativeSizeAxes = Axes.Both,
                         },
-                    }
+                    },
                 },
-                _ => throw new ArgumentOutOfRangeException(nameof(layout), layout, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(layout), layout, null),
             };
     }
 
@@ -404,7 +404,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             KaraokeEditAction.MoveToNextIndex => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
             KaraokeEditAction.MoveToFirstIndex => lyricCaretState.MoveCaret(MovingCaretAction.FirstIndex),
             KaraokeEditAction.MoveToLastIndex => lyricCaretState.MoveCaret(MovingCaretAction.LastIndex),
-            _ => false
+            _ => false,
         };
 
     public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
@@ -475,7 +475,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         public IBindable<double> TimeRange { get; } = new BindableDouble(5000)
         {
             MinValue = 1000,
-            MaxValue = 10000
+            MaxValue = 10000,
         };
 
         public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());

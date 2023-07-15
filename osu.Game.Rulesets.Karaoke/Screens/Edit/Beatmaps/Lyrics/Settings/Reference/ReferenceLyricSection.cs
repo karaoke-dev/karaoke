@@ -26,8 +26,8 @@ public partial class ReferenceLyricSection : LyricPropertySection
             labelledReferenceLyricSelector = new LabelledReferenceLyricSelector
             {
                 Label = "Referenced lyric",
-                Description = "Select the similar lyric that want to reference or sync the property."
-            }
+                Description = "Select the similar lyric that want to reference or sync the property.",
+            },
         };
 
         labelledReferenceLyricSelector.Current.BindValueChanged(x =>
@@ -53,13 +53,13 @@ public partial class ReferenceLyricSection : LyricPropertySection
         lockLyricPropertyBy switch
         {
             // technically the property is always editable.
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
         lockLyricPropertyBy switch
         {
             // technically the property is always editable.
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 }

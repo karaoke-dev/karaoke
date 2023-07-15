@@ -39,8 +39,8 @@ public partial class CreateNewLyricPreviewRow : PreviewRow
                 Action = () =>
                 {
                     lyricsChangeHandler.CreateAtLast();
-                }
-            }
+                },
+            },
         };
     }
 

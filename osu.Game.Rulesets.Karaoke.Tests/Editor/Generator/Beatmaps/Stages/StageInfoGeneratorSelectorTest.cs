@@ -54,7 +54,7 @@ public class StageInfoGeneratorSelectorTest<TStageInfo> : BaseGeneratorSelectorT
                 TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2"),
                 TestCaseTagHelper.ParseLyric("[7000,9000]:lyric3"),
                 TestCaseTagHelper.ParseLyric("[10000,12000]:lyric4"),
-            }
+            },
         };
     }
 }

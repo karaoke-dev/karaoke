@@ -51,7 +51,7 @@ public partial class DefaultPreview : SettingsSubsectionPreview
                     Text = "Select left size to adjust.",
                     Font = OsuFont.GetFont(size: 20),
                 },
-            }
+            },
         };
     }
 

@@ -39,6 +39,6 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditMode>
             new RomajiTagEditModeSection(),
             new RomajiTagIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

@@ -64,7 +64,7 @@ public class KaraokeBeatmapSkin : KaraokeSkin
                     ElementType.LyricLayout => "lyric-layouts",
                     ElementType.LyricStyle => "lyric-styles",
                     ElementType.NoteStyle => "note-styles",
-                    _ => throw new InvalidEnumArgumentException(nameof(elementType))
+                    _ => throw new InvalidEnumArgumentException(nameof(elementType)),
                 };
         });
     }
@@ -101,7 +101,7 @@ public class KaraokeBeatmapSkin : KaraokeSkin
                     KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricLayout)),
                     KaraokeIndexLookup.Style => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricStyle)),
                     KaraokeIndexLookup.Note => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.NoteStyle)),
-                    _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
+                    _ => throw new InvalidEnumArgumentException(nameof(indexLookup)),
                 };
 
             case KaraokeSkinConfigurationLookup skinConfigurationLookup:

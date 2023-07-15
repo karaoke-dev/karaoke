@@ -41,7 +41,7 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
         {
             StageEditorEditMode.Edit => new Selection(),
             StageEditorEditMode.Verify => new StageEditorVerifySelection(category),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(StageEditorEditMode mode) =>
@@ -49,7 +49,7 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
         {
             StageEditorEditMode.Edit => "Edit",
             StageEditorEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, StageEditorEditMode mode, bool active) =>
@@ -57,7 +57,7 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
         {
             StageEditorEditMode.Edit => active ? colours.Red : colours.RedDarker,
             StageEditorEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(StageEditorEditMode mode) =>
@@ -65,7 +65,7 @@ public partial class StageEditorEditModeSection : EditModeSection<StageEditorEdi
         {
             StageEditorEditMode.Edit => "Edit the stage property in here.",
             StageEditorEditMode.Verify => "Check if have any stage issues.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class StageEditorVerifySelection : VerifySelection

@@ -131,7 +131,7 @@ public class KaraokeSkin : Skin
                 {
                     ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => SkinUtils.As<TValue>(new Bindable<TValue>((TValue)DefaultElement[type])),
                     ElementType.LyricLayout => null,
-                    _ => throw new InvalidEnumArgumentException(nameof(type))
+                    _ => throw new InvalidEnumArgumentException(nameof(type)),
                 };
             }
 
@@ -165,7 +165,7 @@ public class KaraokeSkin : Skin
         {
             ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => DefaultElement[type],
             ElementType.LyricLayout => null,
-            _ => throw new InvalidEnumArgumentException(nameof(type))
+            _ => throw new InvalidEnumArgumentException(nameof(type)),
         };
 
     private class DefaultSkinFormat

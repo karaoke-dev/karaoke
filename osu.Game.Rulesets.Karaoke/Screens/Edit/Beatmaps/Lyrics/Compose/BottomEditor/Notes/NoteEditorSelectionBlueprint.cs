@@ -61,7 +61,7 @@ public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IH
         RelativeSizeAxes = Axes.None;
         AddInternal(new EditBodyPiece
         {
-            RelativeSizeAxes = Axes.Both
+            RelativeSizeAxes = Axes.Both,
         });
     }
 

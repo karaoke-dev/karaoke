@@ -25,7 +25,7 @@ public partial class NotePlayfieldTestContainer : Container
         playfield = new NotePlayfield(column);
         InternalChild = content = new KaraokeInputManager(new KaraokeRuleset().RulesetInfo)
         {
-            RelativeSizeAxes = Axes.Both
+            RelativeSizeAxes = Axes.Both,
         };
     }
 }

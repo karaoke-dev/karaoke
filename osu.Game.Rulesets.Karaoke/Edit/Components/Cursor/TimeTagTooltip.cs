@@ -35,11 +35,11 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
             {
                 new Dimension(GridSizeMode.Absolute, time_display_height),
                 new Dimension(GridSizeMode.Absolute, BORDER),
-                new Dimension(GridSizeMode.AutoSize)
+                new Dimension(GridSizeMode.AutoSize),
             },
             ColumnDimensions = new[]
             {
-                new Dimension(GridSizeMode.AutoSize)
+                new Dimension(GridSizeMode.AutoSize),
             },
             Content = new[]
             {
@@ -47,8 +47,8 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
                 {
                     trackTimer = new OsuSpriteText
                     {
-                        Font = OsuFont.GetFont(size: 21, fixedWidth: true)
-                    }
+                        Font = OsuFont.GetFont(size: 21, fixedWidth: true),
+                    },
                 },
                 null,
                 new Drawable[]
@@ -61,16 +61,16 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
                         {
                             index = new OsuSpriteText
                             {
-                                Font = OsuFont.GetFont(size: 12)
+                                Font = OsuFont.GetFont(size: 12),
                             },
                             indexState = new OsuSpriteText
                             {
-                                Font = OsuFont.GetFont(size: 12)
-                            }
-                        }
-                    }
-                }
-            }
+                                Font = OsuFont.GetFont(size: 12),
+                            },
+                        },
+                    },
+                },
+            },
         };
     }
 
@@ -79,7 +79,7 @@ public partial class TimeTagTooltip : BackgroundToolTip<TimeTag>
         return background = new Box
         {
             RelativeSizeAxes = Axes.X,
-            Height = time_display_height + BORDER
+            Height = time_display_height + BORDER,
         };
     }
 

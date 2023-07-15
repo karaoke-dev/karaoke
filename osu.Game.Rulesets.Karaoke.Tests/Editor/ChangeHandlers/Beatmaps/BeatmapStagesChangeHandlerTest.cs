@@ -48,7 +48,7 @@ public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<Beat
             var stageInfo = new ClassicStageInfo();
             karaokeBeatmap.StageInfos = new List<StageInfo>
             {
-                stageInfo
+                stageInfo,
             };
             karaokeBeatmap.CurrentStageInfo = stageInfo;
         });

@@ -50,7 +50,7 @@ public partial class LabelledOpacityAdjustment : LabelledSwitchButton
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
                 Size = new Vector2(CONFIG_BUTTON_SIZE),
-            }
+            },
         });
 
         Component.Current.BindValueChanged(_ => updateConfigButtonOpacity(), true);
@@ -91,7 +91,7 @@ public partial class LabelledOpacityAdjustment : LabelledSwitchButton
                 {
                     Width = 150,
                     Current = { BindTarget = Current },
-                }
+                },
             };
 
         private partial class OpacitySliderBar : RoundedSliderBar<float>

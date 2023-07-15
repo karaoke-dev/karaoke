@@ -38,7 +38,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
         {
             PrepareHitObject(() => new Lyric
             {
-                Text = "karaoke"
+                Text = "karaoke",
             }, false);
         }
 
@@ -53,7 +53,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
                 new TimeTag(new TextIndex(2), 2000),
                 new TimeTag(new TextIndex(3), 3000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -71,7 +71,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
         {
             PrepareHitObject(() => new Lyric
             {
-                Text = "karaoke"
+                Text = "karaoke",
             }, false);
         }
 
@@ -86,7 +86,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
                 new TimeTag(new TextIndex(2), 2000),
                 new TimeTag(new TextIndex(3), 3000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c =>
@@ -105,7 +105,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
         {
             PrepareHitObject(() => new Lyric
             {
-                Text = "karaoke"
+                Text = "karaoke",
             }, false);
         }
 
@@ -120,7 +120,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
                 new TimeTag(new TextIndex(2), 2000),
                 new TimeTag(new TextIndex(3), 3000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            }
+            },
         });
 
         if (lyricReferenceChangeHandler)

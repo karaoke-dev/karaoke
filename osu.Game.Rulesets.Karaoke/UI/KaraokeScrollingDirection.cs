@@ -8,5 +8,5 @@ namespace osu.Game.Rulesets.Karaoke.UI;
 public enum KaraokeScrollingDirection
 {
     Left = ScrollingDirection.Left,
-    Right = ScrollingDirection.Right
+    Right = ScrollingDirection.Right,
 }

@@ -20,7 +20,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers)
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers),
         };
 
         AssertOk(lyric);
@@ -31,7 +31,7 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
     {
         var lyric = new Lyric
         {
-            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers)
+            SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers),
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);

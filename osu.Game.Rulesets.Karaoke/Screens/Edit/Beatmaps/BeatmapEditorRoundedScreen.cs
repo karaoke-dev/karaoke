@@ -49,8 +49,8 @@ public partial class BeatmapEditorRoundedScreen : BeatmapEditorScreen
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                }
-            }
+                },
+            },
         });
     }
 }

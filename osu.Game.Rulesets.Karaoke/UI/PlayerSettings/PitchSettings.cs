@@ -22,19 +22,19 @@ public partial class PitchSettings : PlayerSettingsGroup
         {
             new OsuSpriteText
             {
-                Text = "Pitch:"
+                Text = "Pitch:",
             },
             pitchSliderBar = new ClickablePlayerSliderBar(),
             new OsuSpriteText
             {
-                Text = "Vocal pitch:"
+                Text = "Vocal pitch:",
             },
             vocalPitchSliderBar = new ClickablePlayerSliderBar(),
             new OsuSpriteText
             {
-                Text = "Scoring pitch:"
+                Text = "Scoring pitch:",
             },
-            scoringPitchSliderBar = new ClickablePlayerSliderBar()
+            scoringPitchSliderBar = new ClickablePlayerSliderBar(),
         };
     }
 

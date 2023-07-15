@@ -32,8 +32,8 @@ public partial class TestSceneLayoutToolTip : OsuTestScene
             Child = toolTip = new LayoutToolTip
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
-            }
+                Origin = Anchor.Centre,
+            },
         };
         toolTip.Show();
     });
@@ -60,7 +60,7 @@ public partial class TestSceneLayoutToolTip : OsuTestScene
         {
             var singer = new Lyric
             {
-                Text = "karaoke!"
+                Text = "karaoke!",
             };
             callBack(singer);
             toolTip.SetContent(singer);
@@ -81,7 +81,7 @@ public partial class TestSceneLayoutToolTip : OsuTestScene
             Name = "karaoke! (default skin)",
             Creator = "team karaoke!",
             Protected = true,
-            InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo()
+            InstantiationInfo = typeof(TestingSkin).GetInvariantInstantiationInfo(),
         };
 
         public TestingSkin(IStorageResourceProvider? resources)

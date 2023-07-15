@@ -38,7 +38,7 @@ public partial class AssignLanguageNavigation : TopNavigation<AssignLanguageStep
             NavigationState.Working => $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.",
             NavigationState.Done => "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.",
             NavigationState.Error => "Oops, seems cause some error in here.",
-            _ => throw new ArgumentOutOfRangeException(nameof(value))
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
 
     private partial class AssignLanguageTextFlowContainer : NavigationTextContainer

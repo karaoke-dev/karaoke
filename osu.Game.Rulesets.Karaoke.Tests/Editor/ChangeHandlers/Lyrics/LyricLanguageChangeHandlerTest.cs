@@ -19,7 +19,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());
@@ -35,7 +35,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "???"
+            Text = "???",
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());
@@ -67,7 +67,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     {
         PrepareHitObject(() => new Lyric
         {
-            Text = "???"
+            Text = "???",
         });
 
         TriggerHandlerChanged(c => c.SetLanguage(null));

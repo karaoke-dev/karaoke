@@ -20,7 +20,7 @@ public class NoteUtilsTest
         var note = new Note
         {
             Text = text,
-            RubyText = rubyText
+            RubyText = rubyText,
         };
 
         string actual = NoteUtils.DisplayText(note, useRubyTextIfHave);

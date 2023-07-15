@@ -47,7 +47,7 @@ public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRo
             NavigationState.Working => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
             NavigationState.Done => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
             NavigationState.Error => "Oops, seems cause some error in here.",
-            _ => throw new ArgumentOutOfRangeException(nameof(value))
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
 
     protected override bool AbleToNextStep(NavigationState value)

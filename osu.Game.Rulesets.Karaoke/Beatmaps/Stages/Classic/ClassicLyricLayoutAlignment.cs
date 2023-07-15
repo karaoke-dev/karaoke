@@ -9,5 +9,5 @@ public enum ClassicLyricLayoutAlignment
 
     Center,
 
-    Right
+    Right,
 }

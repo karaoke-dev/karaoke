@@ -109,7 +109,7 @@ public abstract partial class TimeTagScrollContainer : BindableScrollContainer
                     HighColour = colours.BlueDarker,
                 },
                 ticks = new TimelineTickDisplay(),
-            }
+            },
         });
 
         PostProcessContent(container);

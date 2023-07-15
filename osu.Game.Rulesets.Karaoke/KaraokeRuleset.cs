@@ -126,7 +126,7 @@ public partial class KaraokeRuleset : Ruleset
                 new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
                 new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
             },
-            _ => Array.Empty<KeyBinding>()
+            _ => Array.Empty<KeyBinding>(),
         };
 
     public override LocalisableString GetVariantName(int variant)
@@ -165,7 +165,7 @@ public partial class KaraokeRuleset : Ruleset
                 new KaraokeModDisableNote(),
                 new KaraokeModSnow(),
             },
-            _ => Array.Empty<Mod>()
+            _ => Array.Empty<Mod>(),
         };
 
     public override Drawable CreateIcon() => new KaraokeIcon(this);
@@ -233,7 +233,7 @@ public partial class KaraokeRuleset : Ruleset
             HitResult.Great => "Great",
             HitResult.Ok => "OK",
             HitResult.Meh => "Meh",
-            _ => base.GetDisplayNameForHitResult(result)
+            _ => base.GetDisplayNameForHitResult(result),
         };
     }
 
@@ -250,13 +250,13 @@ public partial class KaraokeRuleset : Ruleset
             new("Info", () => new BeatmapInfoGraph(playableBeatmap)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = info_height
+                Height = info_height,
             }),
             new("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = info_height
-            })
+                Height = info_height,
+            }),
         };
 
         // Set component to remain height
@@ -267,7 +267,7 @@ public partial class KaraokeRuleset : Ruleset
             statistic.Add(new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = remain_height - text_size - spacing
+                Height = remain_height - text_size - spacing,
             }));
         }
         else
@@ -275,7 +275,7 @@ public partial class KaraokeRuleset : Ruleset
             statistic.Add(new StatisticItem("Result", () => new NotScorableGraph
             {
                 RelativeSizeAxes = Axes.X,
-                Height = remain_height - text_size - spacing
+                Height = remain_height - text_size - spacing,
             }));
         }
 

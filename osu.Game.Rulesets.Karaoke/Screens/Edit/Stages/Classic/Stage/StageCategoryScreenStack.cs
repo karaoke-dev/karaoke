@@ -20,7 +20,7 @@ public partial class StageCategoryScreenStack : WorkspaceScreenStack<StageEditor
         AddInternal(background = new Box
         {
             RelativeSizeAxes = Axes.Both,
-            Depth = float.MaxValue
+            Depth = float.MaxValue,
         });
     }
 
@@ -36,7 +36,7 @@ public partial class StageCategoryScreenStack : WorkspaceScreenStack<StageEditor
             StageEditorEditCategory.Layout => null,
             StageEditorEditCategory.Timing => null,
             StageEditorEditCategory.Style => null,
-            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };
 
     protected override WorkspaceScreenStackTabControl CreateTabControl() => new StageCategoriesTabControl();

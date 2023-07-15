@@ -30,7 +30,7 @@ public partial class LabelledReferenceLyricSelector : LabelledComponent<Labelled
     protected override SelectLyricButton CreateComponent()
         => new()
         {
-            RelativeSizeAxes = Axes.X
+            RelativeSizeAxes = Axes.X,
         };
 
     public Lyric? IgnoredLyric
@@ -97,7 +97,7 @@ public partial class LabelledReferenceLyricSelector : LabelledComponent<Labelled
             {
                 Width = 400,
                 Height = 600,
-                Current = bindable
+                Current = bindable,
             };
         }
 

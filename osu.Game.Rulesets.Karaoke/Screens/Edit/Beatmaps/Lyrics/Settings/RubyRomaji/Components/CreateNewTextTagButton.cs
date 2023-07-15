@@ -48,7 +48,7 @@ public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHa
             {
                 this.HidePopover();
                 Action?.Invoke(textTag);
-            }
+            },
         };
     }
 
@@ -95,9 +95,9 @@ public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHa
                     new AddButton
                     {
                         Text = "Add",
-                        Action = submit
-                    }
-                }
+                        Action = submit,
+                    },
+                },
             };
         }
 
@@ -145,7 +145,7 @@ public partial class CreateNewTextTagButton<TTextTag> : EditorSectionButton, IHa
             {
                 StartIndex = Math.Min(startIndex, endIndex),
                 EndIndex = Math.Max(startIndex, endIndex),
-                Text = textTagText
+                Text = textTagText,
             });
         }
 

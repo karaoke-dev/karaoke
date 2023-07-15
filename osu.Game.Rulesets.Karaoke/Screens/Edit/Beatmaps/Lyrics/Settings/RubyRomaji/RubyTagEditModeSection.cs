@@ -19,7 +19,7 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
             RubyTagEditMode.Generate => new Selection(),
             RubyTagEditMode.Edit => new Selection(),
             RubyTagEditMode.Verify => new RubyTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(RubyTagEditMode mode) =>
@@ -28,7 +28,7 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
             RubyTagEditMode.Generate => "Generate",
             RubyTagEditMode.Edit => "Edit",
             RubyTagEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditMode mode, bool active) =>
@@ -37,7 +37,7 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
             RubyTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
             RubyTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
             RubyTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(RubyTagEditMode mode) =>
@@ -59,8 +59,8 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
                             AdjustableActions = new List<KaraokeEditAction>
                             {
                                 KaraokeEditAction.MoveToPreviousLyric,
-                                KaraokeEditAction.MoveToNextLyric
-                            }
+                                KaraokeEditAction.MoveToNextLyric,
+                            },
                         }
                     },
                     {
@@ -73,13 +73,13 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
                                 KaraokeEditAction.EditTextTagIncreaseStartIndex,
                                 KaraokeEditAction.EditTextTagReduceEndIndex,
                                 KaraokeEditAction.EditTextTagIncreaseEndIndex,
-                            }
+                            },
                         }
-                    }
-                }
+                    },
+                },
             },
             RubyTagEditMode.Verify => "Check invalid rubies in here",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class RubyTagVerifySelection : LyricEditorVerifySelection

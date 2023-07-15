@@ -21,7 +21,7 @@ public partial class TestSceneSingerToolTip : OsuTestScene
         Child = toolTip = new SingerToolTip
         {
             Anchor = Anchor.Centre,
-            Origin = Anchor.Centre
+            Origin = Anchor.Centre,
         };
         toolTip.Show();
     });

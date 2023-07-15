@@ -72,7 +72,7 @@ public partial class TestSceneSingerScreen : BeatmapEditorScreenTestScene<Singer
             new OsuContextMenuContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = Content
+                Child = Content,
             },
             dialogOverlay = new DialogOverlay(),
             lyricsProvider = new LyricsProvider(),
@@ -81,7 +81,7 @@ public partial class TestSceneSingerScreen : BeatmapEditorScreenTestScene<Singer
 
         var beatDivisor = new BindableBeatDivisor
         {
-            Value = Beatmap.Value.BeatmapInfo.BeatDivisor
+            Value = Beatmap.Value.BeatmapInfo.BeatDivisor,
         };
         var editorClock = new EditorClock(Beatmap.Value.Beatmap, beatDivisor);
         Dependencies.CacheAs(editorClock);

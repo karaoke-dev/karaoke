@@ -21,7 +21,7 @@ internal partial class AvatarSection : EditSingerSection
                 Label = "Colour",
                 Description = "Select singer colour.",
                 Current = singer.HueBindable,
-            }
+            },
         };
     }
 }

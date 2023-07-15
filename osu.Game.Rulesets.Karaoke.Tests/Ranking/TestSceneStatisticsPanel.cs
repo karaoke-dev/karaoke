@@ -17,7 +17,7 @@ public partial class TestSceneStatisticsPanel : OsuTestScene
     {
         var score = new TestKaraokeScoreInfo
         {
-            HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
+            HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents(),
         };
 
         loadPanel(score);
@@ -41,7 +41,7 @@ public partial class TestSceneStatisticsPanel : OsuTestScene
         {
             RelativeSizeAxes = Axes.Both,
             State = { Value = Visibility.Visible },
-            Score = { Value = score }
+            Score = { Value = score },
         };
     });
 }

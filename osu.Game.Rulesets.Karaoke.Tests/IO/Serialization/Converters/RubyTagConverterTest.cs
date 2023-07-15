@@ -23,7 +23,7 @@ public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
 
         string expected = $"\"{json}\"";
@@ -48,7 +48,7 @@ public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
         {
             StartIndex = startIndex,
             EndIndex = endIndex,
-            Text = text
+            Text = text,
         };
         var actual = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings()) ?? throw new InvalidCastException();
         TextTagAssert.ArePropertyEqual(expected, actual);

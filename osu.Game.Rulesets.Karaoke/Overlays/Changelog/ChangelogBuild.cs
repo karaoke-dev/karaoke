@@ -83,9 +83,9 @@ public partial class ChangelogBuild : FillFlowContainer
                             Font = OsuFont.GetFont(weight: FontWeight.Light, size: 19),
                             Colour = Color4.Red,
                         },
-                    }
-                }
+                    },
+                },
             },
-        }
+        },
     };
 }

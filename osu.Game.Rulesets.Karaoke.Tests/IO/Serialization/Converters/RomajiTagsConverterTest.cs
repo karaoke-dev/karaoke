@@ -27,13 +27,13 @@ public class RomajiTagsConverterTest : BaseSingleConverterTest<RomajiTagsConvert
             {
                 StartIndex = 2,
                 EndIndex = 2,
-                Text = "ji"
+                Text = "ji",
             },
             new RomajiTag
             {
                 StartIndex = 0,
                 EndIndex = 1,
-                Text = "roma"
+                Text = "roma",
             },
         };
 
@@ -53,13 +53,13 @@ public class RomajiTagsConverterTest : BaseSingleConverterTest<RomajiTagsConvert
             {
                 StartIndex = 0,
                 EndIndex = 1,
-                Text = "roma"
+                Text = "roma",
             },
             new RomajiTag
             {
                 StartIndex = 2,
                 EndIndex = 2,
-                Text = "ji"
+                Text = "ji",
             },
         };
         var actual = JsonConvert.DeserializeObject<RomajiTag[]>(json, CreateSettings()) ?? throw new InvalidCastException();

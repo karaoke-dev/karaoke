@@ -19,5 +19,5 @@ public enum LockState
     Partial,
 
     [Description("Full")]
-    Full
+    Full,
 }

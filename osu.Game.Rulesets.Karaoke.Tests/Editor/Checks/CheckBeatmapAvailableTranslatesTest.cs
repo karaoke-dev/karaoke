@@ -119,7 +119,7 @@ public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<Chec
                 Ruleset = new KaraokeRuleset().RulesetInfo,
             },
             AvailableTranslates = translateLanguage ?? new List<CultureInfo>(),
-            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
+            HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>(),
         };
         return new EditorBeatmap(karaokeBeatmap);
     }

@@ -32,7 +32,7 @@ public partial class DetailLyricList : BaseLyricList
             ColumnDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, timingWidth),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -41,15 +41,15 @@ public partial class DetailLyricList : BaseLyricList
                     new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = colourProvider.Background3(mode)
+                        Colour = colourProvider.Background3(mode),
                     },
                     new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = colourProvider.Background4(mode)
+                        Colour = colourProvider.Background4(mode),
                     },
-                }
-            }
+                },
+            },
         };
     }
 }

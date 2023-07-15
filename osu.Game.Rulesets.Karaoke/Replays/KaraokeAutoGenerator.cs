@@ -23,7 +23,7 @@ public class KaraokeAutoGenerator : AutoGenerator
         var notes = Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToArray();
         return new Replay
         {
-            Frames = notes.SelectMany((element, index) => getReplayFrames(element, notes.ElementAtOrDefault(index + 1))).ToList()
+            Frames = notes.SelectMany((element, index) => getReplayFrames(element, notes.ElementAtOrDefault(index + 1))).ToList(),
         };
     }
 

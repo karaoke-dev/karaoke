@@ -203,54 +203,54 @@ public class CuttingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
     {
         new Lyric
         {
-            Text = "カラオケ"
-        }
+            Text = "カラオケ",
+        },
     };
 
     private static Lyric[] singleLyricWithTwoText => new[]
     {
         new Lyric
         {
-            Text = "AA"
-        }
+            Text = "AA",
+        },
     };
 
     private static Lyric[] singleLyricWithOneText => new[]
     {
         new Lyric
         {
-            Text = "A"
-        }
+            Text = "A",
+        },
     };
 
     private static Lyric[] singleLyricWithNoText => new[]
     {
-        new Lyric()
+        new Lyric(),
     };
 
     private static Lyric[] twoLyricsWithText => new[]
     {
         new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         },
         new Lyric
         {
-            Text = "大好き"
-        }
+            Text = "大好き",
+        },
     };
 
     private static Lyric[] threeLyricsWithSpacing => new[]
     {
         new Lyric
         {
-            Text = "カラオケ"
+            Text = "カラオケ",
         },
         new Lyric(),
         new Lyric
         {
-            Text = "大好き"
-        }
+            Text = "大好き",
+        },
     };
 
     #endregion

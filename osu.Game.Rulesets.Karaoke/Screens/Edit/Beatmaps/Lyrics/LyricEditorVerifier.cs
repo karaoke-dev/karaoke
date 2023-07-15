@@ -39,7 +39,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
             LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTag() },
             LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText(), new CheckNoteTime() },
             LyricEditorMode.Singer => Array.Empty<ICheck>(),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 
     public IBindableList<Issue> GetBindable(KaraokeHitObject hitObject)

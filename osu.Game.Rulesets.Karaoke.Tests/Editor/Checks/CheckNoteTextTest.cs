@@ -32,7 +32,7 @@ public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
     {
         var note = new Note
         {
-            Text = text
+            Text = text,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteNoText>(note);
@@ -46,7 +46,7 @@ public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
         var note = new Note
         {
             Text = "karaoke",
-            RubyText = rubyText
+            RubyText = rubyText,
         };
 
         AssertNotOk<NoteIssue, IssueTemplateNoteNoRubyText>(note);

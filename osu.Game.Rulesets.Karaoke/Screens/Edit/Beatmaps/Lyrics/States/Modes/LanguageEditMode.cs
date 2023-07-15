@@ -7,5 +7,5 @@ public enum LanguageEditMode
 {
     Generate,
 
-    Verify
+    Verify,
 }

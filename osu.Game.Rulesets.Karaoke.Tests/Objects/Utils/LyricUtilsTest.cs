@@ -247,7 +247,7 @@ public class LyricUtilsTest
             {
                 "[0]:か",
                 "[2,3]:おけ",
-            })
+            }),
         };
         var timeTag = lyric.TimeTags[indexOfTimeTag];
 
@@ -286,7 +286,7 @@ public class LyricUtilsTest
         var lyric = new Lyric
         {
             StartTime = startTime,
-            Duration = endTime - startTime
+            Duration = endTime - startTime,
         };
 
         string actual = LyricUtils.LyricTimeFormattedString(lyric);
@@ -325,7 +325,7 @@ public class LyricUtilsTest
         var singer = TestCaseTagHelper.ParseSinger(compareSinger);
         var lyric = new Lyric
         {
-            SingerIds = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray()
+            SingerIds = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray(),
         };
 
         bool actual = LyricUtils.ContainsSinger(lyric, singer);
@@ -341,7 +341,7 @@ public class LyricUtilsTest
         var singers = TestCaseTagHelper.ParseSingers(compareSingers).ToList();
         var lyric = new Lyric
         {
-            SingerIds = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray()
+            SingerIds = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray(),
         };
 
         bool actual = LyricUtils.OnlyContainsSingers(lyric, singers);

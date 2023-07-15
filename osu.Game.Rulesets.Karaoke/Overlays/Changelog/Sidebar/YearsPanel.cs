@@ -36,7 +36,7 @@ public partial class YearsPanel : CompositeDrawable
             new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = overlayColours.Background3
+                Colour = overlayColours.Background3,
             },
             new Container
             {
@@ -47,9 +47,9 @@ public partial class YearsPanel : CompositeDrawable
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
-                    Spacing = new Vector2(0, 5)
-                }
-            }
+                    Spacing = new Vector2(0, 5),
+                },
+            },
         };
     }
 
@@ -93,7 +93,7 @@ public partial class YearsPanel : CompositeDrawable
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Text = year.ToString()
+                Text = year.ToString(),
             };
         }
 

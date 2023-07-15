@@ -37,7 +37,7 @@ public class Singer : ISinger
     public Bindable<float> HueBindable = new BindableFloat
     {
         MinValue = 0,
-        MaxValue = 1
+        MaxValue = 1,
     };
 
     public float Hue

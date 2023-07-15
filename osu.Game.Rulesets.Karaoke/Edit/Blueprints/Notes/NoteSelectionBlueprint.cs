@@ -47,7 +47,7 @@ public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, I
     {
         AddInternal(new EditBodyPiece
         {
-            RelativeSizeAxes = Axes.Both
+            RelativeSizeAxes = Axes.Both,
         });
     }
 

@@ -13,5 +13,5 @@ public enum SettingsDirection
     /// <summary>
     /// At the right side of the main lyric editor.
     /// </summary>
-    Right
+    Right,
 }

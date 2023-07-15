@@ -137,7 +137,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
-            _ => throw new InvalidOperationException(nameof(mode))
+            _ => throw new InvalidOperationException(nameof(mode)),
         };
 
         ICaretPositionAlgorithm getTextingModeAlgorithm(TextingEditMode textingEditMode) =>
@@ -146,7 +146,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 TextingEditMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
                 TextingEditMode.Split => new CuttingCaretPositionAlgorithm(lyrics),
                 TextingEditMode.Verify => new NavigateCaretPositionAlgorithm(lyrics),
-                _ => throw new InvalidOperationException(nameof(textingEditMode))
+                _ => throw new InvalidOperationException(nameof(textingEditMode)),
             };
 
         ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditMode timeTagEditMode)
@@ -156,7 +156,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 TimeTagEditMode.Create => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
                 TimeTagEditMode.Recording => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
                 TimeTagEditMode.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
-                _ => throw new InvalidOperationException(nameof(timeTagEditMode))
+                _ => throw new InvalidOperationException(nameof(timeTagEditMode)),
             };
 
             static ICaretPositionAlgorithm getCreateTimeTagEditModeAlgorithm(Lyric[] lyrics, CreateTimeTagEditMode createTimeTagEditMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
@@ -164,7 +164,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 {
                     CreateTimeTagEditMode.Create => new TimeTagIndexCaretPositionAlgorithm(lyrics),
                     CreateTimeTagEditMode.Modify => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
-                    _ => throw new InvalidOperationException(nameof(createTimeTagEditMode))
+                    _ => throw new InvalidOperationException(nameof(createTimeTagEditMode)),
                 };
         }
     }
@@ -209,7 +209,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             MovingCaretAction.NextIndex => performMoveToNextIndex(algorithm, currentPosition),
             MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, currentPosition),
             MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, currentPosition),
-            _ => throw new InvalidEnumArgumentException(nameof(action))
+            _ => throw new InvalidEnumArgumentException(nameof(action)),
         };
 
         static ICaretPosition? performMoveToPreviousIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
@@ -375,7 +375,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         {
             TypingCaretPositionAlgorithm => true,
             CreateRubyTagCaretPositionAlgorithm => true,
-            _ => false
+            _ => false,
         };
 
     private void postProcess()

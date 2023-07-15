@@ -42,7 +42,7 @@ public class TextTagUtilsTest
             {
                 Text = textTag.Text,
                 StartIndex = startIndex,
-                EndIndex = endIndex
+                EndIndex = endIndex,
             };
         }
     }
@@ -83,7 +83,7 @@ public class TextTagUtilsTest
             {
                 Text = textTag.Text,
                 StartIndex = startIndex,
-                EndIndex = endIndex
+                EndIndex = endIndex,
             };
         }
     }

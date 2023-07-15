@@ -63,7 +63,7 @@ public abstract partial class SectionTimingInfoItemsEditor<TItem> : SectionItems
                     {
                         RemoveItem(item);
                     },
-                }
+                },
             };
         }
 

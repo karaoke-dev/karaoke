@@ -47,19 +47,19 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
                 AutoSizeAxes = Axes.Y,
                 RowDimensions = new[]
                 {
-                    new Dimension(GridSizeMode.AutoSize)
+                    new Dimension(GridSizeMode.AutoSize),
                 },
                 Content = new[]
                 {
-                    selections = createSelections()
-                }
+                    selections = createSelections(),
+                },
             },
             lyricEditorDescription = CreateDescriptionTextFlowContainer().With(x =>
             {
                 x.RelativeSizeAxes = Axes.X;
                 x.AutoSizeAxes = Axes.Y;
                 x.Padding = new MarginPadding { Horizontal = horizontal_padding };
-            })
+            }),
         };
 
         // should wait until derived class BDL ready.
@@ -190,7 +190,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
                 circle = new Circle
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Red
+                    Colour = Color4.Red,
                 },
                 countText = new OsuSpriteText
                 {
@@ -201,7 +201,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
                     Padding = new MarginPadding(5),
                     Colour = Color4.White,
                     UseFullGlyphHeight = true,
-                }
+                },
             };
         }
     }

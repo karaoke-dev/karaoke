@@ -42,7 +42,7 @@ public abstract partial class GenericEditorScreenTestScene<TScreen, TType> : Edi
             CreateEditorScreen().With(x =>
             {
                 x.State.Value = Visibility.Visible;
-            })
+            }),
         };
     }
 

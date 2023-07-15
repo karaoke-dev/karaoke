@@ -82,7 +82,7 @@ public partial class DrawableBarLine : DrawableKaraokeScrollingHitObject<BarLine
                         Origin = Anchor.Centre,
                         Size = new Vector2(triangle_width),
                         Y = -triangle_offset,
-                        Rotation = 180
+                        Rotation = 180,
                     },
                     new EquilateralTriangle
                     {
@@ -91,10 +91,10 @@ public partial class DrawableBarLine : DrawableKaraokeScrollingHitObject<BarLine
                         Origin = Anchor.Centre,
                         Size = new Vector2(triangle_width),
                         Y = triangle_offset,
-                        Rotation = 0
-                    }
-                }
-            }
+                        Rotation = 0,
+                    },
+                },
+            },
         });
     }
 

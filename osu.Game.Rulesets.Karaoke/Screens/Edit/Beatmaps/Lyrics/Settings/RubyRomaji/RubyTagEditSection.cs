@@ -28,7 +28,7 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Ruby is sync to another ruby.",
             LockLyricPropertyBy.LockState => "Ruby is locked.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
@@ -36,7 +36,7 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
         {
             LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the ruby because it's sync to another lyric's text.",
             LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the ruby.",
-            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     private partial class RubyTagsEditor : TextTagsEditor

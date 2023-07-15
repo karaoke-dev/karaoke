@@ -35,13 +35,13 @@ public partial class TimeTagSettings : LyricEditorSettings
             new TimeTagEditModeSection(),
             new TimeTagAutoGenerateSection(),
             new TimeTagCreateConfigSection(),
-            new CreateTimeTagActionReceiver()
+            new CreateTimeTagActionReceiver(),
         },
         TimeTagEditMode.Recording => new Drawable[]
         {
             new TimeTagEditModeSection(),
             new TimeTagRecordingConfigSection(),
-            new RecordTimeTagActionReceiver()
+            new RecordTimeTagActionReceiver(),
         },
         TimeTagEditMode.Adjust => new Drawable[]
         {
@@ -49,6 +49,6 @@ public partial class TimeTagSettings : LyricEditorSettings
             new TimeTagAdjustConfigSection(),
             new TimeTagIssueSection(),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

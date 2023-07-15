@@ -99,7 +99,7 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                                                 RelativeSizeAxes = Axes.X,
                                                 ShowTooltip = false,
                                             },
-                                        }
+                                        },
                                     },
                                     singerEnglishName = new TruncatingSpriteText
                                     {
@@ -109,11 +109,11 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                                         Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                         RelativeSizeAxes = Axes.X,
                                         ShowTooltip = false,
-                                    }
-                                }
-                            }
-                        }
-                    }
+                                    },
+                                },
+                            },
+                        },
+                    },
                 },
                 singerDescription = new OsuSpriteText
                 {
@@ -122,8 +122,8 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                     Colour = Color4.White.Opacity(0.75f),
                     Font = OsuFont.Default.With(size: 14),
                     Name = "Description",
-                }
-            }
+                },
+            },
         };
 
         bindableName.BindValueChanged(e => singerName.Text = e.NewValue, true);

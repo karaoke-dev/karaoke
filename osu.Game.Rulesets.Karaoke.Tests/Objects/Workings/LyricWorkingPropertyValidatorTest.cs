@@ -79,7 +79,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
-            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -97,7 +97,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         {
             { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
-            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
@@ -107,7 +107,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
-            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() }
+            { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
         });
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 

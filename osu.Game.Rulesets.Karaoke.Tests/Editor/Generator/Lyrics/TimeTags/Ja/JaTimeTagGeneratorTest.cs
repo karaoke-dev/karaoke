@@ -134,15 +134,15 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
                 {
                     StartIndex = 0,
                     EndIndex = 1,
-                    Text = "あした"
+                    Text = "あした",
                 },
                 new RubyTag
                 {
                     StartIndex = 7,
                     EndIndex = 7,
-                    Text = "あそ"
-                }
-            }
+                    Text = "あそ",
+                },
+            },
         };
 
         string[] expectedTimeTags =
@@ -159,7 +159,7 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
             "[9,start]:",
             "[10,start]:",
             "[12,start]:",
-            "[13,start]:"
+            "[13,start]:",
         };
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }

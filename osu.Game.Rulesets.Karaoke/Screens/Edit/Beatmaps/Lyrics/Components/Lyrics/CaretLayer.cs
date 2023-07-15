@@ -68,7 +68,7 @@ public partial class CaretLayer : BaseLayer
                 TimeTagIndexCaretPosition => new DrawableTimeTagIndexCaret(type),
                 // record time-tag
                 TimeTagCaretPosition => new DrawableTimeTagCaret(type),
-                _ => null
+                _ => null,
             };
     }
 

@@ -7,5 +7,5 @@ public enum PanelDirection
 {
     Left,
 
-    Right
+    Right,
 }

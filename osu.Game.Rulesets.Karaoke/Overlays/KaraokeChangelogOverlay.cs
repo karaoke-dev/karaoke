@@ -58,12 +58,12 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
             AutoSizeAxes = Axes.Y,
             RowDimensions = new[]
             {
-                new Dimension(GridSizeMode.AutoSize)
+                new Dimension(GridSizeMode.AutoSize),
             },
             ColumnDimensions = new[]
             {
                 new Dimension(GridSizeMode.AutoSize),
-                new Dimension()
+                new Dimension(),
             },
             Content = new[]
             {
@@ -72,15 +72,15 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
                     sidebarContainer = new Container
                     {
                         AutoSizeAxes = Axes.X,
-                        Child = sidebar = new ChangelogSidebar()
+                        Child = sidebar = new ChangelogSidebar(),
                     },
                     content = new Container
                     {
                         RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y
-                    }
-                }
-            }
+                        AutoSizeAxes = Axes.Y,
+                    },
+                },
+            },
         };
     }
 
@@ -172,7 +172,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
                 sidebar.Metadata.Value = new APIChangelogSidebar
                 {
                     Changelogs = builds,
-                    Years = years
+                    Years = years,
                 };
             });
         }
@@ -206,7 +206,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
                         DisplayVersion = x.Name,
-                        PublishedAt = getPublishDateFromName(x.Name)
+                        PublishedAt = getPublishDateFromName(x.Name),
                     }));
 
                     foreach (var build in builds)

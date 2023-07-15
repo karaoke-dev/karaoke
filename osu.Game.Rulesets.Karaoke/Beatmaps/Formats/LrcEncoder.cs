@@ -32,7 +32,7 @@ public class LrcEncoder
             {
                 Text = lyric.Text,
                 TimeTags = convertTimeTag(lyric.TimeTags),
-                RubyTags = convertRubyTag(lyric.RubyTags)
+                RubyTags = convertRubyTag(lyric.RubyTags),
             };
 
         static SortedDictionary<LrcParser.Model.TextIndex, int?> convertTimeTag(IList<TimeTag> timeTags)
@@ -55,7 +55,7 @@ public class LrcEncoder
             {
                 Text = x.Text,
                 StartCharIndex = x.StartIndex,
-                EndCharIndex = x.EndIndex
+                EndCharIndex = x.EndIndex,
             }).ToList();
     }
 

@@ -32,7 +32,7 @@ public partial class LyricNotesChangeHandlerTest : LyricPropertyChangeHandlerTes
                 new TimeTag(new TextIndex(2), 2000),
                 new TimeTag(new TextIndex(3), 3000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            }
+            },
         });
 
         TriggerHandlerChanged(c => c.AutoGenerate());

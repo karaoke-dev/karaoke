@@ -18,7 +18,7 @@ public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, L
         new IssueTemplateLyricSelfReference(this),
         new IssueTemplateLyricInvalidReferenceLyric(this),
         new IssueTemplateLyricNullReferenceLyricConfig(this),
-        new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this)
+        new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this),
     };
 
     protected override IEnumerable<Issue> CheckReferenceProperty(Lyric lyric, IEnumerable<Lyric> allAvailableReferencedHitObjects)

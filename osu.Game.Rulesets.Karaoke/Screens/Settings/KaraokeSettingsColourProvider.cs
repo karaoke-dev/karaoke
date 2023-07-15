@@ -31,7 +31,7 @@ public class KaraokeSettingsColourProvider
             StyleSection => 333 / 360f, // Pink
             ScoringSection => 45 / 360f, // Orange
             null => 320 / 360f, // Plum
-            _ => throw new ArgumentException($@"{section} colour scheme does not provide a hue value in {nameof(getBaseHue)}.")
+            _ => throw new ArgumentException($@"{section} colour scheme does not provide a hue value in {nameof(getBaseHue)}."),
         };
     }
 }

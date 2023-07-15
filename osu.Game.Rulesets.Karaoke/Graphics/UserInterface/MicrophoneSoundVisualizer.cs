@@ -73,9 +73,9 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                         },
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         updateDeviceInfo();
@@ -124,7 +124,7 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
             MicrophoneStartPitchingEvent microphoneStartPitching => OnMicrophoneStartSinging(microphoneStartPitching),
             MicrophoneEndPitchingEvent microphoneEndPitching => OnMicrophoneEndSinging(microphoneEndPitching),
             MicrophonePitchingEvent microphonePitching => OnMicrophoneSinging(microphonePitching),
-            _ => base.Handle(e)
+            _ => base.Handle(e),
         };
     }
 
@@ -183,7 +183,7 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                     Padding = new MarginPadding
                     {
                         Top = 20,
-                        Left = 15
+                        Left = 15,
                     },
                     Spacing = new Vector2(15),
                     Direction = FillDirection.Horizontal,
@@ -192,16 +192,16 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                         microphoneIcon = new SpriteIcon
                         {
                             Size = new Vector2(24),
-                            Icon = FontAwesome.Solid.Microphone
+                            Icon = FontAwesome.Solid.Microphone,
                         },
                         deviceName = new TruncatingSpriteText
                         {
                             Width = 250,
                             Font = OsuFont.Default.With(size: 20),
                             Text = "Microphone name",
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             };
         }
 
@@ -339,8 +339,8 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                     Spacing = new Vector2(spacing),
                     Children = Enumerable.Range(0, dot_amount).Select(i => new PitchDot
                     {
-                        Colour = calculateDotColour(i, 0.8f)
-                    }).ToArray()
+                        Colour = calculateDotColour(i, 0.8f),
+                    }).ToArray(),
                 },
                 currentDot = new PitchDot
                 {
@@ -418,9 +418,9 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
                             {
                                 Colour = Color4.White,
                                 RelativeSizeAxes = Axes.Both,
-                            }
+                            },
                         },
-                    }
+                    },
                 };
             }
 

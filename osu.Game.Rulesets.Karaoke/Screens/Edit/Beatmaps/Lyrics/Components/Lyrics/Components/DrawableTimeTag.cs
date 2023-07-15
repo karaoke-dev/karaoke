@@ -35,7 +35,7 @@ public partial class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<Time
         {
             Name = "Text index",
             Size = new Vector2(triangle_width),
-            State = state
+            State = state,
         };
     }
 

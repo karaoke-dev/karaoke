@@ -26,6 +26,6 @@ public partial class TestSceneKaraokeModDisableNote : KaraokeModTestScene
 
             // check has no note in playfield
             return lyricPlayfield.AllHitObjects.Any() && notePlayfield.Alpha == 0f;
-        }
+        },
     });
 }

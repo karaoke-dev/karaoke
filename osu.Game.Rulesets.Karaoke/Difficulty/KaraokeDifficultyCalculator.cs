@@ -67,7 +67,7 @@ public class KaraokeDifficultyCalculator : DifficultyCalculator
 
     protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods, double clockRate) => new Skill[]
     {
-        new Strain(mods, ((KaraokeBeatmap)beatmap).NoteInfo)
+        new Strain(mods, ((KaraokeBeatmap)beatmap).NoteInfo),
     };
 
     protected override Mod[] DifficultyAdjustmentMods =>

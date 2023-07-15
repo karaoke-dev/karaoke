@@ -20,7 +20,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertOk(lyric);
@@ -32,7 +32,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricEmptyTimeTag>(lyric);
@@ -44,7 +44,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricMissingFirstTimeTag>(lyric);
@@ -56,7 +56,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricMissingLastTimeTag>(lyric);
@@ -69,7 +69,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOutOfRange>(lyric);
@@ -81,7 +81,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOverlapping>(lyric);
@@ -95,7 +95,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         var lyric = new Lyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagEmptyTime>(lyric);

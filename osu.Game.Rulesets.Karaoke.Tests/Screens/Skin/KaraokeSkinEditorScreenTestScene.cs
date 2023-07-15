@@ -46,8 +46,8 @@ public abstract partial class KaraokeSkinEditorScreenTestScene<T> : EditorClockT
                 CreateEditorScreen(karaokeSkin).With(x =>
                 {
                     x.State.Value = Visibility.Visible;
-                })
-            }
+                }),
+            },
         };
     }
 

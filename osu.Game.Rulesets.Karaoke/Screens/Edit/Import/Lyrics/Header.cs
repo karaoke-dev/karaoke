@@ -55,8 +55,8 @@ public partial class Header : Container
                     breadcrumbs = new HeaderBreadcrumbControl(stack)
                     {
                         Anchor = Anchor.BottomLeft,
-                        Origin = Anchor.BottomLeft
-                    }
+                        Origin = Anchor.BottomLeft,
+                    },
                 },
             },
         };
@@ -106,22 +106,22 @@ public partial class Header : Container
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                            Text = "Import lyric"
+                            Text = "Import lyric",
                         },
                         dot = new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                            Text = "·"
+                            Text = "·",
                         },
                         pageTitle = new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             Font = OsuFont.GetFont(size: 24),
-                        }
-                    }
+                        },
+                    },
                 },
             };
         }
@@ -172,7 +172,7 @@ public partial class Header : Container
 
         protected override TabItem<IScreen> CreateTabItem(IScreen value) => new HeaderBreadcrumbTabItem(value)
         {
-            AccentColour = AccentColour
+            AccentColour = AccentColour,
         };
 
         private partial class HeaderBreadcrumbTabItem : BreadcrumbTabItem

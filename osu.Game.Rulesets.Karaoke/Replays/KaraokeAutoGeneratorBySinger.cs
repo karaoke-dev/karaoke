@@ -82,7 +82,7 @@ public class KaraokeAutoGeneratorBySinger : AutoGenerator
         var result = readTask.GetResultSafely();
         return new Replay
         {
-            Frames = getReplayFrames(result).ToList()
+            Frames = getReplayFrames(result).ToList(),
         };
     }
 

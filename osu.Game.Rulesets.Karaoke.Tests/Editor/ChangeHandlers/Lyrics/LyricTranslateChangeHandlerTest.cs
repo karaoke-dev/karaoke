@@ -36,8 +36,8 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
-            }
+                { new CultureInfo(17), "からおけ" },
+            },
         });
 
         TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "karaoke"));
@@ -57,8 +57,8 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
-            }
+                { new CultureInfo(17), "からおけ" },
+            },
         });
 
         TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
@@ -77,8 +77,8 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             Text = "カラオケ",
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo(17), "からおけ" }
-            }
+                { new CultureInfo(17), "からおけ" },
+            },
         });
 
         TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));

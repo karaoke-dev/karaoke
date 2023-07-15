@@ -27,7 +27,7 @@ public class ClassicLyricTimingInfoGeneratorTest
                 TestCaseTagHelper.ParseLyric("[4000,6000]:lyric2"),
                 TestCaseTagHelper.ParseLyric("[7000,9000]:lyric3"),
                 TestCaseTagHelper.ParseLyric("[10000,12000]:lyric4"),
-            }
+            },
         };
 
         CheckCanGenerate(beatmap, true, config);
@@ -58,7 +58,7 @@ public class ClassicLyricTimingInfoGeneratorTest
                 lyric2,
                 lyric3,
                 lyric4,
-            }
+            },
         };
 
         var expected = new ClassicLyricTimingInfo();
@@ -100,7 +100,7 @@ public class ClassicLyricTimingInfoGeneratorTest
                 lyric3,
                 lyric4,
                 lyric5,
-            }
+            },
         };
 
         var expected = new ClassicLyricTimingInfo();

@@ -26,7 +26,7 @@ public partial class TestSceneBeatmapInfoWedge : OsuTestScene
         {
             Size = new Vector2(0.5f, 245),
             RelativeSizeAxes = Axes.X,
-            Margin = new MarginPadding { Top = 20 }
+            Margin = new MarginPadding { Top = 20 },
         });
 
         AddStep("show", () =>

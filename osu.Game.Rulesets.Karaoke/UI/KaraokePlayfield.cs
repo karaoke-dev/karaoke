@@ -152,7 +152,7 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
         {
             DrawableLyric => LyricPlayfield.Remove(h),
             DrawableNote => NotePlayfield.Remove(h),
-            _ => base.Remove(h)
+            _ => base.Remove(h),
         };
 
     #endregion

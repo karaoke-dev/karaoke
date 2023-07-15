@@ -22,7 +22,7 @@ public class KaraokeSkinElementConverter : GenericTypeConverter<IKaraokeSkinElem
             _ when elementType == typeof(LyricLayout) => ElementType.LyricLayout,
             _ when elementType == typeof(LyricStyle) => ElementType.LyricStyle,
             _ when elementType == typeof(NoteStyle) => ElementType.NoteStyle,
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
 
     public static Type GetObjectType(ElementType elementType) =>
@@ -32,6 +32,6 @@ public class KaraokeSkinElementConverter : GenericTypeConverter<IKaraokeSkinElem
             ElementType.LyricLayout => typeof(LyricLayout),
             ElementType.LyricStyle => typeof(LyricStyle),
             ElementType.NoteStyle => typeof(NoteStyle),
-            _ => throw new NotSupportedException()
+            _ => throw new NotSupportedException(),
         };
 }

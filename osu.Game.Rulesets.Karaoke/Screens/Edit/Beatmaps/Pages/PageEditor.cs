@@ -20,7 +20,7 @@ public partial class PageEditor : CompositeDrawable
         {
             background = new Box
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             },
             new PagesTimeLine
             {
@@ -28,7 +28,7 @@ public partial class PageEditor : CompositeDrawable
                 Origin = Anchor.BottomCentre,
                 RelativeSizeAxes = Axes.X,
                 Height = 100,
-            }
+            },
         };
     }
 

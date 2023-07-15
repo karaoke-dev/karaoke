@@ -62,11 +62,11 @@ public partial class KaraokeSettings : OsuScreen
                     previewArea = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
+                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH },
                     },
-                    new KaraokeVersionManager().With(x => x.Show())
-                }
-            }
+                    new KaraokeVersionManager().With(x => x.Show()),
+                },
+            },
         };
 
         // wait for a period until all children loaded.
@@ -93,7 +93,7 @@ public partial class KaraokeSettings : OsuScreen
 
             previewArea.Child = new DelayedLoadWrapper(preview)
             {
-                RelativeSizeAxes = Axes.Both
+                RelativeSizeAxes = Axes.Both,
             };
         }, true);
     }

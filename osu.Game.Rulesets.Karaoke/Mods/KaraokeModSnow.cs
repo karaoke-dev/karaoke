@@ -101,7 +101,7 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
                     Size = new Vector2(50, 50),
                     Scale = new Vector2(1, 1) * SnowSize,
                     Alpha = currentAlpha,
-                    HorizontalSpeed = RNG.Next(-100, 100) + WingAffection * 10
+                    HorizontalSpeed = RNG.Next(-100, 100) + WingAffection * 10,
                 };
                 Add(newFlake);
             }

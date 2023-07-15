@@ -23,7 +23,7 @@ public partial class EditBodyPiece : Container
         {
             RelativeSizeAxes = Axes.Both,
             AlwaysPresent = true,
-            Alpha = 0
+            Alpha = 0,
         };
     }
 }

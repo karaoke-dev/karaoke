@@ -35,7 +35,7 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
             PageEditorEditMode.Generate => new Selection(),
             PageEditorEditMode.Edit => new Selection(),
             PageEditorEditMode.Verify => new PageEditorVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override LocalisableString GetSelectionText(PageEditorEditMode mode) =>
@@ -44,7 +44,7 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
             PageEditorEditMode.Generate => "Generate",
             PageEditorEditMode.Edit => "Edit",
             PageEditorEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override Color4 GetSelectionColour(OsuColour colours, PageEditorEditMode mode, bool active) =>
@@ -53,7 +53,7 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
             PageEditorEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
             PageEditorEditMode.Edit => active ? colours.Red : colours.RedDarker,
             PageEditorEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     protected override DescriptionFormat GetSelectionDescription(PageEditorEditMode mode) =>
@@ -62,7 +62,7 @@ public partial class PageEditorEditModeSection : EditModeSection<PageEditorEditM
             PageEditorEditMode.Generate => "Generate the pages by lyric.",
             PageEditorEditMode.Edit => "Batch edit page in here.",
             PageEditorEditMode.Verify => "Check if have any page issues.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
 
     private partial class PageEditorVerifySelection : VerifySelection

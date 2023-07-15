@@ -45,14 +45,14 @@ public class KaraokeLegacyBeatmapEncoderTest
                         {
                             StartIndex = 0,
                             EndIndex = 0,
-                            Text = "か"
+                            Text = "か",
                         },
                         new RubyTag
                         {
                             StartIndex = 2,
                             EndIndex = 2,
-                            Text = "お"
-                        }
+                            Text = "お",
+                        },
                     },
                     RomajiTags = new[]
                     {
@@ -60,17 +60,17 @@ public class KaraokeLegacyBeatmapEncoderTest
                         {
                             StartIndex = 1,
                             EndIndex = 1,
-                            Text = "ra"
+                            Text = "ra",
                         },
                         new RomajiTag
                         {
                             StartIndex = 3,
                             EndIndex = 3,
-                            Text = "ke"
-                        }
+                            Text = "ke",
+                        },
                     },
-                }
-            }
+                },
+            },
         };
 
         using var ms = new MemoryStream();

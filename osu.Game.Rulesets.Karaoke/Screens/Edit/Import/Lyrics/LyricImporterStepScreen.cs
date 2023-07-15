@@ -46,8 +46,8 @@ public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporte
                 Origin = Anchor.Centre,
                 Width = 240,
                 Text = $"{Title}, Click to next step.",
-                Action = Complete
-            }
+                Action = Complete,
+            },
         };
     }
 

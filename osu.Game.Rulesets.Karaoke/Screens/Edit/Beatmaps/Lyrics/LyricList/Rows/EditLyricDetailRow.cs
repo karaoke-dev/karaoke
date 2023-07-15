@@ -21,7 +21,7 @@ public partial class EditLyricDetailRow : DetailRow
         {
             Anchor = Anchor.CentreRight,
             Origin = Anchor.CentreRight,
-            Margin = new MarginPadding { Right = 10 }
+            Margin = new MarginPadding { Right = 10 },
         };
     }
 

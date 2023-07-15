@@ -74,7 +74,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
         {
             ReferenceLyricId = referenced_lyric_id,
             Display = true,
-            Tone = new Tone(3)
+            Tone = new Tone(3),
         });
 
         TriggerHandlerChanged(c => c.ChangeDisplayState(false));
@@ -96,8 +96,8 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
             ReferenceLyric = new Lyric
             {
                 ReferenceLyric = new Lyric(),
-                ReferenceLyricConfig = new ReferenceLyricConfig()
-            }
+                ReferenceLyricConfig = new ReferenceLyricConfig(),
+            },
         });
 
         TriggerHandlerChangedWithChangeForbiddenException(c => c.ChangeText("からおけ"));
@@ -110,7 +110,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
         {
             ReferenceLyricId = referenced_lyric_id,
             Display = true,
-            Tone = new Tone(3)
+            Tone = new Tone(3),
         });
 
         TriggerHandlerChanged(c => c.OffsetTone(new Tone(-3)));
@@ -129,7 +129,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
         {
             ReferenceLyricId = referenced_lyric_id,
             Display = true,
-            Tone = new Tone(3)
+            Tone = new Tone(3),
         });
 
         // offset value should not be zero.
@@ -144,7 +144,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
             editorBeatmap.Add(new Lyric
             {
-                Text = "Referenced lyric"
+                Text = "Referenced lyric",
             }.ChangeId(referenced_lyric_id));
         });
     }

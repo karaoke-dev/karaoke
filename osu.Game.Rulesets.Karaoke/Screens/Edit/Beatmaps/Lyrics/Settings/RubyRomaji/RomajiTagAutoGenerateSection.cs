@@ -29,7 +29,7 @@ public partial class RomajiTagAutoGenerateSection : TextTagAutoGenerateSection
                 setting switch
                 {
                     KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig => "Japanese",
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    _ => throw new ArgumentOutOfRangeException(nameof(setting)),
                 };
         }
     }

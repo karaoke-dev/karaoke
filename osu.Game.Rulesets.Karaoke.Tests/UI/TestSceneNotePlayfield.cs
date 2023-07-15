@@ -59,9 +59,9 @@ public partial class TestSceneNotePlayfield : OsuTestScene
                 },
                 new[]
                 {
-                    createColumn(ScrollingDirection.Right, COLUMNS)
-                }
-            }
+                    createColumn(ScrollingDirection.Right, COLUMNS),
+                },
+            },
         };
     }
 
@@ -119,7 +119,7 @@ public partial class TestSceneNotePlayfield : OsuTestScene
                 Tone = new Tone { Scale = tone },
                 ReferenceLyricId = referencedLyric.ID,
                 ReferenceLyric = referencedLyric,
-                ReferenceTimeTagIndex = 0
+                ReferenceTimeTagIndex = 0,
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
@@ -173,7 +173,7 @@ public partial class TestSceneNotePlayfield : OsuTestScene
             Padding = new MarginPadding(20),
             RelativeSizeAxes = Axes.Both,
             TimeRange = 2000,
-            Child = playfield
+            Child = playfield,
         };
     }
 

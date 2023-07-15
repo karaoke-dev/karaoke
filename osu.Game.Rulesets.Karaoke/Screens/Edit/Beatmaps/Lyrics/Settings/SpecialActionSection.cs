@@ -29,7 +29,7 @@ public abstract partial class SpecialActionSection<TAction> : EditorSection wher
                 Label = SwitchActionTitle,
                 Description = SwitchActionDescription,
                 Current = bindableModeSpecialAction,
-            }
+            },
         };
 
         bindableModeSpecialAction.BindValueChanged(e =>

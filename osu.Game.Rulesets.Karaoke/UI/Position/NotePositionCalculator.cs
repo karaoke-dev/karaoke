@@ -38,7 +38,7 @@ public class NotePositionCalculator
     public Tone MaxTone =>
         new()
         {
-            Scale = columns / 2
+            Scale = columns / 2,
         };
 
     public Tone MinTone => -MaxTone;

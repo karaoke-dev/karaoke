@@ -39,7 +39,7 @@ public partial class StageSettings : EditorSettings
         StageEditorEditCategory.Layout => createSectionsForLayoutCategory(bindableMode.Value),
         StageEditorEditCategory.Timing => createSectionsForTimingCategory(bindableMode.Value),
         StageEditorEditCategory.Style => createSectionsForStyleCategory(bindableMode.Value),
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 
     private static IReadOnlyList<Drawable> createSectionsForLayoutCategory(StageEditorEditMode editMode) => editMode switch
@@ -51,9 +51,9 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(StageEditorEditCategory.Layout),
-            new StageEditorIssueSection(StageEditorEditCategory.Layout)
+            new StageEditorIssueSection(StageEditorEditCategory.Layout),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 
     private static IReadOnlyList<Drawable> createSectionsForTimingCategory(StageEditorEditMode editMode) => editMode switch
@@ -66,9 +66,9 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(StageEditorEditCategory.Timing),
-            new StageEditorIssueSection(StageEditorEditCategory.Timing)
+            new StageEditorIssueSection(StageEditorEditCategory.Timing),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 
     private static IReadOnlyList<Drawable> createSectionsForStyleCategory(StageEditorEditMode editMode) => editMode switch
@@ -80,8 +80,8 @@ public partial class StageSettings : EditorSettings
         StageEditorEditMode.Verify => new Drawable[]
         {
             new StageEditorEditModeSection(StageEditorEditCategory.Style),
-            new StageEditorIssueSection(StageEditorEditCategory.Style)
+            new StageEditorIssueSection(StageEditorEditCategory.Style),
         },
-        _ => throw new ArgumentOutOfRangeException()
+        _ => throw new ArgumentOutOfRangeException(),
     };
 }

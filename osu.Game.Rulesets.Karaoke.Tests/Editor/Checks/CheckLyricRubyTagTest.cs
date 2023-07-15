@@ -19,7 +19,7 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         var lyric = new Lyric
         {
             Text = text,
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
 
         AssertOk(lyric);
@@ -32,7 +32,7 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         var lyric = new Lyric
         {
             Text = text,
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
 
         AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyOutOfRange>(lyric);
@@ -45,7 +45,7 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         var lyric = new Lyric
         {
             Text = text,
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
 
         AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyOverlapping>(lyric);
@@ -59,7 +59,7 @@ public class CheckLyricRubyTagTest : HitObjectCheckTest<Lyric, CheckLyricRubyTag
         var lyric = new Lyric
         {
             Text = text,
-            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
+            RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
         };
 
         AssertNotOk<LyricRubyTagIssue, IssueTemplateLyricRubyEmptyText>(lyric);

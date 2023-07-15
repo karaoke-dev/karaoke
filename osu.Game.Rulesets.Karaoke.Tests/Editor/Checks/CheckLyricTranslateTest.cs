@@ -22,8 +22,8 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
         {
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo("Ja-jp"), text }
-            }
+                { new CultureInfo("Ja-jp"), text },
+            },
         };
 
         AssertOk(lyric);
@@ -39,8 +39,8 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
         {
             Translates = new Dictionary<CultureInfo, string>
             {
-                { new CultureInfo("Ja-jp"), text }
-            }
+                { new CultureInfo("Ja-jp"), text },
+            },
         };
 
         AssertNotOk<LyricIssue, IssueTemplateLyricTranslationNoText>(lyric);

@@ -18,7 +18,7 @@ public class KaraokeLyricHitWindows : KaraokeHitWindows
         result switch
         {
             DEFAULT_HIT_RESULT => true,
-            _ => false
+            _ => false,
         };
 
     protected override DifficultyRange[] GetRanges() => lyric_ranges;

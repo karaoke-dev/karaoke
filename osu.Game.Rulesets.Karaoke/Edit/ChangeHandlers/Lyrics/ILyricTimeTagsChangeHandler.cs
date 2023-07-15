@@ -28,7 +28,7 @@ public enum ShiftingDirection
 {
     Left,
 
-    Right
+    Right,
 }
 
 public enum ShiftingType

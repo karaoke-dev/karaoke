@@ -15,7 +15,7 @@ public partial class TestSceneKaraokeModFun : KaraokeModTestScene
         Mod = new KaraokeModSnow(),
         Autoplay = false,
         Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-        PassCondition = () => true
+        PassCondition = () => true,
     });
 
     [Test]
@@ -24,6 +24,6 @@ public partial class TestSceneKaraokeModFun : KaraokeModTestScene
         Mod = new KaraokeModWindowsUpdate(),
         Autoplay = false,
         Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
-        PassCondition = () => true
+        PassCondition = () => true,
     });
 }

@@ -22,14 +22,14 @@ public partial class TimeTagCreateConfigSection : EditorSection
         {
             new TimeTagCreateConfigSubsection
             {
-                Current = lyricEditorConfigManager.GetBindable<CreateTimeTagEditMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode)
+                Current = lyricEditorConfigManager.GetBindable<CreateTimeTagEditMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode),
             },
             new LabelledEnumDropdown<MovingTimeTagCaretMode>
             {
                 Label = "Create tag mode",
                 Description = "Only create start/end time-tag or both.",
                 Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode),
-            }
+            },
         };
     }
 }

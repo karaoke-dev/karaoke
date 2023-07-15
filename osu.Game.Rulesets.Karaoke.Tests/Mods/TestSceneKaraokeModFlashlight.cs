@@ -26,6 +26,6 @@ public partial class TestSceneKaraokeModFlashlight : KaraokeModTestScene
 
             // Should has at least one flashlight
             return drawableRuleset.KeyBindingInputManager.ChildrenOfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
-        }
+        },
     });
 }

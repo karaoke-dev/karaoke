@@ -139,7 +139,7 @@ public abstract partial class HitObjectChangeHandler<THitObject> : Component whe
         {
             Lyric => false,
             Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
-            _ => throw new InvalidCastException()
+            _ => throw new InvalidCastException(),
         };
     }
 

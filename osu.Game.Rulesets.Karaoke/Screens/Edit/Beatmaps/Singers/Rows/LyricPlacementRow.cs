@@ -53,9 +53,9 @@ public abstract partial class LyricPlacementColumn : CompositeDrawable
                             Colour = colourProvider.Dark1,
                         },
                         CreateTimeLinePart(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
     }
 

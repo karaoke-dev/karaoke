@@ -9,5 +9,5 @@ public enum RomajiTagEditMode
 
     Edit,
 
-    Verify
+    Verify,
 }

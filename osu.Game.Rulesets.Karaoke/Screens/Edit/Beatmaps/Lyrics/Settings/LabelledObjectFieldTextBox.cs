@@ -78,7 +78,7 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
         {
             if (selected)
                 TriggerSelect(item);
-        }
+        },
     };
 
     private void focus()

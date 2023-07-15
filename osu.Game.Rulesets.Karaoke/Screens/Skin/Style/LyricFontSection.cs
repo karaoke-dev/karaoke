@@ -42,8 +42,8 @@ internal partial class LyricFontSection : StyleSection
                 {
                     Value = 30,
                     MinValue = 10,
-                    MaxValue = 70
-                }
+                    MaxValue = 70,
+                },
             },
             borderSliderBar = new LabelledRealTimeSliderBar<int>
             {
@@ -53,9 +53,9 @@ internal partial class LyricFontSection : StyleSection
                 {
                     Value = 10,
                     MinValue = 0,
-                    MaxValue = 20
-                }
-            }
+                    MaxValue = 20,
+                },
+            },
         };
     }
 
@@ -71,5 +71,5 @@ public enum Font
 
     F002,
 
-    F003
+    F003,
 }

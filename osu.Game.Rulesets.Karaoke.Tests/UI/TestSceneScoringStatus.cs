@@ -31,7 +31,7 @@ public partial class TestSceneScoringStatus : OsuTestScene
             Child = new ScoringStatus(mode)
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre
+                Origin = Anchor.Centre,
             };
         });
     }

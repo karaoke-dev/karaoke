@@ -42,8 +42,8 @@ public abstract partial class Section : Container
                 AutoSizeAxes = Axes.Y,
                 Spacing = new Vector2(SECTION_SPACING),
                 Direction = FillDirection.Vertical,
-                Margin = new MarginPadding { Top = 30 }
-            }
+                Margin = new MarginPadding { Top = 30 },
+            },
         };
     }
 }

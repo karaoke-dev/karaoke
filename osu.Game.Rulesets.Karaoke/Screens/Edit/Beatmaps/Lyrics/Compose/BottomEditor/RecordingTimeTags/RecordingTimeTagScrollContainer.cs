@@ -83,7 +83,7 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
                 Colour = colours.Red,
                 X = 5,
                 Font = OsuFont.GetFont(size: 16, fixedWidth: true),
-            }
+            },
         });
     }
 

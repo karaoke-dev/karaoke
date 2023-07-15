@@ -121,13 +121,13 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
                                             Name = "English name",
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                             RelativeSizeAxes = Axes.X,
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
-                }
+                },
             };
 
             bindableOrder.BindValueChanged(_ =>

@@ -79,7 +79,7 @@ public partial class ApplySelectingArea : CompositeDrawable
                             Action = () =>
                             {
                                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Apply);
-                            }
+                            },
                         },
                         Empty(),
                         new ActionButton
@@ -88,7 +88,7 @@ public partial class ApplySelectingArea : CompositeDrawable
                             Action = () =>
                             {
                                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
-                            }
+                            },
                         },
                         Empty(),
                         new ActionButton
@@ -98,12 +98,12 @@ public partial class ApplySelectingArea : CompositeDrawable
                             Action = () =>
                             {
                                 // todo : implement
-                            }
+                            },
                         },
                         Empty(),
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         selecting.BindTo(lyricSelectionState.Selecting);
@@ -155,7 +155,7 @@ public partial class ApplySelectingArea : CompositeDrawable
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                }
+                },
             };
         }
 

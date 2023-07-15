@@ -80,7 +80,7 @@ public partial class PagesSection : EditorSection
                     double currentTime = clock.CurrentTime;
                     beatmapPagesChangeHandler.Add(new Page
                     {
-                        Time = currentTime
+                        Time = currentTime,
                     });
                 };
             }

@@ -67,7 +67,7 @@ public abstract partial class Row : CompositeDrawable
                 background = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.9f
+                    Alpha = 0.9f,
                 },
                 new GridContainer
                 {
@@ -77,10 +77,10 @@ public abstract partial class Row : CompositeDrawable
                     RowDimensions = new[] { rowDimensions },
                     Content = new[]
                     {
-                        columns.ToArray()
-                    }
-                }
-            }
+                        columns.ToArray(),
+                    },
+                },
+            },
         };
 
         bindableMode.BindValueChanged(_ =>
@@ -156,7 +156,7 @@ public abstract partial class Row : CompositeDrawable
     {
         Idle,
         Hover,
-        Focus
+        Focus,
     }
 
     public partial class SelectArea : CompositeDrawable
@@ -187,7 +187,7 @@ public abstract partial class Row : CompositeDrawable
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                }
+                },
             };
         }
 

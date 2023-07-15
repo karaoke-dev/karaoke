@@ -22,7 +22,7 @@ public class KaraokeNoteJudgement : KaraokeJudgement
             HitResult.Good => 0.035,
             HitResult.Great => 0.055,
             HitResult.Perfect => 0.065,
-            _ => 0
+            _ => 0,
         };
     }
 }
