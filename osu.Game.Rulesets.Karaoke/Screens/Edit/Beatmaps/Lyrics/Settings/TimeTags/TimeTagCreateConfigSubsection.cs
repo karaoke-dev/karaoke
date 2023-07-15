@@ -188,8 +188,14 @@ public partial class TimeTagCreateConfigSubsection : FillFlowContainer, IHasCurr
                             },
                         }
                     },
-                    { "create_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateStartTimeTag, KaraokeEditAction.CreateEndTimeTag } } },
-                    { "remove_time_tag", new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag } } },
+                    {
+                        "create_time_tag",
+                        new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.CreateStartTimeTag, KaraokeEditAction.CreateEndTimeTag } }
+                    },
+                    {
+                        "remove_time_tag",
+                        new InputKeyDescriptionAction { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.RemoveStartTimeTag, KaraokeEditAction.RemoveEndTimeTag } }
+                    },
                 },
             },
             _ => throw new InvalidOperationException(nameof(mode)),

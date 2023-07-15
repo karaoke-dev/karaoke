@@ -56,7 +56,8 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
 
     public abstract IEnumerable<Issue> CheckStageInfo(TStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects);
 
-    private IEnumerable<Issue> checkElementCategory<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects, int minimumRequiredElements)
+    private IEnumerable<Issue> checkElementCategory<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects,
+                                                                               int minimumRequiredElements)
         where TStageElement : StageElement, IComparable<TStageElement>, new()
         where THitObject : KaraokeHitObject, IHasPrimaryKey
     {
