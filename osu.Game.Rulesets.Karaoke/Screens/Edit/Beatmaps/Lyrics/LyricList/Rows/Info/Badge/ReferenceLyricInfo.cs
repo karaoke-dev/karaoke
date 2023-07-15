@@ -46,12 +46,10 @@ public partial class ReferenceLyricInfo : SubInfo
 
     protected override bool OnClick(ClickEvent e)
     {
-        if (bindableReferenceLyric.Value != null)
-        {
-            lyricCaretState.MoveCaretToTargetPosition(bindableReferenceLyric.Value);
-            return true;
-        }
+        if (bindableReferenceLyric.Value == null)
+            return base.OnClick(e);
 
-        return base.OnClick(e);
+        lyricCaretState.MoveCaretToTargetPosition(bindableReferenceLyric.Value);
+        return true;
     }
 }
