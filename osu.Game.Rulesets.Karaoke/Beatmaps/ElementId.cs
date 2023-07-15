@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 /// </summary>
 public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatable<ElementId>
 {
-    public static readonly ElementId Empty;
+    public static ElementId Empty => default;
 
     private const int length = 7;
 
