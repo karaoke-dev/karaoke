@@ -22,7 +22,7 @@ public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatab
     {
         if (string.IsNullOrEmpty(id))
         {
-            throw new ArgumentException($"id should not be empty", nameof(id));
+            throw new ArgumentException("id should not be empty", nameof(id));
         }
 
         if (id.Length != length)
@@ -32,7 +32,7 @@ public readonly struct ElementId : IComparable, IComparable<ElementId>, IEquatab
 
         if (!checkFormat(id))
         {
-            throw new ArgumentException($"id format is not correct", nameof(id));
+            throw new ArgumentException("id format is not correct", nameof(id));
         }
 
         this.id = id;
