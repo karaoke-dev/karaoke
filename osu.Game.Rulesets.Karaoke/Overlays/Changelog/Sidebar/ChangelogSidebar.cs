@@ -39,7 +39,7 @@ public partial class ChangelogSidebar : CompositeDrawable
             new Box
             {
                 RelativeSizeAxes = Axes.Y,
-                Width = OsuScrollContainer.SCROLL_BAR_HEIGHT,
+                Width = OsuScrollContainer.SCROLL_BAR_WIDTH,
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
                 Colour = colourProvider.Background3,

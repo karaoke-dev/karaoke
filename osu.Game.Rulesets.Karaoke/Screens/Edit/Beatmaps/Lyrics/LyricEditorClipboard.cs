@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
 {
     [Resolved]
-    private GameHost host { get; set; } = null!;
+    private Clipboard clipboard { get; set; } = null!;
 
     [Resolved]
     private OnScreenDisplay? onScreenDisplay { get; set; }
@@ -412,7 +412,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
         var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
         string text = JsonConvert.SerializeObject(obj, settings);
 
-        host.GetClipboard()?.SetText(text);
+        clipboard.SetText(text);
     }
 
     private void saveObjectToTheClipboardContent<T>(T obj)
