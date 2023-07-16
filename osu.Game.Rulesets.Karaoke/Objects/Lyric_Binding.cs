@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
@@ -18,6 +19,31 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// </summary>
 public partial class Lyric
 {
+    [JsonIgnore]
+    public IBindable<int> TimeTagsVersion => timeTagsVersion;
+
+    private readonly Bindable<int> timeTagsVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> RubyTagsVersion => rubyTagsVersion;
+
+    private readonly Bindable<int> rubyTagsVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
+
+    private readonly Bindable<int> romajiTagsVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
+
+    private readonly Bindable<int> referenceLyricConfigVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
+
+    private readonly Bindable<int> lyricPropertyWritableVersion = new();
+
     private void initInternalBindingEvent()
     {
         TimeTagsBindable.CollectionChanged += (_, args) =>
