@@ -23,7 +23,7 @@ public abstract partial class TimeTagScrollContainer : BindableScrollContainer
 {
     private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
 
-    private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
+    private readonly IBindable<int> timeTagsTimingVersion = new Bindable<int>();
 
     [Cached]
     private readonly BindableList<TimeTag> timeTagsBindable = new();
@@ -42,19 +42,19 @@ public abstract partial class TimeTagScrollContainer : BindableScrollContainer
     {
         RelativeSizeAxes = Axes.X;
 
-        timeTagsVersion.BindValueChanged(_ => updateTimeRange());
+        timeTagsTimingVersion.BindValueChanged(_ => updateTimeRange());
         timeTagsBindable.BindCollectionChanged((_, _) => updateTimeRange());
 
         bindableFocusedLyric.BindValueChanged(e =>
         {
-            timeTagsVersion.UnbindBindings();
+            timeTagsTimingVersion.UnbindBindings();
             timeTagsBindable.UnbindBindings();
 
             var lyric = e.NewValue;
             if (lyric == null)
                 return;
 
-            timeTagsVersion.BindTo(lyric.TimeTagsVersion);
+            timeTagsTimingVersion.BindTo(lyric.TimeTagsTimingVersion);
             timeTagsBindable.BindTo(lyric.TimeTagsBindable);
 
             Schedule(() =>

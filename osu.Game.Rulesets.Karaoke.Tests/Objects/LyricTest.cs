@@ -52,7 +52,7 @@ public class LyricTest
         Assert.AreNotSame(clonedLyric.TextBindable, lyric.TextBindable);
         Assert.AreEqual(clonedLyric.Text, lyric.Text);
 
-        Assert.AreNotSame(clonedLyric.TimeTagsVersion, lyric.TimeTagsVersion);
+        Assert.AreNotSame(clonedLyric.TimeTagsTimingVersion, lyric.TimeTagsTimingVersion);
         Assert.AreNotSame(clonedLyric.TimeTagsBindable, lyric.TimeTagsBindable);
         TimeTagAssert.ArePropertyEqual(clonedLyric.TimeTags, lyric.TimeTags);
 
@@ -202,7 +202,7 @@ public class LyricTest
         TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
 
         // and because there's no change inside the tag, so there's version change.
-        Assert.AreEqual(0, lyric.TimeTagsVersion.Value);
+        Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
         Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
         Assert.AreEqual(0, lyric.RomajiTagsVersion.Value);
 
@@ -217,7 +217,7 @@ public class LyricTest
         TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
 
         // and note that because only one property is different, so version should change once.
-        Assert.AreEqual(1, lyric.TimeTagsVersion.Value);
+        Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
         Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
         Assert.AreEqual(1, lyric.RomajiTagsVersion.Value);
     }

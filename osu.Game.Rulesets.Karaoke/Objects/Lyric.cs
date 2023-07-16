@@ -46,11 +46,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public IBindable<int> TimeTagsVersion => timeTagsVersion;
-
-    private readonly Bindable<int> timeTagsVersion = new();
-
-    [JsonIgnore]
     public readonly BindableList<TimeTag> TimeTagsBindable = new();
 
     /// <summary>
@@ -67,11 +62,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public IBindable<int> RubyTagsVersion => rubyTagsVersion;
-
-    private readonly Bindable<int> rubyTagsVersion = new();
-
-    [JsonIgnore]
     public readonly BindableList<RubyTag> RubyTagsBindable = new();
 
     /// <summary>
@@ -86,11 +76,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
             RubyTagsBindable.AddRange(value);
         }
     }
-
-    [JsonIgnore]
-    public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
-
-    private readonly Bindable<int> romajiTagsVersion = new();
 
     [JsonIgnore]
     public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
@@ -189,11 +174,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
-
-    private readonly Bindable<int> referenceLyricConfigVersion = new();
-
-    [JsonIgnore]
     public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
 
     /// <summary>
@@ -204,11 +184,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
         get => ReferenceLyricConfigBindable.Value;
         set => ReferenceLyricConfigBindable.Value = value;
     }
-
-    [JsonIgnore]
-    public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
-
-    private readonly Bindable<int> lyricPropertyWritableVersion = new();
 
     public Lyric()
     {

@@ -11,13 +11,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.
 
 public partial class TimeTagInfo : SubInfo
 {
-    private readonly IBindable<int> bindableTimeTagsVersion;
+    private readonly IBindable<int> bindableTimeTagsTimingVersion;
     private readonly IBindableList<TimeTag> bindableTimeTags;
 
     public TimeTagInfo(Lyric lyric)
         : base(lyric)
     {
-        bindableTimeTagsVersion = lyric.TimeTagsVersion.GetBoundCopy();
+        bindableTimeTagsTimingVersion = lyric.TimeTagsTimingVersion.GetBoundCopy();
         bindableTimeTags = lyric.TimeTagsBindable.GetBoundCopy();
     }
 
@@ -26,7 +26,7 @@ public partial class TimeTagInfo : SubInfo
     {
         BadgeColour = colours.Green;
 
-        bindableTimeTagsVersion.BindValueChanged(_ => updateBadgeText());
+        bindableTimeTagsTimingVersion.BindValueChanged(_ => updateBadgeText());
         bindableTimeTags.BindCollectionChanged((_, _) => updateBadgeText());
 
         updateBadgeText();

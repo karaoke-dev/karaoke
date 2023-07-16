@@ -25,16 +25,16 @@ public partial class Note
         ReferenceLyricBindable.ValueChanged += e =>
         {
             if (e.OldValue != null)
-                e.OldValue.TimeTagsVersion.ValueChanged -= timeTagVersionChanged;
+                e.OldValue.TimeTagsTimingVersion.ValueChanged -= timeTagsTimingVersionChanged;
 
             if (e.NewValue != null)
-                e.NewValue.TimeTagsVersion.ValueChanged += timeTagVersionChanged;
+                e.NewValue.TimeTagsTimingVersion.ValueChanged += timeTagsTimingVersionChanged;
 
             syncStartTimeAndDurationFromTimeTag();
             syncReferenceLyricSingers();
         };
 
-        void timeTagVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
+        void timeTagsTimingVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
     }
 
     private void syncStartTimeAndDurationFromTimeTag()

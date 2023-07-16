@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
@@ -18,6 +19,36 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// </summary>
 public partial class Lyric
 {
+    [JsonIgnore]
+    public IBindable<int> TimeTagsTimingVersion => timeTagsTimingVersion;
+
+    private readonly Bindable<int> timeTagsTimingVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> TimeTagsRomajiVersion => timeTagsRomajiVersion;
+
+    private readonly Bindable<int> timeTagsRomajiVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> RubyTagsVersion => rubyTagsVersion;
+
+    private readonly Bindable<int> rubyTagsVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
+
+    private readonly Bindable<int> romajiTagsVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
+
+    private readonly Bindable<int> referenceLyricConfigVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> LyricPropertyWritableVersion => lyricPropertyWritableVersion;
+
+    private readonly Bindable<int> lyricPropertyWritableVersion = new();
+
     private void initInternalBindingEvent()
     {
         TimeTagsBindable.CollectionChanged += (_, args) =>
@@ -28,7 +59,11 @@ public partial class Lyric
                     Debug.Assert(args.NewItems != null);
 
                     foreach (var c in args.NewItems.Cast<TimeTag>())
-                        c.Changed += invalidate;
+                    {
+                        c.TimingChanged += timingInvalidate;
+                        c.RomajiChanged += romajiInvalidate;
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -36,16 +71,21 @@ public partial class Lyric
                     Debug.Assert(args.OldItems != null);
 
                     foreach (var c in args.OldItems.Cast<TimeTag>())
-                        c.Changed -= invalidate;
+                    {
+                        c.TimingChanged -= timingInvalidate;
+                        c.RomajiChanged -= romajiInvalidate;
+                    }
+
                     break;
             }
 
             updateLyricTime();
 
-            void invalidate() => timeTagsVersion.Value++;
+            void timingInvalidate() => timeTagsTimingVersion.Value++;
+            void romajiInvalidate() => timeTagsRomajiVersion.Value++;
         };
 
-        TimeTagsVersion.ValueChanged += _ =>
+        TimeTagsTimingVersion.ValueChanged += _ =>
         {
             updateLyricTime();
         };
@@ -168,7 +208,7 @@ public partial class Lyric
                 }).ToArray();
             });
 
-            bindValueChange(e, l => l.TimeTagsVersion, (_, config) =>
+            bindValueChange(e, l => l.TimeTagsTimingVersion, (_, config) =>
             {
                 if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncTimeTagProperty)
                     return;
