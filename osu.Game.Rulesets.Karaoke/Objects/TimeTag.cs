@@ -14,14 +14,21 @@ public class TimeTag : IDeepCloneable<TimeTag>
     /// <summary>
     /// Invoked when <see cref="Time"/> of this <see cref="TimeTag"/> is changed.
     /// </summary>
-    public event Action? Changed;
+    public event Action? TimingChanged;
+
+    /// <summary>
+    /// Invoked when <see cref="InitialRomaji"/> or <see cref="RomajiText"/> of this <see cref="TimeTag"/> is changed.
+    /// </summary>
+    public event Action? RomajiChanged;
 
     public TimeTag(TextIndex index, double? time = null)
     {
         Index = index;
         Time = time;
 
-        TimeBindable.ValueChanged += _ => Changed?.Invoke();
+        TimeBindable.ValueChanged += _ => TimingChanged?.Invoke();
+        InitialRomajiBindable.ValueChanged += _ => RomajiChanged?.Invoke();
+        RomajiTextBindable.ValueChanged += _ => RomajiChanged?.Invoke();
     }
 
     /// <summary>

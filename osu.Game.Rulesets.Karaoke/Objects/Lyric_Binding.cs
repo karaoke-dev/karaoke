@@ -54,7 +54,7 @@ public partial class Lyric
                     Debug.Assert(args.NewItems != null);
 
                     foreach (var c in args.NewItems.Cast<TimeTag>())
-                        c.Changed += invalidate;
+                        c.TimingChanged += invalidate;
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -62,7 +62,7 @@ public partial class Lyric
                     Debug.Assert(args.OldItems != null);
 
                     foreach (var c in args.OldItems.Cast<TimeTag>())
-                        c.Changed -= invalidate;
+                        c.TimingChanged -= invalidate;
                     break;
             }
 
