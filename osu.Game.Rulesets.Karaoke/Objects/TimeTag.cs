@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 public class TimeTag : IDeepCloneable<TimeTag>
 {
     /// <summary>
-    /// Invoked when any property of this <see cref="RubyTag"/> is changed.
+    /// Invoked when <see cref="Time"/> of this <see cref="TimeTag"/> is changed.
     /// </summary>
     public event Action? Changed;
 
