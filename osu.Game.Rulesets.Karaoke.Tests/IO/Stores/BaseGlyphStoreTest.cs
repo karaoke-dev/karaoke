@@ -75,8 +75,8 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     [TestCase('#')]
     public void CompareGetCharacterGlyphWithOrigin(char c)
     {
-        var expected = GlyphStore.Get(c);
-        var actual = CustomizeGlyphStore.Get(c);
+        var expected = GlyphStore.Get(c)!;
+        var actual = CustomizeGlyphStore.Get(c)!;
 
         // because get character glyph should make sure that this glyph store contains char, so will not be null.
         Assert.IsNotNull(expected);
