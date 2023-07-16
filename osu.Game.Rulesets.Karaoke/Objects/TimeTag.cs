@@ -42,6 +42,40 @@ public class TimeTag : IDeepCloneable<TimeTag>
         set => TimeBindable.Value = value;
     }
 
+    [JsonIgnore]
+    public readonly Bindable<bool> InitialRomajiBindable = new();
+
+    /// <summary>
+    /// Mark if this romaji is the first letter of the romaji word.
+    /// </summary>
+    /// <example>
+    /// There's the Japanese lyric:
+    /// 枯れた世界に輝く
+    /// There's the Romaji:
+    /// kareta sekai ni kagayaku.
+    /// And it will be separated as:
+    /// ka|re|ta se|kai ni ka|ga|ya|ku.
+    /// If this is the first or(4th) time-tag, then this value should be true.
+    /// If this ts the 2th or 3th time-tag, then this value should be false.
+    /// </example>
+    public bool InitialRomaji
+    {
+        get => InitialRomajiBindable.Value;
+        set => InitialRomajiBindable.Value = value;
+    }
+
+    [JsonIgnore]
+    public readonly Bindable<string?> RomajiTextBindable = new();
+
+    /// <summary>
+    /// Romaji
+    /// </summary>
+    public string? RomajiText
+    {
+        get => RomajiTextBindable.Value;
+        set => RomajiTextBindable.Value = value;
+    }
+
     public TimeTag DeepClone()
     {
         return new TimeTag(Index, Time);
