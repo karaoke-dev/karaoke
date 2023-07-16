@@ -78,7 +78,7 @@ public partial class TestSceneOverlayColourProvider : OsuTestScene
     private partial class PreviewColourDrawable : CompositeDrawable
     {
         [Resolved]
-        private GameHost host { get; set; } = null!;
+        private Clipboard clipboard { get; set; } = null!;
 
         private readonly Color4 color;
 
@@ -105,7 +105,7 @@ public partial class TestSceneOverlayColourProvider : OsuTestScene
 
         protected override bool OnClick(ClickEvent e)
         {
-            host.GetClipboard()?.SetText(color.ToHex());
+            clipboard.SetText(color.ToHex());
             return base.OnClick(e);
         }
     }
