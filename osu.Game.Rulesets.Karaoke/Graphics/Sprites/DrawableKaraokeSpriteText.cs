@@ -15,7 +15,7 @@ public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<
     private const int whole_chunk_index = -1;
 
     private readonly IBindable<string> textBindable = new Bindable<string>();
-    private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
+    private readonly IBindable<int> timeTagsTimingVersion = new Bindable<int>();
     private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
     private readonly IBindable<int> rubyTagsVersion = new Bindable<int>();
     private readonly IBindableList<RubyTag> rubyTagsBindable = new BindableList<RubyTag>();
@@ -29,7 +29,7 @@ public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<
         this.chunkIndex = chunkIndex;
 
         textBindable.BindValueChanged(_ => UpdateText(), true);
-        timeTagsVersion.BindValueChanged(_ => UpdateTimeTags());
+        timeTagsTimingVersion.BindValueChanged(_ => UpdateTimeTags());
         timeTagsBindable.BindCollectionChanged((_, _) => UpdateTimeTags());
         rubyTagsVersion.BindValueChanged(_ => UpdateRubies());
         rubyTagsBindable.BindCollectionChanged((_, _) => UpdateRubies());
@@ -37,7 +37,7 @@ public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<
         romajiTagsBindable.BindCollectionChanged((_, _) => UpdateRomajies());
 
         textBindable.BindTo(lyric.TextBindable);
-        timeTagsVersion.BindTo(lyric.TimeTagsVersion);
+        timeTagsTimingVersion.BindTo(lyric.TimeTagsTimingVersion);
         timeTagsBindable.BindTo(lyric.TimeTagsBindable);
         rubyTagsVersion.BindTo(lyric.RubyTagsVersion);
         rubyTagsBindable.BindTo(lyric.RubyTagsBindable);

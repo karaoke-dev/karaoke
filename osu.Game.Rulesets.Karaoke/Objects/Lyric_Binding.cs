@@ -20,9 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 public partial class Lyric
 {
     [JsonIgnore]
-    public IBindable<int> TimeTagsVersion => timeTagsVersion;
+    public IBindable<int> TimeTagsTimingVersion => timeTagsTimingVersion;
 
-    private readonly Bindable<int> timeTagsVersion = new();
+    private readonly Bindable<int> timeTagsTimingVersion = new();
+
+    [JsonIgnore]
+    public IBindable<int> TimeTagsRomajiVersion => timeTagsRomajiVersion;
+
+    private readonly Bindable<int> timeTagsRomajiVersion = new();
 
     [JsonIgnore]
     public IBindable<int> RubyTagsVersion => rubyTagsVersion;
@@ -54,7 +59,11 @@ public partial class Lyric
                     Debug.Assert(args.NewItems != null);
 
                     foreach (var c in args.NewItems.Cast<TimeTag>())
-                        c.TimingChanged += invalidate;
+                    {
+                        c.TimingChanged += timingInvalidate;
+                        c.RomajiChanged += romajiInvalidate;
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
@@ -62,16 +71,21 @@ public partial class Lyric
                     Debug.Assert(args.OldItems != null);
 
                     foreach (var c in args.OldItems.Cast<TimeTag>())
-                        c.TimingChanged -= invalidate;
+                    {
+                        c.TimingChanged -= timingInvalidate;
+                        c.RomajiChanged -= romajiInvalidate;
+                    }
+
                     break;
             }
 
             updateLyricTime();
 
-            void invalidate() => timeTagsVersion.Value++;
+            void timingInvalidate() => timeTagsTimingVersion.Value++;
+            void romajiInvalidate() => timeTagsRomajiVersion.Value++;
         };
 
-        TimeTagsVersion.ValueChanged += _ =>
+        TimeTagsTimingVersion.ValueChanged += _ =>
         {
             updateLyricTime();
         };
@@ -194,7 +208,7 @@ public partial class Lyric
                 }).ToArray();
             });
 
-            bindValueChange(e, l => l.TimeTagsVersion, (_, config) =>
+            bindValueChange(e, l => l.TimeTagsTimingVersion, (_, config) =>
             {
                 if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncTimeTagProperty)
                     return;
