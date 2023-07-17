@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
@@ -29,12 +30,17 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
 
     protected override RomajiTag[] GenerateFromItem(Lyric item)
     {
-        string text = item.Text;
-        var processingTags = new List<RomajiTagGeneratorParameter>();
-
         // Tokenize the text
+        string text = item.Text;
         var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
 
+        var processingRomajies = getProcessingRomajies(text, tokenStream, Config).ToArray();
+
+        return Convert(processingRomajies).ToArray();
+    }
+
+    private static IEnumerable<RomajiTagGeneratorParameter> getProcessingRomajies(string text, TokenStream tokenStream, JaRomajiTagGeneratorConfig config)
+    {
         // Get result and offset
         var result = tokenStream.GetAttribute<ICharTermAttribute>();
         var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
@@ -58,11 +64,11 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
 
             // Convert to romaji.
             string romaji = JpStringUtils.ToRomaji(katakana);
-            if (Config.Uppercase.Value)
+            if (config.Uppercase.Value)
                 romaji = romaji.ToUpper();
 
             // Make tag
-            processingTags.Add(new RomajiTagGeneratorParameter
+            yield return new RomajiTagGeneratorParameter
             {
                 FromKanji = fromKanji,
                 RomajiTag = new RomajiTag
@@ -71,19 +77,22 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
                     StartIndex = offsetAtt.StartOffset,
                     EndIndex = offsetAtt.EndOffset - 1,
                 },
-            });
+            };
         }
 
         // Dispose
         tokenStream.End();
         tokenStream.Dispose();
+    }
 
+    internal static IEnumerable<RomajiTag> Convert(RomajiTagGeneratorParameter[] tags)
+    {
         var romajiTags = new List<RomajiTag>();
 
-        foreach (var processingTag in processingTags)
+        foreach (var processingTag in tags)
         {
             // combine romajies of they are not from kanji.
-            var previousProcessingTag = processingTags.GetPrevious(processingTag);
+            var previousProcessingTag = tags.GetPrevious(processingTag);
             bool fromKanji = processingTag.FromKanji;
 
             if (previousProcessingTag != null && !fromKanji)
@@ -98,7 +107,7 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
             }
         }
 
-        return romajiTags.ToArray();
+        return romajiTags;
     }
 
     internal class RomajiTagGeneratorParameter

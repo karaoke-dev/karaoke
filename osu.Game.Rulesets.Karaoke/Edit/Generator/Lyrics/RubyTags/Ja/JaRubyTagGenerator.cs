@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
@@ -27,12 +28,15 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
 
     protected override RubyTag[] GenerateFromItem(Lyric item)
     {
-        string text = item.Text;
-        var tags = new List<RubyTag>();
-
         // Tokenize the text
+        string text = item.Text;
         var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
 
+        return getProcessingRubyTags(text, tokenStream, Config).ToArray();
+    }
+
+    private static IEnumerable<RubyTag> getProcessingRubyTags(string text, TokenStream tokenStream, JaRubyTagGeneratorConfig config)
+    {
         // Get result and offset
         var result = tokenStream.GetAttribute<ICharTermAttribute>();
         var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
@@ -54,7 +58,7 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             // Convert to Hiragana as default.
             string hiragana = JpStringUtils.ToHiragana(katakana);
 
-            if (!Config.EnableDuplicatedRuby.Value)
+            if (!config.EnableDuplicatedRuby.Value)
             {
                 // Not add duplicated ruby if same as parent.
                 string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
@@ -63,18 +67,16 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             }
 
             // Make tag
-            tags.Add(new RubyTag
+            yield return new RubyTag
             {
-                Text = Config.RubyAsKatakana.Value ? katakana : hiragana,
+                Text = config.RubyAsKatakana.Value ? katakana : hiragana,
                 StartIndex = offsetAtt.StartOffset,
                 EndIndex = offsetAtt.EndOffset - 1,
-            });
+            };
         }
 
         // Dispose
         tokenStream.End();
         tokenStream.Dispose();
-
-        return tags.ToArray();
     }
 }
