@@ -50,4 +50,3 @@ public abstract class PropertyDetector<TItem, TProperty>
 
     protected abstract TProperty DetectFromItem(TItem item);
 }
-

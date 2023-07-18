@@ -26,7 +26,9 @@ public class GeneratorConfigHelper
 
     private static IEnumerable<PropertyInfo> getAllBindableProperty(GeneratorConfig config)
     {
-        foreach (var property in config.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        var properties = config.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (var property in properties)
         {
             object propertyInstance = property.GetValue(config, null)!;
             var propertyType = propertyInstance.GetType();

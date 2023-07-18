@@ -71,7 +71,8 @@ public class SingerConverterTest : BaseSingleConverterTest<SingerConverter>
         var singer = singerInfo.AddSinger();
         var singerState = singerInfo.AddSingerState(singer);
 
-        string expected = $"{{\"singers\":[{{\"$type\":\"Singer\",\"id\":\"{singer.ID}\"}},{{\"$type\":\"SingerState\",\"id\":\"{singerState.ID}\",\"main_singer_id\":\"{singerState.MainSingerId}\"}}]}}";
+        string expected =
+            $"{{\"singers\":[{{\"$type\":\"Singer\",\"id\":\"{singer.ID}\"}},{{\"$type\":\"SingerState\",\"id\":\"{singerState.ID}\",\"main_singer_id\":\"{singerState.MainSingerId}\"}}]}}";
         string actual = JsonConvert.SerializeObject(singerInfo, CreateSettings());
         Assert.AreEqual(expected, actual);
     }

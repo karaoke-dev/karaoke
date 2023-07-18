@@ -243,7 +243,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
     {
         base.Dispose(isDisposing);
 
-        fontStore?.RemoveStore(localFontStore);
+        fontStore.RemoveStore(localFontStore);
     }
 
     internal partial class FontFamilyPropertyList : FontPropertyList<string?>

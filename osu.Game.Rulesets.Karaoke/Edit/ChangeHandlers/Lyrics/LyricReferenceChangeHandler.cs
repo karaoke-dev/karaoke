@@ -66,10 +66,11 @@ public partial class LyricReferenceChangeHandler : LyricPropertyChangeHandler, I
             {
                 lyric.ReferenceLyricConfig = null;
             }
-            else if (lyric.ReferenceLyricConfig == null)
+            else
             {
+                // should make sure that config will be created if have reference lyric.
                 // todo: not really sure should use sync config if lyric text are similar.
-                lyric.ReferenceLyricConfig = new ReferenceLyricConfig();
+                lyric.ReferenceLyricConfig ??= new ReferenceLyricConfig();
             }
 
             TriggerHitObjectUpdate(lyric);
