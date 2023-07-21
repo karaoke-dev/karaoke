@@ -14,10 +14,10 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
 {
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, true)]
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000" }, true)]
-    [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:" }, false)] // all time-tag should with time.
-    [TestCase(new[] { "[0,start]:1000", "[1,start]:" }, false)] // should have at least two time-tags with time.
+    [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]" }, false)] // all time-tag should with time.
+    [TestCase(new[] { "[0,start]:1000", "[1,start]" }, false)] // should have at least two time-tags with time.
     [TestCase(new[] { "[0,start]:1000" }, false)] // should have at least two time-tags.
-    [TestCase(new[] { "[0,start]:" }, false)] // no-time.
+    [TestCase(new[] { "[0,start]" }, false)] // no-time.
     [TestCase(new string[] { }, false)]
     public void TestCanGenerate(string[] timeTags, bool canGenerate)
     {

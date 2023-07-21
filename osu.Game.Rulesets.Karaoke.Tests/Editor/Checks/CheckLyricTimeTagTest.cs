@@ -87,9 +87,9 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOverlapping>(lyric);
     }
 
-    [TestCase("カラオケ", new[] { "[0,start]:", "[3,end]:1000" })] // empty start time-tag time.
-    [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:" })] // empty end time-tag time.
-    [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]:", "[3,end]:2000" })] // empty center time-tag time.
+    [TestCase("カラオケ", new[] { "[0,start]", "[3,end]:1000" })] // empty start time-tag time.
+    [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]" })] // empty end time-tag time.
+    [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]", "[3,end]:2000" })] // empty center time-tag time.
     public void TestCheckEmptyTime(string text, string[] timeTags)
     {
         var lyric = new Lyric

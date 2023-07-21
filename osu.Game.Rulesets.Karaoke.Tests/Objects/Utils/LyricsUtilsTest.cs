@@ -170,11 +170,11 @@ public class LyricsUtilsTest
         Assert.AreEqual(expected, combineLyric.Text);
     }
 
-    [TestCase(new[] { "[0,start]:" }, new[] { "[0,start]:" }, new[] { "[0,start]:", "[7,start]:" })]
-    [TestCase(new[] { "[0,end]:" }, new[] { "[0,end]:" }, new[] { "[0,end]:", "[7,end]:" })]
+    [TestCase(new[] { "[0,start]" }, new[] { "[0,start]" }, new[] { "[0,start]", "[7,start]" })]
+    [TestCase(new[] { "[0,end]" }, new[] { "[0,end]" }, new[] { "[0,end]", "[7,end]" })]
     [TestCase(new[] { "[0,start]:1000" }, new[] { "[0,start]:1000" }, new[] { "[0,start]:1000", "[7,start]:1000" })] // deal with the case with time.
     [TestCase(new[] { "[0,start]:1000" }, new[] { "[0,start]:-1000" }, new[] { "[0,start]:1000", "[7,start]:-1000" })] // deal with the case with not invalid time tag time.
-    [TestCase(new[] { "[-1,start]:" }, new[] { "[-1,start]:" }, new[] { "[-1,start]:", "[6,start]:" })] // deal with the case with not invalid time tag position.
+    [TestCase(new[] { "[-1,start]" }, new[] { "[-1,start]" }, new[] { "[-1,start]", "[6,start]" })] // deal with the case with not invalid time tag position.
     public void TestCombineLyricTimeTag(string[] firstTimeTags, string[] secondTimeTags, string[] expectTimeTags)
     {
         var lyric1 = new Lyric

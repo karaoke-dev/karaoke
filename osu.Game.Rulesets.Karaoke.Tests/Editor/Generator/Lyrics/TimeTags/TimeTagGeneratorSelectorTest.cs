@@ -30,9 +30,9 @@ public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeT
         CheckCanGenerate(lyric, canGenerate, selector);
     }
 
-    [TestCase(17, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
-    [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
-    [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinese
+    [TestCase(17, "か", new[] { "[0,start]", "[0,end]" })] // Japanese
+    [TestCase(1041, "か", new[] { "[0,start]", "[0,end]" })] // Japanese
+    [TestCase(1028, "喵", new[] { "[0,start]" })] // Chinese
     public void TestGenerate(int lcid, string text, string[] expectedTimeTags)
     {
         var selector = CreateSelector();

@@ -107,9 +107,9 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         AssertNotOk<NoteIssue, IssueTemplateNoteMissingStartReferenceTimeTag>(new HitObject[] { referencedLyric, note });
     }
 
-    [TestCase(0, new[] { "[0,start]:", "[3,end]:5000" })]
-    [TestCase(0, new[] { "[0,start]:", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
-    [TestCase(1, new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
+    [TestCase(0, new[] { "[0,start]", "[3,end]:5000" })]
+    [TestCase(0, new[] { "[0,start]", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
+    [TestCase(1, new[] { "[0,start]:1000", "[1,start]", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
     public void TestCheckStartReferenceTimeTagMissingTime(int referenceTimeTagIndex, string[] timeTags)
     {
         var referencedLyric = new Lyric
@@ -146,9 +146,9 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
         AssertNotOk<NoteIssue, IssueTemplateNoteMissingEndReferenceTimeTag>(new HitObject[] { referencedLyric, note });
     }
 
-    [TestCase(0, new[] { "[0,start]:1000", "[3,end]:" })]
-    [TestCase(3, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:" })]
-    [TestCase(2, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:", "[3,end]:5000" })]
+    [TestCase(0, new[] { "[0,start]:1000", "[3,end]" })]
+    [TestCase(3, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]" })]
+    [TestCase(2, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]", "[3,end]:5000" })]
     public void TestCheckEndReferenceTimeTagMissingTime(int referenceTimeTagIndex, string[] timeTags)
     {
         var referencedLyric = new Lyric

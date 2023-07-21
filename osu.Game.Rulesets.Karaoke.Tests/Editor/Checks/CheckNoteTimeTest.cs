@@ -46,8 +46,8 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
         AssertOk(new HitObject[] { note });
     }
 
-    [TestCase(3, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:" })] // will missing start time-tag.
-    [TestCase(2, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:", "[3,end]:5000" })] // will missing end time-tag.
+    [TestCase(3, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]" })] // will missing start time-tag.
+    [TestCase(2, new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]", "[3,end]:5000" })] // will missing end time-tag.
     public void TestCheckMissingStartOrEndTimeTag(int referenceTimeTagIndex, string[] timeTags)
     {
         var referencedLyric = new Lyric
@@ -88,11 +88,11 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
         AssertNotOk<NoteIssue, IssueTemplateNoteInvalidReferenceTimeTagTime>(new HitObject[] { referencedLyric, note });
     }
 
-    [TestCase("[0,start]:", "[1,start]:")]
-    [TestCase("[0,end]:", "[1,end]:")]
-    [TestCase("[0,start]:", "[1,end]:")]
-    [TestCase("[0,end]:", "[1,start]:")]
-    [TestCase("[1,start]:", "[0,start]:")] // should have error even if time-tag index is not sorted. we did not care about the time-tag index in here.
+    [TestCase("[0,start]", "[1,start]")]
+    [TestCase("[0,end]", "[1,end]")]
+    [TestCase("[0,start]", "[1,end]")]
+    [TestCase("[0,end]", "[1,start]")]
+    [TestCase("[1,start]", "[0,start]")] // should have error even if time-tag index is not sorted. we did not care about the time-tag index in here.
     public void TestCheckDurationTooShort(string startTimeTag, string endTimeTag)
     {
         var referencedLyric = new Lyric
@@ -110,11 +110,11 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
         AssertNotOk<NoteIssue, IssueTemplateNoteDurationTooShort>(new HitObject[] { referencedLyric, note });
     }
 
-    [TestCase("[0,start]:", "[1,start]:")]
-    [TestCase("[0,end]:", "[1,end]:")]
-    [TestCase("[0,start]:", "[1,end]:")]
-    [TestCase("[0,end]:", "[1,start]:")]
-    [TestCase("[1,start]:", "[0,start]:")] // should have error even if time-tag index is not sorted. we did not care about the time-tag index in here.
+    [TestCase("[0,start]", "[1,start]")]
+    [TestCase("[0,end]", "[1,end]")]
+    [TestCase("[0,start]", "[1,end]")]
+    [TestCase("[0,end]", "[1,start]")]
+    [TestCase("[1,start]", "[0,start]")] // should have error even if time-tag index is not sorted. we did not care about the time-tag index in here.
     public void TestCheckDurationTooLong(string startTimeTag, string endTimeTag)
     {
         var referencedLyric = new Lyric
