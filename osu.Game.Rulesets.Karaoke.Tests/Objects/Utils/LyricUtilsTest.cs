@@ -72,7 +72,7 @@ public class LyricUtilsTest
     }
 
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
-    [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, 2, new[] { "[0,start]:", "[1,start]:" })]
+    [TestCase(new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" }, 0, 2, new[] { "[0,start]", "[1,start]" })]
     [TestCase(new[] { "[0,start]:1000", "[2,start]:3000" }, 1, 2, new[] { "[0,start]:1000" })]
     public void TestRemoveTextTimeTag(string[] timeTags, int charGap, int count, string[] actualTimeTags)
     {
@@ -140,9 +140,9 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, "karaoke", new[] { "[7,start]:1000", "[8,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 2, "karaoke", new[] { "[0,start]:1000", "[1,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 4, "karaoke", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" })]
-    [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, "karaoke", new[] { "[7,start]:", "[8,start]:", "[9,start]:", "[10,start]:" })]
-    [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 2, "karaoke", new[] { "[0,start]:", "[1,start]:", "[9,start]:", "[10,start]:" })]
-    [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 4, "karaoke", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" })]
+    [TestCase(new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" }, 0, "karaoke", new[] { "[7,start]", "[8,start]", "[9,start]", "[10,start]" })]
+    [TestCase(new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" }, 2, "karaoke", new[] { "[0,start]", "[1,start]", "[9,start]", "[10,start]" })]
+    [TestCase(new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" }, 4, "karaoke", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" })]
     public void TestAddTextTimeTag(string[] timeTags, int charGap, string addedText, string[] actualTimeTags)
     {
         var lyric = new Lyric
@@ -296,11 +296,11 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, "00:01:000 - 00:04:000")]
     [TestCase(new[] { "[0,start]:4000", "[1,start]:3000", "[2,start]:2000", "[3,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
     [TestCase(new[] { "[3,start]:4000", "[2,start]:3000", "[1,start]:2000", "[0,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
-    [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[1,start]:" }, "00:01:000 - 00:02:000")] // with null case.
-    [TestCase(new[] { "[1,start]:", "[0,start]:1000", "[1,start]:2000" }, "00:01:000 - 00:02:000")] // with null case.
-    [TestCase(new[] { "[0,start]:1000", "[1,start]:" }, "00:01:000 - 00:01:000")] // with null case.
+    [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[1,start]" }, "00:01:000 - 00:02:000")] // with null case.
+    [TestCase(new[] { "[1,start]", "[0,start]:1000", "[1,start]:2000" }, "00:01:000 - 00:02:000")] // with null case.
+    [TestCase(new[] { "[0,start]:1000", "[1,start]" }, "00:01:000 - 00:01:000")] // with null case.
     [TestCase(new[] { "[0,start]:1000" }, "00:01:000 - 00:01:000")]
-    [TestCase(new[] { "[0,start]:" }, "--:--:--- - --:--:---")] // with null case.
+    [TestCase(new[] { "[0,start]" }, "--:--:--- - --:--:---")] // with null case.
     [TestCase(new string[] { }, "--:--:--- - --:--:---")]
     public void TestTimeTagTimeFormattedString(string[] timeTags, string expected)
     {

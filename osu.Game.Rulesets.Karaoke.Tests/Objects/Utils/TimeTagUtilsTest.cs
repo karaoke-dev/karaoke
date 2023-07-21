@@ -11,8 +11,8 @@ public class TimeTagUtilsTest
 {
     [TestCase("[1,start]:1000", 2, "[3,start]:1000")]
     [TestCase("[1,end]:1000", 2, "[3,end]:1000")]
-    [TestCase("[1,start]:", 2, "[3,start]:")]
-    [TestCase("[1,end]:", 2, "[3,end]:")]
+    [TestCase("[1,start]", 2, "[3,start]")]
+    [TestCase("[1,end]", 2, "[3,end]")]
     [TestCase("[1,start]:1000", -2, "[-1,start]:1000")]
     [TestCase("[1,end]:1000", -2, "[-1,end]:1000")]
     public void TestShiftingTimeTag(string shiftingTag, int offset, string expectedTimeTag)
@@ -29,7 +29,7 @@ public class TimeTagUtilsTest
     [TestCase("[1,end]:1000", "00:01:000")]
     [TestCase("[-1,start]:1000", "00:01:000")]
     [TestCase("[-1,start]:-1000", "-00:01:000")]
-    [TestCase("[-1,start]:", "--:--:---")]
+    [TestCase("[-1,start]", "--:--:---")]
     public void TestFormattedString(string tag, string expected)
     {
         var timeTag = TestCaseTagHelper.ParseTimeTag(tag);

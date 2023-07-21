@@ -21,16 +21,16 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
         CheckCanGenerate(text, canGenerate, config);
     }
 
-    [TestCase("がんばって", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false)]
-    [TestCase("がんばって", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[4,start]:" }, true)]
+    [TestCase("がんばって", new[] { "[0,start]", "[2,start]", "[4,start]" }, false)]
+    [TestCase("がんばって", new[] { "[0,start]", "[1,start]", "[2,start]", "[4,start]" }, true)]
     public void TestGenerateWithCheckWhiteCheckん(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x => x.Checkん.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("買って", new[] { "[0,start]:", "[2,start]:" }, false)]
-    [TestCase("買って", new[] { "[0,start]:", "[1,start]:", "[2,start]:" }, true)]
+    [TestCase("買って", new[] { "[0,start]", "[2,start]" }, false)]
+    [TestCase("買って", new[] { "[0,start]", "[1,start]", "[2,start]" }, true)]
     public void TestGenerateWithCheckっ(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x => x.Checkっ.Value = applyConfig);
@@ -38,31 +38,31 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
     }
 
     [TestCase(" ", new string[] { }, false)]
-    [TestCase(" ", new[] { "[0,start]:" }, true)]
+    [TestCase(" ", new[] { "[0,start]" }, true)]
     public void TestGenerateWithCheckBlankLine(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x => x.CheckBlankLine.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("か", new[] { "[0,start]:" }, false)]
-    [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
+    [TestCase("か", new[] { "[0,start]" }, false)]
+    [TestCase("か", new[] { "[0,start]", "[0,end]" }, true)]
     public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x => x.CheckLineEndKeyUp.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("か     ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:" }, false)]
-    [TestCase("か     ", new[] { "[0,start]:", "[1,start]:" }, true)]
+    [TestCase("か     ", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]", "[5,start]" }, false)]
+    [TestCase("か     ", new[] { "[0,start]", "[1,start]" }, true)]
     public void TestGenerateWithCheckWhiteSpace(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x => x.CheckWhiteSpace.Value = applyConfig);
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("か ", new[] { "[0,start]:", "[1,start]:" }, false)]
-    [TestCase("か ", new[] { "[0,start]:", "[0,end]:" }, true)]
+    [TestCase("か ", new[] { "[0,start]", "[1,start]" }, false)]
+    [TestCase("か ", new[] { "[0,start]", "[0,end]" }, true)]
     public void TestGenerateWithCheckWhiteSpaceKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
     {
         var config = GeneratorEmptyConfig(x =>
@@ -73,12 +73,12 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("a　b　c", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
-    [TestCase("a　b　c", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
-    [TestCase("a　b　c", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
-    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
-    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
-    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+    [TestCase("a　b　c", new[] { "[0,start]", "[2,start]", "[4,start]" }, false, false)]
+    [TestCase("a　b　c", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]" }, true, false)]
+    [TestCase("a　b　c", new[] { "[0,start]", "[0,end]", "[2,start]", "[2,end]", "[4,start]" }, true, true)]
+    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]", "[2,start]", "[4,start]" }, false, false)]
+    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]" }, true, false)]
+    [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]", "[0,end]", "[2,start]", "[2,end]", "[4,start]" }, true, true)]
     public void TestGenerateWithCheckWhiteSpaceAlphabet(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
         var config = GeneratorEmptyConfig(x =>
@@ -90,12 +90,12 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("0　1　2", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
-    [TestCase("0　1　2", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
-    [TestCase("0　1　2", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
-    [TestCase("０　１　２", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
-    [TestCase("０　１　２", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
-    [TestCase("０　１　２", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+    [TestCase("0　1　2", new[] { "[0,start]", "[2,start]", "[4,start]" }, false, false)]
+    [TestCase("0　1　2", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]" }, true, false)]
+    [TestCase("0　1　2", new[] { "[0,start]", "[0,end]", "[2,start]", "[2,end]", "[4,start]" }, true, true)]
+    [TestCase("０　１　２", new[] { "[0,start]", "[2,start]", "[4,start]" }, false, false)]
+    [TestCase("０　１　２", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]" }, true, false)]
+    [TestCase("０　１　２", new[] { "[0,start]", "[0,end]", "[2,start]", "[2,end]", "[4,start]" }, true, true)]
     public void TestGenerateWithCheckWhiteSpaceDigit(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
         var config = GeneratorEmptyConfig(x =>
@@ -107,9 +107,9 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }
 
-    [TestCase("!　!　!", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
-    [TestCase("!　!　!", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
-    [TestCase("!　!　!", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+    [TestCase("!　!　!", new[] { "[0,start]", "[2,start]", "[4,start]" }, false, false)]
+    [TestCase("!　!　!", new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]" }, true, false)]
+    [TestCase("!　!　!", new[] { "[0,start]", "[0,end]", "[2,start]", "[2,end]", "[4,start]" }, true, true)]
     public void TestGenerateWitCheckWhiteSpaceAsciiSymbol(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
     {
         var config = GeneratorEmptyConfig(x =>
@@ -147,19 +147,19 @@ public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerato
 
         string[] expectedTimeTags =
         {
-            "[0,start]:",
-            "[0,start]:",
-            "[0,start]:",
-            "[2,start]:",
-            "[4,start]:",
-            "[6,start]:",
-            "[7,start]:",
-            "[7,start]:",
-            "[8,start]:",
-            "[9,start]:",
-            "[10,start]:",
-            "[12,start]:",
-            "[13,start]:",
+            "[0,start]",
+            "[0,start]",
+            "[0,start]",
+            "[2,start]",
+            "[4,start]",
+            "[6,start]",
+            "[7,start]",
+            "[7,start]",
+            "[8,start]",
+            "[9,start]",
+            "[10,start]",
+            "[12,start]",
+            "[13,start]",
         };
         CheckGenerateResult(lyric, expectedTimeTags, config);
     }

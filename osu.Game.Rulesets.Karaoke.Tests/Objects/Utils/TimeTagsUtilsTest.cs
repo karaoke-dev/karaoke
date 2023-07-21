@@ -16,13 +16,13 @@ public class TimeTagsUtilsTest
     [TestCase("[1,start]:1000", "[3,start]:3000", 2, "[2,start]:2000")]
     [TestCase("[1,start]:1000", "[3,end]:4000", 2, "[2,start]:2000")]
     [TestCase("[1,end]:2000", "[3,start]:3000", 2, "[2,start]:2000")]
-    [TestCase("[1,start]:", "[3,start]:3000", 2, "[2,start]:")]
-    [TestCase("[1,start]:1000", "[3,start]:", 2, "[2,start]:")]
-    [TestCase("[1,start]:", "[3,start]:", 2, "[2,start]:")]
-    [TestCase("[0,start]:", "[0,start]:", 0, "[0,start]:")] // edge case, but it's valid.
-    [TestCase("[1,start]:", "[3,start]:", 10, null)] // new index should be in the range.
-    [TestCase("[10,start]:", "[3,start]:", 10, null)] // start index should be smaller then end index.
-    [TestCase("[1,start]:", null, 2, null)] // should not be null.
+    [TestCase("[1,start]", "[3,start]:3000", 2, "[2,start]")]
+    [TestCase("[1,start]:1000", "[3,start]", 2, "[2,start]")]
+    [TestCase("[1,start]", "[3,start]", 2, "[2,start]")]
+    [TestCase("[0,start]", "[0,start]", 0, "[0,start]")] // edge case, but it's valid.
+    [TestCase("[1,start]", "[3,start]", 10, null)] // new index should be in the range.
+    [TestCase("[10,start]", "[3,start]", 10, null)] // start index should be smaller then end index.
+    [TestCase("[1,start]", null, 2, null)] // should not be null.
     public void GenerateTimeTag(string startTag, string? endTag, int index, string? result)
     {
         var startTimeTag = TestCaseTagHelper.ParseTimeTag(startTag);
@@ -44,9 +44,9 @@ public class TimeTagsUtilsTest
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" })]
     [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" })]
-    [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, new[] { "[0,start]:", "[0,start]:", "[0,start]:1100", "[0,end]:2000" })]
+    [TestCase(new[] { "[0,start]", "[0,start]", "[0,end]:2000", "[0,start]:1100" }, new[] { "[0,start]", "[0,start]", "[0,start]:1100", "[0,end]:2000" })]
     [TestCase(new[] { "[0,start]:1000", "[0,start]:1100", "[0,end]:2000", "[0,start]:1100" }, new[] { "[0,start]:1000", "[0,start]:1100", "[0,start]:1100", "[0,end]:2000" })]
-    [TestCase(new[] { "[0,start]:", "[0,end]:", "[0,start]:", "[1,start]:", "[1,end]:" }, new[] { "[0,start]:", "[0,start]:", "[0,end]:", "[1,start]:", "[1,end]:" })]
+    [TestCase(new[] { "[0,start]", "[0,end]", "[0,start]", "[1,start]", "[1,end]" }, new[] { "[0,start]", "[0,start]", "[0,end]", "[1,start]", "[1,end]" })]
     public void TestSort(string[] timeTagTexts, string[] expectedTimeTags)
     {
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
@@ -69,8 +69,8 @@ public class TimeTagsUtilsTest
         TimeTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:", "[3,end]:5000" }, new[] { "[1,start]:", "[3,start]:" })]
-    [TestCase(new[] { "[0,start]:", "[3,end]:" }, new[] { "[0,start]:", "[3,end]:" })]
+    [TestCase(new[] { "[0,start]:1000", "[1,start]", "[2,start]:3000", "[3,start]", "[3,end]:5000" }, new[] { "[1,start]", "[3,start]" })]
+    [TestCase(new[] { "[0,start]", "[3,end]" }, new[] { "[0,start]", "[3,end]" })]
     public void TestFindNoneTime(string[] timeTagTexts, string[] invalidTimeTags)
     {
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
@@ -161,7 +161,7 @@ public class TimeTagsUtilsTest
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, new double[] { 1100, 2000, 2100, 3000 })]
     [TestCase(new[] { "[0,start]:3000", "[0,end]:2100", "[1,start]:2000", "[1,end]:1100" }, new double[] { 1100, 2000, 2100, 3000 })] // will sort by time.
-    [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, new double[] { 1100, 2000 })] // will remove the time-tag with no time.
+    [TestCase(new[] { "[0,start]", "[0,start]", "[0,end]:2000", "[0,start]:1100" }, new double[] { 1100, 2000 })] // will remove the time-tag with no time.
     [TestCase(new[] { "[0,start]:1000", "[0,start]:1100" }, new double[] { 1000, 1100 })] // will remain the duplicated time-tag index.
     [TestCase(new[] { "[0,start]:1000", "[1,start]:1000" }, new double[] { 1000 })] // Should not add duplicated time.
     public void TestToTimeBasedDictionary(string[] timeTagTexts, double[] expected)
@@ -174,8 +174,8 @@ public class TimeTagsUtilsTest
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 1100)]
     [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, 1100)]
-    [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, 1100)]
-    [TestCase(new[] { "[0,start]:" }, null)]
+    [TestCase(new[] { "[0,start]", "[0,start]", "[0,end]:2000", "[0,start]:1100" }, 1100)]
+    [TestCase(new[] { "[0,start]" }, null)]
     [TestCase(new string[] { }, null)]
     public void TestGetStartTime(string[] timeTagTexts, double? expected)
     {
@@ -187,8 +187,8 @@ public class TimeTagsUtilsTest
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 3000)]
     [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, 3000)]
-    [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, 2000)]
-    [TestCase(new[] { "[0,start]:" }, null)]
+    [TestCase(new[] { "[0,start]", "[0,start]", "[0,end]:2000", "[0,start]:1100" }, 2000)]
+    [TestCase(new[] { "[0,start]" }, null)]
     [TestCase(new string[] { }, null)]
     public void TestGetEndTime(string[] timeTagTexts, double? expected)
     {
