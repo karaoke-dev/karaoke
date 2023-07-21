@@ -98,7 +98,7 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { $"{startTimeTag}0", $"{endTimeTag}{MIN_DURATION - 1}" }),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { $"{startTimeTag}:0", $"{endTimeTag}:{MIN_DURATION - 1}" }),
         };
         var note = new Note
         {
@@ -120,7 +120,7 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
         var referencedLyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { $"{startTimeTag}0", $"{endTimeTag}{MAX_DURATION + 1}" }),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { $"{startTimeTag}:0", $"{endTimeTag}:{MAX_DURATION + 1}" }),
         };
         var note = new Note
         {
