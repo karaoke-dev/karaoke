@@ -129,6 +129,9 @@ public static class TestCaseTagHelper
     /// [0,start]:1000              -> has time-tag index with time.<br/>
     /// [0,start]                   -> has time-tag index with no time.<br/>
     /// [0,start]:                  -> has time-tag index with no time.<br/>
+    /// [0,start]#karaoke           -> has time-tag index with romaji.<br/>
+    /// [0,start]#^karaoke          -> has time-tag index with romaji, and it's initial romaji.<br/>
+    /// [0,start]:1000#karaoke      -> has time-tag index with time and romaji.<br/>
     /// </example>
     /// <param name="str">Time tag string format</param>
     /// <returns><see cref="TimeTag"/>Time tag object</returns>
@@ -137,6 +140,7 @@ public static class TestCaseTagHelper
         string regex = generateRegex(time_index_regex, new[]
         {
             getNumberPropertyRegex(':', "time"),
+            getStringPropertyRegex('#', "text"),
         });
 
         return getMatchByStatement<TimeTag>(str, regex, result =>
@@ -147,8 +151,14 @@ public static class TestCaseTagHelper
             int index = result.GetGroupValue<int>("index");
             var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
             int? time = result.GetGroupValue<int?>("time");
+            string? text = result.GetGroupValue<string?>("text");
+            bool? initialRomaji = text?.StartsWith("^");
 
-            return new TimeTag(new TextIndex(index, state), time);
+            return new TimeTag(new TextIndex(index, state), time)
+            {
+                RomajiText = text?.Replace("^", ""),
+                InitialRomaji = initialRomaji ?? default,
+            };
         });
     }
 
