@@ -64,8 +64,8 @@ public static class TextTagUtils
     /// Display tag with position format
     /// </summary>
     /// <example>
-    /// ka(-2~-1)
-    /// ra(4~6)
+    /// ka(-2~-1)<br/>
+    /// ra(4~6)<br/>
     /// </example>
     /// <typeparam name="T"></typeparam>
     /// <param name="textTag"></param>

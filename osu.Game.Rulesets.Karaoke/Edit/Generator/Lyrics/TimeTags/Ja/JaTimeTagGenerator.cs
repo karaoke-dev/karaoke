@@ -17,7 +17,7 @@ public class JaTimeTagGenerator : TimeTagGenerator<JaTimeTagGeneratorConfig>
     }
 
     /// <summary>
-    /// Thanks for RhythmKaTTE's author writing this logic into C#
+    /// Thanks for RhythmKaTTE's author writing this logic into C#.<br/>
     /// http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html
     /// </summary>
     protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)

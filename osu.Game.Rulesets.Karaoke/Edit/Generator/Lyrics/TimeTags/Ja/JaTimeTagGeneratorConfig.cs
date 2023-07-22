@@ -23,7 +23,7 @@ public class JaTimeTagGeneratorConfig : TimeTagGeneratorConfig
     public Bindable<bool> Checkっ { get; } = new BindableBool();
 
     /// <summary>
-    /// Add the <see cref="TimeTag"/> if spacing is next of the alphabet.
+    /// Add the <see cref="TimeTag"/> if spacing is next of the alphabet.<br/>
     /// This feature will work only if enable the <see cref="TimeTagGeneratorConfig.CheckWhiteSpace"/>
     /// </summary>
     [ConfigCategory(CATEGORY_CHECK_WHITE_SPACE)]
@@ -31,7 +31,7 @@ public class JaTimeTagGeneratorConfig : TimeTagGeneratorConfig
     public Bindable<bool> CheckWhiteSpaceAlphabet { get; } = new BindableBool();
 
     /// <summary>
-    /// Add the <see cref="TimeTag"/> if spacing is next of the digit.
+    /// Add the <see cref="TimeTag"/> if spacing is next of the digit.<br/>
     /// This feature will work only if enable the <see cref="TimeTagGeneratorConfig.CheckWhiteSpace"/>
     /// </summary>
     [ConfigCategory(CATEGORY_CHECK_WHITE_SPACE)]
@@ -39,7 +39,7 @@ public class JaTimeTagGeneratorConfig : TimeTagGeneratorConfig
     public Bindable<bool> CheckWhiteSpaceDigit { get; } = new BindableBool();
 
     /// <summary>
-    /// Add the <see cref="TimeTag"/> if spacing is next of the symbol.
+    /// Add the <see cref="TimeTag"/> if spacing is next of the symbol.<br/>
     /// This feature will work only if enable the <see cref="TimeTagGeneratorConfig.CheckWhiteSpace"/>
     /// </summary>
     [ConfigCategory(CATEGORY_CHECK_WHITE_SPACE)]

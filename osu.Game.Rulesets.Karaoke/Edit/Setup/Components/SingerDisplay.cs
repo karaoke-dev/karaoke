@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
 {
     /// <summary>
-    /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>
+    /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>.<br/>
     /// to be removed from its palette.
     /// </summary>
     public event Action<SingerDisplay>? DeleteRequested;

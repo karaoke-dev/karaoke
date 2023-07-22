@@ -25,8 +25,8 @@ public static class TimeTagUtils
     /// Display string with time format
     /// </summary>
     /// <example>
-    /// 02:32:155
-    /// --:--:---
+    /// 02:32:155<br/>
+    /// --:--:---<br/>
     /// </example>
     /// <param name="timeTag"></param>
     /// <returns></returns>

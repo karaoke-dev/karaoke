@@ -21,7 +21,7 @@ public class ClassicStageInfo : StageInfo
     public ClassicStyleCategory StyleCategory { get; set; } = new();
 
     /// <summary>
-    /// The definition for the <see cref="Lyric"/>.
+    /// The definition for the <see cref="Lyric"/>.<br/>
     /// Like the line height or font size.
     /// </summary>
     public ClassicStageDefinition StageDefinition { get; set; } = new();

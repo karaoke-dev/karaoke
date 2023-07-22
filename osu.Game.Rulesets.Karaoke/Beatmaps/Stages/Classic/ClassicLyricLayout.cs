@@ -47,7 +47,7 @@ public class ClassicLyricLayout : StageElement, IComparable<ClassicLyricLayout>
     public readonly Bindable<int> LineBindable = new();
 
     /// <summary>
-    /// <see cref="Lyric"/>'s line number.
+    /// <see cref="Lyric"/>'s line number.<br/>
     /// <see cref="Lyric"/> will at bottom if <see cref="Line"/> is zero.
     /// </summary>
     public int Line
