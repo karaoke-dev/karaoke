@@ -50,12 +50,12 @@ public static class TestCaseTagHelper
     /// Process test case ruby string format into <see cref="RubyTag"/>
     /// </summary>
     /// <example>
-    /// [0]:ruby        -> has range index with text. <br/>
-    /// [0,3]:ruby      -> has range index with text. <br/>
-    /// [0]:            -> has range index with empty text. <br/>
-    /// [0,3]:          -> has range index with empty text. <br/>
-    /// [0]             -> has range index with empty text. <br/>
-    /// [0,3]           -> has range index with empty text. <br/>
+    /// [0]:ruby        -> has range index with text.<br/>
+    /// [0,3]:ruby      -> has range index with text.<br/>
+    /// [0]:            -> has range index with empty text.<br/>
+    /// [0,3]:          -> has range index with empty text.<br/>
+    /// [0]             -> has range index with empty text.<br/>
+    /// [0,3]           -> has range index with empty text.<br/>
     /// </example>
     /// <param name="str">Ruby tag string format</param>
     /// <returns><see cref="RubyTag"/>Ruby tag object</returns>
@@ -88,12 +88,12 @@ public static class TestCaseTagHelper
     /// Process test case romaji string format into <see cref="RomajiTag"/>
     /// </summary>
     /// <example>
-    /// [0]:romaji          -> has range index with text. <br/>
-    /// [0,3]:romaji        -> has range index with text. <br/>
-    /// [0]:                -> has range index with empty text. <br/>
-    /// [0,3]:              -> has range index with empty text. <br/>
-    /// [0]                 -> has range index with empty text. <br/>
-    /// [0,3]               -> has range index with empty text. <br/>
+    /// [0]:romaji          -> has range index with text.<br/>
+    /// [0,3]:romaji        -> has range index with text.<br/>
+    /// [0]:                -> has range index with empty text.<br/>
+    /// [0,3]:              -> has range index with empty text.<br/>
+    /// [0]                 -> has range index with empty text.<br/>
+    /// [0,3]               -> has range index with empty text.<br/>
     /// </example>
     /// <param name="str">Romaji tag string format</param>
     /// <returns><see cref="RomajiTag"/>Romaji tag object</returns>
@@ -126,9 +126,9 @@ public static class TestCaseTagHelper
     /// Process test case time tag string format into <see cref="TimeTag"/>
     /// </summary>
     /// <example>
-    /// [0,start]:1000              -> has time-tag index with time. <br/>
-    /// [0,start]                   -> has time-tag index with no time. <br/>
-    /// [0,start]:                  -> has time-tag index with no time. <br/>
+    /// [0,start]:1000              -> has time-tag index with time.<br/>
+    /// [0,start]                   -> has time-tag index with no time.<br/>
+    /// [0,start]:                  -> has time-tag index with no time.<br/>
     /// </example>
     /// <param name="str">Time tag string format</param>
     /// <returns><see cref="TimeTag"/>Time tag object</returns>
@@ -156,8 +156,8 @@ public static class TestCaseTagHelper
     /// Process test case text index string format into <see cref="TextIndex"/>
     /// </summary>
     /// <example>
-    /// [0,start]   -> has time-tag index with time. <br/>
-    /// [0,end]     -> has time-tag index with time. <br/>
+    /// [0,start]   -> has time-tag index with time.<br/>
+    /// [0,end]     -> has time-tag index with time.<br/>
     /// </example>
     /// <param name="str">Text tag string format</param>
     /// <returns><see cref="TimeTag"/>Text tag object</returns>
@@ -181,9 +181,9 @@ public static class TestCaseTagHelper
     /// Process test case lyric string format into <see cref="Lyric"/>
     /// </summary>
     /// <example>
-    /// [1000,3000]:karaoke     -> has time-range and lyric. <br/>
-    /// [1000,3000]:            -> has time-range. <br/>
-    /// [1000,3000]             -> has time-range. <br/>
+    /// [1000,3000]:karaoke     -> has time-range and lyric.<br/>
+    /// [1000,3000]:            -> has time-range.<br/>
+    /// [1000,3000]             -> has time-range.<br/>
     /// </example>
     /// <param name="str">Lyric string format</param>
     /// <param name="id">Id if needed</param>
@@ -249,9 +249,9 @@ public static class TestCaseTagHelper
     /// Process test case singer string format into <see cref="Singer"/>
     /// </summary>
     /// <example>
-    /// [0]name:singer001       -> singer with id and name. <br/>
-    /// [0]romaji:singer001     -> singer with id and romaji. <br/>
-    /// [0]eg:singer001         -> singer with id and english name. <br/>
+    /// [0]name:singer001       -> singer with id and name.<br/>
+    /// [0]romaji:singer001     -> singer with id and romaji.<br/>
+    /// [0]eg:singer001         -> singer with id and english name.<br/>
     /// </example>
     /// <param name="str">Singer string format</param>
     /// <returns><see cref="Singer"/>sSinger object</returns>
