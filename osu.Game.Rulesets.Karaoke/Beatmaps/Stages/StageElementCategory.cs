@@ -20,7 +20,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     /// <summary>
-    /// Default value.
+    /// Default value.<br/>
     /// Will use this value as default if there's no mapping result in the <typeparamref name="TStageElement"/>
     /// </summary>
     public TStageElement DefaultElement { get; protected set; }
@@ -39,7 +39,7 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     public List<TStageElement> SortedElements { get; private set; } = new();
 
     /// <summary>
-    /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/>
+    /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/><br/>
     /// This is the 1st mapping roles.
     /// </summary>
     public IDictionary<ElementId, ElementId> Mappings { get; protected set; } = new Dictionary<ElementId, ElementId>();

@@ -34,7 +34,7 @@ public abstract class TimeTagGeneratorConfig : GeneratorConfig
     public Bindable<bool> CheckWhiteSpace { get; } = new BindableBool();
 
     /// <summary>
-    /// Add the end <see cref="TimeTag"/> instead.
+    /// Add the end <see cref="TimeTag"/> instead.<br/>
     /// This feature will work only if enable the <see cref="CheckWhiteSpace"/>.
     /// </summary>
     [ConfigCategory(CATEGORY_CHECK_WHITE_SPACE)]

@@ -74,7 +74,7 @@ public class PreviewStageTimingCalculator
     }
 
     /// <summary>
-    /// will take the current lyric and the previous n lyrics.
+    /// will take the current lyric and the previous n lyrics.<br/>
     /// note that the order should be p3, p2, p1, p0, current.
     /// </summary>
     /// <param name="lyric"></param>
