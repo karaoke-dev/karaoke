@@ -56,14 +56,14 @@ public class TimeTag : IDeepCloneable<TimeTag>
     /// Mark if this romaji is the first letter of the romaji word.
     /// </summary>
     /// <example>
-    /// There's the Japanese lyric:
-    /// 枯れた世界に輝く
-    /// There's the Romaji:
-    /// kareta sekai ni kagayaku.
-    /// And it will be separated as:
-    /// ka|re|ta se|kai ni ka|ga|ya|ku.
-    /// If this is the first or(4th) time-tag, then this value should be true.
-    /// If this ts the 2th or 3th time-tag, then this value should be false.
+    /// There's the Japanese lyric:<br/>
+    /// 枯れた世界に輝く<br/>
+    /// There's the Romaji:<br/>
+    /// kareta sekai ni kagayaku.<br/>
+    /// And it will be separated as:<br/>
+    /// ka|re|ta se|kai ni ka|ga|ya|ku.<br/>
+    /// If this is the first or(4th) time-tag, then this value should be true.<br/>
+    /// If this ts the 2th or 3th time-tag, then this value should be false.<br/>
     /// </example>
     public bool InitialRomaji
     {

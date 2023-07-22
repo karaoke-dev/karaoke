@@ -75,8 +75,8 @@ public static class TextIndexUtils
     /// Display string with position format
     /// </summary>
     /// <example>
-    /// 3
-    /// 4(end)
+    /// 3<br/>
+    /// 4(end)<br/>
     /// </example>
     /// <param name="textIndex"></param>
     /// <returns></returns>

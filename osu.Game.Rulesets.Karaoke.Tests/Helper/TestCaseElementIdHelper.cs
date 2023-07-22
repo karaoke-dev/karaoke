@@ -14,10 +14,10 @@ public static class TestCaseElementIdHelper
     /// So create a tool to convert the number to ElementId.
     /// </summary>
     /// <example>
-    /// 1 => 0000001
-    /// 2 => 0000002
-    /// -1 => fffffff
-    /// -2 => ffffffe
+    /// 1       -> 0000001<br/>
+    /// 2       -> 0000002<br/>
+    /// -1      -> fffffff<br/>
+    /// -2      -> ffffffe<br/>
     /// </example>
     /// <param name="number"></param>
     /// <returns></returns>

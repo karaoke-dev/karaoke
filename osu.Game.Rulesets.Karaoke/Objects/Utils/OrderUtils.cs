@@ -74,8 +74,8 @@ public static class OrderUtils
     /// Re-generate order number if has gap between two order number
     /// </summary>
     /// <example>
-    /// Valid: 1, 2, 3, 4
-    /// Should be generated: 1, 3, 4, 5, 7
+    /// Valid: 1, 2, 3, 4<br/>
+    /// Should be generated: 1, 3, 4, 5, 7<br/>
     /// </example>
     /// <typeparam name="T">IHasOrder</typeparam>
     /// <param name="objects">objects</param>
