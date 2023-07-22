@@ -37,10 +37,6 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
 
     private static IEnumerable<RubyTag> getProcessingRubyTags(string text, TokenStream tokenStream, JaRubyTagGeneratorConfig config)
     {
-        // Get result and offset
-        var result = tokenStream.GetAttribute<ICharTermAttribute>();
-        var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
-
         // Reset the stream and convert all result
         tokenStream.Reset();
 
@@ -50,8 +46,12 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             tokenStream.ClearAttributes();
             tokenStream.IncrementToken();
 
+            // Get result and offset
+            var charTermAttribute = tokenStream.GetAttribute<ICharTermAttribute>();
+            var offsetAttribute = tokenStream.GetAttribute<IOffsetAttribute>();
+
             // Get parsed result, result is Katakana.
-            string katakana = result.ToString();
+            string katakana = charTermAttribute.ToString();
             if (string.IsNullOrEmpty(katakana))
                 break;
 
@@ -61,7 +61,7 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             if (!config.EnableDuplicatedRuby.Value)
             {
                 // Not add duplicated ruby if same as parent.
-                string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+                string parentText = text[offsetAttribute.StartOffset..offsetAttribute.EndOffset];
                 if (parentText == katakana || parentText == hiragana)
                     continue;
             }
@@ -70,8 +70,8 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             yield return new RubyTag
             {
                 Text = config.RubyAsKatakana.Value ? katakana : hiragana,
-                StartIndex = offsetAtt.StartOffset,
-                EndIndex = offsetAtt.EndOffset - 1,
+                StartIndex = offsetAttribute.StartOffset,
+                EndIndex = offsetAttribute.EndOffset - 1,
             };
         }
 

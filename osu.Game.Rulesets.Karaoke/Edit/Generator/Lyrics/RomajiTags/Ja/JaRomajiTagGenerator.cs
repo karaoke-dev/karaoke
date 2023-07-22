@@ -41,10 +41,6 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
 
     private static IEnumerable<RomajiTagGeneratorParameter> getProcessingRomajies(string text, TokenStream tokenStream, JaRomajiTagGeneratorConfig config)
     {
-        // Get result and offset
-        var result = tokenStream.GetAttribute<ICharTermAttribute>();
-        var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
-
         // Reset the stream and convert all result
         tokenStream.Reset();
 
@@ -54,12 +50,16 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
             tokenStream.ClearAttributes();
             tokenStream.IncrementToken();
 
+            // Get result and offset
+            var charTermAttribute = tokenStream.GetAttribute<ICharTermAttribute>();
+            var offsetAttribute = tokenStream.GetAttribute<IOffsetAttribute>();
+
             // Get parsed result, result is Katakana.
-            string katakana = result.ToString();
+            string katakana = charTermAttribute.ToString();
             if (string.IsNullOrEmpty(katakana))
                 break;
 
-            string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+            string parentText = text[offsetAttribute.StartOffset..offsetAttribute.EndOffset];
             bool fromKanji = JpStringUtils.ToKatakana(katakana) != JpStringUtils.ToKatakana(parentText);
 
             // Convert to romaji.
@@ -74,8 +74,8 @@ public class JaRomajiTagGenerator : RomajiTagGenerator<JaRomajiTagGeneratorConfi
                 RomajiTag = new RomajiTag
                 {
                     Text = romaji,
-                    StartIndex = offsetAtt.StartOffset,
-                    EndIndex = offsetAtt.EndOffset - 1,
+                    StartIndex = offsetAttribute.StartOffset,
+                    EndIndex = offsetAttribute.EndOffset - 1,
                 },
             };
         }
