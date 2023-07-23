@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
@@ -8,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romajies;
 
-public abstract class RomajiGenerator<TConfig> : LyricPropertyGenerator<RomajiGenerateResult[], TConfig>
+public abstract class RomajiGenerator<TConfig> : LyricPropertyGenerator<IReadOnlyDictionary<TimeTag, RomajiGenerateResult>, TConfig>
     where TConfig : RomajiGeneratorConfig, new()
 {
     protected RomajiGenerator(TConfig config)

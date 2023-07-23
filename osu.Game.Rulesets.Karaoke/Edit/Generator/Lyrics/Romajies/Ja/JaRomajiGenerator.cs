@@ -29,7 +29,7 @@ public class JaRomajiGenerator : RomajiGenerator<JaRomajiGeneratorConfig>
         });
     }
 
-    protected override RomajiGenerateResult[] GenerateFromItem(Lyric item)
+    protected override IReadOnlyDictionary<TimeTag, RomajiGenerateResult> GenerateFromItem(Lyric item)
     {
         // Tokenize the text
         string text = item.Text;
@@ -39,7 +39,7 @@ public class JaRomajiGenerator : RomajiGenerator<JaRomajiGeneratorConfig>
         var processingRomajies = getProcessingRomajies(text, tokenStream, Config).ToArray();
 
         // then, trying to mapping them with the time-tags.
-        return Convert(item.TimeTags, processingRomajies).ToArray();
+        return Convert(item.TimeTags, processingRomajies);
     }
 
     private static IEnumerable<RomajiGeneratorParameter> getProcessingRomajies(string text, TokenStream tokenStream, JaRomajiGeneratorConfig config)
@@ -85,22 +85,22 @@ public class JaRomajiGenerator : RomajiGenerator<JaRomajiGeneratorConfig>
         tokenStream.Dispose();
     }
 
-    internal static IEnumerable<RomajiGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomajiGeneratorParameter> romajis)
+    internal static IReadOnlyDictionary<TimeTag, RomajiGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomajiGeneratorParameter> romajis)
     {
         var group = createGroup(timeTags, romajis);
-        return group.Select((x, i) =>
+        return group.ToDictionary(k => k.Key, (x) =>
         {
+            bool isFirst = timeTags.IndexOf(x.Key) == 0; // todo: use better to mark the initial romaji.
             string romajiText = string.Join(" ", x.Value.Select(r => r.RomajiText));
 
             return new RomajiGenerateResult
             {
-                TimeTag = x.Key,
-                InitialRomaji = i == 0, // todo: use better to mark the initial romaji.
+                InitialRomaji = isFirst,
                 RomajiText = romajiText,
             };
         });
 
-        static IDictionary<TimeTag, List<RomajiGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomajiGeneratorParameter> romajis)
+        static IReadOnlyDictionary<TimeTag, List<RomajiGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomajiGeneratorParameter> romajis)
         {
             var dictionary = timeTags.ToDictionary(x => x, v => new List<RomajiGeneratorParameter>());
 
