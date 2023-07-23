@@ -21,26 +21,25 @@ public class RomajiGenerateResultHelper
     /// <param name="timeTag">Origin time-tag</param>
     /// <param name="str">Generate result string format</param>
     /// <returns><see cref="RomajiGenerateResult"/>Romaji generate result.</returns>
-    public static RomajiGenerateResult ParseRomajiGenerateResult(TimeTag timeTag, string str)
+    public static KeyValuePair<TimeTag, RomajiGenerateResult> ParseRomajiGenerateResult(TimeTag timeTag, string str)
     {
-        bool initialRomaji = str.StartsWith("^", StringComparison.Ordinal);
-
-        return new RomajiGenerateResult
+        var result = new RomajiGenerateResult
         {
-            TimeTag = timeTag,
-            InitialRomaji = initialRomaji,
+            InitialRomaji = str.StartsWith("^", StringComparison.Ordinal),
             RomajiText = str.Replace("^", ""),
         };
+
+        return new KeyValuePair<TimeTag, RomajiGenerateResult>(timeTag, result);
     }
 
-    public static RomajiGenerateResult[] ParseRomajiGenerateResults(IList<TimeTag> timeTags, IList<string> strings)
+    public static IReadOnlyDictionary<TimeTag, RomajiGenerateResult> ParseRomajiGenerateResults(IList<TimeTag> timeTags, IList<string> strings)
     {
         if (timeTags.Count != strings.Count)
             throw new InvalidOperationException();
 
-        return parseRomajiGenerateResults(timeTags, strings).ToArray();
+        return parseRomajiGenerateResults(timeTags, strings).ToDictionary(k => k.Key, v => v.Value);
 
-        static IEnumerable<RomajiGenerateResult> parseRomajiGenerateResults(IList<TimeTag> timeTags, IList<string> strings)
+        static IEnumerable<KeyValuePair<TimeTag, RomajiGenerateResult>> parseRomajiGenerateResults(IList<TimeTag> timeTags, IList<string> strings)
         {
             for (int i = 0; i < timeTags.Count; i++)
             {

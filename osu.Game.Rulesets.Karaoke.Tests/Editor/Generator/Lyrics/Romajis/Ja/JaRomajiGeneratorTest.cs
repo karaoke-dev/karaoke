@@ -81,7 +81,7 @@ public class JaRomajiGeneratorTest : BaseRomajiGeneratorTest<JaRomajiGenerator, 
         var romajis = parseRomajiGenerateResults(romajiParams);
 
         var expected = RomajiGenerateResultHelper.ParseRomajiGenerateResults(timeTags, expectedResults);
-        var actual = JaRomajiGenerator.Convert(timeTags, romajis).ToArray();
+        var actual = JaRomajiGenerator.Convert(timeTags, romajis);
 
         AssertEqual(expected, actual);
     }

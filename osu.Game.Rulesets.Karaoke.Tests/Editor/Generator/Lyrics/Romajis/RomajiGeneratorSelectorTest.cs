@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics.Romajis;
 
-public class RomajiTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RomajiGeneratorSelector, RomajiGenerateResult[]>
+public class RomajiTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RomajiGeneratorSelector, IReadOnlyDictionary<TimeTag, RomajiGenerateResult>>
 {
     [TestCase(17, "花火大会", true)]
     [TestCase(17, "我是中文", true)] // only change the language code to decide should be able to generate or not.
@@ -54,10 +55,9 @@ public class RomajiTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<Rom
         CheckGenerateResult(lyric, expected, selector);
     }
 
-    protected override void AssertEqual(RomajiGenerateResult[] expected, RomajiGenerateResult[] actual)
+    protected override void AssertEqual(IReadOnlyDictionary<TimeTag, RomajiGenerateResult> expected, IReadOnlyDictionary<TimeTag, RomajiGenerateResult> actual)
     {
-        TimeTagAssert.ArePropertyEqual(expected.Select(x => x.TimeTag).ToArray(), actual.Select(x => x.TimeTag).ToArray());
-        Assert.AreEqual(expected.Select(x => x.InitialRomaji), actual.Select(x => x.InitialRomaji));
-        Assert.AreEqual(expected.Select(x => x.RomajiText), actual.Select(x => x.RomajiText));
+        TimeTagAssert.ArePropertyEqual(expected.Select(x => x.Key).ToArray(), actual.Select(x => x.Key).ToArray());
+        Assert.AreEqual(expected.Select(x => x.Value), actual.Select(x => x.Value));
     }
 }
