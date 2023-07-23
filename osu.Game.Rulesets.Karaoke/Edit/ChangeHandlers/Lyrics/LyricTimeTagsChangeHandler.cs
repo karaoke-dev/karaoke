@@ -55,6 +55,40 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
         });
     }
 
+    public void SetTimeTagInitialRomaji(TimeTag timeTag, bool initialRomaji)
+    {
+        CheckExactlySelectedOneHitObject();
+
+        PerformOnSelection(lyric =>
+        {
+            bool containsInLyric = lyric.TimeTags.Contains(timeTag);
+            if (!containsInLyric)
+                throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
+
+            timeTag.InitialRomaji = initialRomaji;
+        });
+    }
+
+    public void SetTimeTagRomajiText(TimeTag timeTag, string romaji)
+    {
+        CheckExactlySelectedOneHitObject();
+
+        PerformOnSelection(lyric =>
+        {
+            bool containsInLyric = lyric.TimeTags.Contains(timeTag);
+            if (!containsInLyric)
+                throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
+
+            timeTag.RomajiText = romaji;
+
+            if (!string.IsNullOrWhiteSpace(romaji))
+                return;
+
+            timeTag.RomajiText = string.Empty;
+            timeTag.InitialRomaji = false;
+        });
+    }
+
     public void ShiftingTimeTagTime(IEnumerable<TimeTag> timeTags, double offset)
     {
         CheckExactlySelectedOneHitObject();
