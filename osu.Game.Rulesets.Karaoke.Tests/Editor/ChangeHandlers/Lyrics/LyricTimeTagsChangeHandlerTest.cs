@@ -85,6 +85,55 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     }
 
     [Test]
+    public void TestSetTimeTagInitialRomaji()
+    {
+        var timeTag = new TimeTag(new TextIndex(), 1000);
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            TimeTags = new[]
+            {
+                timeTag,
+            },
+        });
+
+        TriggerHandlerChanged(c => c.SetTimeTagInitialRomaji(timeTag, true));
+
+        AssertSelectedHitObject(_ =>
+        {
+            Assert.AreEqual(true, timeTag.InitialRomaji);
+        });
+    }
+
+    [Test]
+    public void TestSetTimeTagRomajiText()
+    {
+        var timeTag = new TimeTag(new TextIndex(), 1000);
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            TimeTags = new[]
+            {
+                timeTag,
+            },
+        });
+
+        TriggerHandlerChanged(c => c.SetTimeTagRomajiText(timeTag, "karaoke"));
+
+        AssertSelectedHitObject(_ =>
+        {
+            Assert.AreEqual("karaoke", timeTag.RomajiText);
+        });
+
+        TriggerHandlerChanged(c => c.SetTimeTagRomajiText(timeTag, "  "));
+
+        AssertSelectedHitObject(_ =>
+        {
+            Assert.AreEqual(string.Empty, timeTag.RomajiText);
+        });
+    }
+
+    [Test]
     public void TestShiftingTimeTagTime()
     {
         var timeTag = new TimeTag(new TextIndex());

@@ -11,6 +11,10 @@ public interface ILyricTimeTagsChangeHandler : ILyricListPropertyChangeHandler<T
 {
     void SetTimeTagTime(TimeTag timeTag, double time);
 
+    void SetTimeTagInitialRomaji(TimeTag timeTag, bool initialRomaji);
+
+    void SetTimeTagRomajiText(TimeTag timeTag, string romaji);
+
     void ShiftingTimeTagTime(IEnumerable<TimeTag> timeTags, double offset);
 
     void ClearTimeTagTime(TimeTag timeTag);
