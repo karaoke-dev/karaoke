@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
@@ -27,16 +28,15 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
 
     protected override RubyTag[] GenerateFromItem(Lyric item)
     {
-        string text = item.Text;
-        var tags = new List<RubyTag>();
-
         // Tokenize the text
+        string text = item.Text;
         var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
 
-        // Get result and offset
-        var result = tokenStream.GetAttribute<ICharTermAttribute>();
-        var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
+        return getProcessingRubyTags(text, tokenStream, Config).ToArray();
+    }
 
+    private static IEnumerable<RubyTag> getProcessingRubyTags(string text, TokenStream tokenStream, JaRubyTagGeneratorConfig config)
+    {
         // Reset the stream and convert all result
         tokenStream.Reset();
 
@@ -46,35 +46,37 @@ public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
             tokenStream.ClearAttributes();
             tokenStream.IncrementToken();
 
+            // Get result and offset
+            var charTermAttribute = tokenStream.GetAttribute<ICharTermAttribute>();
+            var offsetAttribute = tokenStream.GetAttribute<IOffsetAttribute>();
+
             // Get parsed result, result is Katakana.
-            string katakana = result.ToString();
+            string katakana = charTermAttribute.ToString();
             if (string.IsNullOrEmpty(katakana))
                 break;
 
             // Convert to Hiragana as default.
             string hiragana = JpStringUtils.ToHiragana(katakana);
 
-            if (!Config.EnableDuplicatedRuby.Value)
+            if (!config.EnableDuplicatedRuby.Value)
             {
                 // Not add duplicated ruby if same as parent.
-                string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+                string parentText = text[offsetAttribute.StartOffset..offsetAttribute.EndOffset];
                 if (parentText == katakana || parentText == hiragana)
                     continue;
             }
 
             // Make tag
-            tags.Add(new RubyTag
+            yield return new RubyTag
             {
-                Text = Config.RubyAsKatakana.Value ? katakana : hiragana,
-                StartIndex = offsetAtt.StartOffset,
-                EndIndex = offsetAtt.EndOffset - 1,
-            });
+                Text = config.RubyAsKatakana.Value ? katakana : hiragana,
+                StartIndex = offsetAttribute.StartOffset,
+                EndIndex = offsetAttribute.EndOffset - 1,
+            };
         }
 
         // Dispose
         tokenStream.End();
         tokenStream.Dispose();
-
-        return tags.ToArray();
     }
 }
