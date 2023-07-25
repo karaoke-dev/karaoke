@@ -5,6 +5,7 @@ using System.Globalization;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
@@ -31,7 +32,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
 
     [Test]
     [Description("Should be able to generate the property if the lyric is not reference to other lyric.")]
-    public void CheckHappyCase()
+    public void ChangeWithNormalLyric()
     {
         // for detect reference lyric.
         if (isLyricReferenceChangeHandler())
@@ -69,6 +70,29 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
         TriggerHandlerChanged(c =>
         {
             Assert.DoesNotThrow(c.AutoGenerate);
+        });
+    }
+
+    [Test]
+    [Description("Should not be able to generate the property if the lyric is missing detectable property.")]
+    public void ChangeWithMissingPropertyLyric()
+    {
+        PrepareHitObject(() => new Lyric());
+
+        TriggerHandlerChanged(c =>
+        {
+            Assert.IsFalse(c.CanGenerate());
+        });
+
+        TriggerHandlerChanged(c =>
+        {
+            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics());
+        });
+
+        TriggerHandlerChanged(c =>
+        {
+            var exception = Assert.Catch(c.AutoGenerate);
+            Assert.Contains(exception?.GetType(), new[] { typeof(GeneratorNotSupportedException), typeof(DetectorNotSupportedException) });
         });
     }
 
