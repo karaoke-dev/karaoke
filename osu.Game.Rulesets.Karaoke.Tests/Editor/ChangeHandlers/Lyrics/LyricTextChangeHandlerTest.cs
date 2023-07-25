@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -62,6 +63,6 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
             Text = "カラ",
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.InsertText(2, "オケ"));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.InsertText(2, "オケ"));
     }
 }

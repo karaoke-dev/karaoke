@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -97,6 +98,6 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             Text = "カラオケ",
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
     }
 }

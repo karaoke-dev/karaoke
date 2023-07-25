@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -99,7 +100,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
             },
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.ChangeText("からおけ"));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.ChangeText("からおけ"));
     }
 
     [Test]

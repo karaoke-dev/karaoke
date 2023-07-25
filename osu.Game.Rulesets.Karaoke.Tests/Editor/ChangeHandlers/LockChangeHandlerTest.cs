@@ -77,6 +77,6 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
             ReferenceLyricConfig = new SyncLyricConfig(),
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.Lock(LockState.Full));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.Lock(LockState.Full));
     }
 }

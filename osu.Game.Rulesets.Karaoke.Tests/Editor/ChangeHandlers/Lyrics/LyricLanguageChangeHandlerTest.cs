@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -82,6 +83,6 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
     public void TestSetLanguageWithReferenceLyric()
     {
         PrepareLyricWithSyncConfig(new Lyric());
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.SetLanguage(new CultureInfo("ja")));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.SetLanguage(new CultureInfo("ja")));
     }
 }

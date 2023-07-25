@@ -4,6 +4,7 @@
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
@@ -186,7 +187,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         if (syncSinger)
         {
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(singer));
+            TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.Add(singer));
         }
         else
         {

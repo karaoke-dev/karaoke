@@ -4,6 +4,7 @@
 using System.Globalization;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -131,7 +132,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
             Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics());
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate());
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.AutoGenerate());
     }
 
     private bool isLyricReferenceChangeHandler()

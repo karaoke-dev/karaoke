@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -268,7 +269,7 @@ public partial class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandl
             Language = new CultureInfo(17),
         });
 
-        TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RomajiTag
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.Add(new RomajiTag
         {
             StartIndex = 0,
             EndIndex = 0,
