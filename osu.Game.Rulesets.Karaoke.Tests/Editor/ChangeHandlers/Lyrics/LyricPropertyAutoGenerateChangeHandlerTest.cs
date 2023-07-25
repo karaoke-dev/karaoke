@@ -6,6 +6,9 @@ using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
@@ -33,7 +36,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
         if (isLyricReferenceChangeHandler())
             return;
 
-        PrepareLyricWithSyncConfig(new Lyric
+        PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
             Language = new CultureInfo(17), // for auto-generate ruby and romaji.
@@ -45,6 +48,10 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
                 new TimeTag(new TextIndex(3), 3000),
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
             },
+            // has reference lyric.
+            ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(1),
+            ReferenceLyric = new Lyric().ChangeId(1),
+            ReferenceLyricConfig = new SyncLyricConfig(),
         });
 
         TriggerHandlerChanged(c =>
