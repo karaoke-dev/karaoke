@@ -12,6 +12,6 @@ public abstract partial class BaseHitObjectPropertyChangeHandlerTest<TChangeHand
 {
     protected void TriggerHandlerChangedWithChangeForbiddenException(Action<TChangeHandler> c)
     {
-        TriggerHandlerChangedWithException<HitObjectPropertyChangeHandler<THitObject>.ChangeForbiddenException>(c);
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c);
     }
 }
