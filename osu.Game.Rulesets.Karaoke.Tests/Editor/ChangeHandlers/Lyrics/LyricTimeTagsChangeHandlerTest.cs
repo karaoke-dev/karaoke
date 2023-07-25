@@ -561,7 +561,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
         // will have exception because the time-tag cannot move right.
         TriggerHandlerChanged(c =>
         {
-            Assert.Catch<ArgumentOutOfRangeException>(() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
                 var targetTimeTag = lyric.TimeTags[0];
