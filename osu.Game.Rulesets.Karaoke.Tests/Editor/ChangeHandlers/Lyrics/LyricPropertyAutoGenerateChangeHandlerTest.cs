@@ -30,6 +30,49 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
     protected override bool IncludeAutoGenerator => true;
 
     [Test]
+    [Description("Should be able to generate the property if the lyric is not reference to other lyric.")]
+    public void CheckHappyCase()
+    {
+        // for detect reference lyric.
+        if (isLyricReferenceChangeHandler())
+        {
+            PrepareHitObject(() => new Lyric
+            {
+                Text = "karaoke",
+            }, false);
+        }
+
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "karaoke",
+            Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+            TimeTags = new[] // for auto-generate notes.
+            {
+                new TimeTag(new TextIndex(0), 0),
+                new TimeTag(new TextIndex(1), 1000),
+                new TimeTag(new TextIndex(2), 2000),
+                new TimeTag(new TextIndex(3), 3000),
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
+            },
+        });
+
+        TriggerHandlerChanged(c =>
+        {
+            Assert.IsTrue(c.CanGenerate());
+        });
+
+        TriggerHandlerChanged(c =>
+        {
+            Assert.IsEmpty(c.GetGeneratorNotSupportedLyrics());
+        });
+
+        TriggerHandlerChanged(c =>
+        {
+            Assert.DoesNotThrow(c.AutoGenerate);
+        });
+    }
+
+    [Test]
     [Description("Should not be able to generate the property if the lyric is reference to other lyric.")]
     public void CheckWithReferencedLyric()
     {
