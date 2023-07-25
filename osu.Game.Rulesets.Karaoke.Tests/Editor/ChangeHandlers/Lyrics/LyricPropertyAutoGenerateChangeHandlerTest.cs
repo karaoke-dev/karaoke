@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
-using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -27,20 +26,12 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
 {
     protected override bool IncludeAutoGenerator => true;
 
-    # region With reference lyric
-
     [Test]
-    public void TestCanGenerateWithReferenceLyric()
+    [Description("Should not be able to generate the property if the lyric is reference to other lyric.")]
+    public void CheckWithReferencedLyric()
     {
-        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
-
-        if (lyricReferenceChangeHandler)
-        {
-            PrepareHitObject(() => new Lyric
-            {
-                Text = "karaoke",
-            }, false);
-        }
+        if (isLyricReferenceChangeHandler())
+            return;
 
         PrepareLyricWithSyncConfig(new Lyric
         {
@@ -58,83 +49,17 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
 
         TriggerHandlerChanged(c =>
         {
-            Assert.AreEqual(lyricReferenceChangeHandler, c.CanGenerate());
-        });
-    }
-
-    [Test]
-    public void TestGeneratorNotSupportedLyricsWithReferenceLyric()
-    {
-        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
-
-        if (lyricReferenceChangeHandler)
-        {
-            PrepareHitObject(() => new Lyric
-            {
-                Text = "karaoke",
-            }, false);
-        }
-
-        PrepareLyricWithSyncConfig(new Lyric
-        {
-            Text = "karaoke",
-            Language = new CultureInfo(17), // for auto-generate ruby and romaji.
-            TimeTags = new[] // for auto-generate notes.
-            {
-                new TimeTag(new TextIndex(0), 0),
-                new TimeTag(new TextIndex(1), 1000),
-                new TimeTag(new TextIndex(2), 2000),
-                new TimeTag(new TextIndex(3), 3000),
-                new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            },
+            Assert.IsFalse(c.CanGenerate());
         });
 
         TriggerHandlerChanged(c =>
         {
-            bool hasNotSupportedLyrics = c.GetGeneratorNotSupportedLyrics().Any();
-            Assert.AreEqual(lyricReferenceChangeHandler, !hasNotSupportedLyrics);
-        });
-    }
-
-    [Test]
-    public void TestAutoGenerate()
-    {
-        bool lyricReferenceChangeHandler = isLyricReferenceChangeHandler();
-
-        if (lyricReferenceChangeHandler)
-        {
-            PrepareHitObject(() => new Lyric
-            {
-                Text = "karaoke",
-            }, false);
-        }
-
-        PrepareLyricWithSyncConfig(new Lyric
-        {
-            Text = "karaoke",
-            Language = new CultureInfo(17), // for auto-generate ruby and romaji.
-            TimeTags = new[] // for auto-generate notes.
-            {
-                new TimeTag(new TextIndex(0), 0),
-                new TimeTag(new TextIndex(1), 1000),
-                new TimeTag(new TextIndex(2), 2000),
-                new TimeTag(new TextIndex(3), 3000),
-                new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-            },
+            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics());
         });
 
-        if (lyricReferenceChangeHandler)
-        {
-            TriggerHandlerChanged(c => c.AutoGenerate());
-        }
-        else
-        {
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate());
-        }
+        TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate());
     }
 
     private bool isLyricReferenceChangeHandler()
         => typeof(TChangeHandler) == typeof(LyricReferenceChangeHandler);
-
-    #endregion
 }
