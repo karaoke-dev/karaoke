@@ -7,16 +7,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 public readonly struct CuttingCaretPosition : ICharGapCaretPosition
 {
-    public CuttingCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
+    public CuttingCaretPosition(Lyric lyric, int index)
     {
         Lyric = lyric;
         CharGap = index;
-        GenerateType = generateType;
     }
 
     public Lyric Lyric { get; }
 
     public int CharGap { get; }
-
-    public CaretGenerateType GenerateType { get; }
 }

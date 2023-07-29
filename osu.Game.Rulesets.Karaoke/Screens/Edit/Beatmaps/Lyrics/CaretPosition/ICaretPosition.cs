@@ -8,6 +8,4 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 public interface ICaretPosition
 {
     public Lyric Lyric { get; }
-
-    public CaretGenerateType GenerateType { get; }
 }

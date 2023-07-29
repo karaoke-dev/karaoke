@@ -12,5 +12,5 @@ public class CreateRubyTagCaretPositionAlgorithm : CharIndexCaretPositionAlgorit
     {
     }
 
-    protected override CreateRubyTagCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
+    protected override CreateRubyTagCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
 }

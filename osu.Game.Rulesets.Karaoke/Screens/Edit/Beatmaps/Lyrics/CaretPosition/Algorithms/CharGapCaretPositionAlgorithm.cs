@@ -71,7 +71,7 @@ public abstract class CharGapCaretPositionAlgorithm<TCaretPosition> : IndexCaret
     }
 
     protected sealed override TCaretPosition? MoveToTargetLyric(Lyric lyric)
-        => CreateCaretPosition(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
+        => CreateCaretPosition(lyric, GetMinIndex(lyric.Text));
 
     protected sealed override TCaretPosition? MoveToPreviousIndex(TCaretPosition currentPosition)
     {

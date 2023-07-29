@@ -41,7 +41,7 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToPreviousLyric(tCaretPosition);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     public ICaretPosition? MoveToNextLyric(ICaretPosition currentPosition)
@@ -52,25 +52,25 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToNextLyric(tCaretPosition);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     ICaretPosition? ICaretPositionAlgorithm.MoveToFirstLyric()
     {
         var movedCaretPosition = MoveToFirstLyric();
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     ICaretPosition? ICaretPositionAlgorithm.MoveToLastLyric()
     {
         var movedCaretPosition = MoveToLastLyric();
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     ICaretPosition? ICaretPositionAlgorithm.MoveToTargetLyric(Lyric lyric)
     {
         var movedCaretPosition = MoveToTargetLyric(lyric);
-        return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
+        return PostValidate(movedCaretPosition);
     }
 
     protected virtual void PreValidate(TCaretPosition input)
@@ -78,7 +78,7 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
         Debug.Assert(PositionMovable(input));
     }
 
-    protected TCaretPosition? PostValidate(TCaretPosition? movedCaretPosition, CaretGenerateType generateType)
+    protected TCaretPosition? PostValidate(TCaretPosition? movedCaretPosition)
     {
         if (movedCaretPosition == null)
             return null;
@@ -87,7 +87,6 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
             return null;
 
         PreValidate(movedCaretPosition.Value);
-        Debug.Assert(movedCaretPosition.Value.GenerateType == generateType);
 
         return movedCaretPosition;
     }

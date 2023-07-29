@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -53,33 +52,24 @@ public abstract partial class ModeStateWithBlueprintContainer<TObject> : Compone
             return;
 
         var lyric = caret.Lyric;
-        var generateType = caret.GenerateType;
 
         SelectedItems.Clear();
         bool locked = IsWriteLyricPropertyLocked(lyric);
         if (locked)
             return;
 
-        switch (generateType)
-        {
-            case CaretGenerateType.Action:
-                if (SelectFirstProperty(lyric))
-                {
-                    var firstItem = SelectableProperties(lyric).FirstOrDefault();
+        // should not select the items from the lyric when mouse click to the lyric.
+        // because selected items will be clear when mouse up.
+        bool mousePressed = isMousePressed();
+        if (mousePressed || !SelectFirstProperty(lyric))
+            return;
 
-                    if (firstItem != null)
-                        SelectedItems.Add(firstItem);
-                }
-
-                break;
-
-            case CaretGenerateType.TargetLyric:
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        var firstItem = SelectableProperties(lyric).FirstOrDefault();
+        if (firstItem != null)
+            SelectedItems.Add(firstItem);
     }
+
+    private bool isMousePressed() => GetContainingInputManager().CurrentState.Mouse.Buttons.HasAnyButtonPressed;
 
     protected abstract bool IsWriteLyricPropertyLocked(Lyric lyric);
 

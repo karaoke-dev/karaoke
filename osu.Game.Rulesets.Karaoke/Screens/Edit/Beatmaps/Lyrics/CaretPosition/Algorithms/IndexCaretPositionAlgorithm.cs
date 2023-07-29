@@ -28,7 +28,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
 
     protected abstract TCaretPosition? MoveToLastIndex(Lyric lyric);
 
-    protected abstract TCaretPosition CreateCaretPosition(Lyric lyric, TCaretIndex index, CaretGenerateType generateType = CaretGenerateType.Action);
+    protected abstract TCaretPosition CreateCaretPosition(Lyric lyric, TCaretIndex index);
 
     public IIndexCaretPosition? MoveToPreviousIndex(IIndexCaretPosition currentPosition)
     {
@@ -38,7 +38,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
         PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToPreviousIndex(tCaretPosition);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     public IIndexCaretPosition? MoveToNextIndex(IIndexCaretPosition currentPosition)
@@ -49,19 +49,19 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
         PreValidate(tCaretPosition);
 
         var movedCaretPosition = MoveToNextIndex(tCaretPosition);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToFirstIndex(Lyric lyric)
     {
         var movedCaretPosition = MoveToFirstIndex(lyric);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToLastIndex(Lyric lyric)
     {
         var movedCaretPosition = MoveToLastIndex(lyric);
-        return PostValidate(movedCaretPosition, CaretGenerateType.Action);
+        return PostValidate(movedCaretPosition);
     }
 
     IIndexCaretPosition? IIndexCaretPositionAlgorithm.MoveToTargetLyric<TIndex>(Lyric lyric, TIndex index)
@@ -69,7 +69,7 @@ public abstract class IndexCaretPositionAlgorithm<TCaretPosition, TCaretIndex> :
         if (index is not TCaretIndex caretIndex)
             throw new InvalidCastException();
 
-        var movedCaretPosition = CreateCaretPosition(lyric, caretIndex, CaretGenerateType.TargetLyric);
-        return PostValidate(movedCaretPosition, CaretGenerateType.TargetLyric);
+        var movedCaretPosition = CreateCaretPosition(lyric, caretIndex);
+        return PostValidate(movedCaretPosition);
     }
 }

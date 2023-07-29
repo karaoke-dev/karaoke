@@ -58,5 +58,5 @@ public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCar
         return new NavigateCaretPosition(lyric);
     }
 
-    protected override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
+    protected override NavigateCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric);
 }
