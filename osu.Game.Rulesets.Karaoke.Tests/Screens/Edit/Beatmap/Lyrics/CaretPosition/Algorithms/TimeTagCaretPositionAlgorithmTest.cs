@@ -214,12 +214,6 @@ public class TimeTagCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithm
 
     #endregion
 
-    protected override void AssertEqual(TimeTagCaretPosition expected, TimeTagCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.TimeTag, actual.TimeTag);
-    }
-
     private static TimeTagCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);

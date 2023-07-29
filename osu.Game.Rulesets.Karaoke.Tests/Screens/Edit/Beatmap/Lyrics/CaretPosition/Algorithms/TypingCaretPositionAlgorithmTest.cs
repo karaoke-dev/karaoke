@@ -169,12 +169,6 @@ public class TypingCaretPositionAlgorithmTest : BaseIndexCaretPositionAlgorithmT
 
     #endregion
 
-    protected override void AssertEqual(TypingCaretPosition expected, TypingCaretPosition actual)
-    {
-        Assert.AreEqual(expected.Lyric, actual.Lyric);
-        Assert.AreEqual(expected.CharGap, actual.CharGap);
-    }
-
     private static TypingCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
     {
         var lyric = lyrics.ElementAtOrDefault(lyricIndex);
