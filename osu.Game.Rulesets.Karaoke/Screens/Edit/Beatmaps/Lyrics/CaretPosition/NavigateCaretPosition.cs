@@ -7,13 +7,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 public readonly struct NavigateCaretPosition : ICaretPosition
 {
-    public NavigateCaretPosition(Lyric lyric, CaretGenerateType generateType = CaretGenerateType.Action)
+    public NavigateCaretPosition(Lyric lyric)
     {
         Lyric = lyric;
-        GenerateType = generateType;
     }
 
     public Lyric Lyric { get; }
-
-    public CaretGenerateType GenerateType { get; }
 }

@@ -7,16 +7,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition
 {
-    public TimeTagIndexCaretPosition(Lyric lyric, int charIndex, CaretGenerateType generateType = CaretGenerateType.Action)
+    public TimeTagIndexCaretPosition(Lyric lyric, int charIndex)
     {
         Lyric = lyric;
         CharIndex = charIndex;
-        GenerateType = generateType;
     }
 
     public Lyric Lyric { get; }
 
     public int CharIndex { get; }
-
-    public CaretGenerateType GenerateType { get; }
 }

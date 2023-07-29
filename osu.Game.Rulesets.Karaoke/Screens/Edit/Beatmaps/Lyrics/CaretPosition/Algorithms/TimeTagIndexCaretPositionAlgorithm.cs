@@ -16,5 +16,5 @@ public class TimeTagIndexCaretPositionAlgorithm : CharIndexCaretPositionAlgorith
     {
     }
 
-    protected override TimeTagIndexCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
+    protected override TimeTagIndexCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
 }

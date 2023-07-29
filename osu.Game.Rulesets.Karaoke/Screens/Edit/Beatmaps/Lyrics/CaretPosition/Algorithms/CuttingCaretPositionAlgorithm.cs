@@ -15,7 +15,7 @@ public class CuttingCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<Cutti
     {
     }
 
-    protected override CuttingCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
+    protected override CuttingCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
 
     protected override int GetMinIndex(string text) => 1;
 

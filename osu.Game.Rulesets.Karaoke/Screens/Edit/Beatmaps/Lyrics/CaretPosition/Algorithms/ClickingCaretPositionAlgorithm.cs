@@ -40,5 +40,5 @@ public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCar
         return null;
     }
 
-    protected override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric, CaretGenerateType.TargetLyric);
+    protected override ClickingCaretPosition? MoveToTargetLyric(Lyric lyric) => new(lyric);
 }

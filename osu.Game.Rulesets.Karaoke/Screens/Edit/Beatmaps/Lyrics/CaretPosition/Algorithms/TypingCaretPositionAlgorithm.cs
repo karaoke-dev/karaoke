@@ -15,7 +15,7 @@ public class TypingCaretPositionAlgorithm : CharGapCaretPositionAlgorithm<Typing
     {
     }
 
-    protected override TypingCaretPosition CreateCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action) => new(lyric, index, generateType);
+    protected override TypingCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
 
     protected override int GetMinIndex(string text) => 0;
 
