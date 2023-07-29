@@ -19,7 +19,7 @@ public abstract partial class HitObjectPropertyChangeHandler<THitObject> : HitOb
     {
         // note: should not check lyric in the perform on selection because it will let change handler in lazer broken.
         if (beatmap.SelectedHitObjects.OfType<THitObject>().Any(IsWritePropertyLocked))
-            throw new ChangeForbiddenException();
+            throw new ChangeForbiddenException("This property might be locked or it's a reference property.");
 
         base.PerformOnSelection(action);
     }
@@ -28,12 +28,4 @@ public abstract partial class HitObjectPropertyChangeHandler<THitObject> : HitOb
 
     public virtual bool IsSelectionsLocked()
         => beatmap.SelectedHitObjects.OfType<THitObject>().Any(IsWritePropertyLocked);
-
-    public class ChangeForbiddenException : InvalidOperationException
-    {
-        public ChangeForbiddenException()
-            : base("This property might be locked or it's a reference property.")
-        {
-        }
-    }
 }

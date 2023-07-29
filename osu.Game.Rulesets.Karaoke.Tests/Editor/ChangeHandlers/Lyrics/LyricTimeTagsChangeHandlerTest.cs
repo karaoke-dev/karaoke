@@ -7,6 +7,7 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -560,7 +561,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
         // will have exception because the time-tag cannot move right.
         TriggerHandlerChanged(c =>
         {
-            Assert.Catch<ArgumentOutOfRangeException>(() =>
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
                 var targetTimeTag = lyric.TimeTags[0];
@@ -598,7 +599,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         if (syncTimeTag)
         {
-            TriggerHandlerChangedWithChangeForbiddenException(c => c.SetTimeTagTime(timeTag, 2000));
+            TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.SetTimeTagTime(timeTag, 2000));
         }
         else
         {
