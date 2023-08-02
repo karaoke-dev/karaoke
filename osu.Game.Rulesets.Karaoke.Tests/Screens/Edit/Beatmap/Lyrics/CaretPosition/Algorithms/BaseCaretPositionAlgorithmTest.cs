@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -99,7 +98,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         }
         else
         {
-            Assert.IsTrue(EqualityComparer<TCaret>.Default.Equals(expected.Value, actual.Value));
+            Assert.AreEqual(expected.Value, actual.Value);
         }
     }
 
