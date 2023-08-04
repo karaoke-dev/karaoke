@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosit
 public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret>
     where TAlgorithm : IIndexCaretPositionAlgorithm where TCaret : struct, IIndexCaretPosition
 {
-    protected void TestMoveToPreviousIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToPreviousIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -23,7 +23,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToNextIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToNextIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -35,7 +35,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToFirstIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToFirstIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -47,7 +47,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToLastIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToLastIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -59,7 +59,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         where TIndex : notnull
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -13,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosit
 
 public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where TAlgorithm : ICaretPositionAlgorithm where TCaret : struct, ICaretPosition
 {
-    protected void TestPositionMovable(Lyric[] lyrics, TCaret caret, bool expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestPositionMovable(Lyric[] lyrics, TCaret caret, bool expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -30,7 +29,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         Assert.AreEqual(expected, actual);
     }
 
-    protected void TestMoveToPreviousLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToPreviousLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -42,7 +41,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToNextLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToNextLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -54,7 +53,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToFirstLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToFirstLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -66,7 +65,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToLastLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToLastLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -78,7 +77,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         AssertEqual(expected, actual);
     }
 
-    protected void TestMoveToTargetLyric(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
+    protected static void TestMoveToTargetLyric(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
         var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
         if (algorithm == null)
@@ -90,7 +89,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         AssertEqual(expected, actual);
     }
 
-    protected void AssertEqual(TCaret? expected, TCaret? actual)
+    protected static void AssertEqual(TCaret? expected, TCaret? actual)
     {
         if (expected == null || actual == null)
         {
@@ -99,7 +98,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         }
         else
         {
-            Assert.IsTrue(EqualityComparer<TCaret>.Default.Equals(expected.Value, actual.Value));
+            Assert.AreEqual(expected.Value, actual.Value);
         }
     }
 
