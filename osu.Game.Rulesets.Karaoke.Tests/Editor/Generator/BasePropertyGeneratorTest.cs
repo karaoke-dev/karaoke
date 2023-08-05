@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator;
 
@@ -29,24 +30,16 @@ public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty, TC
         return config;
     }
 
-    protected static TGenerator GenerateGenerator(TConfig config)
-    {
-        if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
-            throw new ArgumentNullException(nameof(generator));
-
-        return generator;
-    }
-
     protected static void CheckCanGenerate(TItem item, bool canGenerate, TConfig config)
     {
-        var generator = GenerateGenerator(config);
+        var generator = ActivatorUtils.CreateInstance<TGenerator>(config);
 
         CheckCanGenerate(item, canGenerate, generator);
     }
 
     protected void CheckGenerateResult(TItem item, TProperty expected, TConfig config)
     {
-        var generator = GenerateGenerator(config);
+        var generator = ActivatorUtils.CreateInstance<TGenerator>(config);
 
         CheckGenerateResult(item, expected, generator);
     }

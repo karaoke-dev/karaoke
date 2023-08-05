@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator;
 
@@ -29,24 +30,16 @@ public abstract class BasePropertyDetectorTest<TDetector, TItem, TProperty, TCon
         return config;
     }
 
-    protected static TDetector GenerateDetector(TConfig config)
-    {
-        if (Activator.CreateInstance(typeof(TDetector), config) is not TDetector detector)
-            throw new ArgumentNullException(nameof(detector));
-
-        return detector;
-    }
-
     protected static void CheckCanDetect(TItem item, bool canDetect, TConfig config)
     {
-        var detector = GenerateDetector(config);
+        var detector = ActivatorUtils.CreateInstance<TDetector>(config);
 
         CheckCanDetect(item, canDetect, detector);
     }
 
     protected void CheckDetectResult(TItem item, TProperty expected, TConfig config)
     {
-        var detector = GenerateDetector(config);
+        var detector = ActivatorUtils.CreateInstance<TDetector>(config);
 
         CheckDetectResult(item, expected, detector);
     }
