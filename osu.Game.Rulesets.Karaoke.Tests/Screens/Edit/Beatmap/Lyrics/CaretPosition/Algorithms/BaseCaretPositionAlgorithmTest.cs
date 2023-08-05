@@ -7,6 +7,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosition.Algorithms;
 
@@ -14,9 +15,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 {
     protected static void TestPositionMovable(Lyric[] lyrics, TCaret caret, bool expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -31,9 +30,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     protected static void TestMoveToPreviousLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -43,9 +40,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     protected static void TestMoveToNextLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -55,9 +50,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     protected static void TestMoveToFirstLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -67,9 +60,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     protected static void TestMoveToLastLyric(Lyric[] lyrics, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -79,15 +70,16 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     protected static void TestMoveToTargetLyric(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
         var actual = algorithm.MoveToTargetLyric(lyric) as TCaret?;
         AssertEqual(expected, actual);
     }
+
+    protected static TAlgorithm CreateAlgorithm(Lyric[] lyrics)
+        => ActivatorUtils.CreateInstance<TAlgorithm>(new object[] { lyrics });
 
     protected static void AssertEqual(TCaret? expected, TCaret? actual)
     {

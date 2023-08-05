@@ -13,9 +13,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
 {
     protected static void TestMoveToPreviousIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -25,9 +23,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
 
     protected static void TestMoveToNextIndex(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -37,9 +33,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
 
     protected static void TestMoveToFirstIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -49,9 +43,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
 
     protected static void TestMoveToLastIndex(Lyric[] lyrics, Lyric lyric, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
@@ -62,9 +54,7 @@ public abstract class BaseIndexCaretPositionAlgorithmTest<TAlgorithm, TCaret> : 
     protected static void TestMoveToTargetLyric<TIndex>(Lyric[] lyrics, Lyric lyric, TIndex index, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
         where TIndex : notnull
     {
-        var algorithm = (TAlgorithm?)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
-        if (algorithm == null)
-            throw new ArgumentNullException();
+        var algorithm = CreateAlgorithm(lyrics);
 
         invokeAlgorithm?.Invoke(algorithm);
 
