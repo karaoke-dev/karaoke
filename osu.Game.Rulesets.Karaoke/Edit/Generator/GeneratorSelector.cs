@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 
@@ -33,10 +34,7 @@ public abstract class GeneratorSelector<TItem, TProperty, TBaseConfig> : Propert
         generators.Add(selector, new Lazy<PropertyGenerator<TItem, TProperty>>(() =>
         {
             var config = generatorConfigManager.Get<TConfig>();
-            if (Activator.CreateInstance(typeof(TGenerator), config) is not PropertyGenerator<TItem, TProperty> propertyGenerator)
-                throw new InvalidCastException();
-
-            return propertyGenerator;
+            return ActivatorUtils.CreateInstance<TGenerator>(config);
         }));
     }
 
