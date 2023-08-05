@@ -21,7 +21,7 @@ public class LyricConverter : JsonConverter<Lyric>
 
         var newReader = jObject.CreateReader();
 
-        var instance = (Lyric)Activator.CreateInstance(objectType)!;
+        var instance = Activator.CreateInstance<Lyric>();
         serializer.Populate(newReader, instance);
         return instance;
     }
