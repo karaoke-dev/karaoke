@@ -23,48 +23,47 @@ public abstract partial class LyricPropertyChangeHandler : HitObjectPropertyChan
     protected LyricPropertyDetector<TProperty, TConfig> GetDetector<TProperty, TConfig>()
         where TConfig : GeneratorConfig, new()
     {
-        // using reflection to get the detector.
         var config = getGeneratorConfig<TConfig>();
-        var detectorType = getChildType(typeof(LyricPropertyDetector<,>).MakeGenericType(typeof(TProperty), typeof(TConfig)));
-        var detector = Activator.CreateInstance(detectorType, config) as LyricPropertyDetector<TProperty, TConfig>;
-        return detector ?? throw new InvalidOperationException();
+        return createInstance<LyricPropertyDetector<TProperty, TConfig>>(config);
     }
 
     protected LyricPropertyDetector<TProperty, TConfig> GetDetector<TProperty, TConfig>(IEnumerable<Lyric> lyrics)
         where TConfig : GeneratorConfig, new()
     {
-        // using reflection to get the detector.
         var config = getGeneratorConfig<TConfig>();
-        var detectorType = getChildType(typeof(LyricPropertyDetector<,>).MakeGenericType(typeof(TProperty), typeof(TConfig)));
-        var detector = Activator.CreateInstance(detectorType, lyrics, config) as LyricPropertyDetector<TProperty, TConfig>;
-        return detector ?? throw new InvalidOperationException();
+        return createInstance<LyricPropertyDetector<TProperty, TConfig>>(lyrics, config);
     }
 
     protected LyricPropertyGenerator<TProperty, TConfig> GetGenerator<TProperty, TConfig>()
         where TConfig : GeneratorConfig, new()
     {
-        // using reflection to get the generator.
         var config = getGeneratorConfig<TConfig>();
-        var generatorType = getChildType(typeof(LyricPropertyGenerator<,>).MakeGenericType(typeof(TProperty), typeof(TConfig)));
-        var generator = Activator.CreateInstance(generatorType, config) as LyricPropertyGenerator<TProperty, TConfig>;
-        return generator ?? throw new InvalidOperationException();
+        return createInstance<LyricPropertyGenerator<TProperty, TConfig>>(config);
     }
 
     protected LyricGeneratorSelector<TProperty, TBaseConfig> GetSelector<TProperty, TBaseConfig>()
         where TBaseConfig : GeneratorConfig
     {
-        // using reflection to get the selector.
-        var selectorType = getChildType(typeof(LyricGeneratorSelector<,>).MakeGenericType(typeof(TProperty), typeof(TBaseConfig)));
-        var selector = Activator.CreateInstance(selectorType, generatorConfigManager) as LyricGeneratorSelector<TProperty, TBaseConfig>;
-        return selector ?? throw new InvalidOperationException();
+        return createInstance<LyricGeneratorSelector<TProperty, TBaseConfig>>(generatorConfigManager);
     }
 
-    private Type getChildType(Type type)
+    private static TType createInstance<TType>(params object?[]? args)
     {
-        // should get the assembly that the has the class GeneratorConfig.
-        var assembly = typeof(GeneratorConfig).Assembly;
-        return assembly.GetTypes()
-                       .Single(x => type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract);
+        var generatedType = getChildType(typeof(TType));
+
+        var instance = (TType?)Activator.CreateInstance(generatedType, args);
+        if (instance == null)
+            throw new InvalidOperationException();
+
+        return instance;
+
+        static Type getChildType(Type type)
+        {
+            // should get the assembly that the has the class GeneratorConfig.
+            var assembly = typeof(GeneratorConfig).Assembly;
+            return assembly.GetTypes()
+                           .Single(x => type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract);
+        }
     }
 
     private TConfig getGeneratorConfig<TConfig>()

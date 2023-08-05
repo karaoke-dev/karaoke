@@ -90,7 +90,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
 
     public PageInfo DeepClone()
     {
-        var controlPointInfo = (PageInfo)Activator.CreateInstance(GetType())!;
+        var controlPointInfo = Activator.CreateInstance<PageInfo>();
 
         return controlPointInfo;
     }

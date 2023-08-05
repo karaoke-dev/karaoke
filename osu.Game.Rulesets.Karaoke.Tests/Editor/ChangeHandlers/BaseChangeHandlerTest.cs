@@ -57,12 +57,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
     }
 
     protected virtual TChangeHandler CreateChangeHandler()
-    {
-        if (Activator.CreateInstance(typeof(TChangeHandler)) is not TChangeHandler handler)
-            throw new InvalidOperationException("Change handler should have no params in the ctor.");
-
-        return handler;
-    }
+        => Activator.CreateInstance<TChangeHandler>();
 
     [SetUp]
     public virtual void SetUp()
