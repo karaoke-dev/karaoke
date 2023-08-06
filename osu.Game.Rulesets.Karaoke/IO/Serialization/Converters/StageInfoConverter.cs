@@ -3,9 +3,9 @@
 
 using System;
 using System.Reflection;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 

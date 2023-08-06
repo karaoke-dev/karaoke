@@ -5,8 +5,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Extensions;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
@@ -37,7 +37,7 @@ public partial class TimingPointsSection : EditorSection
             private readonly IBindable<int> timingPointsVersion = new Bindable<int>();
 
             [Resolved]
-            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; } = null!;
+            private IClassicStageChangeHandler classicStageChangeHandler { get; set; } = null!;
 
             public DrawableTimingPoint(ClassicLyricTimingPoint item)
                 : base(item)
@@ -46,7 +46,7 @@ public partial class TimingPointsSection : EditorSection
 
             protected override void RemoveItem(ClassicLyricTimingPoint item)
             {
-                beatmapClassicStageChangeHandler.RemoveTimingPoint(item);
+                classicStageChangeHandler.RemoveTimingPoint(item);
             }
 
             [BackgroundDependencyLoader]
@@ -67,7 +67,7 @@ public partial class TimingPointsSection : EditorSection
         private partial class CreateNewTimingPointButton : EditorSectionButton
         {
             [Resolved]
-            private IBeatmapClassicStageChangeHandler beatmapClassicStageChangeHandler { get; set; } = null!;
+            private IClassicStageChangeHandler classicStageChangeHandler { get; set; } = null!;
 
             [Resolved]
             private EditorClock clock { get; set; } = null!;
@@ -78,7 +78,7 @@ public partial class TimingPointsSection : EditorSection
                 Action = () =>
                 {
                     double currentTime = clock.CurrentTime;
-                    beatmapClassicStageChangeHandler.AddTimingPoint(x => x.Time = currentTime);
+                    classicStageChangeHandler.AddTimingPoint(x => x.Time = currentTime);
                 };
             }
         }

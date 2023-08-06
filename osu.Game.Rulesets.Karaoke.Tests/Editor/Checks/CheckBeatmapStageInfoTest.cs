@@ -9,13 +9,13 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapStageInfo<osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic.ClassicStageInfo>;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapStageInfo<osu.Game.Rulesets.Karaoke.Stages.Classic.ClassicStageInfo>;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
