@@ -3,9 +3,9 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
 
-public class ClassicLyricTimingInfoGeneratorConfig : GeneratorConfig
+public class ClassicStageInfoGeneratorConfig : StageInfoGeneratorConfig
 {
     /// <summary>
     /// How may lyric can be in the stage at the same time.

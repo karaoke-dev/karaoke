@@ -3,7 +3,7 @@
 
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 
 /// <summary>
 /// Base interface of the auto-generator.

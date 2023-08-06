@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
 
 public class ClassicStageInfoGenerator : StageInfoGenerator<ClassicStageInfoGeneratorConfig>
 {

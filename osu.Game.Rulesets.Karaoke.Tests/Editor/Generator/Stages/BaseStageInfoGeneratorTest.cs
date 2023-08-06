@@ -2,13 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 using osu.Game.Rulesets.Karaoke.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Stages;
 
 public abstract class BaseStageInfoGeneratorTest<TGenerator, TStageInfo, TConfig>
-    : BaseBeatmapGeneratorTest<TGenerator, StageInfo, TConfig>
+    : BasePropertyGeneratorTest<TGenerator, KaraokeBeatmap, StageInfo, TConfig>
     where TStageInfo : StageInfo
     where TGenerator : StageInfoGenerator<TConfig>
     where TConfig : StageInfoGeneratorConfig, new()

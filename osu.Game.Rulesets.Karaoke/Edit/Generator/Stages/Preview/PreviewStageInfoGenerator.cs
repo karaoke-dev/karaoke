@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
 
 public class PreviewStageInfoGenerator : StageInfoGenerator<PreviewStageInfoGeneratorConfig>
 {

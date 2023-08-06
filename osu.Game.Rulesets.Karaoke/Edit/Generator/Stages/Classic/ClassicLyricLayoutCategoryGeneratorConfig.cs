@@ -4,7 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
 
 public class ClassicLyricLayoutCategoryGeneratorConfig : GeneratorConfig
 {

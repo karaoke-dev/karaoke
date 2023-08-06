@@ -3,7 +3,7 @@
 
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;

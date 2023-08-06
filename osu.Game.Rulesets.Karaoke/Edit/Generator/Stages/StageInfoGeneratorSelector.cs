@@ -5,13 +5,13 @@ using System;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 
 public class StageInfoGeneratorSelector<TStageInfo> : GeneratorSelector<KaraokeBeatmap, StageInfo, StageInfoGeneratorConfig>
     where TStageInfo : StageInfo

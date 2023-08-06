@@ -7,8 +7,6 @@ using osu.Framework.Bindables;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
@@ -17,6 +15,8 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration;
 

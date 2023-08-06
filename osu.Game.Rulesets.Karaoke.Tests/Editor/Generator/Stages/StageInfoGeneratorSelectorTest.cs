@@ -4,14 +4,14 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Stages;
 
 [TestFixture(typeof(ClassicStageInfo))]
 [TestFixture(typeof(PreviewStageInfo))]

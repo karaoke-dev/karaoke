@@ -3,9 +3,9 @@
 
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Stages;
 
 public abstract class BaseStageInfoPropertyGeneratorTest<TGenerator, TObject, TConfig>
     : BasePropertyGeneratorTest<TGenerator, KaraokeBeatmap, TObject, TConfig>
