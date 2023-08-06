@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public interface IBeatmapClassicStageChangeHandler
+public interface IClassicStageChangeHandler
 {
     #region Layout definition
 

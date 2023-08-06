@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class BeatmapStagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapStagesChangeHandler>
+public partial class StagesChangeHandlerTest : BaseChangeHandlerTest<StagesChangeHandler>
 {
     protected override bool IncludeAutoGenerator => true;
 

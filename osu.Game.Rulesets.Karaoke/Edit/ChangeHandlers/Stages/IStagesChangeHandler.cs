@@ -4,9 +4,9 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public interface IBeatmapStagesChangeHandler : IAutoGenerateChangeHandler<StageInfo>
+public interface IStagesChangeHandler : IAutoGenerateChangeHandler<StageInfo>
 {
     LocalisableString? GetGeneratorNotSupportedMessage<TStageInfo>() where TStageInfo : StageInfo;
 

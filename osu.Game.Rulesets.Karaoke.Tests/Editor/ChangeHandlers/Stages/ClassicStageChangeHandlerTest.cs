@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class BeatmapClassicStageChangeHandlerTest : BaseChangeHandlerTest<BeatmapClassicStageChangeHandler>
+public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<ClassicStageChangeHandler>
 {
     #region Layout definition
 

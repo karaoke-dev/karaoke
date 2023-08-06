@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 using osu.Game.Rulesets.Karaoke.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class BeatmapStagesChangeHandler : BeatmapPropertyChangeHandler, IBeatmapStagesChangeHandler
+public partial class StagesChangeHandler : BeatmapPropertyChangeHandler, IStagesChangeHandler
 {
     [Resolved]
     private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; } = null!;

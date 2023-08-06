@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class BeatmapClassicStageChangeHandler : BeatmapPropertyChangeHandler, IBeatmapClassicStageChangeHandler
+public partial class ClassicStageChangeHandler : BeatmapPropertyChangeHandler, IClassicStageChangeHandler
 {
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;

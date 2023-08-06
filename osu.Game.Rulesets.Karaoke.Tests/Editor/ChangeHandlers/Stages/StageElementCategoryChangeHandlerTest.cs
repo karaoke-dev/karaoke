@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Stages;
@@ -14,11 +14,11 @@ using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHandlerTest<BeatmapStageElementCategoryChangeHandlerTest.TestBeatmapStageElementCategoryChangeHandler>
+public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTest<StageElementCategoryChangeHandlerTest.TestStageElementCategoryChangeHandler>
 {
-    protected override TestBeatmapStageElementCategoryChangeHandler CreateChangeHandler()
+    protected override TestStageElementCategoryChangeHandler CreateChangeHandler()
         => new(x => x.OfType<TestStageInfo>().First().Category);
 
     [Test]
@@ -234,9 +234,9 @@ public partial class BeatmapStageElementCategoryChangeHandlerTest : BaseChangeHa
     private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
         => beatmap.StageInfos.OfType<TestStageInfo>().First().Category;
 
-    public partial class TestBeatmapStageElementCategoryChangeHandler : BeatmapStageElementCategoryChangeHandler<TestStageElement, Lyric>
+    public partial class TestStageElementCategoryChangeHandler : StageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
-        public TestBeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TestStageElement, Lyric>> stageCategoryAction)
+        public TestStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TestStageElement, Lyric>> stageCategoryAction)
             : base(stageCategoryAction)
         {
         }

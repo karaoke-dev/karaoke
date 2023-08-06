@@ -8,15 +8,15 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
+namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class BeatmapStageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IBeatmapStageElementCategoryChangeHandler<TStageElement>
+public partial class StageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IStageElementCategoryChangeHandler<TStageElement>
     where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     private readonly Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction;
 
-    public BeatmapStageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction)
+    public StageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction)
     {
         this.stageCategoryAction = stageCategoryAction;
     }
