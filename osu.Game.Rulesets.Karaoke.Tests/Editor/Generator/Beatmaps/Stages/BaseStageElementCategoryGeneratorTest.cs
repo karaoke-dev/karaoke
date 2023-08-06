@@ -6,14 +6,14 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages;
 
 public abstract class BaseLyricStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, TConfig>
     : BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, Lyric, TConfig>
-    where TGenerator : BeatmapPropertyGenerator<TObject, TConfig>
+    where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, Lyric>
     where TStageElement : StageElement, IComparable<TStageElement>, new()
     where TConfig : GeneratorConfig, new()
@@ -21,8 +21,8 @@ public abstract class BaseLyricStageElementCategoryGeneratorTest<TGenerator, TOb
 }
 
 public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, THitObject, TConfig>
-    : BaseBeatmapGeneratorTest<TGenerator, TObject, TConfig>
-    where TGenerator : BeatmapPropertyGenerator<TObject, TConfig>
+    : BaseStageInfoPropertyGeneratorTest<TGenerator, TObject, TConfig>
+    where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, THitObject>
     where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey

@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
 
-public class ClassicLyricTimingInfoGenerator : BeatmapPropertyGenerator<ClassicLyricTimingInfo, ClassicLyricTimingInfoGeneratorConfig>
+public class ClassicLyricTimingInfoGenerator : StageInfoPropertyGenerator<ClassicLyricTimingInfo, ClassicLyricTimingInfoGeneratorConfig>
 {
     public ClassicLyricTimingInfoGenerator(ClassicLyricTimingInfoGeneratorConfig config)
         : base(config)
