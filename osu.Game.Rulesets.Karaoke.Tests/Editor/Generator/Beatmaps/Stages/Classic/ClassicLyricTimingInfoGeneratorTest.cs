@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages.Classic;
 
 public class ClassicLyricTimingInfoGeneratorTest
-    : BaseBeatmapGeneratorTest<ClassicLyricTimingInfoGenerator, ClassicLyricTimingInfo, ClassicLyricTimingInfoGeneratorConfig>
+    : BaseStageInfoPropertyGeneratorTest<ClassicLyricTimingInfoGenerator, ClassicLyricTimingInfo, ClassicLyricTimingInfoGeneratorConfig>
 {
     [Test]
     public void TestCanGenerate()
