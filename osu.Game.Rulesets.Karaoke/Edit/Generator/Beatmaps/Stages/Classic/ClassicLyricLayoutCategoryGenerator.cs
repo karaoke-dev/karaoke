@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Classic;
 
-public class ClassicLyricLayoutCategoryGenerator : BeatmapPropertyGenerator<ClassicLyricLayoutCategory, ClassicLyricLayoutCategoryGeneratorConfig>
+public class ClassicLyricLayoutCategoryGenerator : StageInfoPropertyGenerator<ClassicLyricLayoutCategory, ClassicLyricLayoutCategoryGeneratorConfig>
 {
     public ClassicLyricLayoutCategoryGenerator(ClassicLyricLayoutCategoryGeneratorConfig config)
         : base(config)
