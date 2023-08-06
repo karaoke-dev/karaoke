@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 

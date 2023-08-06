@@ -6,9 +6,9 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 

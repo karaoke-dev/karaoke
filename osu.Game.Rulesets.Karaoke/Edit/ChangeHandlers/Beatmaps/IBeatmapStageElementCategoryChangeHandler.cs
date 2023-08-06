@@ -3,7 +3,7 @@
 
 using System;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 

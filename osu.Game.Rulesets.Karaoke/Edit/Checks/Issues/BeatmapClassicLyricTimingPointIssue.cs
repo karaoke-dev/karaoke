@@ -3,7 +3,7 @@
 
 using System;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 

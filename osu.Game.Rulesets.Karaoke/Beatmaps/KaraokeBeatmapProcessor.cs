@@ -4,12 +4,12 @@
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 

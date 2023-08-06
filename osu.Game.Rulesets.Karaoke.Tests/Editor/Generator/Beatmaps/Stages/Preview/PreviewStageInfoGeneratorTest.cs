@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps.Stages.Preview;

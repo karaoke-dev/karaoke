@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages;
 

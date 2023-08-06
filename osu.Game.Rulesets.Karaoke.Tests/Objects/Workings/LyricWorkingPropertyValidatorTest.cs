@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 

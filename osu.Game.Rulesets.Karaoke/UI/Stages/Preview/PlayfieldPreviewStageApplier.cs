@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osuTK;

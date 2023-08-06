@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
