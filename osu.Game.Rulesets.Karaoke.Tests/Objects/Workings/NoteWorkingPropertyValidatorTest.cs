@@ -3,6 +3,7 @@
 
 using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
@@ -13,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
-public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty>
+public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty, KaraokeBeatmap>
 {
     [Test]
     public void TestPage()

@@ -2,11 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
-public interface IHasWorkingProperty<TWorkingProperty> : IHasWorkingProperty
+public interface IHasWorkingProperty<TWorkingProperty, TFillProperty> : IHasWorkingProperty<TFillProperty>
     where TWorkingProperty : struct, Enum
 {
     bool InvalidateWorkingProperty(TWorkingProperty workingProperty);
@@ -14,7 +13,7 @@ public interface IHasWorkingProperty<TWorkingProperty> : IHasWorkingProperty
     TWorkingProperty[] GetAllInvalidWorkingProperties();
 }
 
-public interface IHasWorkingProperty
+public interface IHasWorkingProperty<in TFillProperty>
 {
-    void ValidateWorkingProperty(KaraokeBeatmap beatmap);
+    void ValidateWorkingProperty(TFillProperty fillProperty);
 }

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffectApplier
+public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty, KaraokeBeatmap>, IHasEffectApplier
 {
     [JsonIgnore]
     private readonly LyricWorkingPropertyValidator workingPropertyValidator;

@@ -60,7 +60,7 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
     {
         // should convert to array here because validate the working property might change the start-time and the end time.
         // which will cause got the wrong item in the array.
-        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
+        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty<KaraokeBeatmap>>().ToArray())
         {
             hitObject.ValidateWorkingProperty(beatmap);
         }
