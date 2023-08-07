@@ -61,10 +61,6 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty, KaraokeBeat
                     ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
                     break;
 
-                case NoteWorkingProperty.EffectApplier:
-                    EffectApplier = getStageEffectApplier(beatmap, this);
-                    break;
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -75,19 +71,22 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty, KaraokeBeat
 
         static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
-
-        static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
-        {
-            var stageInfo = beatmap.CurrentStageInfo;
-            if (stageInfo == null)
-                throw new InvalidCastException();
-
-            return stageInfo.GetStageAppliers(note);
-        }
     }
 
     public void ValidateWorkingProperty(StageInfo stageInfo)
     {
+        foreach (var flag in stageWorkingPropertyValidator.GetAllInvalidFlags())
+        {
+            switch (flag)
+            {
+                case NoteStageWorkingProperty.EffectApplier:
+                    EffectApplier = stageInfo.GetStageAppliers(this);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 
     [JsonIgnore]
@@ -190,7 +189,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty, KaraokeBeat
         {
             EffectApplierBindable.Value = value;
 
-            updateStateByWorkingProperty(NoteWorkingProperty.EffectApplier);
+            updateStateByWorkingProperty(NoteStageWorkingProperty.EffectApplier);
         }
     }
 

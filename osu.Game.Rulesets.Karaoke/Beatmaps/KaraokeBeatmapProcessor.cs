@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
@@ -41,10 +42,10 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
             // should invalidate the working property here because the stage info is changed.
             beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
             {
-                x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-                x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+                x.InvalidateWorkingProperty(LyricStageWorkingProperty.Timing);
+                x.InvalidateWorkingProperty(LyricStageWorkingProperty.EffectApplier);
             });
-            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
+            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteStageWorkingProperty.EffectApplier));
         }
 
         if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
@@ -63,6 +64,15 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
         foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty<KaraokeBeatmap>>().ToArray())
         {
             hitObject.ValidateWorkingProperty(beatmap);
+        }
+
+        var stageInfo = beatmap.CurrentStageInfo;
+        if (stageInfo == null)
+            throw new InvalidCastException();
+
+        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty<StageInfo>>().ToArray())
+        {
+            hitObject.ValidateWorkingProperty(stageInfo);
         }
     }
 }

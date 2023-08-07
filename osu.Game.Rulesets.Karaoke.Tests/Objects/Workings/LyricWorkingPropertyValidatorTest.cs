@@ -7,10 +7,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
@@ -18,40 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
 public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Lyric, LyricWorkingProperty, KaraokeBeatmap>
 {
-    [Test]
-    public void TestStartTime()
-    {
-        var lyric = new Lyric();
-
-        // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.StartTime = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.StartTime, true);
-    }
-
-    [Test]
-    public void TestDuration()
-    {
-        var lyric = new Lyric();
-
-        // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.Duration = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.Duration, true);
-    }
-
-    [Test]
-    public void TestTiming()
-    {
-        var lyric = new Lyric();
-
-        // state is still invalid because duration is not assign.
-        Assert.DoesNotThrow(() => lyric.StartTime = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, false);
-
-        // ok, should be valid now.
-        Assert.DoesNotThrow(() => lyric.Duration = 1000);
-        AssetIsValid(lyric, LyricWorkingProperty.Timing, true);
-    }
-
     [Test]
     public void TestSingers()
     {
@@ -187,16 +150,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = new Lyric().ChangeId(3));
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = null);
-    }
-
-    [Test]
-    public void TestEffectApplier()
-    {
-        var lyric = new Lyric();
-
-        // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.EffectApplier = new LyricClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
-        AssetIsValid(lyric, LyricWorkingProperty.EffectApplier, true);
     }
 
     protected override bool IsInitialStateValid(LyricWorkingProperty flag)
