@@ -11,6 +11,8 @@ public interface IHasWorkingProperty<TWorkingProperty, TFillProperty> : IHasWork
     bool InvalidateWorkingProperty(TWorkingProperty workingProperty);
 
     TWorkingProperty[] GetAllInvalidWorkingProperties();
+
+    bool HasInvalidWorkingProperty() => GetAllInvalidWorkingProperties().Length > 0;
 }
 
 public interface IHasWorkingProperty<in TFillProperty>

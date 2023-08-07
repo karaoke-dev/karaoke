@@ -21,23 +21,35 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty, KaraokeBeatmap>, IHasEffectApplier
+public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty, KaraokeBeatmap>, IHasWorkingProperty<LyricStageWorkingProperty, StageInfo>, IHasEffectApplier
 {
     [JsonIgnore]
     private readonly LyricWorkingPropertyValidator workingPropertyValidator;
 
+    [JsonIgnore]
+    private readonly LyricStageWorkingPropertyValidator stageWorkingPropertyValidator;
+
     public bool InvalidateWorkingProperty(LyricWorkingProperty workingProperty)
         => workingPropertyValidator.Invalidate(workingProperty);
+
+    public bool InvalidateWorkingProperty(LyricStageWorkingProperty workingProperty)
+        => stageWorkingPropertyValidator.Invalidate(workingProperty);
 
     private void updateStateByWorkingProperty(LyricWorkingProperty workingProperty)
         => workingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
 
-    public LyricWorkingProperty[] GetAllInvalidWorkingProperties()
+    private void updateStateByWorkingProperty(LyricStageWorkingProperty workingProperty)
+        => stageWorkingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
+
+    LyricWorkingProperty[] IHasWorkingProperty<LyricWorkingProperty, KaraokeBeatmap>.GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
+
+    LyricStageWorkingProperty[] IHasWorkingProperty<LyricStageWorkingProperty, StageInfo>.GetAllInvalidWorkingProperties()
+        => stageWorkingPropertyValidator.GetAllInvalidFlags();
 
     public void ValidateWorkingProperty(KaraokeBeatmap beatmap)
     {
-        foreach (var flag in GetAllInvalidWorkingProperties())
+        foreach (var flag in workingPropertyValidator.GetAllInvalidFlags())
         {
             switch (flag)
             {
@@ -111,6 +123,10 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty, KaraokeBe
 
             return stageInfo.GetStageAppliers(lyric);
         }
+    }
+
+    public void ValidateWorkingProperty(StageInfo stageInfo)
+    {
     }
 
     [JsonIgnore]
