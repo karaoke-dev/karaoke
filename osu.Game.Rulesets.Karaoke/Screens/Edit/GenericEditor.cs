@@ -36,7 +36,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
 
     public override bool DisallowExternalBeatmapRulesetChanges => true;
 
-    public override bool? AllowTrackAdjustments => false;
+    public override bool? ApplyModTrackAdjustments => false;
 
     public readonly Bindable<TScreenMode> Mode = new();
 
