@@ -35,7 +35,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
     public string FontName { get; }
 
-    public float? Baseline => fontMetrics?.LineHeight;
+    public float? Baseline => fontMetrics?.VerticalMetrics.LineHeight;
 
     protected readonly ResourceStore<byte[]> Store;
 
@@ -89,11 +89,9 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
     public bool HasGlyph(char c)
     {
-        var glyphMetrics = fontMetrics?.GetGlyphMetrics(new CodePoint(c), ColorFontSupport.None).FirstOrDefault();
-        return glyphMetrics?.GlyphType != GlyphType.Fallback;
+        return getGlyphMetrics(c) != null;
     }
 
-    [CanBeNull]
     public CharacterGlyph Get(char character)
     {
         if (fontMetrics == null)
@@ -101,8 +99,8 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
         Debug.Assert(Baseline != null);
 
-        var glyphMetrics = fontMetrics.GetGlyphMetrics(new CodePoint(character), ColorFontSupport.None).FirstOrDefault();
-        if (glyphMetrics == null || glyphMetrics.GlyphType == GlyphType.Fallback)
+        var glyphMetrics = getGlyphMetrics(character);
+        if (glyphMetrics == null)
             return null;
 
         string text = new(new[] { character });
@@ -114,6 +112,27 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
         float advanceWidth2 = glyphMetrics.AdvanceWidth * dpi / glyphMetrics.UnitsPerEm;
         return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, Baseline.Value, this);
+    }
+
+    [CanBeNull]
+    private GlyphMetrics getGlyphMetrics(char character)
+    {
+        if (fontMetrics == null)
+            return null;
+
+        if (!fontMetrics.TryGetGlyphMetrics(new CodePoint(character),
+                TextAttributes.None,
+                TextDecorations.None,
+                LayoutMode.VerticalLeftRight,
+                ColorFontSupport.None,
+                out var glyphMetrics))
+            return null;
+
+        var targetGlyph = glyphMetrics.FirstOrDefault();
+        if (targetGlyph == null || targetGlyph.GlyphType == GlyphType.Fallback)
+            return null;
+
+        return targetGlyph;
     }
 
     public int GetKerning(char left, char right)
