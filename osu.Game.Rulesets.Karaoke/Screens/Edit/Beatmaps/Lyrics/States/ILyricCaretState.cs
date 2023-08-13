@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
@@ -13,13 +14,28 @@ public interface ILyricCaretState
 
     ICaretPosition? CaretPosition => BindableCaretPosition.Value;
 
-    ICaretPosition? ReleaseCaretPosition => BindableReleaseCaretPosition.Value;
+    ICaretPosition? DraggingCaretPosition => BindableDraggingCaretPosition.Value;
 
     IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
     IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
-    IBindable<ICaretPosition?> BindableReleaseCaretPosition { get; }
+    IBindable<ICaretPosition?> BindableDraggingCaretPosition { get; }
+
+    Tuple<IIndexCaretPosition, IIndexCaretPosition>? GetRangeCaretPosition()
+    {
+        if (CaretPosition is not IIndexCaretPosition caretPosition)
+            return null;
+
+        if (DraggingCaretPosition is not IIndexCaretPosition draggableCaretPosition)
+            return new Tuple<IIndexCaretPosition, IIndexCaretPosition>(caretPosition, caretPosition);
+
+        return caretPosition < draggableCaretPosition
+            ? new Tuple<IIndexCaretPosition, IIndexCaretPosition>(caretPosition, draggableCaretPosition)
+            : new Tuple<IIndexCaretPosition, IIndexCaretPosition>(draggableCaretPosition, caretPosition);
+    }
+
+    bool HasDraggingCaretPosition() => DraggingCaretPosition != null;
 
     IBindable<Lyric?> BindableFocusedLyric { get; }
 
@@ -31,7 +47,7 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 
-    bool MoveReleaseCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
+    bool MoveDraggingCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
 
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 
