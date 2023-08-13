@@ -13,13 +13,13 @@ public interface ILyricCaretState
 
     ICaretPosition? CaretPosition => BindableCaretPosition.Value;
 
-    ICaretPosition? ReleaseCaretPosition => BindableReleaseCaretPosition.Value;
+    ICaretPosition? DraggingCaretPosition => BindableDraggingCaretPosition.Value;
 
     IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
     IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
-    IBindable<ICaretPosition?> BindableReleaseCaretPosition { get; }
+    IBindable<ICaretPosition?> BindableDraggingCaretPosition { get; }
 
     IBindable<Lyric?> BindableFocusedLyric { get; }
 
@@ -31,7 +31,7 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 
-    bool MoveReleaseCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
+    bool MoveDraggingCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
 
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 

@@ -22,12 +22,12 @@ public partial class LyricCaretState : Component, ILyricCaretState
 {
     public IBindable<ICaretPosition?> BindableHoverCaretPosition => bindableHoverCaretPosition;
     public IBindable<ICaretPosition?> BindableCaretPosition => bindableCaretPosition;
-    public IBindable<ICaretPosition?> BindableReleaseCaretPosition => bindableReleaseCaretPosition;
+    public IBindable<ICaretPosition?> BindableDraggingCaretPosition => bindableDraggingCaretPosition;
     public IBindable<Lyric?> BindableFocusedLyric => bindableFocusedLyric;
 
     private readonly Bindable<ICaretPosition?> bindableHoverCaretPosition = new();
     private readonly Bindable<ICaretPosition?> bindableCaretPosition = new();
-    private readonly Bindable<ICaretPosition?> bindableReleaseCaretPosition = new();
+    private readonly Bindable<ICaretPosition?> bindableDraggingCaretPosition = new();
     private readonly Bindable<Lyric?> bindableFocusedLyric = new();
 
     private ICaretPositionAlgorithm? algorithm;
@@ -104,7 +104,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         var lyric = bindableCaretPosition.Value?.Lyric;
         bindableHoverCaretPosition.Value = null;
         bindableCaretPosition.Value = getCaretPosition(algorithm, lyric);
-        bindableReleaseCaretPosition.Value = null;
+        bindableDraggingCaretPosition.Value = null;
 
         // should update selection if selected lyric changed.
         postProcess();
@@ -277,7 +277,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveCaretToTargetPosition(caretPosition);
     }
 
-    public bool MoveReleaseCaretIndex<TIndex>(TIndex index)
+    public bool MoveDraggingCaretIndex<TIndex>(TIndex index)
         where TIndex : notnull
     {
         if (!CaretDraggable)
@@ -290,8 +290,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
             return false;
 
-        var releaseCaretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(caretPosition.Lyric, index);
-        return moverReleaseCaretToTargetPosition(releaseCaretPosition);
+        var draggingCaretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(caretPosition.Lyric, index);
+        return moveDraggingCaretToTargetPosition(draggingCaretPosition);
     }
 
     private bool moveCaretToTargetPosition(ICaretPosition? position)
@@ -301,20 +301,20 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         bindableHoverCaretPosition.Value = null;
         bindableCaretPosition.Value = position;
-        bindableReleaseCaretPosition.Value = null;
+        bindableDraggingCaretPosition.Value = null;
 
         postProcess();
 
         return true;
     }
 
-    private bool moverReleaseCaretToTargetPosition(ICaretPosition? position)
+    private bool moveDraggingCaretToTargetPosition(ICaretPosition? position)
     {
         if (position == null)
             return false;
 
         bindableHoverCaretPosition.Value = null;
-        bindableReleaseCaretPosition.Value = position;
+        bindableDraggingCaretPosition.Value = position;
 
         return true;
     }

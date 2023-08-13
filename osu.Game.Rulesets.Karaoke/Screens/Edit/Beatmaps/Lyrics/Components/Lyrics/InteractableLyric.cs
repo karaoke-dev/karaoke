@@ -116,7 +116,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
         if (caretIndex != null)
         {
-            lyricCaretState.MoveReleaseCaretIndex(caretIndex);
+            lyricCaretState.MoveDraggingCaretIndex(caretIndex);
         }
 
         base.OnDrag(e);
