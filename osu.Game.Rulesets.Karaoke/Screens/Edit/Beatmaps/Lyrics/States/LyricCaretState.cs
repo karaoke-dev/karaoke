@@ -261,6 +261,46 @@ public partial class LyricCaretState : Component, ILyricCaretState
         }
     }
 
+    public bool MoveHoverCaretToTargetPosition(Lyric lyric)
+    {
+        var caretPosition = algorithm?.MoveToTargetLyric(lyric);
+        return moveHoverCaretToTargetPosition(caretPosition);
+    }
+
+    public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index)
+        where TIndex : notnull
+    {
+        if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+            return false;
+
+        var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
+        return moveHoverCaretToTargetPosition(caretPosition);
+    }
+
+    private bool moveHoverCaretToTargetPosition(ICaretPosition? position)
+    {
+        if (position == null)
+            return false;
+
+        bindableHoverCaretPosition.Value = position;
+
+        return true;
+    }
+
+    public bool ConfirmHoverCaretPosition()
+    {
+        // place hover caret to target position.
+        var position = BindableHoverCaretPosition.Value;
+        return moveCaretToTargetPosition(position);
+    }
+
+    public bool ClearHoverCaretPosition()
+    {
+        bindableHoverCaretPosition.Value = null;
+
+        return true;
+    }
+
     public bool MoveCaretToTargetPosition(Lyric lyric)
     {
         var caretPosition = algorithm?.MoveToTargetLyric(lyric);
@@ -315,46 +355,6 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         bindableHoverCaretPosition.Value = null;
         bindableRangeCaretPosition.Value = new RangeCaretPosition(startCaretPosition, endCaretPosition);
-
-        return true;
-    }
-
-    public bool MoveHoverCaretToTargetPosition(Lyric lyric)
-    {
-        var caretPosition = algorithm?.MoveToTargetLyric(lyric);
-        return moveHoverCaretToTargetPosition(caretPosition);
-    }
-
-    public bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index)
-        where TIndex : notnull
-    {
-        if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
-            return false;
-
-        var caretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(lyric, index);
-        return moveHoverCaretToTargetPosition(caretPosition);
-    }
-
-    private bool moveHoverCaretToTargetPosition(ICaretPosition? position)
-    {
-        if (position == null)
-            return false;
-
-        bindableHoverCaretPosition.Value = position;
-
-        return true;
-    }
-
-    public bool ConfirmHoverCaretPosition()
-    {
-        // place hover caret to target position.
-        var position = BindableHoverCaretPosition.Value;
-        return moveCaretToTargetPosition(position);
-    }
-
-    public bool ClearHoverCaretPosition()
-    {
-        bindableHoverCaretPosition.Value = null;
 
         return true;
     }

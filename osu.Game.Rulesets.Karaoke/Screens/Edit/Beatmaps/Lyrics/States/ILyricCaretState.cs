@@ -27,12 +27,6 @@ public interface ILyricCaretState
 
     ICaretPosition? GetCaretPositionByAction(MovingCaretAction action);
 
-    bool MoveCaretToTargetPosition(Lyric lyric);
-
-    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
-
-    bool MoveDraggingCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
-
     bool MoveHoverCaretToTargetPosition(Lyric lyric);
 
     bool MoveHoverCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
@@ -40,6 +34,12 @@ public interface ILyricCaretState
     bool ConfirmHoverCaretPosition();
 
     bool ClearHoverCaretPosition();
+
+    bool MoveCaretToTargetPosition(Lyric lyric);
+
+    bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
+
+    bool MoveDraggingCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
 
     void SyncSelectedHitObjectWithCaret();
 
