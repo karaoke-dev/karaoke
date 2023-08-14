@@ -331,7 +331,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             return false;
 
         var endCaretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(caretPosition.Lyric, index);
-        return moveDraggingCaretToTargetPosition(startCaretPosition, endCaretPosition);
+        return moveRangeCaretToTargetPosition(startCaretPosition, endCaretPosition);
     }
 
     private bool moveCaretToTargetPosition(ICaretPosition? position)
@@ -348,7 +348,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return true;
     }
 
-    private bool moveDraggingCaretToTargetPosition(IIndexCaretPosition startCaretPosition, IIndexCaretPosition? endCaretPosition)
+    private bool moveRangeCaretToTargetPosition(IIndexCaretPosition startCaretPosition, IIndexCaretPosition? endCaretPosition)
     {
         if (endCaretPosition == null)
             return false;
