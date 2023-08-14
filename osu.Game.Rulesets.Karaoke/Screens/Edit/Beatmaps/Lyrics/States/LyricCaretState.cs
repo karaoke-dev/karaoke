@@ -363,9 +363,24 @@ public partial class LyricCaretState : Component, ILyricCaretState
     {
         selectedHitObjects.Clear();
 
-        var lyric = bindableCaretPosition.Value?.Lyric;
-        if (lyric != null)
-            selectedHitObjects.Add(lyric);
+        if (bindableRangeCaretPosition.Value is RangeCaretPosition rangeCaretPosition)
+        {
+            addLyricToSelectedHitObjectList(rangeCaretPosition.Start.Lyric);
+            addLyricToSelectedHitObjectList(rangeCaretPosition.End.Lyric);
+        }
+
+        if (bindableCaretPosition.Value?.Lyric != null)
+        {
+            addLyricToSelectedHitObjectList(bindableCaretPosition.Value.Lyric);
+        }
+
+        void addLyricToSelectedHitObjectList(Lyric newLyric)
+        {
+            if (selectedHitObjects.Contains(newLyric))
+                return;
+
+            selectedHitObjects.Add(newLyric);
+        }
     }
 
     public bool CaretEnabled => algorithm != null;
