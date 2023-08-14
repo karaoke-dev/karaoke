@@ -6,10 +6,56 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret : struct, ICaretPosition
+public abstract partial class DrawableRangeCaret<TCaretPosition> : DrawableCaret, ICanAcceptRangeIndex
+    where TCaretPosition : struct, IIndexCaretPosition
+{
+    protected DrawableRangeCaret(DrawableCaretType type)
+        : base(type)
+    {
+    }
+
+    public sealed override void ApplyCaretPosition(ICaretPosition caret)
+    {
+        if (caret is not TCaretPosition tCaret)
+            throw new InvalidCastException();
+
+        ApplyCaretPosition(tCaret);
+    }
+
+    public void ApplyRangeCaretPosition(RangeCaretPosition rangeCaretPosition)
+    {
+        ApplyRangeCaretPosition(rangeCaretPosition.GetRangeCaretPositionWithType<TCaretPosition>());
+    }
+
+    protected abstract void ApplyCaretPosition(TCaretPosition caret);
+
+    protected abstract void ApplyRangeCaretPosition(RangeCaretPosition<TCaretPosition> caret);
+}
+
+public abstract partial class DrawableCaret<TCaretPosition> : DrawableCaret
+    where TCaretPosition : struct, ICaretPosition
+{
+    protected DrawableCaret(DrawableCaretType type)
+        : base(type)
+    {
+    }
+
+    public sealed override void ApplyCaretPosition(ICaretPosition caret)
+    {
+        if (caret is not TCaretPosition tCaret)
+            throw new InvalidCastException();
+
+        ApplyCaretPosition(tCaret);
+    }
+
+    protected abstract void ApplyCaretPosition(TCaretPosition caret);
+}
+
+public abstract partial class DrawableCaret : CompositeDrawable
 {
     [Resolved]
     protected OsuColour Colours { get; private set; } = null!;
@@ -17,9 +63,11 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
     [Resolved]
     protected IPreviewLyricPositionProvider LyricPositionProvider { get; private set; } = null!;
 
+    public readonly DrawableCaretType Type;
+
     protected DrawableCaret(DrawableCaretType type)
-        : base(type)
     {
+        Type = type;
     }
 
     protected static float GetAlpha(DrawableCaretType type) =>
@@ -30,34 +78,12 @@ public abstract partial class DrawableCaret<TCaret> : DrawableCaret where TCaret
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 
-    public sealed override void ApplyCaretPosition(ICaretPosition caret)
-    {
-        if (caret is not TCaret tCaret)
-            throw new InvalidCastException();
+    public abstract void ApplyCaretPosition(ICaretPosition caret);
 
-        ApplyCaretPosition(tCaret);
-    }
-
-    public sealed override void TriggerDisallowEditEffect()
+    public void TriggerDisallowEditEffect()
     {
         TriggerDisallowEditEffect(Colours);
     }
 
-    protected abstract void ApplyCaretPosition(TCaret caret);
-
     protected abstract void TriggerDisallowEditEffect(OsuColour colour);
-}
-
-public abstract partial class DrawableCaret : CompositeDrawable
-{
-    public readonly DrawableCaretType Type;
-
-    protected DrawableCaret(DrawableCaretType type)
-    {
-        Type = type;
-    }
-
-    public abstract void ApplyCaretPosition(ICaretPosition caret);
-
-    public abstract void TriggerDisallowEditEffect();
 }
