@@ -195,22 +195,49 @@ public partial class LyricCaretState : Component, ILyricCaretState
         if (algorithm == null)
             return null;
 
-        var currentPosition = bindableCaretPosition.Value;
-        if (currentPosition == null)
-            return null;
+        var rangeCaretPosition = bindableRangeCaretPosition.Value;
 
-        return action switch
+        if (rangeCaretPosition != null)
         {
-            MovingCaretAction.PreviousLyric => algorithm.MoveToPreviousLyric(currentPosition),
-            MovingCaretAction.NextLyric => algorithm.MoveToNextLyric(currentPosition),
-            MovingCaretAction.FirstLyric => algorithm.MoveToFirstLyric(),
-            MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
-            MovingCaretAction.PreviousIndex => performMoveToPreviousIndex(algorithm, currentPosition),
-            MovingCaretAction.NextIndex => performMoveToNextIndex(algorithm, currentPosition),
-            MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, currentPosition),
-            MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, currentPosition),
-            _ => throw new InvalidEnumArgumentException(nameof(action)),
-        };
+            var startPosition = rangeCaretPosition.Start;
+            var (smallerPosition, largerPosition) = rangeCaretPosition.GetRangeCaretPosition();
+
+            return action switch
+            {
+                MovingCaretAction.PreviousLyric => algorithm.MoveToPreviousLyric(startPosition),
+                MovingCaretAction.NextLyric => algorithm.MoveToNextLyric(startPosition),
+                MovingCaretAction.FirstLyric => algorithm.MoveToFirstLyric(),
+                MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
+                MovingCaretAction.PreviousIndex => isTypingCaret(algorithm) ? smallerPosition : performMoveToPreviousIndex(algorithm, smallerPosition),
+                MovingCaretAction.NextIndex => isTypingCaret(algorithm) ? largerPosition : performMoveToNextIndex(algorithm, largerPosition),
+                MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, smallerPosition),
+                MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, largerPosition),
+                _ => throw new InvalidEnumArgumentException(nameof(action)),
+            };
+
+            static bool isTypingCaret(ICaretPositionAlgorithm algorithm)
+                => algorithm is TypingCaretPositionAlgorithm;
+        }
+
+        var currentPosition = bindableCaretPosition.Value;
+
+        if (currentPosition != null)
+        {
+            return action switch
+            {
+                MovingCaretAction.PreviousLyric => algorithm.MoveToPreviousLyric(currentPosition),
+                MovingCaretAction.NextLyric => algorithm.MoveToNextLyric(currentPosition),
+                MovingCaretAction.FirstLyric => algorithm.MoveToFirstLyric(),
+                MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
+                MovingCaretAction.PreviousIndex => performMoveToPreviousIndex(algorithm, currentPosition),
+                MovingCaretAction.NextIndex => performMoveToNextIndex(algorithm, currentPosition),
+                MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, currentPosition),
+                MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, currentPosition),
+                _ => throw new InvalidEnumArgumentException(nameof(action)),
+            };
+        }
+
+        return null;
 
         static ICaretPosition? performMoveToPreviousIndex(ICaretPositionAlgorithm algorithm, ICaretPosition caretPosition) =>
             performMoveCaret(algorithm, caretPosition,
