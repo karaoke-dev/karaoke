@@ -6,26 +6,43 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-public struct RangeCaretPosition
+public class RangeCaretPosition : RangeCaretPosition<IIndexCaretPosition>
 {
     public RangeCaretPosition(IIndexCaretPosition start, IIndexCaretPosition end)
+        : base(start, end)
+    {
+    }
+
+    public RangeCaretPosition<TIndexCaretPosition> GetRangeCaretPositionWithType<TIndexCaretPosition>()
+        where TIndexCaretPosition : struct, IIndexCaretPosition
+    {
+        if (Start is not TIndexCaretPosition start || End is not TIndexCaretPosition end)
+            throw new InvalidCastException();
+
+        return new RangeCaretPosition<TIndexCaretPosition>(start, end);
+    }
+}
+
+public class RangeCaretPosition<TIndexCaretPosition> where TIndexCaretPosition : IIndexCaretPosition
+{
+    public RangeCaretPosition(TIndexCaretPosition start, TIndexCaretPosition end)
     {
         Start = start;
         End = end;
     }
 
-    public IIndexCaretPosition Start { get; set; }
+    public TIndexCaretPosition Start { get; }
 
-    public IIndexCaretPosition End { get; set; }
+    public TIndexCaretPosition End { get; }
 
     /// <summary>
     /// Get the range caret position with ordered.
     /// </summary>
     /// <returns></returns>
-    public Tuple<IIndexCaretPosition, IIndexCaretPosition> GetRangeCaretPosition()
+    public Tuple<TIndexCaretPosition, TIndexCaretPosition> GetRangeCaretPosition()
     {
         return Start < End
-            ? new Tuple<IIndexCaretPosition, IIndexCaretPosition>(Start, End)
-            : new Tuple<IIndexCaretPosition, IIndexCaretPosition>(End, Start);
+            ? new Tuple<TIndexCaretPosition, TIndexCaretPosition>(Start, End)
+            : new Tuple<TIndexCaretPosition, TIndexCaretPosition>(End, Start);
     }
 }
