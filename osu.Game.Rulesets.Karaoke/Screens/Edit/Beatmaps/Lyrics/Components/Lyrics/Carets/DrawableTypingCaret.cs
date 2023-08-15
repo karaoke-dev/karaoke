@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
@@ -18,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
+public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPosition>
 {
     private const float fading_time = 200;
     private const float caret_move_time = 60;
@@ -70,14 +71,32 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
     protected override void ApplyCaretPosition(TypingCaretPosition caret)
     {
         typingCaretEventHandler?.ChangeLyric(caret.Lyric);
-        typingCaretEventHandler?.ChangeCharGap(caret.CharGap);
+        typingCaretEventHandler?.ChangeCharGapAndOffset(caret.CharGap);
         typingCaretEventHandler?.FocusInputCaretTextBox();
 
         var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
+        changeTheSizeByRect(rect);
+    }
+
+    protected override void ApplyRangeCaretPosition(RangeCaretPosition<TypingCaretPosition> caret)
+    {
+        int minGap = caret.GetRangeCaretPosition().Item1.CharGap;
+        int maxGap = caret.GetRangeCaretPosition().Item2.CharGap;
+
+        typingCaretEventHandler?.ChangeCharGapAndOffset(maxGap, maxGap - minGap);
+        typingCaretEventHandler?.FocusInputCaretTextBox();
+
+        var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndicator(minGap), LyricPositionProvider.GetRectByCharIndicator(maxGap));
+        changeTheSizeByRect(rect);
+    }
+
+    private void changeTheSizeByRect(RectangleF rect)
+    {
         var position = rect.TopLeft;
+        float width = rect.Width + caret_width;
 
         this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), caret_move_time, Easing.Out);
-        this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
+        this.ResizeWidthTo(width, caret_move_time, Easing.Out);
         Height = rect.Height;
     }
 
@@ -121,16 +140,17 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
                 if (charGap == 0)
                     return;
 
-                lyricTextChangeHandler.DeleteLyricText(charGap ?? throw new ArgumentNullException(nameof(charGap)));
+                lyricTextChangeHandler.DeleteLyricText(charGap ?? throw new ArgumentNullException(nameof(charGap)), removeCharAmount);
 
-                moveCaret(-1);
+                moveCaret(-removeCharAmount);
             };
 
             void moveCaret(int offset)
             {
                 // calculate new caret position.
-                int index = (charGap ?? throw new ArgumentNullException(nameof(charGap))) + offset;
-                lyricCaretState.MoveCaretToTargetPosition(lyric ?? throw new ArgumentNullException(nameof(lyric)), index);
+                var targetLyric = lyric ?? throw new ArgumentNullException(nameof(lyric));
+                int targetIndex = (charGap ?? throw new ArgumentNullException(nameof(charGap))) + offset;
+                lyricCaretState.MoveCaretToTargetPosition(targetLyric, targetIndex);
             }
         }
 
@@ -142,10 +162,12 @@ public partial class DrawableTypingCaret : DrawableCaret<TypingCaretPosition>
         }
 
         private int? charGap;
+        private int removeCharAmount = 1;
 
-        public void ChangeCharGap(int gap)
+        public void ChangeCharGapAndOffset(int charGap, int removeCharAmount = 1)
         {
-            charGap = gap;
+            this.charGap = charGap;
+            this.removeCharAmount = removeCharAmount;
         }
 
         public void FocusInputCaretTextBox()
