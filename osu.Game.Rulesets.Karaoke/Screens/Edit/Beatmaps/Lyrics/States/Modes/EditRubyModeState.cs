@@ -10,18 +10,18 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class EditRubyModeState : ModeStateWithBlueprintContainer<RubyTag>, IEditRubyModeState
 {
-    private readonly Bindable<RubyTagEditMode> bindableEditMode = new();
+    private readonly Bindable<RubyTagEditStep> bindableEditMode = new();
 
-    public IBindable<RubyTagEditMode> BindableEditMode => bindableEditMode;
+    public IBindable<RubyTagEditStep> BindableEditMode => bindableEditMode;
 
-    public void ChangeEditMode(RubyTagEditMode mode)
-        => bindableEditMode.Value = mode;
+    public void ChangeEditMode(RubyTagEditStep step)
+        => bindableEditMode.Value = step;
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags));
 
     protected override bool SelectFirstProperty(Lyric lyric)
-        => BindableEditMode.Value == RubyTagEditMode.Edit;
+        => BindableEditMode.Value == RubyTagEditStep.Edit;
 
     protected override IEnumerable<RubyTag> SelectableProperties(Lyric lyric)
         => lyric.RubyTags;

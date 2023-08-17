@@ -56,7 +56,7 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     public void TestTextingMode()
     {
         switchToMode(LyricEditorMode.Texting);
-        clickEditModeButtons<TextingEditMode>();
+        clickEditModeButtons<TextingEditStep>();
     }
 
     [Test]
@@ -69,35 +69,35 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     public void TestLanguageMode()
     {
         switchToMode(LyricEditorMode.Language);
-        clickEditModeButtons<LanguageEditMode>();
+        clickEditModeButtons<LanguageEditStep>();
     }
 
     [Test]
     public void TestEditRubyMode()
     {
         switchToMode(LyricEditorMode.EditRuby);
-        clickEditModeButtons<RubyTagEditMode>();
+        clickEditModeButtons<RubyTagEditStep>();
     }
 
     [Test]
     public void TestEditRomajiMode()
     {
         switchToMode(LyricEditorMode.EditRomaji);
-        clickEditModeButtons<RomajiTagEditMode>();
+        clickEditModeButtons<RomajiTagEditStep>();
     }
 
     [Test]
     public void TestEditTimeTagMode()
     {
         switchToMode(LyricEditorMode.EditTimeTag);
-        clickEditModeButtons<TimeTagEditMode>();
+        clickEditModeButtons<TimeTagEditStep>();
     }
 
     [Test]
     public void TestEditNoteMode()
     {
         switchToMode(LyricEditorMode.EditNote);
-        clickEditModeButtons<NoteEditMode>();
+        clickEditModeButtons<NoteEditStep>();
     }
 
     [Test]

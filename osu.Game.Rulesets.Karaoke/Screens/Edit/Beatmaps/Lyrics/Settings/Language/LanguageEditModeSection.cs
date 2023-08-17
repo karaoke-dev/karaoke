@@ -11,41 +11,41 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
-public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILanguageModeState, LanguageEditMode>
+public partial class LanguageEditModeSection : LyricEditorEditModeSection<ILanguageModeState, LanguageEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;
 
-    protected override Selection CreateSelection(LanguageEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(LanguageEditStep step) =>
+        step switch
         {
-            LanguageEditMode.Generate => new Selection(),
-            LanguageEditMode.Verify => new LanguageVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            LanguageEditStep.Generate => new Selection(),
+            LanguageEditStep.Verify => new LanguageVerifySelection(),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(LanguageEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(LanguageEditStep step) =>
+        step switch
         {
-            LanguageEditMode.Generate => "Generate",
-            LanguageEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            LanguageEditStep.Generate => "Generate",
+            LanguageEditStep.Verify => "Verify",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, LanguageEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, LanguageEditStep step, bool active) =>
+        step switch
         {
-            LanguageEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
-            LanguageEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            LanguageEditStep.Generate => active ? colours.Blue : colours.BlueDarker,
+            LanguageEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(LanguageEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(LanguageEditStep step) =>
+        step switch
         {
-            LanguageEditMode.Generate => "Auto-generate language with just a click.",
-            LanguageEditMode.Verify => "Check if have lyric with no language.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            LanguageEditStep.Generate => "Auto-generate language with just a click.",
+            LanguageEditStep.Verify => "Check if have lyric with no language.",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
     private partial class LanguageVerifySelection : LyricEditorVerifySelection

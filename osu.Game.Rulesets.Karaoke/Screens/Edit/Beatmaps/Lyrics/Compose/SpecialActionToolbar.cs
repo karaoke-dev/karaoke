@@ -110,23 +110,23 @@ public partial class SpecialActionToolbar : CompositeDrawable
         return modeWithSubMode.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => createItemsForTextingMode(modeWithSubMode.GetSubMode<TextingEditMode>()),
+            LyricEditorMode.Texting => createItemsForTextingMode(modeWithSubMode.GetSubMode<TextingEditStep>()),
             LyricEditorMode.Reference => Array.Empty<Drawable>(),
             LyricEditorMode.Language => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditRomaji => Array.Empty<Drawable>(),
-            LyricEditorMode.EditTimeTag => createItemsForEditTimeTagMode(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
-            LyricEditorMode.EditNote => createItemsForEditNoteMode(modeWithSubMode.GetSubMode<NoteEditMode>()),
+            LyricEditorMode.EditTimeTag => createItemsForEditTimeTagMode(modeWithSubMode.GetSubMode<TimeTagEditStep>()),
+            LyricEditorMode.EditNote => createItemsForEditNoteMode(modeWithSubMode.GetSubMode<NoteEditStep>()),
             LyricEditorMode.Singer => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        static IEnumerable<Drawable> createItemsForTextingMode(TextingEditMode textingEditMode)
+        static IEnumerable<Drawable> createItemsForTextingMode(TextingEditStep textingEditMode)
         {
             switch (textingEditMode)
             {
-                case TextingEditMode.Typing:
-                case TextingEditMode.Split:
+                case TextingEditStep.Typing:
+                case TextingEditStep.Split:
                     return new Drawable[]
                     {
                         new MoveToFirstIndexButton(),
@@ -135,7 +135,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                         new MoveToLastIndexButton(),
                     };
 
-                case TextingEditMode.Verify:
+                case TextingEditStep.Verify:
                     return Array.Empty<Drawable>();
 
                 default:
@@ -143,10 +143,10 @@ public partial class SpecialActionToolbar : CompositeDrawable
             }
         }
 
-        static IEnumerable<Drawable> createItemsForEditTimeTagMode(TimeTagEditMode timeTagEditMode) =>
+        static IEnumerable<Drawable> createItemsForEditTimeTagMode(TimeTagEditStep timeTagEditMode) =>
             timeTagEditMode switch
             {
-                TimeTagEditMode.Create => new Drawable[]
+                TimeTagEditStep.Create => new Drawable[]
                 {
                     new MoveToFirstIndexButton(),
                     new MoveToPreviousIndexButton(),
@@ -158,7 +158,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new CreateTimeTagButton(TextIndex.IndexState.End),
                     new RemoveTimeTagButton(TextIndex.IndexState.End),
                 },
-                TimeTagEditMode.Recording => new Drawable[]
+                TimeTagEditStep.Recording => new Drawable[]
                 {
                     new PlaybackSwitchButton(),
                     new Separator(),
@@ -171,19 +171,19 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new ClearTimeTagTimeButton(),
                     new ClearAllTimeTagTimeButton(),
                 },
-                TimeTagEditMode.Adjust => new Drawable[]
+                TimeTagEditStep.Adjust => new Drawable[]
                 {
                     new PlaybackSwitchButton(),
                 },
                 _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null),
             };
 
-        static IEnumerable<Drawable> createItemsForEditNoteMode(NoteEditMode noteEditMode) =>
+        static IEnumerable<Drawable> createItemsForEditNoteMode(NoteEditStep noteEditMode) =>
             noteEditMode switch
             {
-                NoteEditMode.Generate => Array.Empty<Drawable>(),
-                NoteEditMode.Edit => Array.Empty<Drawable>(),
-                NoteEditMode.Verify => Array.Empty<Drawable>(),
+                NoteEditStep.Generate => Array.Empty<Drawable>(),
+                NoteEditStep.Edit => Array.Empty<Drawable>(),
+                NoteEditStep.Verify => Array.Empty<Drawable>(),
                 _ => throw new ArgumentOutOfRangeException(nameof(noteEditMode), noteEditMode, null),
             };
     }

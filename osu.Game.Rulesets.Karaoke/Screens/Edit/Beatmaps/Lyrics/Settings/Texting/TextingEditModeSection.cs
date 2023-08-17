@@ -11,45 +11,45 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
 
-public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextingModeState, TextingEditMode>
+public partial class TextingEditModeSection : LyricEditorEditModeSection<ITextingModeState, TextingEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Red;
 
-    protected override Selection CreateSelection(TextingEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(TextingEditStep step) =>
+        step switch
         {
-            TextingEditMode.Typing => new Selection(),
-            TextingEditMode.Split => new Selection(),
-            TextingEditMode.Verify => new TextingVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            TextingEditStep.Typing => new Selection(),
+            TextingEditStep.Split => new Selection(),
+            TextingEditStep.Verify => new TextingVerifySelection(),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(TextingEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(TextingEditStep step) =>
+        step switch
         {
-            TextingEditMode.Typing => "Typing",
-            TextingEditMode.Split => "Split",
-            TextingEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            TextingEditStep.Typing => "Typing",
+            TextingEditStep.Split => "Split",
+            TextingEditStep.Verify => "Verify",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, TextingEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, TextingEditStep step, bool active) =>
+        step switch
         {
-            TextingEditMode.Typing => active ? colours.Blue : colours.BlueDarker,
-            TextingEditMode.Split => active ? colours.Red : colours.RedDarker,
-            TextingEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            TextingEditStep.Typing => active ? colours.Blue : colours.BlueDarker,
+            TextingEditStep.Split => active ? colours.Red : colours.RedDarker,
+            TextingEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(TextingEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(TextingEditStep step) =>
+        step switch
         {
-            TextingEditMode.Typing => "Edit the lyric text.",
-            TextingEditMode.Split => "Create/delete or split/combine the lyric.",
-            TextingEditMode.Verify => "Check if have lyric with no text.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            TextingEditStep.Typing => "Edit the lyric text.",
+            TextingEditStep.Split => "Create/delete or split/combine the lyric.",
+            TextingEditStep.Verify => "Check if have lyric with no text.",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
     private partial class TextingVerifySelection : LyricEditorVerifySelection

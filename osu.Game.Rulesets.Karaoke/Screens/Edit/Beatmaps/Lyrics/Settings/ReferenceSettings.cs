@@ -17,7 +17,7 @@ public partial class ReferenceSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<ReferenceLyricEditMode> bindableMode = new Bindable<ReferenceLyricEditMode>();
+    private readonly IBindable<ReferenceLyricEditStep> bindableMode = new Bindable<ReferenceLyricEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(IEditReferenceLyricModeState editReferenceLyricModeState)
@@ -31,14 +31,14 @@ public partial class ReferenceSettings : LyricEditorSettings
 
     protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
     {
-        ReferenceLyricEditMode.Edit => new Drawable[]
+        ReferenceLyricEditStep.Edit => new Drawable[]
         {
             new ReferenceLyricEditModeSection(),
             new ReferenceLyricAutoGenerateSection(),
             new ReferenceLyricSection(),
             new ReferenceLyricConfigSection(),
         },
-        ReferenceLyricEditMode.Verify => new Drawable[]
+        ReferenceLyricEditStep.Verify => new Drawable[]
         {
             new ReferenceLyricEditModeSection(),
             new ReferenceLyricIssueSection(),

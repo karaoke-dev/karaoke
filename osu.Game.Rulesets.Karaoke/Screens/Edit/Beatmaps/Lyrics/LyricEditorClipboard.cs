@@ -150,18 +150,18 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.Texting:
                 switch (textingModeState.EditMode)
                 {
-                    case TextingEditMode.Typing:
+                    case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditMode.Split:
+                    case TextingEditStep.Split:
                         if (lyricsChangeHandler == null)
                             throw new NullDependencyException($"Missing {nameof(lyricsChangeHandler)}");
 
                         lyricsChangeHandler.Remove();
                         return true;
 
-                    case TextingEditMode.Verify:
+                    case TextingEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -236,16 +236,16 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.Texting:
                 switch (textingModeState.EditMode)
                 {
-                    case TextingEditMode.Typing:
+                    case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditMode.Split:
+                    case TextingEditStep.Split:
                         saveObjectToTheClipboardContent(lyric);
                         copyObjectToClipboard(lyric.Text);
                         return true;
 
-                    case TextingEditMode.Verify:
+                    case TextingEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -312,11 +312,11 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.Texting:
                 switch (textingModeState.EditMode)
                 {
-                    case TextingEditMode.Typing:
+                    case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditMode.Split:
+                    case TextingEditStep.Split:
                         var pasteLyric = getObjectFromClipboardContent<Lyric>();
                         if (pasteLyric == null)
                             return false;
@@ -327,7 +327,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                         return true;
 
-                    case TextingEditMode.Verify:
+                    case TextingEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 

@@ -155,12 +155,12 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }, true);
 
-        initialSubModeChanged<TextingEditMode>(); // texting
-        initialSubModeChanged<LanguageEditMode>(); // language
-        initialSubModeChanged<RubyTagEditMode>(); // ruby
-        initialSubModeChanged<RomajiTagEditMode>(); // romaji
-        initialSubModeChanged<TimeTagEditMode>(); //time-tag
-        initialSubModeChanged<NoteEditMode>(); // note
+        initialSubModeChanged<TextingEditStep>(); // texting
+        initialSubModeChanged<LanguageEditStep>(); // language
+        initialSubModeChanged<RubyTagEditStep>(); // ruby
+        initialSubModeChanged<RomajiTagEditStep>(); // romaji
+        initialSubModeChanged<TimeTagEditStep>(); //time-tag
+        initialSubModeChanged<NoteEditStep>(); // note
 
         bindablePreferLayout.BindValueChanged(e =>
         {

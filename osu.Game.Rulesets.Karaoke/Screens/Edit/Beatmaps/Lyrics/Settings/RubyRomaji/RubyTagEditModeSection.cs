@@ -11,40 +11,40 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState, RubyTagEditMode>
+public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState, RubyTagEditStep>
 {
-    protected override Selection CreateSelection(RubyTagEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(RubyTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => new Selection(),
-            RubyTagEditMode.Edit => new Selection(),
-            RubyTagEditMode.Verify => new RubyTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RubyTagEditStep.Generate => new Selection(),
+            RubyTagEditStep.Edit => new Selection(),
+            RubyTagEditStep.Verify => new RubyTagVerifySelection(),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(RubyTagEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(RubyTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => "Generate",
-            RubyTagEditMode.Edit => "Edit",
-            RubyTagEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RubyTagEditStep.Generate => "Generate",
+            RubyTagEditStep.Edit => "Edit",
+            RubyTagEditStep.Verify => "Verify",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditStep step, bool active) =>
+        step switch
         {
-            RubyTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
-            RubyTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
-            RubyTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RubyTagEditStep.Generate => active ? colours.Blue : colours.BlueDarker,
+            RubyTagEditStep.Edit => active ? colours.Red : colours.RedDarker,
+            RubyTagEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(RubyTagEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(RubyTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => "Auto-generate rubies in the lyric.",
-            RubyTagEditMode.Edit => new DescriptionFormat
+            RubyTagEditStep.Generate => "Auto-generate rubies in the lyric.",
+            RubyTagEditStep.Edit => new DescriptionFormat
             {
                 Text = "Create / delete and edit lyric rubies in here.\n"
                        + $"Click [{DescriptionFormat.LINK_KEY_ACTION}](directions) to select the target lyric.\n"
@@ -78,8 +78,8 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
                     },
                 },
             },
-            RubyTagEditMode.Verify => "Check invalid rubies in here",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RubyTagEditStep.Verify => "Check invalid rubies in here",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
     private partial class RubyTagVerifySelection : LyricEditorVerifySelection

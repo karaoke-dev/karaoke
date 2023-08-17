@@ -17,7 +17,7 @@ public partial class LanguageSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
+    private readonly IBindable<LanguageEditStep> bindableMode = new Bindable<LanguageEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(ILanguageModeState languageModeState)
@@ -31,12 +31,12 @@ public partial class LanguageSettings : LyricEditorSettings
 
     protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
     {
-        LanguageEditMode.Generate => new Drawable[]
+        LanguageEditStep.Generate => new Drawable[]
         {
             new LanguageEditModeSection(),
             new LanguageSwitchSpecialActionSection(),
         },
-        LanguageEditMode.Verify => new Drawable[]
+        LanguageEditStep.Verify => new Drawable[]
         {
             new LanguageEditModeSection(),
             new LanguageIssueSection(),

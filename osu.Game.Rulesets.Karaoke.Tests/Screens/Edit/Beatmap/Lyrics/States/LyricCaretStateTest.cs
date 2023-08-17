@@ -419,13 +419,13 @@ public partial class LyricCaretStateTest : OsuTestScene
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => TextingEditMode.Typing,
+                LyricEditorMode.Texting => TextingEditStep.Typing,
                 LyricEditorMode.Reference => null,
-                LyricEditorMode.Language => LanguageEditMode.Generate,
-                LyricEditorMode.EditRuby => RubyTagEditMode.Generate,
-                LyricEditorMode.EditRomaji => RomajiTagEditMode.Generate,
-                LyricEditorMode.EditTimeTag => TimeTagEditMode.Create,
-                LyricEditorMode.EditNote => NoteEditMode.Generate,
+                LyricEditorMode.Language => LanguageEditStep.Generate,
+                LyricEditorMode.EditRuby => RubyTagEditStep.Generate,
+                LyricEditorMode.EditRomaji => RomajiTagEditStep.Generate,
+                LyricEditorMode.EditTimeTag => TimeTagEditStep.Create,
+                LyricEditorMode.EditNote => NoteEditStep.Generate,
                 LyricEditorMode.Singer => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };

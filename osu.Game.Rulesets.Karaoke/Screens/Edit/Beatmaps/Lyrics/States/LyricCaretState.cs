@@ -129,33 +129,33 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => getTextingModeAlgorithm(modeWithSubMode.GetSubMode<TextingEditMode>()),
+            LyricEditorMode.Texting => getTextingModeAlgorithm(modeWithSubMode.GetSubMode<TextingEditStep>()),
             LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(modeWithSubMode.GetSubMode<TimeTagEditMode>()),
+            LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(modeWithSubMode.GetSubMode<TimeTagEditStep>()),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
             _ => throw new InvalidOperationException(nameof(mode)),
         };
 
-        ICaretPositionAlgorithm getTextingModeAlgorithm(TextingEditMode textingEditMode) =>
+        ICaretPositionAlgorithm getTextingModeAlgorithm(TextingEditStep textingEditMode) =>
             textingEditMode switch
             {
-                TextingEditMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
-                TextingEditMode.Split => new CuttingCaretPositionAlgorithm(lyrics),
-                TextingEditMode.Verify => new NavigateCaretPositionAlgorithm(lyrics),
+                TextingEditStep.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                TextingEditStep.Split => new CuttingCaretPositionAlgorithm(lyrics),
+                TextingEditStep.Verify => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(textingEditMode)),
             };
 
-        ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditMode timeTagEditMode)
+        ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditStep timeTagEditMode)
         {
             return timeTagEditMode switch
             {
-                TimeTagEditMode.Create => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
-                TimeTagEditMode.Recording => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
-                TimeTagEditMode.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
+                TimeTagEditStep.Create => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
+                TimeTagEditStep.Recording => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
+                TimeTagEditStep.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(timeTagEditMode)),
             };
 

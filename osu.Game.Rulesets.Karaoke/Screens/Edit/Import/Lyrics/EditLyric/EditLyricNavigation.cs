@@ -49,14 +49,14 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
 
             case NavigationState.Working:
             case NavigationState.Done:
-                var mode = Screen.GetLyricEditorModeState<TextingEditMode>();
+                var step = Screen.GetLyricEditorModeState<TextingEditStep>();
 
-                return mode switch
+                return step switch
                 {
-                    TextingEditMode.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
-                    TextingEditMode.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
-                    TextingEditMode.Verify => $"Cool! Try switching to [{split_mode}] or [{typing_mode}] if you want to fix the issue.",
-                    _ => throw new InvalidEnumArgumentException(nameof(mode)),
+                    TextingEditStep.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
+                    TextingEditStep.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
+                    TextingEditStep.Verify => $"Cool! Try switching to [{split_mode}] or [{typing_mode}] if you want to fix the issue.",
+                    _ => throw new InvalidEnumArgumentException(nameof(step)),
                 };
 
             case NavigationState.Error:
@@ -74,8 +74,8 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
     {
         public EditLyricTextFlowContainer(EditLyricStepScreen screen)
         {
-            AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextingEditMode.Typing));
-            AddLinkFactory(split_mode, "split mode", () => screen.SwitchToEditModeState(TextingEditMode.Split));
+            AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextingEditStep.Typing));
+            AddLinkFactory(split_mode, "split mode", () => screen.SwitchToEditModeState(TextingEditStep.Split));
         }
     }
 }

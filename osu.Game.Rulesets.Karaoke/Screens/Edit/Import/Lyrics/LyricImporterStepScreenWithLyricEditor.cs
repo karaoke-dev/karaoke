@@ -63,9 +63,9 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
             lyricSelectionState.SelectAll();
 
             // for some mode, we need to switch to generate section.
-            SwitchSubMode(LanguageEditMode.Generate);
-            SwitchSubMode(RubyTagEditMode.Generate);
-            SwitchSubMode(RomajiTagEditMode.Generate);
+            SwitchSubMode(LanguageEditStep.Generate);
+            SwitchSubMode(RubyTagEditStep.Generate);
+            SwitchSubMode(RomajiTagEditStep.Generate);
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

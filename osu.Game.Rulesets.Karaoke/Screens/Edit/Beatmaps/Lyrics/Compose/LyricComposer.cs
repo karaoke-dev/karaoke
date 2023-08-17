@@ -291,8 +291,8 @@ public partial class LyricComposer : CompositeDrawable
         static BottomEditorType? getBottomEditorType(ModeWithSubMode modeWithSubMode) =>
             modeWithSubMode.Mode switch
             {
-                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
-                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
+                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditStep.Recording => BottomEditorType.RecordingTimeTag,
+                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditStep.Adjust => BottomEditorType.AdjustTimeTags,
                 LyricEditorMode.EditNote => BottomEditorType.Note,
                 _ => null,
             };

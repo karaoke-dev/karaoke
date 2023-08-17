@@ -15,16 +15,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, IEditNoteModeState
 {
-    private readonly Bindable<NoteEditMode> bindableEditMode = new();
+    private readonly Bindable<NoteEditStep> bindableEditMode = new();
     private readonly BindableList<HitObject> selectedHitObjects = new();
 
     [Resolved]
     private EditorBeatmap editorBeatmap { get; set; } = null!;
 
-    public IBindable<NoteEditMode> BindableEditMode => bindableEditMode;
+    public IBindable<NoteEditStep> BindableEditMode => bindableEditMode;
 
-    public void ChangeEditMode(NoteEditMode mode)
-        => bindableEditMode.Value = mode;
+    public void ChangeEditMode(NoteEditStep step)
+        => bindableEditMode.Value = step;
 
     public Bindable<NoteEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
@@ -41,7 +41,7 @@ public partial class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, 
         => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
 
     protected override bool SelectFirstProperty(Lyric lyric)
-        => BindableEditMode.Value == NoteEditMode.Edit;
+        => BindableEditMode.Value == NoteEditStep.Edit;
 
     protected override IEnumerable<Note> SelectableProperties(Lyric lyric)
         => EditorBeatmapUtils.GetNotesByLyric(editorBeatmap, lyric);

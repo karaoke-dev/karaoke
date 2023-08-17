@@ -3,9 +3,9 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public enum LanguageEditMode
+public enum ReferenceLyricEditStep
 {
-    Generate,
+    Edit,
 
     Verify,
 }

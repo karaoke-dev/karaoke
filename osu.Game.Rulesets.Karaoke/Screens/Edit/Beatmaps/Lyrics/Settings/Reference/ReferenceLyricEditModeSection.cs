@@ -11,41 +11,41 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference;
 
-public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<IEditReferenceLyricModeState, ReferenceLyricEditMode>
+public partial class ReferenceLyricEditModeSection : LyricEditorEditModeSection<IEditReferenceLyricModeState, ReferenceLyricEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;
 
-    protected override Selection CreateSelection(ReferenceLyricEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(ReferenceLyricEditStep step) =>
+        step switch
         {
-            ReferenceLyricEditMode.Edit => new Selection(),
-            ReferenceLyricEditMode.Verify => new ReferenceLyricVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            ReferenceLyricEditStep.Edit => new Selection(),
+            ReferenceLyricEditStep.Verify => new ReferenceLyricVerifySelection(),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(ReferenceLyricEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(ReferenceLyricEditStep step) =>
+        step switch
         {
-            ReferenceLyricEditMode.Edit => "Edit",
-            ReferenceLyricEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            ReferenceLyricEditStep.Edit => "Edit",
+            ReferenceLyricEditStep.Verify => "Verify",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, ReferenceLyricEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, ReferenceLyricEditStep step, bool active) =>
+        step switch
         {
-            ReferenceLyricEditMode.Edit => active ? colours.Blue : colours.BlueDarker,
-            ReferenceLyricEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            ReferenceLyricEditStep.Edit => active ? colours.Blue : colours.BlueDarker,
+            ReferenceLyricEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(ReferenceLyricEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(ReferenceLyricEditStep step) =>
+        step switch
         {
-            ReferenceLyricEditMode.Edit => "Assign the reference lyrics.",
-            ReferenceLyricEditMode.Verify => "Check any invalid reference lyric issue.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            ReferenceLyricEditStep.Edit => "Assign the reference lyrics.",
+            ReferenceLyricEditStep.Verify => "Check any invalid reference lyric issue.",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
     private partial class ReferenceLyricVerifySelection : LyricEditorVerifySelection

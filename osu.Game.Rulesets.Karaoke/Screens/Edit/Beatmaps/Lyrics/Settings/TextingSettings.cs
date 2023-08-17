@@ -17,7 +17,7 @@ public partial class TextingSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<TextingEditMode> bindableMode = new Bindable<TextingEditMode>();
+    private readonly IBindable<TextingEditStep> bindableMode = new Bindable<TextingEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(ITextingModeState textingModeState)
@@ -31,17 +31,17 @@ public partial class TextingSettings : LyricEditorSettings
 
     protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
     {
-        TextingEditMode.Typing => new Drawable[]
+        TextingEditStep.Typing => new Drawable[]
         {
             new TextingEditModeSection(),
             new TextingSwitchSpecialActionSection(),
         },
-        TextingEditMode.Split => new Drawable[]
+        TextingEditStep.Split => new Drawable[]
         {
             new TextingEditModeSection(),
             new TextingSwitchSpecialActionSection(),
         },
-        TextingEditMode.Verify => new Drawable[]
+        TextingEditStep.Verify => new Drawable[]
         {
             new TextingEditModeSection(),
             new TextingIssueSection(),

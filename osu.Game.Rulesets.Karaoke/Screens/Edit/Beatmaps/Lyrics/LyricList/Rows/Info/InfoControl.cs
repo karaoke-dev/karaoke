@@ -189,7 +189,7 @@ public partial class InfoControl : Container, IHasContextMenu
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditTimeTag:
-                    return createTimeTagModeSubInfo(mode.GetSubMode<TimeTagEditMode>(), Lyric);
+                    return createTimeTagModeSubInfo(mode.GetSubMode<TimeTagEditStep>(), Lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;
@@ -201,15 +201,15 @@ public partial class InfoControl : Container, IHasContextMenu
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }
 
-            static Drawable createTimeTagModeSubInfo(TimeTagEditMode editMode, Lyric lyric)
+            static Drawable createTimeTagModeSubInfo(TimeTagEditStep editMode, Lyric lyric)
             {
                 switch (editMode)
                 {
-                    case TimeTagEditMode.Create:
+                    case TimeTagEditStep.Create:
                         return new LanguageInfo(lyric);
 
-                    case TimeTagEditMode.Recording:
-                    case TimeTagEditMode.Adjust:
+                    case TimeTagEditStep.Recording:
+                    case TimeTagEditStep.Adjust:
                         return new TimeTagInfo(lyric);
 
                     default:

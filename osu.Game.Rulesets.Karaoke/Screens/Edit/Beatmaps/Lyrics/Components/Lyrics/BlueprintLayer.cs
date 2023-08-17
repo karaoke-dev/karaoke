@@ -53,7 +53,7 @@ public partial class BlueprintLayer : BaseLayer
             {
                 LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
                 LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                LyricEditorMode.EditTimeTag => modeWithSubMode.SubMode is TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
+                LyricEditorMode.EditTimeTag => modeWithSubMode.SubMode is TimeTagEditStep.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                 _ => null,
             };
     }

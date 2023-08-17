@@ -3,11 +3,9 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public enum RubyTagEditMode
+public enum LanguageEditStep
 {
     Generate,
-
-    Edit,
 
     Verify,
 }

@@ -5,6 +5,6 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface ILanguageModeState : IHasEditModeState<LanguageEditMode>, IHasSpecialAction<LanguageEditModeSpecialAction>
+public interface ILanguageModeState : IHasEditModeState<LanguageEditStep>, IHasSpecialAction<LanguageEditModeSpecialAction>
 {
 }
