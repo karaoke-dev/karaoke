@@ -12,16 +12,16 @@ public partial class EditRubyModeState : ModeStateWithBlueprintContainer<RubyTag
 {
     private readonly Bindable<RubyTagEditStep> bindableEditMode = new();
 
-    public IBindable<RubyTagEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<RubyTagEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(RubyTagEditStep step)
+    public void ChangeEditStep(RubyTagEditStep step)
         => bindableEditMode.Value = step;
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags));
 
     protected override bool SelectFirstProperty(Lyric lyric)
-        => BindableEditMode.Value == RubyTagEditStep.Edit;
+        => BindableEditStep.Value == RubyTagEditStep.Edit;
 
     protected override IEnumerable<RubyTag> SelectableProperties(Lyric lyric)
         => lyric.RubyTags;

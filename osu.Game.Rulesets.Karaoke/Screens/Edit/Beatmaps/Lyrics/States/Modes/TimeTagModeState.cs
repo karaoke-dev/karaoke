@@ -15,7 +15,7 @@ public partial class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>
 {
     private readonly Bindable<TimeTagEditStep> bindableEditMode = new();
 
-    public IBindable<TimeTagEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<TimeTagEditStep> BindableEditStep => bindableEditMode;
 
     public BindableFloat BindableRecordZoom { get; } = new();
 
@@ -33,7 +33,7 @@ public partial class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>
         BindableAdjustZoom.Value = BindableAdjustZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 4000);
     }
 
-    public void ChangeEditMode(TimeTagEditStep step)
+    public void ChangeEditStep(TimeTagEditStep step)
         => bindableEditMode.Value = step;
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)

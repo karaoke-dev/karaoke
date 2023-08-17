@@ -11,9 +11,9 @@ public partial class TextingModeState : Component, ITextingModeState
 {
     private readonly Bindable<TextingEditStep> bindableEditMode = new();
 
-    public IBindable<TextingEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<TextingEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(TextingEditStep step)
+    public void ChangeEditStep(TextingEditStep step)
         => bindableEditMode.Value = step;
 
     public Bindable<TextingEditModeSpecialAction> BindableSpecialAction { get; } = new();

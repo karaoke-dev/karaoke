@@ -148,7 +148,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return false;
 
             case LyricEditorMode.Texting:
-                switch (textingModeState.EditMode)
+                switch (textingModeState.EditStep)
                 {
                     case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
@@ -234,7 +234,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.Texting:
-                switch (textingModeState.EditMode)
+                switch (textingModeState.EditStep)
                 {
                     case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
@@ -310,7 +310,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return false;
 
             case LyricEditorMode.Texting:
-                switch (textingModeState.EditMode)
+                switch (textingModeState.EditStep)
                 {
                     case TextingEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.

@@ -5,6 +5,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditRomajiModeState : IHasEditModeState<RomajiTagEditStep>, IHasBlueprintSelection<RomajiTag>
+public interface IEditRomajiModeState : IHasEditStep<RomajiTagEditStep>, IHasBlueprintSelection<RomajiTag>
 {
 }

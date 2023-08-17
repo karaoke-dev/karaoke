@@ -12,16 +12,16 @@ public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<Romaj
 {
     private readonly Bindable<RomajiTagEditStep> bindableEditMode = new();
 
-    public IBindable<RomajiTagEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<RomajiTagEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(RomajiTagEditStep step)
+    public void ChangeEditStep(RomajiTagEditStep step)
         => bindableEditMode.Value = step;
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
 
     protected override bool SelectFirstProperty(Lyric lyric)
-        => BindableEditMode.Value == RomajiTagEditStep.Edit;
+        => BindableEditStep.Value == RomajiTagEditStep.Edit;
 
     protected override IEnumerable<RomajiTag> SelectableProperties(Lyric lyric)
         => lyric.RomajiTags;

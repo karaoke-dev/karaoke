@@ -11,17 +11,17 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
 public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
-    where TEditModeState : class, IHasEditModeState<TEditMode>
+    where TEditModeState : class, IHasEditStep<TEditMode>
     where TEditMode : struct, Enum
 {
     [Resolved]
     private TEditModeState tEditModeState { get; set; } = null!;
 
-    protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
+    protected sealed override TEditMode DefaultMode() => tEditModeState.EditStep;
 
     internal sealed override void UpdateEditMode(TEditMode mode)
     {
-        tEditModeState.ChangeEditMode(mode);
+        tEditModeState.ChangeEditStep(mode);
 
         base.UpdateEditMode(mode);
     }

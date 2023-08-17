@@ -10,8 +10,8 @@ public partial class EditReferenceLyricModeState : Component, IEditReferenceLyri
 {
     private readonly Bindable<ReferenceLyricEditStep> bindableEditMode = new();
 
-    public IBindable<ReferenceLyricEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<ReferenceLyricEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(ReferenceLyricEditStep step)
+    public void ChangeEditStep(ReferenceLyricEditStep step)
         => bindableEditMode.Value = step;
 }

@@ -5,6 +5,6 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface ITextingModeState : IHasEditModeState<TextingEditStep>, IHasSpecialAction<TextingEditModeSpecialAction>
+public interface ITextingModeState : IHasEditStep<TextingEditStep>, IHasSpecialAction<TextingEditModeSpecialAction>
 {
 }

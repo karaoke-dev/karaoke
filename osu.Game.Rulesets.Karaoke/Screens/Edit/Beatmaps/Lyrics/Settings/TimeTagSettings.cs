@@ -16,19 +16,19 @@ public partial class TimeTagSettings : LyricEditorSettings
     public override SettingsDirection Direction => SettingsDirection.Right;
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<TimeTagEditStep> bindableMode = new Bindable<TimeTagEditStep>();
+    private readonly IBindable<TimeTagEditStep> bindableEditStep = new Bindable<TimeTagEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(ITimeTagModeState timeTagModeState)
     {
-        bindableMode.BindTo(timeTagModeState.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
+        bindableEditStep.BindTo(timeTagModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
         TimeTagEditStep.Create => new Drawable[]
         {

@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditNoteModeState : IHasEditModeState<NoteEditStep>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
+public interface IEditNoteModeState : IHasEditStep<NoteEditStep>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
 {
     Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; }
 }

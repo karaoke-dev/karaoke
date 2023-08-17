@@ -15,7 +15,7 @@ public partial class RubyTagSettings : TextTagSettings<RubyTagEditStep>
     [BackgroundDependencyLoader]
     private void load(IEditRubyModeState editRubyModeState)
     {
-        EditMode.BindTo(editRubyModeState.BindableEditMode);
+        EditMode.BindTo(editRubyModeState.BindableEditStep);
         EditMode.BindValueChanged(e =>
         {
             ReloadSections();

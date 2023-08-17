@@ -183,7 +183,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         if (editModeState == null)
             throw new ArgumentNullException();
 
-        editModeState.BindableEditMode.BindValueChanged(e =>
+        editModeState.BindableEditStep.BindValueChanged(e =>
         {
             updateTheSubMode();
         });
@@ -202,13 +202,13 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => textingModeState.BindableEditMode.Value,
+                LyricEditorMode.Texting => textingModeState.BindableEditStep.Value,
                 LyricEditorMode.Reference => null,
-                LyricEditorMode.Language => languageModeState.BindableEditMode.Value,
-                LyricEditorMode.EditRuby => editRubyModeState.BindableEditMode.Value,
-                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditMode.Value,
-                LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditMode.Value,
-                LyricEditorMode.EditNote => editNoteModeState.BindableEditMode.Value,
+                LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
+                LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
+                LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
                 LyricEditorMode.Singer => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
@@ -447,11 +447,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         if (editModeState == null)
             throw new ArgumentNullException();
 
-        editModeState.ChangeEditMode(subMode);
+        editModeState.ChangeEditStep(subMode);
     }
 
-    private IHasEditModeState<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum
-        => InternalChildren.OfType<IHasEditModeState<TSubMode>>().FirstOrDefault();
+    private IHasEditStep<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum
+        => InternalChildren.OfType<IHasEditStep<TSubMode>>().FirstOrDefault();
 
     public virtual void NavigateToFix(LyricEditorMode mode)
     {

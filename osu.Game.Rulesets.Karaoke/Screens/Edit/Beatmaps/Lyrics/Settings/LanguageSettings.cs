@@ -17,19 +17,19 @@ public partial class LanguageSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<LanguageEditStep> bindableMode = new Bindable<LanguageEditStep>();
+    private readonly IBindable<LanguageEditStep> bindableEditStep = new Bindable<LanguageEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(ILanguageModeState languageModeState)
     {
-        bindableMode.BindTo(languageModeState.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
+        bindableEditStep.BindTo(languageModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
         LanguageEditStep.Generate => new Drawable[]
         {

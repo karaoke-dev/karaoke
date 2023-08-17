@@ -17,19 +17,19 @@ public partial class NoteSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<NoteEditStep> bindableMode = new Bindable<NoteEditStep>();
+    private readonly IBindable<NoteEditStep> bindableEditStep = new Bindable<NoteEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(IEditNoteModeState editNoteModeState)
     {
-        bindableMode.BindTo(editNoteModeState.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
+        bindableEditStep.BindTo(editNoteModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
         NoteEditStep.Generate => new Drawable[]
         {

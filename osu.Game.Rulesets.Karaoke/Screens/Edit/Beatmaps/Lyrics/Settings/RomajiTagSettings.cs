@@ -15,7 +15,7 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
     [BackgroundDependencyLoader]
     private void load(IEditRomajiModeState romajiModeState)
     {
-        EditMode.BindTo(romajiModeState.BindableEditMode);
+        EditMode.BindTo(romajiModeState.BindableEditStep);
         EditMode.BindValueChanged(e =>
         {
             ReloadSections();

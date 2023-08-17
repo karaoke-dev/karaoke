@@ -3,6 +3,6 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditReferenceLyricModeState : IHasEditModeState<ReferenceLyricEditStep>
+public interface IEditReferenceLyricModeState : IHasEditStep<ReferenceLyricEditStep>
 {
 }

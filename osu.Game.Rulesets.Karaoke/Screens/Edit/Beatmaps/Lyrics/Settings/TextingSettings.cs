@@ -17,19 +17,19 @@ public partial class TextingSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<TextingEditStep> bindableMode = new Bindable<TextingEditStep>();
+    private readonly IBindable<TextingEditStep> bindableEditStep = new Bindable<TextingEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(ITextingModeState textingModeState)
     {
-        bindableMode.BindTo(textingModeState.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
+        bindableEditStep.BindTo(textingModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
         TextingEditStep.Typing => new Drawable[]
         {

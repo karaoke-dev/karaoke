@@ -13,8 +13,8 @@ public partial class LanguageModeState : Component, ILanguageModeState
 
     public Bindable<LanguageEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
-    public IBindable<LanguageEditStep> BindableEditMode => bindableEditMode;
+    public IBindable<LanguageEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(LanguageEditStep step)
+    public void ChangeEditStep(LanguageEditStep step)
         => bindableEditMode.Value = step;
 }
