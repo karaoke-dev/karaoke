@@ -144,7 +144,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         BindableMode.BindValueChanged(e =>
         {
-            updateTheSubMode();
+            updateTheEditStep();
 
             // should control grid container spacing and place some component.
             initializeSettingsArea();
@@ -185,20 +185,20 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         editModeState.BindableEditStep.BindValueChanged(e =>
         {
-            updateTheSubMode();
+            updateTheEditStep();
         });
     }
 
-    private void updateTheSubMode()
+    private void updateTheEditStep()
     {
         bindableModeWithEditStep.Value = new EditorModeWithEditStep
         {
             Mode = bindableMode.Value,
-            EditStep = getTheSubMode(bindableMode.Value),
+            EditStep = getTheEditStep(bindableMode.Value),
             Default = false,
         };
 
-        Enum? getTheSubMode(LyricEditorMode mode) =>
+        Enum? getTheEditStep(LyricEditorMode mode) =>
             mode switch
             {
                 LyricEditorMode.View => null,
