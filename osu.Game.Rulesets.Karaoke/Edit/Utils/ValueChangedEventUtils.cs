@@ -17,7 +17,7 @@ public static class ValueChangedEventUtils
         return oldLyric != newLyric;
     }
 
-    public static bool EditModeChanged(ValueChangedEvent<ModeWithSubMode> e)
+    public static bool EditModeChanged(ValueChangedEvent<EditorModeWithEditStep> e)
     {
         if (e.OldValue.Default ^ e.NewValue.Default)
             return true;

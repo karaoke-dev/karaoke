@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class BlueprintLayer : BaseLayer
 {
-    private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
+    private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
     // should block all blueprint action if not editable.
     public override bool PropagatePositionalInputSubTree => base.PropagatePositionalInputSubTree && editable;
@@ -22,7 +22,7 @@ public partial class BlueprintLayer : BaseLayer
     public BlueprintLayer(Lyric lyric)
         : base(lyric)
     {
-        bindableModeAndSubMode.BindValueChanged(_ =>
+        bindableModeWithEditStep.BindValueChanged(_ =>
         {
             // Initial blueprint container.
             InitializeBlueprint();
@@ -32,7 +32,7 @@ public partial class BlueprintLayer : BaseLayer
     [BackgroundDependencyLoader]
     private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
     {
-        bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
+        bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
     }
 
     protected void InitializeBlueprint()
@@ -41,19 +41,19 @@ public partial class BlueprintLayer : BaseLayer
         ClearInternal();
 
         // create preview and real caret
-        var modeWithSubMode = bindableModeAndSubMode.Value;
-        var blueprintContainer = createBlueprintContainer(modeWithSubMode, Lyric);
+        var modeWithEditStep = bindableModeWithEditStep.Value;
+        var blueprintContainer = createBlueprintContainer(modeWithEditStep, Lyric);
         if (blueprintContainer == null)
             return;
 
         AddInternal(blueprintContainer);
 
-        static Drawable? createBlueprintContainer(ModeWithSubMode modeWithSubMode, Lyric lyric) =>
-            modeWithSubMode.Mode switch
+        static Drawable? createBlueprintContainer(EditorModeWithEditStep modeWithEditStep, Lyric lyric) =>
+            modeWithEditStep.Mode switch
             {
                 LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
                 LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                LyricEditorMode.EditTimeTag => modeWithSubMode.SubMode is TimeTagEditStep.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
+                LyricEditorMode.EditTimeTag => modeWithEditStep.EditStep is TimeTagEditStep.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                 _ => null,
             };
     }

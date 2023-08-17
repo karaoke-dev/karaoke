@@ -78,13 +78,13 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     private readonly BindableBeatDivisor beatDivisor = new();
 
     private readonly Bindable<LyricEditorMode> bindableMode = new();
-    private readonly Bindable<ModeWithSubMode> bindableModeAndSubMode = new();
+    private readonly Bindable<EditorModeWithEditStep> bindableModeWithEditStep = new();
     private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.Preview);
     private readonly Bindable<LyricEditorLayout> bindableCurrentLayout = new();
 
     public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
-    public IBindable<ModeWithSubMode> BindableModeAndSubMode => bindableModeAndSubMode;
+    public IBindable<EditorModeWithEditStep> BindableModeWithEditStep => bindableModeWithEditStep;
 
     private readonly GridContainer gridContainer;
     private readonly Container editArea;
@@ -191,10 +191,10 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
     private void updateTheSubMode()
     {
-        bindableModeAndSubMode.Value = new ModeWithSubMode
+        bindableModeWithEditStep.Value = new EditorModeWithEditStep
         {
             Mode = bindableMode.Value,
-            SubMode = getTheSubMode(bindableMode.Value),
+            EditStep = getTheSubMode(bindableMode.Value),
             Default = false,
         };
 

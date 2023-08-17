@@ -29,7 +29,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
 
     public const int SPACING = 5;
 
-    private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
+    private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
     private readonly Box background;
 
@@ -57,8 +57,8 @@ public partial class SpecialActionToolbar : CompositeDrawable
     [BackgroundDependencyLoader]
     private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
     {
-        bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
-        bindableModeAndSubMode.BindValueChanged(e =>
+        bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
+        bindableModeWithEditStep.BindValueChanged(e =>
         {
             // Note: add the schedule because will have the "The collection's state is no longer correct." error if not add this.
             Schedule(reGenerateButtons);
@@ -84,8 +84,8 @@ public partial class SpecialActionToolbar : CompositeDrawable
 
         buttonContainer.Add(new Separator());
 
-        var modeWithSubMode = bindableModeAndSubMode.Value;
-        buttonContainer.AddRange(createItemForEditMode(modeWithSubMode));
+        var modeWithEditStep = bindableModeWithEditStep.Value;
+        buttonContainer.AddRange(createItemForEditMode(modeWithEditStep));
     }
 
     private static IEnumerable<Drawable> createAdjustLyricSizeItem() => new Drawable[]
@@ -105,23 +105,23 @@ public partial class SpecialActionToolbar : CompositeDrawable
         new MoveToNextLyricButton(),
     };
 
-    private static IEnumerable<Drawable> createItemForEditMode(ModeWithSubMode modeWithSubMode)
+    private static IEnumerable<Drawable> createItemForEditMode(EditorModeWithEditStep editorModeWithEditStep)
     {
-        return modeWithSubMode.Mode switch
+        return editorModeWithEditStep.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => createItemsForTextingMode(modeWithSubMode.GetSubMode<TextingEditStep>()),
+            LyricEditorMode.Texting => createItemsForTextingEditStep(editorModeWithEditStep.GetEditStep<TextingEditStep>()),
             LyricEditorMode.Reference => Array.Empty<Drawable>(),
             LyricEditorMode.Language => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditRomaji => Array.Empty<Drawable>(),
-            LyricEditorMode.EditTimeTag => createItemsForEditTimeTagMode(modeWithSubMode.GetSubMode<TimeTagEditStep>()),
-            LyricEditorMode.EditNote => createItemsForEditNoteMode(modeWithSubMode.GetSubMode<NoteEditStep>()),
+            LyricEditorMode.EditTimeTag => createItemsForTimeTagEditStep(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
+            LyricEditorMode.EditNote => createItemsForNoteEditStep(editorModeWithEditStep.GetEditStep<NoteEditStep>()),
             LyricEditorMode.Singer => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        static IEnumerable<Drawable> createItemsForTextingMode(TextingEditStep textingEditMode)
+        static IEnumerable<Drawable> createItemsForTextingEditStep(TextingEditStep textingEditMode)
         {
             switch (textingEditMode)
             {
@@ -143,7 +143,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
             }
         }
 
-        static IEnumerable<Drawable> createItemsForEditTimeTagMode(TimeTagEditStep timeTagEditMode) =>
+        static IEnumerable<Drawable> createItemsForTimeTagEditStep(TimeTagEditStep timeTagEditMode) =>
             timeTagEditMode switch
             {
                 TimeTagEditStep.Create => new Drawable[]
@@ -178,7 +178,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
                 _ => throw new ArgumentOutOfRangeException(nameof(timeTagEditMode), timeTagEditMode, null),
             };
 
-        static IEnumerable<Drawable> createItemsForEditNoteMode(NoteEditStep noteEditMode) =>
+        static IEnumerable<Drawable> createItemsForNoteEditStep(NoteEditStep noteEditMode) =>
             noteEditMode switch
             {
                 NoteEditStep.Generate => Array.Empty<Drawable>(),

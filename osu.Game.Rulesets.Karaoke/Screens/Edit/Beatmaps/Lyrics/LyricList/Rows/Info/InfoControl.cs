@@ -35,7 +35,7 @@ public partial class InfoControl : Container, IHasContextMenu
     private readonly OsuSpriteText timeRange;
     private readonly Container subInfoContainer;
 
-    private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
+    private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
     [Resolved]
     private IDialogOverlay? dialogOverlay { get; set; }
@@ -137,7 +137,7 @@ public partial class InfoControl : Container, IHasContextMenu
 
         timeRange.Text = LyricUtils.LyricTimeFormattedString(lyric);
 
-        bindableModeAndSubMode.BindValueChanged(e =>
+        bindableModeWithEditStep.BindValueChanged(e =>
         {
             initializeBadge(e.NewValue);
 
@@ -149,7 +149,7 @@ public partial class InfoControl : Container, IHasContextMenu
     [BackgroundDependencyLoader]
     private void load(ILyricEditorState state)
     {
-        bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
+        bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
     }
 
     private void updateColour(LyricEditorMode mode)
@@ -158,7 +158,7 @@ public partial class InfoControl : Container, IHasContextMenu
         headerBackground.Colour = colourProvider.Background5(mode);
     }
 
-    private void initializeBadge(ModeWithSubMode mode)
+    private void initializeBadge(EditorModeWithEditStep editorMode)
     {
         subInfoContainer.Clear();
         var subInfo = createSubInfo();
@@ -172,7 +172,7 @@ public partial class InfoControl : Container, IHasContextMenu
 
         Drawable? createSubInfo()
         {
-            switch (mode.Mode)
+            switch (editorMode.Mode)
             {
                 case LyricEditorMode.View:
                 case LyricEditorMode.Texting:
@@ -189,7 +189,7 @@ public partial class InfoControl : Container, IHasContextMenu
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditTimeTag:
-                    return createTimeTagModeSubInfo(mode.GetSubMode<TimeTagEditStep>(), Lyric);
+                    return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), Lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;
@@ -198,7 +198,7 @@ public partial class InfoControl : Container, IHasContextMenu
                     return new SingerInfo(Lyric);
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mode));
+                    throw new ArgumentOutOfRangeException(nameof(editorMode));
             }
 
             static Drawable createTimeTagModeSubInfo(TimeTagEditStep editMode, Lyric lyric)
@@ -223,7 +223,7 @@ public partial class InfoControl : Container, IHasContextMenu
     {
         get
         {
-            var editMode = bindableModeAndSubMode.Value.Mode;
+            var editMode = bindableModeWithEditStep.Value.Mode;
             if (editMode != LyricEditorMode.Texting)
                 return Array.Empty<MenuItem>();
 

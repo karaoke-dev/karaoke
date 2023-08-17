@@ -10,7 +10,7 @@ public interface ILyricEditorState
 {
     IBindable<LyricEditorMode> BindableMode { get; }
 
-    IBindable<ModeWithSubMode> BindableModeAndSubMode { get; }
+    IBindable<EditorModeWithEditStep> BindableModeWithEditStep { get; }
 
     LyricEditorMode Mode { get; }
 
@@ -21,26 +21,26 @@ public interface ILyricEditorState
     void NavigateToFix(LyricEditorMode mode);
 }
 
-public struct ModeWithSubMode
+public struct EditorModeWithEditStep
 {
     public LyricEditorMode Mode;
 
-    public Enum? SubMode;
+    public Enum? EditStep;
 
     public bool Default;
 
-    public ModeWithSubMode()
+    public EditorModeWithEditStep()
     {
         Mode = LyricEditorMode.View;
-        SubMode = null;
+        EditStep = null;
         Default = true;
     }
 
-    public TSubMode GetSubMode<TSubMode>() where TSubMode : Enum
+    public TEditStep GetEditStep<TEditStep>() where TEditStep : Enum
     {
-        if (SubMode is not TSubMode subMode)
+        if (EditStep is not TEditStep editStep)
             throw new InvalidOperationException();
 
-        return subMode;
+        return editStep;
     }
 }
