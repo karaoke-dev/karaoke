@@ -42,7 +42,7 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
         => lyricEditor.SwitchMode(mode);
 
     public void SwitchToEditModeState<T>(T mode) where T : Enum
-        => lyricEditor.SwitchSubMode(mode);
+        => lyricEditor.SwitchEditStep(mode);
 
     protected void PrepareAutoGenerate()
     {
@@ -63,9 +63,9 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
             lyricSelectionState.SelectAll();
 
             // for some mode, we need to switch to generate section.
-            SwitchSubMode(LanguageEditStep.Generate);
-            SwitchSubMode(RubyTagEditStep.Generate);
-            SwitchSubMode(RomajiTagEditStep.Generate);
+            SwitchEditStep(LanguageEditStep.Generate);
+            SwitchEditStep(RubyTagEditStep.Generate);
+            SwitchEditStep(RomajiTagEditStep.Generate);
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

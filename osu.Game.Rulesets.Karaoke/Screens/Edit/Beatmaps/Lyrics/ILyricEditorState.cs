@@ -16,7 +16,7 @@ public interface ILyricEditorState
 
     void SwitchMode(LyricEditorMode mode);
 
-    void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum;
+    void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum;
 
     void NavigateToFix(LyricEditorMode mode);
 }

@@ -430,7 +430,7 @@ public partial class LyricCaretStateTest : OsuTestScene
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
 
-        public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+        public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
         {
             // there's no need to do anything.
         }

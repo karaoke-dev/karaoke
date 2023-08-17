@@ -441,13 +441,13 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     public void SwitchMode(LyricEditorMode mode)
         => bindableMode.Value = mode;
 
-    public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+    public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
     {
-        var editModeState = getEditModeState<TSubMode>();
+        var editModeState = getEditModeState<TEditStep>();
         if (editModeState == null)
             throw new ArgumentNullException();
 
-        editModeState.ChangeEditStep(subMode);
+        editModeState.ChangeEditStep(editStep);
     }
 
     private IHasEditStep<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum

@@ -52,7 +52,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
         // navigate to sub-mode if needed.
         var targetSubMode = getNavigateSubMode(issue);
         if (targetSubMode != null)
-            lyricEditorState.SwitchSubMode(targetSubMode);
+            lyricEditorState.SwitchEditStep(targetSubMode);
 
         // navigate to the target lyric.
         (var lyric, object? lyricIndex) = getNavigateLyricAndIndex(issue);
