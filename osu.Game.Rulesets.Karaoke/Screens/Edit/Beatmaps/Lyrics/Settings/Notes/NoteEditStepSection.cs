@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 
-public partial class NoteEditModeSection : LyricEditorEditModeSection<IEditNoteModeState, NoteEditStep>
+public partial class NoteEditStepSection : LyricEditorEditStepSection<IEditNoteModeState, NoteEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Blue;

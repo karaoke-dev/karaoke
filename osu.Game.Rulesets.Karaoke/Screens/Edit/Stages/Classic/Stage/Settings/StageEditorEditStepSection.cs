@@ -11,61 +11,61 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 
-public partial class StageEditorEditModeSection : EditModeSection<StageEditorEditMode>
+public partial class StageEditorEditStepSection : EditStepSection<StageEditorEditMode>
 {
     [Resolved]
     private IStageEditorStateProvider stageEditorStateProvider { get; set; } = null!;
 
     private readonly StageEditorEditCategory category;
 
-    public StageEditorEditModeSection(StageEditorEditCategory category)
+    public StageEditorEditStepSection(StageEditorEditCategory category)
     {
         this.category = category;
     }
 
-    protected override StageEditorEditMode DefaultMode()
+    protected override StageEditorEditMode DefaultStep()
         => stageEditorStateProvider.EditMode;
 
-    internal sealed override void UpdateEditMode(StageEditorEditMode mode)
+    internal sealed override void UpdateEditStep(StageEditorEditMode step)
     {
-        stageEditorStateProvider.ChangeEditMode(mode);
+        stageEditorStateProvider.ChangeEditMode(step);
 
-        base.UpdateEditMode(mode);
+        base.UpdateEditStep(step);
     }
 
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Green;
 
-    protected override Selection CreateSelection(StageEditorEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(StageEditorEditMode step) =>
+        step switch
         {
             StageEditorEditMode.Edit => new Selection(),
             StageEditorEditMode.Verify => new StageEditorVerifySelection(category),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(StageEditorEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(StageEditorEditMode step) =>
+        step switch
         {
             StageEditorEditMode.Edit => "Edit",
             StageEditorEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, StageEditorEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, StageEditorEditMode step, bool active) =>
+        step switch
         {
             StageEditorEditMode.Edit => active ? colours.Red : colours.RedDarker,
             StageEditorEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(StageEditorEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(StageEditorEditMode step) =>
+        step switch
         {
             StageEditorEditMode.Edit => "Edit the stage property in here.",
             StageEditorEditMode.Verify => "Check if have any stage issues.",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
     private partial class StageEditorVerifySelection : VerifySelection

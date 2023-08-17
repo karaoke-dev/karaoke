@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-public partial class RomajiTagEditModeSection : TextTagEditModeSection<IEditRomajiModeState, RomajiTagEditStep>
+public partial class RomajiTagEditStepSection : TextTagEditStepSection<IEditRomajiModeState, RomajiTagEditStep>
 {
     protected override Selection CreateSelection(RomajiTagEditStep step) =>
         step switch

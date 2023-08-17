@@ -26,17 +26,17 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
     {
         RomajiTagEditStep.Generate => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagAutoGenerateSection(),
         },
         RomajiTagEditStep.Edit => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagEditSection(),
         },
         RomajiTagEditStep.Verify => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

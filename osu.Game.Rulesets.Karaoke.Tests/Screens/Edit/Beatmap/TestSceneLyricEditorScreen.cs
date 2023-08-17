@@ -56,7 +56,7 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     public void TestTextingMode()
     {
         switchToMode(LyricEditorMode.Texting);
-        clickEditModeButtons<TextingEditStep>();
+        clickEditStepButtons<TextingEditStep>();
     }
 
     [Test]
@@ -69,35 +69,35 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     public void TestLanguageMode()
     {
         switchToMode(LyricEditorMode.Language);
-        clickEditModeButtons<LanguageEditStep>();
+        clickEditStepButtons<LanguageEditStep>();
     }
 
     [Test]
     public void TestEditRubyMode()
     {
         switchToMode(LyricEditorMode.EditRuby);
-        clickEditModeButtons<RubyTagEditStep>();
+        clickEditStepButtons<RubyTagEditStep>();
     }
 
     [Test]
     public void TestEditRomajiMode()
     {
         switchToMode(LyricEditorMode.EditRomaji);
-        clickEditModeButtons<RomajiTagEditStep>();
+        clickEditStepButtons<RomajiTagEditStep>();
     }
 
     [Test]
     public void TestEditTimeTagMode()
     {
         switchToMode(LyricEditorMode.EditTimeTag);
-        clickEditModeButtons<TimeTagEditStep>();
+        clickEditStepButtons<TimeTagEditStep>();
     }
 
     [Test]
     public void TestEditNoteMode()
     {
         switchToMode(LyricEditorMode.EditNote);
-        clickEditModeButtons<NoteEditStep>();
+        clickEditStepButtons<NoteEditStep>();
     }
 
     [Test]
@@ -115,7 +115,7 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
         AddWaitStep("wait for switch to new mode", 10);
     }
 
-    private void clickEditModeButtons<T>() where T : struct, Enum
+    private void clickEditStepButtons<T>() where T : struct, Enum
     {
         foreach (var editMode in Enum.GetValues<T>())
         {
@@ -127,8 +127,8 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     {
         AddStep("Click the button", () =>
         {
-            var editModeSection = this.ChildrenOfType<LyricEditorEditModeSection<T>>().Single();
-            editModeSection.UpdateEditMode(editMode);
+            var editStepSection = this.ChildrenOfType<LyricEditorEditStepSection<T>>().Single();
+            editStepSection.UpdateEditStep(editMode);
         });
         AddWaitStep("wait for switch to new edit mode.", 10);
     }

@@ -33,19 +33,19 @@ public partial class NoteSettings : LyricEditorSettings
     {
         NoteEditStep.Generate => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteConfigSection(),
             new NoteSwitchSpecialActionSection(),
         },
         NoteEditStep.Edit => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteEditPropertyModeSection(),
             new NoteEditPropertySection(),
         },
         NoteEditStep.Verify => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

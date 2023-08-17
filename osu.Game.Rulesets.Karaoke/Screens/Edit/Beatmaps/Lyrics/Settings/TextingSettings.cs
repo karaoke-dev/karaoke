@@ -33,17 +33,17 @@ public partial class TextingSettings : LyricEditorSettings
     {
         TextingEditStep.Typing => new Drawable[]
         {
-            new TextingEditModeSection(),
+            new TextingEditStepSection(),
             new TextingSwitchSpecialActionSection(),
         },
         TextingEditStep.Split => new Drawable[]
         {
-            new TextingEditModeSection(),
+            new TextingEditStepSection(),
             new TextingSwitchSpecialActionSection(),
         },
         TextingEditStep.Verify => new Drawable[]
         {
-            new TextingEditModeSection(),
+            new TextingEditStepSection(),
             new TextingIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

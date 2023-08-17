@@ -31,17 +31,17 @@ public partial class PageSettings : EditorSettings
     {
         PageEditorEditMode.Generate => new Drawable[]
         {
-            new PageEditorEditModeSection(),
+            new PageEditorEditStepSection(),
             new PageAutoGenerateSection(),
         },
         PageEditorEditMode.Edit => new Drawable[]
         {
-            new PageEditorEditModeSection(),
+            new PageEditorEditStepSection(),
             new PagesSection(),
         },
         PageEditorEditMode.Verify => new Drawable[]
         {
-            new PageEditorEditModeSection(),
+            new PageEditorEditStepSection(),
             new PageEditorIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
