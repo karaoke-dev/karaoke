@@ -155,12 +155,12 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }, true);
 
-        initialSubModeChanged<TextingEditStep>(); // texting
-        initialSubModeChanged<LanguageEditStep>(); // language
-        initialSubModeChanged<RubyTagEditStep>(); // ruby
-        initialSubModeChanged<RomajiTagEditStep>(); // romaji
-        initialSubModeChanged<TimeTagEditStep>(); //time-tag
-        initialSubModeChanged<NoteEditStep>(); // note
+        initialEditStepChanged<TextingEditStep>();
+        initialEditStepChanged<LanguageEditStep>();
+        initialEditStepChanged<RubyTagEditStep>();
+        initialEditStepChanged<RomajiTagEditStep>();
+        initialEditStepChanged<TimeTagEditStep>();
+        initialEditStepChanged<NoteEditStep>();
 
         bindablePreferLayout.BindValueChanged(e =>
         {
@@ -177,9 +177,9 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         }, true);
     }
 
-    private void initialSubModeChanged<TSubMode>() where TSubMode : Enum
+    private void initialEditStepChanged<TEditStep>() where TEditStep : Enum
     {
-        var editModeState = getEditModeState<TSubMode>();
+        var editModeState = getEditStepState<TEditStep>();
         if (editModeState == null)
             throw new ArgumentNullException();
 
@@ -443,15 +443,15 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
     public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
     {
-        var editModeState = getEditModeState<TEditStep>();
-        if (editModeState == null)
+        var editStepState = getEditStepState<TEditStep>();
+        if (editStepState == null)
             throw new ArgumentNullException();
 
-        editModeState.ChangeEditStep(editStep);
+        editStepState.ChangeEditStep(editStep);
     }
 
-    private IHasEditStep<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum
-        => InternalChildren.OfType<IHasEditStep<TSubMode>>().FirstOrDefault();
+    private IHasEditStep<TEditStep>? getEditStepState<TEditStep>() where TEditStep : Enum
+        => InternalChildren.OfType<IHasEditStep<TEditStep>>().FirstOrDefault();
 
     public virtual void NavigateToFix(LyricEditorMode mode)
     {
