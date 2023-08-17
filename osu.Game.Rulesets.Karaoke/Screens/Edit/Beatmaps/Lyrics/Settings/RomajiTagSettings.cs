@@ -15,14 +15,14 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
     [BackgroundDependencyLoader]
     private void load(IEditRomajiModeState romajiModeState)
     {
-        EditMode.BindTo(romajiModeState.BindableEditStep);
-        EditMode.BindValueChanged(e =>
+        BindableEditStep.BindTo(romajiModeState.BindableEditStep);
+        BindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => EditMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => BindableEditStep.Value switch
     {
         RomajiTagEditStep.Generate => new Drawable[]
         {

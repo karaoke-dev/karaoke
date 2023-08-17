@@ -15,14 +15,14 @@ public partial class RubyTagSettings : TextTagSettings<RubyTagEditStep>
     [BackgroundDependencyLoader]
     private void load(IEditRubyModeState editRubyModeState)
     {
-        EditMode.BindTo(editRubyModeState.BindableEditStep);
-        EditMode.BindValueChanged(e =>
+        BindableEditStep.BindTo(editRubyModeState.BindableEditStep);
+        BindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => EditMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => BindableEditStep.Value switch
     {
         RubyTagEditStep.Generate => new Drawable[]
         {
