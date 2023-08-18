@@ -20,11 +20,11 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
-public abstract partial class EditModeSection<TEditMode> : EditorSection where TEditMode : struct, Enum
+public abstract partial class EditStepSection<TEditStep> : EditorSection where TEditStep : struct, Enum
 {
     private const int horizontal_padding = 20;
 
-    protected sealed override LocalisableString Title => "Edit mode";
+    protected sealed override LocalisableString Title => "Edit step";
 
     [Cached]
     private readonly OverlayColourProvider overlayColourProvider;
@@ -35,7 +35,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
     private readonly Selection[] selections;
     private readonly DescriptionTextFlowContainer lyricEditorDescription;
 
-    protected EditModeSection()
+    protected EditStepSection()
     {
         overlayColourProvider = new OverlayColourProvider(CreateColourScheme());
 
@@ -65,30 +65,30 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
         // should wait until derived class BDL ready.
         Schedule(() =>
         {
-            UpdateEditMode(DefaultMode());
+            UpdateEditStep(DefaultStep());
         });
     }
 
     private Selection[] createSelections()
-        => Enum.GetValues<TEditMode>().Select(mode =>
+        => Enum.GetValues<TEditStep>().Select(step =>
         {
-            var selection = CreateSelection(mode);
-            selection.Mode = mode;
-            selection.Text = GetSelectionText(mode);
+            var selection = CreateSelection(step);
+            selection.Step = step;
+            selection.Text = GetSelectionText(step);
             selection.Padding = new MarginPadding { Horizontal = 5 };
-            selection.Action = UpdateEditMode;
+            selection.Action = UpdateEditStep;
 
             return selection;
         }).ToArray();
 
-    internal virtual void UpdateEditMode(TEditMode mode)
+    internal virtual void UpdateEditStep(TEditStep step)
     {
         // update button style.
         foreach (var button in selections)
         {
-            bool highLight = EqualityComparer<TEditMode>.Default.Equals(button.Mode, mode);
+            bool highLight = EqualityComparer<TEditStep>.Default.Equals(button.Step, step);
             button.Alpha = highLight ? 0.8f : 0.4f;
-            button.BackgroundColour = GetSelectionColour(colours, button.Mode, highLight);
+            button.BackgroundColour = GetSelectionColour(colours, button.Step, highLight);
 
             if (!highLight)
                 continue;
@@ -96,7 +96,7 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
             Schedule(() =>
             {
                 // update description text.
-                lyricEditorDescription.Description = GetSelectionDescription(mode);
+                lyricEditorDescription.Description = GetSelectionDescription(step);
             });
         }
     }
@@ -105,25 +105,25 @@ public abstract partial class EditModeSection<TEditMode> : EditorSection where T
 
     protected abstract OverlayColourScheme CreateColourScheme();
 
-    protected abstract TEditMode DefaultMode();
+    protected abstract TEditStep DefaultStep();
 
-    protected abstract Selection CreateSelection(TEditMode mode);
+    protected abstract Selection CreateSelection(TEditStep step);
 
-    protected abstract LocalisableString GetSelectionText(TEditMode mode);
+    protected abstract LocalisableString GetSelectionText(TEditStep step);
 
-    protected abstract Color4 GetSelectionColour(OsuColour colours, TEditMode mode, bool active);
+    protected abstract Color4 GetSelectionColour(OsuColour colours, TEditStep step, bool active);
 
-    protected abstract DescriptionFormat GetSelectionDescription(TEditMode mode);
+    protected abstract DescriptionFormat GetSelectionDescription(TEditStep step);
 
     protected partial class Selection : EditorSectionButton
     {
-        public new Action<TEditMode>? Action;
+        public new Action<TEditStep>? Action;
 
-        public TEditMode Mode { get; set; }
+        public TEditStep Step { get; set; }
 
         public Selection()
         {
-            base.Action = () => Action?.Invoke(Mode);
+            base.Action = () => Action?.Invoke(Step);
         }
     }
 

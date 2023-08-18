@@ -397,40 +397,40 @@ public partial class LyricCaretStateTest : OsuTestScene
     {
         private readonly Bindable<LyricEditorMode> bindableMode = new();
 
-        private readonly Bindable<ModeWithSubMode> bindableModeWitSubMode = new();
+        private readonly Bindable<EditorModeWithEditStep> bindableModeWithEditStep = new();
 
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
-        public IBindable<ModeWithSubMode> BindableModeAndSubMode => bindableModeWitSubMode;
+        public IBindable<EditorModeWithEditStep> BindableModeWithEditStep => bindableModeWithEditStep;
 
         public LyricEditorMode Mode => bindableMode.Value;
 
         public void SwitchMode(LyricEditorMode mode)
         {
             bindableMode.Value = mode;
-            bindableModeWitSubMode.Value = bindableModeWitSubMode.Value with
+            bindableModeWithEditStep.Value = bindableModeWithEditStep.Value with
             {
                 Mode = mode,
-                SubMode = getTheSubMode(mode),
+                EditStep = getTheEditStep(mode),
             };
         }
 
-        private static Enum? getTheSubMode(LyricEditorMode mode) =>
+        private static Enum? getTheEditStep(LyricEditorMode mode) =>
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => TextingEditMode.Typing,
+                LyricEditorMode.Texting => TextingEditStep.Typing,
                 LyricEditorMode.Reference => null,
-                LyricEditorMode.Language => LanguageEditMode.Generate,
-                LyricEditorMode.EditRuby => RubyTagEditMode.Generate,
-                LyricEditorMode.EditRomaji => RomajiTagEditMode.Generate,
-                LyricEditorMode.EditTimeTag => TimeTagEditMode.Create,
-                LyricEditorMode.EditNote => NoteEditMode.Generate,
+                LyricEditorMode.Language => LanguageEditStep.Generate,
+                LyricEditorMode.EditRuby => RubyTagEditStep.Generate,
+                LyricEditorMode.EditRomaji => RomajiTagEditStep.Generate,
+                LyricEditorMode.EditTimeTag => TimeTagEditStep.Create,
+                LyricEditorMode.EditNote => NoteEditStep.Generate,
                 LyricEditorMode.Singer => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
 
-        public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+        public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
         {
             // there's no need to do anything.
         }

@@ -17,35 +17,35 @@ public partial class NoteSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
+    private readonly IBindable<NoteEditStep> bindableEditStep = new Bindable<NoteEditStep>();
 
     [BackgroundDependencyLoader]
     private void load(IEditNoteModeState editNoteModeState)
     {
-        bindableMode.BindTo(editNoteModeState.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
+        bindableEditStep.BindTo(editNoteModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
-        NoteEditMode.Generate => new Drawable[]
+        NoteEditStep.Generate => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteConfigSection(),
             new NoteSwitchSpecialActionSection(),
         },
-        NoteEditMode.Edit => new Drawable[]
+        NoteEditStep.Edit => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteEditPropertyModeSection(),
             new NoteEditPropertySection(),
         },
-        NoteEditMode.Verify => new Drawable[]
+        NoteEditStep.Verify => new Drawable[]
         {
-            new NoteEditModeSection(),
+            new NoteEditStepSection(),
             new NoteIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

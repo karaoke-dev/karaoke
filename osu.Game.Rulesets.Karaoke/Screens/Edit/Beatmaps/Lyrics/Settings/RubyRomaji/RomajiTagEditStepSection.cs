@@ -11,45 +11,45 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState, RubyTagEditMode>
+public partial class RomajiTagEditStepSection : TextTagEditStepSection<IEditRomajiModeState, RomajiTagEditStep>
 {
-    protected override Selection CreateSelection(RubyTagEditMode mode) =>
-        mode switch
+    protected override Selection CreateSelection(RomajiTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => new Selection(),
-            RubyTagEditMode.Edit => new Selection(),
-            RubyTagEditMode.Verify => new RubyTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RomajiTagEditStep.Generate => new Selection(),
+            RomajiTagEditStep.Edit => new Selection(),
+            RomajiTagEditStep.Verify => new RomajiTagVerifySelection(),
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override LocalisableString GetSelectionText(RubyTagEditMode mode) =>
-        mode switch
+    protected override LocalisableString GetSelectionText(RomajiTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => "Generate",
-            RubyTagEditMode.Edit => "Edit",
-            RubyTagEditMode.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RomajiTagEditStep.Generate => "Generate",
+            RomajiTagEditStep.Edit => "Edit",
+            RomajiTagEditStep.Verify => "Verify",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditMode mode, bool active) =>
-        mode switch
+    protected override Color4 GetSelectionColour(OsuColour colours, RomajiTagEditStep step, bool active) =>
+        step switch
         {
-            RubyTagEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
-            RubyTagEditMode.Edit => active ? colours.Red : colours.RedDarker,
-            RubyTagEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RomajiTagEditStep.Generate => active ? colours.Blue : colours.BlueDarker,
+            RomajiTagEditStep.Edit => active ? colours.Red : colours.RedDarker,
+            RomajiTagEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    protected override DescriptionFormat GetSelectionDescription(RubyTagEditMode mode) =>
-        mode switch
+    protected override DescriptionFormat GetSelectionDescription(RomajiTagEditStep step) =>
+        step switch
         {
-            RubyTagEditMode.Generate => "Auto-generate rubies in the lyric.",
-            RubyTagEditMode.Edit => new DescriptionFormat
+            RomajiTagEditStep.Generate => "Auto-generate romajies in the lyric.",
+            RomajiTagEditStep.Edit => new DescriptionFormat
             {
                 Text = "Create / delete and edit lyric rubies in here.\n"
                        + $"Click [{DescriptionFormat.LINK_KEY_ACTION}](directions) to select the target lyric.\n"
-                       + "Press `Tab` to switch between the ruby tags.\n"
-                       + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust ruby index after hover to edit index area.",
+                       + "Press `Tab` to switch between the romaji tags.\n"
+                       + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust romaji index after hover to edit index area.",
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
@@ -78,12 +78,12 @@ public partial class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyMo
                     },
                 },
             },
-            RubyTagEditMode.Verify => "Check invalid rubies in here",
-            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
+            RomajiTagEditStep.Verify => "Check invalid romajies in here.",
+            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    private partial class RubyTagVerifySelection : LyricEditorVerifySelection
+    private partial class RomajiTagVerifySelection : LyricEditorVerifySelection
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditRuby;
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
     }
 }

@@ -8,10 +8,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class EditReferenceLyricModeState : Component, IEditReferenceLyricModeState
 {
-    private readonly Bindable<ReferenceLyricEditMode> bindableEditMode = new();
+    private readonly Bindable<ReferenceLyricEditStep> bindableEditMode = new();
 
-    public IBindable<ReferenceLyricEditMode> BindableEditMode => bindableEditMode;
+    public IBindable<ReferenceLyricEditStep> BindableEditStep => bindableEditMode;
 
-    public void ChangeEditMode(ReferenceLyricEditMode mode)
-        => bindableEditMode.Value = mode;
+    public void ChangeEditStep(ReferenceLyricEditStep step)
+        => bindableEditMode.Value = step;
 }

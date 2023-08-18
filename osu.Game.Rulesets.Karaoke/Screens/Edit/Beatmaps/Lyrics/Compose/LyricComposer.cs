@@ -25,7 +25,7 @@ public partial class LyricComposer : CompositeDrawable
     private readonly Bindable<PanelLayout> bindablePanelLayout = new();
     private readonly Bindable<BottomEditorType?> bindableBottomEditorType = new();
 
-    private readonly IBindable<ModeWithSubMode> bindableModeAndSubMode = new Bindable<ModeWithSubMode>();
+    private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
     private readonly IDictionary<PanelType, Bindable<bool>> panelStatus = new Dictionary<PanelType, Bindable<bool>>();
     private readonly IDictionary<PanelType, Panel> panelInstance = new Dictionary<PanelType, Panel>();
@@ -110,7 +110,7 @@ public partial class LyricComposer : CompositeDrawable
             },
         };
 
-        bindableModeAndSubMode.BindValueChanged(e =>
+        bindableModeWithEditStep.BindValueChanged(e =>
         {
             toggleChangeBottomEditor();
 
@@ -158,7 +158,7 @@ public partial class LyricComposer : CompositeDrawable
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowPropertyPanelInComposer, panelStatus[PanelType.Property]);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, panelStatus[PanelType.InvalidInfo]);
 
-        bindableModeAndSubMode.BindTo(state.BindableModeAndSubMode);
+        bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
     }
 
     protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
@@ -285,14 +285,14 @@ public partial class LyricComposer : CompositeDrawable
 
     private void toggleChangeBottomEditor()
     {
-        var modeWithSubMode = bindableModeAndSubMode.Value;
-        bindableBottomEditorType.Value = getBottomEditorType(modeWithSubMode);
+        var modeWithEditStep = bindableModeWithEditStep.Value;
+        bindableBottomEditorType.Value = getBottomEditorType(modeWithEditStep);
 
-        static BottomEditorType? getBottomEditorType(ModeWithSubMode modeWithSubMode) =>
-            modeWithSubMode.Mode switch
+        static BottomEditorType? getBottomEditorType(EditorModeWithEditStep modeWithEditStep) =>
+            modeWithEditStep.Mode switch
             {
-                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Recording => BottomEditorType.RecordingTimeTag,
-                LyricEditorMode.EditTimeTag when modeWithSubMode.SubMode is TimeTagEditMode.Adjust => BottomEditorType.AdjustTimeTags,
+                LyricEditorMode.EditTimeTag when modeWithEditStep.EditStep is TimeTagEditStep.Recording => BottomEditorType.RecordingTimeTag,
+                LyricEditorMode.EditTimeTag when modeWithEditStep.EditStep is TimeTagEditStep.Adjust => BottomEditorType.AdjustTimeTags,
                 LyricEditorMode.EditNote => BottomEditorType.Note,
                 _ => null,
             };

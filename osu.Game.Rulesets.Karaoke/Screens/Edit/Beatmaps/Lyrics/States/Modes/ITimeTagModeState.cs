@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface ITimeTagModeState : IHasBlueprintSelection<TimeTag>, IHasEditModeState<TimeTagEditMode>
+public interface ITimeTagModeState : IHasBlueprintSelection<TimeTag>, IHasEditStep<TimeTagEditStep>
 {
     BindableFloat BindableRecordZoom { get; }
 

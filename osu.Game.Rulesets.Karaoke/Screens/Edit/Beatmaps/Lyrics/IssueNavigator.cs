@@ -50,9 +50,9 @@ public partial class IssueNavigator : Component, IIssueNavigator
             lyricEditorState.SwitchMode(targetEditMode.Value);
 
         // navigate to sub-mode if needed.
-        var targetSubMode = getNavigateSubMode(issue);
-        if (targetSubMode != null)
-            lyricEditorState.SwitchSubMode(targetSubMode);
+        var targetEditStep = getNavigateEditStep(issue);
+        if (targetEditStep != null)
+            lyricEditorState.SwitchEditStep(targetEditStep);
 
         // navigate to the target lyric.
         (var lyric, object? lyricIndex) = getNavigateLyricAndIndex(issue);
@@ -100,7 +100,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
         }
     }
 
-    private static Enum? getNavigateSubMode(Issue issue)
+    private static Enum? getNavigateEditStep(Issue issue)
     {
         // todo: implement.
         return null;

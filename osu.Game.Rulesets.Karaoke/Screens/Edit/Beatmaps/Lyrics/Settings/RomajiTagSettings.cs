@@ -10,33 +10,33 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditMode>
+public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
 {
     [BackgroundDependencyLoader]
     private void load(IEditRomajiModeState romajiModeState)
     {
-        EditMode.BindTo(romajiModeState.BindableEditMode);
-        EditMode.BindValueChanged(e =>
+        BindableEditStep.BindTo(romajiModeState.BindableEditStep);
+        BindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => EditMode.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => BindableEditStep.Value switch
     {
-        RomajiTagEditMode.Generate => new Drawable[]
+        RomajiTagEditStep.Generate => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagAutoGenerateSection(),
         },
-        RomajiTagEditMode.Edit => new Drawable[]
+        RomajiTagEditStep.Edit => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagEditSection(),
         },
-        RomajiTagEditMode.Verify => new Drawable[]
+        RomajiTagEditStep.Verify => new Drawable[]
         {
-            new RomajiTagEditModeSection(),
+            new RomajiTagEditStepSection(),
             new RomajiTagIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

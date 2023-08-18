@@ -1,13 +1,16 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using osu.Framework.Bindables;
+
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public enum TextingEditMode
+public interface IHasEditStep<T> where T : Enum
 {
-    Typing,
+    IBindable<T> BindableEditStep { get; }
 
-    Split,
+    T EditStep => BindableEditStep.Value;
 
-    Verify,
+    void ChangeEditStep(T mode);
 }

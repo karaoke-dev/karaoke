@@ -78,13 +78,13 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     private readonly BindableBeatDivisor beatDivisor = new();
 
     private readonly Bindable<LyricEditorMode> bindableMode = new();
-    private readonly Bindable<ModeWithSubMode> bindableModeAndSubMode = new();
+    private readonly Bindable<EditorModeWithEditStep> bindableModeWithEditStep = new();
     private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.Preview);
     private readonly Bindable<LyricEditorLayout> bindableCurrentLayout = new();
 
     public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
-    public IBindable<ModeWithSubMode> BindableModeAndSubMode => bindableModeAndSubMode;
+    public IBindable<EditorModeWithEditStep> BindableModeWithEditStep => bindableModeWithEditStep;
 
     private readonly GridContainer gridContainer;
     private readonly Container editArea;
@@ -144,7 +144,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         BindableMode.BindValueChanged(e =>
         {
-            updateTheSubMode();
+            updateModeWithEditStep();
 
             // should control grid container spacing and place some component.
             initializeSettingsArea();
@@ -155,12 +155,13 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }, true);
 
-        initialSubModeChanged<TextingEditMode>(); // texting
-        initialSubModeChanged<LanguageEditMode>(); // language
-        initialSubModeChanged<RubyTagEditMode>(); // ruby
-        initialSubModeChanged<RomajiTagEditMode>(); // romaji
-        initialSubModeChanged<TimeTagEditMode>(); //time-tag
-        initialSubModeChanged<NoteEditMode>(); // note
+        initialEditStepChanged<TextingEditStep>();
+        initialEditStepChanged<ReferenceLyricEditStep>();
+        initialEditStepChanged<LanguageEditStep>();
+        initialEditStepChanged<RubyTagEditStep>();
+        initialEditStepChanged<RomajiTagEditStep>();
+        initialEditStepChanged<TimeTagEditStep>();
+        initialEditStepChanged<NoteEditStep>();
 
         bindablePreferLayout.BindValueChanged(e =>
         {
@@ -177,38 +178,38 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         }, true);
     }
 
-    private void initialSubModeChanged<TSubMode>() where TSubMode : Enum
+    private void initialEditStepChanged<TEditStep>() where TEditStep : Enum
     {
-        var editModeState = getEditModeState<TSubMode>();
+        var editModeState = getEditStepState<TEditStep>();
         if (editModeState == null)
             throw new ArgumentNullException();
 
-        editModeState.BindableEditMode.BindValueChanged(e =>
+        editModeState.BindableEditStep.BindValueChanged(e =>
         {
-            updateTheSubMode();
+            updateModeWithEditStep();
         });
     }
 
-    private void updateTheSubMode()
+    private void updateModeWithEditStep()
     {
-        bindableModeAndSubMode.Value = new ModeWithSubMode
+        bindableModeWithEditStep.Value = new EditorModeWithEditStep
         {
             Mode = bindableMode.Value,
-            SubMode = getTheSubMode(bindableMode.Value),
+            EditStep = getTheEditStep(bindableMode.Value),
             Default = false,
         };
 
-        Enum? getTheSubMode(LyricEditorMode mode) =>
+        Enum? getTheEditStep(LyricEditorMode mode) =>
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => textingModeState.BindableEditMode.Value,
-                LyricEditorMode.Reference => null,
-                LyricEditorMode.Language => languageModeState.BindableEditMode.Value,
-                LyricEditorMode.EditRuby => editRubyModeState.BindableEditMode.Value,
-                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditMode.Value,
-                LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditMode.Value,
-                LyricEditorMode.EditNote => editNoteModeState.BindableEditMode.Value,
+                LyricEditorMode.Texting => textingModeState.BindableEditStep.Value,
+                LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
+                LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
+                LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
+                LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
                 LyricEditorMode.Singer => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
@@ -441,17 +442,17 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     public void SwitchMode(LyricEditorMode mode)
         => bindableMode.Value = mode;
 
-    public void SwitchSubMode<TSubMode>(TSubMode subMode) where TSubMode : Enum
+    public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
     {
-        var editModeState = getEditModeState<TSubMode>();
-        if (editModeState == null)
+        var editStepState = getEditStepState<TEditStep>();
+        if (editStepState == null)
             throw new ArgumentNullException();
 
-        editModeState.ChangeEditMode(subMode);
+        editStepState.ChangeEditStep(editStep);
     }
 
-    private IHasEditModeState<TSubMode>? getEditModeState<TSubMode>() where TSubMode : Enum
-        => InternalChildren.OfType<IHasEditModeState<TSubMode>>().FirstOrDefault();
+    private IHasEditStep<TEditStep>? getEditStepState<TEditStep>() where TEditStep : Enum
+        => InternalChildren.OfType<IHasEditStep<TEditStep>>().FirstOrDefault();
 
     public virtual void NavigateToFix(LyricEditorMode mode)
     {

@@ -10,25 +10,25 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public abstract partial class LyricEditorEditModeSection<TEditModeState, TEditMode> : LyricEditorEditModeSection<TEditMode>
-    where TEditModeState : class, IHasEditModeState<TEditMode>
-    where TEditMode : struct, Enum
+public abstract partial class LyricEditorEditStepSection<TEditStepState, TEditStep> : LyricEditorEditStepSection<TEditStep>
+    where TEditStepState : class, IHasEditStep<TEditStep>
+    where TEditStep : struct, Enum
 {
     [Resolved]
-    private TEditModeState tEditModeState { get; set; } = null!;
+    private TEditStepState tEditStepState { get; set; } = null!;
 
-    protected sealed override TEditMode DefaultMode() => tEditModeState.EditMode;
+    protected sealed override TEditStep DefaultStep() => tEditStepState.EditStep;
 
-    internal sealed override void UpdateEditMode(TEditMode mode)
+    internal sealed override void UpdateEditStep(TEditStep step)
     {
-        tEditModeState.ChangeEditMode(mode);
+        tEditStepState.ChangeEditStep(step);
 
-        base.UpdateEditMode(mode);
+        base.UpdateEditStep(step);
     }
 }
 
-public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSection<TEditMode>
-    where TEditMode : struct, Enum
+public abstract partial class LyricEditorEditStepSection<TEditStep> : EditStepSection<TEditStep>
+    where TEditStep : struct, Enum
 {
     [Resolved]
     private ILyricSelectionState lyricSelectionState { get; set; } = null!;
@@ -36,12 +36,12 @@ public abstract partial class LyricEditorEditModeSection<TEditMode> : EditModeSe
     protected override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
         => new LyricEditorDescriptionTextFlowContainer();
 
-    internal override void UpdateEditMode(TEditMode mode)
+    internal override void UpdateEditStep(TEditStep step)
     {
-        // should cancel the selection after change to the new edit mode.
+        // should cancel the selection after change to the new edit step.
         lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
 
-        base.UpdateEditMode(mode);
+        base.UpdateEditStep(step);
     }
 
     protected abstract partial class LyricEditorVerifySelection : VerifySelection

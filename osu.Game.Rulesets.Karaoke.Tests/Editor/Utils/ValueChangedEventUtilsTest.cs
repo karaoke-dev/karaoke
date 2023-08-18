@@ -63,27 +63,27 @@ public class ValueChangedEventUtilsTest
     [Test]
     public void TestEditModeChangedWithDefaultValue()
     {
-        var oldMode = default(ModeWithSubMode);
-        var newMode = new ModeWithSubMode
+        var oldMode = default(EditorModeWithEditStep);
+        var newMode = new EditorModeWithEditStep
         {
             Mode = LyricEditorMode.View,
         };
 
-        Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
+        Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)));
     }
 
     [Test]
     public void TestEditModeChanged()
     {
-        var oldMode = new ModeWithSubMode
+        var oldMode = new EditorModeWithEditStep
         {
             Mode = LyricEditorMode.View,
         };
-        var newMode = new ModeWithSubMode
+        var newMode = new EditorModeWithEditStep
         {
             Mode = LyricEditorMode.View,
         };
 
-        Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<ModeWithSubMode>(oldMode, newMode)));
+        Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)));
     }
 }

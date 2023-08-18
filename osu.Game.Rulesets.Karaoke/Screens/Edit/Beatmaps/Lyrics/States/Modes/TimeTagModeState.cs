@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>, ITimeTagModeState
 {
-    private readonly Bindable<TimeTagEditMode> bindableEditMode = new();
+    private readonly Bindable<TimeTagEditStep> bindableEditMode = new();
 
-    public IBindable<TimeTagEditMode> BindableEditMode => bindableEditMode;
+    public IBindable<TimeTagEditStep> BindableEditStep => bindableEditMode;
 
     public BindableFloat BindableRecordZoom { get; } = new();
 
@@ -33,8 +33,8 @@ public partial class TimeTagModeState : ModeStateWithBlueprintContainer<TimeTag>
         BindableAdjustZoom.Value = BindableAdjustZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 4000);
     }
 
-    public void ChangeEditMode(TimeTagEditMode mode)
-        => bindableEditMode.Value = mode;
+    public void ChangeEditStep(TimeTagEditStep step)
+        => bindableEditMode.Value = step;
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags));
