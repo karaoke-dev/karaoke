@@ -144,7 +144,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         BindableMode.BindValueChanged(e =>
         {
-            updateTheEditStep();
+            updateModeWithEditStep();
 
             // should control grid container spacing and place some component.
             initializeSettingsArea();
@@ -156,6 +156,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         }, true);
 
         initialEditStepChanged<TextingEditStep>();
+        initialEditStepChanged<ReferenceLyricEditStep>();
         initialEditStepChanged<LanguageEditStep>();
         initialEditStepChanged<RubyTagEditStep>();
         initialEditStepChanged<RomajiTagEditStep>();
@@ -185,11 +186,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         editModeState.BindableEditStep.BindValueChanged(e =>
         {
-            updateTheEditStep();
+            updateModeWithEditStep();
         });
     }
 
-    private void updateTheEditStep()
+    private void updateModeWithEditStep()
     {
         bindableModeWithEditStep.Value = new EditorModeWithEditStep
         {
@@ -203,7 +204,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             {
                 LyricEditorMode.View => null,
                 LyricEditorMode.Texting => textingModeState.BindableEditStep.Value,
-                LyricEditorMode.Reference => null,
+                LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
                 LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
