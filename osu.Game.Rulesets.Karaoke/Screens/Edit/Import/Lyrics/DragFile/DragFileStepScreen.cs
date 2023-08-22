@@ -178,7 +178,7 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
         => new OkPopupDialog
         {
             Icon = FontAwesome.Solid.Bug,
-            HeaderText = @"File loading error",
+            HeaderText = "File loading error",
             BodyText = loadException.Message,
         };
 
@@ -186,15 +186,15 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
         => new OkPopupDialog
         {
             Icon = FontAwesome.Solid.Bug,
-            HeaderText = @"Unknown error",
-            BodyText = @"Unknown error QAQa.",
+            HeaderText = "Unknown error",
+            BodyText = "Unknown error QAQa.",
         };
 
     private PopupDialog createCompleteDialog()
         => new OkPopupDialog(_ => { Complete(); })
         {
             Icon = FontAwesome.Regular.CheckCircle,
-            HeaderText = @"Import success",
+            HeaderText = "Import success",
             BodyText = "Lyrics has been imported.",
         };
 }

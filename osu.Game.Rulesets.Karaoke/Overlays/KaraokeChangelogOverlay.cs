@@ -89,7 +89,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     {
         Header.Build.BindTo(Current);
 
-        sampleBack = audio.Samples.Get(@"UI/generic-select-soft");
+        sampleBack = audio.Samples.Get("UI/generic-select-soft");
 
         Current.BindValueChanged(e =>
         {

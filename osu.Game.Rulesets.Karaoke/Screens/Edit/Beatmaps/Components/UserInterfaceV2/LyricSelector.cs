@@ -96,7 +96,7 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
 
         public LyricSelectionSearchTextBox()
         {
-            PlaceholderText = @"type in keywords...";
+            PlaceholderText = "type in keywords...";
         }
     }
 

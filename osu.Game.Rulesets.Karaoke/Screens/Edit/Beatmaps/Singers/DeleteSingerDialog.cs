@@ -18,12 +18,12 @@ public partial class DeleteSingerDialog : PopupDialog
         {
             new PopupDialogOkButton
             {
-                Text = @"Yes. Go for it.",
+                Text = "Yes. Go for it.",
                 Action = () => okAction(true),
             },
             new PopupDialogCancelButton
             {
-                Text = @"No! Abort mission!",
+                Text = "No! Abort mission!",
                 Action = () => okAction(false),
             },
         };

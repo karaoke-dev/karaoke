@@ -76,8 +76,8 @@ public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     [BackgroundDependencyLoader]
     private void load(AudioManager audio)
     {
-        sampleChecked = audio.Samples.Get(@"UI/check-on");
-        sampleUnchecked = audio.Samples.Get(@"UI/check-off");
+        sampleChecked = audio.Samples.Get("UI/check-on");
+        sampleUnchecked = audio.Samples.Get("UI/check-off");
     }
 
     private Color4 accentColour;

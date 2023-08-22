@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
 public partial class FontManager : Component
 {
-    public const string FONT_BASE_PATH = @"fonts";
+    public const string FONT_BASE_PATH = "fonts";
 
     [Resolved]
     private GameHost host { get; set; } = null!;

@@ -27,9 +27,9 @@ public static class VersionUtils
             var assemblyVersion = GetVersion();
             bool isDeployedBuild = assemblyVersion.Major > 0;
             if (!isDeployedBuild)
-                return @"local " + (DebugUtils.IsDebugBuild ? @"debug" : @"release");
+                return "local " + (DebugUtils.IsDebugBuild ? "debug" : "release");
 
-            return $@"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}-{MajorVersionName}";
+            return $"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}-{MajorVersionName}";
         }
     }
 }

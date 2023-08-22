@@ -95,7 +95,7 @@ public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
 
     private partial class BeatmapCover : CompositeDrawable
     {
-        private const string fallback_texture_name = @"Backgrounds/bg1";
+        private const string fallback_texture_name = "Backgrounds/bg1";
 
         private readonly Sprite sprite;
 

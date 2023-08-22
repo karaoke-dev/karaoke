@@ -413,7 +413,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
 
             public TextPropertySearchTextBox()
             {
-                PlaceholderText = @"Search...";
+                PlaceholderText = "Search...";
             }
         }
     }

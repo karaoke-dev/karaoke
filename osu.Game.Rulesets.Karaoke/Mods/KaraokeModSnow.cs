@@ -40,7 +40,7 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
         Speed = 1,
         WingAffection = 3,
         SnowSize = 0.3f,
-        TexturePath = @"Mod/Snow/Snow",
+        TexturePath = "Mod/Snow/Snow",
         Clock = new FramedClock(new StopwatchClock(true)),
         RelativeSizeAxes = Axes.Both,
         Depth = 1,

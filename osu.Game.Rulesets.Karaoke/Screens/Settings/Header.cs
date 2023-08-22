@@ -39,7 +39,7 @@ public partial class Header : Container
             background = new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Colour = Color4Extensions.FromHex(@"#1f1921"),
+                Colour = Color4Extensions.FromHex("#1f1921"),
             },
             new Container
             {

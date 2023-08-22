@@ -17,12 +17,12 @@ public partial class RollBackResetPopupDialog : PopupDialog
         {
             new PopupDialogDangerousButton
             {
-                Text = @"Forget all changes",
+                Text = "Forget all changes",
                 Action = () => okAction(true),
             },
             new PopupDialogCancelButton
             {
-                Text = @"Let me think about it",
+                Text = "Let me think about it",
                 Action = () => okAction(false),
             },
         };

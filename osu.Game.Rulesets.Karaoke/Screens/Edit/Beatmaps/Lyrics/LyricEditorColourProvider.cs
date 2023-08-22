@@ -63,7 +63,7 @@ public class LyricEditorColourProvider
                 return 255 / 360f; // purple
 
             default:
-                throw new InvalidEnumArgumentException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
+                throw new InvalidEnumArgumentException($"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
         }
     }
 }

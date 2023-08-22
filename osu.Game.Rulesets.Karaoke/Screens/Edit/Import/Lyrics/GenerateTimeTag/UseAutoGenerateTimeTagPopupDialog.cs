@@ -18,12 +18,12 @@ public partial class UseAutoGenerateTimeTagPopupDialog : PopupDialog
         {
             new PopupDialogOkButton
             {
-                Text = @"OK",
+                Text = "OK",
                 Action = () => okAction(true),
             },
             new PopupDialogCancelButton
             {
-                Text = @"Cancel",
+                Text = "Cancel",
                 Action = () => okAction(false),
             },
         };

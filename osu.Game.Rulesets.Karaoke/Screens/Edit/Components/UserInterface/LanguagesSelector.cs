@@ -146,7 +146,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider? colourProvider)
         {
-            background.Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125");
+            background.Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex("1c2125");
         }
 
         public string Text
@@ -186,7 +186,7 @@ public partial class LanguagesSelector : FillFlowContainer, IHasCurrentValue<Cul
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex(@"1c2125"),
+                    Colour = colourProvider?.Background5 ?? Color4Extensions.FromHex("1c2125"),
                 },
                 new Container
                 {

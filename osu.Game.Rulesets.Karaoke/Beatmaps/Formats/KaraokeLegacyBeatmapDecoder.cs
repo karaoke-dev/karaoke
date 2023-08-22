@@ -20,7 +20,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
     public new static void Register()
     {
-        AddDecoder<Beatmap>(@"karaoke file format v", m => new KaraokeLegacyBeatmapDecoder(Parsing.ParseInt(m.Split('v').Last())));
+        AddDecoder<Beatmap>("karaoke file format v", m => new KaraokeLegacyBeatmapDecoder(Parsing.ParseInt(m.Split('v').Last())));
 
         // use this weird way to let all the fall-back beatmap(include karaoke beatmap) become karaoke beatmap.
         SetFallbackDecoder<Beatmap>(() => new KaraokeLegacyBeatmapDecoder());
