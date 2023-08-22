@@ -79,6 +79,6 @@ public class BindableFontUsage : Bindable<FontUsage>
     protected override Bindable<FontUsage> CreateInstance() => new BindableFontUsage();
 
     // IDK why not being called in here while saving.
-    public override string ToString(string format, IFormatProvider formatProvider)
+    public override string ToString(string? format, IFormatProvider? formatProvider)
         => $"family={Value.Family} weight={Value.Weight} size={Value.Size} italics={Value.Italics} fixedWidth={Value.FixedWidth}";
 }
