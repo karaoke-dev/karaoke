@@ -17,7 +17,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
 [Cached(typeof(ISingerScreenScrollingInfoProvider))]
-public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScrollingInfoProvider
+public partial class SingerScreen : BeatmapEditorScreen, ISingerScreenScrollingInfoProvider
 {
     [Cached(typeof(IBeatmapSingersChangeHandler))]
     private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
