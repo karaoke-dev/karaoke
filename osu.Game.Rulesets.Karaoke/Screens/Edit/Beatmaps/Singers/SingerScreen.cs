@@ -68,6 +68,7 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
     {
         base.LoadComplete();
 
+        // sync the selected lyrics in here for prevent the invalid thread for mutation exception.
         BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
     }
 
