@@ -28,6 +28,9 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
     [Cached]
     private readonly BindableList<Lyric> selectedLyrics = new();
 
+    [Resolved]
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
+
     public BindableFloat BindableZoom { get; } = new();
 
     public BindableFloat BindableCurrent { get; } = new();
@@ -40,10 +43,8 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
     }
 
     [BackgroundDependencyLoader]
-    private void load(EditorBeatmap editorBeatmap, EditorClock editorClock)
+    private void load(EditorClock editorClock)
     {
-        BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
-
         // initialize scroll zone.
         BindableZoom.MaxValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 8000);
         BindableZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 80000);
@@ -61,6 +62,13 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
                 },
             },
         });
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
     }
 
     protected override void PopOut()
