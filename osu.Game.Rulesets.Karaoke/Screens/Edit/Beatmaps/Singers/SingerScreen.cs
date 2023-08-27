@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
@@ -43,25 +44,33 @@ public partial class SingerScreen : BeatmapEditorScreen, ISingerScreenScrollingI
     }
 
     [BackgroundDependencyLoader]
-    private void load(EditorClock editorClock)
+    private void load(EditorClock editorClock, OverlayColourProvider colourProvider)
     {
         // initialize scroll zone.
         BindableZoom.MaxValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 8000);
         BindableZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 80000);
         BindableZoom.Value = BindableZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 40000);
 
-        Add(new FixedSectionsContainer<Drawable>
+        Children = new Drawable[]
         {
-            FixedHeader = new SingerScreenHeader(),
-            RelativeSizeAxes = Axes.Both,
-            Children = new[]
+            new Box
             {
-                new SingerEditSection
+                Colour = colourProvider.Background3,
+                RelativeSizeAxes = Axes.Both,
+            },
+            new FixedSectionsContainer<Drawable>
+            {
+                FixedHeader = new SingerScreenHeader(),
+                RelativeSizeAxes = Axes.Both,
+                Children = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
+                    new SingerEditSection
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    },
                 },
             },
-        });
+        };
     }
 
     protected override void LoadComplete()

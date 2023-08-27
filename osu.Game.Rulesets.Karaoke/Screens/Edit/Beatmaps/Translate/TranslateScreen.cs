@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
@@ -27,21 +28,29 @@ public partial class TranslateScreen : BeatmapEditorScreen
     }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(OverlayColourProvider colourProvider)
     {
-        Add(new SectionsContainer<Container>
+        Children = new Drawable[]
         {
-            FixedHeader = new TranslateScreenHeader(),
-            RelativeSizeAxes = Axes.Both,
-            Children = new Container[]
+            new Box
             {
-                new TranslateEditSection
+                Colour = colourProvider.Background3,
+                RelativeSizeAxes = Axes.Both,
+            },
+            new SectionsContainer<Container>
+            {
+                FixedHeader = new TranslateScreenHeader(),
+                RelativeSizeAxes = Axes.Both,
+                Children = new Container[]
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
+                    new TranslateEditSection
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                    },
                 },
             },
-        });
+        };
     }
 
     internal partial class TranslateScreenHeader : OverlayHeader
