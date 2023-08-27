@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
@@ -17,17 +16,5 @@ public abstract partial class GenericEditorScreen<TType> : EditorScreen
         : base(EditorScreenMode.Compose)
     {
         Type = type;
-    }
-
-    protected override void PopIn()
-    {
-        this.ScaleTo(1f, 200, Easing.OutQuint)
-            .FadeIn(200, Easing.OutQuint);
-    }
-
-    protected override void PopOut()
-    {
-        this.ScaleTo(0.98f, 200, Easing.OutQuint)
-            .FadeOut(200, Easing.OutQuint);
     }
 }
