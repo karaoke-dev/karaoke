@@ -28,7 +28,7 @@ public partial class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, 
 
     public Bindable<NoteEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
-    public Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; } = new();
+    public Bindable<NoteEditPropertyMode> BindableNoteEditPropertyMode { get; } = new();
 
     [BackgroundDependencyLoader]
     private void load()

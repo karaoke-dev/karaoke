@@ -170,7 +170,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
     }
 
     [BackgroundDependencyLoader]
-    private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ITimeTagModeState timeTagModeState)
     {
         selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
 
@@ -178,7 +178,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
 
-        lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, bindableCreateTimeTagEditMode);
+        bindableCreateTimeTagEditMode.BindTo(timeTagModeState.BindableCreateTimeTagEditMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, bindableRecordingChangeTimeWhileMovingTheCaret);

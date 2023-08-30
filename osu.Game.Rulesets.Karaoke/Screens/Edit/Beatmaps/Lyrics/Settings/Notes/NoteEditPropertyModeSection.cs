@@ -22,7 +22,7 @@ public partial class NoteEditPropertyModeSection : EditorSection
             {
                 Label = "Edit property",
                 Description = "Batch edit text, ruby(alternative) text or display from notes",
-                Current = editNoteModeState.NoteEditPropertyMode,
+                Current = editNoteModeState.BindableNoteEditPropertyMode,
             },
         };
     }

@@ -7,7 +7,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
@@ -16,13 +16,13 @@ public partial class TimeTagCreateConfigSection : EditorSection
     protected override LocalisableString Title => "Config Tool";
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    private void load(ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
     {
         Children = new Drawable[]
         {
             new TimeTagCreateConfigSubsection
             {
-                Current = lyricEditorConfigManager.GetBindable<CreateTimeTagEditMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode),
+                Current = timeTagModeState.BindableCreateTimeTagEditMode,
             },
             new LabelledEnumDropdown<MovingTimeTagCaretMode>
             {

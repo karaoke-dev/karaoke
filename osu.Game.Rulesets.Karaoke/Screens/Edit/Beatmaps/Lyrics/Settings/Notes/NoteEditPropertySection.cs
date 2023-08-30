@@ -58,7 +58,7 @@ public partial class NoteEditPropertySection : LyricPropertiesSection<Note>
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
-            bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
+            bindableNoteEditPropertyMode.BindTo(editNoteModeState.BindableNoteEditPropertyMode);
         }
 
         protected override Drawable CreateDrawable(Note item)
