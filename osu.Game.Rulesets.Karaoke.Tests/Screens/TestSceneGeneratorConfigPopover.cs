@@ -35,7 +35,7 @@ public partial class TestSceneGeneratorConfigPopover : OsuTestScene
                 Schedule(() =>
                 {
                     Child = popover;
-                    Child?.Show();
+                    Child.Show();
                 });
             });
         }

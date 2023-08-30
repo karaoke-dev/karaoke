@@ -39,7 +39,7 @@ public partial class KaraokeSettings : OsuScreen
 
     public KaraokeSettings()
     {
-        var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
+        var backgroundColour = Color4Extensions.FromHex("3e3a44");
 
         InternalChild = waves = new KaraokeConfigWaveContainer
         {
@@ -136,10 +136,10 @@ public partial class KaraokeSettings : OsuScreen
 
         public KaraokeConfigWaveContainer()
         {
-            FirstWaveColour = Color4Extensions.FromHex(@"654d8c");
-            SecondWaveColour = Color4Extensions.FromHex(@"554075");
-            ThirdWaveColour = Color4Extensions.FromHex(@"44325e");
-            FourthWaveColour = Color4Extensions.FromHex(@"392850");
+            FirstWaveColour = Color4Extensions.FromHex("654d8c");
+            SecondWaveColour = Color4Extensions.FromHex("554075");
+            ThirdWaveColour = Color4Extensions.FromHex("44325e");
+            FourthWaveColour = Color4Extensions.FromHex("392850");
         }
     }
 }

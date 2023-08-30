@@ -57,15 +57,15 @@ public partial class BeatmapMetadataGraph : Container
                     {
                         new TextMetadataSection("Description")
                         {
-                            Text = beatmapInfo?.DifficultyName ?? string.Empty,
+                            Text = beatmapInfo.DifficultyName,
                         },
                         new TextMetadataSection("Source")
                         {
-                            Text = beatmapInfo?.Metadata.Source ?? string.Empty,
+                            Text = beatmapInfo.Metadata.Source,
                         },
                         new TextMetadataSection("Tags")
                         {
-                            Text = beatmapInfo?.Metadata.Tags ?? string.Empty,
+                            Text = beatmapInfo.Metadata.Tags,
                         },
                         new SingerMetadataSection("Singer")
                         {

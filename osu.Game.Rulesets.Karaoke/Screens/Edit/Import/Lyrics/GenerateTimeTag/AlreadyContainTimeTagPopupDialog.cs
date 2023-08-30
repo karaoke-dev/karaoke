@@ -18,7 +18,7 @@ public partial class AlreadyContainTimeTagPopupDialog : PopupDialog
         {
             new PopupDialogOkButton
             {
-                Text = @"OK",
+                Text = "OK",
                 Action = () => okAction(true),
             },
         };

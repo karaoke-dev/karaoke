@@ -44,7 +44,7 @@ public partial class DrawableSingerAvatar : CompositeDrawable
         }, true);
 
         Texture getDefaultAvatar()
-            => textures.Get(@"Online/avatar-guest");
+            => textures.Get("Online/avatar-guest");
     }
 
     private ISinger? singer;

@@ -18,8 +18,8 @@ public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
     [Test]
     public void ShowWithNoFetch()
     {
-        AddStep(@"Show", () => changelog.Show());
-        AddAssert(@"listing displayed", () => changelog.Current.Value == null);
+        AddStep("Show", () => changelog.Show());
+        AddAssert("listing displayed", () => changelog.Current.Value == null);
     }
 
     private partial class TestChangelogOverlay : KaraokeChangelogOverlay

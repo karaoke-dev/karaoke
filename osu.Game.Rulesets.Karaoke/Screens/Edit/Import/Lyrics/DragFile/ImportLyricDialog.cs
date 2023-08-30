@@ -12,19 +12,19 @@ public partial class ImportLyricDialog : PopupDialog
     public ImportLyricDialog(Action<bool> resetAction)
     {
         Icon = FontAwesome.Regular.TrashAlt;
-        HeaderText = @"Confirm import lyric file?";
+        HeaderText = "Confirm import lyric file?";
         BodyText = "Import lyric file will clean-up all exist lyric.";
 
         Buttons = new PopupDialogButton[]
         {
             new PopupDialogOkButton
             {
-                Text = @"Yes. Go for it.",
+                Text = "Yes. Go for it.",
                 Action = () => resetAction(true),
             },
             new PopupDialogCancelButton
             {
-                Text = @"No! Abort mission!",
+                Text = "No! Abort mission!",
                 Action = () => resetAction(false),
             },
         };

@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods;
 
 public class KaraokeModHiddenNote : ModHidden
 {
-    public override LocalisableString Description => @"Notes fade out before you sing them!";
+    public override LocalisableString Description => "Notes fade out before you sing them!";
     public override double ScoreMultiplier => 1.06;
     public override Type[] IncompatibleMods => new[] { typeof(ModFlashlight<KaraokeHitObject>) };
     public override IconUsage? Icon => KaraokeIcon.ModHiddenNote;

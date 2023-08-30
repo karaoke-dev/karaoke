@@ -192,9 +192,9 @@ public partial class ManageFontPreview : SettingsSubsectionPreview
         {
             base.Update();
 
-            var lastChild = Children?.LastOrDefault();
+            var lastChild = Children.LastOrDefault();
             bool generateNewObject = lastChild == null || isAllTextPartAppear(lastChild, direction);
-            if (generateNewObject && Children?.Count < max_text_amount)
+            if (generateNewObject && Children.Count < max_text_amount)
                 createNewText();
 
             static bool isAllTextPartAppear(Drawable text, GenerateDirection direction)

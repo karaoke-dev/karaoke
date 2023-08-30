@@ -268,10 +268,10 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         bool checkDuplicatedWithExistSettings(LyricEditorSettings lyricEditorSettings)
         {
             var type = lyricEditorSettings.GetType();
-            if (leftSideSettings.Children?.FirstOrDefault()?.GetType() == type)
+            if (leftSideSettings.Children.FirstOrDefault()?.GetType() == type)
                 return true;
 
-            if (rightSideSettings.Children?.FirstOrDefault()?.GetType() == type)
+            if (rightSideSettings.Children.FirstOrDefault()?.GetType() == type)
                 return true;
 
             return false;

@@ -120,7 +120,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
 
         public LanguageSelectionSearchTextBox()
         {
-            PlaceholderText = @"type in keywords...";
+            PlaceholderText = "type in keywords...";
         }
     }
 

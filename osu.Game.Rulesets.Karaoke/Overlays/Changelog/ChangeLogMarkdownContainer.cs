@@ -78,7 +78,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
             var baseUri = new Uri(githubUrls[text]);
 
             // Get hash tag with number
-            const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
+            const string issue_regex = "#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
             var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
 
             if (!result.Any())

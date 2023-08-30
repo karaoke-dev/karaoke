@@ -70,7 +70,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
         {
             Font font;
 
-            using (var s = Store.GetStream($@"{AssetName}"))
+            using (var s = Store.GetStream($"{AssetName}"))
             {
                 var fonts = new FontCollection();
                 var fontFamily = fonts.Add(s);
@@ -131,7 +131,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
     {
         if (fontMetrics == null) return null;
 
-        if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
+        if (name.Length > 1 && !name.StartsWith($"{FontName}/", StringComparison.Ordinal))
             return null;
 
         return !HasGlyph(name.Last()) ? null : LoadCharacter(name.Last());
@@ -139,7 +139,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
     public virtual async Task<TextureUpload> GetAsync(string name, CancellationToken cancellationToken = default)
     {
-        if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
+        if (name.Length > 1 && !name.StartsWith($"{FontName}/", StringComparison.Ordinal))
             return null;
 
         await completionSource.Task.ConfigureAwait(false);

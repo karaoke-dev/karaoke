@@ -14,7 +14,7 @@ public partial class OkPopupDialog : PopupDialog
         {
             new PopupDialogOkButton
             {
-                Text = @"OK",
+                Text = "OK",
                 Action = () => okAction?.Invoke(true),
             },
         };
