@@ -14,6 +14,8 @@ public partial class EditRubyModeState : ModeStateWithBlueprintContainer<RubyTag
 
     public IBindable<RubyTagEditStep> BindableEditStep => bindableEditMode;
 
+    public Bindable<RubyTagEditMode> BindableRubyTagEditMode { get; } = new();
+
     public void ChangeEditStep(RubyTagEditStep step)
         => bindableEditMode.Value = step;
 
