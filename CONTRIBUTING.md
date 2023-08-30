@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-Thank you for showing interest in the development of osu!. We aim to provide a good collaborating environment for everyone involved, and as such have decided to list some of the most important things to keep in mind in the process. The guidelines below have been chosen based on past experience.
+Thank you for showing interest in the development of karaoke ruleset. We aim to provide a good collaborating environment for everyone involved, and as such have decided to list some of the most important things to keep in mind in the process. The guidelines below have been chosen based on past experience.
 
 ## Table of contents
 
@@ -53,36 +53,37 @@ When in doubt, it's probably best to start with a discussion first. We will esca
 
 ## Submitting pull requests
 
-While pull requests from unaffiliated contributors are welcome, please note that due to significant community interest and limited review throughput, the core team's primary focus is on the issues which are currently [on the roadmap](https://github.com/orgs/ppy/projects/7/views/6). Reviewing PRs that fall outside of the scope of the roadmap is done on a best-effort basis, so please be aware that it may take a while before a core maintainer gets around to review your change.
-
-The [issue tracker](https://github.com/ppy/osu/issues) should provide plenty of issues to start with. We also have a [`good-first-issue`](https://github.com/ppy/osu/issues?q=is%3Aissue+is%3Aopen+label%3Agood-first-issue) label, although from experience it is not used very often, as it is relatively rare that we can spot an issue that will definitively be a good first issue for a new contributor regardless of their programming experience.
+The [issue tracker](https://github.com/karaoke-dev/karaoke/issues) should provide plenty of issues to start with. We also have a [`Good for contributor`](https://github.com/karaoke-dev/karaoke/issues?q=is%3Aissue+is%3Aopen+label%3A"Good+for+contributor") label.
 
 In the case of simple issues, a direct PR is okay. However, if you decide to work on an existing issue which doesn't seem trivial, **please ask us first**. This way we can try to estimate if it is a good fit for you and provide the correct direction on how to address it. In addition, note that while we do not rule out external contributors from working on roadmapped issues, we will generally prefer to handle them ourselves unless they're not very time sensitive.
 
-If you'd like to propose a subjective change to one of the visual aspects of the game, or there is a bigger task you'd like to work on, but there is no corresponding issue or discussion thread yet for it, **please open a discussion or issue first** to avoid wasted effort. This in particular applies if you want to work on [one of the available designs from the osu! public Figma library](https://www.figma.com/file/6m10GiGEncVFWmgOoSyakH/osu!-Figma-Library).
+If you'd like to propose a subjective change to one of the visual aspects of the ruleset, or there is a bigger task you'd like to work on, but there is no corresponding issue or discussion thread yet for it, **please open a discussion or issue first** to avoid wasted effort.
 
 Aside from the above, below is a brief checklist of things to watch out when you're preparing your code changes:
 
-- Make sure you're comfortable with the principles of object-oriented programming, the syntax of C\# and your development environment.
+- Make sure you're comfortable with the principles of object-oriented programming, the syntax of `C\#` and your `development environment`.
 - Make sure you are familiar with [git](https://git-scm.com/) and [the pull request workflow](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/proposing-changes-to-your-work-with-pull-requests).
+- Discuss with us first if you're planning to work on a `bigger change`, or `it's UI/UX related`.
 - Please do not make code changes via the GitHub web interface.
 - Please add tests for your changes. We expect most new features and bugfixes to have test coverage, unless the effort of adding them is prohibitive. The visual testing methodology we use is described in more detail [here](https://github.com/ppy/osu-framework/wiki/Development-and-Testing).
-- Please run tests and code style analysis (via `InspectCode.{ps1,sh}` scripts in the root of this repository) before opening the PR. This is particularly important if you're a first-time contributor, as CI will not run for your PR until we allow it to do so.
 
 After you're done with your changes and you wish to open the PR, please observe the following recommendations:
 
 - Please submit the pull request from a [topic branch](https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows#_topic_branch) (not `master`), and keep the *Allow edits from maintainers* check box selected, so that we can push fixes to your PR if necessary.
-- Please avoid pushing untested or incomplete code.
-- Please do not force-push or rebase unless we ask you to.
-- Please do not merge `master` continually if there are no conflicts to resolve. We will do this for you when the change is ready for merge.
+- Please write the commit messages with useful information in mind. We recommend reading [this article](https://chris.beams.io/posts/git-commit/) for some good tips.
+- Unlike osu! project, `force-push` is allowed in here. Please do not hesitate to use it if you need to.
+- Rebase the PR branch to the `master` if PR is too old or has conflicts.
 
-We are highly committed to quality when it comes to the osu! project. This means that contributions from less experienced community members can take multiple rounds of review to get to a mergeable state. We try our utmost best to never conflate a person with the code they authored, and to keep the discussion focused on the code at all times. Please consider our comments and requests a learning experience.
+We are highly committed to quality when it comes to the karaoke ruleset project.
+This means that contributions from less experienced community members can take multiple rounds of review to get to a mergeable state.
 
-If you're uncertain about some part of the codebase or some inner workings of the game and framework, please reach out either by leaving a comment in the relevant issue, discussion, or PR thread, or by posting a message in the [development Discord server](https://discord.gg/ppy). We will try to help you as much as we can.
+If you're uncertain about some part of the codebase or some inner workings of the karaoke ruleset, please reach out either by leaving a comment in the relevant issue, discussion, or PR thread, or by posting a message in the [development Discord server](https://discord.gg/ga2xZXk).
+We will try to help you as much as we can.
 
 ## Resources
 
-- [Development roadmap](https://github.com/orgs/ppy/projects/7/views/6): What the core team is currently working on
-- [`ppy/osu-framework` wiki](https://github.com/ppy/osu-framework/wiki): Contains introductory information about osu!framework, the bespoke 2D game framework we use for the game
+- [`ppy/osu`](https://github.com/ppy/osu): The game that karaoke ruleset is running on.
 - [`ppy/osu` wiki](https://github.com/ppy/osu/wiki): Contains articles about various technical aspects of the game
-- [Public Figma library](https://www.figma.com/file/6m10GiGEncVFWmgOoSyakH/osu!-Figma-Library): Contains finished and draft designs for osu!
+- [`ppy/osu-framework`](https://github.com/ppy/osu-framework): The game framework that karaoke ruleset is running on.
+- [`ppy/osu-framework` wiki](https://github.com/ppy/osu-framework/wiki): Contains introductory information about osu!framework, the bespoke 2D game framework we use for the game.
+.
