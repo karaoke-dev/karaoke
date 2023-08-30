@@ -9,5 +9,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public interface IEditNoteModeState : IHasEditStep<NoteEditStep>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
 {
-    Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; }
+    Bindable<NoteEditPropertyMode> BindableNoteEditPropertyMode { get; }
 }
