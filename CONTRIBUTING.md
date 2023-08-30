@@ -12,12 +12,12 @@ Thank you for showing interest in the development of karaoke ruleset. We aim to 
 
 ## Reporting bugs
 
-A **bug** is a situation in which there is something clearly *and objectively* wrong with the game. Examples of applicable bug reports are:
+A **bug** is a situation in which there is something clearly *and objectively* wrong with the ruleset. Examples of applicable bug reports are:
 
-- The game crashes to desktop when I start a beatmap
-- Friends appear twice in the friend listing
-- The game slows down a lot when I play this specific map
-- A piece of text is overlapping another piece of text on the screen
+- The ruleset crashes to desktop when I start a beatmap
+- Cannot load karoake beatmap that edited before.
+- The ruleset slows down a lot when I play this specific map.
+- Text effect looks weird if using directX renderer.
 
 To track bug reports, we primarily use GitHub **issues**. When opening an issue, please keep in mind the following:
 
@@ -31,9 +31,9 @@ If we cannot reproduce the issue, it is deemed low priority, or it is deemed to 
 
 If you wish to:
 
-- provide *subjective* feedback on the game (about how the UI looks, about how the default skin works, about game mechanics, about how the PP and scoring systems work, etc.),
-- suggest a new feature to be added to the game,
-- report a non-specific problem with the game that you think may be connected to your hardware or operating system specifically,
+- Provide *subjective* feedback on the ruleset (about how the UI looks, about how the default skin works, about ruleset mechanics, about how the PP and scoring systems work, etc.),
+- Suggest a new feature to be added to the ruleset.
+- Report a non-specific problem with the ruleset that you think may be connected to your hardware or operating system specifically.
 
 then it is generally best to start with a **discussion** first. Discussions are a good avenue to group subjective feedback on a single topic, or gauge interest in a particular feature request.
 
@@ -71,7 +71,7 @@ After you're done with your changes and you wish to open the PR, please observe 
 
 - Please submit the pull request from a [topic branch](https://git-scm.com/book/en/v2/Git-Branching-Branching-Workflows#_topic_branch) (not `master`), and keep the *Allow edits from maintainers* check box selected, so that we can push fixes to your PR if necessary.
 - Please write the commit messages with useful information in mind. We recommend reading [this article](https://chris.beams.io/posts/git-commit/) for some good tips.
-- Unlike osu! project, `force-push` is allowed in here. Please do not hesitate to use it if you need to.
+- Unlike osu! project, `force-push` is allowed in here. Use it if you need to.
 - Rebase the PR branch to the `master` if PR is too old or has conflicts.
 
 We are highly committed to quality when it comes to the karaoke ruleset project.
