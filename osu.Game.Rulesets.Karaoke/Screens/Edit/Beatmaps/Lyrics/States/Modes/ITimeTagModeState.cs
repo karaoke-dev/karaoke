@@ -11,4 +11,6 @@ public interface ITimeTagModeState : IHasEditStep<TimeTagEditStep>, IHasBlueprin
     BindableFloat BindableRecordZoom { get; }
 
     BindableFloat BindableAdjustZoom { get; }
+
+    Bindable<CreateTimeTagEditMode> BindableCreateTimeTagEditMode { get; }
 }

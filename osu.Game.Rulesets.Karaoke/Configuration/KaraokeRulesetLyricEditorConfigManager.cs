@@ -6,7 +6,6 @@ using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration;
@@ -30,7 +29,6 @@ public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<Kara
         SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
         // Create time-tag.
-        SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
         SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
 
         // Recording
@@ -70,7 +68,6 @@ public enum KaraokeRulesetLyricEditorSetting
     FontSizeInComposer,
 
     // Create time-tag.
-    CreateTimeTagEditMode,
     CreateTimeTagMovingCaretMode,
 
     // Recording
