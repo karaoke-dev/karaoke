@@ -14,6 +14,9 @@ public partial class BlueprintLayer : BaseLayer
 {
     private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
+    // todo: make better way to handle this.
+    private readonly IBindable<RubyTagEditMode> bindableRubyTagEditMode = new Bindable<RubyTagEditMode>();
+
     // should block all blueprint action if not editable.
     public override bool PropagatePositionalInputSubTree => base.PropagatePositionalInputSubTree && editable;
 
@@ -27,12 +30,20 @@ public partial class BlueprintLayer : BaseLayer
             // Initial blueprint container.
             InitializeBlueprint();
         });
+
+        bindableRubyTagEditMode.BindValueChanged(_ =>
+        {
+            // Initial blueprint container.
+            InitializeBlueprint();
+        });
     }
 
     [BackgroundDependencyLoader]
-    private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
+    private void load(ILyricEditorState state, IEditRubyModeState editRubyModeState)
     {
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
+
+        bindableRubyTagEditMode.BindTo(editRubyModeState.BindableRubyTagEditMode);
     }
 
     protected void InitializeBlueprint()
@@ -42,16 +53,18 @@ public partial class BlueprintLayer : BaseLayer
 
         // create preview and real caret
         var modeWithEditStep = bindableModeWithEditStep.Value;
-        var blueprintContainer = createBlueprintContainer(modeWithEditStep, Lyric);
+        var rubyTagEditMode = bindableRubyTagEditMode.Value;
+
+        var blueprintContainer = createBlueprintContainer(modeWithEditStep, rubyTagEditMode, Lyric);
         if (blueprintContainer == null)
             return;
 
         AddInternal(blueprintContainer);
 
-        static Drawable? createBlueprintContainer(EditorModeWithEditStep modeWithEditStep, Lyric lyric) =>
+        static Drawable? createBlueprintContainer(EditorModeWithEditStep modeWithEditStep, RubyTagEditMode rubyTagEditMode, Lyric lyric) =>
             modeWithEditStep.Mode switch
             {
-                LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
+                LyricEditorMode.EditRuby => rubyTagEditMode == RubyTagEditMode.Create ? null : new RubyBlueprintContainer(lyric),
                 LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
                 LyricEditorMode.EditTimeTag => modeWithEditStep.EditStep is TimeTagEditStep.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                 _ => null,
