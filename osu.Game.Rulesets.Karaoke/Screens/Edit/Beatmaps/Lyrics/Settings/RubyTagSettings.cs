@@ -27,16 +27,19 @@ public partial class RubyTagSettings : TextTagSettings<RubyTagEditStep>
         RubyTagEditStep.Generate => new Drawable[]
         {
             new RubyTagEditStepSection(),
+            new RubyTagConfigToolSection(),
             new RubyTagAutoGenerateSection(),
         },
         RubyTagEditStep.Edit => new Drawable[]
         {
             new RubyTagEditStepSection(),
+            new RubyTagConfigToolSection(),
             new RubyTagEditSection(),
         },
         RubyTagEditStep.Verify => new Drawable[]
         {
             new RubyTagEditStepSection(),
+            new RubyTagConfigToolSection(),
             new RubyTagIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
