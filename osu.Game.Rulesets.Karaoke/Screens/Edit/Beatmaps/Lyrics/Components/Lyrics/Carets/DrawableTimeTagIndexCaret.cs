@@ -20,7 +20,7 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
         InternalChild = new Container
         {
             Masking = true,
-            BorderThickness = 4,
+            BorderThickness = border_spacing,
             BorderColour = Colour4.White,
             RelativeSizeAxes = Axes.Both,
             Child = new Box

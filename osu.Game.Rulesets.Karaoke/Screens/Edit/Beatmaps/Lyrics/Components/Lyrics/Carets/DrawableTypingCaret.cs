@@ -23,6 +23,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
 {
     private const float fading_time = 200;
     private const float caret_move_time = 60;
+    private const float caret_resize_time = 60;
     private const float caret_width = 3;
 
     private readonly Box drawableCaret;
@@ -92,11 +93,11 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
 
     private void changeTheSizeByRect(RectangleF rect)
     {
-        var position = rect.TopLeft;
+        var position = rect.TopLeft - new Vector2(caret_width / 2, 0);
         float width = rect.Width + caret_width;
 
-        this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), caret_move_time, Easing.Out);
-        this.ResizeWidthTo(width, caret_move_time, Easing.Out);
+        this.MoveTo(position, caret_move_time, Easing.Out);
+        this.ResizeWidthTo(width, caret_resize_time, Easing.Out);
         Height = rect.Height;
     }
 
