@@ -79,6 +79,8 @@ public partial class CaretLayer : BaseLayer
                 CuttingCaretPosition => new DrawableCuttingCaret(type),
                 // typing
                 TypingCaretPosition => new DrawableTypingCaret(type),
+                // creat ruby-tag
+                CreateRubyTagCaretPosition => new DrawableCreateRubyTagCaretPosition(type),
                 // creat time-tag
                 TimeTagIndexCaretPosition => new DrawableTimeTagIndexCaret(type),
                 // record time-tag

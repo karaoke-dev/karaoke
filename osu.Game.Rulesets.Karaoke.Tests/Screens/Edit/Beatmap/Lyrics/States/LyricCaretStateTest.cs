@@ -63,6 +63,7 @@ public partial class LyricCaretStateTest : OsuTestScene
         Dependencies.Cache(new EditorClock());
         Dependencies.CacheAs(state = new TestLyricEditorState());
         Dependencies.CacheAs<ITextingModeState>(new TextingModeState());
+        Dependencies.CacheAs<IEditRubyModeState>(new EditRubyModeState());
         Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
@@ -107,7 +108,7 @@ public partial class LyricCaretStateTest : OsuTestScene
     {
         // change from edit mode to view mode for checking that caret position should be clear.
         changeMode(LyricEditorMode.Texting);
-        changeMode(LyricEditorMode.EditRuby);
+        changeMode(LyricEditorMode.EditRomaji);
 
         // get the action
         assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);

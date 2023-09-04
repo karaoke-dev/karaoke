@@ -128,6 +128,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             CuttingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
             TypingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
             NavigateCaretPosition => null,
+            CreateRubyTagCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
             TimeTagIndexCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
             TimeTagCaretPosition => karaokeSpriteText.GetTimeTagByPosition(position),
             _ => null,
