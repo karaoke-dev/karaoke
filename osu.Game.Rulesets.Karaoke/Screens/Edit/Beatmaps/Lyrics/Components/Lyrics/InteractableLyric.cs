@@ -10,12 +10,9 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
-using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
@@ -23,33 +20,30 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
     [Cached(typeof(IPreviewLyricPositionProvider))]
-    private readonly PreviewKaraokeSpriteText karaokeSpriteText;
-
-    [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; } = null!;
+    protected readonly PreviewKaraokeSpriteText KaraokeSpriteText;
 
     protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<int> bindableLyricPropertyWritableVersion;
 
-    private readonly Lyric lyric;
+    protected readonly Lyric Lyric;
     private LocalisableString? lockReason;
 
     protected InteractableLyric(Lyric lyric)
     {
-        this.lyric = lyric;
+        Lyric = lyric;
 
         bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
         InternalChildren = new Drawable[]
         {
-            new LyricLayer(lyric, karaokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
+            new LyricLayer(lyric, KaraokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
         };
 
         AddRangeInternal(CreateLayers(lyric));
 
-        karaokeSpriteText.SizeChanged = () =>
+        KaraokeSpriteText.SizeChanged = () =>
         {
-            Height = karaokeSpriteText.DrawHeight;
+            Height = KaraokeSpriteText.DrawHeight;
         };
 
         BindableMode.BindValueChanged(x =>
@@ -70,89 +64,12 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
     {
         BindableMode.BindTo(state.BindableMode);
 
-        karaokeSpriteText.Clock = clock;
-    }
-
-    protected override bool OnMouseMove(MouseMoveEvent e)
-    {
-        if (!lyricCaretState.CaretEnabled)
-            return false;
-
-        if (IsDragged)
-            return false;
-
-        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-        object? caretIndex = getCaretIndexByPosition(xPosition);
-
-        if (caretIndex != null)
-        {
-            lyricCaretState.MoveHoverCaretToTargetPosition(lyric, caretIndex);
-        }
-        else if (lyricCaretState.CaretPosition is not IIndexCaretPosition)
-        {
-            // still need to handle the case with non-index caret position.
-            lyricCaretState.MoveHoverCaretToTargetPosition(lyric);
-        }
-
-        return base.OnMouseMove(e);
-    }
-
-    protected override bool OnDragStart(DragStartEvent e)
-    {
-        // confirm the hover caret position before drag start.
-        lyricCaretState.ConfirmHoverCaretPosition();
-
-        // should handle the drag event if the caret algorithm is able to handle it.
-        return lyricCaretState.CaretDraggable;
-    }
-
-    protected override void OnDrag(DragEvent e)
-    {
-        if (!lyricCaretState.CaretEnabled)
-            return;
-
-        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-        object? caretIndex = getCaretIndexByPosition(xPosition);
-
-        if (caretIndex != null)
-        {
-            lyricCaretState.MoveDraggingCaretIndex(caretIndex);
-        }
-
-        base.OnDrag(e);
-    }
-
-    private object? getCaretIndexByPosition(float position) =>
-        lyricCaretState.CaretPosition switch
-        {
-            CuttingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
-            TypingCaretPosition => karaokeSpriteText.GetCharIndicatorByPosition(position),
-            NavigateCaretPosition => null,
-            CreateRubyTagCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
-            TimeTagIndexCaretPosition => karaokeSpriteText.GetCharIndexByPosition(position),
-            TimeTagCaretPosition => karaokeSpriteText.GetTimeTagByPosition(position),
-            _ => null,
-        };
-
-    protected override void OnHoverLost(HoverLostEvent e)
-    {
-        base.OnHoverLost(e);
-
-        if (!lyricCaretState.CaretEnabled)
-            return;
-
-        // lost hover caret and time-tag caret
-        lyricCaretState.ClearHoverCaretPosition();
-    }
-
-    protected override bool OnClick(ClickEvent e)
-    {
-        return lyricCaretState.ConfirmHoverCaretPosition();
+        KaraokeSpriteText.Clock = clock;
     }
 
     private void triggerWritableVersionChanged()
     {
-        var loadReason = GetLyricPropertyLockedReason(lyric, BindableMode.Value);
+        var loadReason = GetLyricPropertyLockedReason(Lyric, BindableMode.Value);
         lockReason = loadReason;
 
         // adjust the style.
@@ -180,14 +97,14 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
-            LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
-            LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Language)),
-            LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags)),
-            LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RomajiTags)),
-            LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
+            LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.RomajiTags), nameof(Objects.Lyric.TimeTags)),
+            LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.ReferenceLyric), nameof(Objects.Lyric.ReferenceLyricConfig)),
+            LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
+            LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RubyTags)),
+            LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RomajiTags)),
+            LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.TimeTags)),
             LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
-            LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds)),
+            LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.SingerIds)),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
     }
