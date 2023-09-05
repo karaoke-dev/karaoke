@@ -45,6 +45,83 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
     }
 
+    protected override bool OnMouseMove(MouseMoveEvent e)
+    {
+        if (!lyricCaretState.CaretEnabled)
+            return false;
+
+        if (IsDragged)
+            return false;
+
+        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+        object? caretIndex = getCaretIndexByPosition(xPosition);
+
+        if (caretIndex != null)
+        {
+            lyricCaretState.MoveHoverCaretToTargetPosition(Lyric, caretIndex);
+        }
+        else if (lyricCaretState.CaretPosition is not IIndexCaretPosition)
+        {
+            // still need to handle the case with non-index caret position.
+            lyricCaretState.MoveHoverCaretToTargetPosition(Lyric);
+        }
+
+        return base.OnMouseMove(e);
+    }
+
+    protected override bool OnDragStart(DragStartEvent e)
+    {
+        // confirm the hover caret position before drag start.
+        lyricCaretState.ConfirmHoverCaretPosition();
+
+        // should handle the drag event if the caret algorithm is able to handle it.
+        return lyricCaretState.CaretDraggable;
+    }
+
+    protected override void OnDrag(DragEvent e)
+    {
+        if (!lyricCaretState.CaretEnabled)
+            return;
+
+        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+        object? caretIndex = getCaretIndexByPosition(xPosition);
+
+        if (caretIndex != null)
+        {
+            lyricCaretState.MoveDraggingCaretIndex(caretIndex);
+        }
+
+        base.OnDrag(e);
+    }
+
+    private object? getCaretIndexByPosition(float position) =>
+        lyricCaretState.CaretPosition switch
+        {
+            CuttingCaretPosition => KaraokeSpriteText.GetCharIndicatorByPosition(position),
+            TypingCaretPosition => KaraokeSpriteText.GetCharIndicatorByPosition(position),
+            NavigateCaretPosition => null,
+            CreateRubyTagCaretPosition => KaraokeSpriteText.GetCharIndexByPosition(position),
+            TimeTagIndexCaretPosition => KaraokeSpriteText.GetCharIndexByPosition(position),
+            TimeTagCaretPosition => KaraokeSpriteText.GetTimeTagByPosition(position),
+            _ => null,
+        };
+
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+
+        if (!lyricCaretState.CaretEnabled)
+            return;
+
+        // lost hover caret and time-tag caret
+        lyricCaretState.ClearHoverCaretPosition();
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        return lyricCaretState.ConfirmHoverCaretPosition();
+    }
+
     protected override bool OnDoubleClick(DoubleClickEvent e)
     {
         var position = lyricCaretState.CaretPosition;
