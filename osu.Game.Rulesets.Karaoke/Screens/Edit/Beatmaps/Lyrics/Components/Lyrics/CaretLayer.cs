@@ -80,7 +80,7 @@ public partial class CaretLayer : BaseLayer
                 // typing
                 TypingCaretPosition => new DrawableTypingCaret(type),
                 // creat ruby-tag
-                CreateRubyTagCaretPosition => new DrawableCreateRubyTagCaretPosition(type),
+                CreateRubyTagCaretPosition => new DrawableCreateRubyTagCaret(type),
                 // creat time-tag
                 TimeTagIndexCaretPosition => new DrawableTimeTagIndexCaret(type),
                 // record time-tag

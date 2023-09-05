@@ -18,7 +18,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCreateRubyTagCaretPosition : DrawableRangeCaret<CreateRubyTagCaretPosition>
+public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyTagCaretPosition>
 {
     private const float border_spacing = 5;
     private const float caret_move_time = 60;
@@ -32,7 +32,7 @@ public partial class DrawableCreateRubyTagCaretPosition : DrawableRangeCaret<Cre
 
     private readonly IconButton icon;
 
-    public DrawableCreateRubyTagCaretPosition(DrawableCaretType type)
+    public DrawableCreateRubyTagCaret(DrawableCaretType type)
         : base(type)
     {
         InternalChildren = new Drawable[]
