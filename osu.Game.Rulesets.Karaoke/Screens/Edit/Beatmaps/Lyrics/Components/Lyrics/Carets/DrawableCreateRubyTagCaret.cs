@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -96,8 +95,6 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     {
         int minIndex = caret.GetRangeCaretPosition().Item1.CharIndex;
         int maxIndex = caret.GetRangeCaretPosition().Item2.CharIndex;
-
-        Logger.Log($"{minIndex}, {maxIndex}");
 
         var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndex(minIndex), LyricPositionProvider.GetRectByCharIndex(maxIndex));
         changeTheSizeByRect(rect);
