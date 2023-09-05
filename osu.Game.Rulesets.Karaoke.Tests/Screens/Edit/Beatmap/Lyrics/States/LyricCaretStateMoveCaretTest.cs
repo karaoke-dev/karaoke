@@ -209,8 +209,21 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         PrepareLyrics(new[] { "Lyric1", "Lyric2" });
         ChangeMode(TestCaretType.CaretDraggable);
         MoveCaretToTargetPosition(() => GetLyric(1), () => 1);
-        MoveDraggingCaretIndex(() => 2);
 
+        // start dragging.
+        StartDragging();
+        AssertHoverCaretPosition(() => null);
+        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertDraggableCaretPosition(() =>
+        {
+            var startPosition = new TypingCaretPosition(GetLyric(1), 1);
+            var endPosition = new TypingCaretPosition(GetLyric(1), 1);
+
+            return new RangeCaretPosition(startPosition, endPosition, RangeCaretDraggingState.StartDrag);
+        });
+
+        // move dragging index.
+        MoveDraggingCaretIndex(() => 2);
         AssertHoverCaretPosition(() => null);
         AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
         AssertDraggableCaretPosition(() =>
@@ -218,7 +231,19 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
             var endPosition = new TypingCaretPosition(GetLyric(1), 2);
 
-            return new RangeCaretPosition(startPosition, endPosition);
+            return new RangeCaretPosition(startPosition, endPosition, RangeCaretDraggingState.Dragging);
+        });
+
+        // end dragging.
+        EndDragging();
+        AssertHoverCaretPosition(() => null);
+        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertDraggableCaretPosition(() =>
+        {
+            var startPosition = new TypingCaretPosition(GetLyric(1), 1);
+            var endPosition = new TypingCaretPosition(GetLyric(1), 2);
+
+            return new RangeCaretPosition(startPosition, endPosition, RangeCaretDraggingState.EndDrag);
         });
     }
 
@@ -276,12 +301,28 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         });
     }
 
+    protected void StartDragging()
+    {
+        AddStep("Start dragging", () =>
+        {
+            LyricCaretState.StartDragging();
+        });
+    }
+
     protected void MoveDraggingCaretIndex<TIndex>(Func<TIndex> index)
         where TIndex : notnull
     {
         AddStep("Moving caret by caret position", () =>
         {
             LyricCaretState.MoveDraggingCaretIndex(index());
+        });
+    }
+
+    protected void EndDragging()
+    {
+        AddStep("End dragging", () =>
+        {
+            LyricCaretState.EndDragging();
         });
     }
 

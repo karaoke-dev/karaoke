@@ -106,7 +106,7 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
             var startIndex = new TypingCaretPosition(GetLyric(0), 0);
             var endIndex = new TypingCaretPosition(GetLyric(0), 0);
 
-            return new RangeCaretPosition(startIndex, endIndex);
+            return new RangeCaretPosition(startIndex, endIndex, RangeCaretDraggingState.EndDrag);
         });
 
         ChangeMode(TestCaretType.ViewOnly);

@@ -9,8 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 public class RangeCaretPosition : RangeCaretPosition<IIndexCaretPosition>
 {
-    public RangeCaretPosition(IIndexCaretPosition start, IIndexCaretPosition end)
-        : base(start, end)
+    public RangeCaretPosition(IIndexCaretPosition start, IIndexCaretPosition end, RangeCaretDraggingState draggingState)
+        : base(start, end, draggingState)
     {
     }
 
@@ -20,21 +20,24 @@ public class RangeCaretPosition : RangeCaretPosition<IIndexCaretPosition>
         if (Start is not TIndexCaretPosition start || End is not TIndexCaretPosition end)
             throw new InvalidCastException();
 
-        return new RangeCaretPosition<TIndexCaretPosition>(start, end);
+        return new RangeCaretPosition<TIndexCaretPosition>(start, end, DraggingState);
     }
 }
 
 public class RangeCaretPosition<TIndexCaretPosition> : IEquatable<RangeCaretPosition<TIndexCaretPosition>> where TIndexCaretPosition : IIndexCaretPosition
 {
-    public RangeCaretPosition(TIndexCaretPosition start, TIndexCaretPosition end)
+    public RangeCaretPosition(TIndexCaretPosition start, TIndexCaretPosition end, RangeCaretDraggingState draggingState)
     {
         Start = start;
         End = end;
+        DraggingState = draggingState;
     }
 
     public TIndexCaretPosition Start { get; }
 
     public TIndexCaretPosition End { get; }
+
+    public RangeCaretDraggingState DraggingState { get; }
 
     /// <summary>
     /// Get the range caret position with ordered.
@@ -56,7 +59,8 @@ public class RangeCaretPosition<TIndexCaretPosition> : IEquatable<RangeCaretPosi
             return true;
 
         return EqualityComparer<TIndexCaretPosition>.Default.Equals(Start, other.Start)
-               && EqualityComparer<TIndexCaretPosition>.Default.Equals(End, other.End);
+               && EqualityComparer<TIndexCaretPosition>.Default.Equals(End, other.End)
+               && DraggingState == other.DraggingState;
     }
 
     public override bool Equals(object? obj)
@@ -74,4 +78,13 @@ public class RangeCaretPosition<TIndexCaretPosition> : IEquatable<RangeCaretPosi
     {
         return HashCode.Combine(Start, End);
     }
+}
+
+public enum RangeCaretDraggingState
+{
+    StartDrag,
+
+    Dragging,
+
+    EndDrag,
 }
