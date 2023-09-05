@@ -20,7 +20,7 @@ public class RomajiTagConverter : JsonConverter<RomajiTag>
         if (string.IsNullOrEmpty(value))
             return new RomajiTag();
 
-        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<romaji>.*$)");
+        var regex = new Regex(@"\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\]:(?<romaji>.*$)");
         var result = regex.Match(value);
         if (!result.Success)
             return new RomajiTag();

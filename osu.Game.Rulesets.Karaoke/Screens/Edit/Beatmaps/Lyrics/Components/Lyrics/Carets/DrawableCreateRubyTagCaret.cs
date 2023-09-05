@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -18,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCreateRubyTagCaretPosition : DrawableRangeCaret<CreateRubyTagCaretPosition>
+public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyTagCaretPosition>
 {
     private const float border_spacing = 5;
     private const float caret_move_time = 60;
@@ -32,7 +31,7 @@ public partial class DrawableCreateRubyTagCaretPosition : DrawableRangeCaret<Cre
 
     private readonly IconButton icon;
 
-    public DrawableCreateRubyTagCaretPosition(DrawableCaretType type)
+    public DrawableCreateRubyTagCaret(DrawableCaretType type)
         : base(type)
     {
         InternalChildren = new Drawable[]
@@ -96,8 +95,6 @@ public partial class DrawableCreateRubyTagCaretPosition : DrawableRangeCaret<Cre
     {
         int minIndex = caret.GetRangeCaretPosition().Item1.CharIndex;
         int maxIndex = caret.GetRangeCaretPosition().Item2.CharIndex;
-
-        Logger.Log($"{minIndex}, {maxIndex}");
 
         var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndex(minIndex), LyricPositionProvider.GetRectByCharIndex(maxIndex));
         changeTheSizeByRect(rect);
