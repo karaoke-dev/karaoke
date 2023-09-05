@@ -20,7 +20,7 @@ public class RubyTagConverter : JsonConverter<RubyTag>
         if (string.IsNullOrEmpty(value))
             return new RubyTag();
 
-        var regex = new Regex("\\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\\]:(?<ruby>.*$)");
+        var regex = new Regex(@"\[(?<start>[-0-9]+)(?:,(?<end>[-0-9]+))?\]:(?<ruby>.*$)");
         var result = regex.Match(value);
         if (!result.Success)
             return new RubyTag();
