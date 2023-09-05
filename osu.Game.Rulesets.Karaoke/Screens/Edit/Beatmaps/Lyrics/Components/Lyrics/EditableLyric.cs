@@ -72,11 +72,12 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     protected override bool OnDragStart(DragStartEvent e)
     {
-        // confirm the hover caret position before drag start.
-        lyricCaretState.ConfirmHoverCaretPosition();
+        // should not handle the drag event if the caret algorithm is able to handle it.
+        if (!lyricCaretState.CaretDraggable)
+            return false;
 
-        // should handle the drag event if the caret algorithm is able to handle it.
-        return lyricCaretState.CaretDraggable;
+        // confirm the hover caret position before drag start.
+        return lyricCaretState.ConfirmHoverCaretPosition();
     }
 
     protected override void OnDrag(DragEvent e)
