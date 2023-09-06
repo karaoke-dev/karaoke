@@ -50,7 +50,8 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         if (!lyricCaretState.CaretEnabled)
             return false;
 
-        if (IsDragged)
+        // should not trigger the hover caret event if dragging other lyric.
+        if (e.HasAnyButtonPressed)
             return false;
 
         float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
