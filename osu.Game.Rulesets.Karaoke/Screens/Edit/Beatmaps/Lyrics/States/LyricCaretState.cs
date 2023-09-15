@@ -219,6 +219,9 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         if (rangeCaretPosition != null)
         {
+            if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
+                throw new InvalidOperationException("Must using the index caret position algorithm if has range caret position.");
+
             var startPosition = rangeCaretPosition.Start;
             var (smallerPosition, largerPosition) = rangeCaretPosition.GetRangeCaretPosition();
 
@@ -230,8 +233,8 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 MovingCaretAction.LastLyric => algorithm.MoveToLastLyric(),
                 MovingCaretAction.PreviousIndex => isTypingCaret(algorithm) ? smallerPosition : performMoveToPreviousIndex(algorithm, smallerPosition),
                 MovingCaretAction.NextIndex => isTypingCaret(algorithm) ? largerPosition : performMoveToNextIndex(algorithm, largerPosition),
-                MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, smallerPosition),
-                MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, largerPosition),
+                MovingCaretAction.FirstIndex => indexCaretPositionAlgorithm.MoveToFirstIndex(smallerPosition.Lyric),
+                MovingCaretAction.LastIndex => indexCaretPositionAlgorithm.MoveToLastIndex(largerPosition.Lyric),
                 _ => throw new InvalidEnumArgumentException(nameof(action)),
             };
 
@@ -297,7 +300,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             // will have three cases in here:
             // 1. got duplicated value (means it's not valid to move left and right)
             // 2. got the same value (means it's not valid to move left and right)
-            // 3. got unique value(OK to return the value)
+            // 3. got unique value (OK to return the value)
             var movedCaretPosition = action(indexCaretPositionAlgorithm, indexCaretPosition);
             if (movedCaretPosition != null && !EqualityComparer<ICaretPosition>.Default.Equals(movedCaretPosition, caretPosition))
                 return movedCaretPosition;
