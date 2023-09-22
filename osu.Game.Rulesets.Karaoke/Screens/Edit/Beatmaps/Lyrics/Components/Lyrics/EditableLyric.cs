@@ -46,6 +46,8 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
     }
 
+    #region Hover
+
     protected override bool OnMouseMove(MouseMoveEvent e)
     {
         if (!lyricCaretState.CaretEnabled)
@@ -71,14 +73,41 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         return base.OnMouseMove(e);
     }
 
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+
+        if (!lyricCaretState.CaretEnabled)
+            return;
+
+        // lost hover caret and time-tag caret
+        lyricCaretState.ClearHoverCaretPosition();
+    }
+
+    #endregion
+
+    #region Click
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        return lyricCaretState.ConfirmHoverCaretPosition();
+    }
+
+    #endregion
+
+    #region Drag
+
     protected override bool OnDragStart(DragStartEvent e)
     {
         // should not handle the drag event if the caret algorithm is able to handle it.
         if (!lyricCaretState.CaretDraggable)
             return false;
 
+        if (lyricCaretState.HoverCaretPosition != null)
+            lyricCaretState.ConfirmHoverCaretPosition();
+
         // confirm the hover caret position before drag start.
-        return lyricCaretState.ConfirmHoverCaretPosition();
+        return lyricCaretState.StartDragging();
     }
 
     protected override void OnDrag(DragEvent e)
@@ -97,6 +126,16 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         base.OnDrag(e);
     }
 
+    protected override void OnDragEnd(DragEndEvent e)
+    {
+        if (!lyricCaretState.CaretDraggable)
+            throw new InvalidOperationException();
+
+        lyricCaretState.EndDragging();
+
+        base.OnDragEnd(e);
+    }
+
     private object? getCaretIndexByPosition(float position) =>
         lyricCaretState.CaretPosition switch
         {
@@ -109,21 +148,7 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
             _ => null,
         };
 
-    protected override void OnHoverLost(HoverLostEvent e)
-    {
-        base.OnHoverLost(e);
-
-        if (!lyricCaretState.CaretEnabled)
-            return;
-
-        // lost hover caret and time-tag caret
-        lyricCaretState.ClearHoverCaretPosition();
-    }
-
-    protected override bool OnClick(ClickEvent e)
-    {
-        return lyricCaretState.ConfirmHoverCaretPosition();
-    }
+    #endregion
 
     protected override bool OnDoubleClick(DoubleClickEvent e)
     {

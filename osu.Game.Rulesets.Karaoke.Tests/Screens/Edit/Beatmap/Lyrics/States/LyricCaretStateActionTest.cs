@@ -215,7 +215,7 @@ public partial class LyricCaretStateActionTest : BaseLyricCaretStateTest
             var startIndex = new TypingCaretPosition(GetLyric(1), 1);
             var endIndex = new TypingCaretPosition(GetLyric(1), 5);
 
-            return new RangeCaretPosition(startIndex, endIndex);
+            return new RangeCaretPosition(startIndex, endIndex, RangeCaretDraggingState.EndDrag);
         });
         AssertGetCaretPositionByAction(MovingCaretAction.PreviousLyric, () => new TypingCaretPosition(GetLyric(0), 1));
         AssertGetCaretPositionByAction(MovingCaretAction.NextLyric, () => new TypingCaretPosition(GetLyric(2), 1));
@@ -232,7 +232,7 @@ public partial class LyricCaretStateActionTest : BaseLyricCaretStateTest
             var startIndex = new TypingCaretPosition(GetLyric(1), 0);
             var endIndex = new TypingCaretPosition(GetLyric(1), 6);
 
-            return new RangeCaretPosition(startIndex, endIndex);
+            return new RangeCaretPosition(startIndex, endIndex, RangeCaretDraggingState.EndDrag);
         });
         AssertGetCaretPositionByAction(MovingCaretAction.PreviousLyric, () => new TypingCaretPosition(GetLyric(0), 0));
         AssertGetCaretPositionByAction(MovingCaretAction.NextLyric, () => new TypingCaretPosition(GetLyric(2), 0));
@@ -252,7 +252,7 @@ public partial class LyricCaretStateActionTest : BaseLyricCaretStateTest
             var startIndex = new TypingCaretPosition(GetLyric(0), 1);
             var endIndex = new TypingCaretPosition(GetLyric(0), 5);
 
-            return new RangeCaretPosition(startIndex, endIndex);
+            return new RangeCaretPosition(startIndex, endIndex, RangeCaretDraggingState.EndDrag);
         });
         AssertGetCaretPositionByAction(MovingCaretAction.PreviousLyric, () => null);
         AssertGetCaretPositionByAction(MovingCaretAction.NextLyric, () => null);
@@ -269,7 +269,7 @@ public partial class LyricCaretStateActionTest : BaseLyricCaretStateTest
             var startIndex = new TypingCaretPosition(GetLyric(0), 0);
             var endIndex = new TypingCaretPosition(GetLyric(0), 6);
 
-            return new RangeCaretPosition(startIndex, endIndex);
+            return new RangeCaretPosition(startIndex, endIndex, RangeCaretDraggingState.EndDrag);
         });
         AssertGetCaretPositionByAction(MovingCaretAction.PreviousLyric, () => null);
         AssertGetCaretPositionByAction(MovingCaretAction.NextLyric, () => null);

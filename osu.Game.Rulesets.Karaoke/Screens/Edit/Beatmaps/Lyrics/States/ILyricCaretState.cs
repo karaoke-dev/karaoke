@@ -39,7 +39,11 @@ public interface ILyricCaretState
 
     bool MoveCaretToTargetPosition<TIndex>(Lyric lyric, TIndex index) where TIndex : notnull;
 
+    bool StartDragging();
+
     bool MoveDraggingCaretIndex<TIndex>(TIndex index) where TIndex : notnull;
+
+    bool EndDragging();
 
     void SyncSelectedHitObjectWithCaret();
 

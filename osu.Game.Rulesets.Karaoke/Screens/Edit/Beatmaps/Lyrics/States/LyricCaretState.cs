@@ -367,6 +367,18 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return moveCaretToTargetPosition(caretPosition);
     }
 
+    public bool StartDragging()
+    {
+        if (!CaretDraggable)
+            throw new InvalidOperationException("Should not call this method if the caret is not draggable");
+
+        var caretPosition = bindableCaretPosition.Value;
+        if (caretPosition is not IIndexCaretPosition indexCaretPosition)
+            throw new InvalidOperationException($"Binding caret position should have value and the type should be {typeof(IIndexCaretPosition)}.");
+
+        return moveRangeCaretToTargetPosition(indexCaretPosition, indexCaretPosition, RangeCaretDraggingState.StartDrag);
+    }
+
     public bool MoveDraggingCaretIndex<TIndex>(TIndex index)
         where TIndex : notnull
     {
@@ -381,7 +393,19 @@ public partial class LyricCaretState : Component, ILyricCaretState
             throw new InvalidOperationException("Algorithm should be index caret position algorithm.");
 
         var endCaretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(caretPosition.Lyric, index);
-        return moveRangeCaretToTargetPosition(startCaretPosition, endCaretPosition);
+        return moveRangeCaretToTargetPosition(startCaretPosition, endCaretPosition, RangeCaretDraggingState.Dragging);
+    }
+
+    public bool EndDragging()
+    {
+        if (!CaretDraggable)
+            throw new InvalidOperationException("Should not call this method if the caret is not draggable");
+
+        var rangeCaretPosition = bindableRangeCaretPosition.Value;
+        if (rangeCaretPosition == null)
+            return false;
+
+        return moveRangeCaretToTargetPosition(rangeCaretPosition.Start, rangeCaretPosition.End, RangeCaretDraggingState.EndDrag);
     }
 
     private bool moveCaretToTargetPosition(ICaretPosition? position)
@@ -398,13 +422,13 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return true;
     }
 
-    private bool moveRangeCaretToTargetPosition(IIndexCaretPosition startCaretPosition, IIndexCaretPosition? endCaretPosition)
+    private bool moveRangeCaretToTargetPosition(IIndexCaretPosition startCaretPosition, IIndexCaretPosition? endCaretPosition, RangeCaretDraggingState draggingState)
     {
         if (endCaretPosition == null)
             return false;
 
         bindableHoverCaretPosition.Value = null;
-        bindableRangeCaretPosition.Value = new RangeCaretPosition(startCaretPosition, endCaretPosition);
+        bindableRangeCaretPosition.Value = new RangeCaretPosition(startCaretPosition, endCaretPosition, draggingState);
 
         return true;
     }
