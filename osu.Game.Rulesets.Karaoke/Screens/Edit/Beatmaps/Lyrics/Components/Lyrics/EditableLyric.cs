@@ -103,9 +103,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         if (!lyricCaretState.CaretDraggable)
             return false;
 
-        if (lyricCaretState.HoverCaretPosition != null)
-            lyricCaretState.ConfirmHoverCaretPosition();
-
         // confirm the hover caret position before drag start.
         return lyricCaretState.StartDragging();
     }
