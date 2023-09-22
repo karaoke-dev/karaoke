@@ -9,6 +9,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
@@ -16,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class CaretLayer : BaseLayer
 {
+    private readonly IBindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm?>();
+
     private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
     private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
     private readonly IBindable<RangeCaretPosition?> bindableRangeCaretPosition = new Bindable<RangeCaretPosition?>();
@@ -23,48 +26,35 @@ public partial class CaretLayer : BaseLayer
     public CaretLayer(Lyric lyric)
         : base(lyric)
     {
+        bindableCaretPositionAlgorithm.BindValueChanged(e =>
+        {
+            updateDrawableCaret(e.NewValue, DrawableCaretType.HoverCaret);
+            updateDrawableCaret(e.NewValue, DrawableCaretType.Caret);
+        }, true);
+
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            updateCaretTypeAndPosition(e, DrawableCaretType.HoverCaret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
         }, true);
 
         bindableCaretPosition.BindValueChanged(e =>
         {
-            updateCaretTypeAndPosition(e, DrawableCaretType.Caret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
         }, true);
 
         bindableRangeCaretPosition.BindValueChanged(e =>
         {
-            if (e.NewValue == null)
-            {
-                // handle the case that clear the range caret position.
-                applyTheCaretPosition(bindableCaretPosition.Value, DrawableCaretType.Caret);
-            }
-            else
-            {
-                applyRangeCaretPosition(e.NewValue, DrawableCaretType.Caret);
-            }
+            applyRangeCaretPosition(e.NewValue, DrawableCaretType.Caret);
         }, true);
-
-        void updateCaretTypeAndPosition(ValueChangedEvent<ICaretPosition?> e, DrawableCaretType caretType)
-        {
-            var oldCaretPosition = e.OldValue;
-            var newCaretPosition = e.NewValue;
-
-            if (oldCaretPosition?.GetType() != newCaretPosition?.GetType())
-                updateDrawableCaret(newCaretPosition, caretType);
-
-            applyTheCaretPosition(newCaretPosition, caretType);
-        }
     }
 
-    private void updateDrawableCaret(ICaretPosition? position, DrawableCaretType type)
+    private void updateDrawableCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretType type)
     {
         var oldCaret = getDrawableCaret(type);
         if (oldCaret != null)
             RemoveInternal(oldCaret, true);
 
-        var caret = createCaret(position, type);
+        var caret = createCaret(algorithm, type);
         if (caret == null)
             return;
 
@@ -72,19 +62,19 @@ public partial class CaretLayer : BaseLayer
 
         AddInternal(caret);
 
-        static DrawableCaret? createCaret(ICaretPosition? caretPositionAlgorithm, DrawableCaretType type) =>
-            caretPositionAlgorithm switch
+        static DrawableCaret? createCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretType type) =>
+            algorithm switch
             {
                 // cutting lyric
-                CuttingCaretPosition => new DrawableCuttingCaret(type),
+                CuttingCaretPositionAlgorithm => new DrawableCuttingCaret(type),
                 // typing
-                TypingCaretPosition => new DrawableTypingCaret(type),
+                TypingCaretPositionAlgorithm => new DrawableTypingCaret(type),
                 // creat ruby-tag
-                CreateRubyTagCaretPosition => new DrawableCreateRubyTagCaret(type),
+                CreateRubyTagCaretPositionAlgorithm => new DrawableCreateRubyTagCaret(type),
                 // creat time-tag
-                TimeTagIndexCaretPosition => new DrawableTimeTagIndexCaret(type),
+                TimeTagIndexCaretPositionAlgorithm => new DrawableTimeTagIndexCaret(type),
                 // record time-tag
-                TimeTagCaretPosition => new DrawableTimeTagCaret(type),
+                TimeTagCaretPositionAlgorithm => new DrawableTimeTagCaret(type),
                 _ => null,
             };
     }
@@ -113,12 +103,20 @@ public partial class CaretLayer : BaseLayer
         if (rangeCaretPosition == null)
             return;
 
-        if (rangeCaretPosition.Start.Lyric != Lyric || rangeCaretPosition.End.Lyric != Lyric)
-            return;
-
         var caret = getDrawableCaret(type);
+        if (caret == null)
+            throw new InvalidOperationException("Should be able to get the drawable caret.");
+
+        if (rangeCaretPosition.Start.Lyric != Lyric || rangeCaretPosition.End.Lyric != Lyric)
+        {
+            caret.Hide();
+            return;
+        }
+
+        caret.Show();
+
         if (caret is not ICanAcceptRangeIndex rangeIndexDrawableCaret)
-            throw new InvalidOperationException("");
+            throw new InvalidOperationException("Caret should be able to accept range index.");
 
         rangeIndexDrawableCaret.ApplyRangeCaretPosition(rangeCaretPosition);
     }
@@ -129,6 +127,8 @@ public partial class CaretLayer : BaseLayer
     [BackgroundDependencyLoader]
     private void load(ILyricCaretState lyricCaretState)
     {
+        bindableCaretPositionAlgorithm.BindTo(lyricCaretState.BindableCaretPositionAlgorithm);
+
         bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
         bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         bindableRangeCaretPosition.BindTo(lyricCaretState.BindableRangeCaretPosition);
