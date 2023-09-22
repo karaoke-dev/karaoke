@@ -208,12 +208,12 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
     {
         PrepareLyrics(new[] { "Lyric1", "Lyric2" });
         ChangeMode(TestCaretType.CaretDraggable);
-        MoveCaretToTargetPosition(() => GetLyric(1), () => 1);
+        MoveHoverCaretToTargetPosition(() => GetLyric(1), () => 1);
 
         // start dragging.
         StartDragging();
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
@@ -225,7 +225,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         // move dragging index.
         MoveDraggingCaretIndex(() => 2);
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
@@ -237,7 +237,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         // end dragging.
         EndDragging();
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
