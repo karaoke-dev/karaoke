@@ -109,9 +109,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     protected override void OnDrag(DragEvent e)
     {
-        if (!lyricCaretState.CaretDraggable)
-            throw new InvalidOperationException();
-
         float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
         object? caretIndex = getCaretIndexByPosition(xPosition);
 
@@ -125,9 +122,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     protected override void OnDragEnd(DragEndEvent e)
     {
-        if (!lyricCaretState.CaretDraggable)
-            throw new InvalidOperationException();
-
         lyricCaretState.EndDragging();
 
         base.OnDragEnd(e);
