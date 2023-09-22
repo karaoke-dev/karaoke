@@ -375,10 +375,10 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         var caretPosition = bindableCaretPosition.Value;
         if (caretPosition is not IIndexCaretPosition startCaretPosition)
-            throw new InvalidOperationException($"Should call the {nameof(MoveCaretToTargetPosition)} first to assign the caret position");
+            throw new InvalidOperationException($"Binding caret position should have value and the type should be {typeof(IIndexCaretPosition)}.");
 
         if (algorithm is not IIndexCaretPositionAlgorithm indexCaretPositionAlgorithm)
-            return false;
+            throw new InvalidOperationException("Algorithm should be index caret position algorithm.");
 
         var endCaretPosition = indexCaretPositionAlgorithm.MoveToTargetLyric(caretPosition.Lyric, index);
         return moveRangeCaretToTargetPosition(startCaretPosition, endCaretPosition);
