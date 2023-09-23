@@ -12,7 +12,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using Component = osu.Framework.Graphics.Component;
 
@@ -37,7 +36,6 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
     private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
-    private readonly BindableList<HitObject> selectedHitObjects = new();
     private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
 
     // it might be special for create time-tag mode.
@@ -46,6 +44,9 @@ public partial class LyricCaretState : Component, ILyricCaretState
     private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
     private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
     private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
+
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
 
     [Resolved]
     private EditorClock editorClock { get; set; } = null!;
@@ -187,15 +188,12 @@ public partial class LyricCaretState : Component, ILyricCaretState
     }
 
     [BackgroundDependencyLoader]
-    private void load(EditorBeatmap beatmap,
-                      ILyricsProvider lyricsProvider,
+    private void load(ILyricsProvider lyricsProvider,
                       ILyricEditorState state,
                       KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager,
                       IEditRubyModeState editRubyModeState,
                       ITimeTagModeState timeTagModeState)
     {
-        selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
-
         bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
 
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
@@ -443,26 +441,21 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
     public void SyncSelectedHitObjectWithCaret()
     {
-        selectedHitObjects.Clear();
-
-        if (bindableRangeCaretPosition.Value is RangeCaretPosition rangeCaretPosition)
+        // should wait until beatmap loaded.
+        Schedule(() =>
         {
-            addLyricToSelectedHitObjectList(rangeCaretPosition.Start.Lyric);
-            addLyricToSelectedHitObjectList(rangeCaretPosition.End.Lyric);
-        }
+            beatmap.SelectedHitObjects.Clear();
 
-        if (bindableCaretPosition.Value?.Lyric != null)
-        {
-            addLyricToSelectedHitObjectList(bindableCaretPosition.Value.Lyric);
-        }
-
-        void addLyricToSelectedHitObjectList(Lyric newLyric)
-        {
-            if (selectedHitObjects.Contains(newLyric))
-                return;
-
-            selectedHitObjects.Add(newLyric);
-        }
+            if (bindableRangeCaretPosition.Value is RangeCaretPosition rangeCaretPosition)
+            {
+                var selectedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => rangeCaretPosition.IsInRange(x));
+                beatmap.SelectedHitObjects.AddRange(selectedLyrics);
+            }
+            else if (bindableCaretPosition.Value?.Lyric != null)
+            {
+                beatmap.SelectedHitObjects.Add(bindableCaretPosition.Value.Lyric);
+            }
+        });
     }
 
     public bool CaretEnabled => algorithm != null;
