@@ -2,13 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
@@ -17,19 +22,16 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyTagCaretPosition>
+public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyTagCaretPosition>, IHasPopover
 {
     private const float border_spacing = 5;
     private const float caret_move_time = 60;
     private const float caret_resize_time = 60;
 
     [Resolved]
-    private ILyricRubyTagsChangeHandler lyricRubyTagsChangeHandler { get; set; } = null!;
-
-    [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    private readonly IconButton icon;
+    private readonly SpriteIcon icon;
 
     public DrawableCreateRubyTagCaret(DrawableCaretType type)
         : base(type)
@@ -50,7 +52,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
                     Alpha = 0.1f,
                 },
             },
-            icon = new IconButton
+            icon = new SpriteIcon
             {
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.BottomLeft,
@@ -64,9 +66,11 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     [BackgroundDependencyLoader]
     private void load(OsuColour colours)
     {
-        icon.IconColour = colours.Green;
-        icon.IconHoverColour = colours.GreenLight;
+        icon.Colour = colours.Green;
     }
+
+    private int startCharIndex;
+    private int endCharIndex;
 
     protected override void ApplyCaretPosition(CreateRubyTagCaretPosition caret)
     {
@@ -83,37 +87,36 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
             }
         }
 
+        startCharIndex = caret.CharIndex;
+        endCharIndex = caret.CharIndex;
+
         var rect = LyricPositionProvider.GetRectByCharIndex(caret.CharIndex);
         changeTheSizeByRect(rect);
 
-        icon.Action = () =>
-        {
-            lyricRubyTagsChangeHandler.Add(new RubyTag
-            {
-                StartIndex = caret.CharIndex,
-                EndIndex = caret.CharIndex,
-                Text = "Ruby",
-            });
-        };
+        // should not continuous showing the caret position if move the caret by keyboard.
+        if (Type == DrawableCaretType.Caret)
+            this.HidePopover();
+    }
+
+    protected override bool OnClick(ClickEvent e)
+    {
+        if (Type == DrawableCaretType.HoverCaret)
+            return false;
+
+        this.ShowPopover();
+        return true;
     }
 
     protected override void ApplyRangeCaretPosition(RangeCaretPosition<CreateRubyTagCaretPosition> caret)
     {
-        int minIndex = caret.GetRangeCaretPosition().Item1.CharIndex;
-        int maxIndex = caret.GetRangeCaretPosition().Item2.CharIndex;
+        startCharIndex = caret.GetRangeCaretPosition().Item1.CharIndex;
+        endCharIndex = caret.GetRangeCaretPosition().Item2.CharIndex;
 
-        var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndex(minIndex), LyricPositionProvider.GetRectByCharIndex(maxIndex));
+        var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndex(startCharIndex), LyricPositionProvider.GetRectByCharIndex(endCharIndex));
         changeTheSizeByRect(rect);
 
-        icon.Action = () =>
-        {
-            lyricRubyTagsChangeHandler.Add(new RubyTag
-            {
-                StartIndex = minIndex,
-                EndIndex = maxIndex,
-                Text = "Ruby",
-            });
-        };
+        if (Type == DrawableCaretType.Caret && caret.DraggingState == RangeCaretDraggingState.EndDrag)
+            this.ShowPopover();
     }
 
     private void changeTheSizeByRect(RectangleF rect)
@@ -129,5 +132,81 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
         this.FlashColour(colour.Red, 200);
+    }
+
+    public Popover GetPopover() => new CreateRubyPopover(startCharIndex, endCharIndex);
+
+    private partial class CreateRubyPopover : OsuPopover
+    {
+        [Resolved]
+        private ILyricRubyTagsChangeHandler lyricRubyTagsChangeHandler { get; set; } = null!;
+
+        private readonly LabelledTextBox labelledRubyTextBox;
+
+        public CreateRubyPopover(int startCharIndex, int endCharIndex)
+        {
+            Child = new FillFlowContainer
+            {
+                Width = 200,
+                Direction = FillDirection.Vertical,
+                AutoSizeAxes = Axes.Y,
+                Spacing = new Vector2(0, 10),
+                Children = new Drawable[]
+                {
+                    labelledRubyTextBox = new CreateRubyLabelledTextBox
+                    {
+                        Label = "Ruby",
+                        Current =
+                        {
+                            Value = "Ruby",
+                        },
+                    },
+                    new CreateRubyButton
+                    {
+                        Text = "Create",
+                        Action = addRubyText,
+                    },
+                },
+            };
+
+            labelledRubyTextBox.OnCommit += (_, _) =>
+            {
+                addRubyText();
+            };
+            return;
+
+            void addRubyText()
+            {
+                lyricRubyTagsChangeHandler.Add(new RubyTag
+                {
+                    StartIndex = startCharIndex,
+                    EndIndex = endCharIndex,
+                    Text = labelledRubyTextBox.Text,
+                });
+
+                this.HidePopover();
+            }
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            ScheduleAfterChildren(() => GetContainingInputManager().ChangeFocus(labelledRubyTextBox));
+        }
+
+        private partial class CreateRubyLabelledTextBox : LabelledTextBox
+        {
+            protected override OsuTextBox CreateComponent()
+            {
+                return base.CreateComponent().With(x =>
+                {
+                    x.CommitOnFocusLost = false;
+                });
+            }
+        }
+
+        private partial class CreateRubyButton : EditorSectionButton
+        {
+        }
     }
 }
