@@ -24,15 +24,11 @@ public partial class DrawablePreviewLyricList : DrawableLyricList
             return false;
 
         // should not move the position in manage lyric mode.
-        if (bindableMode.Value == LyricEditorMode.Texting)
+        if (bindableMode.Value is LyricEditorMode.Texting or LyricEditorMode.EditRuby)
             return false;
 
         // move to target position if auto focus.
-        bool autoFocus = bindableAutoFocusToEditLyric.Value;
-        if (!autoFocus)
-            return false;
-
-        return true;
+        return bindableAutoFocusToEditLyric.Value;
     }
 
     protected override int SkipRows()
