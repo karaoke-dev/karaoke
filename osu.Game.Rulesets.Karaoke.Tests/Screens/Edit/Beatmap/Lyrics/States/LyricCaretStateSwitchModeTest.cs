@@ -141,13 +141,13 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
 
     protected void AssertCaretPositionAlgorithmIsNull()
     {
-        AddAssert("Assert caret position type", () => LyricCaretState.CaretPositionAlgorithm == null);
+        AddAssert("Assert caret position algorithm should be null", () => LyricCaretState.CaretPositionAlgorithm == null);
     }
 
     protected void AssertCaretPositionAlgorithm<TCaretPositionAlgorithm>()
         where TCaretPositionAlgorithm : ICaretPositionAlgorithm
     {
-        AddAssert("Assert caret position type", () => LyricCaretState.CaretPositionAlgorithm?.GetType() == typeof(TCaretPositionAlgorithm));
+        AddAssert("Assert caret position algorithm", () => LyricCaretState.CaretPositionAlgorithm?.GetType() == typeof(TCaretPositionAlgorithm));
     }
 
     #endregion
