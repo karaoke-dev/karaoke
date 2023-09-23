@@ -30,7 +30,10 @@ public partial class LyricCaretState : Component, ILyricCaretState
     private readonly Bindable<RangeCaretPosition?> bindableRangeCaretPosition = new();
     private readonly Bindable<Lyric?> bindableFocusedLyric = new();
 
-    private ICaretPositionAlgorithm? algorithm;
+    public IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm => bindableCaretPositionAlgorithm;
+
+    private ICaretPositionAlgorithm? algorithm => bindableCaretPositionAlgorithm.Value;
+    private readonly Bindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new();
 
     private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -104,7 +107,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
     private void refreshAlgorithmAndCaretPosition()
     {
         // refresh algorithm
-        algorithm = getAlgorithmByMode(bindableModeWithEditStep.Value);
+        bindableCaretPositionAlgorithm.Value = getAlgorithmByMode(bindableModeWithEditStep.Value);
 
         // refresh caret position
         var lyric = bindableCaretPosition.Value?.Lyric;

@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.States;
@@ -24,6 +25,8 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
 
         AssertCaretEnabled(false);
         AssertCaretDraggable(false);
+
+        AssertCaretPositionAlgorithmIsNull();
     }
 
     [Test]
@@ -38,6 +41,8 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
 
         AssertCaretEnabled(true);
         AssertCaretDraggable(false);
+
+        AssertCaretPositionAlgorithm<NavigateCaretPositionAlgorithm>();
     }
 
     [Test]
@@ -52,6 +57,8 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
 
         AssertCaretEnabled(true);
         AssertCaretDraggable(false);
+
+        AssertCaretPositionAlgorithm<CuttingCaretPositionAlgorithm>();
     }
 
     [Test]
@@ -66,6 +73,8 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
 
         AssertCaretEnabled(true);
         AssertCaretDraggable(true);
+
+        AssertCaretPositionAlgorithm<TypingCaretPositionAlgorithm>();
     }
 
     #endregion
@@ -128,6 +137,17 @@ public partial class LyricCaretStateSwitchModeTest : BaseLyricCaretStateTest
     protected void AssertCaretDraggable(bool caretDraggable)
     {
         AddAssert("Assert caret draggable", () => LyricCaretState.CaretDraggable == caretDraggable);
+    }
+
+    protected void AssertCaretPositionAlgorithmIsNull()
+    {
+        AddAssert("Assert caret position type", () => LyricCaretState.CaretPositionAlgorithm == null);
+    }
+
+    protected void AssertCaretPositionAlgorithm<TCaretPositionAlgorithm>()
+        where TCaretPositionAlgorithm : ICaretPositionAlgorithm
+    {
+        AddAssert("Assert caret position type", () => LyricCaretState.CaretPositionAlgorithm?.GetType() == typeof(TCaretPositionAlgorithm));
     }
 
     #endregion
