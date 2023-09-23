@@ -84,6 +84,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         int minGap = caret.GetRangeCaretPosition().Item1.CharGap;
         int maxGap = caret.GetRangeCaretPosition().Item2.CharGap;
 
+        typingCaretEventHandler?.ChangeLyric(caret.Start.Lyric);
         typingCaretEventHandler?.ChangeCharGapAndOffset(maxGap, maxGap - minGap);
         typingCaretEventHandler?.FocusInputCaretTextBox();
 

@@ -301,7 +301,7 @@ public partial class LyricCaretStateActionTest : BaseLyricCaretStateTest
 
     protected void AssertGetCaretPositionByAction(MovingCaretAction action, Func<ICaretPosition?> getPosition)
     {
-        AddAssert("Assert caret position", () =>
+        AddAssert("Assert caret position by action", () =>
         {
             var expectedCaret = getPosition();
             var actualCaret = LyricCaretState.GetCaretPositionByAction(action);

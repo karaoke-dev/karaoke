@@ -208,12 +208,12 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
     {
         PrepareLyrics(new[] { "Lyric1", "Lyric2" });
         ChangeMode(TestCaretType.CaretDraggable);
-        MoveCaretToTargetPosition(() => GetLyric(1), () => 1);
+        MoveHoverCaretToTargetPosition(() => GetLyric(1), () => 1);
 
         // start dragging.
         StartDragging();
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
@@ -225,7 +225,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         // move dragging index.
         MoveDraggingCaretIndex(() => 2);
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
@@ -237,7 +237,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
         // end dragging.
         EndDragging();
         AssertHoverCaretPosition(() => null);
-        AssertCaretPosition(() => new TypingCaretPosition(GetLyric(1), 1));
+        AssertCaretPosition(() => null);
         AssertDraggableCaretPosition(() =>
         {
             var startPosition = new TypingCaretPosition(GetLyric(1), 1);
@@ -253,7 +253,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
 
     protected void MoveHoverCaretToTargetPosition(Func<Lyric> lyric)
     {
-        AddStep("Moving hover caret by action", () =>
+        AddStep("Moving hover caret to target position", () =>
         {
             LyricCaretState.MoveHoverCaretToTargetPosition(lyric());
         });
@@ -262,7 +262,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
     protected void MoveHoverCaretToTargetPosition<TIndex>(Func<Lyric> lyric, Func<TIndex> index)
         where TIndex : notnull
     {
-        AddStep("Moving hover caret by caret position", () =>
+        AddStep("Moving hover caret to target position with index", () =>
         {
             LyricCaretState.MoveHoverCaretToTargetPosition(lyric(), index());
         });
@@ -270,7 +270,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
 
     protected void ConfirmHoverCaretPosition()
     {
-        AddStep("Moving hover caret by action", () =>
+        AddStep("Conform hover caret position", () =>
         {
             LyricCaretState.ConfirmHoverCaretPosition();
         });
@@ -278,7 +278,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
 
     protected void ClearHoverCaretPosition()
     {
-        AddStep("Moving hover caret by action", () =>
+        AddStep("Clear hover caret position", () =>
         {
             LyricCaretState.ClearHoverCaretPosition();
         });
@@ -286,7 +286,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
 
     protected void MoveCaretToTargetPosition(Func<Lyric> lyric)
     {
-        AddStep("Moving caret by action", () =>
+        AddStep("Move caret to target position", () =>
         {
             LyricCaretState.MoveCaretToTargetPosition(lyric());
         });
@@ -295,7 +295,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
     protected void MoveCaretToTargetPosition<TIndex>(Func<Lyric> lyric, Func<TIndex> index)
         where TIndex : notnull
     {
-        AddStep("Moving caret by action", () =>
+        AddStep("Move caret to target position with index", () =>
         {
             LyricCaretState.MoveCaretToTargetPosition(lyric(), index());
         });
@@ -312,7 +312,7 @@ public partial class LyricCaretStateMoveCaretTest : BaseLyricCaretStateTest
     protected void MoveDraggingCaretIndex<TIndex>(Func<TIndex> index)
         where TIndex : notnull
     {
-        AddStep("Moving caret by caret position", () =>
+        AddStep("Moving dragging caret index", () =>
         {
             LyricCaretState.MoveDraggingCaretIndex(index());
         });

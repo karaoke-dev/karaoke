@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
@@ -28,6 +29,9 @@ public class RangeCaretPosition<TIndexCaretPosition> : IEquatable<RangeCaretPosi
 {
     public RangeCaretPosition(TIndexCaretPosition start, TIndexCaretPosition end, RangeCaretDraggingState draggingState)
     {
+        if (start.GetType() != end.GetType())
+            throw new InvalidOperationException("Start and end caret index should be the same type.");
+
         Start = start;
         End = end;
         DraggingState = draggingState;
@@ -77,6 +81,19 @@ public class RangeCaretPosition<TIndexCaretPosition> : IEquatable<RangeCaretPosi
     public override int GetHashCode()
     {
         return HashCode.Combine(Start, End);
+    }
+
+    public bool IsInRange(Lyric lyric)
+    {
+        int minOrder = Math.Min(Start.Lyric.Order, End.Lyric.Order);
+        int maxOrder = Math.Max(Start.Lyric.Order, End.Lyric.Order);
+
+        return lyric.Order >= minOrder && lyric.Order <= maxOrder;
+    }
+
+    public Type GetCaretPositionType()
+    {
+        return Start.GetType();
     }
 }
 

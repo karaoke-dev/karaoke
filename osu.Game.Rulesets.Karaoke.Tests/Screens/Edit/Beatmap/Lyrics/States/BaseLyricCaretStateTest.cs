@@ -66,7 +66,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
     [SetUp]
     public void Setup()
     {
-        AddStep("Set-up.", () =>
+        AddStep("Set-up", () =>
         {
             state.SwitchMode(LyricEditorMode.View);
         });
@@ -149,7 +149,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
 
     public void PrepareRangeCaretPosition(Func<RangeCaretPosition?> getPosition)
     {
-        AddStep("Set caret position", () =>
+        AddStep("Set range caret position", () =>
         {
             if (LyricCaretState.BindableRangeCaretPosition is not Bindable<RangeCaretPosition?> bindable)
                 throw new InvalidOperationException();

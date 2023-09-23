@@ -30,6 +30,7 @@ public abstract partial class Row : CompositeDrawable
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<ICaretPosition?> bindableHoverCaretPosition = new Bindable<ICaretPosition?>();
     private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+    private readonly IBindable<RangeCaretPosition?> bindableRangeCaretPosition = new Bindable<RangeCaretPosition?>();
 
     protected readonly Lyric Lyric;
 
@@ -90,14 +91,26 @@ public abstract partial class Row : CompositeDrawable
 
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            if (ValueChangedEventUtils.LyricChanged(e))
-                updateBackgroundColour();
+            if (!ValueChangedEventUtils.LyricChanged(e))
+                return;
+
+            updateBackgroundColour();
         });
 
         bindableCaretPosition.BindValueChanged(e =>
         {
-            if (ValueChangedEventUtils.LyricChanged(e))
-                updateBackgroundColour();
+            if (!ValueChangedEventUtils.LyricChanged(e))
+                return;
+
+            updateBackgroundColour();
+        });
+
+        bindableRangeCaretPosition.BindValueChanged(e =>
+        {
+            if (!ValueChangedEventUtils.LyricChanged(e))
+                return;
+
+            updateBackgroundColour();
         });
     }
 
@@ -108,6 +121,7 @@ public abstract partial class Row : CompositeDrawable
 
         bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
         bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+        bindableRangeCaretPosition.BindTo(lyricCaretState.BindableRangeCaretPosition);
 
         updateBackgroundColour();
     }
@@ -134,21 +148,32 @@ public abstract partial class Row : CompositeDrawable
 
         BackgroundStyle getBackgroundStyle()
         {
-            if (highlightBackground(bindableCaretPosition.Value))
+            if (highlightBackgroundByCaretPosition(bindableCaretPosition.Value))
                 return BackgroundStyle.Focus;
 
-            if (highlightBackground(bindableHoverCaretPosition.Value))
+            if (highlightBackgroundByRangeCaretPosition(bindableRangeCaretPosition.Value))
+                return BackgroundStyle.Focus;
+
+            if (highlightBackgroundByCaretPosition(bindableHoverCaretPosition.Value))
                 return BackgroundStyle.Hover;
 
             return BackgroundStyle.Idle;
         }
 
-        bool highlightBackground(ICaretPosition? caretPosition)
+        bool highlightBackgroundByCaretPosition(ICaretPosition? caretPosition)
         {
             if (caretPosition?.Lyric != Lyric)
                 return false;
 
             return HighlightBackgroundWhenSelected(caretPosition);
+        }
+
+        bool highlightBackgroundByRangeCaretPosition(RangeCaretPosition? rangeCaretPosition)
+        {
+            if (rangeCaretPosition == null || !rangeCaretPosition.IsInRange(Lyric))
+                return false;
+
+            return HighlightBackgroundWhenSelected(rangeCaretPosition.Start);
         }
     }
 

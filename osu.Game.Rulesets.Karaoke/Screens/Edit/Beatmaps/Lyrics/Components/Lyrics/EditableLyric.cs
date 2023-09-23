@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -11,6 +10,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
@@ -57,8 +57,7 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         if (e.HasAnyButtonPressed)
             return false;
 
-        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-        object? caretIndex = getCaretIndexByPosition(xPosition);
+        object? caretIndex = getCaretIndexByPosition(e);
 
         if (caretIndex != null)
         {
@@ -84,6 +83,22 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         lyricCaretState.ClearHoverCaretPosition();
     }
 
+    private object? getCaretIndexByPosition(UIEvent mouseEvent)
+    {
+        var algorithm = lyricCaretState.CaretPositionAlgorithm;
+        float xPosition = ToLocalSpace(mouseEvent.ScreenSpaceMousePosition).X;
+        return algorithm switch
+        {
+            CuttingCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndicatorByPosition(xPosition),
+            TypingCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndicatorByPosition(xPosition),
+            NavigateCaretPositionAlgorithm => null,
+            CreateRubyTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
+            TimeTagIndexCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
+            TimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetTimeTagByPosition(xPosition),
+            _ => null,
+        };
+    }
+
     #endregion
 
     #region Click
@@ -103,20 +118,13 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         if (!lyricCaretState.CaretDraggable)
             return false;
 
-        if (lyricCaretState.HoverCaretPosition != null)
-            lyricCaretState.ConfirmHoverCaretPosition();
-
         // confirm the hover caret position before drag start.
         return lyricCaretState.StartDragging();
     }
 
     protected override void OnDrag(DragEvent e)
     {
-        if (!lyricCaretState.CaretDraggable)
-            throw new InvalidOperationException();
-
-        float xPosition = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-        object? caretIndex = getCaretIndexByPosition(xPosition);
+        object? caretIndex = getCaretIndexByPosition(e);
 
         if (caretIndex != null)
         {
@@ -128,25 +136,10 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     protected override void OnDragEnd(DragEndEvent e)
     {
-        if (!lyricCaretState.CaretDraggable)
-            throw new InvalidOperationException();
-
         lyricCaretState.EndDragging();
 
         base.OnDragEnd(e);
     }
-
-    private object? getCaretIndexByPosition(float position) =>
-        lyricCaretState.CaretPosition switch
-        {
-            CuttingCaretPosition => KaraokeSpriteText.GetCharIndicatorByPosition(position),
-            TypingCaretPosition => KaraokeSpriteText.GetCharIndicatorByPosition(position),
-            NavigateCaretPosition => null,
-            CreateRubyTagCaretPosition => KaraokeSpriteText.GetCharIndexByPosition(position),
-            TimeTagIndexCaretPosition => KaraokeSpriteText.GetCharIndexByPosition(position),
-            TimeTagCaretPosition => KaraokeSpriteText.GetTimeTagByPosition(position),
-            _ => null,
-        };
 
     #endregion
 

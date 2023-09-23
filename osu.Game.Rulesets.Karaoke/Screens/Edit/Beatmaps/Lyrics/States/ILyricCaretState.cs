@@ -4,6 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
@@ -50,4 +51,8 @@ public interface ILyricCaretState
     bool CaretEnabled { get; }
 
     bool CaretDraggable { get; }
+
+    ICaretPositionAlgorithm? CaretPositionAlgorithm => BindableCaretPositionAlgorithm.Value;
+
+    IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm { get; }
 }
