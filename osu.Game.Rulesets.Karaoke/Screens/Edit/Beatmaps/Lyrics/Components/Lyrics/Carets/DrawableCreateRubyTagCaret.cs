@@ -71,10 +71,16 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     protected override void ApplyCaretPosition(CreateRubyTagCaretPosition caret)
     {
         // should not show the hover caret if already contains the selected range.
-        if (Type == DrawableCaretType.HoverCaret && lyricCaretState.CaretPosition?.Lyric == caret.Lyric)
+        if (Type == DrawableCaretType.HoverCaret)
         {
-            Hide();
-            return;
+            bool isClickToThisCaret = lyricCaretState.CaretPosition?.Lyric == caret.Lyric;
+            bool isDraggingToThisCaret = lyricCaretState.RangeCaretPosition?.IsInRange(caret.Lyric) ?? false;
+
+            if (isClickToThisCaret || isDraggingToThisCaret)
+            {
+                Hide();
+                return;
+            }
         }
 
         var rect = LyricPositionProvider.GetRectByCharIndex(caret.CharIndex);
