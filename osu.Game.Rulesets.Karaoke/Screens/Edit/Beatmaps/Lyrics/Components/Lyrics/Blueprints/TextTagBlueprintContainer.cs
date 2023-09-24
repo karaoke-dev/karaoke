@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
@@ -26,7 +27,8 @@ public abstract partial class TextTagBlueprintContainer<T> : LyricPropertyBluepr
     protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
         => blueprints.OrderBy(b => b.Item.StartIndex);
 
-    protected abstract partial class TextTagSelectionHandler : BindableSelectionHandler
+    protected abstract partial class TextTagSelectionHandler<TModeState> : LyricPropertySelectionHandler<TModeState>
+        where TModeState : IHasBlueprintSelection<T>
     {
         [Resolved]
         private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;

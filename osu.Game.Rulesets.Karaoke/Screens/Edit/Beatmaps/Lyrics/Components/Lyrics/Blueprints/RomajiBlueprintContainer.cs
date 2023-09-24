@@ -28,16 +28,10 @@ public partial class RomajiBlueprintContainer : TextTagBlueprintContainer<Romaji
     protected override SelectionBlueprint<RomajiTag> CreateBlueprintFor(RomajiTag item)
         => new RomajiTagSelectionBlueprint(item);
 
-    protected partial class RomajiTagSelectionHandler : TextTagSelectionHandler
+    protected partial class RomajiTagSelectionHandler : TextTagSelectionHandler<IEditRomajiModeState>
     {
         [Resolved]
         private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; } = null!;
-
-        [BackgroundDependencyLoader]
-        private void load(IEditRomajiModeState editRomajiModeState)
-        {
-            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
-        }
 
         protected override void DeleteItems(IEnumerable<RomajiTag> items)
             => romajiTagsChangeHandler.RemoveRange(items);

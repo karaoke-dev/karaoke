@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
 
@@ -43,5 +44,15 @@ public abstract partial class LyricPropertyBlueprintContainer<T> : BindableBluep
     {
         lyricCaretState.MoveCaretToTargetPosition(Lyric);
         return base.OnDragStart(e);
+    }
+
+    protected abstract partial class LyricPropertySelectionHandler<TModeState> : BindableSelectionHandler
+        where TModeState : IHasBlueprintSelection<T>
+    {
+        [BackgroundDependencyLoader]
+        private void load(TModeState modeState)
+        {
+            SelectedItems.BindTo(modeState.SelectedItems);
+        }
     }
 }

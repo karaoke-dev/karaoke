@@ -28,16 +28,10 @@ public partial class TimeTagBlueprintContainer : LyricPropertyBlueprintContainer
     protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
         => new TimeTagSelectionBlueprint(item);
 
-    protected partial class TimeTagSelectionHandler : BindableSelectionHandler
+    protected partial class TimeTagSelectionHandler : LyricPropertySelectionHandler<ITimeTagModeState>
     {
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
-
-        [BackgroundDependencyLoader]
-        private void load(ITimeTagModeState timeTagModeState)
-        {
-            SelectedItems.BindTo(timeTagModeState.SelectedItems);
-        }
 
         // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
         public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;

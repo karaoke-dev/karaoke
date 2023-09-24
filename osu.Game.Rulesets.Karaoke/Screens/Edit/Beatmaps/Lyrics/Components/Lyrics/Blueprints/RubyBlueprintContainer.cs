@@ -28,16 +28,10 @@ public partial class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
     protected override SelectionBlueprint<RubyTag> CreateBlueprintFor(RubyTag item)
         => new RubyTagSelectionBlueprint(item);
 
-    protected partial class RubyTagSelectionHandler : TextTagSelectionHandler
+    protected partial class RubyTagSelectionHandler : TextTagSelectionHandler<IEditRubyModeState>
     {
         [Resolved]
         private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
-
-        [BackgroundDependencyLoader]
-        private void load(IEditRubyModeState editRubyModeState)
-        {
-            SelectedItems.BindTo(editRubyModeState.SelectedItems);
-        }
 
         protected override void DeleteItems(IEnumerable<RubyTag> items)
             => rubyTagsChangeHandler.RemoveRange(items);
