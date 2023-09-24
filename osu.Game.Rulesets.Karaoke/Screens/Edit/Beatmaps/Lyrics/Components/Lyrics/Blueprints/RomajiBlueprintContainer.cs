@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
@@ -15,21 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
 {
-    [UsedImplicitly]
-    private readonly BindableList<RomajiTag> romajiTags;
-
     public RomajiBlueprintContainer(Lyric lyric)
         : base(lyric)
     {
-        romajiTags = lyric.RomajiTagsBindable.GetBoundCopy();
     }
 
-    [BackgroundDependencyLoader]
-    private void load()
-    {
-        // Add romaji tag into blueprint container
-        RegisterBindable(romajiTags);
-    }
+    protected override BindableList<RomajiTag> GetProperties(Lyric lyric)
+        => lyric.RomajiTagsBindable.GetBoundCopy();
 
     protected override SelectionHandler<RomajiTag> CreateSelectionHandler()
         => new RomajiTagSelectionHandler();

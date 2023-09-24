@@ -6,34 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Blueprints;
 
-public abstract partial class TextTagBlueprintContainer<T> : BindableBlueprintContainer<T> where T : class, ITextTag
+public abstract partial class TextTagBlueprintContainer<T> : LyricPropertyBlueprintContainer<T> where T : class, ITextTag
 {
-    [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; } = null!;
-
-    protected readonly Lyric Lyric;
-
     protected TextTagBlueprintContainer(Lyric lyric)
+        : base(lyric)
     {
-        Lyric = lyric;
-    }
-
-    protected override bool OnMouseDown(MouseDownEvent e)
-    {
-        lyricCaretState.MoveCaretToTargetPosition(Lyric);
-        return base.OnMouseDown(e);
     }
 
     protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)

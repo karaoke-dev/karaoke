@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
@@ -15,21 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyri
 
 public partial class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
 {
-    [UsedImplicitly]
-    private readonly BindableList<RubyTag> rubyTags;
-
     public RubyBlueprintContainer(Lyric lyric)
         : base(lyric)
     {
-        rubyTags = lyric.RubyTagsBindable.GetBoundCopy();
     }
 
-    [BackgroundDependencyLoader]
-    private void load()
-    {
-        // Add ruby tag into blueprint container
-        RegisterBindable(rubyTags);
-    }
+    protected override BindableList<RubyTag> GetProperties(Lyric lyric)
+        => lyric.RubyTagsBindable.GetBoundCopy();
 
     protected override SelectionHandler<RubyTag> CreateSelectionHandler()
         => new RubyTagSelectionHandler();
