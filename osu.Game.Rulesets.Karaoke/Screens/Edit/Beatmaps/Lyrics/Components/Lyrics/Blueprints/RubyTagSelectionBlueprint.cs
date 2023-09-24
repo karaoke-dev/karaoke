@@ -36,6 +36,10 @@ public partial class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyT
     public RubyTagSelectionBlueprint(RubyTag item)
         : base(item)
     {
+        // Instead of adding the margin to the popover, use this way to make the popover not block the lyric text.
+        RelativeSizeAxes = Axes.Y;
+        AutoSizeAxes = Axes.X;
+
         text = item.TextBindable.GetBoundCopy();
         startIndex = item.StartIndexBindable.GetBoundCopy();
         endIndex = item.EndIndexBindable.GetBoundCopy();
