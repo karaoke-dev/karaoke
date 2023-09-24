@@ -65,12 +65,6 @@ public class ClassicLyricTimingInfo
             void timeValueChanged(ValueChangedEvent<double> e) => onTimingChanged();
         };
 
-        void onTimingChanged()
-        {
-            SortedTimings = Timings.OrderBy(x => x.Time).ToList();
-            timingVersion.Value++;
-        }
-
         Mappings.CollectionChanged += (_, args) =>
         {
             switch (args.Action)
@@ -85,6 +79,12 @@ public class ClassicLyricTimingInfo
                     throw new ArgumentOutOfRangeException();
             }
         };
+
+        void onTimingChanged()
+        {
+            SortedTimings = Timings.OrderBy(x => x.Time).ToList();
+            timingVersion.Value++;
+        }
 
         void onMappingChanged() => mappingVersion.Value++;
     }
