@@ -94,7 +94,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
         if (!initialStateCache.IsValid)
         {
             // Reset scroll info
-            scrollingInfo.Algorithm.Reset();
+            scrollingInfo.Algorithm.Value.Reset();
 
             foreach (var cached in pathInitialStateCache.Values)
                 cached.Invalidate();
@@ -132,8 +132,8 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
             _ => 0.0f,
         };
 
-        path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);
-        path.LifetimeEnd = scrollingInfo.Algorithm.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime, timeRange.Value, scrollLength);
+        path.LifetimeStart = scrollingInfo.Algorithm.Value.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);
+        path.LifetimeEnd = scrollingInfo.Algorithm.Value.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime, timeRange.Value, scrollLength);
     }
 
     // Cant use AddOnce() since the delegate is re-constructed every invocation
@@ -161,7 +161,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
 
         foreach (var frame in frameList)
         {
-            float x = scrollingInfo.Algorithm.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
+            float x = scrollingInfo.Algorithm.Value.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
             path.AddVertex(new Vector2(left ? x : -x, GetPosition(frame)));
         }
     });
@@ -194,7 +194,7 @@ public abstract partial class VoiceVisualization<T> : LifetimeManagementContaine
 
         double startTime = GetTime(firstFrameInPath);
         int multiple = direction.Value == ScrollingDirection.Left ? 1 : -1;
-        float x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
+        float x = scrollingInfo.Algorithm.Value.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
         path.X = (x + Offset) * multiple;
     }
 

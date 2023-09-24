@@ -73,7 +73,7 @@ public abstract partial class KaraokeSkinnableColumnTestScene : KaraokeSkinnable
 
         IBindable<ScrollingDirection> IScrollingInfo.Direction => Direction;
         IBindable<double> IScrollingInfo.TimeRange { get; } = new Bindable<double>(1000);
-        IScrollAlgorithm IScrollingInfo.Algorithm { get; } = new ZeroScrollAlgorithm();
+        IBindable<IScrollAlgorithm> IScrollingInfo.Algorithm { get; } = new Bindable<IScrollAlgorithm>(new ZeroScrollAlgorithm());
     }
 
     private class ZeroScrollAlgorithm : IScrollAlgorithm

@@ -72,7 +72,7 @@ public partial class NoteStylePreview : Container
 
         public IBindable<double> TimeRange { get; } = new BindableDouble();
 
-        public IScrollAlgorithm Algorithm { get; } = new ZeroScrollAlgorithm();
+        public IBindable<IScrollAlgorithm> Algorithm { get; } = new Bindable<IScrollAlgorithm>(new ZeroScrollAlgorithm());
 
         private class ZeroScrollAlgorithm : IScrollAlgorithm
         {
