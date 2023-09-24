@@ -49,18 +49,6 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
 
         protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(Lyric lyric, RomajiTag textTag)
             => new LabelledRomajiTagTextBox(lyric, textTag);
-
-        protected override void AddTextTag(RomajiTag textTag)
-            => romajiTagsChangeHandler.Add(textTag);
-
-        protected override LocalisableString CreateNewTextTagButtonText()
-            => "Create new romaji";
-
-        protected override LocalisableString CreateNewTextTagTitle()
-            => "Romaji";
-
-        protected override LocalisableString CreateNewTextTagDescription()
-            => "Please enter the romaji.";
     }
 
     protected partial class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>

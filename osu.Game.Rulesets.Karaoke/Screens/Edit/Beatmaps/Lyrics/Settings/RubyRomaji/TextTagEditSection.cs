@@ -3,7 +3,6 @@
 
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
@@ -30,28 +29,11 @@ public abstract partial class TextTagEditSection<TTextTag> : LyricPropertiesSect
 
         protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(Lyric lyric, TTextTag textTag);
 
-        protected override EditorSectionButton CreateCreateNewItemButton()
-        {
-            return new CreateNewTextTagButton<TTextTag>
-            {
-                Text = CreateNewTextTagButtonText(),
-                LabelledTextBoxLabel = CreateNewTextTagTitle(),
-                LabelledTextBoxDescription = CreateNewTextTagDescription(),
-                Action = AddTextTag,
-            };
-        }
+        protected override EditorSectionButton? CreateCreateNewItemButton() => null;
 
         protected override IBindableList<TTextTag> GetItems(Lyric lyric)
         {
             throw new System.NotImplementedException();
         }
-
-        protected abstract LocalisableString CreateNewTextTagButtonText();
-
-        protected abstract LocalisableString CreateNewTextTagTitle();
-
-        protected abstract LocalisableString CreateNewTextTagDescription();
-
-        protected abstract void AddTextTag(TTextTag textTag);
     }
 }
