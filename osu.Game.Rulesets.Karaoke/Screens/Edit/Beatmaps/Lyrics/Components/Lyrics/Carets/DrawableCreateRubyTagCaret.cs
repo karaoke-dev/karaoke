@@ -141,10 +141,16 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
         [Resolved]
         private ILyricRubyTagsChangeHandler lyricRubyTagsChangeHandler { get; set; } = null!;
 
+        private readonly int startCharIndex;
+        private readonly int endCharIndex;
+
         private readonly LabelledTextBox labelledRubyTextBox;
 
         public CreateRubyPopover(int startCharIndex, int endCharIndex)
         {
+            this.startCharIndex = startCharIndex;
+            this.endCharIndex = endCharIndex;
+
             Child = new FillFlowContainer
             {
                 Width = 200,
@@ -156,10 +162,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
                     labelledRubyTextBox = new CreateRubyLabelledTextBox
                     {
                         Label = "Ruby",
-                        Current =
-                        {
-                            Value = "Ruby",
-                        },
+                        PlaceholderText = "Ruby text",
                     },
                     new CreateRubyButton
                     {
@@ -173,19 +176,27 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
             {
                 addRubyText();
             };
-            return;
+        }
 
-            void addRubyText()
+        private void addRubyText()
+        {
+            string? rubyText = labelledRubyTextBox.Text;
+
+            if (string.IsNullOrEmpty(rubyText))
             {
-                lyricRubyTagsChangeHandler.Add(new RubyTag
-                {
-                    StartIndex = startCharIndex,
-                    EndIndex = endCharIndex,
-                    Text = labelledRubyTextBox.Text,
-                });
-
-                this.HidePopover();
+                labelledRubyTextBox.Description = "Please enter the ruby text";
+                GetContainingInputManager().ChangeFocus(labelledRubyTextBox);
+                return;
             }
+
+            lyricRubyTagsChangeHandler.Add(new RubyTag
+            {
+                StartIndex = startCharIndex,
+                EndIndex = endCharIndex,
+                Text = labelledRubyTextBox.Text,
+            });
+
+            this.HidePopover();
         }
 
         protected override void LoadComplete()
