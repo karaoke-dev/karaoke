@@ -112,7 +112,7 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
 
         public IBindable<double> TimeRange { get; } = new BindableDouble(1500);
 
-        public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new SortedList<MultiplierControlPoint>(Comparer<MultiplierControlPoint>.Default));
+        public IBindable<IScrollAlgorithm> Algorithm { get; } = new Bindable<IScrollAlgorithm>(new SequentialScrollAlgorithm(new SortedList<MultiplierControlPoint>(Comparer<MultiplierControlPoint>.Default)));
     }
 
     private class PreviewNotePositionInfo : INotePositionInfo

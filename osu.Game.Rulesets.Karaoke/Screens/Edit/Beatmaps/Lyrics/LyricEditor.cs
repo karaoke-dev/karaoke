@@ -479,6 +479,6 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             MaxValue = 10000,
         };
 
-        public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
+        public IBindable<IScrollAlgorithm> Algorithm { get; } = new Bindable<IScrollAlgorithm>(new SequentialScrollAlgorithm(new List<MultiplierControlPoint>()));
     }
 }
