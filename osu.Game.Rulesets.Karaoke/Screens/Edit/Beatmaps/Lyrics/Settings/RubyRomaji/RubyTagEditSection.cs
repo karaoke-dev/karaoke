@@ -49,18 +49,6 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
 
         protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(Lyric lyric, RubyTag textTag)
             => new LabelledRubyTagTextBox(lyric, textTag);
-
-        protected override void AddTextTag(RubyTag textTag)
-            => rubyTagsChangeHandler.Add(textTag);
-
-        protected override LocalisableString CreateNewTextTagButtonText()
-            => "Create new ruby";
-
-        protected override LocalisableString CreateNewTextTagTitle()
-            => "Ruby";
-
-        protected override LocalisableString CreateNewTextTagDescription()
-            => "Please enter the ruby.";
     }
 
     protected partial class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
