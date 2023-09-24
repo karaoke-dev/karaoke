@@ -73,6 +73,7 @@ public partial class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyT
 
         public RubyEditPopover(RubyTag rubyTag)
         {
+            AllowableAnchors = new[] { Anchor.TopCentre, Anchor.BottomCentre };
             Child = new FillFlowContainer
             {
                 Width = 200,
