@@ -41,9 +41,6 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
 
     private partial class RubyTagsEditor : TextTagsEditor
     {
-        [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
-
         protected override IBindableList<RubyTag> GetItems(Lyric lyric)
             => lyric.RubyTagsBindable;
 
