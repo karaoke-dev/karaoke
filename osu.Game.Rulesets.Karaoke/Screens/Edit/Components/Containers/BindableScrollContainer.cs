@@ -23,15 +23,6 @@ public abstract partial class BindableScrollContainer : ZoomableScrollContainer
         BindableZoom.MaxValueChanged += assignZoomRange;
         BindableZoom.MinValueChanged += assignZoomRange;
 
-        void assignZoomRange(float _)
-        {
-            // we should make sure that will not cause error while assigning the size.
-            float initial = Math.Clamp(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
-            float minimum = BindableZoom.MinValue;
-            float maximum = BindableZoom.MaxValue;
-            SetupZoom(initial, minimum, maximum);
-        }
-
         BindableZoom.BindValueChanged(e =>
         {
             if (e.NewValue == Zoom)
@@ -44,6 +35,15 @@ public abstract partial class BindableScrollContainer : ZoomableScrollContainer
         {
             ScrollTo(e.NewValue);
         }, true);
+
+        void assignZoomRange(float _)
+        {
+            // we should make sure that will not cause error while assigning the size.
+            float initial = Math.Clamp(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
+            float minimum = BindableZoom.MinValue;
+            float maximum = BindableZoom.MaxValue;
+            SetupZoom(initial, minimum, maximum);
+        }
     }
 
     protected override bool OnScroll(ScrollEvent e)

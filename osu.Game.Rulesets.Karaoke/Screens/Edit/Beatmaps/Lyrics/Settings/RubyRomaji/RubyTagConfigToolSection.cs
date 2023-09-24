@@ -17,7 +17,7 @@ public partial class RubyTagConfigToolSection : EditorSection
     {
         Children = new Drawable[]
         {
-            new RubyTagEditModeSubsection()
+            new RubyTagEditModeSubsection
             {
                 Current = editRubyModeState.BindableRubyTagEditMode,
             },

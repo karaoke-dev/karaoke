@@ -22,14 +22,14 @@ public static class ComparableUtils
     {
         var comparerResults = comparers.Select(comparer =>
         {
+            return (Func<T, T, int>)compareFunction;
+
             int compareFunction(T aa, T bb)
             {
                 object xPropertyValue = comparer(aa);
                 object yPropertyValue = comparer(bb);
                 return Comparer.Default.Compare(xPropertyValue, yPropertyValue);
             }
-
-            return (Func<T, T, int>)compareFunction;
         }).ToArray();
 
         return Compare(x, y, comparerResults);

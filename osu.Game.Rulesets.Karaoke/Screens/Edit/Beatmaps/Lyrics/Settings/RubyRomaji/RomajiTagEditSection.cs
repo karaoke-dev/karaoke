@@ -41,9 +41,6 @@ public partial class RomajiTagEditSection : TextTagEditSection<RomajiTag>
 
     private partial class RomajiTagsEditor : TextTagsEditor
     {
-        [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; } = null!;
-
         protected override IBindableList<RomajiTag> GetItems(Lyric lyric)
             => lyric.RomajiTagsBindable;
 

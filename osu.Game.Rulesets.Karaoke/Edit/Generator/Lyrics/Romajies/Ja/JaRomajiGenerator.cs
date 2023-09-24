@@ -88,7 +88,7 @@ public class JaRomajiGenerator : RomajiGenerator<JaRomajiGeneratorConfig>
     internal static IReadOnlyDictionary<TimeTag, RomajiGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomajiGeneratorParameter> romajis)
     {
         var group = createGroup(timeTags, romajis);
-        return group.ToDictionary(k => k.Key, (x) =>
+        return group.ToDictionary(k => k.Key, x =>
         {
             bool isFirst = timeTags.IndexOf(x.Key) == 0; // todo: use better to mark the initial romaji.
             string romajiText = string.Join(" ", x.Value.Select(r => r.RomajiText));
