@@ -194,7 +194,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         {
             bindableMode.Value = mode;
 
-            bindableMode.BindValueChanged((_) =>
+            bindableMode.BindValueChanged(_ =>
             {
                 updateModeWithEditStep();
             }, true);
