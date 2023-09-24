@@ -151,6 +151,8 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
             this.startCharIndex = startCharIndex;
             this.endCharIndex = endCharIndex;
 
+            AllowableAnchors = new[] { Anchor.TopCentre, Anchor.BottomCentre };
+
             Child = new FillFlowContainer
             {
                 Width = 200,
