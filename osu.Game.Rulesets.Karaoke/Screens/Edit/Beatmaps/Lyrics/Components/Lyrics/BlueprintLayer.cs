@@ -65,8 +65,8 @@ public partial class BlueprintLayer : BaseLayer
             modeWithEditStep.Mode switch
             {
                 LyricEditorMode.EditRuby => rubyTagEditMode == RubyTagEditMode.Create ? null : new RubyBlueprintContainer(lyric),
-                LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
                 LyricEditorMode.EditTimeTag => modeWithEditStep.EditStep is TimeTagEditStep.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
+                LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
                 _ => null,
             };
     }

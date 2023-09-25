@@ -39,16 +39,16 @@ public enum LyricEditorMode
     EditRuby,
 
     /// <summary>
-    /// Able to create/delete romaji.
-    /// </summary>
-    [Description("Edit romaji")]
-    EditRomaji,
-
-    /// <summary>
     /// Enable to create/delete and reset time tag.
     /// </summary>
     [Description("Edit time tag")]
     EditTimeTag,
+
+    /// <summary>
+    /// Able to edit the romaji from the time-tag.
+    /// </summary>
+    [Description("Edit romaji")]
+    EditRomaji,
 
     /// <summary>
     /// Enable to create/delete notes.

@@ -50,10 +50,10 @@ public class LyricEditorColourProvider
 
             case LyricEditorMode.Language:
             case LyricEditorMode.EditRuby:
-            case LyricEditorMode.EditRomaji:
                 return 333 / 360f; // pink
 
             case LyricEditorMode.EditTimeTag:
+            case LyricEditorMode.EditRomaji:
                 return 45 / 360f; // orange
 
             case LyricEditorMode.EditNote:

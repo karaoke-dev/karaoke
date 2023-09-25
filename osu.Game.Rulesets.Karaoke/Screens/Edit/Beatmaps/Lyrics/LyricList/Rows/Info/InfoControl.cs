@@ -185,11 +185,13 @@ public partial class InfoControl : Container, IHasContextMenu
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditRuby:
-                case LyricEditorMode.EditRomaji:
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditTimeTag:
                     return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), Lyric);
+
+                case LyricEditorMode.EditRomaji:
+                    return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;

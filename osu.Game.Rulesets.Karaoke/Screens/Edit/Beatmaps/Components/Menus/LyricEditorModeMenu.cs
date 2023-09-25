@@ -22,8 +22,8 @@ public class LyricEditorModeMenu : EnumMenu<LyricEditorMode>
         LyricEditorMode.Reference,
         LyricEditorMode.Language,
         LyricEditorMode.EditRuby,
-        LyricEditorMode.EditRomaji,
         LyricEditorMode.EditTimeTag,
+        LyricEditorMode.EditRomaji,
         LyricEditorMode.EditNote,
         LyricEditorMode.Singer,
     };
