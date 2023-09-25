@@ -42,10 +42,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
+    private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
@@ -187,17 +187,6 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricRubyTagsChangeHandler.RemoveRange(rubies);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
-                var romajies = editRomajiModeState.SelectedItems;
-                if (!romajies.Any())
-                    return false;
-
-                if (lyricRomajiTagsChangeHandler == null)
-                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
-
-                lyricRomajiTagsChangeHandler.RemoveRange(romajies);
-                return true;
-
             case LyricEditorMode.EditTimeTag:
                 var timeTags = timeTagModeState.SelectedItems;
                 if (!timeTags.Any())
@@ -207,6 +196,17 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                     throw new NullDependencyException($"Missing {nameof(lyricTimeTagsChangeHandler)}");
 
                 lyricTimeTagsChangeHandler.RemoveRange(timeTags);
+                return true;
+
+            case LyricEditorMode.EditRomaji:
+                var romajies = editRomajiModeState.SelectedItems;
+                if (!romajies.Any())
+                    return false;
+
+                if (lyricRomajiTagsChangeHandler == null)
+                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
+
+                lyricRomajiTagsChangeHandler.RemoveRange(romajies);
                 return true;
 
             case LyricEditorMode.EditNote:
@@ -270,15 +270,6 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(rubies);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
-                var romajies = editRomajiModeState.SelectedItems;
-                if (!romajies.Any())
-                    return false;
-
-                saveObjectToTheClipboardContent(romajies);
-                copyObjectToClipboard(romajies);
-                return true;
-
             case LyricEditorMode.EditTimeTag:
                 var timeTags = timeTagModeState.SelectedItems;
                 if (!timeTags.Any())
@@ -286,6 +277,15 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
 
                 saveObjectToTheClipboardContent(timeTags);
                 copyObjectToClipboard(timeTags);
+                return true;
+
+            case LyricEditorMode.EditRomaji:
+                var romajies = editRomajiModeState.SelectedItems;
+                if (!romajies.Any())
+                    return false;
+
+                saveObjectToTheClipboardContent(romajies);
+                copyObjectToClipboard(romajies);
                 return true;
 
             case LyricEditorMode.EditNote:
@@ -360,17 +360,6 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricRubyTagsChangeHandler.AddRange(pasteRubies);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
-                var pasteRomajies = getObjectFromClipboardContent<RomajiTag[]>();
-                if (pasteRomajies == null)
-                    return false;
-
-                if (lyricRomajiTagsChangeHandler == null)
-                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
-
-                lyricRomajiTagsChangeHandler.AddRange(pasteRomajies);
-                return true;
-
             case LyricEditorMode.EditTimeTag:
                 var pasteTimeTags = getObjectFromClipboardContent<TimeTag[]>();
                 if (pasteTimeTags == null)
@@ -380,6 +369,17 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                     throw new NullDependencyException($"Missing {nameof(lyricTimeTagsChangeHandler)}");
 
                 lyricTimeTagsChangeHandler.AddRange(pasteTimeTags);
+                return true;
+
+            case LyricEditorMode.EditRomaji:
+                var pasteRomajies = getObjectFromClipboardContent<RomajiTag[]>();
+                if (pasteRomajies == null)
+                    return false;
+
+                if (lyricRomajiTagsChangeHandler == null)
+                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
+
+                lyricRomajiTagsChangeHandler.AddRange(pasteRomajies);
                 return true;
 
             case LyricEditorMode.EditNote:

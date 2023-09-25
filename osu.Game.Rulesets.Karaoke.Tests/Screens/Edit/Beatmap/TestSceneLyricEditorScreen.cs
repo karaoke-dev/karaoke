@@ -80,17 +80,17 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     }
 
     [Test]
-    public void TestEditRomajiMode()
-    {
-        switchToMode(LyricEditorMode.EditRomaji);
-        clickEditStepButtons<RomajiTagEditStep>();
-    }
-
-    [Test]
     public void TestEditTimeTagMode()
     {
         switchToMode(LyricEditorMode.EditTimeTag);
         clickEditStepButtons<TimeTagEditStep>();
+    }
+
+    [Test]
+    public void TestEditRomajiMode()
+    {
+        switchToMode(LyricEditorMode.EditRomaji);
+        clickEditStepButtons<RomajiTagEditStep>();
     }
 
     [Test]

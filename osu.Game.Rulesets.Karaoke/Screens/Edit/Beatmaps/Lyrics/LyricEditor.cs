@@ -53,11 +53,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(IEditRubyModeState))]
     private readonly EditRubyModeState editRubyModeState;
 
-    [Cached(typeof(IEditRomajiModeState))]
-    private readonly EditRomajiModeState editRomajiModeState;
-
     [Cached(typeof(ITimeTagModeState))]
     private readonly TimeTagModeState timeTagModeState;
+
+    [Cached(typeof(IEditRomajiModeState))]
+    private readonly EditRomajiModeState editRomajiModeState;
 
     [Cached(typeof(IEditNoteModeState))]
     private readonly EditNoteModeState editNoteModeState;
@@ -103,8 +103,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
         AddInternal(languageModeState = new LanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
-        AddInternal(editRomajiModeState = new EditRomajiModeState());
         AddInternal(timeTagModeState = new TimeTagModeState());
+        AddInternal(editRomajiModeState = new EditRomajiModeState());
         AddInternal(editNoteModeState = new EditNoteModeState());
 
         // Separated feature.
@@ -207,8 +207,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
                 LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
-                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
                 LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
                 LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
                 LyricEditorMode.Singer => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
@@ -258,8 +258,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.Reference => new ReferenceSettings(),
                 LyricEditorMode.Language => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
-                LyricEditorMode.EditRomaji => new RomajiTagSettings(),
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
+                LyricEditorMode.EditRomaji => new RomajiTagSettings(),
                 LyricEditorMode.EditNote => new NoteSettings(),
                 LyricEditorMode.Singer => new SingerSettings(),
                 _ => null,
@@ -293,8 +293,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
+                LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditNote => LyricEditorLayout.Detail,
                 LyricEditorMode.Singer => LyricEditorLayout.Preview,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
