@@ -27,10 +27,10 @@ public partial class IssueNavigator : Component, IIssueNavigator
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
+    private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
     [Resolved]
     private IEditNoteModeState noteModeState { get; set; } = null!;

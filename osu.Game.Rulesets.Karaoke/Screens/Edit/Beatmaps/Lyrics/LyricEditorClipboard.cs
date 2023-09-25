@@ -42,10 +42,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
+    private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }

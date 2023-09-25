@@ -53,11 +53,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(IEditRubyModeState))]
     private readonly EditRubyModeState editRubyModeState;
 
-    [Cached(typeof(IEditRomajiModeState))]
-    private readonly EditRomajiModeState editRomajiModeState;
-
     [Cached(typeof(ITimeTagModeState))]
     private readonly TimeTagModeState timeTagModeState;
+
+    [Cached(typeof(IEditRomajiModeState))]
+    private readonly EditRomajiModeState editRomajiModeState;
 
     [Cached(typeof(IEditNoteModeState))]
     private readonly EditNoteModeState editNoteModeState;
@@ -103,8 +103,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
         AddInternal(languageModeState = new LanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
-        AddInternal(editRomajiModeState = new EditRomajiModeState());
         AddInternal(timeTagModeState = new TimeTagModeState());
+        AddInternal(editRomajiModeState = new EditRomajiModeState());
         AddInternal(editNoteModeState = new EditNoteModeState());
 
         // Separated feature.
