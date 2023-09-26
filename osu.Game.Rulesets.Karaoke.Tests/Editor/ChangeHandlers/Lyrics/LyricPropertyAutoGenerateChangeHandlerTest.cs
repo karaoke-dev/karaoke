@@ -2,15 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
+using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
@@ -19,24 +23,282 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 /// If the <see cref="Lyric.ReferenceLyric"/> in the <see cref="Lyric"/> is not empty.
 /// <see cref="ILyricPropertyAutoGenerateChangeHandler"/> should be able to change the property.
 /// </summary>
-/// <typeparam name="TChangeHandler"></typeparam>
-[TestFixture(typeof(LyricReferenceChangeHandler))]
-[TestFixture(typeof(LyricLanguageChangeHandler))]
-[TestFixture(typeof(LyricRubyTagsChangeHandler))]
-[TestFixture(typeof(LyricRomajiTagsChangeHandler))]
-[TestFixture(typeof(LyricTimeTagsChangeHandler))]
-[TestFixture(typeof(LyricNotesChangeHandler))]
-public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> : LyricPropertyChangeHandlerTest<TChangeHandler>
-    where TChangeHandler : LyricPropertyChangeHandler, ILyricPropertyAutoGenerateChangeHandler, new()
+public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricPropertyAutoGenerateChangeHandler>
 {
     protected override bool IncludeAutoGenerator => true;
 
+    #region Reference lyric
+
+    [Test]
+    public void TestDetectReferenceLyric()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+        }, false);
+
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.DetectReferenceLyric));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsNotNull(h.ReferenceLyric);
+            Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
+        });
+    }
+
+    [Test]
+    public void TestDetectReferenceLyricWithNonSupportedLyric()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+        }, false);
+
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "???",
+        });
+
+        TriggerHandlerChangedWithException<DetectorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.DetectReferenceLyric));
+    }
+
+    #endregion
+
+    #region Language
+
+    [Test]
+    public void TestDetectLanguage()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.DetectLanguage));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual(new CultureInfo("ja"), h.Language);
+        });
+    }
+
+    [Test]
+    public void TestDetectLanguageWithNonSupportedLyric()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "???",
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.DetectLanguage));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.IsNull(h.Language);
+        });
+    }
+
+    #endregion
+
+    #region Ruby
+
+    [Test]
+    public void TestAutoGenerateRubyTags()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17),
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRubyTags));
+
+        AssertSelectedHitObject(h =>
+        {
+            var rubyTags = h.RubyTags;
+            Assert.AreEqual(1, rubyTags.Count);
+            Assert.AreEqual("かぜ", rubyTags[0].Text);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateRubyTagsWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "風",
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+                Language = new CultureInfo(17),
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRubyTags));
+    }
+
+    #endregion
+
+    #region Romaji
+
+    [Test]
+    public void TestAutoGenerateRomajiTags()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "風",
+            Language = new CultureInfo(17),
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomajiTags));
+
+        AssertSelectedHitObject(h =>
+        {
+            var romajiTags = h.RomajiTags;
+            Assert.AreEqual(1, romajiTags.Count);
+            Assert.AreEqual("kaze", romajiTags[0].Text);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateRomajiTagsWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "風",
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+                Language = new CultureInfo(17),
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomajiTags));
+    }
+
+    #endregion
+
+    #region TimeTag
+
+    [Test]
+    public void TestAutoGenerateTimeTags()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTags));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual(5, h.TimeTags.Count);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateTimeTagsWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "カラオケ",
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+            },
+            new Lyric
+            {
+                Text = string.Empty,
+                Language = new CultureInfo(17),
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTags));
+    }
+
+    #endregion
+
+    #region Note
+
+    [Test]
+    public void TestAutoGenerateNotes()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            TimeTags = new[]
+            {
+                new TimeTag(new TextIndex(0), 0),
+                new TimeTag(new TextIndex(1), 1000),
+                new TimeTag(new TextIndex(2), 2000),
+                new TimeTag(new TextIndex(3), 3000),
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
+            },
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateNotes));
+
+        AssertSelectedHitObject(h =>
+        {
+            var actualNotes = getMatchedNotes(h);
+            Assert.AreEqual(4, actualNotes.Length);
+            Assert.AreEqual("カ", actualNotes[0].Text);
+            Assert.AreEqual("ラ", actualNotes[1].Text);
+            Assert.AreEqual("オ", actualNotes[2].Text);
+            Assert.AreEqual("ケ", actualNotes[3].Text);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateNotesWithNonSupportedLyric()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateNotes));
+    }
+
+    private Note[] getMatchedNotes(Lyric lyric)
+    {
+        var editorBeatmap = Dependencies.Get<EditorBeatmap>();
+        return EditorBeatmapUtils.GetNotesByLyric(editorBeatmap, lyric).ToArray();
+    }
+
+    #endregion
+
+    #region Shared tests
+
     [Test]
     [Description("Should be able to generate the property if the lyric is not reference to other lyric.")]
-    public void ChangeWithNormalLyric()
+    public void ChangeWithNormalLyric([Values] AutoGenerateType type)
     {
         // for detect reference lyric.
-        if (isLyricReferenceChangeHandler())
+        if (isLyricReferenceChangeHandler(type))
         {
             PrepareHitObject(() => new Lyric
             {
@@ -60,48 +322,48 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsTrue(c.CanGenerate());
+            Assert.IsTrue(c.CanGenerate(type));
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsEmpty(c.GetGeneratorNotSupportedLyrics());
+            Assert.IsEmpty(c.GetGeneratorNotSupportedLyrics(type));
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.DoesNotThrow(c.AutoGenerate);
+            Assert.DoesNotThrow(() => c.AutoGenerate(type));
         });
     }
 
     [Test]
     [Description("Should not be able to generate the property if the lyric is missing detectable property.")]
-    public void ChangeWithMissingPropertyLyric()
+    public void ChangeWithMissingPropertyLyric([Values] AutoGenerateType type)
     {
         PrepareHitObject(() => new Lyric());
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsFalse(c.CanGenerate());
+            Assert.IsFalse(c.CanGenerate(type));
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics());
+            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics(type));
         });
 
         TriggerHandlerChanged(c =>
         {
-            var exception = Assert.Catch(c.AutoGenerate);
+            var exception = Assert.Catch(() => c.AutoGenerate(type));
             Assert.Contains(exception?.GetType(), new[] { typeof(GeneratorNotSupportedException), typeof(DetectorNotSupportedException) });
         });
     }
 
     [Test]
     [Description("Should not be able to generate the property if the lyric is reference to other lyric.")]
-    public void CheckWithReferencedLyric()
+    public void CheckWithReferencedLyric([Values] AutoGenerateType type)
     {
-        if (isLyricReferenceChangeHandler())
+        if (isLyricReferenceChangeHandler(type))
             return;
 
         PrepareHitObject(() => new Lyric
@@ -124,17 +386,19 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest<TChangeHandler> 
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsFalse(c.CanGenerate());
+            Assert.IsFalse(c.CanGenerate(type));
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics());
+            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics(type));
         });
 
-        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.AutoGenerate());
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.AutoGenerate(type));
     }
 
-    private bool isLyricReferenceChangeHandler()
-        => typeof(TChangeHandler) == typeof(LyricReferenceChangeHandler);
+    private bool isLyricReferenceChangeHandler(AutoGenerateType type)
+        => type == AutoGenerateType.DetectReferenceLyric;
+
+    #endregion
 }
