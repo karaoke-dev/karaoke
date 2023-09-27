@@ -151,52 +151,6 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     #endregion
 
-    #region Romaji
-
-    [Test]
-    public void TestAutoGenerateRomajiTags()
-    {
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "風",
-            Language = new CultureInfo(17),
-        });
-
-        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomajiTags));
-
-        AssertSelectedHitObject(h =>
-        {
-            var romajiTags = h.RomajiTags;
-            Assert.AreEqual(1, romajiTags.Count);
-            Assert.AreEqual("kaze", romajiTags[0].Text);
-        });
-    }
-
-    [Test]
-    public void TestAutoGenerateRomajiTagsWithNonSupportedLyric()
-    {
-        PrepareHitObjects(() => new[]
-        {
-            new Lyric
-            {
-                Text = "風",
-            },
-            new Lyric
-            {
-                Text = string.Empty,
-            },
-            new Lyric
-            {
-                Text = string.Empty,
-                Language = new CultureInfo(17),
-            },
-        });
-
-        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomajiTags));
-    }
-
-    #endregion
-
     #region Time-tag
 
     [Test]

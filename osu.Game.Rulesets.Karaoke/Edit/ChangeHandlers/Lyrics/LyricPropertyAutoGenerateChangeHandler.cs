@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romajies;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -50,10 +49,6 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             case AutoGenerateType.AutoGenerateRubyTags:
                 var rubyGenerator = getSelector<RubyTag[], RubyTagGeneratorConfig>();
                 return canGenerate(rubyGenerator);
-
-            case AutoGenerateType.AutoGenerateRomajiTags:
-                var romajiGenerator = getSelector<RomajiTag[], RomajiTagGeneratorConfig>();
-                return canGenerate(romajiGenerator);
 
             case AutoGenerateType.AutoGenerateTimeTags:
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
@@ -95,10 +90,6 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             case AutoGenerateType.AutoGenerateRubyTags:
                 var rubyGenerator = getSelector<RubyTag[], RubyTagGeneratorConfig>();
                 return getInvalidMessageFromGenerator(rubyGenerator);
-
-            case AutoGenerateType.AutoGenerateRomajiTags:
-                var romajiGenerator = getSelector<RomajiTag[], RomajiTagGeneratorConfig>();
-                return getInvalidMessageFromGenerator(romajiGenerator);
 
             case AutoGenerateType.AutoGenerateTimeTags:
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
@@ -171,14 +162,6 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 });
                 break;
 
-            case AutoGenerateType.AutoGenerateRomajiTags:
-                var romajiGenerator = getSelector<RomajiTag[], RomajiTagGeneratorConfig>();
-                PerformOnSelection(lyric =>
-                {
-                    lyric.RomajiTags = romajiGenerator.Generate(lyric);
-                });
-                break;
-
             case AutoGenerateType.AutoGenerateTimeTags:
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 PerformOnSelection(lyric =>
@@ -229,7 +212,6 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             AutoGenerateType.DetectReferenceLyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
             AutoGenerateType.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
             AutoGenerateType.AutoGenerateRubyTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags)),
-            AutoGenerateType.AutoGenerateRomajiTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags)),
             AutoGenerateType.AutoGenerateTimeTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
             AutoGenerateType.AutoGenerateTimeTagRomaji => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
             AutoGenerateType.AutoGenerateNotes => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric),

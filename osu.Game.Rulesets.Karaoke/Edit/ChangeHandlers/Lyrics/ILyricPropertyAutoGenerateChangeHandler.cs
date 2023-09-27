@@ -20,8 +20,6 @@ public enum AutoGenerateType
 
     AutoGenerateRubyTags,
 
-    AutoGenerateRomajiTags,
-
     AutoGenerateTimeTags,
 
     AutoGenerateTimeTagRomaji,
