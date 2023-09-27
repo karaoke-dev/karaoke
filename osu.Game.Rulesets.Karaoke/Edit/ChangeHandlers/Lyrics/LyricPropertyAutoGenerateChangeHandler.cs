@@ -27,16 +27,16 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
 {
     // should change this flag if wants to change property in the lyrics.
     // Not a good to waite a global property for that but there's no better choice.
-    private AutoGenerateType? currentAutoGenerateProperty;
+    private AutoGenerateType? currentAutoGenerateType;
 
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
 
-    public bool CanGenerate(AutoGenerateType autoGenerateProperty)
+    public bool CanGenerate(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -63,7 +63,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return canGenerate(noteGenerator);
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
 
         bool canDetect<T>(PropertyDetector<Lyric, T> detector)
@@ -73,11 +73,11 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(generator.CanGenerate);
     }
 
-    public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(AutoGenerateType autoGenerateProperty)
+    public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -104,7 +104,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return getInvalidMessageFromGenerator(noteGenerator);
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
 
         IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(PropertyDetector<Lyric, T> detector)
@@ -124,11 +124,11 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
         }
     }
 
-    public void AutoGenerate(AutoGenerateType autoGenerateProperty)
+    public void AutoGenerate(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -192,7 +192,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 break;
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
     }
 
@@ -200,7 +200,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
         => throw new InvalidOperationException("Auto-generator does not support this check method.");
 
     protected override bool IsWritePropertyLocked(Lyric lyric) =>
-        currentAutoGenerateProperty switch
+        currentAutoGenerateType switch
         {
             AutoGenerateType.DetectReferenceLyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
             AutoGenerateType.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
