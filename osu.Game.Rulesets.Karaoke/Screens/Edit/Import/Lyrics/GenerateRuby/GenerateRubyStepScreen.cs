@@ -7,9 +7,9 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRuby;
 
-public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
+public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEditor
 {
     public override string Title => "Generate ruby";
 
@@ -22,13 +22,13 @@ public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithL
     [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]
     private readonly LyricPropertyAutoGenerateChangeHandler lyricPropertyAutoGenerateChangeHandler;
 
-    public GenerateRubyRomajiStepScreen()
+    public GenerateRubyStepScreen()
     {
         AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
     }
 
     protected override TopNavigation CreateNavigation()
-        => new GenerateRubyRomajiNavigation(this);
+        => new GenerateRubyNavigation(this);
 
     protected override Drawable CreateContent()
         => base.CreateContent().With(_ =>

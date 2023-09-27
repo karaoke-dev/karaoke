@@ -6,13 +6,13 @@ using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRuby;
 
-public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRomajiStepScreen>
+public partial class GenerateRubyNavigation : TopNavigation<GenerateRubyStepScreen>
 {
     private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
 
-    public GenerateRubyRomajiNavigation(GenerateRubyRomajiStepScreen screen)
+    public GenerateRubyNavigation(GenerateRubyStepScreen screen)
         : base(screen)
     {
     }
@@ -54,7 +54,7 @@ public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRo
 
     private partial class GenerateRubyTextFlowContainer : NavigationTextContainer
     {
-        public GenerateRubyTextFlowContainer(GenerateRubyRomajiStepScreen screen)
+        public GenerateRubyTextFlowContainer(GenerateRubyStepScreen screen)
         {
             AddLinkFactory(auto_generate_ruby, "auto generate ruby", screen.AskForAutoGenerateRuby);
         }

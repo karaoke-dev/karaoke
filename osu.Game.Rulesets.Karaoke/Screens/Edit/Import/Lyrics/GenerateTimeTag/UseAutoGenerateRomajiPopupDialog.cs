@@ -5,15 +5,15 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 
-public partial class UseAutoGenerateRubyPopupDialog : PopupDialog
+public partial class UseAutoGenerateRomajiPopupDialog : PopupDialog
 {
-    public UseAutoGenerateRubyPopupDialog(Action<bool> okAction)
+    public UseAutoGenerateRomajiPopupDialog(Action<bool> okAction)
     {
         Icon = FontAwesome.Solid.Globe;
-        HeaderText = "Auto generate ruby";
-        BodyText = "Would you like to use ruby generator to auto generate each lyric's ruby?";
+        HeaderText = "Auto generate romaji";
+        BodyText = "Would you like to use romaji generator to auto generate each lyric's romaji?";
         Buttons = new PopupDialogButton[]
         {
             new PopupDialogOkButton
