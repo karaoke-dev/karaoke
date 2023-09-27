@@ -48,16 +48,12 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
 
     public override void Complete()
     {
-        // Check is need to go to generate ruby/romaji step or just skip.
-        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRubyTags)
-            || lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRomajiTags))
-        {
-            ScreenStack.Push(LyricImporterStep.GenerateRuby);
-        }
-        else
-        {
-            ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
-        }
+        // Check is need to go to generate ruby step or just skip.
+        var nextStep = lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRubyTags)
+            ? LyricImporterStep.GenerateRuby
+            : LyricImporterStep.GenerateTimeTag;
+
+        ScreenStack.Push(nextStep);
     }
 
     internal void AskForAutoAssignLanguage()

@@ -40,11 +40,9 @@ public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithL
     {
         base.LoadComplete();
 
-        // Asking auto-generate ruby or romaji.
+        // Asking auto-generate ruby.
         if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRubyTags))
             AskForAutoGenerateRuby();
-        else if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRomajiTags))
-            AskForAutoGenerateRomaji();
     }
 
     public override void Complete()
@@ -57,19 +55,6 @@ public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithL
         SwitchLyricEditorMode(LyricEditorMode.EditRuby);
 
         DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
-        {
-            if (!ok)
-                return;
-
-            PrepareAutoGenerate();
-        }));
-    }
-
-    internal void AskForAutoGenerateRomaji()
-    {
-        SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
-
-        DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
         {
             if (!ok)
                 return;

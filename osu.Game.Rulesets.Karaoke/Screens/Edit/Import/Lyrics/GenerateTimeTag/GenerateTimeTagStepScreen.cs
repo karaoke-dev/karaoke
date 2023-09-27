@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 
@@ -22,11 +23,15 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
 
     public override IconUsage Icon => FontAwesome.Solid.Tag;
 
+    [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]
+    private readonly LyricPropertyAutoGenerateChangeHandler lyricPropertyAutoGenerateChangeHandler;
+
     [Cached(typeof(ILyricTimeTagsChangeHandler))]
     private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
 
     public GenerateTimeTagStepScreen()
     {
+        AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
         AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
     }
 
@@ -42,7 +47,17 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        AskForAutoGenerateTimeTag();
+
+        // todo: we should better way to switch between time-tag mode or romaji mode.
+        // or even create new step for it.
+        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji))
+        {
+            AskForAutoGenerateRomaji();
+        }
+        else
+        {
+            AskForAutoGenerateTimeTag();
+        }
     }
 
     public override void Complete()
@@ -72,5 +87,18 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
                 PrepareAutoGenerate();
             }));
         }
+    }
+
+    internal void AskForAutoGenerateRomaji()
+    {
+        SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
+
+        DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
+        {
+            if (!ok)
+                return;
+
+            PrepareAutoGenerate();
+        }));
     }
 }
