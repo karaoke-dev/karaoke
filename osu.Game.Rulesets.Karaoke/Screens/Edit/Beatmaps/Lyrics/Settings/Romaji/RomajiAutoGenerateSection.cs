@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
-public partial class RomajiTagAutoGenerateSection : TextTagAutoGenerateSection
+public partial class RomajiAutoGenerateSection : TextTagAutoGenerateSection
 {
     protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
         => new RomajiTagAutoGenerateSubsection();

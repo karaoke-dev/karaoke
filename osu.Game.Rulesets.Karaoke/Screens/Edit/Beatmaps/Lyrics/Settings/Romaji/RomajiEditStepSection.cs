@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
-public partial class RomajiTagEditStepSection : TextTagEditStepSection<IEditRomajiModeState, RomajiTagEditStep>
+public partial class RomajiEditStepSection : TextTagEditStepSection<IEditRomajiModeState, RomajiTagEditStep>
 {
     protected override Selection CreateSelection(RomajiTagEditStep step) =>
         step switch

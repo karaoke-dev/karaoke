@@ -5,10 +5,11 @@ using System;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
-public partial class RomajiTagIssueSection : TextTagIssueSection
+public partial class RomajiIssueSection : TextTagIssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
 
