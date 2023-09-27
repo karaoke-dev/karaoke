@@ -27,9 +27,6 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
     [Cached(typeof(ILyricsChangeHandler))]
     private readonly LyricsChangeHandler lyricsChangeHandler;
 
-    [Cached(typeof(ILyricNotesChangeHandler))]
-    private readonly LyricNotesChangeHandler lyricNotesChangeHandler;
-
     [Cached(typeof(ILyricTextChangeHandler))]
     private readonly LyricTextChangeHandler lyricTextChangeHandler;
 
@@ -73,7 +70,6 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
     {
         AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
         AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
-        AddInternal(lyricNotesChangeHandler = new LyricNotesChangeHandler());
         AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
         AddInternal(lyricReferenceChangeHandler = new LyricReferenceChangeHandler());
         AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
