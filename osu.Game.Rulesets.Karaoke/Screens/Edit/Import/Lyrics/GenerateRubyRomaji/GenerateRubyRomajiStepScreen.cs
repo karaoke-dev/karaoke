@@ -19,16 +19,12 @@ public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithL
 
     public override IconUsage Icon => FontAwesome.Solid.Gem;
 
-    [Cached(typeof(ILyricRubyTagsChangeHandler))]
-    private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
-
-    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
+    [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]
+    private readonly LyricPropertyAutoGenerateChangeHandler lyricPropertyAutoGenerateChangeHandler;
 
     public GenerateRubyRomajiStepScreen()
     {
-        AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
+        AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
     }
 
     protected override TopNavigation CreateNavigation()
@@ -45,9 +41,9 @@ public partial class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithL
         base.LoadComplete();
 
         // Asking auto-generate ruby or romaji.
-        if (lyricRubyTagsChangeHandler.CanGenerate())
+        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRubyTags))
             AskForAutoGenerateRuby();
-        else if (lyricRomajiTagsChangeHandler.CanGenerate())
+        else if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRomajiTags))
             AskForAutoGenerateRomaji();
     }
 

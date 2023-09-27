@@ -10,9 +10,14 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
-public partial class LanguageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricLanguageChangeHandler>
+public partial class LanguageAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
 {
     private const string typing_mode = "TYPING_MODE";
+
+    public LanguageAutoGenerateSubsection()
+        : base(AutoGenerateType.DetectLanguage)
+    {
+    }
 
     protected override DescriptionFormat CreateInvalidDescriptionFormat()
         => new()

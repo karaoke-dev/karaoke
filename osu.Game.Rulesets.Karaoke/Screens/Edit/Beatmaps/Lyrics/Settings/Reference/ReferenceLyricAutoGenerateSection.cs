@@ -13,8 +13,13 @@ public partial class ReferenceLyricAutoGenerateSection : AutoGenerateSection
     protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
         => new ReferenceLyricAutoGenerateSubsection();
 
-    private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection<ILyricReferenceChangeHandler>
+    private partial class ReferenceLyricAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
     {
+        public ReferenceLyricAutoGenerateSubsection()
+            : base(AutoGenerateType.DetectReferenceLyric)
+        {
+        }
+
         protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
             {

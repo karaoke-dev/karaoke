@@ -3,7 +3,6 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Generator;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
@@ -11,50 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
 public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricReferenceChangeHandler>
 {
-    protected override bool IncludeAutoGenerator => true;
-
-    #region Auto-Generate
-
-    [Test]
-    public void TestDetectReferenceLyric()
-    {
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "カラオケ",
-        }, false);
-
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "カラオケ",
-        });
-
-        TriggerHandlerChanged(c => c.AutoGenerate());
-
-        AssertSelectedHitObject(h =>
-        {
-            Assert.IsNotNull(h.ReferenceLyric);
-            Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
-        });
-    }
-
-    [Test]
-    public void TestDetectReferenceLyricWithNonSupportedLyric()
-    {
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "カラオケ",
-        }, false);
-
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "???",
-        });
-
-        TriggerHandlerChangedWithException<DetectorNotSupportedException>(c => c.AutoGenerate());
-    }
-
-    #endregion
-
     [Test]
     public void TestUpdateReferenceLyric()
     {

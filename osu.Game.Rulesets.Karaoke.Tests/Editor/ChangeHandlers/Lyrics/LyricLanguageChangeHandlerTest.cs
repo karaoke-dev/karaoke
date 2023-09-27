@@ -11,44 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
 public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricLanguageChangeHandler>
 {
-    protected override bool IncludeAutoGenerator => true;
-
-    #region Auto-Generate
-
-    [Test]
-    public void TestDetectLanguage()
-    {
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "カラオケ",
-        });
-
-        TriggerHandlerChanged(c => c.AutoGenerate());
-
-        AssertSelectedHitObject(h =>
-        {
-            Assert.AreEqual(new CultureInfo("ja"), h.Language);
-        });
-    }
-
-    [Test]
-    public void TestDetectLanguageWithNonSupportedLyric()
-    {
-        PrepareHitObject(() => new Lyric
-        {
-            Text = "???",
-        });
-
-        TriggerHandlerChanged(c => c.AutoGenerate());
-
-        AssertSelectedHitObject(h =>
-        {
-            Assert.IsNull(h.Language);
-        });
-    }
-
-    #endregion
-
     [Test]
     public void TestSetLanguageToJapanese()
     {

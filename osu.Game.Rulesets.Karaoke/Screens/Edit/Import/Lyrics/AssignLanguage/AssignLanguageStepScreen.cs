@@ -19,20 +19,16 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
 
     public override IconUsage Icon => FontAwesome.Solid.Globe;
 
+    [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]
+    private readonly LyricPropertyAutoGenerateChangeHandler lyricPropertyAutoGenerateChangeHandler;
+
     [Cached(typeof(ILyricLanguageChangeHandler))]
     private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
 
-    [Cached(typeof(ILyricRubyTagsChangeHandler))]
-    private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
-
-    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
-
     public AssignLanguageStepScreen()
     {
+        AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
         AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
-        AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
     }
 
     protected override TopNavigation CreateNavigation()
@@ -53,8 +49,8 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
     public override void Complete()
     {
         // Check is need to go to generate ruby/romaji step or just skip.
-        if (lyricRubyTagsChangeHandler.CanGenerate()
-            || lyricRomajiTagsChangeHandler.CanGenerate())
+        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRubyTags)
+            || lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRomajiTags))
         {
             ScreenStack.Push(LyricImporterStep.GenerateRuby);
         }

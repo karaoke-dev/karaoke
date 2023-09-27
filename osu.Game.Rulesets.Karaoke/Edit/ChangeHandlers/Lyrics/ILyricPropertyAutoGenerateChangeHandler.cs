@@ -7,7 +7,22 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-public interface ILyricPropertyAutoGenerateChangeHandler : IAutoGenerateChangeHandler
+public interface ILyricPropertyAutoGenerateChangeHandler : ILyricPropertyChangeHandler, IEnumAutoGenerateChangeHandler<AutoGenerateType>
 {
-    IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics();
+    IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(AutoGenerateType type);
+}
+
+public enum AutoGenerateType
+{
+    DetectReferenceLyric,
+
+    DetectLanguage,
+
+    AutoGenerateRubyTags,
+
+    AutoGenerateRomajiTags,
+
+    AutoGenerateTimeTags,
+
+    AutoGenerateNotes,
 }

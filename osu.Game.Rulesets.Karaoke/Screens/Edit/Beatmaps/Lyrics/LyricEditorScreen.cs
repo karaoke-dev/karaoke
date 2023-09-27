@@ -21,11 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public partial class LyricEditorScreen : BeatmapEditorScreen
 {
+    [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]
+    private readonly LyricPropertyAutoGenerateChangeHandler lyricPropertyAutoGenerateChangeHandler;
+
     [Cached(typeof(ILyricsChangeHandler))]
     private readonly LyricsChangeHandler lyricsChangeHandler;
-
-    [Cached(typeof(ILyricNotesChangeHandler))]
-    private readonly LyricNotesChangeHandler lyricNotesChangeHandler;
 
     [Cached(typeof(ILyricTextChangeHandler))]
     private readonly LyricTextChangeHandler lyricTextChangeHandler;
@@ -68,8 +68,8 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
     public LyricEditorScreen()
         : base(KaraokeBeatmapEditorScreenMode.Lyric)
     {
+        AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
         AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
-        AddInternal(lyricNotesChangeHandler = new LyricNotesChangeHandler());
         AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
         AddInternal(lyricReferenceChangeHandler = new LyricReferenceChangeHandler());
         AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());

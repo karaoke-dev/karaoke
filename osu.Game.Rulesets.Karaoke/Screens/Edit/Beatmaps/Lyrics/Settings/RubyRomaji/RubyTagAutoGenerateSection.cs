@@ -13,8 +13,13 @@ public partial class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
     protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
         => new RubyTagAutoGenerateSubsection();
 
-    private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRubyTagsChangeHandler>
+    private partial class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
     {
+        public RubyTagAutoGenerateSubsection()
+            : base(AutoGenerateType.AutoGenerateRubyTags)
+        {
+        }
+
         protected override ConfigButton CreateConfigButton()
             => new RubyTagAutoGenerateConfigButton();
 
