@@ -24,5 +24,7 @@ public enum AutoGenerateType
 
     AutoGenerateTimeTags,
 
+    AutoGenerateTimeTagRomaji,
+
     AutoGenerateNotes,
 }

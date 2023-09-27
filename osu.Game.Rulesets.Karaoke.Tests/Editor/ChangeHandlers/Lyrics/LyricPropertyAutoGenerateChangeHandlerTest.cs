@@ -197,7 +197,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     #endregion
 
-    #region TimeTag
+    #region Time-tag
 
     [Test]
     public void TestAutoGenerateTimeTags()
@@ -237,6 +237,44 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
         });
 
         TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTags));
+    }
+
+    #endregion
+
+    #region Time-tag romaji
+
+    [Test]
+    public void TestAutoGenerateTimeTagRomaji()
+    {
+        PrepareHitObject(() => new Lyric
+        {
+            Text = "カラオケ",
+            Language = new CultureInfo(17),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]", "[3,end]" }),
+        });
+
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji));
+
+        AssertSelectedHitObject(h =>
+        {
+            Assert.AreEqual("karaoke", h.TimeTags[0].RomajiText);
+        });
+    }
+
+    [Test]
+    public void TestAutoGenerateTimeTagRomajiWithNonSupportedLyric()
+    {
+        PrepareHitObjects(() => new[]
+        {
+            new Lyric
+            {
+                Text = "カラオケ",
+                Language = new CultureInfo(17),
+                // with no time-tag.
+            },
+        });
+
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji));
     }
 
     #endregion

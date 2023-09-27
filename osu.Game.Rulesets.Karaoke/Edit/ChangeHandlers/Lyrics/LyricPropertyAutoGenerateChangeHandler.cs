@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romajies;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
@@ -27,16 +28,16 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
 {
     // should change this flag if wants to change property in the lyrics.
     // Not a good to waite a global property for that but there's no better choice.
-    private AutoGenerateType? currentAutoGenerateProperty;
+    private AutoGenerateType? currentAutoGenerateType;
 
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
 
-    public bool CanGenerate(AutoGenerateType autoGenerateProperty)
+    public bool CanGenerate(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -58,12 +59,16 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return canGenerate(timeTagGenerator);
 
+            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomajiGenerateResult>, RomajiGeneratorConfig>();
+                return canGenerate(timeTagRomajiGenerator);
+
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
                 return canGenerate(noteGenerator);
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
 
         bool canDetect<T>(PropertyDetector<Lyric, T> detector)
@@ -73,11 +78,11 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(generator.CanGenerate);
     }
 
-    public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(AutoGenerateType autoGenerateProperty)
+    public IDictionary<Lyric, LocalisableString> GetGeneratorNotSupportedLyrics(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -99,12 +104,16 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return getInvalidMessageFromGenerator(timeTagGenerator);
 
+            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomajiGenerateResult>, RomajiGeneratorConfig>();
+                return getInvalidMessageFromGenerator(timeTagRomajiGenerator);
+
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
                 return getInvalidMessageFromGenerator(noteGenerator);
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
 
         IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(PropertyDetector<Lyric, T> detector)
@@ -124,11 +133,11 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
         }
     }
 
-    public void AutoGenerate(AutoGenerateType autoGenerateProperty)
+    public void AutoGenerate(AutoGenerateType type)
     {
-        currentAutoGenerateProperty = autoGenerateProperty;
+        currentAutoGenerateType = type;
 
-        switch (autoGenerateProperty)
+        switch (type)
         {
             case AutoGenerateType.DetectReferenceLyric:
                 var referenceLyricDetector = getDetector<Lyric?, ReferenceLyricDetectorConfig>(HitObjects);
@@ -178,6 +187,21 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 });
                 break;
 
+            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomajiGenerateResult>, RomajiGeneratorConfig>();
+                PerformOnSelection(lyric =>
+                {
+                    var results = timeTagRomajiGenerator.Generate(lyric);
+
+                    foreach (var (key, value) in results)
+                    {
+                        var matchedTimeTag = lyric.TimeTags.Single(x => x == key);
+                        matchedTimeTag.InitialRomaji = value.InitialRomaji;
+                        matchedTimeTag.RomajiText = value.RomajiText;
+                    }
+                });
+                break;
+
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
                 PerformOnSelection(lyric =>
@@ -192,7 +216,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 break;
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
+                throw new ArgumentOutOfRangeException(nameof(type));
         }
     }
 
@@ -200,13 +224,14 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
         => throw new InvalidOperationException("Auto-generator does not support this check method.");
 
     protected override bool IsWritePropertyLocked(Lyric lyric) =>
-        currentAutoGenerateProperty switch
+        currentAutoGenerateType switch
         {
             AutoGenerateType.DetectReferenceLyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
             AutoGenerateType.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
             AutoGenerateType.AutoGenerateRubyTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags)),
             AutoGenerateType.AutoGenerateRomajiTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags)),
             AutoGenerateType.AutoGenerateTimeTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
+            AutoGenerateType.AutoGenerateTimeTagRomaji => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
             AutoGenerateType.AutoGenerateNotes => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric),
             _ => throw new ArgumentOutOfRangeException(),
         };

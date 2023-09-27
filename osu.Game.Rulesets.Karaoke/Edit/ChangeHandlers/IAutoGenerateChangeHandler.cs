@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 /// <typeparam name="TEnum"></typeparam>
 public interface IEnumAutoGenerateChangeHandler<in TEnum> where TEnum : Enum
 {
-    bool CanGenerate(TEnum property);
+    bool CanGenerate(TEnum type);
 
-    void AutoGenerate(TEnum property);
+    void AutoGenerate(TEnum type);
 }
 
 /// <summary>
