@@ -21,7 +21,7 @@ public partial class RomajiAutoGenerateSection : AutoGenerateSection
         private const string time_tag_mode = "TIME_TAG_MODE";
 
         public RomajiTagAutoGenerateSubsection()
-            : base(AutoGenerateType.AutoGenerateRomajiTags)
+            : base(AutoGenerateType.AutoGenerateTimeTagRomaji)
         {
         }
 
