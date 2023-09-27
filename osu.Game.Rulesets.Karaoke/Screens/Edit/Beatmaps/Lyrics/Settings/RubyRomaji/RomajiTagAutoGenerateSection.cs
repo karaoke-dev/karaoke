@@ -13,8 +13,13 @@ public partial class RomajiTagAutoGenerateSection : TextTagAutoGenerateSection
     protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
         => new RomajiTagAutoGenerateSubsection();
 
-    private partial class RomajiTagAutoGenerateSubsection : TextTagAutoGenerateSubsection<ILyricRomajiTagsChangeHandler>
+    private partial class RomajiTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
     {
+        public RomajiTagAutoGenerateSubsection()
+            : base(AutoGenerateType.AutoGenerateRomajiTags)
+        {
+        }
+
         protected override ConfigButton CreateConfigButton()
             => new RomajiTagAutoGenerateConfigButton();
 

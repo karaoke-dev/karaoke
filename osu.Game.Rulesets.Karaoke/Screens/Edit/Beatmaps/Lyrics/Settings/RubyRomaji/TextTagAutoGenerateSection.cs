@@ -10,10 +10,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRo
 
 public abstract partial class TextTagAutoGenerateSection : AutoGenerateSection
 {
-    protected abstract partial class TextTagAutoGenerateSubsection<TChangeHandler> : LyricEditorAutoGenerateSubsection<TChangeHandler>
-        where TChangeHandler : class, ILyricPropertyAutoGenerateChangeHandler
+    protected abstract partial class TextTagAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
     {
         private const string language_mode = "LANGUAGE_MODE";
+
+        protected TextTagAutoGenerateSubsection(AutoGenerateType generateType)
+            : base(generateType)
+        {
+        }
 
         protected override DescriptionFormat CreateInvalidDescriptionFormat()
             => new()
