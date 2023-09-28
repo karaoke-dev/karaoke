@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -16,6 +17,8 @@ public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<Romaj
 
     public void ChangeEditStep(RomajiTagEditStep step)
         => bindableEditMode.Value = step;
+
+    public Bindable<RomajiEditPropertyMode> BindableRomajiEditPropertyMode { get; } = new();
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
