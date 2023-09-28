@@ -5,16 +5,18 @@ using System;
 using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
-public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
+public partial class RubyTagEditSection : LyricPropertiesSection<RubyTag>
 {
     protected override LocalisableString Title => "Ruby";
 
@@ -39,13 +41,25 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
             _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
-    private partial class RubyTagsEditor : TextTagsEditor
+    private partial class RubyTagsEditor : LyricPropertiesEditor
     {
+        protected sealed override Drawable CreateDrawable(RubyTag item)
+        {
+            string relativeToLyricText = TextTagUtils.GetTextFromLyric(item, CurrentLyric.Text);
+            string range = TextTagUtils.PositionFormattedString(item);
+
+            return new LabelledRubyTagTextBox(CurrentLyric, item).With(t =>
+            {
+                t.Label = relativeToLyricText;
+                t.Description = range;
+                t.TabbableContentContainer = this;
+            });
+        }
+
+        protected override EditorSectionButton? CreateCreateNewItemButton() => null;
+
         protected override IBindableList<RubyTag> GetItems(Lyric lyric)
             => lyric.RubyTagsBindable;
-
-        protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(Lyric lyric, RubyTag textTag)
-            => new LabelledRubyTagTextBox(lyric, textTag);
     }
 
     protected partial class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
@@ -56,10 +70,10 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
         [Resolved]
         private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
-        public LabelledRubyTagTextBox(Lyric lyric, RubyTag textTag)
-            : base(lyric, textTag)
+        public LabelledRubyTagTextBox(Lyric lyric, RubyTag rubyTag)
+            : base(lyric, rubyTag)
         {
-            Debug.Assert(lyric.RubyTags.Contains(textTag));
+            Debug.Assert(lyric.RubyTags.Contains(rubyTag));
         }
 
         protected override void TriggerSelect(RubyTag item)
@@ -71,8 +85,8 @@ public partial class RubyTagEditSection : TextTagEditSection<RubyTag>
         protected override void SetIndex(RubyTag item, int? startIndex, int? endIndex)
             => rubyTagsChangeHandler.SetIndex(item, startIndex, endIndex);
 
-        protected override void RemoveTextTag(RubyTag textTag)
-            => rubyTagsChangeHandler.Remove(textTag);
+        protected override void RemoveTextTag(RubyTag rubyTag)
+            => rubyTagsChangeHandler.Remove(rubyTag);
 
         [BackgroundDependencyLoader]
         private void load()

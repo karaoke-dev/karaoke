@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<RomajiTag>, IEditRomajiModeState
+public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<TimeTag>, IEditRomajiModeState
 {
     private readonly Bindable<RomajiTagEditStep> bindableEditMode = new();
 
@@ -21,11 +21,11 @@ public partial class EditRomajiModeState : ModeStateWithBlueprintContainer<Romaj
     public Bindable<RomajiEditPropertyMode> BindableRomajiEditPropertyMode { get; } = new();
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
-        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
+        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags));
 
     protected override bool SelectFirstProperty(Lyric lyric)
         => BindableEditStep.Value == RomajiTagEditStep.Edit;
 
-    protected override IEnumerable<RomajiTag> SelectableProperties(Lyric lyric)
-        => lyric.RomajiTags;
+    protected override IEnumerable<TimeTag> SelectableProperties(Lyric lyric)
+        => lyric.TimeTags;
 }

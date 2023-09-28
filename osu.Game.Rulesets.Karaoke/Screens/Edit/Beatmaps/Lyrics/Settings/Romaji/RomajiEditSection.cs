@@ -2,20 +2,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
-public partial class RomajiEditSection : TextTagEditSection<RomajiTag>
+public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
 {
     protected override LocalisableString Title => "Romaji";
 
@@ -40,43 +40,98 @@ public partial class RomajiEditSection : TextTagEditSection<RomajiTag>
             _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
-    private partial class RomajiTagsEditor : TextTagsEditor
+    private partial class RomajiTagsEditor : LyricPropertiesEditor
     {
-        protected override IBindableList<RomajiTag> GetItems(Lyric lyric)
-            => lyric.RomajiTagsBindable;
+        private readonly Bindable<RomajiEditPropertyMode> bindableRomajiEditPropertyMode = new();
 
-        protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(Lyric lyric, RomajiTag textTag)
-            => new LabelledRomajiTagTextBox(lyric, textTag);
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; } = null!;
+
+        public RomajiTagsEditor()
+        {
+            bindableRomajiEditPropertyMode.BindValueChanged(e =>
+            {
+                RedrewContent();
+            });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IEditRomajiModeState editRomajiModeState)
+        {
+            bindableRomajiEditPropertyMode.BindTo(editRomajiModeState.BindableRomajiEditPropertyMode);
+        }
+
+        protected override Drawable CreateDrawable(TimeTag item)
+        {
+            int index = Items.IndexOf(item);
+            return bindableRomajiEditPropertyMode.Value switch
+            {
+                RomajiEditPropertyMode.Text => new LabelledRomajiTextTextBox(item)
+                {
+                    Label = $"#{index + 1}",
+                    TabbableContentContainer = this,
+                },
+                RomajiEditPropertyMode.Initial => new LabelledInitialSwitchButton(item)
+                {
+                    Label = item.RomajiText ?? string.Empty,
+                },
+                _ => throw new ArgumentOutOfRangeException(nameof(bindableRomajiEditPropertyMode.Value)),
+            };
+        }
+
+        protected override EditorSectionButton? CreateCreateNewItemButton() => null;
+
+        protected override IBindableList<TimeTag> GetItems(Lyric lyric)
+            => lyric.TimeTagsBindable;
     }
 
-    protected partial class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
+    private partial class LabelledRomajiTextTextBox : LabelledObjectFieldTextBox<TimeTag>
     {
         [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; } = null!;
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         [Resolved]
         private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
 
-        public LabelledRomajiTagTextBox(Lyric lyric, RomajiTag textTag)
-            : base(lyric, textTag)
+        public LabelledRomajiTextTextBox(TimeTag item)
+            : base(item)
         {
-            Debug.Assert(lyric.RomajiTags.Contains(textTag));
         }
 
-        protected override void TriggerSelect(RomajiTag item)
+        protected override void TriggerSelect(TimeTag item)
             => editRomajiModeState.Select(item);
 
-        protected override void ApplyValue(RomajiTag item, string value)
-            => romajiTagsChangeHandler.SetText(item, value);
+        protected override string GetFieldValue(TimeTag timeTag)
+            => timeTag.RomajiText ?? string.Empty;
 
-        protected override void SetIndex(RomajiTag item, int? startIndex, int? endIndex)
-            => romajiTagsChangeHandler.SetIndex(item, startIndex, endIndex);
-
-        protected override void RemoveTextTag(RomajiTag textTag)
-            => romajiTagsChangeHandler.Remove(textTag);
+        protected override void ApplyValue(TimeTag timeTag, string value)
+            => lyricTimeTagsChangeHandler.SetTimeTagRomajiText(timeTag, value);
 
         [BackgroundDependencyLoader]
         private void load()
+        {
+            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
+        }
+    }
+
+    private partial class LabelledInitialSwitchButton : LabelledObjectFieldSwitchButton<TimeTag>
+    {
+        [Resolved]
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
+
+        public LabelledInitialSwitchButton(TimeTag item)
+            : base(item)
+        {
+        }
+
+        protected override bool GetFieldValue(TimeTag timeTag)
+            => timeTag.InitialRomaji;
+
+        protected override void ApplyValue(TimeTag timeTag, bool value)
+            => lyricTimeTagsChangeHandler.SetTimeTagInitialRomaji(timeTag, value);
+
+        [BackgroundDependencyLoader]
+        private void load(IEditRomajiModeState editRomajiModeState)
         {
             SelectedItems.BindTo(editRomajiModeState.SelectedItems);
         }
