@@ -199,15 +199,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditRomaji:
-                var romajies = editRomajiModeState.SelectedItems;
-                if (!romajies.Any())
-                    return false;
-
-                if (lyricRomajiTagsChangeHandler == null)
-                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
-
-                lyricRomajiTagsChangeHandler.RemoveRange(romajies);
-                return true;
+                return false;
 
             case LyricEditorMode.EditNote:
                 return false;
@@ -280,13 +272,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditRomaji:
-                var romajies = editRomajiModeState.SelectedItems;
-                if (!romajies.Any())
-                    return false;
-
-                saveObjectToTheClipboardContent(romajies);
-                copyObjectToClipboard(romajies);
-                return true;
+                return false;
 
             case LyricEditorMode.EditNote:
                 return false;
@@ -372,15 +358,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditRomaji:
-                var pasteRomajies = getObjectFromClipboardContent<RomajiTag[]>();
-                if (pasteRomajies == null)
-                    return false;
-
-                if (lyricRomajiTagsChangeHandler == null)
-                    throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
-
-                lyricRomajiTagsChangeHandler.AddRange(pasteRomajies);
-                return true;
+                return false;
 
             case LyricEditorMode.EditNote:
                 return false;
