@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,23 +12,32 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.UserInterface;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components;
 
-public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTextBox<T> where T : class, ITextTag
+public partial class LabelledRubyTagTextBox : LabelledObjectFieldTextBox<RubyTag>
 {
     protected const float DELETE_BUTTON_SIZE = 20f;
 
+    [Resolved]
+    private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
+
+    [Resolved]
+    private IEditRubyModeState editRubyModeState { get; set; } = null!;
+
     private readonly IndexShiftingPart indexShiftingPart;
 
-    protected LabelledTextTagTextBox(Lyric lyric, T textTag)
-        : base(textTag)
+    public LabelledRubyTagTextBox(Lyric lyric, RubyTag rubyTag)
+        : base(rubyTag)
     {
+        Debug.Assert(lyric.RubyTags.Contains(rubyTag));
+
         if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
             throw new ArgumentNullException(nameof(fillFlowContainer));
 
@@ -54,13 +64,13 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
                 Size = new Vector2(DELETE_BUTTON_SIZE),
-                Action = () => RemoveTextTag(textTag),
+                Action = () => removeRubyTag(rubyTag),
                 Hover = hover =>
                 {
                     if (hover)
                     {
                         // trigger selected if hover on delete button.
-                        TriggerSelect(textTag);
+                        TriggerSelect(rubyTag);
                     }
                 },
             },
@@ -84,11 +94,11 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                 Selected = selected =>
                 {
                     if (selected)
-                        TriggerSelect(textTag);
+                        TriggerSelect(rubyTag);
                 },
                 Action = (indexType, action) =>
                 {
-                    int index = getNewIndex(textTag, indexType);
+                    int index = getNewIndex(rubyTag, indexType);
                     int newIndex = calculateNewIndex(index, action);
                     if (TextTagUtils.OutOfRange(lyric.Text, newIndex))
                         return;
@@ -96,24 +106,24 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
                     switch (indexType)
                     {
                         case AdjustIndex.Start:
-                            if (TextTagUtils.ValidNewStartIndex(textTag, newIndex))
-                                SetIndex(textTag, newIndex, null);
+                            if (TextTagUtils.ValidNewStartIndex(rubyTag, newIndex))
+                                setIndex(rubyTag, newIndex, null);
                             break;
 
                         case AdjustIndex.End:
-                            if (TextTagUtils.ValidNewEndIndex(textTag, newIndex))
-                                SetIndex(textTag, null, newIndex);
+                            if (TextTagUtils.ValidNewEndIndex(rubyTag, newIndex))
+                                setIndex(rubyTag, null, newIndex);
                             break;
 
                         default:
                             throw new InvalidOperationException();
                     }
 
-                    static int getNewIndex(T textTag, AdjustIndex index) =>
+                    static int getNewIndex(RubyTag rubyTag, AdjustIndex index) =>
                         index switch
                         {
-                            AdjustIndex.Start => textTag.StartIndex,
-                            AdjustIndex.End => textTag.EndIndex,
+                            AdjustIndex.Start => rubyTag.StartIndex,
+                            AdjustIndex.End => rubyTag.EndIndex,
                             _ => throw new InvalidOperationException(),
                         };
 
@@ -129,12 +139,26 @@ public abstract partial class LabelledTextTagTextBox<T> : LabelledObjectFieldTex
         });
     }
 
-    protected sealed override string GetFieldValue(T item)
+    private void setIndex(RubyTag item, int? startIndex, int? endIndex)
+        => rubyTagsChangeHandler.SetIndex(item, startIndex, endIndex);
+
+    private void removeRubyTag(RubyTag rubyTag)
+        => rubyTagsChangeHandler.Remove(rubyTag);
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+        SelectedItems.BindTo(editRubyModeState.SelectedItems);
+    }
+
+    protected sealed override string GetFieldValue(RubyTag item)
         => item.Text;
 
-    protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
+    protected override void TriggerSelect(RubyTag item)
+        => editRubyModeState.Select(item);
 
-    protected abstract void RemoveTextTag(T item);
+    protected override void ApplyValue(RubyTag item, string value)
+        => rubyTagsChangeHandler.SetText(item, value);
 
     protected override bool IsFocused(Drawable focusedDrawable)
         => base.IsFocused(focusedDrawable) || focusedDrawable == indexShiftingPart;

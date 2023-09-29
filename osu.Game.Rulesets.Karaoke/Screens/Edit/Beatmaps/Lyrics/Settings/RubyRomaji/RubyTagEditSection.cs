@@ -2,17 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Diagnostics;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji.Components;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
 
@@ -60,38 +56,5 @@ public partial class RubyTagEditSection : LyricPropertiesSection<RubyTag>
 
         protected override IBindableList<RubyTag> GetItems(Lyric lyric)
             => lyric.RubyTagsBindable;
-    }
-
-    protected partial class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
-    {
-        [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; } = null!;
-
-        [Resolved]
-        private IEditRubyModeState editRubyModeState { get; set; } = null!;
-
-        public LabelledRubyTagTextBox(Lyric lyric, RubyTag rubyTag)
-            : base(lyric, rubyTag)
-        {
-            Debug.Assert(lyric.RubyTags.Contains(rubyTag));
-        }
-
-        protected override void TriggerSelect(RubyTag item)
-            => editRubyModeState.Select(item);
-
-        protected override void ApplyValue(RubyTag item, string value)
-            => rubyTagsChangeHandler.SetText(item, value);
-
-        protected override void SetIndex(RubyTag item, int? startIndex, int? endIndex)
-            => rubyTagsChangeHandler.SetIndex(item, startIndex, endIndex);
-
-        protected override void RemoveTextTag(RubyTag rubyTag)
-            => rubyTagsChangeHandler.Remove(rubyTag);
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            SelectedItems.BindTo(editRubyModeState.SelectedItems);
-        }
     }
 }
