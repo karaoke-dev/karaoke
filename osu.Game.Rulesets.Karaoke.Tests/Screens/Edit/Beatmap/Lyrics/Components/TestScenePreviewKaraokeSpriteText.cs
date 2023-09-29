@@ -184,24 +184,7 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
         {
             AddStep($"Show ruby-tag position: {TextTagUtils.PositionFormattedString(rubyTag)}", () =>
             {
-                var position = karaokeSpriteText.GetTextTagByPosition(rubyTag);
-                showPosition(position);
-            });
-        }
-    }
-
-    #endregion
-
-    #region Romaji tag
-
-    [Test]
-    public void TestGetRomajiTagPosition()
-    {
-        foreach (var romajiTag in lyric.RomajiTags)
-        {
-            AddStep($"Show romaji-tag position: {TextTagUtils.PositionFormattedString(romajiTag)}", () =>
-            {
-                var position = karaokeSpriteText.GetTextTagByPosition(romajiTag);
+                var position = karaokeSpriteText.GetRubyTagByPosition(rubyTag);
                 showPosition(position);
             });
         }

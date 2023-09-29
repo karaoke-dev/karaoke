@@ -131,7 +131,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
         private int? calculateNewIndex(RubyTag rubyTag, float offset, Anchor anchor)
         {
             // get real left-side and right-side position
-            var rect = previewLyricPositionProvider.GetTextTagByPosition(rubyTag);
+            var rect = previewLyricPositionProvider.GetRubyTagByPosition(rubyTag);
 
             // todo: need to think about how to handle the case if the text-tag already out of the range of the text.
             if (rect == null)

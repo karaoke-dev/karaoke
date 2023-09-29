@@ -95,7 +95,7 @@ public partial class RubyTagSelectionBlueprint : SelectionBlueprint<RubyTag>, IH
         // wait until lyric update ruby position.
         ScheduleAfterChildren(() =>
         {
-            var rubyTagRect = previewLyricPositionProvider.GetTextTagByPosition(Item);
+            var rubyTagRect = previewLyricPositionProvider.GetRubyTagByPosition(Item);
 
             if (rubyTagRect == null)
             {

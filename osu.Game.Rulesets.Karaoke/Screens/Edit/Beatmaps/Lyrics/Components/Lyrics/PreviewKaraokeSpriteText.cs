@@ -11,7 +11,6 @@ using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
@@ -126,15 +125,10 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #endregion
 
-    #region Ruby/Romaji tag
+    #region Ruby tag
 
-    public RectangleF? GetTextTagByPosition(ITextTag textTag) =>
-        textTag switch
-        {
-            RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
-            RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
-            _ => throw new ArgumentOutOfRangeException(nameof(textTag)),
-        };
+    public RectangleF? GetRubyTagByPosition(RubyTag rubyTag) =>
+        spriteText.GetRubyTagPosition(rubyTag);
 
     #endregion
 
