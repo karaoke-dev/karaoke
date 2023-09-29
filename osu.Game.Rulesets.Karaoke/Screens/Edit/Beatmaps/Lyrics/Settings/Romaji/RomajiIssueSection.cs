@@ -33,7 +33,7 @@ public partial class RomajiIssueSection : LyricEditorIssueSection
 
         protected override Drawable[] CreateContent(Issue issue)
         {
-            (var lyric, RomajiTag romajiTag) = getInvalidByIssue(issue);
+            (var lyric, TimeTag timeTag) = getInvalidByIssue(issue);
 
             return new Drawable[]
             {
@@ -52,7 +52,7 @@ public partial class RomajiIssueSection : LyricEditorIssueSection
                 },
                 new OsuSpriteText
                 {
-                    Text = TextTagUtils.PositionFormattedString(romajiTag),
+                    Text = TimeTagUtils.FormattedString(timeTag),
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
@@ -65,12 +65,12 @@ public partial class RomajiIssueSection : LyricEditorIssueSection
             };
         }
 
-        private Tuple<Lyric, RomajiTag> getInvalidByIssue(Issue issue)
+        private Tuple<Lyric, TimeTag> getInvalidByIssue(Issue issue)
         {
-            if (issue is not LyricRomajiTagIssue romajiTagIssue)
+            if (issue is not LyricTimeTagIssue romajiTagIssue)
                 throw new InvalidCastException();
 
-            return new Tuple<Lyric, RomajiTag>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag);
+            return new Tuple<Lyric, TimeTag>(romajiTagIssue.Lyric, romajiTagIssue.TimeTag);
         }
     }
 }
