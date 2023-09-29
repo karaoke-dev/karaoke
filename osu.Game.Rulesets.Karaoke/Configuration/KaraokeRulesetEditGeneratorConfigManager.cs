@@ -11,7 +11,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romajies.Ja;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
@@ -43,12 +42,6 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
         // Language detection
         SetDefault<LanguageDetectorConfig>();
 
-        // Note generator
-        SetDefault<NoteGeneratorConfig>();
-
-        // Romaji generator
-        SetDefault<JaRomajiTagGeneratorConfig>();
-
         // Ruby generator
         SetDefault<JaRubyTagGeneratorConfig>();
 
@@ -58,6 +51,9 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
 
         // Romaji generator
         SetDefault<JaRomajiGeneratorConfig>();
+
+        // Note generator
+        SetDefault<NoteGeneratorConfig>();
     }
 
     protected void SetDefault<T>() where T : GeneratorConfig, new()
@@ -80,12 +76,11 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
             Type t when t == typeof(PreviewStageInfoGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.PreviewStageInfoGeneratorConfig,
             Type t when t == typeof(ReferenceLyricDetectorConfig) => KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig,
             Type t when t == typeof(LanguageDetectorConfig) => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig,
-            Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
-            Type t when t == typeof(JaRomajiTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig,
             Type t when t == typeof(JaRubyTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
             Type t when t == typeof(JaTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
             Type t when t == typeof(ZhTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
             Type t when t == typeof(JaRomajiGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig,
+            Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
             _ => throw new NotSupportedException(),
         };
 
@@ -127,12 +122,6 @@ public enum KaraokeRulesetEditGeneratorSetting
     // Language detection
     LanguageDetectorConfig,
 
-    // Note generator
-    NoteGeneratorConfig,
-
-    // Romaji generator
-    JaRomajiTagGeneratorConfig,
-
     // Ruby generator
     JaRubyTagGeneratorConfig,
 
@@ -142,4 +131,7 @@ public enum KaraokeRulesetEditGeneratorSetting
 
     // Romaji generator.
     JaRomajiGeneratorConfig,
+
+    // Note generator
+    NoteGeneratorConfig,
 }
