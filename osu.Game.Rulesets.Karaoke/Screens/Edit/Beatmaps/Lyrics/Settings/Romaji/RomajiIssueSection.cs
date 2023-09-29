@@ -7,17 +7,21 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
-public abstract partial class TextTagIssueSection : LyricEditorIssueSection
+public partial class RomajiIssueSection : LyricEditorIssueSection
 {
-    protected abstract partial class TextTagIssueTable<TTextTag> : LyricsIssueTable where TTextTag : ITextTag
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
+
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiTagIssueTable();
+
+    private partial class RomajiTagIssueTable : LyricsIssueTable
     {
         protected override TableColumn[] CreateHeaders() => new[]
         {
@@ -29,7 +33,7 @@ public abstract partial class TextTagIssueSection : LyricEditorIssueSection
 
         protected override Drawable[] CreateContent(Issue issue)
         {
-            (var lyric, TTextTag textTag) = GetInvalidByIssue(issue);
+            (var lyric, RomajiTag romajiTag) = getInvalidByIssue(issue);
 
             return new Drawable[]
             {
@@ -48,7 +52,7 @@ public abstract partial class TextTagIssueSection : LyricEditorIssueSection
                 },
                 new OsuSpriteText
                 {
-                    Text = TextTagUtils.PositionFormattedString(textTag),
+                    Text = TextTagUtils.PositionFormattedString(romajiTag),
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
@@ -61,6 +65,12 @@ public abstract partial class TextTagIssueSection : LyricEditorIssueSection
             };
         }
 
-        protected abstract Tuple<Lyric, TTextTag> GetInvalidByIssue(Issue issue);
+        private Tuple<Lyric, RomajiTag> getInvalidByIssue(Issue issue)
+        {
+            if (issue is not LyricRomajiTagIssue romajiTagIssue)
+                throw new InvalidCastException();
+
+            return new Tuple<Lyric, RomajiTag>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag);
+        }
     }
 }

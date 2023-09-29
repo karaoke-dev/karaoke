@@ -68,18 +68,18 @@ public enum KaraokeEditAction
     [Description("Next edit mode")]
     NextEditMode,
 
-    // Edit Ruby / romaji tag.
-    [Description("Reduce start index")]
-    EditTextTagReduceStartIndex,
+    // Edit Ruby tag.
+    [Description("Reduce ruby-tag start index")]
+    EditRubyTagReduceStartIndex,
 
-    [Description("Increase start index")]
-    EditTextTagIncreaseStartIndex,
+    [Description("Increase ruby-tag start index")]
+    EditRubyTagIncreaseStartIndex,
 
-    [Description("Reduce end index")]
-    EditTextTagReduceEndIndex,
+    [Description("Reduce ruby-tag end index")]
+    EditRubyTagReduceEndIndex,
 
-    [Description("Increase end index")]
-    EditTextTagIncreaseEndIndex,
+    [Description("Increase ruby-tag end index")]
+    EditRubyTagIncreaseEndIndex,
 
     // Edit time-tag.
     [Description("Create start time-tag")]

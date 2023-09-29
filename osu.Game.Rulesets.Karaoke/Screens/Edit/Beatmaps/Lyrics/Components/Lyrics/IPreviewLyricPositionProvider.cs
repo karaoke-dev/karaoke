@@ -3,7 +3,6 @@
 
 using osu.Framework.Graphics.Primitives;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
@@ -18,7 +17,7 @@ public interface IPreviewLyricPositionProvider
 
     RectangleF GetRectByCharIndicator(int charIndex);
 
-    RectangleF? GetTextTagByPosition(ITextTag textTag);
+    RectangleF? GetRubyTagByPosition(RubyTag rubyTag);
 
     TimeTag? GetTimeTagByPosition(float position);
 

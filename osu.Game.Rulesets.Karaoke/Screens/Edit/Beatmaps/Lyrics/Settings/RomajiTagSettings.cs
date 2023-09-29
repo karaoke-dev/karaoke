@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.RubyRomaji;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
@@ -26,18 +26,19 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
     {
         RomajiTagEditStep.Generate => new Drawable[]
         {
-            new RomajiTagEditStepSection(),
-            new RomajiTagAutoGenerateSection(),
+            new RomajiEditStepSection(),
+            new RomajiAutoGenerateSection(),
         },
         RomajiTagEditStep.Edit => new Drawable[]
         {
-            new RomajiTagEditStepSection(),
-            new RomajiTagEditSection(),
+            new RomajiEditStepSection(),
+            new RomajiEditPropertyModeSection(),
+            new RomajiEditSection(),
         },
         RomajiTagEditStep.Verify => new Drawable[]
         {
-            new RomajiTagEditStepSection(),
-            new RomajiTagIssueSection(),
+            new RomajiEditStepSection(),
+            new RomajiIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
     };
