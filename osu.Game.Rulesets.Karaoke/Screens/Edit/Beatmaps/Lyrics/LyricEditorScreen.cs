@@ -39,9 +39,6 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
     [Cached(typeof(ILyricRubyTagsChangeHandler))]
     private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
-
     [Cached(typeof(ILyricTimeTagsChangeHandler))]
     private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
 
@@ -74,7 +71,6 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
         AddInternal(lyricReferenceChangeHandler = new LyricReferenceChangeHandler());
         AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
         AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
         AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
         AddInternal(notePositionInfo = new NotePositionInfo());
         AddInternal(notesChangeHandler = new NotesChangeHandler());

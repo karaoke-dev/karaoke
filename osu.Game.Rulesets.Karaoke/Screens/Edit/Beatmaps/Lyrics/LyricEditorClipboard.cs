@@ -57,9 +57,6 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private ILyricRubyTagsChangeHandler? lyricRubyTagsChangeHandler { get; set; }
 
     [Resolved]
-    private ILyricRomajiTagsChangeHandler? lyricRomajiTagsChangeHandler { get; set; }
-
-    [Resolved]
     private ILyricTimeTagsChangeHandler? lyricTimeTagsChangeHandler { get; set; }
 
     [Resolved]

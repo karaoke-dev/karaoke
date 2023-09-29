@@ -51,9 +51,6 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
     [Cached(typeof(ILyricRubyTagsChangeHandler))]
     private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-    [Cached(typeof(ILyricRomajiTagsChangeHandler))]
-    private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
-
     [Cached(typeof(INotePositionInfo))]
     private readonly NotePositionInfo notePositionInfo;
 
@@ -86,7 +83,6 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
         AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
 
         AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-        AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
         AddInternal(notePositionInfo = new NotePositionInfo());
         AddInternal(notesChangeHandler = new NotesChangeHandler());
         AddInternal(notePropertyChangeHandler = new NotePropertyChangeHandler());
