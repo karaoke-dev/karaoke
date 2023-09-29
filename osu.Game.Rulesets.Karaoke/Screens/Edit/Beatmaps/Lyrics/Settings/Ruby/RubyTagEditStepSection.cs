@@ -73,10 +73,10 @@ public partial class RubyTagEditStepSection : LyricEditorEditStepSection<IEditRu
                             Text = "Keys",
                             AdjustableActions = new List<KaraokeEditAction>
                             {
-                                KaraokeEditAction.EditTextTagReduceStartIndex,
-                                KaraokeEditAction.EditTextTagIncreaseStartIndex,
-                                KaraokeEditAction.EditTextTagReduceEndIndex,
-                                KaraokeEditAction.EditTextTagIncreaseEndIndex,
+                                KaraokeEditAction.EditRubyTagReduceStartIndex,
+                                KaraokeEditAction.EditRubyTagIncreaseStartIndex,
+                                KaraokeEditAction.EditRubyTagReduceEndIndex,
+                                KaraokeEditAction.EditRubyTagIncreaseEndIndex,
                             },
                         }
                     },

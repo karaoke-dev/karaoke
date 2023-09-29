@@ -73,10 +73,10 @@ public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRom
                             Text = "Keys",
                             AdjustableActions = new List<KaraokeEditAction>
                             {
-                                KaraokeEditAction.EditTextTagReduceStartIndex,
-                                KaraokeEditAction.EditTextTagIncreaseStartIndex,
-                                KaraokeEditAction.EditTextTagReduceEndIndex,
-                                KaraokeEditAction.EditTextTagIncreaseEndIndex,
+                                KaraokeEditAction.EditRubyTagReduceStartIndex,
+                                KaraokeEditAction.EditRubyTagIncreaseStartIndex,
+                                KaraokeEditAction.EditRubyTagReduceEndIndex,
+                                KaraokeEditAction.EditRubyTagIncreaseEndIndex,
                             },
                         }
                     },

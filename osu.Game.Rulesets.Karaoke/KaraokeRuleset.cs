@@ -109,10 +109,10 @@ public partial class KaraokeRuleset : Ruleset
                 new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),
 
                 // Edit Ruby / romaji tag.
-                new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.EditTextTagReduceStartIndex),
-                new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseStartIndex),
-                new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditTextTagReduceEndIndex),
-                new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
+                new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.EditRubyTagReduceStartIndex),
+                new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.EditRubyTagIncreaseStartIndex),
+                new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditRubyTagReduceEndIndex),
+                new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditRubyTagIncreaseEndIndex),
 
                 // edit time-tag.
                 new KeyBinding(InputKey.Q, KaraokeEditAction.CreateStartTimeTag),

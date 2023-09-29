@@ -275,10 +275,10 @@ public partial class LabelledRubyTagTextBox : LabelledObjectFieldTextBox<RubyTag
 
             return e.Action switch
             {
-                KaraokeEditAction.EditTextTagReduceStartIndex => reduceStartIndexButton.TriggerClick(),
-                KaraokeEditAction.EditTextTagIncreaseStartIndex => increaseStartIndexButton.TriggerClick(),
-                KaraokeEditAction.EditTextTagReduceEndIndex => reduceEndIndexButton.TriggerClick(),
-                KaraokeEditAction.EditTextTagIncreaseEndIndex => increaseEndIndexButton.TriggerClick(),
+                KaraokeEditAction.EditRubyTagReduceStartIndex => reduceStartIndexButton.TriggerClick(),
+                KaraokeEditAction.EditRubyTagIncreaseStartIndex => increaseStartIndexButton.TriggerClick(),
+                KaraokeEditAction.EditRubyTagReduceEndIndex => reduceEndIndexButton.TriggerClick(),
+                KaraokeEditAction.EditRubyTagIncreaseEndIndex => increaseEndIndexButton.TriggerClick(),
                 _ => false,
             };
         }
