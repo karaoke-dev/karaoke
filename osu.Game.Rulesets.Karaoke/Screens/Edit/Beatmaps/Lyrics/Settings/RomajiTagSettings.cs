@@ -32,6 +32,7 @@ public partial class RomajiTagSettings : TextTagSettings<RomajiTagEditStep>
         RomajiTagEditStep.Edit => new Drawable[]
         {
             new RomajiEditStepSection(),
+            new RomajiEditPropertyModeSection(),
             new RomajiEditSection(),
         },
         RomajiTagEditStep.Verify => new Drawable[]
