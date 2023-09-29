@@ -6,14 +6,13 @@ using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRuby;
 
-public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRomajiStepScreen>
+public partial class GenerateRubyNavigation : TopNavigation<GenerateRubyStepScreen>
 {
     private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
-    private const string auto_generate_romaji = "AUTO_GENERATE_ROMAJI";
 
-    public GenerateRubyRomajiNavigation(GenerateRubyRomajiStepScreen screen)
+    public GenerateRubyNavigation(GenerateRubyStepScreen screen)
         : base(screen)
     {
     }
@@ -43,9 +42,9 @@ public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRo
     protected override LocalisableString GetNavigationText(NavigationState value) =>
         value switch
         {
-            NavigationState.Initial => $"Lazy to typing ruby? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] to auto-generate ruby and romaji. It's very easy.",
-            NavigationState.Working => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
-            NavigationState.Done => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
+            NavigationState.Initial => $"Lazy to typing ruby? Press [{auto_generate_ruby}].",
+            NavigationState.Working => $"Go to next step to generate time-tag.",
+            NavigationState.Done => $"Go to next step to generate time-tag.",
             NavigationState.Error => "Oops, seems cause some error in here.",
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
@@ -55,10 +54,9 @@ public partial class GenerateRubyRomajiNavigation : TopNavigation<GenerateRubyRo
 
     private partial class GenerateRubyTextFlowContainer : NavigationTextContainer
     {
-        public GenerateRubyTextFlowContainer(GenerateRubyRomajiStepScreen screen)
+        public GenerateRubyTextFlowContainer(GenerateRubyStepScreen screen)
         {
             AddLinkFactory(auto_generate_ruby, "auto generate ruby", screen.AskForAutoGenerateRuby);
-            AddLinkFactory(auto_generate_romaji, "auto generate romaji", screen.AskForAutoGenerateRomaji);
         }
     }
 }

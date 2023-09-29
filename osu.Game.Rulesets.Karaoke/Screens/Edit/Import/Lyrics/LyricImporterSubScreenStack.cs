@@ -7,7 +7,7 @@ using osu.Framework.Screens;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.EditLyric;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRubyRomaji;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRuby;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.Success;
 using osu.Game.Screens;
@@ -47,7 +47,7 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
                 return;
 
             case LyricImporterStep.GenerateRuby:
-                Push(new GenerateRubyRomajiStepScreen());
+                Push(new GenerateRubyStepScreen());
                 return;
 
             case LyricImporterStep.GenerateTimeTag:
