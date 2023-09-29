@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -99,5 +100,102 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         };
 
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagEmptyTime>(lyric);
+    }
+
+    [TestCase("カラオケ", "")] // should not be white-space only.
+    [TestCase("カラオケ", " ")] // should not be white-space only.
+    public void TestCheckRomajiEmptyText(string text, string romajiText)
+    {
+        var lyric = new Lyric
+        {
+            Text = text,
+            TimeTags = new[]
+            {
+                new TimeTag(new TextIndex())
+                {
+                    RomajiText = romajiText,
+                    Time = 1000,
+                },
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
+                {
+                    Time = 2000,
+                },
+            },
+        };
+
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiInvalidText>(lyric);
+    }
+
+    [TestCase("カラオケ", "")] // should not be white-space only.
+    [TestCase("カラオケ", " ")] // should not be white-space only.
+    public void TestCheckRomajiEmptyTextIfFirst(string text, string romajiText)
+    {
+        var lyric = new Lyric
+        {
+            Text = text,
+            TimeTags = new[]
+            {
+                new TimeTag(new TextIndex())
+                {
+                    RomajiText = romajiText,
+                    InitialRomaji = true,
+                    Time = 1000,
+                },
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
+                {
+                    Time = 2000,
+                },
+            },
+        };
+
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst>(lyric);
+    }
+
+    [TestCase("カラオケ", "")] // should not have empty text if end.
+    [TestCase("カラオケ", " ")] // should not have empty text if end.
+    [TestCase("カラオケ", "123")] // should not have empty text if end.
+    public void TestRomajiNotHaveEmptyTextIfEnd(string text, string romajiText)
+    {
+        var lyric = new Lyric
+        {
+            Text = text,
+            TimeTags = new[]
+            {
+                new TimeTag(new TextIndex())
+                {
+                    Time = 1000,
+                },
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
+                {
+                    RomajiText = romajiText,
+                    Time = 2000,
+                },
+            },
+        };
+
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd>(lyric);
+    }
+
+    [Test]
+    public void TestRomajiNotFistRomajiTextIfEnd()
+    {
+        var lyric = new Lyric
+        {
+            Text = "カラオケ",
+            TimeTags = new[]
+            {
+                new TimeTag(new TextIndex())
+                {
+                    Time = 1000,
+                },
+                new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
+                {
+                    InitialRomaji = true, // is invalid.
+                    Time = 2000,
+                },
+            },
+        };
+
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd>(lyric);
     }
 }
