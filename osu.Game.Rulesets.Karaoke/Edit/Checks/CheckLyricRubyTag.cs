@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public class CheckLyricRubyTag : CheckLyricTextTag<RubyTag>
+public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
 {
     protected override string Description => "Lyric with invalid ruby tag.";
 
@@ -20,21 +20,34 @@ public class CheckLyricRubyTag : CheckLyricTextTag<RubyTag>
         new IssueTemplateLyricRubyEmptyText(this),
     };
 
-    protected override IList<RubyTag> GetTextTag(Lyric lyric)
-        => lyric.RubyTags;
+    protected override IEnumerable<Issue> Check(Lyric lyric)
+    {
+        string text = lyric.Text;
+        var textTags = lyric.RubyTags;
 
-    protected override TextTagsUtils.Sorting Sorting => TextTagsUtils.Sorting.Asc;
+        const TextTagsUtils.Sorting sorting = TextTagsUtils.Sorting.Asc;
 
-    protected override Issue GetOutOfRangeIssue(Lyric lyric, RubyTag textTag)
-        => new IssueTemplateLyricRubyOutOfRange(this).Create(lyric, textTag);
+        var outOfRangeTags = TextTagsUtils.FindOutOfRange(textTags, text);
+        var overlappingTags = TextTagsUtils.FindOverlapping(textTags, sorting);
+        var emptyTextTags = TextTagsUtils.FindEmptyText(textTags);
 
-    protected override Issue GetOverlappingIssue(Lyric lyric, RubyTag textTag)
-        => new IssueTemplateLyricRubyOverlapping(this).Create(lyric, textTag);
+        foreach (var textTag in outOfRangeTags)
+        {
+            yield return new IssueTemplateLyricRubyOutOfRange(this).Create(lyric, textTag);
+        }
 
-    protected override Issue GetEmptyTextIssue(Lyric lyric, RubyTag textTag)
-        => new IssueTemplateLyricRubyEmptyText(this).Create(lyric, textTag);
+        foreach (var textTag in overlappingTags)
+        {
+            yield return new IssueTemplateLyricRubyOverlapping(this).Create(lyric, textTag);
+        }
 
-    public abstract class IssueTemplateLyricRuby : IssueTemplateLyricTextTag
+        foreach (var textTag in emptyTextTags)
+        {
+            yield return new IssueTemplateLyricRubyEmptyText(this).Create(lyric, textTag);
+        }
+    }
+
+    public abstract class IssueTemplateLyricRuby : IssueTemplate
     {
         protected IssueTemplateLyricRuby(ICheck check, IssueType type, string unformattedMessage)
             : base(check, type, unformattedMessage)

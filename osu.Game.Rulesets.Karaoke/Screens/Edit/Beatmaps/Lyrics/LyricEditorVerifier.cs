@@ -35,8 +35,8 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
             LyricEditorMode.Reference => new ICheck[] { new CheckLyricReferenceLyric() },
             LyricEditorMode.Language => new ICheck[] { new CheckLyricLanguage() },
             LyricEditorMode.EditRuby => new ICheck[] { new CheckLyricRubyTag() },
-            LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTag() },
-            LyricEditorMode.EditRomaji => new ICheck[] { new CheckLyricRomajiTag() },
+            LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTagOnly() },
+            LyricEditorMode.EditRomaji => new ICheck[] { new CheckLyricTimeTagRomaji() },
             LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText(), new CheckNoteTime() },
             LyricEditorMode.Singer => Array.Empty<ICheck>(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
@@ -185,5 +185,21 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         beatmap.HitObjectAdded -= hitObjectAdded;
         beatmap.HitObjectRemoved -= hitObjectRemoved;
         beatmap.HitObjectUpdated -= hitObjectUpdated;
+    }
+}
+
+public class CheckLyricTimeTagOnly : CheckLyricTimeTag
+{
+    protected override IEnumerable<Issue> Check(Lyric lyric)
+    {
+        return CheckTimeTag(lyric);
+    }
+}
+
+public class CheckLyricTimeTagRomaji : CheckLyricTimeTag
+{
+    protected override IEnumerable<Issue> Check(Lyric lyric)
+    {
+        return CheckTimeTagRomaji(lyric);
     }
 }

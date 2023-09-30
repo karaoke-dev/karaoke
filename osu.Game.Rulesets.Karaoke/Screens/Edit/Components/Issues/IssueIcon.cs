@@ -77,7 +77,6 @@ public partial class IssueIcon : CompositeDrawable
             CheckBeatmapPageInfo => FontAwesome.Solid.Pager,
             CheckLyricLanguage => FontAwesome.Solid.Globe,
             CheckLyricReferenceLyric => FontAwesome.Solid.Link,
-            CheckLyricRomajiTag => FontAwesome.Solid.Tag,
             CheckLyricRubyTag => FontAwesome.Solid.Tag,
             CheckLyricSinger => FontAwesome.Solid.Music,
             CheckLyricText => FontAwesome.Solid.TextHeight,

@@ -85,10 +85,10 @@ public partial class IssueNavigator : Component, IIssueNavigator
             case CheckLyricRubyTag:
                 return LyricEditorMode.EditRuby;
 
-            case CheckLyricTimeTag:
+            case CheckLyricTimeTagOnly:
                 return LyricEditorMode.EditTimeTag;
 
-            case CheckLyricRomajiTag:
+            case CheckLyricTimeTagRomaji:
                 return LyricEditorMode.EditRomaji;
 
             case CheckNoteReferenceLyric:
@@ -110,7 +110,6 @@ public partial class IssueNavigator : Component, IIssueNavigator
         issue switch
         {
             LyricRubyTagIssue rubyTagIssue => new Tuple<Lyric?, object?>(rubyTagIssue.Lyric, rubyTagIssue.RubyTag),
-            LyricRomajiTagIssue romajiTagIssue => new Tuple<Lyric?, object?>(romajiTagIssue.Lyric, romajiTagIssue.RomajiTag),
             LyricTimeTagIssue timeTagIssue => new Tuple<Lyric?, object?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
             LyricIssue lyricIssue => new Tuple<Lyric?, object?>(lyricIssue.Lyric, null),
             NoteIssue noteIssue => new Tuple<Lyric?, object?>(noteIssue.Note.ReferenceLyric, null),
