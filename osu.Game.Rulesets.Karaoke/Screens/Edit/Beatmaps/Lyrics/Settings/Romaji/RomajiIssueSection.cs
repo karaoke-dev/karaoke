@@ -19,9 +19,9 @@ public partial class RomajiIssueSection : LyricEditorIssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
 
-    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiTagIssueTable();
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiIssueTable();
 
-    private partial class RomajiTagIssueTable : LyricsIssueTable
+    private partial class RomajiIssueTable : LyricsIssueTable
     {
         protected override TableColumn[] CreateHeaders() => new[]
         {
