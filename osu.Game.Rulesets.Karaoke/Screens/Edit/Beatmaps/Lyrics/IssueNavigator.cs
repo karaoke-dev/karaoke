@@ -85,10 +85,10 @@ public partial class IssueNavigator : Component, IIssueNavigator
             case CheckLyricRubyTag:
                 return LyricEditorMode.EditRuby;
 
-            case CheckLyricTimeTag:
+            case CheckLyricTimeTagOnly:
                 return LyricEditorMode.EditTimeTag;
 
-            case CheckLyricRomajiTag:
+            case CheckLyricTimeTagRomaji:
                 return LyricEditorMode.EditRomaji;
 
             case CheckNoteReferenceLyric:
