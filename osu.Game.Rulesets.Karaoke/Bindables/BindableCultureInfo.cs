@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using osu.Framework.Bindables;
+using osu.Framework.Logging;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Bindables;
@@ -23,23 +24,34 @@ public class BindableCultureInfo : Bindable<CultureInfo?>
             return;
         }
 
-        switch (input)
+        try
         {
-            case string str:
-                Value = CultureInfoUtils.CreateLoadCultureInfoByCode(str);
-                break;
+            switch (input)
+            {
+                case string str:
+                    Value = CultureInfoUtils.CreateLoadCultureInfoByCode(str);
+                    break;
 
-            case int lcid:
-                Value = CultureInfoUtils.CreateLoadCultureInfoById(lcid);
-                break;
+                case int lcid:
+                    Value = CultureInfoUtils.CreateLoadCultureInfoById(lcid);
+                    break;
 
-            case CultureInfo cultureInfo:
-                Value = cultureInfo;
-                break;
+                case CultureInfo cultureInfo:
+                    Value = cultureInfo;
+                    break;
 
-            default:
-                base.Parse(input);
-                break;
+                default:
+                    base.Parse(input);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            Value = null;
+
+            // It might have issue that the culture info is not available in the system.
+            // Log it instead of throw exception.
+            Logger.Error(ex, $"Failed to parse {input} into {typeof(CultureInfo)}");
         }
     }
 
