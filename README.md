@@ -19,11 +19,14 @@ The source code of the `karaoke` ruleset, running on [osu!lazer](https://github.
 
 ## Status
 
-Some features are still under heavy development, but existing features should work fine.
+This project is still not very stable, `so we recommend looking around this project to find new features instead of actually using it`. 
 
-Please note that this project doesn't have much of a [demo](https://github.com/karaoke-dev/sample-beatmap) currently available, and most of the lyrics are written in Japanese, so we recommend looking around this project to find new features instead of actually using it, unless you understand / speak Japanese.
+Also:
+- This project doesn't have much of a [demo](https://github.com/karaoke-dev/sample-beatmap) currently available. And most demos are Japanese only.
+- This project is not very stable, especially in the editor.
+- Beatmap does not support save feature.
 
-Also, another reason for looking around is that this project is not stable. I hope users don't start using it until most of the bugs are fixed, and the editor has been implemented.
+Reccommend using this ruleset until [support batch import song](https://github.com/karaoke-dev/karaoke/issues/2144).
 
 If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [Discord](https://discord.gg/ga2xZXk). I will typically reply faster on Discord.
 
