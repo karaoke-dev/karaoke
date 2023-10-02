@@ -46,13 +46,13 @@ public static class CharUtils
     /// <summary>
     /// Check this char is chinese character
     /// </summary>
-    /// <param name="character"></param>
+    /// <param name="c"></param>
     /// <returns></returns>
-    public static bool IsChinese(char character)
+    public static bool IsChinese(char c)
     {
         // From : https://stackoverflow.com/a/61738863/4105113
         int minValue = UnicodeRanges.CjkUnifiedIdeographs.FirstCodePoint;
         int maxValue = minValue + UnicodeRanges.CjkUnifiedIdeographs.Length;
-        return character >= minValue && character < maxValue;
+        return c >= minValue && c < maxValue;
     }
 }
