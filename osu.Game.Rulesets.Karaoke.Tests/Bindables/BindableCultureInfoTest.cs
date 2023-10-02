@@ -47,4 +47,11 @@ public class BindableCultureInfoTest
         var actual = bindable.Value;
         Assert.AreEqual(expected, actual);
     }
+
+    [TestCase("中文（简体）")]
+    public void TestParsingNotSupportedCultureInfo(string value)
+    {
+        var bindable = new BindableCultureInfo();
+        Assert.DoesNotThrow(() => bindable.Parse(value));
+    }
 }
