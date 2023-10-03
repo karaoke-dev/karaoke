@@ -76,4 +76,19 @@ public class CharUtilsTest
         bool actual = CharUtils.IsChinese(c);
         Assert.AreEqual(expected, actual);
     }
+
+    [TestCase('A', true)]
+    [TestCase('A', true)]
+    [TestCase('Ḁ', true)]
+    [TestCase('ỿ', true)]
+    [TestCase('Ｚ', false)]
+    [TestCase('ｚ', false)]
+    [TestCase('は', false)]
+    [TestCase('^', false)]
+    [TestCase(' ', false)]
+    public void TestIsLatin(char c, bool expected)
+    {
+        bool actual = CharUtils.IsLatin(c);
+        Assert.AreEqual(expected, actual);
+    }
 }
