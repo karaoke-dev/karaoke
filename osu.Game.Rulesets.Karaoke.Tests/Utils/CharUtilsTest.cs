@@ -40,9 +40,9 @@ public class CharUtilsTest
     [TestCase('ｚ', true)]
     [TestCase('1', false)]
     [TestCase('文', false)]
-    public void TestIsLatin(char c, bool expected)
+    public void TestIsEnglish(char c, bool expected)
     {
-        bool actual = CharUtils.IsLatin(c);
+        bool actual = CharUtils.IsEnglish(c);
         Assert.AreEqual(expected, actual);
     }
 

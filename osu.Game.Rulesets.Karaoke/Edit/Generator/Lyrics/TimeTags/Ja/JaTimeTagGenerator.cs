@@ -56,7 +56,7 @@ public class JaTimeTagGenerator : TimeTagGenerator<JaTimeTagGeneratorConfig>
                     ? new TimeTag(new TextIndex(i - 1, TextIndex.IndexState.End))
                     : new TimeTag(new TextIndex(i));
 
-                if (CharUtils.IsLatin(pc))
+                if (CharUtils.IsEnglish(pc))
                 {
                     if (Config.CheckWhiteSpaceAlphabet.Value)
                         yield return timeTag;
@@ -76,9 +76,9 @@ public class JaTimeTagGenerator : TimeTagGenerator<JaTimeTagGeneratorConfig>
                     yield return timeTag;
                 }
             }
-            else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
+            else if (CharUtils.IsEnglish(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
             {
-                if (CharUtils.IsSpacing(pc) || (!CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc)))
+                if (CharUtils.IsSpacing(pc) || (!CharUtils.IsEnglish(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc)))
                 {
                     yield return new TimeTag(new TextIndex(i));
                 }
