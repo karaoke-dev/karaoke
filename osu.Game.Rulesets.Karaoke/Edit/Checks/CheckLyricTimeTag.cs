@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
@@ -86,33 +87,27 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
 
         foreach (var timeTag in lyric.TimeTags)
         {
+            bool initialRomaji = timeTag.InitialRomaji;
+            string? romajiText = timeTag.RomajiText;
+
             switch (timeTag.Index.State)
             {
                 case TextIndex.IndexState.Start:
-                    if (!timeTag.InitialRomaji)
-                    {
-                        // romaji text in the time-tag should be null.
-                        if (timeTag.RomajiText == null)
-                            break;
+                    // if input the romaji text, should be valid.
+                    if (romajiText != null && !isRomajiTextValid(romajiText))
+                        yield return new IssueTemplateLyricTimeTagRomajiInvalidText(this).Create(lyric, timeTag);
 
-                        // but should not be empty or white-space only.
-                        if (string.IsNullOrWhiteSpace(timeTag.RomajiText))
-                            yield return new IssueTemplateLyricTimeTagRomajiInvalidText(this).Create(lyric, timeTag);
-                    }
-                    else
-                    {
-                        // if is first romaji text, should not be null.
-                        if (string.IsNullOrWhiteSpace(timeTag.RomajiText))
-                            yield return new IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(this).Create(lyric, timeTag);
-                    }
+                    // if is first romaji text, should not be null.
+                    if (initialRomaji && romajiText == null)
+                        yield return new IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(this).Create(lyric, timeTag);
 
                     break;
 
                 case TextIndex.IndexState.End:
-                    if (timeTag.RomajiText != null)
+                    if (romajiText != null)
                         yield return new IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd(this).Create(lyric, timeTag);
 
-                    if (timeTag.InitialRomaji)
+                    if (initialRomaji)
                         yield return new IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd(this).Create(lyric, timeTag);
 
                     break;
@@ -120,6 +115,18 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        yield break;
+
+        static bool isRomajiTextValid(string text)
+        {
+            // should not be white-space only.
+            if (string.IsNullOrWhiteSpace(text))
+                return false;
+
+            // should be all latin text or white-space
+            return text.All(c => CharUtils.IsLatin(c) || CharUtils.IsSpacing(c));
         }
     }
 
