@@ -102,9 +102,10 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagEmptyTime>(lyric);
     }
 
-    [TestCase("カラオケ", "")] // should not be white-space only.
+    [TestCase("カラオケ", "")] // should not be empty.
     [TestCase("カラオケ", " ")] // should not be white-space only.
-    public void TestCheckRomajiEmptyText(string text, string romajiText)
+    [TestCase("カラオケ", "卡拉OK")] // should be within latin.
+    public void TestCheckTimeTagRomajiInvalidText(string text, string romajiText)
     {
         var lyric = new Lyric
         {
@@ -126,8 +127,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
         AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiInvalidText>(lyric);
     }
 
-    [TestCase("カラオケ", "")] // should not be white-space only.
-    [TestCase("カラオケ", " ")] // should not be white-space only.
+    [TestCase("カラオケ", null)] // should not be white-space only.
     public void TestCheckRomajiEmptyTextIfFirst(string text, string romajiText)
     {
         var lyric = new Lyric

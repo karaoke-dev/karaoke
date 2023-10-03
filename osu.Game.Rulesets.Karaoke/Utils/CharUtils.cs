@@ -22,11 +22,11 @@ public static class CharUtils
         (c >= '\uFF65' && c <= '\uFF9F');
 
     /// <summary>
-    /// Check this character is english
+    /// Check this character is English latter or not.
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
-    public static bool IsLatin(char c) =>
+    public static bool IsEnglish(char c) =>
         (c >= 'A' && c <= 'Z') ||
         (c >= 'a' && c <= 'z') ||
         (c >= 'Ａ' && c <= 'Ｚ') ||
@@ -46,13 +46,35 @@ public static class CharUtils
     /// <summary>
     /// Check this char is chinese character
     /// </summary>
-    /// <param name="character"></param>
+    /// <param name="c"></param>
     /// <returns></returns>
-    public static bool IsChinese(char character)
+    public static bool IsChinese(char c)
     {
         // From : https://stackoverflow.com/a/61738863/4105113
         int minValue = UnicodeRanges.CjkUnifiedIdeographs.FirstCodePoint;
         int maxValue = minValue + UnicodeRanges.CjkUnifiedIdeographs.Length;
-        return character >= minValue && character < maxValue;
+        return c >= minValue && c < maxValue;
+    }
+
+    /// <summary>
+    /// Check this char is latin alphabet or not.
+    /// Usually, this is used to check the romanization result.
+    /// </summary>
+    /// <param name="c"></param>
+    /// <returns></returns>
+    public static bool IsLatin(char c)
+    {
+        if (c >= 'A' && c <= 'Z')
+            return true;
+
+        if (c >= 'a' && c <= 'z')
+            return true;
+
+        // another romanized characters
+        // see: https://www.unicode.org/charts/PDF/U1E00.pdf
+        if (c >= '\u1E00' && c <= '\u1EFF')
+            return true;
+
+        return false;
     }
 }
