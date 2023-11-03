@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
 [Cached(typeof(IPageStateProvider))]
-public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
+public partial class PageScreen : BeatmapEditorScreen, IPageStateProvider
 {
     [Cached(typeof(IBeatmapPagesChangeHandler))]
     private readonly BeatmapPagesChangeHandler beatmapPagesChangeHandler;
