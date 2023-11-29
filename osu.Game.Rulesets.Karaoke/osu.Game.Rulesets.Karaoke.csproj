@@ -14,7 +14,7 @@
     <PackageReference Include="Octokit" Version="8.1.1" />
     <PackageReference Include="osu.Framework.KaraokeFont" Version="2023.1007.0" />
     <PackageReference Include="osu.Framework.Microphone" Version="2023.627.0" />
-    <PackageReference Include="ppy.LocalisationAnalyser" Version="2023.712.0">
+    <PackageReference Include="ppy.LocalisationAnalyser" Version="2023.1117.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
