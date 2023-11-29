@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
+using osu.Game.Graphics;
 using osu.Game.Localisation;
 using osu.Game.Overlays;
 using osu.Game.Resources.Localisation.Web;
@@ -57,7 +58,7 @@ public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
         {
             Title = PageTitleStrings.MainChangelogControllerDefault;
             Description = NamedOverlayComponentStrings.ChangelogDescription;
-            IconTexture = "Icons/Hexacons/devtools";
+            Icon = HexaconsIcons.Devtools;
         }
     }
 }

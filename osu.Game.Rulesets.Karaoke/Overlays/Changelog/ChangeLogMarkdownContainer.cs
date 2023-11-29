@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
 using osu.Game.Graphics;
@@ -39,7 +38,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
         }
     }
 
-    public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
+    public override OsuMarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
 
     public override SpriteText CreateSpriteText() => base.CreateSpriteText().With(s =>
     {
