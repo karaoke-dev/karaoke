@@ -51,11 +51,13 @@ public class KaraokeAutoGeneratorBySinger : AutoGenerator
             long length = totalLength;
             long lengthSum = 0;
 
+            const int bytes_per_sample = 4;
+
             // Microphone at period 10
-            int bytesPerIteration = 3276 * info.Channels * TrackBass.BYTES_PER_SAMPLE;
+            int bytesPerIteration = 3276 * info.Channels * bytes_per_sample;
 
             var pitches = new Dictionary<double, float?>();
-            float[] sampleBuffer = new float[bytesPerIteration / TrackBass.BYTES_PER_SAMPLE];
+            float[] sampleBuffer = new float[bytesPerIteration / bytes_per_sample];
 
             // Read sample data
             while (length > 0)
