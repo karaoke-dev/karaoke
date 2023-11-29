@@ -46,7 +46,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                         {
                             new ImportLyricMenu(null, "Import from text", null!),
                             new ImportLyricMenu(null, "Import from .lrc file", null!),
-                            new EditorMenuItemSpacer(),
+                            new OsuMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
                             new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),

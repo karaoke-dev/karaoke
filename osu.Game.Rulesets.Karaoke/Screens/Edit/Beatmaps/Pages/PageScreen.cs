@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -119,7 +120,7 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
             {
                 Title = "page";
                 Description = "create page of your beatmap";
-                IconTexture = "Icons/Hexacons/social";
+                Icon = HexaconsIcons.Social;
             }
         }
     }

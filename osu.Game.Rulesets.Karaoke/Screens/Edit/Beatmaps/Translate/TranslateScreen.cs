@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
@@ -54,7 +55,7 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
             {
                 Title = "translate";
                 Description = "create translation of your beatmap";
-                IconTexture = "Icons/Hexacons/social";
+                Icon = HexaconsIcons.Social;
             }
         }
     }

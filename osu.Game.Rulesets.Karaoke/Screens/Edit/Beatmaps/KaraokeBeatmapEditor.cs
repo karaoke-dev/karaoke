@@ -95,7 +95,7 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                     {
                         new ImportLyricMenu(this, "Import from text", importBeatmapChangeHandler),
                         new ImportLyricMenu(this, "Import from .lrc file", importBeatmapChangeHandler),
-                        new EditorMenuItemSpacer(),
+                        new OsuMenuItemSpacer(),
                         new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                         new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
                         new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),

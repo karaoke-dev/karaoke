@@ -27,7 +27,7 @@ public partial class TestSceneHitEventTimingDistributionGraph : OsuTestScene
     [Test]
     public void TestZeroTimeOffset()
     {
-        createTest(Enumerable.Range(0, 100).Select(_ => new HitEvent(0, HitResult.Perfect, new Note(), new Note(), null)).ToList());
+        createTest(Enumerable.Range(0, 100).Select(_ => new HitEvent(0, 1.0, HitResult.Perfect, new Note(), new Note(), null)).ToList());
     }
 
     [Test]
@@ -63,7 +63,7 @@ public partial class TestSceneHitEventTimingDistributionGraph : OsuTestScene
             int count = (int)Math.Pow(25 - Math.Abs(i - 25), 2);
 
             for (int j = 0; j < count; j++)
-                hitEvents.Add(new HitEvent(i - 25, HitResult.Perfect, new Note(), new Note(), null));
+                hitEvents.Add(new HitEvent(i - 25, 1.0, HitResult.Perfect, new Note(), new Note(), null));
         }
 
         return hitEvents;
