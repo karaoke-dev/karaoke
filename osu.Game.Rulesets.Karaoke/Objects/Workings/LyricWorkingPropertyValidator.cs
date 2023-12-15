@@ -18,26 +18,18 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool HasDataProperty(LyricWorkingProperty flags) =>
         flags switch
         {
-            LyricWorkingProperty.StartTime => false,
-            LyricWorkingProperty.Duration => false,
-            LyricWorkingProperty.Timing => false,
             LyricWorkingProperty.Singers => true,
             LyricWorkingProperty.Page => false,
             LyricWorkingProperty.ReferenceLyric => true,
-            LyricWorkingProperty.EffectApplier => false,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
     protected override bool IsWorkingPropertySynced(Lyric hitObject, LyricWorkingProperty flags) =>
         flags switch
         {
-            LyricWorkingProperty.StartTime => true,
-            LyricWorkingProperty.Duration => true,
-            LyricWorkingProperty.Timing => true,
             LyricWorkingProperty.Singers => isWorkingSingerSynced(hitObject),
             LyricWorkingProperty.Page => true,
             LyricWorkingProperty.ReferenceLyric => isReferenceLyricSynced(hitObject),
-            LyricWorkingProperty.EffectApplier => true,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 

@@ -89,7 +89,7 @@ public partial class BeatmapPropertyChangeHandler : Component
     protected void InvalidateAllHitObjectWorkingProperty<TWorkingProperty>(TWorkingProperty property)
         where TWorkingProperty : struct, Enum
     {
-        foreach (var hitObject in KaraokeBeatmap.HitObjects.OfType<IHasWorkingProperty<TWorkingProperty>>())
+        foreach (var hitObject in KaraokeBeatmap.HitObjects.OfType<IHasWorkingProperty<TWorkingProperty, KaraokeBeatmap>>())
         {
             hitObject.InvalidateWorkingProperty(property);
         }

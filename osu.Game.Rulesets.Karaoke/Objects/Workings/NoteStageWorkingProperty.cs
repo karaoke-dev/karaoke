@@ -9,15 +9,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 /// Specifies which properties in the <see cref="Note"/> are being invalidated.
 /// </summary>
 [Flags]
-public enum NoteWorkingProperty
+public enum NoteStageWorkingProperty
 {
     /// <summary>
-    /// <see cref="Note.PageIndex"/> is being invalidated.
+    /// <see cref="Note.EffectApplier"/> is being invalidated.
     /// </summary>
-    Page = 1,
-
-    /// <summary>
-    /// <see cref="Note.ReferenceLyric"/> is being invalidated.
-    /// </summary>
-    ReferenceLyric = 1 << 1,
+    EffectApplier = 1,
 }

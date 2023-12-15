@@ -188,6 +188,7 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     public Lyric()
     {
         workingPropertyValidator = new LyricWorkingPropertyValidator(this);
+        stageWorkingPropertyValidator = new LyricStageWorkingPropertyValidator(this);
 
         initInternalBindingEvent();
         initReferenceLyricEvent();

@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 
@@ -20,23 +21,35 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffectApplier
+public partial class Note : IHasWorkingProperty<NoteWorkingProperty, KaraokeBeatmap>, IHasWorkingProperty<NoteStageWorkingProperty, StageInfo>, IHasEffectApplier
 {
     [JsonIgnore]
     private readonly NoteWorkingPropertyValidator workingPropertyValidator;
 
+    [JsonIgnore]
+    private readonly NoteStageWorkingPropertyValidator stageWorkingPropertyValidator;
+
     public bool InvalidateWorkingProperty(NoteWorkingProperty workingProperty)
         => workingPropertyValidator.Invalidate(workingProperty);
+
+    public bool InvalidateWorkingProperty(NoteStageWorkingProperty workingProperty)
+        => stageWorkingPropertyValidator.Invalidate(workingProperty);
 
     private void updateStateByWorkingProperty(NoteWorkingProperty workingProperty)
         => workingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
 
-    public NoteWorkingProperty[] GetAllInvalidWorkingProperties()
+    private void updateStateByWorkingProperty(NoteStageWorkingProperty workingProperty)
+        => stageWorkingPropertyValidator.UpdateStateByWorkingProperty(workingProperty);
+
+    NoteWorkingProperty[] IHasWorkingProperty<NoteWorkingProperty, KaraokeBeatmap>.GetAllInvalidWorkingProperties()
         => workingPropertyValidator.GetAllInvalidFlags();
+
+    NoteStageWorkingProperty[] IHasWorkingProperty<NoteStageWorkingProperty, StageInfo>.GetAllInvalidWorkingProperties()
+        => stageWorkingPropertyValidator.GetAllInvalidFlags();
 
     public void ValidateWorkingProperty(KaraokeBeatmap beatmap)
     {
-        foreach (var flag in GetAllInvalidWorkingProperties())
+        foreach (var flag in workingPropertyValidator.GetAllInvalidFlags())
         {
             switch (flag)
             {
@@ -46,10 +59,6 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
 
                 case NoteWorkingProperty.ReferenceLyric:
                     ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
-                    break;
-
-                case NoteWorkingProperty.EffectApplier:
-                    EffectApplier = getStageEffectApplier(beatmap, this);
                     break;
 
                 default:
@@ -62,14 +71,21 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
 
         static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
+    }
 
-        static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
+    public void ValidateWorkingProperty(StageInfo stageInfo)
+    {
+        foreach (var flag in stageWorkingPropertyValidator.GetAllInvalidFlags())
         {
-            var stageInfo = beatmap.CurrentStageInfo;
-            if (stageInfo == null)
-                throw new InvalidCastException();
+            switch (flag)
+            {
+                case NoteStageWorkingProperty.EffectApplier:
+                    EffectApplier = stageInfo.GetStageAppliers(this);
+                    break;
 
-            return stageInfo.GetStageAppliers(note);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 
@@ -173,7 +189,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         {
             EffectApplierBindable.Value = value;
 
-            updateStateByWorkingProperty(NoteWorkingProperty.EffectApplier);
+            updateStateByWorkingProperty(NoteStageWorkingProperty.EffectApplier);
         }
     }
 
