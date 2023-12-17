@@ -1,9 +1,9 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Tests.Visual;
@@ -14,12 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues;
 [TestFixture]
 public partial class TestSceneIssueIcon : OsuTestScene
 {
-    private SpriteIcon icon = null!;
+    private IssueIcon icon = null!;
 
     [SetUp]
     public void SetUp() => Schedule(() =>
     {
-        Child = icon = new SpriteIcon
+        Child = icon = new IssueIcon
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
@@ -28,19 +28,21 @@ public partial class TestSceneIssueIcon : OsuTestScene
     });
 
     [Test]
-    public void DisplayIconByIssueTemplate()
+    public void DisplayIconByIssues()
     {
-        var availableChecks = TestCaseCheckHelper.GetAllAvailableChecks();
+        var availableIssues = TestCaseCheckHelper.CreateAllAvailableIssues()
+                                                 .GroupBy(x => x.Check)
+                                                 .ToDictionary(x => x.Key, x => x.ToArray());
 
-        foreach (var check in availableChecks)
+        foreach (var (check, issues) in availableIssues)
         {
             AddLabel($"Check: {check.Metadata.Description}");
 
-            foreach (var template in check.PossibleTemplates)
+            foreach (var issue in issues)
             {
-                AddStep($"Test lyric with template {template.UnformattedMessage}", () =>
+                AddStep($"Test lyric with template {issue.Template.UnformattedMessage}", () =>
                 {
-                    icon.Icon = IssueIcon.GetIconByIssueTemplate(template);
+                    icon.Issue = issue;
                 });
             }
         }

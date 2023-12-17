@@ -45,24 +45,24 @@ public partial class IssueIcon : CompositeDrawable
                 LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
                 _ => new SpriteIcon
                 {
-                    Icon = GetIconByIssue(issue),
+                    Icon = getIconByIssue(issue),
                 },
             };
     }
 
-    internal static IconUsage GetIconByIssue(Issue issue)
-        => GetIconByIssueTemplate(issue.Template);
+    private static IconUsage getIconByIssue(Issue issue)
+        => getIconByIssueTemplate(issue.Template);
 
-    internal static IconUsage GetIconByIssueTemplate(IssueTemplate issueTemplate)
-        => GetIconUsageByIssueTemplate(issueTemplate) ?? GetIconUsageByCheck(issueTemplate.Check);
+    private static IconUsage getIconByIssueTemplate(IssueTemplate issueTemplate)
+        => getIconUsageByIssueTemplate(issueTemplate) ?? getIconUsageByCheck(issueTemplate.Check);
 
-    internal static IconUsage? GetIconUsageByIssueTemplate(IssueTemplate issueTemplate)
+    private static IconUsage? getIconUsageByIssueTemplate(IssueTemplate issueTemplate)
     {
         // will override the icon if needed.
         return null;
     }
 
-    internal static IconUsage GetIconUsageByCheck(ICheck check) =>
+    private static IconUsage getIconUsageByCheck(ICheck check) =>
         check switch
         {
             CheckBeatmapAvailableTranslates => FontAwesome.Solid.Language,
