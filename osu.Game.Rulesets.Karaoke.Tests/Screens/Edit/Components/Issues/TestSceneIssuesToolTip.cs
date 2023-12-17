@@ -1,10 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Components.Issues;
@@ -26,16 +28,25 @@ public partial class TestSceneIssuesToolTip : OsuTestScene
     });
 
     [Test]
-    public void TestValidLyric()
+    public void TestTooltipWithoutIssue()
     {
-        setTooltip("valid lyric");
+        AddStep("Test tooltip with no issue.", () =>
+        {
+            toolTip.SetContent(Array.Empty<Issue>());
+        });
     }
 
-    private void setTooltip(string testName, params Issue[] issues)
+    [Test]
+    public void TestTooltipWithIssue()
     {
-        AddStep(testName, () =>
+        var availableIssues = TestCaseCheckHelper.CreateAllAvailableIssues();
+
+        foreach (var (check, issues) in availableIssues)
         {
-            toolTip.SetContent(issues);
-        });
+            AddStep($"Check {check.Metadata.Description} has {issues.Length} issues.", () =>
+            {
+                toolTip.SetContent(issues);
+            });
+        }
     }
 }
