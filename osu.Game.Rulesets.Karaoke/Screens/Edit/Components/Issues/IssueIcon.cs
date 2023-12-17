@@ -28,47 +28,41 @@ public partial class IssueIcon : CompositeDrawable
 
     private void updateIssue()
     {
-        InternalChild = Issue != null ? getDrawableByIssue(Issue) : null;
+        InternalChild = Issue != null ? createDrawableByIssue(Issue) : null;
     }
 
-    private static Drawable getDrawableByIssue(Issue issue)
+    private static Drawable createDrawableByIssue(Issue issue)
     {
-        return createIssueIcon(issue).With(x =>
+        return createDrawable(issue).With(x =>
         {
             x.Colour = issue.Template.Colour;
             x.RelativeSizeAxes = Axes.Both;
         });
 
-        static Drawable createIssueIcon(Issue issue)
-        {
-            var drawableByIssue = GetDrawableByIssue(issue);
-            if (drawableByIssue != null)
-                return drawableByIssue;
-
-            return new SpriteIcon
+        static Drawable createDrawable(Issue issue) =>
+            issue switch
             {
-                Icon = GetIconByIssueTemplate(issue.Template),
+                LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
+                _ => new SpriteIcon
+                {
+                    Icon = getIconByIssue(issue),
+                },
             };
-        }
     }
 
-    internal static Drawable? GetDrawableByIssue(Issue issue) =>
-        issue switch
-        {
-            LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
-            _ => null,
-        };
+    private static IconUsage getIconByIssue(Issue issue)
+        => getIconByIssueTemplate(issue.Template);
 
-    internal static IconUsage GetIconByIssueTemplate(IssueTemplate issueTemplate)
-        => GetIconUsageByIssueTemplate(issueTemplate) ?? GetIconUsageByCheck(issueTemplate.Check);
+    private static IconUsage getIconByIssueTemplate(IssueTemplate issueTemplate)
+        => getIconUsageByIssueTemplate(issueTemplate) ?? getIconUsageByCheck(issueTemplate.Check);
 
-    internal static IconUsage? GetIconUsageByIssueTemplate(IssueTemplate issueTemplate)
+    private static IconUsage? getIconUsageByIssueTemplate(IssueTemplate issueTemplate)
     {
         // will override the icon if needed.
         return null;
     }
 
-    internal static IconUsage GetIconUsageByCheck(ICheck check) =>
+    private static IconUsage getIconUsageByCheck(ICheck check) =>
         check switch
         {
             CheckBeatmapAvailableTranslates => FontAwesome.Solid.Language,
