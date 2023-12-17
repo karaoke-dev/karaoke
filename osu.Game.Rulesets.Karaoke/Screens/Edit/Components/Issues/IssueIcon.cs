@@ -28,36 +28,27 @@ public partial class IssueIcon : CompositeDrawable
 
     private void updateIssue()
     {
-        InternalChild = Issue != null ? getDrawableByIssue(Issue) : null;
+        InternalChild = Issue != null ? createDrawableByIssue(Issue) : null;
     }
 
-    private static Drawable getDrawableByIssue(Issue issue)
+    private static Drawable createDrawableByIssue(Issue issue)
     {
-        return createIssueIcon(issue).With(x =>
+        return createDrawable(issue).With(x =>
         {
             x.Colour = issue.Template.Colour;
             x.RelativeSizeAxes = Axes.Both;
         });
 
-        static Drawable createIssueIcon(Issue issue)
-        {
-            var drawableByIssue = GetDrawableByIssue(issue);
-            if (drawableByIssue != null)
-                return drawableByIssue;
-
-            return new SpriteIcon
+        static Drawable createDrawable(Issue issue) =>
+            issue switch
             {
-                Icon = GetIconByIssue(issue),
+                LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
+                _ => new SpriteIcon
+                {
+                    Icon = GetIconByIssue(issue),
+                },
             };
-        }
     }
-
-    internal static Drawable? GetDrawableByIssue(Issue issue) =>
-        issue switch
-        {
-            LyricTimeTagIssue lyricTimeTagIssue => new DrawableTextIndex { State = lyricTimeTagIssue.TimeTag.Index.State },
-            _ => null,
-        };
 
     internal static IconUsage GetIconByIssue(Issue issue)
         => GetIconByIssueTemplate(issue.Template);
