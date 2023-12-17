@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Globalization;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Bindables;
@@ -14,7 +15,7 @@ public class BindableFontUsageTest
     public void TestParsingString(string value, string family, float size, string weight = null!, bool italics = false, bool fixedWidth = false)
     {
         var bindable = new BindableFontUsage();
-        bindable.Parse(value);
+        bindable.Parse(value, CultureInfo.InvariantCulture);
 
         var expected = new FontUsage(family, size, weight, italics, fixedWidth);
         var actual = bindable.Value;

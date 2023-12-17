@@ -16,7 +16,7 @@ public class BindableCultureInfo : Bindable<CultureInfo?>
     {
     }
 
-    public override void Parse(object? input)
+    public override void Parse(object? input, IFormatProvider provider)
     {
         if (input == null)
         {
@@ -41,7 +41,7 @@ public class BindableCultureInfo : Bindable<CultureInfo?>
                     break;
 
                 default:
-                    base.Parse(input);
+                    base.Parse(input, provider);
                     break;
             }
         }
