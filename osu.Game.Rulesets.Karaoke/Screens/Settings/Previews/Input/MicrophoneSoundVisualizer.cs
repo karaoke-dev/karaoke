@@ -15,7 +15,7 @@ using osu.Game.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
 
 public partial class MicrophoneSoundVisualizer : CompositeDrawable
 {

@@ -8,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
 
