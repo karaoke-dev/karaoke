@@ -4,10 +4,10 @@
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics;
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Settings.Previews;
 
 [TestFixture]
 public partial class TestSceneMicrophoneSoundVisualizer : OsuTestScene

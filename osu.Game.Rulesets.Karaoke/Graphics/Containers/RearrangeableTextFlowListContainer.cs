@@ -14,7 +14,7 @@ using osu.Game.Graphics.Containers;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+namespace osu.Game.Rulesets.Karaoke.Graphics.Containers;
 
 /// <summary>
 /// Implement most feature for searchable text container.

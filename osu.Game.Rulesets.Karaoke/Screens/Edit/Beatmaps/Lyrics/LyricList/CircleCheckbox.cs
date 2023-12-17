@@ -16,7 +16,7 @@ using osu.Game.Graphics.UserInterface;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
 
 public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
 {

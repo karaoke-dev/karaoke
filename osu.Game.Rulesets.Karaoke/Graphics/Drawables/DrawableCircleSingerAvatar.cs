@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+namespace osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 
 public partial class DrawableCircleSingerAvatar : DrawableSingerAvatar
 {

@@ -7,7 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList.Rows.Info.Badge;
