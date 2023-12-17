@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+namespace osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 
 public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<Singer>>
 {
