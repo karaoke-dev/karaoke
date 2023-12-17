@@ -83,4 +83,6 @@ public class APIChangelogBuild
         /// </summary>
         public APIChangelogBuild? Previous { get; set; }
     }
+
+    public override string ToString() => $"Karaoke! {DisplayVersion}";
 }
