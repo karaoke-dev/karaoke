@@ -43,7 +43,7 @@ public class BindableFontUsage : Bindable<FontUsage>
         base.BindTo(them);
     }
 
-    public override void Parse(object input)
+    public override void Parse(object? input, IFormatProvider provider)
     {
         if (input is not string str || string.IsNullOrEmpty(str))
         {

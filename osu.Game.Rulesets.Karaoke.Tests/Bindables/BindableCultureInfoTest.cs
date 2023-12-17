@@ -15,7 +15,7 @@ public class BindableCultureInfoTest
     public void TestParsingString(string value, int expectedLcid)
     {
         var bindable = new BindableCultureInfo();
-        bindable.Parse(value);
+        bindable.Parse(value, CultureInfo.InvariantCulture);
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
@@ -28,7 +28,7 @@ public class BindableCultureInfoTest
     public void TestParsingNumber(int value, int expectedLcid)
     {
         var bindable = new BindableCultureInfo();
-        bindable.Parse(value);
+        bindable.Parse(value, CultureInfo.InvariantCulture);
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
@@ -41,7 +41,7 @@ public class BindableCultureInfoTest
     public void TestParsingCultureInfo(int value, int expectedLcid)
     {
         var bindable = new BindableCultureInfo();
-        bindable.Parse(new CultureInfo(value));
+        bindable.Parse(new CultureInfo(value), CultureInfo.InvariantCulture);
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
@@ -52,6 +52,6 @@ public class BindableCultureInfoTest
     public void TestParsingNotSupportedCultureInfo(string value)
     {
         var bindable = new BindableCultureInfo();
-        Assert.DoesNotThrow(() => bindable.Parse(value));
+        Assert.DoesNotThrow(() => bindable.Parse(value, CultureInfo.InvariantCulture));
     }
 }
