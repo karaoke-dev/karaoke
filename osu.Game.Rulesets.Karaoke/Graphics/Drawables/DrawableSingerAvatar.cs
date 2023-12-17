@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+namespace osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 
 public partial class DrawableSingerAvatar : CompositeDrawable
 {

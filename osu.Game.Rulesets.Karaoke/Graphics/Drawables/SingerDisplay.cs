@@ -13,7 +13,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Drawables;
