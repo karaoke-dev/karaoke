@@ -28,14 +28,15 @@ public class TestCaseCheckHelper
         return (List<ICheck>)field.GetValue(beatmapVerifier)!;
     }
 
-    public static IEnumerable<IssueTemplate> GetAllAvailableIssueTemplates()
+    public static IReadOnlyDictionary<ICheck, IEnumerable<IssueTemplate>> GetAllAvailableIssueTemplates()
     {
-        return GetAllAvailableChecks().SelectMany(x => x.PossibleTemplates);
+        return GetAllAvailableChecks().ToDictionary(k => k, v => v.PossibleTemplates);
     }
 
-    public static IEnumerable<Issue> CreateAllAvailableIssues()
+    public static IReadOnlyDictionary<ICheck, Issue[]> CreateAllAvailableIssues()
     {
-        return GetAllAvailableIssueTemplates().Select(createIssueByIssueTemplate);
+        return GetAllAvailableIssueTemplates().ToDictionary(k => k.Key,
+            v => v.Value.Select(createIssueByIssueTemplate).ToArray());
 
         Issue createIssueByIssueTemplate(IssueTemplate issueTemplate)
         {

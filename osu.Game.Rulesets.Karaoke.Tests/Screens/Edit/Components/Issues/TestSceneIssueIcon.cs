@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
@@ -30,9 +29,7 @@ public partial class TestSceneIssueIcon : OsuTestScene
     [Test]
     public void DisplayIconByIssues()
     {
-        var availableIssues = TestCaseCheckHelper.CreateAllAvailableIssues()
-                                                 .GroupBy(x => x.Check)
-                                                 .ToDictionary(x => x.Key, x => x.ToArray());
+        var availableIssues = TestCaseCheckHelper.CreateAllAvailableIssues();
 
         foreach (var (check, issues) in availableIssues)
         {
