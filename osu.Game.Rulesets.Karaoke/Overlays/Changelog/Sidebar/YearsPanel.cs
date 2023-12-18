@@ -18,12 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
 
 public partial class YearsPanel : CompositeDrawable
 {
-    private readonly Bindable<APIChangelogSidebar> metadata = new();
+    private readonly Bindable<APIChangelogIndex> metadata = new();
 
     private FillFlowContainer yearsFlow = null!;
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider overlayColours, Bindable<APIChangelogSidebar> metadata)
+    private void load(OverlayColourProvider overlayColours, Bindable<APIChangelogIndex> metadata)
     {
         this.metadata.BindTo(metadata);
 

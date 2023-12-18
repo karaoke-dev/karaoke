@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
 public partial class ChangelogSidebar : CompositeDrawable
 {
     [Cached]
-    public readonly Bindable<APIChangelogSidebar> Metadata = new();
+    public readonly Bindable<APIChangelogIndex> Metadata = new();
 
     [Cached]
     public readonly Bindable<int> Year = new();
@@ -109,19 +109,19 @@ public partial class ChangelogSidebar : CompositeDrawable
         Year.BindValueChanged(e => onMetadataChanged(Metadata.Value, e.NewValue), true);
     }
 
-    private void onMetadataChanged(APIChangelogSidebar? metadata, int targetYear)
+    private void onMetadataChanged(APIChangelogIndex? metadata, int targetYear)
     {
         changelogsFlow.Clear();
 
         if (metadata == null)
             return;
 
-        var allPosts = metadata.Changelogs;
+        var builds = metadata.Builds;
 
-        if (allPosts.Any() != true)
+        if (builds.Any() != true)
             return;
 
-        var lookup = metadata.Changelogs.ToLookup(post => post.PublishedAt.Year);
+        var lookup = builds.ToLookup(post => post.PublishedAt.Year);
         var posts = lookup[targetYear].ToList();
         changelogsFlow.Add(new ChangelogSection(targetYear, posts));
     }

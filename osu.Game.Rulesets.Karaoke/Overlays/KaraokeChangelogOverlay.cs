@@ -169,9 +169,9 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
 
                 int[] years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
                 sidebar.Year.Value = years.Max();
-                sidebar.Metadata.Value = new APIChangelogSidebar
+                sidebar.Metadata.Value = new APIChangelogIndex
                 {
-                    Changelogs = builds,
+                    Builds = builds,
                     Years = years,
                 };
             });

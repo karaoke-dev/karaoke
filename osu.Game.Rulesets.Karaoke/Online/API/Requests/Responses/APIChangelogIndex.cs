@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
-public class APIChangelogSidebar
+public class APIChangelogIndex
 {
-    public IEnumerable<APIChangelogBuild> Changelogs { get; set; } = Array.Empty<APIChangelogBuild>();
+    public List<APIChangelogBuild> Builds { get; set; } = new();
 
     public int[] Years { get; set; } = Array.Empty<int>();
 }
