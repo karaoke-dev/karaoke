@@ -18,12 +18,14 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
     protected override async Task<APIChangelogIndex> Perform(IGitHubClient client)
     {
         var builds = await getAllBuilds(client).ConfigureAwait(false);
+        var previewBuilds = (await Task.WhenAll(builds.Take(5).Select(x => createPreviewBuild(client, x))).ConfigureAwait(false)).ToList();
         int[] years = generateYears(builds);
 
         return new APIChangelogIndex
         {
             Years = years,
             Builds = builds,
+            PreviewBuilds = previewBuilds,
         };
     }
 
@@ -74,6 +76,12 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
 
             return new DateTimeOffset(new DateTime(year, month, day));
         }
+    }
+
+    private static async Task<APIChangelogBuild> createPreviewBuild(IGitHubClient client, APIChangelogBuild originBuild)
+    {
+        string contentString = await GetChangelogContent(client, originBuild.Version).ConfigureAwait(false);
+        return CreateBuildWithContent(originBuild, contentString);
     }
 
     private static int[] generateYears(IEnumerable<APIChangelogBuild> builds)

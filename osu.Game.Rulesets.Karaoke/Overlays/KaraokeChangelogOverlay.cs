@@ -95,7 +95,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
             }
             else if (index != null)
             {
-                loadContent(new ChangelogListing(index.Builds));
+                loadContent(new ChangelogListing(index.PreviewBuilds));
             }
             else
             {

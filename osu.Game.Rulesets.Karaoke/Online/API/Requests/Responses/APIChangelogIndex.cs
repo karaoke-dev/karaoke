@@ -10,5 +10,7 @@ public class APIChangelogIndex
 {
     public List<APIChangelogBuild> Builds { get; set; } = new();
 
+    public List<APIChangelogBuild> PreviewBuilds { get; set; } = new();
+
     public int[] Years { get; set; } = Array.Empty<int>();
 }
