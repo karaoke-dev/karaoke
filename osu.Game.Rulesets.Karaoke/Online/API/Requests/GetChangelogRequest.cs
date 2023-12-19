@@ -57,7 +57,7 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
         {
             RootUrl = content.HtmlUrl,
             Path = content.Path,
-            DisplayVersion = content.Name,
+            Version = content.Name,
             PublishedAt = getPublishDateFromName(content.Name),
         };
 

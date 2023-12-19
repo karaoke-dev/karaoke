@@ -57,9 +57,21 @@ public class APIChangelogBuild
     public string ReadmeDownloadUrl => $"{DocumentUrl}index.md";
 
     /// <summary>
+    /// Version number
+    /// </summary>
+    /// <example>2023.0123</example>
+    /// <example>2023.1111</example>
+    public string Version { get; set; } = null!;
+
+    /// <summary>
     /// Display version
     /// </summary>
-    public string DisplayVersion { get; set; } = null!;
+    public string DisplayVersion => Version;
+
+    /// <summary>
+    /// Might be preview or detail markdown content.
+    /// </summary>
+    public string Content { get; set; } = null!;
 
     /// <summary>
     /// Version
