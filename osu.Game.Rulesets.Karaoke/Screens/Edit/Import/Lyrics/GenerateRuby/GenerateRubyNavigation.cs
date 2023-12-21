@@ -43,8 +43,8 @@ public partial class GenerateRubyNavigation : TopNavigation<GenerateRubyStepScre
         value switch
         {
             NavigationState.Initial => $"Lazy to typing ruby? Press [{auto_generate_ruby}].",
-            NavigationState.Working => $"Go to next step to generate time-tag.",
-            NavigationState.Done => $"Go to next step to generate time-tag.",
+            NavigationState.Working => "Go to next step to generate time-tag.",
+            NavigationState.Done => "Go to next step to generate time-tag.",
             NavigationState.Error => "Oops, seems cause some error in here.",
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
