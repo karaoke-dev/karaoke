@@ -2,23 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Octokit;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Online.API.Requests;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
@@ -39,7 +35,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
 
     private Sample? sampleBack;
 
-    private readonly List<APIChangelogBuild> builds = new();
+    private APIChangelogIndex? index;
 
     private readonly string organizationName;
     private readonly string branchName;
@@ -94,10 +90,16 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
         Current.BindValueChanged(e =>
         {
             if (e.NewValue != null)
+            {
                 loadContent(new ChangelogSingleBuild(e.NewValue));
+            }
+            else if (index != null)
+            {
+                loadContent(new ChangelogListing(index.PreviewBuilds));
+            }
             else
             {
-                loadContent(new ChangelogListing(builds));
+                // todo: should show oops content.
             }
         });
     }
@@ -167,13 +169,11 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
             {
                 Current.TriggerChange();
 
-                int[] years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
-                sidebar.Year.Value = years.Max();
-                sidebar.Metadata.Value = new APIChangelogSidebar
-                {
-                    Changelogs = builds,
-                    Years = years,
-                };
+                if (index == null)
+                    return;
+
+                sidebar.Year.Value = index.Years.Max();
+                sidebar.Metadata.Value = index;
             });
         }
     }
@@ -192,61 +192,24 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
         {
             var tcs = new TaskCompletionSource<bool>();
 
-            var client = new GitHubClient(new ProductHeaderValue(organizationName));
+            var req = new GetChangelogRequest();
 
-            try
+            req.Success += res => Schedule(() =>
             {
-                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName).ConfigureAwait(false);
+                index = res;
+                tcs.SetResult(true);
+            });
 
-                if (reposAscending.Any())
-                {
-                    builds.Clear();
-                    builds.AddRange(reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
-                    {
-                        RootUrl = x.HtmlUrl,
-                        Path = x.Path,
-                        DisplayVersion = x.Name,
-                        PublishedAt = getPublishDateFromName(x.Name),
-                    }));
-
-                    foreach (var build in builds)
-                    {
-                        build.Versions.Previous = builds.GetPrevious(build);
-                        build.Versions.Next = builds.GetNext(build);
-                    }
-
-                    tcs.SetResult(true);
-                }
-                else
-                {
-                    tcs.SetResult(false);
-                }
-            }
-            catch (RateLimitExceededException)
+            req.Failure += e =>
             {
-                // todo: maybe show something?
-            }
-            catch (Exception)
-            {
-                // todo: maybe show something?
-            }
+                initialFetchTask = null;
+                tcs.SetException(e);
+            };
 
-            await tcs.Task.ConfigureAwait(false);
-        });
+            await req.Perform().ConfigureAwait(false);
 
-        static DateTimeOffset getPublishDateFromName(string name)
-        {
-            var regex = new Regex("(?<year>[-0-9]+).(?<month>[-0-9]{2})(?<day>[-0-9]{2})");
-            var result = regex.Match(name);
-            if (!result.Success)
-                return DateTimeOffset.MaxValue;
-
-            int year = result.GetGroupValue<int>("year");
-            int month = result.GetGroupValue<int>("month");
-            int day = result.GetGroupValue<int>("day");
-
-            return new DateTimeOffset(new DateTime(year, month, day));
-        }
+            return tcs.Task;
+        }).Unwrap();
     }
 
     private CancellationTokenSource? loadContentCancellation;

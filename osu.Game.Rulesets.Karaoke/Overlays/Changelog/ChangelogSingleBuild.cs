@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -11,6 +12,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Online.API.Requests;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
@@ -20,32 +22,47 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 /// </summary>
 public partial class ChangelogSingleBuild : ChangelogContent
 {
-    private readonly APIChangelogBuild build;
+    private readonly APIChangelogBuild originBuild;
 
     public ChangelogSingleBuild(APIChangelogBuild build)
     {
-        this.build = build;
+        originBuild = build;
     }
 
     [BackgroundDependencyLoader]
     private void load(OverlayColourProvider colourProvider)
     {
-        // todo: get result from here
-
-        if (true)
+        Task.Run(async () =>
         {
-            Children = new Drawable[]
+            var tcs = new TaskCompletionSource<bool>();
+
+            var req = new GetChangelogBuildRequest(originBuild);
+            req.Success += build =>
             {
-                new ChangelogBuildWithNavigation(build) { SelectBuild = SelectBuild },
-                new Box
+                Schedule(() =>
                 {
-                    RelativeSizeAxes = Axes.X,
-                    Height = 2,
-                    Colour = colourProvider.Background6,
-                    Margin = new MarginPadding { Top = 30 },
-                },
+                    Children = new Drawable[]
+                    {
+                        new ChangelogBuildWithNavigation(build) { SelectBuild = SelectBuild },
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Height = 2,
+                            Colour = colourProvider.Background6,
+                            Margin = new MarginPadding { Top = 30 },
+                        },
+                    };
+                });
             };
-        }
+            req.Failure += _ =>
+            {
+                // todo: maybe display some
+            };
+
+            await req.Perform().ConfigureAwait(false);
+
+            return tcs.Task;
+        }).Unwrap();
     }
 
     public partial class ChangelogBuildWithNavigation : ChangelogBuild

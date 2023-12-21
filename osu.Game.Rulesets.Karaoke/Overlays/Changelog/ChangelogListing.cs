@@ -20,9 +20,9 @@ public partial class ChangelogListing : ChangelogContent
 {
     private readonly IReadOnlyList<APIChangelogBuild> entries;
 
-    public ChangelogListing(IEnumerable<APIChangelogBuild> entries)
+    public ChangelogListing(List<APIChangelogBuild> entries)
     {
-        this.entries = entries.Take(4).ToList();
+        this.entries = entries;
     }
 
     [BackgroundDependencyLoader]

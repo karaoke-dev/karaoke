@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
 using Markdig.Syntax.Inlines;
-using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
@@ -25,17 +23,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
     {
         DocumentUrl = build.DocumentUrl;
         RootUrl = build.RootUrl;
-
-        using var httpClient = new HttpClient();
-
-        try
-        {
-            Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
-        }
-        catch (Exception)
-        {
-            Text = "Oops, seems there's something wrong with network.";
-        }
+        Text = build.Content;
     }
 
     public override OsuMarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
