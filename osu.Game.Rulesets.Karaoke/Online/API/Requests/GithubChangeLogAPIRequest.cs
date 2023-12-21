@@ -11,6 +11,7 @@ public abstract class GithubChangeLogAPIRequest<T> : GithubAPIRequest<T> where T
 {
     protected const string ORGANIZATION_NAME = "karaoke-dev";
     protected const string PROJECT_NAME = $"{ORGANIZATION_NAME}.github.io";
+    protected const string BRANCH_NAME = "master";
     protected const string CHANGELOG_PATH = "content/changelog";
 
     protected GithubChangeLogAPIRequest()
@@ -33,10 +34,10 @@ public abstract class GithubChangeLogAPIRequest<T> : GithubAPIRequest<T> where T
 
     protected static APIChangelogBuild CreateBuildWithContent(APIChangelogBuild originBuild, string content)
     {
-        return new APIChangelogBuild(originBuild.OrganizationName, originBuild.ProjectName)
+        return new APIChangelogBuild
         {
+            DocumentUrl = originBuild.DocumentUrl,
             RootUrl = originBuild.RootUrl,
-            Path = originBuild.Path,
             Version = originBuild.Version,
             Content = content,
             Versions =

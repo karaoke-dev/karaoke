@@ -24,9 +24,9 @@ public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
     [SetUp]
     public void SetUp() => Schedule(() =>
     {
-        var build = new APIChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
+        var build = new APIChangelogBuild
         {
-            Path = "content/changelog/2020.0620",
+            DocumentUrl = "https://raw.githubusercontent.com/karaoke-dev/karaoke-dev.github.io/master/content/changelog/2020.0620",
             RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/content/changelog/2020.0620",
             Content = "---\ntitle: \"2020.0620\"\ndate: 2020-06-20\n---\n\n## Achievement\n\n- Might support convert `UTAU`/`SynthV` project into karaoke beatmap in future. [karaoke](#100#101@andy840119)",
         };

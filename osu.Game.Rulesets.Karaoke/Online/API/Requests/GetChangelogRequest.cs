@@ -55,10 +55,10 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
 
     private static APIChangelogBuild createBuild(RepositoryContent content)
     {
-        return new APIChangelogBuild(ORGANIZATION_NAME, PROJECT_NAME)
+        return new APIChangelogBuild
         {
+            DocumentUrl = getDocumentUrl(content.Path),
             RootUrl = content.HtmlUrl,
-            Path = content.Path,
             Version = content.Name,
             PublishedAt = getPublishDateFromName(content.Name),
         };
@@ -76,6 +76,9 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
 
             return new DateTimeOffset(new DateTime(year, month, day));
         }
+
+        string getDocumentUrl(string path)
+            => $"https://raw.githubusercontent.com/{ORGANIZATION_NAME}/{PROJECT_NAME}/{BRANCH_NAME}/{path}/";
     }
 
     private static async Task<APIChangelogBuild> createPreviewBuild(IGitHubClient client, APIChangelogBuild originBuild)
