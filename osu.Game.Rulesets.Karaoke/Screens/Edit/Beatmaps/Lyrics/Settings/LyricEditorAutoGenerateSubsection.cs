@@ -17,7 +17,7 @@ public abstract partial class LyricEditorAutoGenerateSubsection : AutoGenerateSu
 
     protected LyricEditorAutoGenerateSubsection(AutoGenerateType generateType)
     {
-        this.autoGenerateType = generateType;
+        autoGenerateType = generateType;
     }
 
     protected override EditorSectionButton CreateGenerateButton()
