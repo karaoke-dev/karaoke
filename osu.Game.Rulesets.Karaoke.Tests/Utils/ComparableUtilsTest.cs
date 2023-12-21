@@ -50,10 +50,13 @@ public class ComparableUtilsTest
 
     private class TestObject
     {
-        public int A { get; set; } = 0;
+        [JsonProperty]
+        public int A { get; set; }
 
-        public double B { get; set; } = 0;
+        [JsonProperty]
+        public double B { get; set; }
 
+        [JsonProperty]
         public string C { get; set; } = string.Empty;
     }
 }
