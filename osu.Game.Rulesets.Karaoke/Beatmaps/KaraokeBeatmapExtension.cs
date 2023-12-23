@@ -12,14 +12,9 @@ public static class KaraokeBeatmapExtension
 {
     public static bool IsScorable(this IBeatmap beatmap)
     {
-        if (beatmap is not KaraokeBeatmap karaokeBeatmap)
-        {
-            // we should throw invalidate exception here but it will cause test case failed.
-            // because beatmap in the working beatmap in test case not always be karaoke beatmap class.
-            return false;
-        }
-
-        return karaokeBeatmap.Scorable;
+        // we should throw invalidate exception here but it will cause test case failed.
+        // because beatmap in the working beatmap in test case not always be karaoke beatmap class.
+        return beatmap is KaraokeBeatmap karaokeBeatmap && karaokeBeatmap.Scorable;
     }
 
     public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
