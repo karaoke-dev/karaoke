@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyricEditorVerifier
 {
     [Resolved]
-    private EditorBeatmap beatmap { get; set; } = null!;
+    private EditorBeatmap editorBeatmap { get; set; } = null!;
 
     private readonly Dictionary<KaraokeHitObject, BindableList<Issue>> hitObjectIssues = new();
 
@@ -65,9 +65,9 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         base.LoadComplete();
 
         // need to check is there any lyric added or removed.
-        beatmap.HitObjectAdded += hitObjectAdded;
-        beatmap.HitObjectRemoved += hitObjectRemoved;
-        beatmap.HitObjectUpdated += hitObjectUpdated;
+        editorBeatmap.HitObjectAdded += hitObjectAdded;
+        editorBeatmap.HitObjectRemoved += hitObjectRemoved;
+        editorBeatmap.HitObjectUpdated += hitObjectUpdated;
 
         recalculateIssues();
     }
@@ -80,7 +80,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
 
     private void recalculateIssues()
     {
-        var hitObjects = beatmap.HitObjects.OfType<KaraokeHitObject>().ToArray();
+        var hitObjects = editorBeatmap.HitObjects.OfType<KaraokeHitObject>().ToArray();
         var listedHitObjects = hitObjectIssues.Keys.ToArray();
 
         var newHitObjects = hitObjects.Except(listedHitObjects);
@@ -182,9 +182,9 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
     {
         base.Dispose(isDisposing);
 
-        beatmap.HitObjectAdded -= hitObjectAdded;
-        beatmap.HitObjectRemoved -= hitObjectRemoved;
-        beatmap.HitObjectUpdated -= hitObjectUpdated;
+        editorBeatmap.HitObjectAdded -= hitObjectAdded;
+        editorBeatmap.HitObjectRemoved -= hitObjectRemoved;
+        editorBeatmap.HitObjectUpdated -= hitObjectUpdated;
     }
 }
 
