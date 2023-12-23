@@ -81,11 +81,8 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
     protected override TimeTagCaretPosition? MoveToFirstLyric()
     {
         var firstLyric = Lyrics.FirstOrDefault(x => x.TimeTags.Any(timeTagMovable));
-        if (firstLyric == null)
-            return null;
-
-        var firstTimeTag = firstLyric.TimeTags.FirstOrDefault(timeTagMovable);
-        if (firstTimeTag == null)
+        var firstTimeTag = firstLyric?.TimeTags.FirstOrDefault(timeTagMovable);
+        if (firstLyric == null || firstTimeTag == null)
             return null;
 
         return CreateCaretPosition(firstLyric, firstTimeTag);
@@ -94,11 +91,8 @@ public class TimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<TimeTag
     protected override TimeTagCaretPosition? MoveToLastLyric()
     {
         var lastLyric = Lyrics.LastOrDefault(x => x.TimeTags.Any(timeTagMovable));
-        if (lastLyric == null)
-            return null;
-
-        var lastTimeTag = lastLyric.TimeTags.LastOrDefault(timeTagMovable);
-        if (lastTimeTag == null)
+        var lastTimeTag = lastLyric?.TimeTags.LastOrDefault(timeTagMovable);
+        if (lastLyric == null || lastTimeTag == null)
             return null;
 
         return CreateCaretPosition(lastLyric, lastTimeTag);
