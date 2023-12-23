@@ -25,7 +25,7 @@ public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImpo
     private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);
 
     [Cached]
-    private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
+    private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager = new();
 
     protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
@@ -36,11 +36,6 @@ public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImpo
     }
 
     private DialogOverlay dialogOverlay = null!;
-
-    public TestSceneLyricImporter()
-    {
-        lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
-    }
 
     [BackgroundDependencyLoader]
     private void load()

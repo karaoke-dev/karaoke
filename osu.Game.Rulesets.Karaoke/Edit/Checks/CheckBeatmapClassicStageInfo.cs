@@ -143,10 +143,6 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
         public Issue Create() => new(this);
     }
 
-    #region stage definition
-
-    #endregion
-
     #region timing info
 
     public class IssueTemplateLessThanTwoTimingPoints : IssueTemplate

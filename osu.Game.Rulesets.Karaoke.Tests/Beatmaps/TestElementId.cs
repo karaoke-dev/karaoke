@@ -35,11 +35,17 @@ public class TestElementId
     {
         if (created)
         {
-            Assert.DoesNotThrow(() => new ElementId(id));
+            Assert.DoesNotThrow(() =>
+            {
+                var _ = new ElementId(id);
+            });
         }
         else
         {
-            Assert.Throws<ArgumentException>(() => new ElementId(id));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var _ = new ElementId(id);
+            });
         }
     }
 

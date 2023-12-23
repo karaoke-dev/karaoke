@@ -45,9 +45,6 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private ITimeTagModeState timeTagModeState { get; set; } = null!;
 
     [Resolved]
-    private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
-
-    [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
 
     [Resolved]

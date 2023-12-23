@@ -18,21 +18,16 @@ public partial class TestSceneSetupScreen : EditorClockTestScene
 {
     [Cached(typeof(EditorBeatmap))]
     [Cached(typeof(IBeatSnapProvider))]
-    private readonly EditorBeatmap editorBeatmap;
+    private readonly EditorBeatmap editorBeatmap = new(new KaraokeBeatmap
+    {
+        BeatmapInfo =
+        {
+            Ruleset = new KaraokeRuleset().RulesetInfo,
+        },
+    });
 
     [Cached]
     private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
-
-    public TestSceneSetupScreen()
-    {
-        editorBeatmap = new EditorBeatmap(new KaraokeBeatmap
-        {
-            BeatmapInfo =
-            {
-                Ruleset = new KaraokeRuleset().RulesetInfo,
-            },
-        });
-    }
 
     [Test]
     public void TestKaraoke() => runForRuleset(new KaraokeRuleset().RulesetInfo);

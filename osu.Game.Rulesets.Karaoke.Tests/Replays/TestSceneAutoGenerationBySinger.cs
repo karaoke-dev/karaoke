@@ -56,10 +56,13 @@ public partial class TestSceneAutoGenerationBySinger : OsuTestScene
 
     private struct TestKaraokeReplayFrame
     {
+        [JsonProperty]
         public double Time { get; set; }
 
+        [JsonProperty]
         public float Pitch { get; set; }
 
+        [JsonProperty]
         public bool Sound { get; set; }
     }
 }

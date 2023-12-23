@@ -6,11 +6,11 @@ using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IHasEditStep<T> where T : Enum
+public interface IHasEditStep<TEditStep> where TEditStep : Enum
 {
-    IBindable<T> BindableEditStep { get; }
+    IBindable<TEditStep> BindableEditStep { get; }
 
-    T EditStep => BindableEditStep.Value;
+    TEditStep EditStep => BindableEditStep.Value;
 
-    void ChangeEditStep(T mode);
+    void ChangeEditStep(TEditStep step);
 }

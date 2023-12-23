@@ -48,12 +48,9 @@ public class KaraokeJsonBeatmapDecoder : JsonBeatmapDecoder
         {
             var props = base.CreateProperties(type, memberSerialization);
 
-            if (type == typeof(BeatmapInfo))
-            {
-                return props.Where(p => p.PropertyName != "ruleset_id").ToList();
-            }
-
-            return props;
+            return type == typeof(BeatmapInfo)
+                ? props.Where(p => p.PropertyName != "ruleset_id").ToList()
+                : props;
         }
     }
 }

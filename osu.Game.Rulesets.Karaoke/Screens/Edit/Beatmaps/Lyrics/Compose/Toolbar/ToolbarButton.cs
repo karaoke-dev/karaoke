@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.Input;
 using osu.Game.Graphics.Containers;
 using osuTK;
 
@@ -25,9 +24,6 @@ public abstract partial class ToolbarButton : OsuClickableContainer
 
     [Resolved]
     private TextureStore textures { get; set; } = null!;
-
-    [Resolved]
-    private ReadableKeyCombinationProvider keyCombinationProvider { get; set; } = null!;
 
     public void SetIcon(string texture) =>
         SetIcon(new Sprite

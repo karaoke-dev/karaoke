@@ -106,15 +106,17 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
 
     private static PropertyInfo? getMethod(Type type, string methodName)
     {
-        var theMethod = type.GetProperty(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+        Type? targetType = type;
 
-        if (theMethod != null)
-            return theMethod;
+        while (targetType != null)
+        {
+            var theMethod = targetType.GetProperty(methodName, BindingFlags.NonPublic | BindingFlags.Static);
+            if (theMethod != null)
+                return theMethod;
 
-        var baseType = type.BaseType;
-        if (baseType == null)
-            return null;
+            targetType = targetType.BaseType;
+        }
 
-        return getMethod(baseType, methodName);
+        return null;
     }
 }

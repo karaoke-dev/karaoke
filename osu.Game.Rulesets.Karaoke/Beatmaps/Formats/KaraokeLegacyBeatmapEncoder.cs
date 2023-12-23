@@ -52,11 +52,9 @@ public class KaraokeLegacyBeatmapEncoder
         // Convert single note
         static string convertNote(Note note)
         {
-            if (!note.Display)
-                return "-";
-
-            // TODO : Fill if customize ruby and percentage
-            return convertTone(note.Tone);
+            return !note.Display
+                ? "-"
+                : convertTone(note.Tone);
 
             // Convert tone to string
             static string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : string.Empty);

@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -78,9 +77,6 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
         public Action? DeleteRequested { get; set; }
 
         private readonly DrawableSingerAvatar singerAvatar;
-
-        [Resolved]
-        private OsuColour colours { get; set; } = null!;
 
         public SingerCircle()
         {

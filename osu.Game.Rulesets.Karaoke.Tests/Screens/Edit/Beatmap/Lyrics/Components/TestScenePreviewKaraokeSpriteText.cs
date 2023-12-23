@@ -27,18 +27,13 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
 
     private Action? updateAction;
 
-    private readonly Lyric lyric;
-
-    public TestScenePreviewKaraokeSpriteText()
+    private readonly Lyric lyric = new()
     {
-        lyric = new Lyric
-        {
-            Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
-            RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }),
-        };
-    }
+        Text = "カラオケ",
+        TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
+        RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
+        RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }),
+    };
 
     protected override void Update()
     {

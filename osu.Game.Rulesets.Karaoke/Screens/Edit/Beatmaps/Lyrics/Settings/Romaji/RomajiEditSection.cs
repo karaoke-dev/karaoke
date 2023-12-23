@@ -11,7 +11,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
@@ -43,9 +42,6 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
     private partial class RomajiTagsEditor : LyricPropertiesEditor
     {
         private readonly Bindable<RomajiEditPropertyMode> bindableRomajiEditPropertyMode = new();
-
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; } = null!;
 
         public RomajiTagsEditor()
         {

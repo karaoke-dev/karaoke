@@ -126,7 +126,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
             : result;
     }
 
-    protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods = null)
+    protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
     {
         drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
 

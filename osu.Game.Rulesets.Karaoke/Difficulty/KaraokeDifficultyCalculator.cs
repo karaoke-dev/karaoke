@@ -79,16 +79,11 @@ public class KaraokeDifficultyCalculator : DifficultyCalculator
 
     private int getHitWindow300(Mod[] mods)
     {
-        if (isForCurrentRuleset)
-        {
-            double od = Math.Min(10.0, Math.Max(0, 10.0 - originalOverallDifficulty));
-            return applyModAdjustments(34 + 3 * od, mods);
-        }
+        if (!isForCurrentRuleset)
+            return applyModAdjustments(Math.Round(originalOverallDifficulty) > 4 ? 34 : 47, mods);
 
-        if (Math.Round(originalOverallDifficulty) > 4)
-            return applyModAdjustments(34, mods);
-
-        return applyModAdjustments(47, mods);
+        double od = Math.Min(10.0, Math.Max(0, 10.0 - originalOverallDifficulty));
+        return applyModAdjustments(34 + 3 * od, mods);
 
         static int applyModAdjustments(double value, Mod[] mods)
         {

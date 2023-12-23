@@ -83,14 +83,12 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
 
     private partial class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
     {
-        private readonly Container<T> content;
-
         // todo: check what this shit doing.
-        protected override Container<T> Content => content;
+        protected override Container<T> Content { get; }
 
         public FixedSectionsContainer()
         {
-            AddInternal(content = new Container<T>
+            AddInternal(Content = new Container<T>
             {
                 Masking = true,
                 RelativeSizeAxes = Axes.Both,
