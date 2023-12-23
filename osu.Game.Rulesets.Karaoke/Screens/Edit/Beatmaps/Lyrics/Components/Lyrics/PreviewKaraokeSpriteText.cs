@@ -26,7 +26,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     public Lyric HitObject;
 
-    public Action? SizeChanged = null;
+    public Action? SizeChanged;
 
     private readonly EditorLyricSpriteText spriteText;
 
