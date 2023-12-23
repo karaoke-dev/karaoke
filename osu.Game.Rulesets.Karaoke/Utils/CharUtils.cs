@@ -64,17 +64,17 @@ public static class CharUtils
     /// <returns></returns>
     public static bool IsLatin(char c)
     {
-        if (c >= 'A' && c <= 'Z')
-            return true;
+        switch (c)
+        {
+            case >= 'A' and <= 'Z':
+            case >= 'a' and <= 'z':
+            // another romanized characters
+            // see: https://www.unicode.org/charts/PDF/U1E00.pdf
+            case >= '\u1E00' and <= '\u1EFF':
+                return true;
 
-        if (c >= 'a' && c <= 'z')
-            return true;
-
-        // another romanized characters
-        // see: https://www.unicode.org/charts/PDF/U1E00.pdf
-        if (c >= '\u1E00' && c <= '\u1EFF')
-            return true;
-
-        return false;
+            default:
+                return false;
+        }
     }
 }
