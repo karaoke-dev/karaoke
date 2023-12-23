@@ -136,31 +136,35 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     public TimeTag? GetTimeTagByPosition(float position)
     {
-        // todo: will use better way to get the time-tag
-        var textIndex = getHoverIndex();
-        return HitObject.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+        var hoverIndex = getHoverIndex();
+        if (hoverIndex == null)
+            return null;
 
-        TextIndex getHoverIndex()
+        // todo: will use better way to get the time-tag
+        return HitObject.TimeTags.FirstOrDefault(x => x.Index == hoverIndex);
+
+        TextIndex? getHoverIndex()
         {
             for (int i = 0; i < Text.Length; i++)
             {
-                if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
-                    return new TextIndex(i);
-
-                if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
-                    return new TextIndex(i, TextIndex.IndexState.End);
+                foreach (var indexState in Enum.GetValues<TextIndex.IndexState>())
+                {
+                    var textIndex = new TextIndex(i, indexState);
+                    var triggerRange = getTriggerRange(textIndex);
+                    if (position >= triggerRange.Item1 && position <= triggerRange.Item2)
+                        return textIndex;
+                }
             }
 
-            return new TextIndex(Text.Length - 1, TextIndex.IndexState.End);
+            // hover the last time-tag if exceed the range.
+            return null;
 
-            // todo : might have a better way to call spriteText.GetTimeTagPosition just once.
-            float getTriggerPositionByTimeIndex(TextIndex textIndex)
+            Tuple<float, float> getTriggerRange(TextIndex textIndex)
             {
-                int charIndex = textIndex.Index;
-                float startPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex)).X;
-                float endPosition = spriteText.GetTimeTagPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
-
-                return TextIndexUtils.GetValueByState(textIndex, () => startPosition + (endPosition - startPosition) / 2, () => endPosition);
+                var rect = spriteText.GetCharacterDrawRectangle(textIndex.Index);
+                return TextIndexUtils.GetValueByState(textIndex,
+                    () => new Tuple<float, float>(rect.Left, rect.Centre.X),
+                    () => new Tuple<float, float>(rect.Centre.X, rect.Right));
             }
         }
     }
