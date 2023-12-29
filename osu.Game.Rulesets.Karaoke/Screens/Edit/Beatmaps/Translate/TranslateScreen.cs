@@ -55,7 +55,7 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
             {
                 Title = "translate";
                 Description = "create translation of your beatmap";
-                Icon = HexaconsIcons.Social;
+                Icon = OsuIcon.Online;
             }
         }
     }

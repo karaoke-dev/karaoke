@@ -58,7 +58,7 @@ public partial class ChangelogHeader : BreadcrumbControlOverlayHeader
         {
             Title = PageTitleStrings.MainChangelogControllerDefault;
             Description = NamedOverlayComponentStrings.ChangelogDescription;
-            Icon = HexaconsIcons.Devtools;
+            Icon = OsuIcon.ChangelogB;
         }
     }
 }

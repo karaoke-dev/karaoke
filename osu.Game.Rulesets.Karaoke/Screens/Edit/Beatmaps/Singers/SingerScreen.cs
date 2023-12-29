@@ -107,7 +107,7 @@ public partial class SingerScreen : BeatmapEditorRoundedScreen, ISingerScreenScr
             {
                 Title = "singer";
                 Description = "create singer of your beatmap";
-                Icon = HexaconsIcons.Social;
+                Icon = OsuIcon.Player;
             }
         }
     }

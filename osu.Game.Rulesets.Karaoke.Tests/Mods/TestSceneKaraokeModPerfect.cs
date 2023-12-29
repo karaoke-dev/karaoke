@@ -4,11 +4,14 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-public partial class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
+public partial class TestSceneKaraokeModPerfect : ModFailConditionTestScene
 {
+    protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
     public TestSceneKaraokeModPerfect()
         : base(new KaraokeModPerfect())
     {
