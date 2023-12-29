@@ -118,7 +118,7 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
             {
                 Title = "page";
                 Description = "create page of your beatmap";
-                Icon = HexaconsIcons.Social;
+                Icon = OsuIcon.FeaturedArtistCircle;
             }
         }
     }
