@@ -67,7 +67,10 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         var caretPosition = createBiggerCaretPosition(lyric1);
         var comparedCaretPosition = createSmallerCaretPosition(lyric2);
 
-        Assert.Throws<InvalidOperationException>(() => caretPosition.CompareTo(comparedCaretPosition));
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            int _ = caretPosition.CompareTo(comparedCaretPosition);
+        });
     }
 
     [Test]
@@ -78,7 +81,10 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         var caretPosition = createBiggerCaretPosition(lyric);
         var comparedCaretPosition = new FakeCaretPosition(lyric);
 
-        Assert.Throws<InvalidOperationException>(() => caretPosition.CompareTo(comparedCaretPosition));
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            int _ = caretPosition.CompareTo(comparedCaretPosition);
+        });
     }
 
     private IIndexCaretPosition createSmallerCaretPosition(Lyric lyric) =>

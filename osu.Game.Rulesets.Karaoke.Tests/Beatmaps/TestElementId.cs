@@ -84,9 +84,20 @@ public class TestElementId
         var elementId = new ElementId("1234567");
 
         Assert.AreEqual(elementId.CompareTo(null), 1);
-        Assert.Throws<ArgumentException>(() => elementId.CompareTo(3)); // should not compare to other type
-        Assert.Throws<ArgumentException>(() => elementId.CompareTo("123")); // should not compare to the string also.
-        Assert.DoesNotThrow(() => elementId.CompareTo(new ElementId("1234567")));
+        Assert.Throws<ArgumentException>(() =>
+        {
+            int _ = elementId.CompareTo(3);
+        });
+        Assert.Throws<ArgumentException>(() =>
+        {
+            // should not compare to other type
+            int _ = elementId.CompareTo("123");
+        });
+        Assert.DoesNotThrow(() =>
+        {
+            // should not compare to the string also.
+            int _ = elementId.CompareTo(new ElementId("1234567"));
+        });
     }
 
     [TestCase("1234567", "1234567", true)]
