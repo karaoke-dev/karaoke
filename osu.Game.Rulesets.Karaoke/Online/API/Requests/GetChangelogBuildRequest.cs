@@ -18,7 +18,7 @@ public class GetChangelogBuildRequest : GithubChangeLogAPIRequest<APIChangelogBu
 
     protected override async Task<APIChangelogBuild> Perform(IGitHubClient client)
     {
-        string contentString = await GetChangelogContent(client, originBuild.Version).ConfigureAwait(false);
+        string contentString = await ChangelogRequestUtils.GetChangelogContent(client, originBuild.Version).ConfigureAwait(false);
         return CreateBuildWithContent(originBuild, contentString);
     }
 }
