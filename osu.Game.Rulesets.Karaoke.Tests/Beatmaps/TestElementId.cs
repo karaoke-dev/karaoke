@@ -37,14 +37,14 @@ public class TestElementId
         {
             Assert.DoesNotThrow(() =>
             {
-                var _ = new ElementId(id);
+                _ = new ElementId(id);
             });
         }
         else
         {
             Assert.Throws<ArgumentException>(() =>
             {
-                var _ = new ElementId(id);
+                _ = new ElementId(id);
             });
         }
     }
