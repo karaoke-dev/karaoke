@@ -108,15 +108,20 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
     public Issue[]? TooltipContent { get; private set; }
 
     public Popover GetPopover()
-        => new IssueTablePopover(this, bindableIssues);
+    {
+        if (Parent == null)
+            throw new InvalidCastException("Should attach parent before get popover.");
+
+        return new IssueTablePopover(Parent.Dependencies, bindableIssues);
+    }
 
     private partial class IssueTablePopover : OsuPopover
     {
-        private readonly CompositeDrawable parentDrawable;
+        private readonly IReadOnlyDependencyContainer dependencyContainer;
 
-        public IssueTablePopover(CompositeDrawable parent, IReadOnlyCollection<Issue> issues)
+        public IssueTablePopover(IReadOnlyDependencyContainer dependencyContainer, IReadOnlyCollection<Issue> issues)
         {
-            parentDrawable = parent;
+            this.dependencyContainer = dependencyContainer;
 
             Child = new Container
             {
@@ -136,7 +141,7 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                         Scale = new Vector2(0.7f),
                         Action = () =>
                         {
-                            var verifier = parentDrawable.Dependencies.Get<ILyricEditorVerifier>();
+                            var verifier = dependencyContainer.Get<ILyricEditorVerifier>();
                             verifier.Refresh();
 
                             // should close the popover if has no issue.
@@ -152,9 +157,9 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
-            dependencies.Cache(parentDrawable.Dependencies.Get<LyricEditorColourProvider>());
-            dependencies.CacheAs(parentDrawable.Dependencies.Get<ILyricEditorState>());
-            dependencies.CacheAs(parentDrawable.Dependencies.Get<IIssueNavigator>());
+            dependencies.Cache(dependencyContainer.Get<LyricEditorColourProvider>());
+            dependencies.CacheAs(dependencyContainer.Get<ILyricEditorState>());
+            dependencies.CacheAs(dependencyContainer.Get<IIssueNavigator>());
 
             return dependencies;
         }
