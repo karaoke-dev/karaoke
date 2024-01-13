@@ -7,11 +7,12 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests;
 
-public class GetChangelogBuildRequest : GithubChangeLogAPIRequest<APIChangelogBuild>
+public class GetChangelogBuildRequest : GithubAPIRequest<APIChangelogBuild>
 {
     private readonly APIChangelogBuild originBuild;
 
     public GetChangelogBuildRequest(APIChangelogBuild originBuild)
+        : base(ChangelogRequestUtils.ORGANIZATION_NAME)
     {
         this.originBuild = originBuild;
     }
@@ -19,6 +20,6 @@ public class GetChangelogBuildRequest : GithubChangeLogAPIRequest<APIChangelogBu
     protected override async Task<APIChangelogBuild> Perform(IGitHubClient client)
     {
         string contentString = await ChangelogRequestUtils.GetChangelogContent(client, originBuild.Version).ConfigureAwait(false);
-        return CreateBuildWithContent(originBuild, contentString);
+        return originBuild.CreateBuildWithContent(contentString);
     }
 }

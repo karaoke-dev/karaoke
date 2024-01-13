@@ -10,8 +10,13 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests;
 
-public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
+public class GetChangelogRequest : GithubAPIRequest<APIChangelogIndex>
 {
+    public GetChangelogRequest()
+        : base(ChangelogRequestUtils.ORGANIZATION_NAME)
+    {
+    }
+
     protected override async Task<APIChangelogIndex> Perform(IGitHubClient client)
     {
         var builds = await getAllBuilds(client).ConfigureAwait(false);
@@ -60,7 +65,7 @@ public class GetChangelogRequest : GithubChangeLogAPIRequest<APIChangelogIndex>
     private static async Task<APIChangelogBuild> createPreviewBuild(IGitHubClient client, APIChangelogBuild originBuild)
     {
         string contentString = await ChangelogRequestUtils.GetChangelogContent(client, originBuild.Version).ConfigureAwait(false);
-        return CreateBuildWithContent(originBuild, contentString);
+        return originBuild.CreateBuildWithContent(contentString);
     }
 
     private static int[] generateYears(IEnumerable<APIChangelogBuild> builds)
