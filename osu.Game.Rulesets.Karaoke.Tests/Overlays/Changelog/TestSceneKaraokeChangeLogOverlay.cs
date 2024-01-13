@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Overlays;
+namespace osu.Game.Rulesets.Karaoke.Tests.Overlays.Changelog;
 
 [TestFixture]
 public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
