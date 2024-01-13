@@ -12,7 +12,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osu.Game.Database;
 using osu.Game.Overlays.Dialog;
-using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
+using osu.Game.Rulesets.Karaoke.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile;

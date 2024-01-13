@@ -4,7 +4,7 @@
 using System;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
+namespace osu.Game.Rulesets.Karaoke.Overlays.Dialog;
 
 public partial class OkPopupDialog : PopupDialog
 {
