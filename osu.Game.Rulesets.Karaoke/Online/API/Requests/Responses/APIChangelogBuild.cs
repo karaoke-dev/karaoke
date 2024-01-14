@@ -59,4 +59,21 @@ public class APIChangelogBuild
     }
 
     public override string ToString() => $"Karaoke! {DisplayVersion}";
+
+    public APIChangelogBuild CreateBuildWithContent(string content)
+    {
+        return new APIChangelogBuild
+        {
+            DocumentUrl = DocumentUrl,
+            RootUrl = RootUrl,
+            Version = Version,
+            Content = content,
+            Versions =
+            {
+                Previous = Versions.Previous,
+                Next = Versions.Next,
+            },
+            PublishedAt = PublishedAt,
+        };
+    }
 }

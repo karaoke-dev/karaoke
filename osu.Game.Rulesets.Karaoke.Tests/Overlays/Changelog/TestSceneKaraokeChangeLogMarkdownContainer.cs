@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Overlays;
+namespace osu.Game.Rulesets.Karaoke.Tests.Overlays.Changelog;
 
 [TestFixture]
 public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
