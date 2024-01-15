@@ -17,9 +17,9 @@ public class TimeTag : IDeepCloneable<TimeTag>
     public event Action? TimingChanged;
 
     /// <summary>
-    /// Invoked when <see cref="InitialRomaji"/> or <see cref="RomajiText"/> of this <see cref="TimeTag"/> is changed.
+    /// Invoked when <see cref="FirstSyllable"/> or <see cref="RomanizedSyllable"/> of this <see cref="TimeTag"/> is changed.
     /// </summary>
-    public event Action? RomajiChanged;
+    public event Action? SyllableChanged;
 
     public TimeTag(TextIndex index, double? time = null)
     {
@@ -27,8 +27,8 @@ public class TimeTag : IDeepCloneable<TimeTag>
         Time = time;
 
         TimeBindable.ValueChanged += _ => TimingChanged?.Invoke();
-        InitialRomajiBindable.ValueChanged += _ => RomajiChanged?.Invoke();
-        RomajiTextBindable.ValueChanged += _ => RomajiChanged?.Invoke();
+        FirstSyllableBindable.ValueChanged += _ => SyllableChanged?.Invoke();
+        RomanizedSyllableBindable.ValueChanged += _ => SyllableChanged?.Invoke();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class TimeTag : IDeepCloneable<TimeTag>
     }
 
     [JsonIgnore]
-    public readonly Bindable<bool> InitialRomajiBindable = new();
+    public readonly Bindable<bool> FirstSyllableBindable = new();
 
     /// <summary>
     /// Mark if this romaji is the first letter of the romaji word.
@@ -65,22 +65,22 @@ public class TimeTag : IDeepCloneable<TimeTag>
     /// If this is the first or(4th) time-tag, then this value should be true.<br/>
     /// If this ts the 2th or 3th time-tag, then this value should be false.<br/>
     /// </example>
-    public bool InitialRomaji
+    public bool FirstSyllable
     {
-        get => InitialRomajiBindable.Value;
-        set => InitialRomajiBindable.Value = value;
+        get => FirstSyllableBindable.Value;
+        set => FirstSyllableBindable.Value = value;
     }
 
     [JsonIgnore]
-    public readonly Bindable<string?> RomajiTextBindable = new();
+    public readonly Bindable<string?> RomanizedSyllableBindable = new();
 
     /// <summary>
     /// Romaji
     /// </summary>
-    public string? RomajiText
+    public string? RomanizedSyllable
     {
-        get => RomajiTextBindable.Value;
-        set => RomajiTextBindable.Value = value;
+        get => RomanizedSyllableBindable.Value;
+        set => RomanizedSyllableBindable.Value = value;
     }
 
     public TimeTag DeepClone()

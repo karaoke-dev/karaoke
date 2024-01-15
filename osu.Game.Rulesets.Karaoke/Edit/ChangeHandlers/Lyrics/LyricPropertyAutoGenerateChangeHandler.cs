@@ -179,8 +179,8 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                     foreach (var (key, value) in results)
                     {
                         var matchedTimeTag = lyric.TimeTags.Single(x => x == key);
-                        matchedTimeTag.InitialRomaji = value.InitialRomaji;
-                        matchedTimeTag.RomajiText = value.RomajiText;
+                        matchedTimeTag.FirstSyllable = value.InitialRomaji;
+                        matchedTimeTag.RomanizedSyllable = value.RomajiText;
                     }
                 });
                 break;

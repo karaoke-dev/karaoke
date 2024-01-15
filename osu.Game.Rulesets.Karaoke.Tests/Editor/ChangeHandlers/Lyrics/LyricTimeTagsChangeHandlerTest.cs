@@ -54,7 +54,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(true, timeTag.InitialRomaji);
+            Assert.AreEqual(true, timeTag.FirstSyllable);
         });
     }
 
@@ -75,14 +75,14 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual("karaoke", timeTag.RomajiText);
+            Assert.AreEqual("karaoke", timeTag.RomanizedSyllable);
         });
 
         TriggerHandlerChanged(c => c.SetTimeTagRomajiText(timeTag, "  "));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(string.Empty, timeTag.RomajiText);
+            Assert.AreEqual(string.Empty, timeTag.RomanizedSyllable);
         });
     }
 

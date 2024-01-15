@@ -69,7 +69,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
                 },
                 RomajiEditPropertyMode.Initial => new LabelledInitialSwitchButton(item)
                 {
-                    Label = item.RomajiText ?? string.Empty,
+                    Label = item.RomanizedSyllable ?? string.Empty,
                 },
                 _ => throw new ArgumentOutOfRangeException(nameof(bindableRomajiEditPropertyMode.Value)),
             };
@@ -98,7 +98,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             => editRomajiModeState.Select(item);
 
         protected override string GetFieldValue(TimeTag timeTag)
-            => timeTag.RomajiText ?? string.Empty;
+            => timeTag.RomanizedSyllable ?? string.Empty;
 
         protected override void ApplyValue(TimeTag timeTag, string value)
             => lyricTimeTagsChangeHandler.SetTimeTagRomajiText(timeTag, value);
@@ -121,7 +121,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         }
 
         protected override bool GetFieldValue(TimeTag timeTag)
-            => timeTag.InitialRomaji;
+            => timeTag.FirstSyllable;
 
         protected override void ApplyValue(TimeTag timeTag, bool value)
             => lyricTimeTagsChangeHandler.SetTimeTagInitialRomaji(timeTag, value);

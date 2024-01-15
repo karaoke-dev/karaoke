@@ -37,7 +37,7 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
             if (!containsInLyric)
                 throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
-            timeTag.InitialRomaji = initialRomaji;
+            timeTag.FirstSyllable = initialRomaji;
         });
     }
 
@@ -51,13 +51,13 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
             if (!containsInLyric)
                 throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
-            timeTag.RomajiText = romaji;
+            timeTag.RomanizedSyllable = romaji;
 
             if (!string.IsNullOrWhiteSpace(romaji))
                 return;
 
-            timeTag.RomajiText = string.Empty;
-            timeTag.InitialRomaji = false;
+            timeTag.RomanizedSyllable = string.Empty;
+            timeTag.FirstSyllable = false;
         });
     }
 
