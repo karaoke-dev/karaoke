@@ -27,7 +27,7 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
         });
     }
 
-    public void SetTimeTagInitialRomaji(TimeTag timeTag, bool initialRomaji)
+    public void SetTimeTagFirstSyllable(TimeTag timeTag, bool firstSyllable)
     {
         CheckExactlySelectedOneHitObject();
 
@@ -37,11 +37,11 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
             if (!containsInLyric)
                 throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
-            timeTag.FirstSyllable = initialRomaji;
+            timeTag.FirstSyllable = firstSyllable;
         });
     }
 
-    public void SetTimeTagRomajiText(TimeTag timeTag, string romaji)
+    public void SetTimeTagRomanizedSyllable(TimeTag timeTag, string? romanizedSyllable)
     {
         CheckExactlySelectedOneHitObject();
 
@@ -51,9 +51,9 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
             if (!containsInLyric)
                 throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
-            timeTag.RomanizedSyllable = romaji;
+            timeTag.RomanizedSyllable = romanizedSyllable;
 
-            if (!string.IsNullOrWhiteSpace(romaji))
+            if (!string.IsNullOrWhiteSpace(romanizedSyllable))
                 return;
 
             timeTag.RomanizedSyllable = string.Empty;

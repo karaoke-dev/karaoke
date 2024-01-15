@@ -101,7 +101,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             => timeTag.RomanizedSyllable ?? string.Empty;
 
         protected override void ApplyValue(TimeTag timeTag, string value)
-            => lyricTimeTagsChangeHandler.SetTimeTagRomajiText(timeTag, value);
+            => lyricTimeTagsChangeHandler.SetTimeTagRomanizedSyllable(timeTag, value);
 
         [BackgroundDependencyLoader]
         private void load()
@@ -124,7 +124,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             => timeTag.FirstSyllable;
 
         protected override void ApplyValue(TimeTag timeTag, bool value)
-            => lyricTimeTagsChangeHandler.SetTimeTagInitialRomaji(timeTag, value);
+            => lyricTimeTagsChangeHandler.SetTimeTagFirstSyllable(timeTag, value);
 
         [BackgroundDependencyLoader]
         private void load(IEditRomajiModeState editRomajiModeState)
