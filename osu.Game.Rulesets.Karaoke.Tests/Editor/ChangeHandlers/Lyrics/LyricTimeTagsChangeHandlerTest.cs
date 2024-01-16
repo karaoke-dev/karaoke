@@ -38,7 +38,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     }
 
     [Test]
-    public void TestSetTimeTagInitialRomaji()
+    public void TestSetTimeTagFirstSyllable()
     {
         var timeTag = new TimeTag(new TextIndex(), 1000);
         PrepareHitObject(() => new Lyric
@@ -50,16 +50,16 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             },
         });
 
-        TriggerHandlerChanged(c => c.SetTimeTagInitialRomaji(timeTag, true));
+        TriggerHandlerChanged(c => c.SetTimeTagFirstSyllable(timeTag, true));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(true, timeTag.InitialRomaji);
+            Assert.AreEqual(true, timeTag.FirstSyllable);
         });
     }
 
     [Test]
-    public void TestSetTimeTagRomajiText()
+    public void TestSetTimeTagRomanizedSyllable()
     {
         var timeTag = new TimeTag(new TextIndex(), 1000);
         PrepareHitObject(() => new Lyric
@@ -71,18 +71,18 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             },
         });
 
-        TriggerHandlerChanged(c => c.SetTimeTagRomajiText(timeTag, "karaoke"));
+        TriggerHandlerChanged(c => c.SetTimeTagRomanizedSyllable(timeTag, "karaoke"));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual("karaoke", timeTag.RomajiText);
+            Assert.AreEqual("karaoke", timeTag.RomanizedSyllable);
         });
 
-        TriggerHandlerChanged(c => c.SetTimeTagRomajiText(timeTag, "  "));
+        TriggerHandlerChanged(c => c.SetTimeTagRomanizedSyllable(timeTag, "  "));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(string.Empty, timeTag.RomajiText);
+            Assert.AreEqual(string.Empty, timeTag.RomanizedSyllable);
         });
     }
 

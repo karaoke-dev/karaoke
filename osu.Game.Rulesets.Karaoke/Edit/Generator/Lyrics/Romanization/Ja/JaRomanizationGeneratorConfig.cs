@@ -3,10 +3,10 @@
 
 using osu.Framework.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romajies.Ja;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanization.Ja;
 
-public class JaRomajiGeneratorConfig : RomajiGeneratorConfig
+public class JaRomanizationGeneratorConfig : RomanizationGeneratorConfig
 {
-    [ConfigSource("Uppercase", "Export romaji with uppercase.")]
+    [ConfigSource("Uppercase", "Export romanization with uppercase.")]
     public Bindable<bool> Uppercase { get; } = new BindableBool();
 }

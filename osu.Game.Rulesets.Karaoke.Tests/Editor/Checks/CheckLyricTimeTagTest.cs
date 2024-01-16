@@ -105,7 +105,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
     [TestCase("カラオケ", "")] // should not be empty.
     [TestCase("カラオケ", " ")] // should not be white-space only.
     [TestCase("カラオケ", "卡拉OK")] // should be within latin.
-    public void TestCheckTimeTagRomajiInvalidText(string text, string romajiText)
+    public void TestCheckTimeTagRomajiInvalidText(string text, string romanizedSyllable)
     {
         var lyric = new Lyric
         {
@@ -114,7 +114,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             {
                 new TimeTag(new TextIndex())
                 {
-                    RomajiText = romajiText,
+                    RomanizedSyllable = romanizedSyllable,
                     Time = 1000,
                 },
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
@@ -128,7 +128,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
     }
 
     [TestCase("カラオケ", null)] // should not be white-space only.
-    public void TestCheckRomajiEmptyTextIfFirst(string text, string romajiText)
+    public void TestCheckRomajiEmptyTextIfFirst(string text, string romanizedSyllable)
     {
         var lyric = new Lyric
         {
@@ -137,8 +137,8 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             {
                 new TimeTag(new TextIndex())
                 {
-                    RomajiText = romajiText,
-                    InitialRomaji = true,
+                    RomanizedSyllable = romanizedSyllable,
+                    FirstSyllable = true,
                     Time = 1000,
                 },
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
@@ -154,7 +154,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
     [TestCase("カラオケ", "")] // should not have empty text if end.
     [TestCase("カラオケ", " ")] // should not have empty text if end.
     [TestCase("カラオケ", "123")] // should not have empty text if end.
-    public void TestRomajiNotHaveEmptyTextIfEnd(string text, string romajiText)
+    public void TestRomajiNotHaveEmptyTextIfEnd(string text, string romanizedSyllable)
     {
         var lyric = new Lyric
         {
@@ -167,7 +167,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
                 },
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
                 {
-                    RomajiText = romajiText,
+                    RomanizedSyllable = romanizedSyllable,
                     Time = 2000,
                 },
             },
@@ -190,7 +190,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
                 },
                 new TimeTag(new TextIndex(3, TextIndex.IndexState.End))
                 {
-                    InitialRomaji = true, // is invalid.
+                    FirstSyllable = true, // is invalid.
                     Time = 2000,
                 },
             },

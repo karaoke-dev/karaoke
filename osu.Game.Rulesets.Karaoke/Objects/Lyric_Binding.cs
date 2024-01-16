@@ -61,7 +61,7 @@ public partial class Lyric
                     foreach (var c in args.NewItems.Cast<TimeTag>())
                     {
                         c.TimingChanged += timingInvalidate;
-                        c.RomajiChanged += romajiInvalidate;
+                        c.SyllableChanged += romajiInvalidate;
                     }
 
                     break;
@@ -73,7 +73,7 @@ public partial class Lyric
                     foreach (var c in args.OldItems.Cast<TimeTag>())
                     {
                         c.TimingChanged -= timingInvalidate;
-                        c.RomajiChanged -= romajiInvalidate;
+                        c.SyllableChanged -= romajiInvalidate;
                     }
 
                     break;
