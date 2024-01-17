@@ -35,7 +35,6 @@ public static class LyricUtils
 
         // deal with ruby and romaji, might remove and shifting.
         lyric.RubyTags = processTags(lyric.RubyTags, charGap, count);
-        lyric.RomajiTags = processTags(lyric.RomajiTags, charGap, count);
         lyric.TimeTags = processTimeTags(lyric.TimeTags, charGap, count);
 
         // deal with text
@@ -91,7 +90,6 @@ public static class LyricUtils
 
         // deal with ruby and romaji with shifting.
         lyric.RubyTags = processTags(lyric.RubyTags, charGap, offset);
-        lyric.RomajiTags = processTags(lyric.RomajiTags, charGap, offset);
         lyric.TimeTags = processTimeTags(lyric.TimeTags, charGap, offset);
 
         // deal with text

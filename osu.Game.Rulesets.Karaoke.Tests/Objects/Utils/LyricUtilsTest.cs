@@ -55,22 +55,6 @@ public class LyricUtilsTest
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }, 0, 2, new[] { "[0]:o", "[1]:ke" })]
-    [TestCase(new[] { "[0,1]:kara", "[2,3]:oke" }, 1, 2, new[] { "[0]:kara", "[1]:oke" })]
-    public void TestRemoveTextRomaji(string[] romajies, int charGap, int count, string[] targetRomajies)
-    {
-        var lyric = new Lyric
-        {
-            Text = "カラオケ",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
-        };
-        LyricUtils.RemoveText(lyric, charGap, count);
-
-        var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
-        var actual = lyric.RomajiTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
-    }
-
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
     [TestCase(new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]" }, 0, 2, new[] { "[0,start]", "[1,start]" })]
     [TestCase(new[] { "[0,start]:1000", "[2,start]:3000" }, 1, 2, new[] { "[0,start]:1000" })]
@@ -117,23 +101,6 @@ public class LyricUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
         var actual = lyric.RubyTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
-    }
-
-    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
-    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
-    [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
-    public void TextAddTextRomaji(string[] romajies, int charGap, string addedText, string[] targetRomajies)
-    {
-        var lyric = new Lyric
-        {
-            Text = "カラオケ",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
-        };
-        LyricUtils.AddText(lyric, charGap, addedText);
-
-        var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
-        var actual = lyric.RomajiTags;
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 

@@ -74,27 +74,6 @@ public class LyricsUtilsTest
         TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(secondRubyTags), secondLyric.RubyTags);
     }
 
-    [TestCase("カラオケ", new[] { "[0]:ka", "[1]:ra", "[2]:o", "[3]:ke" }, 2,
-        new[] { "[0]:ka", "[1]:ra" }, new[] { "[0]:o", "[1]:ke" })]
-    [TestCase("カラオケ", new[] { "[0,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[1,3]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[1,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new[] { "[0,3]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
-    [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
-    public void TestSeparateLyricRomajiTag(string text, string[] romajiTags, int splitIndex, string[] firstRomajiTags, string[] secondRomajiTags)
-    {
-        var lyric = new Lyric
-        {
-            Text = text,
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags),
-        };
-
-        var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
-
-        TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRomajiTags(firstRomajiTags), firstLyric.RomajiTags);
-        TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRomajiTags(secondRomajiTags), secondLyric.RomajiTags);
-    }
-
     [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
     public void TestSeparateLyricStartTime()
     {
@@ -221,31 +200,6 @@ public class LyricsUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTags(expectedRubyTags);
         var actual = combineLyric.RubyTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
-    }
-
-    [TestCase(new[] { "[0]:romaji" }, new[] { "[0]:ローマ字" }, new[] { "[0]:romaji", "[7]:ローマ字" })]
-    [TestCase(new[] { "[0]:" }, new[] { "[0]:" }, new[] { "[0]:", "[7]:" })]
-    [TestCase(new[] { "[0,2]:" }, new[] { "[0,2]:" }, new[] { "[0,2]:", "[7,9]:" })]
-    [TestCase(new[] { "[0,9]:" }, new[] { "[0,9]:" }, new[] { "[0,9]:", "[7,13]:" })] // will auto-fix romaji index.
-    [TestCase(new[] { "[-10,-1]:" }, new[] { "[-10,-1]:" }, new[] { "[-10,-1]:", "[0,6]:" })] // will auto-fix romaji index.
-    public void TestCombineLyricRomajiTag(string[] firstRomajiTags, string[] secondRomajiTags, string[] expectedRomajiTags)
-    {
-        var lyric1 = new Lyric
-        {
-            Text = "karaoke",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(firstRomajiTags),
-        };
-        var lyric2 = new Lyric
-        {
-            Text = "karaoke",
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(secondRomajiTags),
-        };
-
-        var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
-
-        var expected = TestCaseTagHelper.ParseRomajiTags(expectedRomajiTags);
-        var actual = combineLyric.RomajiTags;
         TextTagAssert.ArePropertyEqual(expected, actual);
     }
 
