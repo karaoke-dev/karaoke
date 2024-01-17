@@ -34,9 +34,17 @@ public class KaraokeLegacyBeatmapEncoderTest
                     TimeTags = new List<TimeTag>
                     {
                         new(new TextIndex(0), start_time + 500),
-                        new(new TextIndex(1), start_time + 600),
+                        new(new TextIndex(1), start_time + 600)
+                        {
+                            FirstSyllable = true,
+                            RomanisedSyllable = "ra",
+                        },
                         new(new TextIndex(2), start_time + 1000),
-                        new(new TextIndex(3), start_time + 1500),
+                        new(new TextIndex(3), start_time + 1500)
+                        {
+                            FirstSyllable = true,
+                            RomanisedSyllable = "ke",
+                        },
                         new(new TextIndex(4), start_time + 2000),
                     },
                     RubyTags = new[]
@@ -52,21 +60,6 @@ public class KaraokeLegacyBeatmapEncoderTest
                             StartIndex = 2,
                             EndIndex = 2,
                             Text = "お",
-                        },
-                    },
-                    RomajiTags = new[]
-                    {
-                        new RomajiTag
-                        {
-                            StartIndex = 1,
-                            EndIndex = 1,
-                            Text = "ra",
-                        },
-                        new RomajiTag
-                        {
-                            StartIndex = 3,
-                            EndIndex = 3,
-                            Text = "ke",
                         },
                     },
                 },

@@ -46,9 +46,17 @@ internal partial class LyricStylePreview : Container
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(0), startTime + 500),
-                new(new TextIndex(1), startTime + 600),
+                new(new TextIndex(1), startTime + 600)
+                {
+                    FirstSyllable = true,
+                    RomanisedSyllable = "ra",
+                },
                 new(new TextIndex(2), startTime + 1000),
-                new(new TextIndex(3), startTime + 1500),
+                new(new TextIndex(3), startTime + 1500)
+                {
+                    FirstSyllable = true,
+                    RomanisedSyllable = "ke",
+                },
                 new(new TextIndex(4), startTime + 2000),
             },
             RubyTags = new[]
@@ -64,21 +72,6 @@ internal partial class LyricStylePreview : Container
                     StartIndex = 2,
                     EndIndex = 2,
                     Text = "お",
-                },
-            },
-            RomajiTags = new[]
-            {
-                new RomajiTag
-                {
-                    StartIndex = 1,
-                    EndIndex = 1,
-                    Text = "ra",
-                },
-                new RomajiTag
-                {
-                    StartIndex = 3,
-                    EndIndex = 3,
-                    Text = "ke",
                 },
             },
         };
