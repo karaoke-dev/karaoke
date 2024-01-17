@@ -12,7 +12,11 @@ public class TimeTagTest
     [Test]
     public void TestClone()
     {
-        var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000);
+        var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000)
+        {
+            FirstSyllable = true,
+            RomanizedSyllable = "karaoke",
+        };
 
         var clonedTimeTag = timeTag.DeepClone();
 
@@ -20,5 +24,7 @@ public class TimeTagTest
 
         Assert.AreNotSame(clonedTimeTag.TimeBindable, timeTag.TimeBindable);
         Assert.AreEqual(clonedTimeTag.Time, timeTag.Time);
+        Assert.AreNotSame(clonedTimeTag.FirstSyllable, timeTag.FirstSyllable);
+        Assert.AreEqual(clonedTimeTag.RomanizedSyllable, timeTag.RomanizedSyllable);
     }
 }

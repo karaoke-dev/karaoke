@@ -85,6 +85,10 @@ public class TimeTag : IDeepCloneable<TimeTag>
 
     public TimeTag DeepClone()
     {
-        return new TimeTag(Index, Time);
+        return new TimeTag(Index, Time)
+        {
+            FirstSyllable = FirstSyllable,
+            RomanizedSyllable = RomanizedSyllable,
+        };
     }
 }
