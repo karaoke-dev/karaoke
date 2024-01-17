@@ -107,9 +107,8 @@ public class LyricTest
         var referencedLyric = new Lyric
         {
             Text = "karaoke",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100#^ka" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" }),
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
@@ -128,7 +127,6 @@ public class LyricTest
         Assert.AreEqual(referencedLyric.Text, lyric.Text);
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
         Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
@@ -147,9 +145,8 @@ public class LyricTest
         };
 
         referencedLyric.Text = "karaoke";
-        referencedLyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" });
+        referencedLyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100^ka" });
         referencedLyric.RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" });
-        referencedLyric.RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" });
         referencedLyric.SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 });
         referencedLyric.Translates = new Dictionary<CultureInfo, string>
         {
@@ -160,7 +157,6 @@ public class LyricTest
         Assert.AreEqual(referencedLyric.Text, lyric.Text);
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
         Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
@@ -171,16 +167,14 @@ public class LyricTest
     {
         // test modify property inside the list.
         // ruby, romaji tag time-tag.
-        var timeTag = TestCaseTagHelper.ParseTimeTag("[0,start]:1100");
+        var timeTag = TestCaseTagHelper.ParseTimeTag("[0,start]:1100#^ka");
         var rubyTag = TestCaseTagHelper.ParseRubyTag("[0]:か");
-        var romajiTag = TestCaseTagHelper.ParseRomajiTag("[0]:ka");
 
         var referencedLyric = new Lyric
         {
             Text = "karaoke",
             TimeTags = new[] { timeTag },
             RubyTags = new[] { rubyTag },
-            RomajiTags = new[] { romajiTag },
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
@@ -199,7 +193,6 @@ public class LyricTest
         // property should be the same
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
 
         // and because there's no change inside the tag, so there's version change.
         Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
@@ -208,13 +201,12 @@ public class LyricTest
 
         // it's time to change the property in the list.
         timeTag.Time = 2000;
+        timeTag.RomanisedSyllable = "romaji";
         rubyTag.Text = "ruby";
-        romajiTag.Text = "romaji";
 
         // property should be equal.
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
 
         // and note that because only one property is different, so version should change once.
         Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
@@ -236,9 +228,8 @@ public class LyricTest
         var referencedLyric = new Lyric
         {
             Text = "karaoke",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100#ka" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka" }),
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
             Translates = new Dictionary<CultureInfo, string>
             {
