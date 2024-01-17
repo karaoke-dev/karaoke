@@ -28,13 +28,6 @@ public class TextTagUtilsTest
         var actualRubyTag = generateFixedTag(rubyTag, lyric);
         TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
-        // test romaji tag.
-        var romajiTag = TestCaseTagHelper.ParseRomajiTag(textTag);
-
-        var expectedRomajiTag = TestCaseTagHelper.ParseRomajiTag(actualTag);
-        var actualRomajiTag = generateFixedTag(romajiTag, lyric);
-        TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
-
         static T generateFixedTag<T>(T textTag, string lyric) where T : ITextTag, new()
         {
             (int startIndex, int endIndex) = TextTagUtils.GetFixedIndex(textTag, lyric);
@@ -57,7 +50,6 @@ public class TextTagUtilsTest
     public void TestGetShiftingIndex(string textTag, string lyric, int offset, string? actualTag)
     {
         var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-        var romajiTag = TestCaseTagHelper.ParseRomajiTag(textTag);
 
         if (actualTag == null)
         {
@@ -70,11 +62,6 @@ public class TextTagUtilsTest
         var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
         var actualRubyTag = generateShiftingTag(rubyTag, lyric, offset);
         TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
-
-        // test romaji tag.
-        var expectedRomajiTag = TestCaseTagHelper.ParseRomajiTag(actualTag);
-        var actualRomajiTag = generateShiftingTag(romajiTag, lyric, offset);
-        TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
 
         static T generateShiftingTag<T>(T textTag, string lyric, int offset) where T : ITextTag, new()
         {
