@@ -23,5 +23,7 @@ public class TimeTagAssert : Assert
     {
         AreEqual(expect.Index, actually.Index);
         AreEqual(expect.Time, actually.Time);
+        AreEqual(expect.FirstSyllable, actually.FirstSyllable);
+        AreEqual(expect.RomanizedSyllable, actually.RomanizedSyllable);
     }
 }
