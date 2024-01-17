@@ -24,9 +24,8 @@ public class LyricTest
         var lyric = new Lyric
         {
             Text = "カラオケ",
-            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }),
+            TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000^ka", "[1,start]:2000^ra", "[2,start]:3000^o", "[3,start]:4000^ke", "[3,end]:5000" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
-            RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0]:ka", "[1]:ra", "[3]:o", "[4]:ke" }),
             StartTime = 1000,
             Duration = 4000,
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
@@ -63,10 +62,6 @@ public class LyricTest
         Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
         Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
         TextTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
-
-        Assert.AreNotSame(clonedLyric.RomajiTagsVersion, lyric.RomajiTagsVersion);
-        Assert.AreNotSame(clonedLyric.RomajiTagsBindable, lyric.RomajiTagsBindable);
-        TextTagAssert.ArePropertyEqual(clonedLyric.RomajiTags, lyric.RomajiTags);
 
         Assert.AreNotSame(clonedLyric.StartTimeBindable, lyric.StartTimeBindable);
         Assert.AreEqual(clonedLyric.StartTime, lyric.StartTime);
@@ -196,8 +191,8 @@ public class LyricTest
 
         // and because there's no change inside the tag, so there's version change.
         Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
+        Assert.AreEqual(0, lyric.TimeTagsRomajiVersion.Value);
         Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
-        Assert.AreEqual(0, lyric.RomajiTagsVersion.Value);
 
         // it's time to change the property in the list.
         timeTag.Time = 2000;
@@ -210,8 +205,8 @@ public class LyricTest
 
         // and note that because only one property is different, so version should change once.
         Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
+        Assert.AreEqual(1, lyric.TimeTagsRomajiVersion.Value);
         Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
-        Assert.AreEqual(1, lyric.RomajiTagsVersion.Value);
     }
 
     [Test]
