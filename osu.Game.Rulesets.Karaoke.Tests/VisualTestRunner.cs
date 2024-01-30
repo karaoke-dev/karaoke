@@ -11,7 +11,7 @@ public static class VisualTestRunner
     [STAThread]
     public static int Main(string[] args)
     {
-        using var host = Host.GetSuitableDesktopHost("karaoke-visual-test-runner", new HostOptions { BindIPC = true });
+        using var host = Host.GetSuitableDesktopHost("karaoke-visual-test-runner");
         host.Run(new KaraokeTestBrowser());
 
         return 0;
