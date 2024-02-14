@@ -15,8 +15,8 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Scoring;
-using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 public partial class DrawableLyric : DrawableKaraokeHitObject
 {
-    private Container<DefaultLyricPiece> lyricPieces;
+    private Container<DrawableKaraokeSpriteText> lyricPieces;
     private OsuSpriteText translateText;
 
     [Resolved(canBeNull: true)]
@@ -65,7 +65,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     {
         AutoSizeAxes = Axes.Both;
 
-        AddInternal(lyricPieces = new Container<DefaultLyricPiece>
+        AddInternal(lyricPieces = new Container<DrawableKaraokeSpriteText>
         {
             AutoSizeAxes = Axes.Both,
         });
@@ -124,7 +124,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         base.OnApply();
 
         lyricPieces.Clear();
-        lyricPieces.Add(new DefaultLyricPiece(HitObject));
+        lyricPieces.Add(new DrawableKaraokeSpriteText(HitObject));
         ApplySkin(CurrentSkin, false);
 
         singersBindable.BindTo(HitObject.SingersBindable);
@@ -213,7 +213,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         lyricPieces.ForEach(x => x.RefreshStateTransforms());
     }
 
-    public void ApplyToLyricPieces(Action<DefaultLyricPiece> action)
+    public void ApplyToLyricPieces(Action<DrawableKaraokeSpriteText> action)
     {
         foreach (var lyricPiece in lyricPieces)
             action?.Invoke(lyricPiece);
