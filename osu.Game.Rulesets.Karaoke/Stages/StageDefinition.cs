@@ -6,6 +6,6 @@ namespace osu.Game.Rulesets.Karaoke.Stages;
 /// <summary>
 /// Class to store all the definition for the <see cref="StageInfo"/>
 /// </summary>
-public class StageDefinition
+public abstract class StageDefinition
 {
 }
