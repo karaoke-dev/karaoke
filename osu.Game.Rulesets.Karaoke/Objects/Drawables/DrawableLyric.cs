@@ -32,8 +32,8 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
 
     private readonly BindableBool useTranslateBindable = new();
     private readonly Bindable<CultureInfo> preferLanguageBindable = new();
-    private readonly BindableBool displayRubyBindable = new();
-    private readonly BindableBool displayRomajiBindable = new();
+    private readonly Bindable<LyricDisplayType> displayTypeBindable = new();
+    private readonly Bindable<LyricDisplayProperty> displayPropertyBindable = new();
 
     private readonly Bindable<FontUsage> mainFontUsageBindable = new();
     private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
@@ -80,22 +80,22 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             // gameplay.
             session.BindWith(KaraokeRulesetSession.UseTranslate, useTranslateBindable);
             session.BindWith(KaraokeRulesetSession.PreferLanguage, preferLanguageBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayRuby, displayRubyBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomajiBindable);
+            session.BindWith(KaraokeRulesetSession.DisplayRuby, displayTypeBindable);
+            session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayPropertyBindable);
         }
         else if (config != null)
         {
             // preview lyric effect.
             config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslateBindable);
             config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguageBindable);
-            config.BindWith(KaraokeRulesetSetting.DisplayRuby, displayRubyBindable);
-            config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
+            config.BindWith(KaraokeRulesetSetting.DisplayType, displayTypeBindable);
+            config.BindWith(KaraokeRulesetSetting.DisplayProperty, displayPropertyBindable);
         }
 
         useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
         preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
-        displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
-        displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
+        displayTypeBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayType = e.NewValue));
+        displayPropertyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayProperty = e.NewValue));
 
         if (config != null)
         {

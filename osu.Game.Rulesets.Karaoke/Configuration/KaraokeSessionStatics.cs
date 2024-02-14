@@ -29,10 +29,10 @@ public class KaraokeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession
         SetDefault(KaraokeRulesetSession.UseTranslate, useTranslate);
         SetDefault(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
-        bool displayRuby = getValue<bool>(KaraokeRulesetSetting.DisplayRuby);
-        bool displayRomaji = getValue<bool>(KaraokeRulesetSetting.DisplayRomaji);
-        SetDefault(KaraokeRulesetSession.DisplayRuby, displayRuby);
-        SetDefault(KaraokeRulesetSession.DisplayRomaji, displayRomaji);
+        bool displayType = getValue<bool>(KaraokeRulesetSetting.DisplayType);
+        bool displayProperty = getValue<bool>(KaraokeRulesetSetting.DisplayProperty);
+        SetDefault(KaraokeRulesetSession.DisplayRuby, displayType);
+        SetDefault(KaraokeRulesetSession.DisplayRomaji, displayProperty);
 
         // Pitch
         bool overridePitch = getValue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
