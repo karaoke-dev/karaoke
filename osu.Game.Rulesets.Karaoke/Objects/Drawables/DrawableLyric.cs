@@ -80,8 +80,8 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             // gameplay.
             session.BindWith(KaraokeRulesetSession.UseTranslate, useTranslateBindable);
             session.BindWith(KaraokeRulesetSession.PreferLanguage, preferLanguageBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayRuby, displayTypeBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayPropertyBindable);
+            session.BindWith(KaraokeRulesetSession.DisplayType, displayTypeBindable);
+            session.BindWith(KaraokeRulesetSession.DisplayProperty, displayPropertyBindable);
         }
         else if (config != null)
         {

@@ -42,7 +42,7 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
                     Value = false,
                 },
             },
-            new RubyRomajiSettings
+            new LyricDisplaySettings
             {
                 Expanded =
                 {

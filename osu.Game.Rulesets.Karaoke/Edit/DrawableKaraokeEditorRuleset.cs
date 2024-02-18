@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
@@ -15,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit;
 
 public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
 {
-    private readonly Bindable<bool> bindableDisplayRubyToggle = new();
-    private readonly Bindable<bool> bindableDisplayRomajiToggle = new();
+    private readonly Bindable<LyricDisplayType> bindableDisplayTypeToggle = new();
+    private readonly Bindable<LyricDisplayProperty> bindableDisplayPropertyToggle = new();
     private readonly Bindable<bool> bindableDisplayTranslateToggle = new();
 
     public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
@@ -26,8 +27,8 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods)
         : base(ruleset, beatmap, mods)
     {
-        bindableDisplayRubyToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRuby, x.NewValue); });
-        bindableDisplayRomajiToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRomaji, x.NewValue); });
+        bindableDisplayTypeToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayType, x.NewValue); });
+        bindableDisplayPropertyToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayProperty, x.NewValue); });
         bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
     }
 
@@ -36,8 +37,8 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     [BackgroundDependencyLoader]
     private void load(KaraokeRulesetEditConfigManager editConfigManager)
     {
-        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayRubyToggle);
-        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
+        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayTypeToggle);
+        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayPropertyToggle);
         editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
     }
 
