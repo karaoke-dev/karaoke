@@ -11,10 +11,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Setup dotnet version
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET 8.0.x
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x' # SDK Version to use.
+        dotnet-version: "8.0.x"
     - name: Fetch all tags
       run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Get current tag
@@ -34,15 +34,15 @@ jobs:
         release_name: ${{ github.ref }}
     - name: Zip the dlls
       run: |
-        cd osu.Game.Rulesets.Karaoke/bin/Release/net6.0/DLLs
+        cd osu.Game.Rulesets.Karaoke/bin/Release/net8.0/DLLs
         zip -r ../osu.Game.Rulesets.Karaoke.zip ./*
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v1
       with:
         token: ${{ secrets.RELEASE_TOKEN }}
         files: |
-          osu.Game.Rulesets.Karaoke/bin/Release/net6.0/Packed/osu.Game.Rulesets.Karaoke.dll
-          osu.Game.Rulesets.Karaoke/bin/Release/net6.0/osu.Game.Rulesets.Karaoke.zip
+          osu.Game.Rulesets.Karaoke/bin/Release/net8.0/Packed/osu.Game.Rulesets.Karaoke.dll
+          osu.Game.Rulesets.Karaoke/bin/Release/net8.0/osu.Game.Rulesets.Karaoke.zip
         draft: true
         body: |
           Thank you for showing interest in this ruleset. This is a tagged release (${{ env.CURRENT_TAG }}).
