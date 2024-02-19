@@ -202,7 +202,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             OnLyricEnd?.Invoke(this);
 
             // Apply end hit result
-            ApplyResult(r => { r.Type = KaraokeLyricHitWindows.DEFAULT_HIT_RESULT; });
+            ApplyResult(KaraokeLyricHitWindows.DEFAULT_HIT_RESULT);
         }
     }
 
