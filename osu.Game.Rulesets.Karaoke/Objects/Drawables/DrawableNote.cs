@@ -169,7 +169,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         if (!userTriggered)
         {
             if (!HitObject.HitWindows.CanBeHit(timeOffset))
-                ApplyResult(r => r.Type = HitResult.Miss);
+                ApplyResult(HitResult.Miss);
             return;
         }
 
@@ -177,7 +177,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         if (result == HitResult.None)
             return;
 
-        ApplyResult(r => r.Type = result);
+        ApplyResult(result);
     }
 
     public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
