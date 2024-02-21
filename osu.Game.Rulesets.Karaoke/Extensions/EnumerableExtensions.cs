@@ -36,7 +36,7 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Convert [][] to [,]
+    /// Convert [][] to [,].
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="source"></param>
