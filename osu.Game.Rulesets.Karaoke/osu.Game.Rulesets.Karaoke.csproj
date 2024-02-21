@@ -36,7 +36,7 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <!--We need to copy framework assembly to the output, else ILRepack will fail to resolve framework assembly.-->
+  <!--We need to copy framework assembly to the output, else will not able to copy the file into DLLs folder.-->
   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
