@@ -153,7 +153,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                 {
                     Items = new MenuItem[]
                     {
-                        new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
+                        new LyricDisplayPreviewMenuItem(editConfigManager, "Lyric display preview"),
                     },
                 },
                 new("Tools")

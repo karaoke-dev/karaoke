@@ -37,8 +37,8 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     [BackgroundDependencyLoader]
     private void load(KaraokeRulesetEditConfigManager editConfigManager)
     {
-        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayTypeToggle);
-        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayPropertyToggle);
+        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayType, bindableDisplayTypeToggle);
+        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayProperty, bindableDisplayPropertyToggle);
         editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
     }
 
