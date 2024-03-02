@@ -4,11 +4,11 @@
 using osu.Framework.Bindables;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
-public class BoolMenu : ToggleMenuItem
+public class BindableBoolMenuItem : ToggleMenuItem
 {
-    public BoolMenu(Bindable<bool> bindable, string text)
+    public BindableBoolMenuItem(Bindable<bool> bindable, string text)
         : base(text)
     {
         State.BindTo(bindable);

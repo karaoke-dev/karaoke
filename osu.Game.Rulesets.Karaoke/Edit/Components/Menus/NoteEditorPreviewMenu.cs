@@ -4,6 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 
@@ -23,9 +24,9 @@ public class NoteEditorPreviewMenu : MenuItem
 
         Items = new[]
         {
-            new BoolMenu(bindableDisplayRubyToggle, "Display ruby"),
-            new BoolMenu(bindableDisplayRomajiToggle, "Display romaji"),
-            new BoolMenu(bindableDisplayTranslateToggle, "Display translate"),
+            new BindableBoolMenuItem(bindableDisplayRubyToggle, "Display ruby"),
+            new BindableBoolMenuItem(bindableDisplayRomajiToggle, "Display romaji"),
+            new BindableBoolMenuItem(bindableDisplayTranslateToggle, "Display translate"),
         };
     }
 }

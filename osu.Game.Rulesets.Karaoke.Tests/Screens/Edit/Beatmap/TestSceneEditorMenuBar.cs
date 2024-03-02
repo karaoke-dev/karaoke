@@ -52,7 +52,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                             new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
                         },
                     },
-                    new LyricEditorModeMenu(new Bindable<LyricEditorMode>(), "Mode"),
+                    new LyricEditorModeMenuItem(new Bindable<LyricEditorMode>(), "Mode"),
                     new MenuItem("View")
                     {
                         Items = new MenuItem[]
@@ -67,7 +67,7 @@ public partial class TestSceneEditorMenuBar : OsuTestScene
                         {
                             new EditorMenuItem("Lyric editor"),
                             new GeneratorConfigMenu("Auto-generator"),
-                            new LockStateMenu(lyricEditorConfig, "Lock"),
+                            new LockStateMenuItem(lyricEditorConfig, "Lock"),
                         },
                     },
                     new MenuItem("Tools")

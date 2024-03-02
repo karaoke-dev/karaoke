@@ -10,13 +10,13 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
-public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
+public abstract class BindableEnumMenuItem<T> : MenuItem where T : struct, Enum
 {
     private readonly Bindable<T> bindableEnum = new();
 
-    protected EnumMenu(Bindable<T> bindable, string text)
+    protected BindableEnumMenuItem(Bindable<T> bindable, string text)
         : base(text)
     {
         Items = createMenuItems();

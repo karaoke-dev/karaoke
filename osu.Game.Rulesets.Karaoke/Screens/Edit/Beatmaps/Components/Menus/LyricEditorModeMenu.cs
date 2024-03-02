@@ -4,13 +4,14 @@
 using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 
-public class LyricEditorModeMenu : EnumMenu<LyricEditorMode>
+public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
 {
-    public LyricEditorModeMenu(Bindable<LyricEditorMode> config, string text)
+    public LyricEditorModeMenuItem(Bindable<LyricEditorMode> config, string text)
         : base(config, text)
     {
     }
