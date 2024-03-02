@@ -9,8 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 
 public class LyricEditorPreferLayoutMenuItem : BindableEnumMenuItem<LyricEditorLayout>
 {
-    public LyricEditorPreferLayoutMenuItem(KaraokeRulesetLyricEditorConfigManager config, string text)
-        : base(config.GetBindable<LyricEditorLayout>(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout), text)
+    public LyricEditorPreferLayoutMenuItem(string text, KaraokeRulesetLyricEditorConfigManager config)
+        : base(text, config.GetBindable<LyricEditorLayout>(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout))
     {
     }
 }

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 public class BindableBoolMenuItem : ToggleMenuItem
 {
-    public BindableBoolMenuItem(Bindable<bool> bindable, string text)
+    public BindableBoolMenuItem(string text, Bindable<bool> bindable)
         : base(text)
     {
         State.BindTo(bindable);

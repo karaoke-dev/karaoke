@@ -16,7 +16,7 @@ public abstract class BindableEnumMenuItem<T> : MenuItem where T : struct, Enum
 {
     private readonly Bindable<T> bindableEnum = new();
 
-    protected BindableEnumMenuItem(Bindable<T> bindable, string text)
+    protected BindableEnumMenuItem(string text, Bindable<T> bindable)
         : base(text)
     {
         Items = createMenuItems();

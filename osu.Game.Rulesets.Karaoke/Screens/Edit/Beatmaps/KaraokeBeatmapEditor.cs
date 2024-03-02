@@ -102,19 +102,19 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                         new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                     },
                 },
-                new LyricEditorModeMenuItem(bindableLyricEditorMode, "Mode"),
+                new LyricEditorModeMenuItem("Mode", bindableLyricEditorMode),
                 new("View")
                 {
                     Items = new MenuItem[]
                     {
-                        new LyricEditorPreferLayoutMenuItem(lyricEditorConfigManager, "Layout"),
+                        new LyricEditorPreferLayoutMenuItem("Layout", lyricEditorConfigManager),
                         new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
                         new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
                     },
                 },
                 new("Config")
                 {
-                    Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenuItem(lyricEditorConfigManager, "Lock") },
+                    Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenuItem("Lock", lyricEditorConfigManager) },
                 },
             },
             _ => Array.Empty<MenuItem>(),

@@ -24,9 +24,9 @@ public class NoteEditorPreviewMenu : MenuItem
 
         Items = new[]
         {
-            new BindableBoolMenuItem(bindableDisplayRubyToggle, "Display ruby"),
-            new BindableBoolMenuItem(bindableDisplayRomajiToggle, "Display romaji"),
-            new BindableBoolMenuItem(bindableDisplayTranslateToggle, "Display translate"),
+            new BindableBoolMenuItem("Display ruby", bindableDisplayRubyToggle),
+            new BindableBoolMenuItem("Display romaji", bindableDisplayRomajiToggle),
+            new BindableBoolMenuItem("Display translate", bindableDisplayTranslateToggle),
         };
     }
 }

@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 
 public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
 {
-    public LyricEditorModeMenuItem(Bindable<LyricEditorMode> config, string text)
-        : base(config, text)
+    public LyricEditorModeMenuItem(string text, Bindable<LyricEditorMode> config)
+        : base(text, config)
     {
     }
 

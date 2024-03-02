@@ -14,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 /// </summary>
 public class LockStateMenuItem : BindableEnumMenuItem<LockState>
 {
-    public LockStateMenuItem(KaraokeRulesetLyricEditorConfigManager config, string text)
-        : base(config.GetBindable<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState), text)
+    public LockStateMenuItem(string text, KaraokeRulesetLyricEditorConfigManager config)
+        : base(text, config.GetBindable<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState))
     {
     }
 
