@@ -14,16 +14,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 
 public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
 {
-    private readonly Bindable<T> bindableEnum;
+    private readonly Bindable<T> bindableEnum = new();
 
     protected EnumMenu(Bindable<T> bindable, string text)
         : base(text)
     {
         Items = createMenuItems();
 
-        bindableEnum = bindable;
-
-        bindable.BindValueChanged(e =>
+        bindableEnum.BindTo(bindable);
+        bindableEnum.BindValueChanged(e =>
         {
             var newSelection = e.NewValue;
             Items.OfType<ToggleMenuItem>().ForEach(x =>
