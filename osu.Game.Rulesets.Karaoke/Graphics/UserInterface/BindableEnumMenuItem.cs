@@ -12,11 +12,11 @@ using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
-public abstract class BindableEnumMenuItem<T> : MenuItem where T : struct, Enum
+public class BindableEnumMenuItem<T> : MenuItem where T : struct, Enum
 {
     private readonly Bindable<T> bindableEnum = new();
 
-    protected BindableEnumMenuItem(string text, Bindable<T> bindable)
+    public BindableEnumMenuItem(string text, Bindable<T> bindable)
         : base(text)
     {
         Items = createMenuItems();
