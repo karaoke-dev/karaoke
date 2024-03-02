@@ -10,6 +10,14 @@ using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
+public partial class DrawableKaraokeSpriteText : DrawableKaraokeSpriteText<LyricSpriteText>
+{
+    public DrawableKaraokeSpriteText(Lyric lyric)
+        : base(lyric)
+    {
+    }
+}
+
 public partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<TSpriteText> where TSpriteText : LyricSpriteText, new()
 {
     private const int whole_chunk_index = -1;
