@@ -10,20 +10,19 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
-public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
+public abstract class BindableEnumMenuItem<T> : MenuItem where T : struct, Enum
 {
-    private readonly Bindable<T> bindableEnum;
+    private readonly Bindable<T> bindableEnum = new();
 
-    protected EnumMenu(Bindable<T> bindable, string text)
+    protected BindableEnumMenuItem(string text, Bindable<T> bindable)
         : base(text)
     {
         Items = createMenuItems();
 
-        bindableEnum = bindable;
-
-        bindable.BindValueChanged(e =>
+        bindableEnum.BindTo(bindable);
+        bindableEnum.BindValueChanged(e =>
         {
             var newSelection = e.NewValue;
             Items.OfType<ToggleMenuItem>().ForEach(x =>
