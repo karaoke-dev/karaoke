@@ -3,40 +3,29 @@
 
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 
 public class NoteEditorPreviewMenu : MenuItem
 {
-    private readonly KaraokeRulesetEditConfigManager config;
+    private readonly Bindable<bool> bindableDisplayRubyToggle = new();
+    private readonly Bindable<bool> bindableDisplayRomajiToggle = new();
+    private readonly Bindable<bool> bindableDisplayTranslateToggle = new();
 
     public NoteEditorPreviewMenu(KaraokeRulesetEditConfigManager config, string text)
         : base(text)
     {
-        this.config = config;
+        // Note: cannot use config.GetBindable<bool> directly the menu item.
+        config.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayRubyToggle);
+        config.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
+        config.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
 
         Items = new[]
         {
-            createToggleMenu("Display ruby", KaraokeRulesetEditSetting.DisplayRuby),
-            createToggleMenu("Display romaji", KaraokeRulesetEditSetting.DisplayRomaji),
-            createToggleMenu("Display translate", KaraokeRulesetEditSetting.DisplayTranslate),
+            new BoolMenu(bindableDisplayRubyToggle, "Display ruby"),
+            new BoolMenu(bindableDisplayRomajiToggle, "Display romaji"),
+            new BoolMenu(bindableDisplayTranslateToggle, "Display translate"),
         };
-    }
-
-    private ToggleMenuItem createToggleMenu(string menu, KaraokeRulesetEditSetting setting)
-    {
-        var bindable = new Bindable<bool>();
-        var menuItem = new ToggleMenuItem(menu, MenuItemType.Standard, _ => bindable.Value = !bindable.Value);
-
-        // create bindable
-        bindable.BindValueChanged(e =>
-        {
-            menuItem.State.Value = e.NewValue;
-        }, true);
-        config.BindWith(setting, bindable);
-
-        return menuItem;
     }
 }
