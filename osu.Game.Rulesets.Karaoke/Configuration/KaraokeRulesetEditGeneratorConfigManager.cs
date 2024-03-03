@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanization.Ja;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanisation.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags.Zh;
@@ -50,7 +50,7 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
         SetDefault<ZhTimeTagGeneratorConfig>();
 
         // Romaji generator
-        SetDefault<JaRomanizationGeneratorConfig>();
+        SetDefault<JaRomanisationGeneratorConfig>();
 
         // Note generator
         SetDefault<NoteGeneratorConfig>();
@@ -79,7 +79,7 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
             Type t when t == typeof(JaRubyTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
             Type t when t == typeof(JaTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
             Type t when t == typeof(ZhTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
-            Type t when t == typeof(JaRomanizationGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig,
+            Type t when t == typeof(JaRomanisationGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig,
             Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
             _ => throw new NotSupportedException(),
         };

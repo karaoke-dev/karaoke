@@ -58,7 +58,7 @@ public static class CharUtils
 
     /// <summary>
     /// Check this char is latin alphabet or not.
-    /// Usually, this is used to check the romanization result.
+    /// Usually, this is used to check the romanisation result.
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>

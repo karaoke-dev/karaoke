@@ -13,13 +13,13 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanization.Ja;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanisation.Ja;
 
-public class JaRomanizationGenerator : RomanizationGenerator<JaRomanizationGeneratorConfig>
+public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGeneratorConfig>
 {
     private readonly Analyzer analyzer;
 
-    public JaRomanizationGenerator(JaRomanizationGeneratorConfig config)
+    public JaRomanisationGenerator(JaRomanisationGeneratorConfig config)
         : base(config)
     {
         analyzer = Analyzer.NewAnonymous((fieldName, reader) =>
@@ -29,20 +29,20 @@ public class JaRomanizationGenerator : RomanizationGenerator<JaRomanizationGener
         });
     }
 
-    protected override IReadOnlyDictionary<TimeTag, RomanizationGenerateResult> GenerateFromItem(Lyric item)
+    protected override IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> GenerateFromItem(Lyric item)
     {
         // Tokenize the text
         string text = item.Text;
         var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
 
         // get the processing tags.
-        var processingRomanizations = getProcessingRomanizations(text, tokenStream, Config).ToArray();
+        var processingRomanisations = getProcessingRomanisations(text, tokenStream, Config).ToArray();
 
         // then, trying to mapping them with the time-tags.
-        return Convert(item.TimeTags, processingRomanizations);
+        return Convert(item.TimeTags, processingRomanisations);
     }
 
-    private static IEnumerable<RomanizationGeneratorParameter> getProcessingRomanizations(string text, TokenStream tokenStream, JaRomanizationGeneratorConfig config)
+    private static IEnumerable<RomanisationGeneratorParameter> getProcessingRomanisations(string text, TokenStream tokenStream, JaRomanisationGeneratorConfig config)
     {
         // Reset the stream and convert all result
         tokenStream.Reset();
@@ -71,7 +71,7 @@ public class JaRomanizationGenerator : RomanizationGenerator<JaRomanizationGener
                 romanizedSyllable = romanizedSyllable.ToUpper();
 
             // Make tag
-            yield return new RomanizationGeneratorParameter
+            yield return new RomanisationGeneratorParameter
             {
                 FromKanji = fromKanji,
                 StartIndex = offsetAttribute.StartOffset,
@@ -85,58 +85,58 @@ public class JaRomanizationGenerator : RomanizationGenerator<JaRomanizationGener
         tokenStream.Dispose();
     }
 
-    internal static IReadOnlyDictionary<TimeTag, RomanizationGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomanizationGeneratorParameter> romanizations)
+    internal static IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> romanisations)
     {
-        var group = createGroup(timeTags, romanizations);
+        var group = createGroup(timeTags, romanisations);
         return group.ToDictionary(k => k.Key, x =>
         {
             bool isFirst = timeTags.IndexOf(x.Key) == 0; // todo: use better to mark the first syllable.
             string romanizedSyllable = string.Join(" ", x.Value.Select(r => r.RomanizedSyllable));
 
-            return new RomanizationGenerateResult
+            return new RomanisationGenerateResult
             {
                 FirstSyllable = isFirst,
                 RomanizedSyllable = romanizedSyllable,
             };
         });
 
-        static IReadOnlyDictionary<TimeTag, List<RomanizationGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomanizationGeneratorParameter> romanizations)
+        static IReadOnlyDictionary<TimeTag, List<RomanisationGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> romanisations)
         {
-            var dictionary = timeTags.ToDictionary(x => x, v => new List<RomanizationGeneratorParameter>());
+            var dictionary = timeTags.ToDictionary(x => x, v => new List<RomanisationGeneratorParameter>());
 
             int processedIndex = 0;
 
             foreach (var (timeTag, list) in dictionary)
             {
-                while (processedIndex < romanizations.Count && isTimeTagInRange(timeTags, timeTag, romanizations[processedIndex]))
+                while (processedIndex < romanisations.Count && isTimeTagInRange(timeTags, timeTag, romanisations[processedIndex]))
                 {
-                    list.Add(romanizations[processedIndex]);
+                    list.Add(romanisations[processedIndex]);
                     processedIndex++;
                 }
             }
 
-            if (processedIndex < romanizations.Count - 1)
-                throw new InvalidOperationException("Still have romanizations that haven't process");
+            if (processedIndex < romanisations.Count - 1)
+                throw new InvalidOperationException("Still have romanisations that haven't process");
 
             return dictionary;
         }
 
-        static bool isTimeTagInRange(IEnumerable<TimeTag> timeTags, TimeTag currentTimeTag, RomanizationGeneratorParameter parameter)
+        static bool isTimeTagInRange(IEnumerable<TimeTag> timeTags, TimeTag currentTimeTag, RomanisationGeneratorParameter parameter)
         {
             if (currentTimeTag.Index.State == TextIndex.IndexState.End)
                 return false;
 
-            int romanizationIndex = parameter.StartIndex;
+            int romanisationIndex = parameter.StartIndex;
 
             var nextTimeTag = timeTags.GetNextMatch(currentTimeTag, x => x.Index > currentTimeTag.Index && x.Index.State == TextIndex.IndexState.Start);
             if (nextTimeTag == null)
-                return romanizationIndex >= currentTimeTag.Index.Index;
+                return romanisationIndex >= currentTimeTag.Index.Index;
 
-            return romanizationIndex >= currentTimeTag.Index.Index && romanizationIndex < nextTimeTag.Index.Index;
+            return romanisationIndex >= currentTimeTag.Index.Index && romanisationIndex < nextTimeTag.Index.Index;
         }
     }
 
-    internal class RomanizationGeneratorParameter
+    internal class RomanisationGeneratorParameter
     {
         public bool FromKanji { get; set; }
 

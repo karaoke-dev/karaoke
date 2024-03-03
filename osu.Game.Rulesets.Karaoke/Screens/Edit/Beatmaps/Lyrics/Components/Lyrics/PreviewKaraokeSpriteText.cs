@@ -35,7 +35,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     {
         HitObject = lyric;
 
-        // should display ruby and romanization by default.
+        // should display ruby and romanisation by default.
         DisplayType = LyricDisplayType.Lyric;
         DisplayProperty = LyricDisplayProperty.Both;
 

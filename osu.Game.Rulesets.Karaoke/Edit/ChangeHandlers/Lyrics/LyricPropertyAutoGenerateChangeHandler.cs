@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.ReferenceLyric;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanization;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
@@ -55,7 +55,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return canGenerate(timeTagGenerator);
 
             case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanizationGenerateResult>, RomanizationGeneratorConfig>();
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 return canGenerate(timeTagRomajiGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
@@ -96,7 +96,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return getInvalidMessageFromGenerator(timeTagGenerator);
 
             case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanizationGenerateResult>, RomanizationGeneratorConfig>();
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 return getInvalidMessageFromGenerator(timeTagRomajiGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
@@ -171,7 +171,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 break;
 
             case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanizationGenerateResult>, RomanizationGeneratorConfig>();
+                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 PerformOnSelection(lyric =>
                 {
                     var results = timeTagRomajiGenerator.Generate(lyric);
