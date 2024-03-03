@@ -36,7 +36,7 @@ public class LyricFirstDisplayProcessor : BaseDisplayProcessor
         });
         property.TimeTagsBindable.BindCollectionChanged((_, _) =>
         {
-            // If create/remove the time-tag, romanized syllable might be affected.
+            // If create/remove the time-tag, romanised syllable might be affected.
             UpdateBottomText();
             UpdateTimeTags();
         });
@@ -83,7 +83,7 @@ public class LyricFirstDisplayProcessor : BaseDisplayProcessor
 
         static PositionText toPositionText(int startCharIndex, int endCharIndex, TimeTag[] timeTags)
         {
-            string text = string.Join("", timeTags.Select(x => x.RomanizedSyllable));
+            string text = string.Join("", timeTags.Select(x => x.RomanisedSyllable));
             return new PositionText(text, startCharIndex, endCharIndex);
         }
     }

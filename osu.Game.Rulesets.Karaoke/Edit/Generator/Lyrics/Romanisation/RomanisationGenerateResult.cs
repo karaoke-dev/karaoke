@@ -7,5 +7,5 @@ public struct RomanisationGenerateResult
 {
     public bool FirstSyllable { get; set; }
 
-    public string? RomanizedSyllable { get; set; }
+    public string? RomanisedSyllable { get; set; }
 }

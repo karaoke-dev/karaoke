@@ -64,7 +64,7 @@ public class DisplayLyricProcessor : IDisposable
         processor = DisplayType switch
         {
             LyricDisplayType.Lyric => new LyricFirstDisplayProcessor(lyric, DisplayProperty),
-            LyricDisplayType.RomanizedSyllable => new RomanizedSyllableFirstDisplayProcessor(lyric, DisplayProperty),
+            LyricDisplayType.RomanisedSyllable => new RomanisedSyllableFirstDisplayProcessor(lyric, DisplayProperty),
             _ => throw new ArgumentOutOfRangeException(),
         };
 

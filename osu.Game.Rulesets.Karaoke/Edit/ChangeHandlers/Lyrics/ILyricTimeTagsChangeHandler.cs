@@ -13,7 +13,7 @@ public interface ILyricTimeTagsChangeHandler : ILyricListPropertyChangeHandler<T
 
     void SetTimeTagFirstSyllable(TimeTag timeTag, bool firstSyllable);
 
-    void SetTimeTagRomanizedSyllable(TimeTag timeTag, string? romanizedSyllable);
+    void SetTimeTagRomanisedSyllable(TimeTag timeTag, string? romanisedSyllable);
 
     void ShiftingTimeTagTime(IEnumerable<TimeTag> timeTags, double offset);
 

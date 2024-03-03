@@ -211,7 +211,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("karaoke", h.TimeTags[0].RomanizedSyllable);
+            Assert.AreEqual("karaoke", h.TimeTags[0].RomanisedSyllable);
         });
     }
 

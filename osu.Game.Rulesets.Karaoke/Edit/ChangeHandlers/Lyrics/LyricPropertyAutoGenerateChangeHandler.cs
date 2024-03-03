@@ -180,7 +180,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                     {
                         var matchedTimeTag = lyric.TimeTags.Single(x => x == key);
                         matchedTimeTag.FirstSyllable = value.FirstSyllable;
-                        matchedTimeTag.RomanizedSyllable = value.RomanizedSyllable;
+                        matchedTimeTag.RomanisedSyllable = value.RomanisedSyllable;
                     }
                 });
                 break;

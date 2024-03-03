@@ -26,7 +26,7 @@ public class RomanisationGenerateResultHelper
         var result = new RomanisationGenerateResult
         {
             FirstSyllable = str.StartsWith("^", StringComparison.Ordinal),
-            RomanizedSyllable = str.Replace("^", ""),
+            RomanisedSyllable = str.Replace("^", ""),
         };
 
         return new KeyValuePair<TimeTag, RomanisationGenerateResult>(timeTag, result);

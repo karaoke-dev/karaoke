@@ -35,7 +35,7 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
     {
         var issues = new List<Issue>();
         issues.AddRange(CheckTimeTag(lyric));
-        issues.AddRange(CheckTimeTagRomanizedSyllable(lyric));
+        issues.AddRange(CheckTimeTagRomanisedSyllable(lyric));
         return issues;
     }
 
@@ -78,7 +78,7 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         }
     }
 
-    protected IEnumerable<Issue> CheckTimeTagRomanizedSyllable(Lyric lyric)
+    protected IEnumerable<Issue> CheckTimeTagRomanisedSyllable(Lyric lyric)
     {
         if (!lyric.TimeTags.Any())
         {
@@ -88,23 +88,23 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         foreach (var timeTag in lyric.TimeTags)
         {
             bool firstSyllable = timeTag.FirstSyllable;
-            string? romanizedSyllable = timeTag.RomanizedSyllable;
+            string? romanisedSyllable = timeTag.RomanisedSyllable;
 
             switch (timeTag.Index.State)
             {
                 case TextIndex.IndexState.Start:
-                    // if input the romanized syllable, should be valid.
-                    if (romanizedSyllable != null && !isRomanizedSyllableValid(romanizedSyllable))
+                    // if input the romanised syllable, should be valid.
+                    if (romanisedSyllable != null && !isRomanisedSyllableValid(romanisedSyllable))
                         yield return new IssueTemplateLyricTimeTagRomajiInvalidText(this).Create(lyric, timeTag);
 
-                    // if is first romanized syllable, should not be null.
-                    if (firstSyllable && romanizedSyllable == null)
+                    // if is first romanised syllable, should not be null.
+                    if (firstSyllable && romanisedSyllable == null)
                         yield return new IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(this).Create(lyric, timeTag);
 
                     break;
 
                 case TextIndex.IndexState.End:
-                    if (romanizedSyllable != null)
+                    if (romanisedSyllable != null)
                         yield return new IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd(this).Create(lyric, timeTag);
 
                     if (firstSyllable)
@@ -119,7 +119,7 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
 
         yield break;
 
-        static bool isRomanizedSyllableValid(string text)
+        static bool isRomanisedSyllableValid(string text)
         {
             // should not be white-space only.
             if (string.IsNullOrWhiteSpace(text))

@@ -21,8 +21,8 @@ public enum LyricDisplayProperty
     /// Display bottom text.
     /// </summary>
     /// <example>
-    /// Display the <see cref="TimeTag.RomanizedSyllable"/> as bottom text if <see cref="LyricDisplayType.Lyric"/>.<br/>
-    /// Display the <see cref="Lyric.Text"/> as bottom text if <see cref="LyricDisplayType.RomanizedSyllable"/>.<br/>
+    /// Display the <see cref="TimeTag.RomanisedSyllable"/> as bottom text if <see cref="LyricDisplayType.Lyric"/>.<br/>
+    /// Display the <see cref="Lyric.Text"/> as bottom text if <see cref="LyricDisplayType.RomanisedSyllable"/>.<br/>
     /// </example>
     BottomText = 1 << 2,
 

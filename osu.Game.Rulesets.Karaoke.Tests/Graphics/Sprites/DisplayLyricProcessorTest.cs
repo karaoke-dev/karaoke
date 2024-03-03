@@ -76,7 +76,7 @@ public class DisplayLyricProcessorTest
     public void TestSwitchDisplayType()
     {
         // change the display type.
-        testProcessor!.DisplayType = LyricDisplayType.RomanizedSyllable;
+        testProcessor!.DisplayType = LyricDisplayType.RomanisedSyllable;
 
         // check the changed count
         Assert.AreEqual(topTextChangeCount, 1);

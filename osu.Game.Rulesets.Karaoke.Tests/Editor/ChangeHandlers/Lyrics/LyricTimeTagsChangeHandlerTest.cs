@@ -59,7 +59,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     }
 
     [Test]
-    public void TestSetTimeTagRomanizedSyllable()
+    public void TestSetTimeTagRomanisedSyllable()
     {
         var timeTag = new TimeTag(new TextIndex(), 1000);
         PrepareHitObject(() => new Lyric
@@ -71,18 +71,18 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             },
         });
 
-        TriggerHandlerChanged(c => c.SetTimeTagRomanizedSyllable(timeTag, "karaoke"));
+        TriggerHandlerChanged(c => c.SetTimeTagRomanisedSyllable(timeTag, "karaoke"));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual("karaoke", timeTag.RomanizedSyllable);
+            Assert.AreEqual("karaoke", timeTag.RomanisedSyllable);
         });
 
-        TriggerHandlerChanged(c => c.SetTimeTagRomanizedSyllable(timeTag, "  "));
+        TriggerHandlerChanged(c => c.SetTimeTagRomanisedSyllable(timeTag, "  "));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(string.Empty, timeTag.RomanizedSyllable);
+            Assert.AreEqual(string.Empty, timeTag.RomanisedSyllable);
         });
     }
 

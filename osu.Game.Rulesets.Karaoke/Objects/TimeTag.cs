@@ -17,7 +17,7 @@ public class TimeTag : IDeepCloneable<TimeTag>
     public event Action? TimingChanged;
 
     /// <summary>
-    /// Invoked when <see cref="FirstSyllable"/> or <see cref="RomanizedSyllable"/> of this <see cref="TimeTag"/> is changed.
+    /// Invoked when <see cref="FirstSyllable"/> or <see cref="RomanisedSyllable"/> of this <see cref="TimeTag"/> is changed.
     /// </summary>
     public event Action? SyllableChanged;
 
@@ -28,7 +28,7 @@ public class TimeTag : IDeepCloneable<TimeTag>
 
         TimeBindable.ValueChanged += _ => TimingChanged?.Invoke();
         FirstSyllableBindable.ValueChanged += _ => SyllableChanged?.Invoke();
-        RomanizedSyllableBindable.ValueChanged += _ => SyllableChanged?.Invoke();
+        RomanisedSyllableBindable.ValueChanged += _ => SyllableChanged?.Invoke();
     }
 
     /// <summary>
@@ -72,15 +72,15 @@ public class TimeTag : IDeepCloneable<TimeTag>
     }
 
     [JsonIgnore]
-    public readonly Bindable<string?> RomanizedSyllableBindable = new();
+    public readonly Bindable<string?> RomanisedSyllableBindable = new();
 
     /// <summary>
     /// Romaji
     /// </summary>
-    public string? RomanizedSyllable
+    public string? RomanisedSyllable
     {
-        get => RomanizedSyllableBindable.Value;
-        set => RomanizedSyllableBindable.Value = value;
+        get => RomanisedSyllableBindable.Value;
+        set => RomanisedSyllableBindable.Value = value;
     }
 
     public TimeTag DeepClone()
@@ -88,7 +88,7 @@ public class TimeTag : IDeepCloneable<TimeTag>
         return new TimeTag(Index, Time)
         {
             FirstSyllable = FirstSyllable,
-            RomanizedSyllable = RomanizedSyllable,
+            RomanisedSyllable = RomanisedSyllable,
         };
     }
 }

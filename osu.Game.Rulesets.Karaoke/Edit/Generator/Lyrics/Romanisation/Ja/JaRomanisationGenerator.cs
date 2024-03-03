@@ -65,10 +65,10 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
             string parentText = text[offsetAttribute.StartOffset..offsetAttribute.EndOffset];
             bool fromKanji = JpStringUtils.ToKatakana(katakana) != JpStringUtils.ToKatakana(parentText);
 
-            // Convert to romanized syllable.
-            string romanizedSyllable = JpStringUtils.ToRomaji(katakana);
+            // Convert to romanised syllable.
+            string romanisedSyllable = JpStringUtils.ToRomaji(katakana);
             if (config.Uppercase.Value)
-                romanizedSyllable = romanizedSyllable.ToUpper();
+                romanisedSyllable = romanisedSyllable.ToUpper();
 
             // Make tag
             yield return new RomanisationGeneratorParameter
@@ -76,7 +76,7 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
                 FromKanji = fromKanji,
                 StartIndex = offsetAttribute.StartOffset,
                 EndIndex = offsetAttribute.EndOffset - 1,
-                RomanizedSyllable = romanizedSyllable,
+                RomanisedSyllable = romanisedSyllable,
             };
         }
 
@@ -91,12 +91,12 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
         return group.ToDictionary(k => k.Key, x =>
         {
             bool isFirst = timeTags.IndexOf(x.Key) == 0; // todo: use better to mark the first syllable.
-            string romanizedSyllable = string.Join(" ", x.Value.Select(r => r.RomanizedSyllable));
+            string romanisedSyllable = string.Join(" ", x.Value.Select(r => r.RomanisedSyllable));
 
             return new RomanisationGenerateResult
             {
                 FirstSyllable = isFirst,
-                RomanizedSyllable = romanizedSyllable,
+                RomanisedSyllable = romanisedSyllable,
             };
         });
 
@@ -144,6 +144,6 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
 
         public int EndIndex { get; set; }
 
-        public string RomanizedSyllable { get; set; } = string.Empty;
+        public string RomanisedSyllable { get; set; } = string.Empty;
     }
 }

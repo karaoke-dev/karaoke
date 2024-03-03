@@ -39,7 +39,7 @@ public class RomanisationGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<
 
     [TestCase(17, "はなび", new[] { "[0,start]" }, new[] { "^hana bi" })] // Japanese
     [TestCase(1041, "花火大会", new[] { "[0,start]", "[3,end]" }, new[] { "^hanabi taikai", "" })] // Japanese
-    public void TestGenerate(int lcid, string text, string[] timeTagStrings, string[] expectedRomanizedSyllables)
+    public void TestGenerate(int lcid, string text, string[] timeTagStrings, string[] expectedRomanisedSyllables)
     {
         var selector = CreateSelector();
 
@@ -51,7 +51,7 @@ public class RomanisationGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<
             TimeTags = timeTags,
         };
 
-        var expected = RomanisationGenerateResultHelper.ParseRomanisationGenerateResults(timeTags, expectedRomanizedSyllables);
+        var expected = RomanisationGenerateResultHelper.ParseRomanisationGenerateResults(timeTags, expectedRomanisedSyllables);
         CheckGenerateResult(lyric, expected, selector);
     }
 

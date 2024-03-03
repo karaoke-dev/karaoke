@@ -40,7 +40,7 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
     [TestCase("枯れた世界に輝く",
         new[] { "[0,start]", "[1,start]", "[2,start]", "[3,start]", "[4,start]", "[5,start]", "[6,start]", "[6,start]", "[6,start]", "[7,start]", "[7,end]" },
         new[] { "^kare", "", "ta", "sekai", "", "ni", "kagayaku", "", "", "", "" })]
-    public void TestGenerate(string text, string[] timeTagStrings, string[] expectedRomanizedSyllables)
+    public void TestGenerate(string text, string[] timeTagStrings, string[] expectedRomanisedSyllables)
     {
         var config = GeneratorEmptyConfig();
 
@@ -51,12 +51,12 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
             TimeTags = timeTags,
         };
 
-        CheckGenerateResult(lyric, expectedRomanizedSyllables, config);
+        CheckGenerateResult(lyric, expectedRomanisedSyllables, config);
     }
 
     [TestCase("はなび", new[] { "[0,start]" }, new[] { "^HANA BI" })]
     [TestCase("花火大会", new[] { "[0,start]", "[2,start]", "[3,end]" }, new[] { "^HANABI", "TAIKAI", "" })]
-    public void TestGenerateWithUppercase(string text, string[] timeTagStrings, string[] expectedRomanizedSyllables)
+    public void TestGenerateWithUppercase(string text, string[] timeTagStrings, string[] expectedRomanisedSyllables)
     {
         var config = GeneratorEmptyConfig(x => x.Uppercase.Value = true);
 
@@ -67,7 +67,7 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
             TimeTags = timeTags,
         };
 
-        CheckGenerateResult(lyric, expectedRomanizedSyllables, config);
+        CheckGenerateResult(lyric, expectedRomanisedSyllables, config);
     }
 
     [TestCase("花", new[] { "[0,start]", "[0,end]" }, new[] { "[0]:hana" }, new[] { "^hana", "" })]
@@ -99,7 +99,7 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
         {
             StartIndex = romajiTag.StartIndex,
             EndIndex = romajiTag.EndIndex,
-            RomanizedSyllable = romajiTag.Text,
+            RomanisedSyllable = romajiTag.Text,
         };
     }
 
