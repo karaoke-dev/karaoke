@@ -36,13 +36,13 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
         var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
 
         // get the processing tags.
-        var processingRomanisations = getProcessingRomanisations(text, tokenStream, Config).ToArray();
+        var parameters = generateParameters(text, tokenStream, Config).ToArray();
 
         // then, trying to mapping them with the time-tags.
-        return Convert(item.TimeTags, processingRomanisations);
+        return Convert(item.TimeTags, parameters);
     }
 
-    private static IEnumerable<RomanisationGeneratorParameter> getProcessingRomanisations(string text, TokenStream tokenStream, JaRomanisationGeneratorConfig config)
+    private static IEnumerable<RomanisationGeneratorParameter> generateParameters(string text, TokenStream tokenStream, JaRomanisationGeneratorConfig config)
     {
         // Reset the stream and convert all result
         tokenStream.Reset();
@@ -85,9 +85,9 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
         tokenStream.Dispose();
     }
 
-    internal static IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> romanisations)
+    internal static IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> Convert(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> parameters)
     {
-        var group = createGroup(timeTags, romanisations);
+        var group = createGroup(timeTags, parameters);
         return group.ToDictionary(k => k.Key, x =>
         {
             bool isFirst = timeTags.IndexOf(x.Key) == 0; // todo: use better to mark the first syllable.
@@ -100,7 +100,7 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
             };
         });
 
-        static IReadOnlyDictionary<TimeTag, List<RomanisationGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> romanisations)
+        static IReadOnlyDictionary<TimeTag, List<RomanisationGeneratorParameter>> createGroup(IList<TimeTag> timeTags, IList<RomanisationGeneratorParameter> parameters)
         {
             var dictionary = timeTags.ToDictionary(x => x, v => new List<RomanisationGeneratorParameter>());
 
@@ -108,14 +108,14 @@ public class JaRomanisationGenerator : RomanisationGenerator<JaRomanisationGener
 
             foreach (var (timeTag, list) in dictionary)
             {
-                while (processedIndex < romanisations.Count && isTimeTagInRange(timeTags, timeTag, romanisations[processedIndex]))
+                while (processedIndex < parameters.Count && isTimeTagInRange(timeTags, timeTag, parameters[processedIndex]))
                 {
-                    list.Add(romanisations[processedIndex]);
+                    list.Add(parameters[processedIndex]);
                     processedIndex++;
                 }
             }
 
-            if (processedIndex < romanisations.Count - 1)
+            if (processedIndex < parameters.Count - 1)
                 throw new InvalidOperationException("Still have romanisations that haven't process");
 
             return dictionary;

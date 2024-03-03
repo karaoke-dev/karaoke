@@ -78,10 +78,10 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
     public void TestConvertToRomanisationGenerateResult(string text, string[] timeTagStrings, string[] romanisationParams, string[] expectedResults)
     {
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagStrings);
-        var romanisations = parseRomanisationGenerateResults(romanisationParams);
+        var results = parseRomanisationGenerateResults(romanisationParams);
 
         var expected = RomanisationGenerateResultHelper.ParseRomanisationGenerateResults(timeTags, expectedResults);
-        var actual = JaRomanisationGenerator.Convert(timeTags, romanisations);
+        var actual = JaRomanisationGenerator.Convert(timeTags, results);
 
         AssertEqual(expected, actual);
     }
