@@ -35,8 +35,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     {
         HitObject = lyric;
 
-        DisplayRuby = true;
-        DisplayRomaji = true;
+        // should display ruby and romanization by default.
+        DisplayType = LyricDisplayType.Lyric;
+        DisplayProperty = LyricDisplayProperty.Both;
 
         spriteText = getSpriteText();
 
@@ -47,6 +48,19 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
             return lyricSpriteTexts.Child;
         }
+    }
+
+    protected override void OnPropertyChanged()
+    {
+        triggerSizeChangedEvent();
+    }
+
+    private void triggerSizeChangedEvent()
+    {
+        ScheduleAfterChildren(() =>
+        {
+            SizeChanged?.Invoke();
+        });
     }
 
     #region Text char index
@@ -222,35 +236,6 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
             static FontUsage getFont(float? charSize = null)
                 => FontUsage.Default.With(size: charSize * 2);
         }, true);
-    }
-
-    protected override void UpdateText()
-    {
-        base.UpdateText();
-
-        triggerSizeChangedEvent();
-    }
-
-    protected override void UpdateRubies()
-    {
-        base.UpdateRubies();
-
-        triggerSizeChangedEvent();
-    }
-
-    protected override void UpdateRomajies()
-    {
-        base.UpdateRomajies();
-
-        triggerSizeChangedEvent();
-    }
-
-    private void triggerSizeChangedEvent()
-    {
-        ScheduleAfterChildren(() =>
-        {
-            SizeChanged?.Invoke();
-        });
     }
 
     public override bool RemoveCompletedTransforms => false;

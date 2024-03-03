@@ -4,28 +4,29 @@
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 
-public class NoteEditorPreviewMenu : MenuItem
+public class LyricDisplayPreviewMenuItem : MenuItem
 {
-    private readonly Bindable<bool> bindableDisplayRubyToggle = new();
-    private readonly Bindable<bool> bindableDisplayRomajiToggle = new();
+    private readonly Bindable<LyricDisplayType> bindableDisplayTypeToggle = new();
+    private readonly Bindable<LyricDisplayProperty> bindableDisplayPropertyToggle = new();
     private readonly Bindable<bool> bindableDisplayTranslateToggle = new();
 
-    public NoteEditorPreviewMenu(KaraokeRulesetEditConfigManager config, string text)
+    public LyricDisplayPreviewMenuItem(KaraokeRulesetEditConfigManager config, string text)
         : base(text)
     {
         // Note: cannot use config.GetBindable<bool> directly the menu item.
-        config.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayRubyToggle);
-        config.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
+        config.BindWith(KaraokeRulesetEditSetting.DisplayType, bindableDisplayTypeToggle);
+        config.BindWith(KaraokeRulesetEditSetting.DisplayProperty, bindableDisplayPropertyToggle);
         config.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
 
-        Items = new[]
+        Items = new MenuItem[]
         {
-            new BindableBoolMenuItem("Display ruby", bindableDisplayRubyToggle),
-            new BindableBoolMenuItem("Display romaji", bindableDisplayRomajiToggle),
+            new BindableEnumMenuItem<LyricDisplayType>("Display type", bindableDisplayTypeToggle),
+            new BindableEnumMenuItem<LyricDisplayProperty>("Display property", bindableDisplayPropertyToggle),
             new BindableBoolMenuItem("Display translate", bindableDisplayTranslateToggle),
         };
     }
