@@ -129,9 +129,9 @@ public static class TestCaseTagHelper
     /// [0,start]:1000              -> has time-tag index with time.<br/>
     /// [0,start]                   -> has time-tag index with no time.<br/>
     /// [0,start]:                  -> has time-tag index with no time.<br/>
-    /// [0,start]#karaoke           -> has time-tag index with romanized syllable.<br/>
-    /// [0,start]#^karaoke          -> has time-tag index with romanized syllable, and it's the first one.<br/>
-    /// [0,start]:1000#karaoke      -> has time-tag index with time and romanized syllable.<br/>
+    /// [0,start]#karaoke           -> has time-tag index with romanised syllable.<br/>
+    /// [0,start]#^karaoke          -> has time-tag index with romanised syllable, and it's the first one.<br/>
+    /// [0,start]:1000#karaoke      -> has time-tag index with time and romanised syllable.<br/>
     /// </example>
     /// <param name="str">Time tag string format</param>
     /// <returns><see cref="TimeTag"/>Time tag object</returns>
@@ -157,7 +157,7 @@ public static class TestCaseTagHelper
             return new TimeTag(new TextIndex(index, state), time)
             {
                 FirstSyllable = firstSyllable ?? default,
-                RomanizedSyllable = text?.Replace("^", ""),
+                RomanisedSyllable = text?.Replace("^", ""),
             };
         });
     }

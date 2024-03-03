@@ -130,7 +130,7 @@ public partial class TestSceneLyricFirstDisplayProcessor : TestSceneDisplayProce
 
         AssertTopTextNotChanged();
         AssertCenterTextNotChanged();
-        // it's OK not to filter the romanization that out of range. karaoke/sprite text will not display that.
+        // it's OK not to filter the romanisation that out of range. karaoke/sprite text will not display that.
         AssertBottomTextChanged(new PositionText[]
         {
             new("ka", 0, 0),

@@ -13,17 +13,17 @@ public enum LyricDisplayType
     /// <example>
     /// Top: <see cref="RubyTag.Text"/><br/>
     /// Center: <see cref="Lyric.Text"/><br/>
-    /// Bottom: <see cref="TimeTag.RomanizedSyllable"/><br/>
+    /// Bottom: <see cref="TimeTag.RomanisedSyllable"/><br/>
     /// </example>
     Lyric,
 
     /// <summary>
-    /// Display the romanized lyric as center of the text.
+    /// Display the romanised lyric as center of the text.
     /// </summary>
     /// <example>
     /// Top: <see cref="RubyTag.Text"/><br/>
-    /// Center: <see cref="TimeTag.RomanizedSyllable"/><br/>
+    /// Center: <see cref="TimeTag.RomanisedSyllable"/><br/>
     /// Bottom: <see cref="Lyric.Text"/><br/>
     /// </example>
-    RomanizedSyllable,
+    RomanisedSyllable,
 }

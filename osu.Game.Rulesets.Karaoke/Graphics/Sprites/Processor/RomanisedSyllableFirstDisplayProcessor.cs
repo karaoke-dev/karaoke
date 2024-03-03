@@ -8,9 +8,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites.Processor;
 
-public class RomanizedSyllableFirstDisplayProcessor : BaseDisplayProcessor
+public class RomanisedSyllableFirstDisplayProcessor : BaseDisplayProcessor
 {
-    public RomanizedSyllableFirstDisplayProcessor(Lyric lyric, LyricDisplayProperty displayProperty)
+    public RomanisedSyllableFirstDisplayProcessor(Lyric lyric, LyricDisplayProperty displayProperty)
         : base(lyric, displayProperty)
     {
         // Note: some of the properties are not implemented yet because we are not sure people actually use it.
@@ -59,7 +59,7 @@ public class RomanizedSyllableFirstDisplayProcessor : BaseDisplayProcessor
         string.Join("", lyric.TimeTags.Select((x, i) =>
         {
             bool hasEmptySpace = i != 0 && x.FirstSyllable;
-            return hasEmptySpace ? " " + x.RomanizedSyllable : x.RomanizedSyllable;
+            return hasEmptySpace ? " " + x.RomanisedSyllable : x.RomanisedSyllable;
         }));
 
     protected override IEnumerable<PositionText> CalculateBottomTexts(Lyric lyric)

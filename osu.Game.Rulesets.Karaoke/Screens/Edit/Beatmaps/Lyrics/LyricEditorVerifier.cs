@@ -200,6 +200,6 @@ public class CheckLyricTimeTagRomaji : CheckLyricTimeTag
 {
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
-        return CheckTimeTagRomanizedSyllable(lyric);
+        return CheckTimeTagRomanisedSyllable(lyric);
     }
 }

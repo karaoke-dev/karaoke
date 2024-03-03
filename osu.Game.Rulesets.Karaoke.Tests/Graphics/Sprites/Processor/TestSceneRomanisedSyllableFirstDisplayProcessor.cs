@@ -12,10 +12,10 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics.Sprites.Processor;
 
-public partial class TestSceneRomanizedSyllableFirstDisplayProcessor : TestSceneDisplayProcessor
+public partial class TestSceneRomanisedSyllableFirstDisplayProcessor : TestSceneDisplayProcessor
 {
     protected override BaseDisplayProcessor CreateProcessor(Lyric lyric, LyricDisplayProperty displayProperty)
-        => new RomanizedSyllableFirstDisplayProcessor(lyric, displayProperty);
+        => new RomanisedSyllableFirstDisplayProcessor(lyric, displayProperty);
 
     #region Happy path
 

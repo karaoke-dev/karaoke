@@ -7,12 +7,12 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanization;
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanisation;
 
-public abstract class RomanizationGenerator<TConfig> : LyricPropertyGenerator<IReadOnlyDictionary<TimeTag, RomanizationGenerateResult>, TConfig>
-    where TConfig : RomanizationGeneratorConfig, new()
+public abstract class RomanisationGenerator<TConfig> : LyricPropertyGenerator<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, TConfig>
+    where TConfig : RomanisationGeneratorConfig, new()
 {
-    protected RomanizationGenerator(TConfig config)
+    protected RomanisationGenerator(TConfig config)
         : base(config)
     {
     }

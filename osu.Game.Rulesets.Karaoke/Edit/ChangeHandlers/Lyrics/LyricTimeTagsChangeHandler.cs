@@ -41,7 +41,7 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
         });
     }
 
-    public void SetTimeTagRomanizedSyllable(TimeTag timeTag, string? romanizedSyllable)
+    public void SetTimeTagRomanisedSyllable(TimeTag timeTag, string? romanisedSyllable)
     {
         CheckExactlySelectedOneHitObject();
 
@@ -51,12 +51,12 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
             if (!containsInLyric)
                 throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
-            timeTag.RomanizedSyllable = romanizedSyllable;
+            timeTag.RomanisedSyllable = romanisedSyllable;
 
-            if (!string.IsNullOrWhiteSpace(romanizedSyllable))
+            if (!string.IsNullOrWhiteSpace(romanisedSyllable))
                 return;
 
-            timeTag.RomanizedSyllable = string.Empty;
+            timeTag.RomanisedSyllable = string.Empty;
             timeTag.FirstSyllable = false;
         });
     }

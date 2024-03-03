@@ -58,7 +58,7 @@ public static class CharUtils
 
     /// <summary>
     /// Check this char is latin alphabet or not.
-    /// Usually, this is used to check the romanization result.
+    /// Usually, this is used to check the romanisation result.
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
@@ -68,7 +68,7 @@ public static class CharUtils
         {
             case >= 'A' and <= 'Z':
             case >= 'a' and <= 'z':
-            // another romanized characters
+            // another romanised characters
             // see: https://www.unicode.org/charts/PDF/U1E00.pdf
             case >= '\u1E00' and <= '\u1EFF':
                 return true;

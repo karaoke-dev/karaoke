@@ -15,7 +15,7 @@ public class TimeTagTest
         var timeTag = new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000)
         {
             FirstSyllable = true,
-            RomanizedSyllable = "karaoke",
+            RomanisedSyllable = "karaoke",
         };
 
         var clonedTimeTag = timeTag.DeepClone();
@@ -25,6 +25,6 @@ public class TimeTagTest
         Assert.AreNotSame(clonedTimeTag.TimeBindable, timeTag.TimeBindable);
         Assert.AreEqual(clonedTimeTag.Time, timeTag.Time);
         Assert.AreNotSame(clonedTimeTag.FirstSyllable, timeTag.FirstSyllable);
-        Assert.AreEqual(clonedTimeTag.RomanizedSyllable, timeTag.RomanizedSyllable);
+        Assert.AreEqual(clonedTimeTag.RomanisedSyllable, timeTag.RomanisedSyllable);
     }
 }
