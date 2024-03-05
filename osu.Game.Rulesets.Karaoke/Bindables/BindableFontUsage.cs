@@ -10,38 +10,34 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Bindables;
 
-public class BindableFontUsage : Bindable<FontUsage>
+public class BindableFontUsage : RangeConstrainedBindable<FontUsage>
 {
+    private const int default_min_font_size = 1;
+    private const int default_max_font_size = 72;
+
+    protected override FontUsage DefaultMinValue => Default.With(size: default_min_font_size);
+    protected override FontUsage DefaultMaxValue => Default.With(size: default_max_font_size);
+
     public BindableFontUsage(FontUsage value = default)
         : base(value)
     {
-        MinFontSize = DefaultMinFontSize;
-        MaxFontSize = DefaultMaxFontSize;
     }
 
-    public float MinFontSize { get; set; }
-    public float MaxFontSize { get; set; }
-
-    protected float DefaultMinFontSize => 0;
-
-    protected float DefaultMaxFontSize => 200;
-
-    public override FontUsage Value
+    public float MinFontSize
     {
-        get => base.Value;
-        set => base.Value = value.With(size: Math.Clamp(value.Size, MinFontSize, MaxFontSize));
+        get => MinValue.Size;
+        set => MinValue = MinValue.With(size: value);
     }
 
-    public override void BindTo(Bindable<FontUsage> them)
+    public float MaxFontSize
     {
-        if (them is BindableFontUsage other)
-        {
-            MinFontSize = Math.Max(MinFontSize, other.MinFontSize);
-            MaxFontSize = Math.Min(MaxFontSize, other.MaxFontSize);
-        }
-
-        base.BindTo(them);
+        get => MaxValue.Size;
+        set => MaxValue = MaxValue.With(size: value);
     }
+
+    // IDK why not being called in here while saving.
+    public override string ToString(string? format, IFormatProvider? formatProvider)
+        => $"family={Value.Family} weight={Value.Weight} size={Value.Size} italics={Value.Italics} fixedWidth={Value.FixedWidth}";
 
     public override void Parse(object? input, IFormatProvider provider)
     {
@@ -78,7 +74,11 @@ public class BindableFontUsage : Bindable<FontUsage>
 
     protected override Bindable<FontUsage> CreateInstance() => new BindableFontUsage();
 
-    // IDK why not being called in here while saving.
-    public override string ToString(string? format, IFormatProvider? formatProvider)
-        => $"family={Value.Family} weight={Value.Weight} size={Value.Size} italics={Value.Italics} fixedWidth={Value.FixedWidth}";
+    protected sealed override FontUsage ClampValue(FontUsage value, FontUsage minValue, FontUsage maxValue)
+    {
+        return value.With(size: Math.Clamp(value.Size, minValue.Size, maxValue.Size));
+    }
+
+    protected sealed override bool IsValidRange(FontUsage min, FontUsage max)
+        => min.Size <= max.Size;
 }
