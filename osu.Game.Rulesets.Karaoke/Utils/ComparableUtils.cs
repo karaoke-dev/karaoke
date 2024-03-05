@@ -9,18 +9,18 @@ namespace osu.Game.Rulesets.Karaoke.Utils;
 
 public static class ComparableUtils
 {
-    public static int Compare<T>(T? x, T? y, params Func<T, T, int>[] comparers)
+    public static int Compare<T>(T? x, T? y, params Func<T, T, int>[] comparators)
     {
         if (x == null || y == null)
             throw new InvalidOperationException("This utils does not support null cases");
 
-        return comparers.Select(cmp => cmp(x, y))
-                        .FirstOrDefault(result => result != 0);
+        return comparators.Select(cmp => cmp(x, y))
+                          .FirstOrDefault(result => result != 0);
     }
 
-    public static int CompareByProperty<T>(T? x, T? y, params Func<T, object>[] comparers)
+    public static int CompareByProperty<T>(T? x, T? y, params Func<T, object>[] comparators)
     {
-        var comparerResults = comparers.Select(comparer =>
+        var comparerResults = comparators.Select(comparer =>
         {
             return (Func<T, T, int>)compareFunction;
 
