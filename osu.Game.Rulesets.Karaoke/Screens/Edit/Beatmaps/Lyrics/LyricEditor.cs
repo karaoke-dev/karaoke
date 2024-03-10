@@ -47,8 +47,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(IEditReferenceLyricModeState))]
     private readonly EditReferenceLyricModeState editReferenceLyricModeState;
 
-    [Cached(typeof(ILanguageModeState))]
-    private readonly LanguageModeState languageModeState;
+    [Cached(typeof(IEditLanguageModeState))]
+    private readonly EditLanguageModeState editLanguageModeState;
 
     [Cached(typeof(IEditRubyModeState))]
     private readonly EditRubyModeState editRubyModeState;
@@ -101,7 +101,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         // state for target mode only.
         AddInternal(editTextModeState = new EditTextModeState());
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
-        AddInternal(languageModeState = new LanguageModeState());
+        AddInternal(editLanguageModeState = new EditLanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
         AddInternal(timeTagModeState = new TimeTagModeState());
         AddInternal(editRomajiModeState = new EditRomajiModeState());
@@ -205,7 +205,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.View => null,
                 LyricEditorMode.EditText => editTextModeState.BindableEditStep.Value,
                 LyricEditorMode.EditReference => editReferenceLyricModeState.BindableEditStep.Value,
-                LyricEditorMode.EditLanguage => languageModeState.BindableEditStep.Value,
+                LyricEditorMode.EditLanguage => editLanguageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
                 LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
