@@ -120,7 +120,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
     private void updateAddLyricState()
     {
         // display add new lyric only with edit mode.
-        bool disableBottomDrawable = bindableMode.Value == LyricEditorMode.Texting && !bindableSelecting.Value;
+        bool disableBottomDrawable = bindableMode.Value == LyricEditorMode.EditText && !bindableSelecting.Value;
         container.DisplayBottomDrawable = disableBottomDrawable;
     }
 

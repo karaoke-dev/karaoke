@@ -12,15 +12,15 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Text;
 
-public partial class TextingIssueSection : LyricEditorIssueSection
+public partial class TextIssueSection : LyricEditorIssueSection
 {
-    protected override LyricEditorMode EditMode => LyricEditorMode.Texting;
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditText;
 
-    protected override LyricsIssueTable CreateLyricsIssueTable() => new TextingIssueTable();
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new TextIssueTable();
 
-    private partial class TextingIssueTable : LyricsIssueTable
+    private partial class TextIssueTable : LyricsIssueTable
     {
         protected override TableColumn[] CreateHeaders() => new[]
         {

@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Refere
 
 public partial class ReferenceLyricIssueSection : LyricEditorIssueSection
 {
-    protected override LyricEditorMode EditMode => LyricEditorMode.Reference;
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditReferenceLyric;
 
     protected override LyricsIssueTable CreateLyricsIssueTable() => new ReferenceLyricIssueTable();
 

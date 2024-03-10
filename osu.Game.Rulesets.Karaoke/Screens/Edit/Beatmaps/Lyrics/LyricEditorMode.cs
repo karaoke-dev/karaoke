@@ -17,20 +17,20 @@ public enum LyricEditorMode
     /// Can create/delete/move/split/combine lyric.
     /// And typing the lyric.
     /// </summary>
-    [Description("Texting")]
-    Texting,
+    [Description("Edit Text")]
+    EditText,
 
     /// <summary>
     /// Mark the lyric is "similar" to another lyric.
     /// </summary>
-    [Description("Reference")]
-    Reference,
+    [Description("Edit Reference lyric")]
+    EditReferenceLyric,
 
     /// <summary>
     /// Can edit each lyric's language.
     /// </summary>
     [Description("Select language")]
-    Language,
+    EditLanguage,
 
     /// <summary>
     /// Able to create/delete ruby.
@@ -60,5 +60,5 @@ public enum LyricEditorMode
     /// Can edit each lyric's singer.
     /// </summary>
     [Description("Select singer")]
-    Singer,
+    EditSinger,
 }

@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public enum TextingEditStep
+public enum TextEditStep
 {
     Typing,
 

@@ -16,13 +16,13 @@ public partial class TimeTagCreateConfigSection : EditorSection
     protected override LocalisableString Title => "Config Tool";
 
     [BackgroundDependencyLoader]
-    private void load(ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    private void load(IEditTimeTagModeState editTimeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
     {
         Children = new Drawable[]
         {
             new TimeTagCreateConfigSubsection
             {
-                Current = timeTagModeState.BindableCreateTimeTagEditMode,
+                Current = editTimeTagModeState.BindableCreateTimeTagEditMode,
             },
             new LabelledEnumDropdown<MovingTimeTagCaretMode>
             {

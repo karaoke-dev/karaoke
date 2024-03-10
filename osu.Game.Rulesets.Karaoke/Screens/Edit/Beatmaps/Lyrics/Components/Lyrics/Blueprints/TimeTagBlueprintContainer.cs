@@ -28,7 +28,7 @@ public partial class TimeTagBlueprintContainer : LyricPropertyBlueprintContainer
     protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
         => new TimeTagSelectionBlueprint(item);
 
-    protected partial class TimeTagSelectionHandler : LyricPropertySelectionHandler<ITimeTagModeState>
+    protected partial class TimeTagSelectionHandler : LyricPropertySelectionHandler<IEditTimeTagModeState>
     {
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;

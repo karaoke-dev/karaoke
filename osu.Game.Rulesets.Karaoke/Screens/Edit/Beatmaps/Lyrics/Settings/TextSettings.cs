@@ -6,23 +6,23 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Texting;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Text;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public partial class TextingSettings : LyricEditorSettings
+public partial class TextSettings : LyricEditorSettings
 {
     public override SettingsDirection Direction => SettingsDirection.Right;
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<TextingEditStep> bindableEditStep = new Bindable<TextingEditStep>();
+    private readonly IBindable<TextEditStep> bindableEditStep = new Bindable<TextEditStep>();
 
     [BackgroundDependencyLoader]
-    private void load(ITextingModeState textingModeState)
+    private void load(IEditTextModeState editTextModeState)
     {
-        bindableEditStep.BindTo(textingModeState.BindableEditStep);
+        bindableEditStep.BindTo(editTextModeState.BindableEditStep);
         bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
@@ -31,20 +31,20 @@ public partial class TextingSettings : LyricEditorSettings
 
     protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
-        TextingEditStep.Typing => new Drawable[]
+        TextEditStep.Typing => new Drawable[]
         {
-            new TextingEditStepSection(),
-            new TextingSwitchSpecialActionSection(),
+            new TextEditStepSection(),
+            new TextSwitchSpecialActionSection(),
         },
-        TextingEditStep.Split => new Drawable[]
+        TextEditStep.Split => new Drawable[]
         {
-            new TextingEditStepSection(),
-            new TextingSwitchSpecialActionSection(),
+            new TextEditStepSection(),
+            new TextSwitchSpecialActionSection(),
         },
-        TextingEditStep.Verify => new Drawable[]
+        TextEditStep.Verify => new Drawable[]
         {
-            new TextingEditStepSection(),
-            new TextingIssueSection(),
+            new TextEditStepSection(),
+            new TextIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
     };

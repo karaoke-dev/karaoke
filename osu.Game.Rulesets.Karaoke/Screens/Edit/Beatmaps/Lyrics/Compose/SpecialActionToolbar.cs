@@ -110,23 +110,23 @@ public partial class SpecialActionToolbar : CompositeDrawable
         return editorModeWithEditStep.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => createItemsForTextingEditStep(editorModeWithEditStep.GetEditStep<TextingEditStep>()),
-            LyricEditorMode.Reference => Array.Empty<Drawable>(),
-            LyricEditorMode.Language => Array.Empty<Drawable>(),
+            LyricEditorMode.EditText => createItemsForTextEditStep(editorModeWithEditStep.GetEditStep<TextEditStep>()),
+            LyricEditorMode.EditReferenceLyric => Array.Empty<Drawable>(),
+            LyricEditorMode.EditLanguage => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditTimeTag => createItemsForTimeTagEditStep(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
             LyricEditorMode.EditRomaji => Array.Empty<Drawable>(),
             LyricEditorMode.EditNote => createItemsForNoteEditStep(editorModeWithEditStep.GetEditStep<NoteEditStep>()),
-            LyricEditorMode.Singer => Array.Empty<Drawable>(),
+            LyricEditorMode.EditSinger => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        static IEnumerable<Drawable> createItemsForTextingEditStep(TextingEditStep textingEditMode)
+        static IEnumerable<Drawable> createItemsForTextEditStep(TextEditStep textEditMode)
         {
-            switch (textingEditMode)
+            switch (textEditMode)
             {
-                case TextingEditStep.Typing:
-                case TextingEditStep.Split:
+                case TextEditStep.Typing:
+                case TextEditStep.Split:
                     return new Drawable[]
                     {
                         new MoveToFirstIndexButton(),
@@ -135,11 +135,11 @@ public partial class SpecialActionToolbar : CompositeDrawable
                         new MoveToLastIndexButton(),
                     };
 
-                case TextingEditStep.Verify:
+                case TextEditStep.Verify:
                     return Array.Empty<Drawable>();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(textingEditMode));
+                    throw new ArgumentOutOfRangeException(nameof(textEditMode));
             }
         }
 

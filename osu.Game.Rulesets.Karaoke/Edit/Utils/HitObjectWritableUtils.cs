@@ -69,7 +69,7 @@ public static class HitObjectWritableUtils
 
     private static bool isWriteLyricPropertyLockedByState(LockState lockState, string propertyName)
     {
-        // partial lock will only lock some property change like texting because they are easy to be modified.
+        // partial lock will only lock some property change like text because they are easy to be modified.
         // fully lock will basically lock all lyric properties.
         return propertyName switch
         {

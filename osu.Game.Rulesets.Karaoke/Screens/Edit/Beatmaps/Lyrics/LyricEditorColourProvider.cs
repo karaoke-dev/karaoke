@@ -44,11 +44,11 @@ public class LyricEditorColourProvider
             case LyricEditorMode.View:
                 return 200 / 360f; // blue
 
-            case LyricEditorMode.Texting:
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditText:
+            case LyricEditorMode.EditReferenceLyric:
                 return 0 / 360f; // red
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
             case LyricEditorMode.EditRuby:
                 return 333 / 360f; // pink
 
@@ -59,7 +59,7 @@ public class LyricEditorColourProvider
             case LyricEditorMode.EditNote:
                 return 200 / 360f; // blue
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 return 255 / 360f; // purple
 
             default:

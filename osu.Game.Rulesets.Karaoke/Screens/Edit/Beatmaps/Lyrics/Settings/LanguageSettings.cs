@@ -20,9 +20,9 @@ public partial class LanguageSettings : LyricEditorSettings
     private readonly IBindable<LanguageEditStep> bindableEditStep = new Bindable<LanguageEditStep>();
 
     [BackgroundDependencyLoader]
-    private void load(ILanguageModeState languageModeState)
+    private void load(IEditLanguageModeState editLanguageModeState)
     {
-        bindableEditStep.BindTo(languageModeState.BindableEditStep);
+        bindableEditStep.BindTo(editLanguageModeState.BindableEditStep);
         bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();

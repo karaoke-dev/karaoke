@@ -36,13 +36,13 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private Lyric? getSelectedLyric() => lyricCaretState.BindableFocusedLyric.Value;
 
     [Resolved]
-    private ITextingModeState textingModeState { get; set; } = null!;
+    private IEditTextModeState editTextModeState { get; set; } = null!;
 
     [Resolved]
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditTimeTagModeState editTimeTagModeState { get; set; } = null!;
 
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
@@ -141,21 +141,21 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.EditText:
+                switch (editTextModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         if (lyricsChangeHandler == null)
                             throw new NullDependencyException($"Missing {nameof(lyricsChangeHandler)}");
 
                         lyricsChangeHandler.Remove();
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -163,10 +163,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 languageChangeHandler?.SetLanguage(null);
                 return true;
 
@@ -182,7 +182,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditTimeTag:
-                var timeTags = timeTagModeState.SelectedItems;
+                var timeTags = editTimeTagModeState.SelectedItems;
                 if (!timeTags.Any())
                     return false;
 
@@ -198,7 +198,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 if (lyricSingerChangeHandler == null)
                     throw new NullDependencyException($"Missing {nameof(lyricSingerChangeHandler)}");
 
@@ -219,19 +219,19 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(lyric.Text);
                 return true;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.EditText:
+                switch (editTextModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         saveObjectToTheClipboardContent(lyric);
                         copyObjectToClipboard(lyric.Text);
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -239,10 +239,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 saveObjectToTheClipboardContent(lyric.Language);
                 copyObjectToClipboard(lyric.Language);
                 return true;
@@ -257,7 +257,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditTimeTag:
-                var timeTags = timeTagModeState.SelectedItems;
+                var timeTags = editTimeTagModeState.SelectedItems;
                 if (!timeTags.Any())
                     return false;
 
@@ -271,7 +271,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 saveObjectToTheClipboardContent(lyric.SingerIds);
                 var singers = getMatchedSinges(lyric.SingerIds);
                 copyObjectToClipboard(singers);
@@ -289,14 +289,14 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.EditText:
+                switch (editTextModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         var pasteLyric = getObjectFromClipboardContent<Lyric>();
                         if (pasteLyric == null)
                             return false;
@@ -307,7 +307,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -315,10 +315,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 var pasteLanguage = getObjectFromClipboardContent<CultureInfo>();
                 if (pasteLanguage == null)
                     return false;
@@ -357,7 +357,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 ElementId[]? pasteSingerIds = getObjectFromClipboardContent<ElementId[]>();
                 if (pasteSingerIds == null)
                     return false;

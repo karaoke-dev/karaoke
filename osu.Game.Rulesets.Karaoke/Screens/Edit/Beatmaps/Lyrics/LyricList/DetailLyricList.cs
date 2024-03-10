@@ -23,7 +23,7 @@ public partial class DetailLyricList : BaseLyricList
 
     protected override Drawable CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
     {
-        bool containsHandler = mode == LyricEditorMode.Texting;
+        bool containsHandler = mode == LyricEditorMode.EditText;
 
         const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMING_WIDTH;
         float timingWidth = containsHandler ? DrawableLyricListItem.HANDLER_WIDTH + timing_base_width : timing_base_width;

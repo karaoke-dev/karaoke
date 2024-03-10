@@ -63,10 +63,10 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
     {
         // Check should contains language-related issue in the verifier.
         assertHitObjectIssueAmount(internalLyric, 1);
-        assertEditModeIssueAmount(LyricEditorMode.Language, 1);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 1);
 
         // Should not contains issue in other edit mode.
-        assertEditModeIssueAmount(LyricEditorMode.Texting, 0);
+        assertEditModeIssueAmount(LyricEditorMode.EditText, 0);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
 
         assertHitObjectIssueAmount(internalLyric, 1);
         assertHitObjectIssueAmount(newLyric, 1);
-        assertEditModeIssueAmount(LyricEditorMode.Language, 2);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 2);
     }
 
     [Test]
@@ -92,7 +92,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
             editorBeatmap.Remove(internalLyric);
         });
 
-        assertEditModeIssueAmount(LyricEditorMode.Language, 0);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 0);
     }
 
     [Test]
@@ -105,7 +105,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         });
 
         assertHitObjectIssueAmount(internalLyric, 0);
-        assertEditModeIssueAmount(LyricEditorMode.Language, 0);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 0);
     }
 
     [Test]
@@ -118,7 +118,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         });
 
         assertHitObjectIssueAmount(internalLyric, 0);
-        assertEditModeIssueAmount(LyricEditorMode.Language, 0);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 0);
     }
 
     [Test]
@@ -131,7 +131,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         });
 
         assertHitObjectIssueAmount(internalLyric, 0);
-        assertEditModeIssueAmount(LyricEditorMode.Language, 0);
+        assertEditModeIssueAmount(LyricEditorMode.EditLanguage, 0);
     }
 
     #region Tool

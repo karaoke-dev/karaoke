@@ -37,7 +37,7 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
     protected override Drawable CreateContent()
         => base.CreateContent().With(_ =>
         {
-            SwitchLyricEditorMode(LyricEditorMode.Language);
+            SwitchLyricEditorMode(LyricEditorMode.EditLanguage);
         });
 
     protected override void LoadComplete()

@@ -47,9 +47,9 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         Dependencies.Cache(editorBeatmap = new EditorBeatmap(beatmap));
         Dependencies.Cache(new EditorClock());
         Dependencies.CacheAs<ILyricEditorState>(state = new TestLyricEditorState());
-        Dependencies.CacheAs<ITextingModeState>(new TextingModeState());
+        Dependencies.CacheAs<IEditTextModeState>(new EditTextModeState());
         Dependencies.CacheAs<IEditRubyModeState>(new EditRubyModeState());
-        Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
+        Dependencies.CacheAs<IEditTimeTagModeState>(new EditTimeTagModeState());
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
         var lyricsProvider = new LyricsProvider();
@@ -96,17 +96,17 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                     return;
 
                 case TestCaretType.CaretEnable:
-                    state.SwitchMode(LyricEditorMode.Reference);
+                    state.SwitchMode(LyricEditorMode.EditReferenceLyric);
                     break;
 
                 case TestCaretType.CaretWithIndex:
-                    state.SwitchMode(LyricEditorMode.Texting);
-                    state.SwitchEditStep(TextingEditStep.Split);
+                    state.SwitchMode(LyricEditorMode.EditText);
+                    state.SwitchEditStep(TextEditStep.Split);
                     break;
 
                 case TestCaretType.CaretDraggable:
-                    state.SwitchMode(LyricEditorMode.Texting);
-                    state.SwitchEditStep(TextingEditStep.Typing);
+                    state.SwitchMode(LyricEditorMode.EditText);
+                    state.SwitchEditStep(TextEditStep.Typing);
                     break;
 
                 default:
@@ -188,7 +188,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         public LyricEditorMode Mode => bindableMode.Value;
 
         [Resolved]
-        private ITextingModeState textingModeState { get; set; } = null!;
+        private IEditTextModeState editTextModeState { get; set; } = null!;
 
         public void SwitchMode(LyricEditorMode mode)
         {
@@ -198,7 +198,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
             {
                 updateModeWithEditStep();
             }, true);
-            textingModeState.BindableEditStep.BindValueChanged(e =>
+            editTextModeState.BindableEditStep.BindValueChanged(e =>
             {
                 updateModeWithEditStep();
             });
@@ -217,24 +217,24 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                 mode switch
                 {
                     LyricEditorMode.View => null,
-                    LyricEditorMode.Texting => textingModeState.EditStep,
-                    LyricEditorMode.Reference => null,
-                    LyricEditorMode.Language => throw new NotSupportedException(),
+                    LyricEditorMode.EditText => editTextModeState.EditStep,
+                    LyricEditorMode.EditReferenceLyric => null,
+                    LyricEditorMode.EditLanguage => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
                     LyricEditorMode.EditTimeTag => throw new NotSupportedException(),
                     LyricEditorMode.EditRomaji => throw new NotSupportedException(),
                     LyricEditorMode.EditNote => throw new NotSupportedException(),
-                    LyricEditorMode.Singer => throw new NotSupportedException(),
+                    LyricEditorMode.EditSinger => throw new NotSupportedException(),
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
                 };
         }
 
         public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
         {
-            if (editStep is not TextingEditStep textingEditStep)
+            if (editStep is not TextEditStep textEditStep)
                 throw new NotSupportedException();
 
-            textingModeState.ChangeEditStep(textingEditStep);
+            editTextModeState.ChangeEditStep(textEditStep);
         }
 
         public void NavigateToFix(LyricEditorMode mode)

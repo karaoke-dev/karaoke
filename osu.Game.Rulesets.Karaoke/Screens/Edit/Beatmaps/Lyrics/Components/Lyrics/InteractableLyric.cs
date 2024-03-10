@@ -97,14 +97,14 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.RomajiTags), nameof(Objects.Lyric.TimeTags)),
-            LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.ReferenceLyric), nameof(Objects.Lyric.ReferenceLyricConfig)),
-            LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
+            LyricEditorMode.EditText => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.RomajiTags), nameof(Objects.Lyric.TimeTags)),
+            LyricEditorMode.EditReferenceLyric => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.ReferenceLyric), nameof(Objects.Lyric.ReferenceLyricConfig)),
+            LyricEditorMode.EditLanguage => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
             LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RubyTags)),
             LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.TimeTags)),
             LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RomajiTags)),
             LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
-            LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.SingerIds)),
+            LyricEditorMode.EditSinger => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.SingerIds)),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
     }

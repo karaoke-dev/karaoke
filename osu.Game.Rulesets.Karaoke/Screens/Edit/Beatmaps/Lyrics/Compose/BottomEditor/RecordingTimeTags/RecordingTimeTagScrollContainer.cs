@@ -56,9 +56,9 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
     }
 
     [BackgroundDependencyLoader]
-    private void load(OsuColour colours, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+    private void load(OsuColour colours, IEditTimeTagModeState editTimeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
     {
-        BindableZoom.BindTo(timeTagModeState.BindableRecordZoom);
+        BindableZoom.BindTo(editTimeTagModeState.BindableRecordZoom);
 
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, ShowWaveformGraph);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, WaveformOpacity);

@@ -12,7 +12,7 @@ public partial class LanguageSwitchSpecialActionSection : SpecialActionSection<L
     protected override string SwitchActionDescription => "Auto-generate or batch change the language by hands.";
 
     [BackgroundDependencyLoader]
-    private void load(ILanguageModeState editNoteModeState)
+    private void load(IEditLanguageModeState editNoteModeState)
     {
         BindTo(editNoteModeState);
     }

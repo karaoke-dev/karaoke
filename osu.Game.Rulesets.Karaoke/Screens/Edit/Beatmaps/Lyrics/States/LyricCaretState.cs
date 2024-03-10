@@ -139,24 +139,24 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => getTextingModeAlgorithm(editorModeWithEditStep.GetEditStep<TextingEditStep>()),
-            LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditText => getTextModeAlgorithm(editorModeWithEditStep.GetEditStep<TextEditStep>()),
+            LyricEditorMode.EditReferenceLyric => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditLanguage => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => getRubyTagModeAlgorithm(),
             LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
             LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditSinger => new NavigateCaretPositionAlgorithm(lyrics),
             _ => throw new InvalidOperationException(nameof(mode)),
         };
 
-        ICaretPositionAlgorithm getTextingModeAlgorithm(TextingEditStep textingEditMode) =>
-            textingEditMode switch
+        ICaretPositionAlgorithm getTextModeAlgorithm(TextEditStep textEditMode) =>
+            textEditMode switch
             {
-                TextingEditStep.Typing => new TypingCaretPositionAlgorithm(lyrics),
-                TextingEditStep.Split => new CuttingCaretPositionAlgorithm(lyrics),
-                TextingEditStep.Verify => new NavigateCaretPositionAlgorithm(lyrics),
-                _ => throw new InvalidOperationException(nameof(textingEditMode)),
+                TextEditStep.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                TextEditStep.Split => new CuttingCaretPositionAlgorithm(lyrics),
+                TextEditStep.Verify => new NavigateCaretPositionAlgorithm(lyrics),
+                _ => throw new InvalidOperationException(nameof(textEditMode)),
             };
 
         ICaretPositionAlgorithm getRubyTagModeAlgorithm() =>
@@ -192,14 +192,14 @@ public partial class LyricCaretState : Component, ILyricCaretState
                       ILyricEditorState state,
                       KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager,
                       IEditRubyModeState editRubyModeState,
-                      ITimeTagModeState timeTagModeState)
+                      IEditTimeTagModeState editTimeTagModeState)
     {
         bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
 
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
 
         bindableRubyTagEditMode.BindTo(editRubyModeState.BindableRubyTagEditMode);
-        bindableCreateTimeTagEditMode.BindTo(timeTagModeState.BindableCreateTimeTagEditMode);
+        bindableCreateTimeTagEditMode.BindTo(editTimeTagModeState.BindableCreateTimeTagEditMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, bindableRecordingChangeTimeWhileMovingTheCaret);

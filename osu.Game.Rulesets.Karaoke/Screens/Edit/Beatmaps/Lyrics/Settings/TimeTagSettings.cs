@@ -19,9 +19,9 @@ public partial class TimeTagSettings : LyricEditorSettings
     private readonly IBindable<TimeTagEditStep> bindableEditStep = new Bindable<TimeTagEditStep>();
 
     [BackgroundDependencyLoader]
-    private void load(ITimeTagModeState timeTagModeState)
+    private void load(IEditTimeTagModeState editTimeTagModeState)
     {
-        bindableEditStep.BindTo(timeTagModeState.BindableEditStep);
+        bindableEditStep.BindTo(editTimeTagModeState.BindableEditStep);
         bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();

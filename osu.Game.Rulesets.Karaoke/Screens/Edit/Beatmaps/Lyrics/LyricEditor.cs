@@ -41,20 +41,20 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(ILyricCaretState))]
     private readonly LyricCaretState lyricCaretState;
 
-    [Cached(typeof(ITextingModeState))]
-    private readonly TextingModeState textingModeState;
+    [Cached(typeof(IEditTextModeState))]
+    private readonly EditTextModeState editTextModeState;
 
     [Cached(typeof(IEditReferenceLyricModeState))]
     private readonly EditReferenceLyricModeState editReferenceLyricModeState;
 
-    [Cached(typeof(ILanguageModeState))]
-    private readonly LanguageModeState languageModeState;
+    [Cached(typeof(IEditLanguageModeState))]
+    private readonly EditLanguageModeState editLanguageModeState;
 
     [Cached(typeof(IEditRubyModeState))]
     private readonly EditRubyModeState editRubyModeState;
 
-    [Cached(typeof(ITimeTagModeState))]
-    private readonly TimeTagModeState timeTagModeState;
+    [Cached(typeof(IEditTimeTagModeState))]
+    private readonly EditTimeTagModeState editTimeTagModeState;
 
     [Cached(typeof(IEditRomajiModeState))]
     private readonly EditRomajiModeState editRomajiModeState;
@@ -99,11 +99,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(lyricCaretState = new LyricCaretState());
 
         // state for target mode only.
-        AddInternal(textingModeState = new TextingModeState());
+        AddInternal(editTextModeState = new EditTextModeState());
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
-        AddInternal(languageModeState = new LanguageModeState());
+        AddInternal(editLanguageModeState = new EditLanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
-        AddInternal(timeTagModeState = new TimeTagModeState());
+        AddInternal(editTimeTagModeState = new EditTimeTagModeState());
         AddInternal(editRomajiModeState = new EditRomajiModeState());
         AddInternal(editNoteModeState = new EditNoteModeState());
 
@@ -155,7 +155,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }, true);
 
-        initialEditStepChanged<TextingEditStep>();
+        initialEditStepChanged<TextEditStep>();
         initialEditStepChanged<ReferenceLyricEditStep>();
         initialEditStepChanged<LanguageEditStep>();
         initialEditStepChanged<RubyTagEditStep>();
@@ -203,14 +203,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => textingModeState.BindableEditStep.Value,
-                LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
-                LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
+                LyricEditorMode.EditText => editTextModeState.BindableEditStep.Value,
+                LyricEditorMode.EditReferenceLyric => editReferenceLyricModeState.BindableEditStep.Value,
+                LyricEditorMode.EditLanguage => editLanguageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
-                LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
+                LyricEditorMode.EditTimeTag => editTimeTagModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
                 LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
-                LyricEditorMode.Singer => null,
+                LyricEditorMode.EditSinger => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
@@ -254,14 +254,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         LyricEditorSettings? getSettings() =>
             Mode switch
             {
-                LyricEditorMode.Texting => new TextingSettings(),
-                LyricEditorMode.Reference => new ReferenceSettings(),
-                LyricEditorMode.Language => new LanguageSettings(),
+                LyricEditorMode.EditText => new TextSettings(),
+                LyricEditorMode.EditReferenceLyric => new ReferenceSettings(),
+                LyricEditorMode.EditLanguage => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
                 LyricEditorMode.EditRomaji => new RomajiTagSettings(),
                 LyricEditorMode.EditNote => new NoteSettings(),
-                LyricEditorMode.Singer => new SingerSettings(),
+                LyricEditorMode.EditSinger => new SingerSettings(),
                 _ => null,
             };
 
@@ -289,14 +289,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => LyricEditorLayout.Preview,
-                LyricEditorMode.Texting => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditText => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditReferenceLyric => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditLanguage => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
                 LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditNote => LyricEditorLayout.Detail,
-                LyricEditorMode.Singer => LyricEditorLayout.Preview,
+                LyricEditorMode.EditSinger => LyricEditorLayout.Preview,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
@@ -458,8 +458,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     {
         switch (mode)
         {
-            case LyricEditorMode.Texting:
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditText:
+            case LyricEditorMode.EditLanguage:
             case LyricEditorMode.EditTimeTag:
                 SwitchMode(mode);
                 break;

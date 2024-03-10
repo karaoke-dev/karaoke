@@ -34,7 +34,7 @@ public partial class RubyTagAutoGenerateSection : AutoGenerateSection
                         language_mode, new SwitchModeDescriptionAction
                         {
                             Text = "edit language mode",
-                            Mode = LyricEditorMode.Language,
+                            Mode = LyricEditorMode.EditLanguage,
                         }
                     },
                 },

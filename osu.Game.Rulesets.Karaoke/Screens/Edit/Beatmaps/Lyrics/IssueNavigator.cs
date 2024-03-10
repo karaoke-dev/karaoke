@@ -27,7 +27,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditTimeTagModeState editTimeTagModeState { get; set; } = null!;
 
     [Resolved]
     private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
@@ -74,13 +74,13 @@ public partial class IssueNavigator : Component, IIssueNavigator
         switch (check)
         {
             case CheckLyricText:
-                return LyricEditorMode.Texting;
+                return LyricEditorMode.EditText;
 
             case CheckLyricReferenceLyric:
-                return LyricEditorMode.Reference;
+                return LyricEditorMode.EditReferenceLyric;
 
             case CheckLyricLanguage:
-                return LyricEditorMode.Language;
+                return LyricEditorMode.EditLanguage;
 
             case CheckLyricRubyTag:
                 return LyricEditorMode.EditRuby;
@@ -122,7 +122,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
         {
             editRubyModeState,
             editRomajiModeState,
-            timeTagModeState,
+            editTimeTagModeState,
             noteModeState,
         };
 
