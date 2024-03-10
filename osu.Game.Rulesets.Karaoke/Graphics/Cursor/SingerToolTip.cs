@@ -24,7 +24,7 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
     private const int sub_text_size = 12;
 
     private readonly IBindable<string> bindableName = new Bindable<string>();
-    private readonly IBindable<string> bindableRomajiName = new Bindable<string>();
+    private readonly IBindable<string> bindableRomanisation = new Bindable<string>();
     private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
     private readonly IBindable<string> bindableDescription = new Bindable<string>();
 
@@ -32,10 +32,10 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
     private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
 
     private readonly DrawableSingerAvatar avatar;
-    private readonly OsuSpriteText singerName;
-    private readonly OsuSpriteText singerEnglishName;
-    private readonly OsuSpriteText singerRomajiName;
-    private readonly OsuSpriteText singerDescription;
+    private readonly OsuSpriteText name;
+    private readonly OsuSpriteText englishName;
+    private readonly OsuSpriteText romanisation;
+    private readonly OsuSpriteText description;
 
     public SingerToolTip()
     {
@@ -85,23 +85,23 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                                         Spacing = new Vector2(1),
                                         Children = new[]
                                         {
-                                            singerName = new TruncatingSpriteText
+                                            name = new TruncatingSpriteText
                                             {
                                                 Name = "Singer name",
                                                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: main_text_size),
                                                 RelativeSizeAxes = Axes.X,
                                                 ShowTooltip = false,
                                             },
-                                            singerRomajiName = new TruncatingSpriteText
+                                            romanisation = new TruncatingSpriteText
                                             {
-                                                Name = "Romaji name",
+                                                Name = "Romanisation",
                                                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
                                                 RelativeSizeAxes = Axes.X,
                                                 ShowTooltip = false,
                                             },
                                         },
                                     },
-                                    singerEnglishName = new TruncatingSpriteText
+                                    englishName = new TruncatingSpriteText
                                     {
                                         Name = "English name",
                                         Anchor = Anchor.BottomLeft,
@@ -115,7 +115,7 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
                         },
                     },
                 },
-                singerDescription = new OsuSpriteText
+                description = new OsuSpriteText
                 {
                     RelativeSizeAxes = Axes.X,
                     AllowMultiline = true,
@@ -126,10 +126,10 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
             },
         };
 
-        bindableName.BindValueChanged(e => singerName.Text = e.NewValue, true);
-        bindableRomajiName.BindValueChanged(e => singerRomajiName.Text = string.IsNullOrEmpty(e.NewValue) ? string.Empty : $"({e.NewValue})", true);
-        bindableEnglishName.BindValueChanged(e => singerEnglishName.Text = e.NewValue, true);
-        bindableDescription.BindValueChanged(e => singerDescription.Text = string.IsNullOrEmpty(e.NewValue) ? "<No description>" : e.NewValue, true);
+        bindableName.BindValueChanged(e => name.Text = e.NewValue, true);
+        bindableRomanisation.BindValueChanged(e => romanisation.Text = string.IsNullOrEmpty(e.NewValue) ? string.Empty : $"({e.NewValue})", true);
+        bindableEnglishName.BindValueChanged(e => englishName.Text = e.NewValue, true);
+        bindableDescription.BindValueChanged(e => description.Text = string.IsNullOrEmpty(e.NewValue) ? "<No description>" : e.NewValue, true);
     }
 
     private ISinger? lastSinger;
@@ -148,12 +148,12 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
             return;
 
         bindableName.UnbindBindings();
-        bindableRomajiName.UnbindBindings();
+        bindableRomanisation.UnbindBindings();
         bindableEnglishName.UnbindBindings();
         bindableDescription.UnbindBindings();
 
         bindableName.BindTo(s.NameBindable);
-        bindableRomajiName.BindTo(s.RomajiNameBindable);
+        bindableRomanisation.BindTo(s.RomanisationBindable);
         bindableEnglishName.BindTo(s.EnglishNameBindable);
         bindableDescription.BindTo(s.DescriptionBindable);
     }
