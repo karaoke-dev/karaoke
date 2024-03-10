@@ -13,15 +13,15 @@ using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Issues;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomajiIssueSection : LyricEditorIssueSection
+public partial class RomanisationIssueSection : LyricEditorIssueSection
 {
     protected override LyricEditorMode EditMode => LyricEditorMode.EditRomanisation;
 
-    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiIssueTable();
+    protected override LyricsIssueTable CreateLyricsIssueTable() => new RomanisationIssueTable();
 
-    private partial class RomajiIssueTable : LyricsIssueTable
+    private partial class RomanisationIssueTable : LyricsIssueTable
     {
         protected override TableColumn[] CreateHeaders() => new[]
         {
@@ -67,10 +67,10 @@ public partial class RomajiIssueSection : LyricEditorIssueSection
 
         private Tuple<Lyric, TimeTag> getInvalidByIssue(Issue issue)
         {
-            if (issue is not LyricTimeTagIssue romajiTagIssue)
+            if (issue is not LyricTimeTagIssue timeTagIssue)
                 throw new InvalidCastException();
 
-            return new Tuple<Lyric, TimeTag>(romajiTagIssue.Lyric, romajiTagIssue.TimeTag);
+            return new Tuple<Lyric, TimeTag>(timeTagIssue.Lyric, timeTagIssue.TimeTag);
         }
     }
 }

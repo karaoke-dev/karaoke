@@ -12,38 +12,38 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
+public partial class RomanisationEditSection : LyricPropertiesSection<TimeTag>
 {
-    protected override LocalisableString Title => "Romaji";
+    protected override LocalisableString Title => "Romanisation";
 
-    protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new RomajiTagsEditor();
+    protected override LyricPropertiesEditor CreateLyricPropertiesEditor() => new RomanisationTagsEditor();
 
     protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
-        => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RomajiTags));
+        => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags));
 
     protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
         lockLyricPropertyBy switch
         {
-            LockLyricPropertyBy.ReferenceLyricConfig => "Romaji is sync to another romaji.",
-            LockLyricPropertyBy.LockState => "Romaji is locked.",
+            LockLyricPropertyBy.ReferenceLyricConfig => "Romanisation is sync to another romanisation.",
+            LockLyricPropertyBy.LockState => "Romanisation is locked.",
             _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
     protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
         lockLyricPropertyBy switch
         {
-            LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the romaji because it's sync to another lyric's text.",
-            LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the romaji.",
+            LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the romanisation because it's sync to another lyric's text.",
+            LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the romanisation.",
             _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null),
         };
 
-    private partial class RomajiTagsEditor : LyricPropertiesEditor
+    private partial class RomanisationTagsEditor : LyricPropertiesEditor
     {
-        private readonly Bindable<RomajiEditPropertyMode> bindableRomajiEditPropertyMode = new();
+        private readonly Bindable<RomanisationEditPropertyMode> bindableRomajiEditPropertyMode = new();
 
-        public RomajiTagsEditor()
+        public RomanisationTagsEditor()
         {
             bindableRomajiEditPropertyMode.BindValueChanged(e =>
             {
@@ -62,12 +62,12 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             int index = Items.IndexOf(item);
             return bindableRomajiEditPropertyMode.Value switch
             {
-                RomajiEditPropertyMode.Text => new LabelledRomajiTextTextBox(item)
+                RomanisationEditPropertyMode.Text => new LabelledRomanisedSyllableTextBox(item)
                 {
                     Label = $"#{index + 1}",
                     TabbableContentContainer = this,
                 },
-                RomajiEditPropertyMode.Initial => new LabelledInitialSwitchButton(item)
+                RomanisationEditPropertyMode.Initial => new LabelledFirstSyllableSwitchButton(item)
                 {
                     Label = item.RomanisedSyllable ?? string.Empty,
                 },
@@ -81,7 +81,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             => lyric.TimeTagsBindable;
     }
 
-    private partial class LabelledRomajiTextTextBox : LabelledObjectFieldTextBox<TimeTag>
+    private partial class LabelledRomanisedSyllableTextBox : LabelledObjectFieldTextBox<TimeTag>
     {
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
@@ -89,7 +89,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         [Resolved]
         private IEditRomanisationModeState editRomanisationModeState { get; set; } = null!;
 
-        public LabelledRomajiTextTextBox(TimeTag item)
+        public LabelledRomanisedSyllableTextBox(TimeTag item)
             : base(item)
         {
         }
@@ -110,12 +110,12 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         }
     }
 
-    private partial class LabelledInitialSwitchButton : LabelledObjectFieldSwitchButton<TimeTag>
+    private partial class LabelledFirstSyllableSwitchButton : LabelledObjectFieldSwitchButton<TimeTag>
     {
         [Resolved]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
-        public LabelledInitialSwitchButton(TimeTag item)
+        public LabelledFirstSyllableSwitchButton(TimeTag item)
             : base(item)
         {
         }

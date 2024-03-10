@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRomanisationModeState, RomanisationTagEditStep>
+public partial class RomanisationEditStepSection : LyricEditorEditStepSection<IEditRomanisationModeState, RomanisationTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Orange;
@@ -22,7 +22,7 @@ public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRom
         {
             RomanisationTagEditStep.Generate => new Selection(),
             RomanisationTagEditStep.Edit => new Selection(),
-            RomanisationTagEditStep.Verify => new RomajiTagVerifySelection(),
+            RomanisationTagEditStep.Verify => new RomanisationVerifySelection(),
             _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
@@ -47,13 +47,13 @@ public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRom
     protected override DescriptionFormat GetSelectionDescription(RomanisationTagEditStep step) =>
         step switch
         {
-            RomanisationTagEditStep.Generate => "Auto-generate romajies in the lyric.",
+            RomanisationTagEditStep.Generate => "Auto-generate romanisation in the lyric.",
             RomanisationTagEditStep.Edit => new DescriptionFormat
             {
                 Text = "Create / delete and edit lyric rubies in here.\n"
                        + $"Click [{DescriptionFormat.LINK_KEY_ACTION}](directions) to select the target lyric.\n"
-                       + "Press `Tab` to switch between the romaji tags.\n"
-                       + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust romaji index after hover to edit index area.",
+                       + "Press `Tab` to switch between the romanised syllable tags.\n"
+                       + $"Than, press [{DescriptionFormat.LINK_KEY_ACTION}](adjust_text_tag_index) or button to adjust romanised syllable index after hover to edit index area.",
                 Actions = new Dictionary<string, IDescriptionAction>
                 {
                     {
@@ -82,11 +82,11 @@ public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRom
                     },
                 },
             },
-            RomanisationTagEditStep.Verify => "Check invalid romajies in here.",
+            RomanisationTagEditStep.Verify => "Check invalid romanisation in here.",
             _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    private partial class RomajiTagVerifySelection : LyricEditorVerifySelection
+    private partial class RomanisationVerifySelection : LyricEditorVerifySelection
     {
         protected override LyricEditorMode EditMode => LyricEditorMode.EditRomanisation;
     }
