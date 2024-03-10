@@ -97,7 +97,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.RomajiTags), nameof(Objects.Lyric.TimeTags)),
+            LyricEditorMode.Text => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.RomajiTags), nameof(Objects.Lyric.TimeTags)),
             LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.ReferenceLyric), nameof(Objects.Lyric.ReferenceLyricConfig)),
             LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
             LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RubyTags)),

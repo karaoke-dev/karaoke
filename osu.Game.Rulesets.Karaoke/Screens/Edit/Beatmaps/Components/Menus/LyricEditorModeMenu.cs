@@ -18,7 +18,7 @@ public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
     protected override IEnumerable<LyricEditorMode> ValidEnums => new[]
     {
         LyricEditorMode.View,
-        LyricEditorMode.Texting,
+        LyricEditorMode.Text,
         LyricEditorMode.Reference,
         LyricEditorMode.Language,
         LyricEditorMode.EditRuby,

@@ -82,7 +82,7 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
         {
             switch (mode)
             {
-                case LyricEditorMode.Texting:
+                case LyricEditorMode.Text:
                     screenStack.Pop(LyricImporterStep.EditLyric);
                     break;
 

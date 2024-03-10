@@ -53,10 +53,10 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     }
 
     [Test]
-    public void TestTextingMode()
+    public void TestTextMode()
     {
-        switchToMode(LyricEditorMode.Texting);
-        clickEditStepButtons<TextingEditStep>();
+        switchToMode(LyricEditorMode.Text);
+        clickEditStepButtons<TextEditStep>();
     }
 
     [Test]

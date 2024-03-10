@@ -49,13 +49,13 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
 
             case NavigationState.Working:
             case NavigationState.Done:
-                var step = Screen.GetLyricEditorModeState<TextingEditStep>();
+                var step = Screen.GetLyricEditorModeState<TextEditStep>();
 
                 return step switch
                 {
-                    TextingEditStep.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
-                    TextingEditStep.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
-                    TextingEditStep.Verify => $"Cool! Try switching to [{split_mode}] or [{typing_mode}] if you want to fix the issue.",
+                    TextEditStep.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
+                    TextEditStep.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
+                    TextEditStep.Verify => $"Cool! Try switching to [{split_mode}] or [{typing_mode}] if you want to fix the issue.",
                     _ => throw new InvalidEnumArgumentException(nameof(step)),
                 };
 
@@ -74,8 +74,8 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
     {
         public EditLyricTextFlowContainer(EditLyricStepScreen screen)
         {
-            AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextingEditStep.Typing));
-            AddLinkFactory(split_mode, "split mode", () => screen.SwitchToEditModeState(TextingEditStep.Split));
+            AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextEditStep.Typing));
+            AddLinkFactory(split_mode, "split mode", () => screen.SwitchToEditModeState(TextEditStep.Split));
         }
     }
 }

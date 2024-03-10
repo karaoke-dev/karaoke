@@ -47,7 +47,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         Dependencies.Cache(editorBeatmap = new EditorBeatmap(beatmap));
         Dependencies.Cache(new EditorClock());
         Dependencies.CacheAs<ILyricEditorState>(state = new TestLyricEditorState());
-        Dependencies.CacheAs<ITextingModeState>(new TextingModeState());
+        Dependencies.CacheAs<ITextModeState>(new TextModeState());
         Dependencies.CacheAs<IEditRubyModeState>(new EditRubyModeState());
         Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
@@ -100,13 +100,13 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                     break;
 
                 case TestCaretType.CaretWithIndex:
-                    state.SwitchMode(LyricEditorMode.Texting);
-                    state.SwitchEditStep(TextingEditStep.Split);
+                    state.SwitchMode(LyricEditorMode.Text);
+                    state.SwitchEditStep(TextEditStep.Split);
                     break;
 
                 case TestCaretType.CaretDraggable:
-                    state.SwitchMode(LyricEditorMode.Texting);
-                    state.SwitchEditStep(TextingEditStep.Typing);
+                    state.SwitchMode(LyricEditorMode.Text);
+                    state.SwitchEditStep(TextEditStep.Typing);
                     break;
 
                 default:
@@ -188,7 +188,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         public LyricEditorMode Mode => bindableMode.Value;
 
         [Resolved]
-        private ITextingModeState textingModeState { get; set; } = null!;
+        private ITextModeState textModeState { get; set; } = null!;
 
         public void SwitchMode(LyricEditorMode mode)
         {
@@ -198,7 +198,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
             {
                 updateModeWithEditStep();
             }, true);
-            textingModeState.BindableEditStep.BindValueChanged(e =>
+            textModeState.BindableEditStep.BindValueChanged(e =>
             {
                 updateModeWithEditStep();
             });
@@ -217,7 +217,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                 mode switch
                 {
                     LyricEditorMode.View => null,
-                    LyricEditorMode.Texting => textingModeState.EditStep,
+                    LyricEditorMode.Text => textModeState.EditStep,
                     LyricEditorMode.Reference => null,
                     LyricEditorMode.Language => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
@@ -231,10 +231,10 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
 
         public void SwitchEditStep<TEditStep>(TEditStep editStep) where TEditStep : Enum
         {
-            if (editStep is not TextingEditStep textingEditStep)
+            if (editStep is not TextEditStep textEditStep)
                 throw new NotSupportedException();
 
-            textingModeState.ChangeEditStep(textingEditStep);
+            textModeState.ChangeEditStep(textEditStep);
         }
 
         public void NavigateToFix(LyricEditorMode mode)

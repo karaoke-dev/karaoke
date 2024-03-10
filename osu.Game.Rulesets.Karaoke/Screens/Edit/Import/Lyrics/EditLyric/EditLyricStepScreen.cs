@@ -38,7 +38,7 @@ public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEdito
         => base.CreateContent().With(_ =>
         {
             // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
-            SwitchLyricEditorMode(LyricEditorMode.Texting);
+            SwitchLyricEditorMode(LyricEditorMode.Text);
         });
 
     public override void Complete()

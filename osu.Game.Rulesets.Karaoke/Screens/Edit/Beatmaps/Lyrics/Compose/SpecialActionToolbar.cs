@@ -110,7 +110,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
         return editorModeWithEditStep.Mode switch
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
-            LyricEditorMode.Texting => createItemsForTextingEditStep(editorModeWithEditStep.GetEditStep<TextingEditStep>()),
+            LyricEditorMode.Text => createItemsForTextEditStep(editorModeWithEditStep.GetEditStep<TextEditStep>()),
             LyricEditorMode.Reference => Array.Empty<Drawable>(),
             LyricEditorMode.Language => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
@@ -121,12 +121,12 @@ public partial class SpecialActionToolbar : CompositeDrawable
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        static IEnumerable<Drawable> createItemsForTextingEditStep(TextingEditStep textingEditMode)
+        static IEnumerable<Drawable> createItemsForTextEditStep(TextEditStep textEditMode)
         {
-            switch (textingEditMode)
+            switch (textEditMode)
             {
-                case TextingEditStep.Typing:
-                case TextingEditStep.Split:
+                case TextEditStep.Typing:
+                case TextEditStep.Split:
                     return new Drawable[]
                     {
                         new MoveToFirstIndexButton(),
@@ -135,11 +135,11 @@ public partial class SpecialActionToolbar : CompositeDrawable
                         new MoveToLastIndexButton(),
                     };
 
-                case TextingEditStep.Verify:
+                case TextEditStep.Verify:
                     return Array.Empty<Drawable>();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(textingEditMode));
+                    throw new ArgumentOutOfRangeException(nameof(textEditMode));
             }
         }
 

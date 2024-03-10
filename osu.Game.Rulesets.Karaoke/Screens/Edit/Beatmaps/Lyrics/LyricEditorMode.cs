@@ -17,8 +17,8 @@ public enum LyricEditorMode
     /// Can create/delete/move/split/combine lyric.
     /// And typing the lyric.
     /// </summary>
-    [Description("Texting")]
-    Texting,
+    [Description("Text")]
+    Text,
 
     /// <summary>
     /// Mark the lyric is "similar" to another lyric.

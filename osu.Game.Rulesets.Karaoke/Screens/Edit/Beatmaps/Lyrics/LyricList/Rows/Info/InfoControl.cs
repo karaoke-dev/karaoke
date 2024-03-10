@@ -175,7 +175,7 @@ public partial class InfoControl : Container, IHasContextMenu
             switch (editorMode.Mode)
             {
                 case LyricEditorMode.View:
-                case LyricEditorMode.Texting:
+                case LyricEditorMode.Text:
                     return null;
 
                 case LyricEditorMode.Reference:
@@ -226,7 +226,7 @@ public partial class InfoControl : Container, IHasContextMenu
         get
         {
             var editMode = bindableModeWithEditStep.Value.Mode;
-            if (editMode != LyricEditorMode.Texting)
+            if (editMode != LyricEditorMode.Text)
                 return Array.Empty<MenuItem>();
 
             // should select lyric if trying to interact with context menu.

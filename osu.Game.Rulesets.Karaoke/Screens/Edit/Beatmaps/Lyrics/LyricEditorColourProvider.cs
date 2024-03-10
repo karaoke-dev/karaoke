@@ -44,7 +44,7 @@ public class LyricEditorColourProvider
             case LyricEditorMode.View:
                 return 200 / 360f; // blue
 
-            case LyricEditorMode.Texting:
+            case LyricEditorMode.Text:
             case LyricEditorMode.Reference:
                 return 0 / 360f; // red
 

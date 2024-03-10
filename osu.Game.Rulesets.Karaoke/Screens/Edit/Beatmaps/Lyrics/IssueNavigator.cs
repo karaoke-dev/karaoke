@@ -74,7 +74,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
         switch (check)
         {
             case CheckLyricText:
-                return LyricEditorMode.Texting;
+                return LyricEditorMode.Text;
 
             case CheckLyricReferenceLyric:
                 return LyricEditorMode.Reference;

@@ -41,8 +41,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(ILyricCaretState))]
     private readonly LyricCaretState lyricCaretState;
 
-    [Cached(typeof(ITextingModeState))]
-    private readonly TextingModeState textingModeState;
+    [Cached(typeof(ITextModeState))]
+    private readonly TextModeState textModeState;
 
     [Cached(typeof(IEditReferenceLyricModeState))]
     private readonly EditReferenceLyricModeState editReferenceLyricModeState;
@@ -99,7 +99,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(lyricCaretState = new LyricCaretState());
 
         // state for target mode only.
-        AddInternal(textingModeState = new TextingModeState());
+        AddInternal(textModeState = new TextModeState());
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
         AddInternal(languageModeState = new LanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
@@ -155,7 +155,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }, true);
 
-        initialEditStepChanged<TextingEditStep>();
+        initialEditStepChanged<TextEditStep>();
         initialEditStepChanged<ReferenceLyricEditStep>();
         initialEditStepChanged<LanguageEditStep>();
         initialEditStepChanged<RubyTagEditStep>();
@@ -203,7 +203,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => textingModeState.BindableEditStep.Value,
+                LyricEditorMode.Text => textModeState.BindableEditStep.Value,
                 LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
                 LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
@@ -254,7 +254,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         LyricEditorSettings? getSettings() =>
             Mode switch
             {
-                LyricEditorMode.Texting => new TextingSettings(),
+                LyricEditorMode.Text => new TextSettings(),
                 LyricEditorMode.Reference => new ReferenceSettings(),
                 LyricEditorMode.Language => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
@@ -289,7 +289,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => LyricEditorLayout.Preview,
-                LyricEditorMode.Texting => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.Text => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
@@ -458,7 +458,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     {
         switch (mode)
         {
-            case LyricEditorMode.Texting:
+            case LyricEditorMode.Text:
             case LyricEditorMode.Language:
             case LyricEditorMode.EditTimeTag:
                 SwitchMode(mode);

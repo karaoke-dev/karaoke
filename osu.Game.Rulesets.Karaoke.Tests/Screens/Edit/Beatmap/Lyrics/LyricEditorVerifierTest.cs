@@ -66,7 +66,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         assertEditModeIssueAmount(LyricEditorMode.Language, 1);
 
         // Should not contains issue in other edit mode.
-        assertEditModeIssueAmount(LyricEditorMode.Texting, 0);
+        assertEditModeIssueAmount(LyricEditorMode.Text, 0);
     }
 
     [Test]

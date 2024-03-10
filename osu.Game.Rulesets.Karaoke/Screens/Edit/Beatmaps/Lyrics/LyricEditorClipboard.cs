@@ -36,7 +36,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private Lyric? getSelectedLyric() => lyricCaretState.BindableFocusedLyric.Value;
 
     [Resolved]
-    private ITextingModeState textingModeState { get; set; } = null!;
+    private ITextModeState textModeState { get; set; } = null!;
 
     [Resolved]
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
@@ -141,21 +141,21 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.Text:
+                switch (textModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         if (lyricsChangeHandler == null)
                             throw new NullDependencyException($"Missing {nameof(lyricsChangeHandler)}");
 
                         lyricsChangeHandler.Remove();
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -219,19 +219,19 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(lyric.Text);
                 return true;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.Text:
+                switch (textModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         saveObjectToTheClipboardContent(lyric);
                         copyObjectToClipboard(lyric.Text);
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
@@ -289,14 +289,14 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Texting:
-                switch (textingModeState.EditStep)
+            case LyricEditorMode.Text:
+                switch (textModeState.EditStep)
                 {
-                    case TextingEditStep.Typing:
+                    case TextEditStep.Typing:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
-                    case TextingEditStep.Split:
+                    case TextEditStep.Split:
                         var pasteLyric = getObjectFromClipboardContent<Lyric>();
                         if (pasteLyric == null)
                             return false;
@@ -307,7 +307,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                         return true;
 
-                    case TextingEditStep.Verify:
+                    case TextEditStep.Verify:
                         // cut, copy or paste event should be handled in the caret.
                         return false;
 
