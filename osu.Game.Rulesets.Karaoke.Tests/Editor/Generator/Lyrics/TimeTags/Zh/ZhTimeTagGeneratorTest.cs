@@ -12,7 +12,7 @@ public class ZhTimeTagGeneratorTest : BaseTimeTagGeneratorTest<ZhTimeTagGenerato
     [TestCase("拉拉拉~~~", true)]
     [TestCase("~~~", true)]
     [TestCase("   ", true)]
-    [TestCase("", false)] // will not able to generate the romaji if lyric is empty.
+    [TestCase("", false)] // will not able to generate the romanisation if lyric is empty.
     [TestCase(null, false)]
     public void TestCanGenerate(string text, bool canGenerate)
     {
