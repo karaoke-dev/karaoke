@@ -14,18 +14,18 @@ public class CheckLyricLanguage : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricNotFillLanguage(this),
+        new IssueTemplateNotFill(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
         if (lyric.Language == null)
-            yield return new IssueTemplateLyricNotFillLanguage(this).Create(lyric);
+            yield return new IssueTemplateNotFill(this).Create(lyric);
     }
 
-    public class IssueTemplateLyricNotFillLanguage : IssueTemplate
+    public class IssueTemplateNotFill : IssueTemplate
     {
-        public IssueTemplateLyricNotFillLanguage(ICheck check)
+        public IssueTemplateNotFill(ICheck check)
             : base(check, IssueType.Problem, "Lyric must have assign language.")
         {
         }
