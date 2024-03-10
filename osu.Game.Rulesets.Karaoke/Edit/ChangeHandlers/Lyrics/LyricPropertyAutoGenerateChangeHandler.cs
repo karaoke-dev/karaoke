@@ -55,8 +55,8 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return canGenerate(timeTagGenerator);
 
             case AutoGenerateType.AutoGenerateRomanisation:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
-                return canGenerate(timeTagRomajiGenerator);
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+                return canGenerate(romanisationGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
@@ -96,8 +96,8 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 return getInvalidMessageFromGenerator(timeTagGenerator);
 
             case AutoGenerateType.AutoGenerateRomanisation:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
-                return getInvalidMessageFromGenerator(timeTagRomajiGenerator);
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+                return getInvalidMessageFromGenerator(romanisationGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
@@ -171,10 +171,10 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 break;
 
             case AutoGenerateType.AutoGenerateRomanisation:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 PerformOnSelection(lyric =>
                 {
-                    var results = timeTagRomajiGenerator.Generate(lyric);
+                    var results = romanisationGenerator.Generate(lyric);
 
                     foreach (var (key, value) in results)
                     {
