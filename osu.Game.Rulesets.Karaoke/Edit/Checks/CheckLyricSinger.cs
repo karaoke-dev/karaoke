@@ -15,18 +15,18 @@ public class CheckLyricSinger : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricNoSinger(this),
+        new IssueTemplateNoSinger(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
         if (!lyric.SingerIds.Any())
-            yield return new IssueTemplateLyricNoSinger(this).Create(lyric);
+            yield return new IssueTemplateNoSinger(this).Create(lyric);
     }
 
-    public class IssueTemplateLyricNoSinger : IssueTemplate
+    public class IssueTemplateNoSinger : IssueTemplate
     {
-        public IssueTemplateLyricNoSinger(ICheck check)
+        public IssueTemplateNoSinger(ICheck check)
             : base(check, IssueType.Problem, "Lyric must have at least one singer.")
         {
         }
