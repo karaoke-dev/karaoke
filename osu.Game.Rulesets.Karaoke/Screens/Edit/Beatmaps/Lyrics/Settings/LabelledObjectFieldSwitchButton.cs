@@ -29,7 +29,7 @@ public abstract partial class LabelledObjectFieldSwitchButton<T> : LabelledSwitc
         // apply current value from the field in the item.
         Current.Value = GetFieldValue(item);
 
-        // should change preview text box if selected ruby/romaji changed.
+        // should change preview text box if selected boolean property changed.
         Component.OnCommit += (sender, edited) =>
         {
             if (!edited)
