@@ -28,7 +28,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
         var lyricConfig = LyricFontInfo.CreateDefault();
 
         const string expected =
-            "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
+            "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romanisation_interval\":2,\"ruby_alignment\":2,\"romanisation_alignment\":2,\"ruby_margin\":4,\"romanisation_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romanisation_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
         string actual = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -37,7 +37,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
     public void TestLyricConfigDeserialize()
     {
         const string json =
-            "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
+            "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romanisation_interval\":2,\"ruby_alignment\":2,\"romanisation_alignment\":2,\"ruby_margin\":4,\"romanisation_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romanisation_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
 
         var expected = LyricFontInfo.CreateDefault();
         var actual = (LyricFontInfo)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;

@@ -19,14 +19,14 @@ public class LyricFontInfo : IKaraokeSkinElement
         SmartHorizon = KaraokeTextSmartHorizon.Multi,
         LyricsInterval = 4,
         RubyInterval = 2,
-        RomajiInterval = 2,
+        RomanisationInterval = 2,
         RubyAlignment = LyricTextAlignment.EqualSpace,
-        RomajiAlignment = LyricTextAlignment.EqualSpace,
+        RomanisationAlignment = LyricTextAlignment.EqualSpace,
         RubyMargin = 4,
-        RomajiMargin = 4,
+        RomanisationMargin = 4,
         MainTextFont = new FontUsage("Torus", 48, "Bold"),
         RubyTextFont = new FontUsage("Torus", 20, "Bold"),
-        RomajiTextFont = new FontUsage("Torus", 20, "Bold"),
+        RomanisationTextFont = new FontUsage("Torus", 20, "Bold"),
     };
 
     public int ID { get; set; }
@@ -49,9 +49,9 @@ public class LyricFontInfo : IKaraokeSkinElement
     public int RubyInterval { get; set; }
 
     /// <summary>
-    /// Interval between lyric romaji
+    /// Interval between lyric romanisation
     /// </summary>
-    public int RomajiInterval { get; set; }
+    public int RomanisationInterval { get; set; }
 
     /// <summary>
     /// Ruby position alignment
@@ -61,7 +61,7 @@ public class LyricFontInfo : IKaraokeSkinElement
     /// <summary>
     /// Ruby position alignment
     /// </summary>
-    public LyricTextAlignment RomajiAlignment { get; set; } = LyricTextAlignment.Auto;
+    public LyricTextAlignment RomanisationAlignment { get; set; } = LyricTextAlignment.Auto;
 
     /// <summary>
     /// Interval between lyric text and ruby
@@ -69,9 +69,9 @@ public class LyricFontInfo : IKaraokeSkinElement
     public int RubyMargin { get; set; }
 
     /// <summary>
-    /// (Additional) Interval between lyric text and romaji
+    /// (Additional) Interval between lyric text and romanisation.
     /// </summary>
-    public int RomajiMargin { get; set; }
+    public int RomanisationMargin { get; set; }
 
     /// <summary>
     /// Main text font
@@ -84,9 +84,9 @@ public class LyricFontInfo : IKaraokeSkinElement
     public FontUsage RubyTextFont { get; set; } = new("Torus", 20, "Bold");
 
     /// <summary>
-    /// Romaji text font
+    /// Romanisation text font
     /// </summary>
-    public FontUsage RomajiTextFont { get; set; } = new("Torus", 20, "Bold");
+    public FontUsage RomanisationTextFont { get; set; } = new("Torus", 20, "Bold");
 
     public void ApplyTo(Drawable d)
     {
@@ -98,7 +98,7 @@ public class LyricFontInfo : IKaraokeSkinElement
             // Apply text font info
             l.Font = getFont(KaraokeRulesetSetting.MainFont, MainTextFont);
             l.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, RubyTextFont);
-            l.RomajiFont = getFont(KaraokeRulesetSetting.RomanisationFont, RomajiTextFont);
+            l.RomajiFont = getFont(KaraokeRulesetSetting.RomanisationFont, RomanisationTextFont);
 
             // Layout to text
             l.KaraokeTextSmartHorizon = SmartHorizon;
@@ -109,10 +109,10 @@ public class LyricFontInfo : IKaraokeSkinElement
             l.RubyAlignment = RubyAlignment;
             l.RubyMargin = RubyMargin;
 
-            // Romaji
-            l.RomajiSpacing = new Vector2(RomajiInterval, l.RomajiSpacing.Y);
-            l.RomajiAlignment = RomajiAlignment;
-            l.RomajiMargin = RomajiMargin;
+            // Romanisation
+            l.RomajiSpacing = new Vector2(RomanisationInterval, l.RomajiSpacing.Y);
+            l.RomajiAlignment = RomanisationAlignment;
+            l.RomajiMargin = RomanisationMargin;
         });
 
         // Apply translate font.
