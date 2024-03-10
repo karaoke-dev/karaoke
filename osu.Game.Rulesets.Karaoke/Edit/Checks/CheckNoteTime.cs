@@ -18,9 +18,9 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateNoteInvalidReferenceTimeTagTime(this),
-        new IssueTemplateNoteDurationTooShort(this),
-        new IssueTemplateNoteDurationTooLong(this),
+        new IssueTemplateInvalidReferenceTimeTagTime(this),
+        new IssueTemplateDurationTooShort(this),
+        new IssueTemplateDurationTooLong(this),
     };
 
     protected override IEnumerable<Issue> Check(Note note)
@@ -40,7 +40,7 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
         // should have alert if reference time-tag's time is invalid.
         if (endTime.Value < startTime.Value)
         {
-            yield return new IssueTemplateNoteInvalidReferenceTimeTagTime(this).Create(note);
+            yield return new IssueTemplateInvalidReferenceTimeTagTime(this).Create(note);
 
             yield break;
         }
@@ -49,12 +49,12 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
         switch (note.Duration)
         {
             case < MIN_DURATION:
-                yield return new IssueTemplateNoteDurationTooShort(this).Create(note);
+                yield return new IssueTemplateDurationTooShort(this).Create(note);
 
                 break;
 
             case > MAX_DURATION:
-                yield return new IssueTemplateNoteDurationTooLong(this).Create(note);
+                yield return new IssueTemplateDurationTooLong(this).Create(note);
 
                 break;
         }
@@ -62,9 +62,9 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
         // todo: check for offset time's range.
     }
 
-    public class IssueTemplateNoteInvalidReferenceTimeTagTime : IssueTemplate
+    public class IssueTemplateInvalidReferenceTimeTagTime : IssueTemplate
     {
-        public IssueTemplateNoteInvalidReferenceTimeTagTime(ICheck check)
+        public IssueTemplateInvalidReferenceTimeTagTime(ICheck check)
             : base(check, IssueType.Problem, "Note must have text.")
         {
         }
@@ -73,9 +73,9 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteDurationTooShort : IssueTemplate
+    public class IssueTemplateDurationTooShort : IssueTemplate
     {
-        public IssueTemplateNoteDurationTooShort(ICheck check)
+        public IssueTemplateDurationTooShort(ICheck check)
             : base(check, IssueType.Problem, "Note's duration too short.")
         {
         }
@@ -84,9 +84,9 @@ public class CheckNoteTime : CheckHitObjectProperty<Note>
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteDurationTooLong : IssueTemplate
+    public class IssueTemplateDurationTooLong : IssueTemplate
     {
-        public IssueTemplateNoteDurationTooLong(ICheck check)
+        public IssueTemplateDurationTooLong(ICheck check)
             : base(check, IssueType.Problem, "Note's duration too long.")
         {
         }

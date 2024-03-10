@@ -33,7 +33,7 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
     [TestCase("")]
     [TestCase(" ")] // but should not be empty or white space.
     [TestCase("　")] // but should not be empty or white space.
-    public void TestCheckTranslationNoText(string text)
+    public void TestCheckEmptyText(string text)
     {
         var lyric = new Lyric
         {
@@ -43,6 +43,6 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
             },
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricTranslationNoText>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateEmptyText>(lyric);
     }
 }

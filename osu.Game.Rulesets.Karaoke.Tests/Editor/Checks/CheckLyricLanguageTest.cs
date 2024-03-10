@@ -25,13 +25,13 @@ public class CheckLyricLanguageTest : HitObjectCheckTest<Lyric, CheckLyricLangua
     }
 
     [TestCase(null)]
-    public void TestCheckNotFillLanguage(string? language)
+    public void TestCheckNotFill(string? language)
     {
         var lyric = new Lyric
         {
             Language = language != null ? new CultureInfo(language) : null,
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricNotFillLanguage>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateNotFill>(lyric);
     }
 }

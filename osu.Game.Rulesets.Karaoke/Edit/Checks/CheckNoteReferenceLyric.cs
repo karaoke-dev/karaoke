@@ -15,53 +15,53 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateNoteNullReferenceLyric(this),
-        new IssueTemplateNoteInvalidReferenceLyric(this),
-        new IssueTemplateNoteMissingReferenceTimeTag(this),
-        new IssueTemplateNoteMissingStartReferenceTimeTag(this),
-        new IssueTemplateNoteStartReferenceTimeTagMissingTime(this),
-        new IssueTemplateNoteMissingEndReferenceTimeTag(this),
-        new IssueTemplateNoteEndReferenceTimeTagMissingTime(this),
+        new IssueTemplateNullReferenceLyric(this),
+        new IssueTemplateInvalidReferenceLyric(this),
+        new IssueTemplateMissingReferenceTimeTag(this),
+        new IssueTemplateMissingStartReferenceTimeTag(this),
+        new IssueTemplateStartReferenceTimeTagMissingTime(this),
+        new IssueTemplateMissingEndReferenceTimeTag(this),
+        new IssueTemplateEndReferenceTimeTagMissingTime(this),
     };
 
     protected override IEnumerable<Issue> CheckReferenceProperty(Note note, IEnumerable<Lyric> allAvailableReferencedHitObjects)
     {
         if (note.ReferenceLyric == null)
         {
-            yield return new IssueTemplateNoteNullReferenceLyric(this).Create(note);
+            yield return new IssueTemplateNullReferenceLyric(this).Create(note);
 
             yield break;
         }
 
         if (note.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(note.ReferenceLyric))
-            yield return new IssueTemplateNoteInvalidReferenceLyric(this).Create(note);
+            yield return new IssueTemplateInvalidReferenceLyric(this).Create(note);
 
         var startTimeTag = note.StartReferenceTimeTag;
         var endTimeTag = note.EndReferenceTimeTag;
 
         if (startTimeTag == null && endTimeTag == null)
         {
-            yield return new IssueTemplateNoteMissingReferenceTimeTag(this).Create(note);
+            yield return new IssueTemplateMissingReferenceTimeTag(this).Create(note);
 
             yield break;
         }
 
         if (startTimeTag == null)
-            yield return new IssueTemplateNoteMissingStartReferenceTimeTag(this).Create(note);
+            yield return new IssueTemplateMissingStartReferenceTimeTag(this).Create(note);
 
         if (startTimeTag != null && startTimeTag.Time == null)
-            yield return new IssueTemplateNoteStartReferenceTimeTagMissingTime(this).Create(note);
+            yield return new IssueTemplateStartReferenceTimeTagMissingTime(this).Create(note);
 
         if (endTimeTag == null)
-            yield return new IssueTemplateNoteMissingEndReferenceTimeTag(this).Create(note);
+            yield return new IssueTemplateMissingEndReferenceTimeTag(this).Create(note);
 
         if (endTimeTag != null && endTimeTag.Time == null)
-            yield return new IssueTemplateNoteEndReferenceTimeTagMissingTime(this).Create(note);
+            yield return new IssueTemplateEndReferenceTimeTagMissingTime(this).Create(note);
     }
 
-    public class IssueTemplateNoteNullReferenceLyric : IssueTemplate
+    public class IssueTemplateNullReferenceLyric : IssueTemplate
     {
-        public IssueTemplateNoteNullReferenceLyric(ICheck check)
+        public IssueTemplateNullReferenceLyric(ICheck check)
             : base(check, IssueType.Error, "Note must have its parent lyric.")
         {
         }
@@ -70,9 +70,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteInvalidReferenceLyric : IssueTemplate
+    public class IssueTemplateInvalidReferenceLyric : IssueTemplate
     {
-        public IssueTemplateNoteInvalidReferenceLyric(ICheck check)
+        public IssueTemplateInvalidReferenceLyric(ICheck check)
             : base(check, IssueType.Error, "Note's reference lyric must in the beatmap.")
         {
         }
@@ -81,9 +81,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteMissingReferenceTimeTag : IssueTemplate
+    public class IssueTemplateMissingReferenceTimeTag : IssueTemplate
     {
-        public IssueTemplateNoteMissingReferenceTimeTag(ICheck check)
+        public IssueTemplateMissingReferenceTimeTag(ICheck check)
             : base(check, IssueType.Problem, "Note's reference time-tag is missing.")
         {
         }
@@ -92,9 +92,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteMissingStartReferenceTimeTag : IssueTemplate
+    public class IssueTemplateMissingStartReferenceTimeTag : IssueTemplate
     {
-        public IssueTemplateNoteMissingStartReferenceTimeTag(ICheck check)
+        public IssueTemplateMissingStartReferenceTimeTag(ICheck check)
             : base(check, IssueType.Problem, "Note's start reference time-tag is missing.")
         {
         }
@@ -103,9 +103,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteStartReferenceTimeTagMissingTime : IssueTemplate
+    public class IssueTemplateStartReferenceTimeTagMissingTime : IssueTemplate
     {
-        public IssueTemplateNoteStartReferenceTimeTagMissingTime(ICheck check)
+        public IssueTemplateStartReferenceTimeTagMissingTime(ICheck check)
             : base(check, IssueType.Problem, "Note's start reference time-tag is found but missing time.")
         {
         }
@@ -114,9 +114,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteMissingEndReferenceTimeTag : IssueTemplate
+    public class IssueTemplateMissingEndReferenceTimeTag : IssueTemplate
     {
-        public IssueTemplateNoteMissingEndReferenceTimeTag(ICheck check)
+        public IssueTemplateMissingEndReferenceTimeTag(ICheck check)
             : base(check, IssueType.Problem, "Note's end reference time-tag is missing.")
         {
         }
@@ -125,9 +125,9 @@ public class CheckNoteReferenceLyric : CheckHitObjectReferenceProperty<Note, Lyr
             => new NoteIssue(note, this);
     }
 
-    public class IssueTemplateNoteEndReferenceTimeTagMissingTime : IssueTemplate
+    public class IssueTemplateEndReferenceTimeTagMissingTime : IssueTemplate
     {
-        public IssueTemplateNoteEndReferenceTimeTagMissingTime(ICheck check)
+        public IssueTemplateEndReferenceTimeTagMissingTime(ICheck check)
             : base(check, IssueType.Problem, "Note's end reference time-tag is found but missing time.")
         {
         }

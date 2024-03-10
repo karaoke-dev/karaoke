@@ -15,26 +15,26 @@ public class CheckLyricTime : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricTimeOverlapping(this),
-        new IssueTemplateLyricStartTimeInvalid(this),
-        new IssueTemplateLyricEndTimeInvalid(this),
+        new IssueTemplateTimeOverlapping(this),
+        new IssueTemplateStartTimeInvalid(this),
+        new IssueTemplateEndTimeInvalid(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
         if (LyricUtils.CheckIsTimeOverlapping(lyric))
-            yield return new IssueTemplateLyricTimeOverlapping(this).Create(lyric);
+            yield return new IssueTemplateTimeOverlapping(this).Create(lyric);
 
         if (LyricUtils.CheckIsStartTimeInvalid(lyric))
-            yield return new IssueTemplateLyricStartTimeInvalid(this).Create(lyric);
+            yield return new IssueTemplateStartTimeInvalid(this).Create(lyric);
 
         if (LyricUtils.CheckIsEndTimeInvalid(lyric))
-            yield return new IssueTemplateLyricEndTimeInvalid(this).Create(lyric);
+            yield return new IssueTemplateEndTimeInvalid(this).Create(lyric);
     }
 
-    public class IssueTemplateLyricTimeOverlapping : IssueTemplate
+    public class IssueTemplateTimeOverlapping : IssueTemplate
     {
-        public IssueTemplateLyricTimeOverlapping(ICheck check)
+        public IssueTemplateTimeOverlapping(ICheck check)
             : base(check, IssueType.Problem, "Lyric's start is larger than end-time.")
         {
         }
@@ -43,9 +43,9 @@ public class CheckLyricTime : CheckHitObjectProperty<Lyric>
             => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricStartTimeInvalid : IssueTemplate
+    public class IssueTemplateStartTimeInvalid : IssueTemplate
     {
-        public IssueTemplateLyricStartTimeInvalid(ICheck check)
+        public IssueTemplateStartTimeInvalid(ICheck check)
             : base(check, IssueType.Problem, "Lyric's start time is larger than time-tag's time.")
         {
         }
@@ -54,9 +54,9 @@ public class CheckLyricTime : CheckHitObjectProperty<Lyric>
             => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricEndTimeInvalid : IssueTemplate
+    public class IssueTemplateEndTimeInvalid : IssueTemplate
     {
-        public IssueTemplateLyricEndTimeInvalid(ICheck check)
+        public IssueTemplateEndTimeInvalid(ICheck check)
             : base(check, IssueType.Problem, "Lyric's end time is smaller than time-tag's time.")
         {
         }

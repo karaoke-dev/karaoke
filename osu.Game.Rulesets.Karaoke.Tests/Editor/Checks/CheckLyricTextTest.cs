@@ -29,13 +29,13 @@ public class CheckLyricTextTest : HitObjectCheckTest<Lyric, CheckLyricText>
     [TestCase("　")] // but should not be empty or white space.
     [TestCase("")]
     [TestCase(null)]
-    public void TestCheckNoText(string text)
+    public void TestCheckEmptyText(string text)
     {
         var lyric = new Lyric
         {
             Text = text,
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricNoText>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateEmptyText>(lyric);
     }
 }

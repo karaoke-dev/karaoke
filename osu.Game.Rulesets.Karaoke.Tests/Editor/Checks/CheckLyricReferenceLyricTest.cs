@@ -38,7 +38,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
         lyric.ReferenceLyricId = lyric.ID;
         lyric.ReferenceLyric = lyric;
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricSelfReference>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateSelfReference>(lyric);
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
             ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricInvalidReferenceLyric>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateInvalidReferenceLyric>(lyric);
     }
 
     [Test]
@@ -65,11 +65,11 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
             ReferenceLyric = referencedLyric,
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
+        AssertNotOk<LyricIssue, IssueTemplateNullReferenceLyricConfig>(new HitObject[] { referencedLyric, lyric });
     }
 
     [Test]
-    public void TestCheckHasReferenceLyricConfigIfNoReferenceLyric()
+    public void TestCheckHasReferenceLyricConfigWhenNoReferenceLyric()
     {
         var lyric = new Lyric
         {
@@ -77,6 +77,6 @@ public class CheckLyricReferenceLyricTest : HitObjectCheckTest<Lyric, CheckLyric
             ReferenceLyricConfig = new ReferenceLyricConfig(),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateHasReferenceLyricConfigWhenNoReferenceLyric>(lyric);
     }
 }

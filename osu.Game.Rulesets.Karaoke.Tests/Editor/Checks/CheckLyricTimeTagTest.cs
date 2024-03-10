@@ -28,7 +28,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
     }
 
     [TestCase("カラオケ", new string[] { })]
-    public void TestCheckMissingNoTimeTag(string text, string[] timeTags)
+    public void TestCheckEmpty(string text, string[] timeTags)
     {
         var lyric = new Lyric
         {
@@ -36,11 +36,11 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricEmptyTimeTag>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateEmpty>(lyric);
     }
 
     [TestCase("カラオケ", new[] { "[3,end]:5000" })]
-    public void TestCheckMissingFirstTimeTag(string text, string[] timeTags)
+    public void TestCheckMissingStart(string text, string[] timeTags)
     {
         var lyric = new Lyric
         {
@@ -48,11 +48,11 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricMissingFirstTimeTag>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateMissingStart>(lyric);
     }
 
     [TestCase("カラオケ", new[] { "[0,start]:5000" })]
-    public void TestCheckMissingLastTimeTag(string text, string[] timeTags)
+    public void TestCheckMissingEnd(string text, string[] timeTags)
     {
         var lyric = new Lyric
         {
@@ -60,7 +60,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricMissingLastTimeTag>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateMissingEnd>(lyric);
     }
 
     [TestCase("カラオケ", new[] { "[-1,start]:0", "[0,start]:1000", "[3,end]:1000" })] // out-of range start time-tag time.
@@ -73,7 +73,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOutOfRange>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateOutOfRange>(lyric);
     }
 
     [TestCase("カラオケ", new[] { "[0,start]:5000", "[3,end]:1000" })]
@@ -85,7 +85,7 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagOverlapping>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateOverlapping>(lyric);
     }
 
     [TestCase("カラオケ", new[] { "[0,start]", "[3,end]:1000" })] // empty start time-tag time.
@@ -99,13 +99,13 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagEmptyTime>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateEmptyTime>(lyric);
     }
 
     [TestCase("カラオケ", "")] // should not be empty.
     [TestCase("カラオケ", " ")] // should not be white-space only.
     [TestCase("カラオケ", "卡拉OK")] // should be within latin.
-    public void TestCheckTimeTagRomajiInvalidText(string text, string romanisedSyllable)
+    public void TestCheckInvalidRomanisedSyllable(string text, string romanisedSyllable)
     {
         var lyric = new Lyric
         {
@@ -124,11 +124,11 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             },
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiInvalidText>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateInvalidRomanisedSyllable>(lyric);
     }
 
     [TestCase("カラオケ", null)] // should not be white-space only.
-    public void TestCheckRomajiEmptyTextIfFirst(string text, string romanisedSyllable)
+    public void TestCheckShouldFillRomanisedSyllable(string text, string romanisedSyllable)
     {
         var lyric = new Lyric
         {
@@ -148,13 +148,13 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             },
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateShouldFillRomanisedSyllable>(lyric);
     }
 
     [TestCase("カラオケ", "")] // should not have empty text if end.
     [TestCase("カラオケ", " ")] // should not have empty text if end.
     [TestCase("カラオケ", "123")] // should not have empty text if end.
-    public void TestRomajiNotHaveEmptyTextIfEnd(string text, string romanisedSyllable)
+    public void TestCheckShouldNotFillRomanisedSyllable(string text, string romanisedSyllable)
     {
         var lyric = new Lyric
         {
@@ -173,11 +173,11 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             },
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateShouldNotFillRomanisedSyllable>(lyric);
     }
 
     [Test]
-    public void TestRomajiNotFistRomajiTextIfEnd()
+    public void TestCheckShouldNotMarkFirstSyllable()
     {
         var lyric = new Lyric
         {
@@ -196,6 +196,6 @@ public class CheckLyricTimeTagTest : HitObjectCheckTest<Lyric, CheckLyricTimeTag
             },
         };
 
-        AssertNotOk<LyricTimeTagIssue, IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd>(lyric);
+        AssertNotOk<LyricTimeTagIssue, IssueTemplateShouldNotMarkFirstSyllable>(lyric);
     }
 }

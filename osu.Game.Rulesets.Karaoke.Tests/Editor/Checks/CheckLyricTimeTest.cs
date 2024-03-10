@@ -27,7 +27,7 @@ public class CheckLyricTimeTest : HitObjectCheckTest<Lyric, CheckLyricTime>
         var lyric = TestCaseTagHelper.ParseLyric(lyricText);
         lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricTimeOverlapping>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateTimeOverlapping>(lyric);
     }
 
     [TestCase("[2000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" })]
@@ -36,7 +36,7 @@ public class CheckLyricTimeTest : HitObjectCheckTest<Lyric, CheckLyricTime>
         var lyric = TestCaseTagHelper.ParseLyric(lyricText);
         lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricStartTimeInvalid>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateStartTimeInvalid>(lyric);
     }
 
     [TestCase("[1000,2000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" })]
@@ -45,6 +45,6 @@ public class CheckLyricTimeTest : HitObjectCheckTest<Lyric, CheckLyricTime>
         var lyric = TestCaseTagHelper.ParseLyric(lyricText);
         lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricEndTimeInvalid>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateEndTimeInvalid>(lyric);
     }
 }

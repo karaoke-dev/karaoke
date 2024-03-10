@@ -45,7 +45,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceLyric = null, // reference should not be null.
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteNullReferenceLyric>(note);
+        AssertNotOk<NoteIssue, IssueTemplateNullReferenceLyric>(note);
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = 0,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteInvalidReferenceLyric>(note);
+        AssertNotOk<NoteIssue, IssueTemplateInvalidReferenceLyric>(note);
     }
 
     [TestCase(2, new[] { "[0,start]:1000", "[3,end]:5000" })] // will find the time-tag at index 2 and 3.
@@ -85,7 +85,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteMissingReferenceTimeTag>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateMissingReferenceTimeTag>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase(-1, new[] { "[0,start]:1000", "[3,end]:5000" })]
@@ -104,7 +104,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteMissingStartReferenceTimeTag>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateMissingStartReferenceTimeTag>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase(0, new[] { "[0,start]", "[3,end]:5000" })]
@@ -124,7 +124,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteStartReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateStartReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase(1, new[] { "[0,start]:1000", "[3,end]:5000" })]
@@ -143,7 +143,7 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteMissingEndReferenceTimeTag>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateMissingEndReferenceTimeTag>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase(0, new[] { "[0,start]:1000", "[3,end]" })]
@@ -163,6 +163,6 @@ public class CheckNoteReferenceLyricTest : HitObjectCheckTest<Note, CheckNoteRef
             ReferenceTimeTagIndex = referenceTimeTagIndex,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteEndReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateEndReferenceTimeTagMissingTime>(new HitObject[] { referencedLyric, note });
     }
 }

@@ -15,7 +15,7 @@ public class CheckLyricTranslate : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricTranslationNoText(this),
+        new IssueTemplateEmptyText(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
@@ -25,13 +25,13 @@ public class CheckLyricTranslate : CheckHitObjectProperty<Lyric>
         foreach ((var language, string translate) in translates)
         {
             if (string.IsNullOrWhiteSpace(translate))
-                yield return new IssueTemplateLyricTranslationNoText(this).Create(lyric, language);
+                yield return new IssueTemplateEmptyText(this).Create(lyric, language);
         }
     }
 
-    public class IssueTemplateLyricTranslationNoText : IssueTemplate
+    public class IssueTemplateEmptyText : IssueTemplate
     {
-        public IssueTemplateLyricTranslationNoText(ICheck check)
+        public IssueTemplateEmptyText(ICheck check)
             : base(check, IssueType.Problem, "Translation in the lyric should not by empty or white-space only.")
         {
         }

@@ -14,18 +14,18 @@ public class CheckLyricText : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricNoText(this),
+        new IssueTemplateEmptyText(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
         if (string.IsNullOrWhiteSpace(lyric.Text))
-            yield return new IssueTemplateLyricNoText(this).Create(lyric);
+            yield return new IssueTemplateEmptyText(this).Create(lyric);
     }
 
-    public class IssueTemplateLyricNoText : IssueTemplate
+    public class IssueTemplateEmptyText : IssueTemplate
     {
-        public IssueTemplateLyricNoText(ICheck check)
+        public IssueTemplateEmptyText(ICheck check)
             : base(check, IssueType.Problem, "Lyric's text should not be empty or white-space only.")
         {
         }

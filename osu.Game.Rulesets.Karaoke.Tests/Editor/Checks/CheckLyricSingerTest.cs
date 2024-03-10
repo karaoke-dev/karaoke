@@ -34,6 +34,6 @@ public class CheckLyricSingerTest : HitObjectCheckTest<Lyric, CheckLyricSinger>
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(singers),
         };
 
-        AssertNotOk<LyricIssue, IssueTemplateLyricNoSinger>(lyric);
+        AssertNotOk<LyricIssue, IssueTemplateNoSinger>(lyric);
     }
 }
