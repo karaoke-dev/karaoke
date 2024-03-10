@@ -57,13 +57,13 @@ public partial class RomanisationAutoGenerateSection : AutoGenerateSection
         {
             protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
             {
-                KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig,
+                KaraokeRulesetEditGeneratorSetting.JaRomanisationGeneratorConfig,
             };
 
             protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
                 setting switch
                 {
-                    KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig => "Japanese",
+                    KaraokeRulesetEditGeneratorSetting.JaRomanisationGeneratorConfig => "Japanese",
                     _ => throw new ArgumentOutOfRangeException(nameof(setting)),
                 };
         }

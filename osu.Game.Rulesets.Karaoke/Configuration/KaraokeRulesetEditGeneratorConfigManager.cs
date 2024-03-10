@@ -49,7 +49,7 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
         SetDefault<JaTimeTagGeneratorConfig>();
         SetDefault<ZhTimeTagGeneratorConfig>();
 
-        // Romaji generator
+        // Romanisation generator
         SetDefault<JaRomanisationGeneratorConfig>();
 
         // Note generator
@@ -79,7 +79,7 @@ public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<Ka
             Type t when t == typeof(JaRubyTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
             Type t when t == typeof(JaTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
             Type t when t == typeof(ZhTimeTagGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
-            Type t when t == typeof(JaRomanisationGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomajiGeneratorConfig,
+            Type t when t == typeof(JaRomanisationGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.JaRomanisationGeneratorConfig,
             Type t when t == typeof(NoteGeneratorConfig) => KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig,
             _ => throw new NotSupportedException(),
         };
@@ -129,8 +129,8 @@ public enum KaraokeRulesetEditGeneratorSetting
     JaTimeTagGeneratorConfig,
     ZhTimeTagGeneratorConfig,
 
-    // Romaji generator.
-    JaRomajiGeneratorConfig,
+    // Romanisation generator.
+    JaRomanisationGeneratorConfig,
 
     // Note generator
     NoteGeneratorConfig,
