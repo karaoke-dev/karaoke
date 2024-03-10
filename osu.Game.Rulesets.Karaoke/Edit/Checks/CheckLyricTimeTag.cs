@@ -19,16 +19,16 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricEmptyTimeTag(this),
-        new IssueTemplateLyricMissingFirstTimeTag(this),
-        new IssueTemplateLyricMissingLastTimeTag(this),
-        new IssueTemplateLyricTimeTagOutOfRange(this),
-        new IssueTemplateLyricTimeTagOverlapping(this),
-        new IssueTemplateLyricTimeTagEmptyTime(this),
-        new IssueTemplateLyricTimeTagRomajiInvalidText(this),
-        new IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(this),
-        new IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd(this),
-        new IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd(this),
+        new IssueTemplateEmpty(this),
+        new IssueTemplateMissingStart(this),
+        new IssueTemplateMissingEnd(this),
+        new IssueTemplateOutOfRange(this),
+        new IssueTemplateOverlapping(this),
+        new IssueTemplateEmptyTime(this),
+        new IssueTemplateInvalidRomanisedSyllable(this),
+        new IssueTemplateShouldFillRomanisedSyllable(this),
+        new IssueTemplateShouldNotFillRomanisedSyllable(this),
+        new IssueTemplateShouldNotMarkFirstSyllable(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
@@ -43,16 +43,16 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
     {
         if (!lyric.TimeTags.Any())
         {
-            yield return new IssueTemplateLyricEmptyTimeTag(this).Create(lyric);
+            yield return new IssueTemplateEmpty(this).Create(lyric);
 
             yield break;
         }
 
         if (!TimeTagsUtils.HasStartTimeTagInLyric(lyric.TimeTags, lyric.Text))
-            yield return new IssueTemplateLyricMissingFirstTimeTag(this).Create(lyric);
+            yield return new IssueTemplateMissingStart(this).Create(lyric);
 
         if (!TimeTagsUtils.HasEndTimeTagInLyric(lyric.TimeTags, lyric.Text))
-            yield return new IssueTemplateLyricMissingLastTimeTag(this).Create(lyric);
+            yield return new IssueTemplateMissingEnd(this).Create(lyric);
 
         // todo: maybe config?
         const GroupCheck group_check = GroupCheck.Asc;
@@ -64,17 +64,17 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
 
         foreach (var textTag in outOfRangeTags)
         {
-            yield return new IssueTemplateLyricTimeTagOutOfRange(this).Create(lyric, textTag);
+            yield return new IssueTemplateOutOfRange(this).Create(lyric, textTag);
         }
 
         foreach (var textTag in overlappingTimeTags)
         {
-            yield return new IssueTemplateLyricTimeTagOverlapping(this).Create(lyric, textTag);
+            yield return new IssueTemplateOverlapping(this).Create(lyric, textTag);
         }
 
         foreach (var textTag in noTimeTimeTags)
         {
-            yield return new IssueTemplateLyricTimeTagEmptyTime(this).Create(lyric, textTag);
+            yield return new IssueTemplateEmptyTime(this).Create(lyric, textTag);
         }
     }
 
@@ -95,20 +95,20 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
                 case TextIndex.IndexState.Start:
                     // if input the romanised syllable, should be valid.
                     if (romanisedSyllable != null && !isRomanisedSyllableValid(romanisedSyllable))
-                        yield return new IssueTemplateLyricTimeTagRomajiInvalidText(this).Create(lyric, timeTag);
+                        yield return new IssueTemplateInvalidRomanisedSyllable(this).Create(lyric, timeTag);
 
                     // if is first romanised syllable, should not be null.
                     if (firstSyllable && romanisedSyllable == null)
-                        yield return new IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(this).Create(lyric, timeTag);
+                        yield return new IssueTemplateShouldFillRomanisedSyllable(this).Create(lyric, timeTag);
 
                     break;
 
                 case TextIndex.IndexState.End:
                     if (romanisedSyllable != null)
-                        yield return new IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd(this).Create(lyric, timeTag);
+                        yield return new IssueTemplateShouldNotFillRomanisedSyllable(this).Create(lyric, timeTag);
 
                     if (firstSyllable)
-                        yield return new IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd(this).Create(lyric, timeTag);
+                        yield return new IssueTemplateShouldNotMarkFirstSyllable(this).Create(lyric, timeTag);
 
                     break;
 
@@ -130,9 +130,9 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         }
     }
 
-    public class IssueTemplateLyricEmptyTimeTag : IssueTemplate
+    public class IssueTemplateEmpty : IssueTemplate
     {
-        public IssueTemplateLyricEmptyTimeTag(ICheck check)
+        public IssueTemplateEmpty(ICheck check)
             : base(check, IssueType.Problem, "This lyric has no time-tag.")
         {
         }
@@ -140,9 +140,9 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         public Issue Create(Lyric lyric) => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricMissingFirstTimeTag : IssueTemplate
+    public class IssueTemplateMissingStart : IssueTemplate
     {
-        public IssueTemplateLyricMissingFirstTimeTag(ICheck check)
+        public IssueTemplateMissingStart(ICheck check)
             : base(check, IssueType.Problem, "Missing first time-tag in the lyric.")
         {
         }
@@ -150,9 +150,9 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         public Issue Create(Lyric lyric) => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricMissingLastTimeTag : IssueTemplate
+    public class IssueTemplateMissingEnd : IssueTemplate
     {
-        public IssueTemplateLyricMissingLastTimeTag(ICheck check)
+        public IssueTemplateMissingEnd(ICheck check)
             : base(check, IssueType.Problem, "Missing last time-tag in the lyric.")
         {
         }
@@ -170,58 +170,58 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         public Issue Create(Lyric lyric, TimeTag timeTag) => new LyricTimeTagIssue(lyric, this, timeTag, timeTag);
     }
 
-    public class IssueTemplateLyricTimeTagOutOfRange : IssueTemplateLyricTimeTag
+    public class IssueTemplateOutOfRange : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagOutOfRange(ICheck check)
+        public IssueTemplateOutOfRange(ICheck check)
             : base(check, IssueType.Problem, "Time-tag index is out of range.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagOverlapping : IssueTemplateLyricTimeTag
+    public class IssueTemplateOverlapping : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagOverlapping(ICheck check)
+        public IssueTemplateOverlapping(ICheck check)
             : base(check, IssueType.Problem, "Time-tag index is overlapping to another time-tag.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagEmptyTime : IssueTemplateLyricTimeTag
+    public class IssueTemplateEmptyTime : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagEmptyTime(ICheck check)
+        public IssueTemplateEmptyTime(ICheck check)
             : base(check, IssueType.Problem, "Time-tag has no time.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagRomajiInvalidText : IssueTemplateLyricTimeTag
+    public class IssueTemplateInvalidRomanisedSyllable : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagRomajiInvalidText(ICheck check)
-            : base(check, IssueType.Problem, "Time-tag romaji text should not be empty or white-space only.")
+        public IssueTemplateInvalidRomanisedSyllable(ICheck check)
+            : base(check, IssueType.Problem, "Romanised syllable should not be empty or white-space only.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst : IssueTemplateLyricTimeTag
+    public class IssueTemplateShouldFillRomanisedSyllable : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagRomajiInvalidTextIfFirst(ICheck check)
-            : base(check, IssueType.Problem, "Time-tag romaji text should not be empty or white-space if is the first romaji text.")
+        public IssueTemplateShouldFillRomanisedSyllable(ICheck check)
+            : base(check, IssueType.Problem, "Romanised syllable should not be empty or white-space if in the first time-tag.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd : IssueTemplateLyricTimeTag
+    public class IssueTemplateShouldNotFillRomanisedSyllable : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagRomajiNotHaveEmptyTextIfEnd(ICheck check)
-            : base(check, IssueType.Error, "Should not have empty romaji text if time-tag is end.")
+        public IssueTemplateShouldNotFillRomanisedSyllable(ICheck check)
+            : base(check, IssueType.Error, "Should not have empty romanised syllable if time-tag is end.")
         {
         }
     }
 
-    public class IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd : IssueTemplateLyricTimeTag
+    public class IssueTemplateShouldNotMarkFirstSyllable : IssueTemplateLyricTimeTag
     {
-        public IssueTemplateLyricTimeTagRomajiNotFistRomajiTextIfEnd(ICheck check)
-            : base(check, IssueType.Error, "Should not have empty romaji text if time-tag is end.")
+        public IssueTemplateShouldNotMarkFirstSyllable(ICheck check)
+            : base(check, IssueType.Error, "Should not have empty romanised syllable if time-tag is end.")
         {
         }
     }
