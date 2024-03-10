@@ -15,7 +15,7 @@ public class TimeTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<TimeT
     [TestCase(17, "花火大会", true)]
     [TestCase(1028, "喵", true)] // Support the chinese.
     [TestCase(3081, "hello", false)] // English is not supported.
-    [TestCase(17, "", false)] // will not able to generate the romaji if lyric is empty.
+    [TestCase(17, "", false)] // will not able to generate the romanisation if lyric is empty.
     [TestCase(17, "   ", false)]
     [TestCase(17, null, false)]
     public void TestCanGenerate(int lcid, string text, bool canGenerate)

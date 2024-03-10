@@ -14,7 +14,7 @@ public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyT
 {
     [TestCase(17, "花火大会", true)]
     [TestCase(17, "我是中文", true)] // only change the language code to decide should be able to generate or not.
-    [TestCase(17, "", false)] // will not able to generate the romaji if lyric is empty.
+    [TestCase(17, "", false)] // will not able to generate the romanisation if lyric is empty.
     [TestCase(17, "   ", false)]
     [TestCase(17, null, false)]
     [TestCase(1028, "はなび", false)] // Should not be able to generate if language is not supported.

@@ -24,7 +24,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
 {
     private readonly Bindable<FontUsage> mainFont = new();
     private readonly Bindable<FontUsage> rubyFont = new();
-    private readonly Bindable<FontUsage> romajiFont = new();
+    private readonly Bindable<FontUsage> romanisationFont = new();
     private readonly Bindable<FontUsage> translateFont = new();
     private readonly Bindable<CultureInfo> preferLanguage = new();
 
@@ -60,7 +60,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         {
             addFont(e.NewValue);
         });
-        romajiFont.BindValueChanged(e =>
+        romanisationFont.BindValueChanged(e =>
         {
             addFont(e.NewValue);
         });
@@ -94,7 +94,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         // fonts
         config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
         config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
-        config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFont);
+        config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFont);
         config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
         config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
     }

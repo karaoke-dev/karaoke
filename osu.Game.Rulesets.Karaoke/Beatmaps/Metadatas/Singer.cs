@@ -56,12 +56,12 @@ public class Singer : ISinger
     }
 
     [JsonIgnore]
-    public readonly Bindable<string> RomajiNameBindable = new();
+    public readonly Bindable<string> RomanisationBindable = new();
 
-    public string RomajiName
+    public string Romanisation
     {
-        get => RomajiNameBindable.Value;
-        set => RomajiNameBindable.Value = value;
+        get => RomanisationBindable.Value;
+        set => RomanisationBindable.Value = value;
     }
 
     [JsonIgnore]

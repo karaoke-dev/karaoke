@@ -59,7 +59,7 @@ public partial class TestSceneBeatmapMetadataGraph : OsuTestScene
             singerInfo.AddSinger(s =>
             {
                 s.Name = $"Singer{singerIndex}";
-                s.RomajiName = $"[Romaji]Singer{singerIndex}";
+                s.Romanisation = $"[Romanisation]Singer{singerIndex}";
                 s.EnglishName = $"[English]Singer{singerIndex}";
             });
         }

@@ -225,7 +225,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
             // Apply text font info
             var lyricFont = newConfig.MainTextFont;
             var rubyFont = newConfig.RubyTextFont;
-            var romajiFont = newConfig.RomajiTextFont;
+            var romajiFont = newConfig.RomanisationTextFont;
 
             Font = getFont(lyricFont.Size);
             RubyFont = getFont(rubyFont.Size);

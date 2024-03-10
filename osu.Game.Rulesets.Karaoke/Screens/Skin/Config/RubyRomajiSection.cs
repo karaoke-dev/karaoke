@@ -68,17 +68,17 @@ internal partial class RubyRomajiSection : LyricConfigSection
         {
             var lyricFontInfo = e.NewValue;
             applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
-            applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomajiAlignment);
+            applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomanisationAlignment);
             applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
-            applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomajiMargin);
+            applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomanisationMargin);
 
             static void applyCurrent<T>(Bindable<T> bindable, T value)
                 => bindable.Value = bindable.Default = value;
         }, true);
 
         rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
-        romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiAlignment = x.NewValue));
+        romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationAlignment = x.NewValue));
         rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
-        romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomajiMargin = x.NewValue));
+        romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationMargin = x.NewValue));
     }
 }

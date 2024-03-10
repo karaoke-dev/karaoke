@@ -31,7 +31,7 @@ public partial class TestSceneSingerScreen : BeatmapEditorScreenTestScene<Singer
         {
             s.Order = 1;
             s.Name = "初音ミク";
-            s.RomajiName = "Hatsune Miku";
+            s.Romanisation = "Hatsune Miku";
             s.EnglishName = "Miku";
             s.Description = "International superstar vocaloid Hatsune Miku.";
             s.Hue = 189 / 360f;
@@ -41,7 +41,7 @@ public partial class TestSceneSingerScreen : BeatmapEditorScreenTestScene<Singer
         {
             s.Order = 2;
             s.Name = "ハク";
-            s.RomajiName = "haku";
+            s.Romanisation = "haku";
             s.EnglishName = "andy840119";
             s.Description = "Creator of this ruleset.";
             s.Hue = 46 / 360f;
@@ -51,7 +51,7 @@ public partial class TestSceneSingerScreen : BeatmapEditorScreenTestScene<Singer
         {
             s.Order = 3;
             s.Name = "ゴミパソコン";
-            s.RomajiName = "gomi-pasokonn";
+            s.Romanisation = "gomi-pasokonn";
             s.EnglishName = "Miku";
             s.Description = "My fucking slow desktop.";
             s.Hue = 290 / 360f;

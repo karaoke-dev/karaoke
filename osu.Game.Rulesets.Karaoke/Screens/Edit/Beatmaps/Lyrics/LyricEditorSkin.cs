@@ -85,8 +85,8 @@ public class LyricEditorSkin : KaraokeSkin
                 = multipleSize(LyricFontInfo.MainTextFont, changePercentage);
             LyricFontInfo.RubyTextFont
                 = multipleSize(LyricFontInfo.RubyTextFont, changePercentage);
-            LyricFontInfo.RomajiTextFont
-                = multipleSize(LyricFontInfo.RomajiTextFont, changePercentage);
+            LyricFontInfo.RomanisationTextFont
+                = multipleSize(LyricFontInfo.RomanisationTextFont, changePercentage);
 
             // todo: change size might not working now.
             // DefaultElement[ElementType.LyricConfig].TriggerChange();

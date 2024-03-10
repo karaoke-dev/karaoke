@@ -50,16 +50,16 @@ public partial class TestSceneSingerToolTip : OsuTestScene
             singer.EnglishName = "Hatsune Miku";
         });
 
-        setTooltip("Test singer with romaji name", singer =>
+        setTooltip("Test singer with romanisation", singer =>
         {
-            singer.Name = "Singer with Romaji name";
-            singer.RomajiName = "Hatsune Miku";
+            singer.Name = "Singer with romanisation";
+            singer.Romanisation = "Hatsune Miku";
         });
 
         setTooltip("Test singer with large context", singer =>
         {
-            singer.Name = "Singer with Romaji name large large large large large large large large large";
-            singer.RomajiName = "Hatsune Miku large large large large large large large large large";
+            singer.Name = "Singer with romanisation large large large large large large large large large";
+            singer.Romanisation = "Hatsune Miku large large large large large large large large large";
             singer.EnglishName = "Hatsune Miku large large large large large large large large large";
             singer.Description =
                 "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";

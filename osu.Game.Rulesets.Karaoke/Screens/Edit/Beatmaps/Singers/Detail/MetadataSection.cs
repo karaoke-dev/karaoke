@@ -24,8 +24,8 @@ internal partial class MetadataSection : EditSingerSection
             },
             new LabelledTextBox
             {
-                Label = "Romaji name",
-                Current = singer.RomajiNameBindable,
+                Label = "Romanisation",
+                Current = singer.RomanisationBindable,
                 TabbableContentContainer = this,
             },
             new LabelledTextBox
