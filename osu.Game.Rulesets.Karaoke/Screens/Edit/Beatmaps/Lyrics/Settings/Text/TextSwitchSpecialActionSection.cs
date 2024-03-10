@@ -13,9 +13,9 @@ public partial class TextSwitchSpecialActionSection : SpecialActionSection<TextE
     protected override string SwitchActionDescription => "Copy, delete or move the lyrics.";
 
     [BackgroundDependencyLoader]
-    private void load(ITextModeState textModeState)
+    private void load(IEditTextModeState editTextModeState)
     {
-        BindTo(textModeState);
+        BindTo(editTextModeState);
     }
 
     protected override void UpdateActionArea(TextEditModeSpecialAction action)

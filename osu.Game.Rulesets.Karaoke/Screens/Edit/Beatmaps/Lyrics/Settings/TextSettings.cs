@@ -20,9 +20,9 @@ public partial class TextSettings : LyricEditorSettings
     private readonly IBindable<TextEditStep> bindableEditStep = new Bindable<TextEditStep>();
 
     [BackgroundDependencyLoader]
-    private void load(ITextModeState textModeState)
+    private void load(IEditTextModeState editTextModeState)
     {
-        bindableEditStep.BindTo(textModeState.BindableEditStep);
+        bindableEditStep.BindTo(editTextModeState.BindableEditStep);
         bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();

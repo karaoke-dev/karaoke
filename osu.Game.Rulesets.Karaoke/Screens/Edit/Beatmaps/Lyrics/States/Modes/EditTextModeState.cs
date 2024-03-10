@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Text;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public partial class TextModeState : Component, ITextModeState
+public partial class EditTextModeState : Component, IEditTextModeState
 {
     private readonly Bindable<TextEditStep> bindableEditMode = new();
 

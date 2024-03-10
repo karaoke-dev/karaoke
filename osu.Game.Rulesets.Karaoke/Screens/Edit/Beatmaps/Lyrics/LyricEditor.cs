@@ -41,8 +41,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(ILyricCaretState))]
     private readonly LyricCaretState lyricCaretState;
 
-    [Cached(typeof(ITextModeState))]
-    private readonly TextModeState textModeState;
+    [Cached(typeof(IEditTextModeState))]
+    private readonly EditTextModeState editTextModeState;
 
     [Cached(typeof(IEditReferenceLyricModeState))]
     private readonly EditReferenceLyricModeState editReferenceLyricModeState;
@@ -99,7 +99,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(lyricCaretState = new LyricCaretState());
 
         // state for target mode only.
-        AddInternal(textModeState = new TextModeState());
+        AddInternal(editTextModeState = new EditTextModeState());
         AddInternal(editReferenceLyricModeState = new EditReferenceLyricModeState());
         AddInternal(languageModeState = new LanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
@@ -203,7 +203,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.EditText => textModeState.BindableEditStep.Value,
+                LyricEditorMode.EditText => editTextModeState.BindableEditStep.Value,
                 LyricEditorMode.EditReference => editReferenceLyricModeState.BindableEditStep.Value,
                 LyricEditorMode.EditLanguage => languageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,

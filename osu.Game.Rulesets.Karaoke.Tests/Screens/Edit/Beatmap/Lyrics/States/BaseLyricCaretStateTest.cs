@@ -47,7 +47,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         Dependencies.Cache(editorBeatmap = new EditorBeatmap(beatmap));
         Dependencies.Cache(new EditorClock());
         Dependencies.CacheAs<ILyricEditorState>(state = new TestLyricEditorState());
-        Dependencies.CacheAs<ITextModeState>(new TextModeState());
+        Dependencies.CacheAs<IEditTextModeState>(new EditTextModeState());
         Dependencies.CacheAs<IEditRubyModeState>(new EditRubyModeState());
         Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
@@ -188,7 +188,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         public LyricEditorMode Mode => bindableMode.Value;
 
         [Resolved]
-        private ITextModeState textModeState { get; set; } = null!;
+        private IEditTextModeState editTextModeState { get; set; } = null!;
 
         public void SwitchMode(LyricEditorMode mode)
         {
@@ -198,7 +198,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
             {
                 updateModeWithEditStep();
             }, true);
-            textModeState.BindableEditStep.BindValueChanged(e =>
+            editTextModeState.BindableEditStep.BindValueChanged(e =>
             {
                 updateModeWithEditStep();
             });
@@ -217,7 +217,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                 mode switch
                 {
                     LyricEditorMode.View => null,
-                    LyricEditorMode.EditText => textModeState.EditStep,
+                    LyricEditorMode.EditText => editTextModeState.EditStep,
                     LyricEditorMode.EditReference => null,
                     LyricEditorMode.EditLanguage => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
@@ -234,7 +234,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
             if (editStep is not TextEditStep textEditStep)
                 throw new NotSupportedException();
 
-            textModeState.ChangeEditStep(textEditStep);
+            editTextModeState.ChangeEditStep(textEditStep);
         }
 
         public void NavigateToFix(LyricEditorMode mode)
