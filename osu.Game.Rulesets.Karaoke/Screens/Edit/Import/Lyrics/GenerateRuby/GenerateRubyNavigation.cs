@@ -22,12 +22,12 @@ public partial class GenerateRubyNavigation : TopNavigation<GenerateRubyStepScre
 
     protected override NavigationState GetState(Lyric[] lyrics)
     {
-        // technically, all non-english lyric should have romaji.
-        if (lyrics.All(hasRomaji))
+        // technically, all non-english lyric should have romanisation.
+        if (lyrics.All(hasRomanisation))
             return NavigationState.Done;
 
         // not all (japanese) lyric contains ruby, so it's ok with that.
-        if (lyrics.Any(hasRuby) || lyrics.Any(hasRomaji))
+        if (lyrics.Any(hasRuby) || lyrics.Any(hasRomanisation))
             return NavigationState.Working;
 
         return NavigationState.Initial;
@@ -35,8 +35,8 @@ public partial class GenerateRubyNavigation : TopNavigation<GenerateRubyStepScre
         static bool hasRuby(Lyric lyric)
             => lyric.RubyTags.Any();
 
-        static bool hasRomaji(Lyric lyric)
-            => lyric.RubyTags.Any();
+        static bool hasRomanisation(Lyric lyric)
+            => lyric.TimeTags.Any(x => !string.IsNullOrEmpty(x.RomanisedSyllable));
     }
 
     protected override LocalisableString GetNavigationText(NavigationState value) =>
