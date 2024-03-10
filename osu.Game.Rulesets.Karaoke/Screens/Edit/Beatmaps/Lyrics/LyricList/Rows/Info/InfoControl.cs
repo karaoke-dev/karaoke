@@ -190,7 +190,7 @@ public partial class InfoControl : Container, IHasContextMenu
                 case LyricEditorMode.EditTimeTag:
                     return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), Lyric);
 
-                case LyricEditorMode.EditRomaji:
+                case LyricEditorMode.EditRomanisation:
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditNote:

@@ -51,7 +51,7 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
         // or even create new step for it.
         if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji))
         {
-            AskForAutoGenerateRomaji();
+            AskForAutoGenerateRomanisation();
         }
         else
         {
@@ -88,9 +88,9 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
         }
     }
 
-    internal void AskForAutoGenerateRomaji()
+    internal void AskForAutoGenerateRomanisation()
     {
-        SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
+        SwitchLyricEditorMode(LyricEditorMode.EditRomanisation);
 
         DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
         {

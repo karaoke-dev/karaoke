@@ -45,10 +45,10 @@ public enum LyricEditorMode
     EditTimeTag,
 
     /// <summary>
-    /// Able to edit the romaji from the time-tag.
+    /// Able to edit the romanisation from the time-tag.
     /// </summary>
-    [Description("Edit romaji")]
-    EditRomaji,
+    [Description("Edit Romanisation")]
+    EditRomanisation,
 
     /// <summary>
     /// Enable to create/delete notes.

@@ -222,7 +222,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                     LyricEditorMode.EditLanguage => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
                     LyricEditorMode.EditTimeTag => throw new NotSupportedException(),
-                    LyricEditorMode.EditRomaji => throw new NotSupportedException(),
+                    LyricEditorMode.EditRomanisation => throw new NotSupportedException(),
                     LyricEditorMode.EditNote => throw new NotSupportedException(),
                     LyricEditorMode.EditSinger => throw new NotSupportedException(),
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),

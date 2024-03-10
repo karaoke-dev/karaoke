@@ -7,22 +7,22 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomajiEditPropertyModeSection : EditorSection
+public partial class RomanisationEditPropertyModeSection : EditorSection
 {
     protected override LocalisableString Title => "Edit property";
 
     [BackgroundDependencyLoader]
-    private void load(IEditRomajiModeState editRomajiModeState)
+    private void load(IEditRomanisationModeState editRomanisationModeState)
     {
         Children = new Drawable[]
         {
-            new LabelledEnumDropdown<RomajiEditPropertyMode>
+            new LabelledEnumDropdown<RomanisationEditPropertyMode>
             {
                 Label = "Edit property",
-                Description = "Batch edit text or other romaji-related properties from time-tag",
-                Current = editRomajiModeState.BindableRomajiEditPropertyMode,
+                Description = "Batch edit text or other romanisation-related properties from time-tag",
+                Current = editRomanisationModeState.BindableRomanisationEditPropertyMode,
             },
         };
     }

@@ -115,7 +115,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
             LyricEditorMode.EditLanguage => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditTimeTag => createItemsForTimeTagEditStep(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
-            LyricEditorMode.EditRomaji => Array.Empty<Drawable>(),
+            LyricEditorMode.EditRomanisation => Array.Empty<Drawable>(),
             LyricEditorMode.EditNote => createItemsForNoteEditStep(editorModeWithEditStep.GetEditStep<NoteEditStep>()),
             LyricEditorMode.EditSinger => Array.Empty<Drawable>(),
             _ => throw new ArgumentOutOfRangeException(),

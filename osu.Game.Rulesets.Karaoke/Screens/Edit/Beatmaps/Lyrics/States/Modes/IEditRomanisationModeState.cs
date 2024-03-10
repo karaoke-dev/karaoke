@@ -3,11 +3,11 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditRomajiModeState : IHasEditStep<RomajiTagEditStep>, IHasBlueprintSelection<TimeTag>
+public interface IEditRomanisationModeState : IHasEditStep<RomanisationTagEditStep>, IHasBlueprintSelection<TimeTag>
 {
-    Bindable<RomajiEditPropertyMode> BindableRomajiEditPropertyMode { get; }
+    Bindable<RomanisationEditPropertyMode> BindableRomanisationEditPropertyMode { get; }
 }

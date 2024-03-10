@@ -8,19 +8,19 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomajiAutoGenerateSection : AutoGenerateSection
+public partial class RomanisationAutoGenerateSection : AutoGenerateSection
 {
     protected override AutoGenerateSubsection CreateAutoGenerateSubsection()
-        => new RomajiTagAutoGenerateSubsection();
+        => new RomanisationAutoGenerateSubsection();
 
-    private partial class RomajiTagAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
+    private partial class RomanisationAutoGenerateSubsection : LyricEditorAutoGenerateSubsection
     {
         private const string language_mode = "LANGUAGE_MODE";
         private const string time_tag_mode = "TIME_TAG_MODE";
 
-        public RomajiTagAutoGenerateSubsection()
+        public RomanisationAutoGenerateSubsection()
             : base(AutoGenerateType.AutoGenerateTimeTagRomaji)
         {
         }
@@ -51,9 +51,9 @@ public partial class RomajiAutoGenerateSection : AutoGenerateSection
             };
 
         protected override ConfigButton CreateConfigButton()
-            => new RomajiTagAutoGenerateConfigButton();
+            => new RomanisationAutoGenerateConfigButton();
 
-        protected partial class RomajiTagAutoGenerateConfigButton : MultiConfigButton
+        protected partial class RomanisationAutoGenerateConfigButton : MultiConfigButton
         {
             protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
             {

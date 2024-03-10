@@ -30,7 +30,7 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
         // apply current value from the field in the item.
         Current.Value = GetFieldValue(item);
 
-        // should change preview text box if selected ruby/romaji changed.
+        // should change preview text box if selected string property changed.
         OnCommit += (sender, newText) =>
         {
             if (!newText)

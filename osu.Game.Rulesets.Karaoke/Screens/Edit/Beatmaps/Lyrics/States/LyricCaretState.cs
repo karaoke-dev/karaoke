@@ -144,7 +144,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             LyricEditorMode.EditLanguage => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => getRubyTagModeAlgorithm(),
             LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
-            LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditRomanisation => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditSinger => new NavigateCaretPositionAlgorithm(lyrics),
             _ => throw new InvalidOperationException(nameof(mode)),

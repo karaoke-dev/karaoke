@@ -89,8 +89,8 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     [Test]
     public void TestEditRomajiMode()
     {
-        switchToMode(LyricEditorMode.EditRomaji);
-        clickEditStepButtons<RomajiTagEditStep>();
+        switchToMode(LyricEditorMode.EditRomanisation);
+        clickEditStepButtons<RomanisationTagEditStep>();
     }
 
     [Test]

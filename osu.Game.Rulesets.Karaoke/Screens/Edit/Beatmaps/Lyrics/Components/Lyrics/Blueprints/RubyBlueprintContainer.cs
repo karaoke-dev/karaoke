@@ -48,7 +48,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
         {
             base.OnSelectionChanged();
 
-            // only select one ruby / romaji tag can let user drag to change start and end index.
+            // only select one ruby tag can let user drag to change start and end index.
             SelectionBox.CanScaleX = SelectedItems.Count == 1;
 
             // should clear delta size before change start/end index.
@@ -97,7 +97,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
         {
             deltaScaleSize += scale.X;
 
-            // this feature only works if only select one ruby / romaji tag.
+            // this feature only works if only select one ruby tag.
             var selectedRubyTag = SelectedItems.FirstOrDefault();
             if (selectedRubyTag == null)
                 return false;

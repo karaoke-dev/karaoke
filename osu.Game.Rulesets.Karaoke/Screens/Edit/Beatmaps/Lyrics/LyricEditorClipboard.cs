@@ -65,7 +65,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
     // we should save the serialized lyric object into here instead of save into the clipboard for some reason:
-    // 1. It's hard to know which ruby/romaji or time-tag being copied.
+    // 1. It's hard to know which ruby/romanisation or time-tag being copied.
     // 2. Maybe user did not want to copy the full json content?
     private string clipboardContent = string.Empty;
 
@@ -192,7 +192,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricTimeTagsChangeHandler.RemoveRange(timeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:
@@ -265,7 +265,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(timeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:
@@ -351,7 +351,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricTimeTagsChangeHandler.AddRange(pasteTimeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:

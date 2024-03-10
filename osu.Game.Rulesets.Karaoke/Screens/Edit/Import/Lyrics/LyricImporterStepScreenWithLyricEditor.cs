@@ -65,7 +65,7 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
             // for some mode, we need to switch to generate section.
             SwitchEditStep(LanguageEditStep.Generate);
             SwitchEditStep(RubyTagEditStep.Generate);
-            SwitchEditStep(RomajiTagEditStep.Generate);
+            SwitchEditStep(RomanisationTagEditStep.Generate);
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

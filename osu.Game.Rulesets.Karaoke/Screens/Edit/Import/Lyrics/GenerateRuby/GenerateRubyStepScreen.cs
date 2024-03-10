@@ -33,7 +33,7 @@ public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEd
     protected override Drawable CreateContent()
         => base.CreateContent().With(_ =>
         {
-            SwitchLyricEditorMode(LyricEditorMode.EditRomaji);
+            SwitchLyricEditorMode(LyricEditorMode.EditRomanisation);
         });
 
     protected override void LoadComplete()
