@@ -85,7 +85,7 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
             ReferenceTimeTagIndex = 0,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteInvalidReferenceTimeTagTime>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateInvalidReferenceTimeTagTime>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase("[0,start]", "[1,start]")]
@@ -107,7 +107,7 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
             ReferenceTimeTagIndex = 0,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteDurationTooShort>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateDurationTooShort>(new HitObject[] { referencedLyric, note });
     }
 
     [TestCase("[0,start]", "[1,start]")]
@@ -129,6 +129,6 @@ public class CheckNoteTimeTest : HitObjectCheckTest<Note, CheckNoteTime>
             ReferenceTimeTagIndex = 0,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteDurationTooLong>(new HitObject[] { referencedLyric, note });
+        AssertNotOk<NoteIssue, IssueTemplateDurationTooLong>(new HitObject[] { referencedLyric, note });
     }
 }
