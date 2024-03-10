@@ -100,9 +100,9 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         [BackgroundDependencyLoader]
-        private void load(ITimeTagModeState timeTagModeState)
+        private void load(IEditTimeTagModeState editTimeTagModeState)
         {
-            SelectedItems.BindTo(timeTagModeState.SelectedItems);
+            SelectedItems.BindTo(editTimeTagModeState.SelectedItems);
         }
 
         // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation

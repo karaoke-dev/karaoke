@@ -49,7 +49,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
         Dependencies.CacheAs<ILyricEditorState>(state = new TestLyricEditorState());
         Dependencies.CacheAs<IEditTextModeState>(new EditTextModeState());
         Dependencies.CacheAs<IEditRubyModeState>(new EditRubyModeState());
-        Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
+        Dependencies.CacheAs<IEditTimeTagModeState>(new EditTimeTagModeState());
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
         var lyricsProvider = new LyricsProvider();

@@ -192,14 +192,14 @@ public partial class LyricCaretState : Component, ILyricCaretState
                       ILyricEditorState state,
                       KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager,
                       IEditRubyModeState editRubyModeState,
-                      ITimeTagModeState timeTagModeState)
+                      IEditTimeTagModeState editTimeTagModeState)
     {
         bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
 
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
 
         bindableRubyTagEditMode.BindTo(editRubyModeState.BindableRubyTagEditMode);
-        bindableCreateTimeTagEditMode.BindTo(timeTagModeState.BindableCreateTimeTagEditMode);
+        bindableCreateTimeTagEditMode.BindTo(editTimeTagModeState.BindableCreateTimeTagEditMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, bindableRecordingChangeTimeWhileMovingTheCaret);

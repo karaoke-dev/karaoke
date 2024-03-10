@@ -18,7 +18,7 @@ public partial class TimeTagRecordingConfigSection : EditorSection
     protected override LocalisableString Title => "Config";
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ITimeTagModeState timeTagModeState)
+    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, IEditTimeTagModeState editTimeTagModeState)
     {
         Children = new Drawable[]
         {
@@ -44,7 +44,7 @@ public partial class TimeTagRecordingConfigSection : EditorSection
             {
                 Label = "Time range",
                 Description = "Change time-range to zoom-in/zoom-out the recording area.",
-                Current = timeTagModeState.BindableRecordZoom,
+                Current = editTimeTagModeState.BindableRecordZoom,
             },
             new LabelledOpacityAdjustment
             {

@@ -42,7 +42,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditTimeTagModeState editTimeTagModeState { get; set; } = null!;
 
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
@@ -182,7 +182,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditTimeTag:
-                var timeTags = timeTagModeState.SelectedItems;
+                var timeTags = editTimeTagModeState.SelectedItems;
                 if (!timeTags.Any())
                     return false;
 
@@ -257,7 +257,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 return true;
 
             case LyricEditorMode.EditTimeTag:
-                var timeTags = timeTagModeState.SelectedItems;
+                var timeTags = editTimeTagModeState.SelectedItems;
                 if (!timeTags.Any())
                     return false;
 

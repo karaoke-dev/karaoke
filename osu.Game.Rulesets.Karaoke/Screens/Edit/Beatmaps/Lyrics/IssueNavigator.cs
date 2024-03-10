@@ -27,7 +27,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
     private IEditRubyModeState editRubyModeState { get; set; } = null!;
 
     [Resolved]
-    private ITimeTagModeState timeTagModeState { get; set; } = null!;
+    private IEditTimeTagModeState editTimeTagModeState { get; set; } = null!;
 
     [Resolved]
     private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
@@ -122,7 +122,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
         {
             editRubyModeState,
             editRomajiModeState,
-            timeTagModeState,
+            editTimeTagModeState,
             noteModeState,
         };
 
