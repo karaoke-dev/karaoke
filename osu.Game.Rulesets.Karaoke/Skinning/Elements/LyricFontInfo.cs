@@ -98,7 +98,7 @@ public class LyricFontInfo : IKaraokeSkinElement
             // Apply text font info
             l.Font = getFont(KaraokeRulesetSetting.MainFont, MainTextFont);
             l.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, RubyTextFont);
-            l.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, RomajiTextFont);
+            l.RomajiFont = getFont(KaraokeRulesetSetting.RomanisationFont, RomajiTextFont);
 
             // Layout to text
             l.KaraokeTextSmartHorizon = SmartHorizon;
@@ -138,7 +138,7 @@ public class LyricFontInfo : IKaraokeSkinElement
                 {
                     case KaraokeRulesetSetting.MainFont:
                     case KaraokeRulesetSetting.RubyFont:
-                    case KaraokeRulesetSetting.RomajiFont:
+                    case KaraokeRulesetSetting.RomanisationFont:
                         return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
 
                     case KaraokeRulesetSetting.TranslateFont:

@@ -32,7 +32,7 @@ public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentCo
         {
             manager.Get<FontUsage>(KaraokeRulesetSetting.MainFont),
             manager.Get<FontUsage>(KaraokeRulesetSetting.RubyFont),
-            manager.Get<FontUsage>(KaraokeRulesetSetting.RomajiFont),
+            manager.Get<FontUsage>(KaraokeRulesetSetting.RomanisationFont),
             manager.Get<FontUsage>(KaraokeRulesetSetting.TranslateFont),
             manager.Get<FontUsage>(KaraokeRulesetSetting.NoteFont),
         };

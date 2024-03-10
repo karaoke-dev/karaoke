@@ -38,8 +38,8 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     private readonly Bindable<FontUsage> mainFontUsageBindable = new();
     private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
     private readonly Bindable<int> rubyMarginBindable = new();
-    private readonly Bindable<FontUsage> romajiFontUsageBindable = new();
-    private readonly Bindable<int> romajiMarginBindable = new();
+    private readonly Bindable<FontUsage> romanisationFontUsageBindable = new();
+    private readonly Bindable<int> romanisationMarginBindable = new();
     private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
     private readonly IBindableDictionary<Singer, SingerState[]> singersBindable = new BindableDictionary<Singer, SingerState[]>();
@@ -102,16 +102,16 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             config.BindWith(KaraokeRulesetSetting.MainFont, mainFontUsageBindable);
             config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFontUsageBindable);
             config.BindWith(KaraokeRulesetSetting.RubyMargin, rubyMarginBindable);
-            config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFontUsageBindable);
-            config.BindWith(KaraokeRulesetSetting.RomajiMargin, romajiMarginBindable);
+            config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFontUsageBindable);
+            config.BindWith(KaraokeRulesetSetting.RomanisationMargin, romanisationMarginBindable);
             config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
         }
 
         mainFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
         rubyFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
         rubyMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
-        romajiFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
-        romajiMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
+        romanisationFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
+        romanisationMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
         translateFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
 
         // property in hitobject.

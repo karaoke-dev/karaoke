@@ -41,13 +41,13 @@ public partial class LyricFontSettings : KaraokeSettingsSubsection
             },
             new SettingsFont
             {
-                LabelText = "Default romaji font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomajiFont),
+                LabelText = "Default romanisation font",
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomanisationFont),
             },
             new SettingsSlider<int>
             {
-                LabelText = "Romaji margin",
-                Current = Config.GetBindable<int>(KaraokeRulesetSetting.RomajiMargin),
+                LabelText = "Romanisation margin",
+                Current = Config.GetBindable<int>(KaraokeRulesetSetting.RomanisationMargin),
                 KeyboardStep = 1,
             },
             new SettingsCheckbox

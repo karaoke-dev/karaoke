@@ -63,8 +63,8 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         SetDefault(KaraokeRulesetSetting.MainFont, new FontUsage("Torus", 48, "Bold"), 48f, 48f);
         SetDefault(KaraokeRulesetSetting.RubyFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
         SetDefault(KaraokeRulesetSetting.RubyMargin, 5, 0, 20);
-        SetDefault(KaraokeRulesetSetting.RomajiFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
-        SetDefault(KaraokeRulesetSetting.RomajiMargin, 0, 0, 20);
+        SetDefault(KaraokeRulesetSetting.RomanisationFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
+        SetDefault(KaraokeRulesetSetting.RomanisationMargin, 0, 0, 20);
         SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
         SetDefault(KaraokeRulesetSetting.TranslateFont, new FontUsage("Torus", 18, "Bold"), 10f, 48f);
         SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
@@ -83,7 +83,7 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
 
             case KaraokeRulesetSetting.MainFont:
             case KaraokeRulesetSetting.RubyFont:
-            case KaraokeRulesetSetting.RomajiFont:
+            case KaraokeRulesetSetting.RomanisationFont:
             case KaraokeRulesetSetting.TranslateFont:
             case KaraokeRulesetSetting.NoteFont:
                 base.AddBindable(lookup, new BindableFontUsage(TypeUtils.ChangeType<FontUsage>(bindable.Value)));
@@ -164,8 +164,8 @@ public enum KaraokeRulesetSetting
     MainFont,
     RubyFont,
     RubyMargin,
-    RomajiFont,
-    RomajiMargin,
+    RomanisationFont,
+    RomanisationMargin,
     ForceUseDefaultFont,
     TranslateFont,
     ForceUseDefaultTranslateFont,
