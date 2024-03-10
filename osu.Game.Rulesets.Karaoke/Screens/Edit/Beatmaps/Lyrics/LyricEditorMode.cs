@@ -17,13 +17,13 @@ public enum LyricEditorMode
     /// Can create/delete/move/split/combine lyric.
     /// And typing the lyric.
     /// </summary>
-    [Description("Text")]
+    [Description("Edit Text")]
     EditText,
 
     /// <summary>
     /// Mark the lyric is "similar" to another lyric.
     /// </summary>
-    [Description("Reference lyric")]
+    [Description("Edit Reference lyric")]
     EditReferenceLyric,
 
     /// <summary>
