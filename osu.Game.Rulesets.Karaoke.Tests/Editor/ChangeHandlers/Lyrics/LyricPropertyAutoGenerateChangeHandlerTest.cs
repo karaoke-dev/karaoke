@@ -195,10 +195,10 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     #endregion
 
-    #region Time-tag romaji
+    #region Romanisation
 
     [Test]
-    public void TestAutoGenerateTimeTagRomaji()
+    public void TestAutoGenerateRomanisation()
     {
         PrepareHitObject(() => new Lyric
         {
@@ -207,7 +207,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]", "[3,end]" }),
         });
 
-        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji));
+        TriggerHandlerChanged(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomanisation));
 
         AssertSelectedHitObject(h =>
         {
@@ -216,7 +216,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
     }
 
     [Test]
-    public void TestAutoGenerateTimeTagRomajiWithNonSupportedLyric()
+    public void TestAutoGenerateRomanisationWithNonSupportedLyric()
     {
         PrepareHitObjects(() => new[]
         {
@@ -228,7 +228,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
             },
         });
 
-        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji));
+        TriggerHandlerChangedWithException<GeneratorNotSupportedException>(c => c.AutoGenerate(AutoGenerateType.AutoGenerateRomanisation));
     }
 
     #endregion
@@ -301,7 +301,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+            Language = new CultureInfo(17), // for auto-generate ruby and romanisation.
             TimeTags = new[] // for auto-generate notes.
             {
                 new TimeTag(new TextIndex(0), 0),
@@ -361,7 +361,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
         PrepareHitObject(() => new Lyric
         {
             Text = "karaoke",
-            Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+            Language = new CultureInfo(17), // for auto-generate ruby and romanisation.
             TimeTags = new[] // for auto-generate notes.
             {
                 new TimeTag(new TextIndex(0), 0),

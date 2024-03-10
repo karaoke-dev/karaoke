@@ -22,7 +22,7 @@ public enum AutoGenerateType
 
     AutoGenerateTimeTags,
 
-    AutoGenerateTimeTagRomaji,
+    AutoGenerateRomanisation,
 
     AutoGenerateNotes,
 }

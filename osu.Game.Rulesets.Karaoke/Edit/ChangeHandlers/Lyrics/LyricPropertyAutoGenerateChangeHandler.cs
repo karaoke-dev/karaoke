@@ -54,9 +54,9 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return canGenerate(timeTagGenerator);
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
-                return canGenerate(timeTagRomajiGenerator);
+            case AutoGenerateType.AutoGenerateRomanisation:
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+                return canGenerate(romanisationGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
@@ -95,9 +95,9 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return getInvalidMessageFromGenerator(timeTagGenerator);
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
-                return getInvalidMessageFromGenerator(timeTagRomajiGenerator);
+            case AutoGenerateType.AutoGenerateRomanisation:
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+                return getInvalidMessageFromGenerator(romanisationGenerator);
 
             case AutoGenerateType.AutoGenerateNotes:
                 var noteGenerator = getGenerator<Note[], NoteGeneratorConfig>();
@@ -170,11 +170,11 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 });
                 break;
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
-                var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
+            case AutoGenerateType.AutoGenerateRomanisation:
+                var romanisationGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 PerformOnSelection(lyric =>
                 {
-                    var results = timeTagRomajiGenerator.Generate(lyric);
+                    var results = romanisationGenerator.Generate(lyric);
 
                     foreach (var (key, value) in results)
                     {
@@ -213,7 +213,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             AutoGenerateType.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
             AutoGenerateType.AutoGenerateRubyTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags)),
             AutoGenerateType.AutoGenerateTimeTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
-            AutoGenerateType.AutoGenerateTimeTagRomaji => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
+            AutoGenerateType.AutoGenerateRomanisation => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
             AutoGenerateType.AutoGenerateNotes => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric),
             _ => throw new ArgumentOutOfRangeException(),
         };

@@ -21,7 +21,7 @@ public partial class RomanisationAutoGenerateSection : AutoGenerateSection
         private const string time_tag_mode = "TIME_TAG_MODE";
 
         public RomanisationAutoGenerateSubsection()
-            : base(AutoGenerateType.AutoGenerateTimeTagRomaji)
+            : base(AutoGenerateType.AutoGenerateRomanisation)
         {
         }
 

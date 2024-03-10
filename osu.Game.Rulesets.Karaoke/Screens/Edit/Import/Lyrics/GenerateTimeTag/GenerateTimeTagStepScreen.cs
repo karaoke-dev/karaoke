@@ -49,7 +49,7 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
 
         // todo: we should better way to switch between time-tag mode or romaji mode.
         // or even create new step for it.
-        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateTimeTagRomaji))
+        if (lyricPropertyAutoGenerateChangeHandler.CanGenerate(AutoGenerateType.AutoGenerateRomanisation))
         {
             AskForAutoGenerateRomanisation();
         }
