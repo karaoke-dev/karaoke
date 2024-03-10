@@ -22,7 +22,7 @@ public partial class RomanisationEditPropertyModeSection : EditorSection
             {
                 Label = "Edit property",
                 Description = "Batch edit text or other romanisation-related properties from time-tag",
-                Current = editRomanisationModeState.BindableRomajiEditPropertyMode,
+                Current = editRomanisationModeState.BindableRomanisationEditPropertyMode,
             },
         };
     }

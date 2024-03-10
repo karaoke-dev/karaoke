@@ -9,5 +9,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public interface IEditRomanisationModeState : IHasEditStep<RomanisationTagEditStep>, IHasBlueprintSelection<TimeTag>
 {
-    Bindable<RomanisationEditPropertyMode> BindableRomajiEditPropertyMode { get; }
+    Bindable<RomanisationEditPropertyMode> BindableRomanisationEditPropertyMode { get; }
 }

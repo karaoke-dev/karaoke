@@ -41,11 +41,11 @@ public partial class RomanisationEditSection : LyricPropertiesSection<TimeTag>
 
     private partial class RomanisationTagsEditor : LyricPropertiesEditor
     {
-        private readonly Bindable<RomanisationEditPropertyMode> bindableRomajiEditPropertyMode = new();
+        private readonly Bindable<RomanisationEditPropertyMode> bindableRomanisationEditPropertyMode = new();
 
         public RomanisationTagsEditor()
         {
-            bindableRomajiEditPropertyMode.BindValueChanged(e =>
+            bindableRomanisationEditPropertyMode.BindValueChanged(e =>
             {
                 RedrewContent();
             });
@@ -54,13 +54,13 @@ public partial class RomanisationEditSection : LyricPropertiesSection<TimeTag>
         [BackgroundDependencyLoader]
         private void load(IEditRomanisationModeState editRomanisationModeState)
         {
-            bindableRomajiEditPropertyMode.BindTo(editRomanisationModeState.BindableRomajiEditPropertyMode);
+            bindableRomanisationEditPropertyMode.BindTo(editRomanisationModeState.BindableRomanisationEditPropertyMode);
         }
 
         protected override Drawable CreateDrawable(TimeTag item)
         {
             int index = Items.IndexOf(item);
-            return bindableRomajiEditPropertyMode.Value switch
+            return bindableRomanisationEditPropertyMode.Value switch
             {
                 RomanisationEditPropertyMode.Text => new LabelledRomanisedSyllableTextBox(item)
                 {
@@ -71,7 +71,7 @@ public partial class RomanisationEditSection : LyricPropertiesSection<TimeTag>
                 {
                     Label = item.RomanisedSyllable ?? string.Empty,
                 },
-                _ => throw new ArgumentOutOfRangeException(nameof(bindableRomajiEditPropertyMode.Value)),
+                _ => throw new ArgumentOutOfRangeException(nameof(bindableRomanisationEditPropertyMode.Value)),
             };
         }
 

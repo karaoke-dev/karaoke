@@ -18,7 +18,7 @@ public partial class EditRomanisationModeState : ModeStateWithBlueprintContainer
     public void ChangeEditStep(RomanisationTagEditStep step)
         => bindableEditMode.Value = step;
 
-    public Bindable<RomanisationEditPropertyMode> BindableRomajiEditPropertyMode { get; } = new();
+    public Bindable<RomanisationEditPropertyMode> BindableRomanisationEditPropertyMode { get; } = new();
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags));
