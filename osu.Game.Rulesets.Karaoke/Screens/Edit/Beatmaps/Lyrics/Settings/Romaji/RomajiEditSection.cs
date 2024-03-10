@@ -52,9 +52,9 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         }
 
         [BackgroundDependencyLoader]
-        private void load(IEditRomajiModeState editRomajiModeState)
+        private void load(IEditRomanisationModeState editRomanisationModeState)
         {
-            bindableRomajiEditPropertyMode.BindTo(editRomajiModeState.BindableRomajiEditPropertyMode);
+            bindableRomajiEditPropertyMode.BindTo(editRomanisationModeState.BindableRomajiEditPropertyMode);
         }
 
         protected override Drawable CreateDrawable(TimeTag item)
@@ -87,7 +87,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         [Resolved]
-        private IEditRomajiModeState editRomajiModeState { get; set; } = null!;
+        private IEditRomanisationModeState editRomanisationModeState { get; set; } = null!;
 
         public LabelledRomajiTextTextBox(TimeTag item)
             : base(item)
@@ -95,7 +95,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         }
 
         protected override void TriggerSelect(TimeTag item)
-            => editRomajiModeState.Select(item);
+            => editRomanisationModeState.Select(item);
 
         protected override string GetFieldValue(TimeTag timeTag)
             => timeTag.RomanisedSyllable ?? string.Empty;
@@ -106,7 +106,7 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
         [BackgroundDependencyLoader]
         private void load()
         {
-            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
+            SelectedItems.BindTo(editRomanisationModeState.SelectedItems);
         }
     }
 
@@ -127,9 +127,9 @@ public partial class RomajiEditSection : LyricPropertiesSection<TimeTag>
             => lyricTimeTagsChangeHandler.SetTimeTagFirstSyllable(timeTag, value);
 
         [BackgroundDependencyLoader]
-        private void load(IEditRomajiModeState editRomajiModeState)
+        private void load(IEditRomanisationModeState editRomanisationModeState)
         {
-            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
+            SelectedItems.BindTo(editRomanisationModeState.SelectedItems);
         }
     }
 }

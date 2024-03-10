@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditRomajiModeState : IHasEditStep<RomajiTagEditStep>, IHasBlueprintSelection<TimeTag>
+public interface IEditRomanisationModeState : IHasEditStep<RomanisationTagEditStep>, IHasBlueprintSelection<TimeTag>
 {
     Bindable<RomajiEditPropertyMode> BindableRomajiEditPropertyMode { get; }
 }

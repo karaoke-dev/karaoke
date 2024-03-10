@@ -56,8 +56,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     [Cached(typeof(IEditTimeTagModeState))]
     private readonly EditTimeTagModeState editTimeTagModeState;
 
-    [Cached(typeof(IEditRomajiModeState))]
-    private readonly EditRomajiModeState editRomajiModeState;
+    [Cached(typeof(IEditRomanisationModeState))]
+    private readonly EditRomanisationModeState editRomanisationModeState;
 
     [Cached(typeof(IEditNoteModeState))]
     private readonly EditNoteModeState editNoteModeState;
@@ -104,7 +104,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(editLanguageModeState = new EditLanguageModeState());
         AddInternal(editRubyModeState = new EditRubyModeState());
         AddInternal(editTimeTagModeState = new EditTimeTagModeState());
-        AddInternal(editRomajiModeState = new EditRomajiModeState());
+        AddInternal(editRomanisationModeState = new EditRomanisationModeState());
         AddInternal(editNoteModeState = new EditNoteModeState());
 
         // Separated feature.
@@ -159,7 +159,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         initialEditStepChanged<ReferenceLyricEditStep>();
         initialEditStepChanged<LanguageEditStep>();
         initialEditStepChanged<RubyTagEditStep>();
-        initialEditStepChanged<RomajiTagEditStep>();
+        initialEditStepChanged<RomanisationTagEditStep>();
         initialEditStepChanged<TimeTagEditStep>();
         initialEditStepChanged<NoteEditStep>();
 
@@ -208,7 +208,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.EditLanguage => editLanguageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
                 LyricEditorMode.EditTimeTag => editTimeTagModeState.BindableEditStep.Value,
-                LyricEditorMode.EditRomanisation => editRomajiModeState.BindableEditStep.Value,
+                LyricEditorMode.EditRomanisation => editRomanisationModeState.BindableEditStep.Value,
                 LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
                 LyricEditorMode.EditSinger => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),

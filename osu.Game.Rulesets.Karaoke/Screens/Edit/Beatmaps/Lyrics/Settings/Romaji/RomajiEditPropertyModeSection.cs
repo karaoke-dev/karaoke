@@ -14,7 +14,7 @@ public partial class RomajiEditPropertyModeSection : EditorSection
     protected override LocalisableString Title => "Edit property";
 
     [BackgroundDependencyLoader]
-    private void load(IEditRomajiModeState editRomajiModeState)
+    private void load(IEditRomanisationModeState editRomanisationModeState)
     {
         Children = new Drawable[]
         {
@@ -22,7 +22,7 @@ public partial class RomajiEditPropertyModeSection : EditorSection
             {
                 Label = "Edit property",
                 Description = "Batch edit text or other romaji-related properties from time-tag",
-                Current = editRomajiModeState.BindableRomajiEditPropertyMode,
+                Current = editRomanisationModeState.BindableRomajiEditPropertyMode,
             },
         };
     }
