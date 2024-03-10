@@ -139,14 +139,14 @@ public partial class LyricCaretState : Component, ILyricCaretState
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.Text => getTextModeAlgorithm(editorModeWithEditStep.GetEditStep<TextEditStep>()),
-            LyricEditorMode.Reference => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditText => getTextModeAlgorithm(editorModeWithEditStep.GetEditStep<TextEditStep>()),
+            LyricEditorMode.EditReference => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditLanguage => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => getRubyTagModeAlgorithm(),
             LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),
             LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
-            LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditSinger => new NavigateCaretPositionAlgorithm(lyrics),
             _ => throw new InvalidOperationException(nameof(mode)),
         };
 

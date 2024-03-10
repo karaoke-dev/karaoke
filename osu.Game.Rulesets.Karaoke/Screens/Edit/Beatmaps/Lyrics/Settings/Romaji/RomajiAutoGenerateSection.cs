@@ -36,7 +36,7 @@ public partial class RomajiAutoGenerateSection : AutoGenerateSection
                         new SwitchModeDescriptionAction
                         {
                             Text = "edit language mode",
-                            Mode = LyricEditorMode.Language,
+                            Mode = LyricEditorMode.EditLanguage,
                         }
                     },
                     {

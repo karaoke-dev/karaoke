@@ -74,13 +74,13 @@ public partial class IssueNavigator : Component, IIssueNavigator
         switch (check)
         {
             case CheckLyricText:
-                return LyricEditorMode.Text;
+                return LyricEditorMode.EditText;
 
             case CheckLyricReferenceLyric:
-                return LyricEditorMode.Reference;
+                return LyricEditorMode.EditReference;
 
             case CheckLyricLanguage:
-                return LyricEditorMode.Language;
+                return LyricEditorMode.EditLanguage;
 
             case CheckLyricRubyTag:
                 return LyricEditorMode.EditRuby;

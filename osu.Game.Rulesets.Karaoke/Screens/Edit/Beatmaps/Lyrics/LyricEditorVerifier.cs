@@ -31,14 +31,14 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         type switch
         {
             LyricEditorMode.View => Array.Empty<ICheck>(),
-            LyricEditorMode.Text => new ICheck[] { new CheckLyricText() },
-            LyricEditorMode.Reference => new ICheck[] { new CheckLyricReferenceLyric() },
-            LyricEditorMode.Language => new ICheck[] { new CheckLyricLanguage() },
+            LyricEditorMode.EditText => new ICheck[] { new CheckLyricText() },
+            LyricEditorMode.EditReference => new ICheck[] { new CheckLyricReferenceLyric() },
+            LyricEditorMode.EditLanguage => new ICheck[] { new CheckLyricLanguage() },
             LyricEditorMode.EditRuby => new ICheck[] { new CheckLyricRubyTag() },
             LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTagOnly() },
             LyricEditorMode.EditRomaji => new ICheck[] { new CheckLyricTimeTagRomaji() },
             LyricEditorMode.EditNote => new ICheck[] { new CheckNoteReferenceLyric(), new CheckNoteText(), new CheckNoteTime() },
-            LyricEditorMode.Singer => Array.Empty<ICheck>(),
+            LyricEditorMode.EditSinger => Array.Empty<ICheck>(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 

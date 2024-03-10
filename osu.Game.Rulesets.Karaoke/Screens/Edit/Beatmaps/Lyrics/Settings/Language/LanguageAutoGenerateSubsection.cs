@@ -29,7 +29,7 @@ public partial class LanguageAutoGenerateSubsection : LyricEditorAutoGenerateSub
                     typing_mode, new SwitchModeDescriptionAction
                     {
                         Text = "typing mode",
-                        Mode = LyricEditorMode.Text,
+                        Mode = LyricEditorMode.EditText,
                     }
                 },
             },

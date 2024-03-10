@@ -26,7 +26,7 @@ public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<L
         bindableMode.BindValueChanged(e =>
         {
             // Only draggable in edit mode.
-            ShowDragHandle.Value = e.NewValue == LyricEditorMode.Text;
+            ShowDragHandle.Value = e.NewValue == LyricEditorMode.EditText;
         }, true);
 
         DragActive.BindValueChanged(e =>

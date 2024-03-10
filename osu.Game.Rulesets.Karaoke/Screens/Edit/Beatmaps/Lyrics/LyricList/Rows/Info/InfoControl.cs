@@ -175,13 +175,13 @@ public partial class InfoControl : Container, IHasContextMenu
             switch (editorMode.Mode)
             {
                 case LyricEditorMode.View:
-                case LyricEditorMode.Text:
+                case LyricEditorMode.EditText:
                     return null;
 
-                case LyricEditorMode.Reference:
+                case LyricEditorMode.EditReference:
                     return new ReferenceLyricInfo(Lyric);
 
-                case LyricEditorMode.Language:
+                case LyricEditorMode.EditLanguage:
                     return new LanguageInfo(Lyric);
 
                 case LyricEditorMode.EditRuby:
@@ -196,7 +196,7 @@ public partial class InfoControl : Container, IHasContextMenu
                 case LyricEditorMode.EditNote:
                     return null;
 
-                case LyricEditorMode.Singer:
+                case LyricEditorMode.EditSinger:
                     return new SingerInfo(Lyric);
 
                 default:
@@ -226,7 +226,7 @@ public partial class InfoControl : Container, IHasContextMenu
         get
         {
             var editMode = bindableModeWithEditStep.Value.Mode;
-            if (editMode != LyricEditorMode.Text)
+            if (editMode != LyricEditorMode.EditText)
                 return Array.Empty<MenuItem>();
 
             // should select lyric if trying to interact with context menu.

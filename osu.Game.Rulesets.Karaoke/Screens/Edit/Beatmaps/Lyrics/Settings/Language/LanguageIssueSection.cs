@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Langua
 
 public partial class LanguageIssueSection : LyricEditorIssueSection
 {
-    protected override LyricEditorMode EditMode => LyricEditorMode.Language;
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditLanguage;
 
     protected override LyricsIssueTable CreateLyricsIssueTable() => new LanguageIssueTable();
 

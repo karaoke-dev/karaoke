@@ -24,7 +24,7 @@ public partial class DrawablePreviewLyricList : DrawableLyricList
             return false;
 
         // should not move the position in manage lyric mode.
-        if (bindableMode.Value is LyricEditorMode.Text or LyricEditorMode.EditRuby)
+        if (bindableMode.Value is LyricEditorMode.EditText or LyricEditorMode.EditRuby)
             return false;
 
         // move to target position if auto focus.

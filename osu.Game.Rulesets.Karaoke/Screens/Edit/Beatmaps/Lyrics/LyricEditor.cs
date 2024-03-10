@@ -203,14 +203,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Text => textModeState.BindableEditStep.Value,
-                LyricEditorMode.Reference => editReferenceLyricModeState.BindableEditStep.Value,
-                LyricEditorMode.Language => languageModeState.BindableEditStep.Value,
+                LyricEditorMode.EditText => textModeState.BindableEditStep.Value,
+                LyricEditorMode.EditReference => editReferenceLyricModeState.BindableEditStep.Value,
+                LyricEditorMode.EditLanguage => languageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
                 LyricEditorMode.EditTimeTag => timeTagModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRomaji => editRomajiModeState.BindableEditStep.Value,
                 LyricEditorMode.EditNote => editNoteModeState.BindableEditStep.Value,
-                LyricEditorMode.Singer => null,
+                LyricEditorMode.EditSinger => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
@@ -254,14 +254,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         LyricEditorSettings? getSettings() =>
             Mode switch
             {
-                LyricEditorMode.Text => new TextSettings(),
-                LyricEditorMode.Reference => new ReferenceSettings(),
-                LyricEditorMode.Language => new LanguageSettings(),
+                LyricEditorMode.EditText => new TextSettings(),
+                LyricEditorMode.EditReference => new ReferenceSettings(),
+                LyricEditorMode.EditLanguage => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
                 LyricEditorMode.EditRomaji => new RomajiTagSettings(),
                 LyricEditorMode.EditNote => new NoteSettings(),
-                LyricEditorMode.Singer => new SingerSettings(),
+                LyricEditorMode.EditSinger => new SingerSettings(),
                 _ => null,
             };
 
@@ -289,14 +289,14 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             mode switch
             {
                 LyricEditorMode.View => LyricEditorLayout.Preview,
-                LyricEditorMode.Text => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.Reference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.Language => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditText => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditReference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditLanguage => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
                 LyricEditorMode.EditRomaji => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditNote => LyricEditorLayout.Detail,
-                LyricEditorMode.Singer => LyricEditorLayout.Preview,
+                LyricEditorMode.EditSinger => LyricEditorLayout.Preview,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
@@ -458,8 +458,8 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     {
         switch (mode)
         {
-            case LyricEditorMode.Text:
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditText:
+            case LyricEditorMode.EditLanguage:
             case LyricEditorMode.EditTimeTag:
                 SwitchMode(mode);
                 break;

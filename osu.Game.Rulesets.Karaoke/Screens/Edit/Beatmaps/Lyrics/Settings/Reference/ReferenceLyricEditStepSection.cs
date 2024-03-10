@@ -50,6 +50,6 @@ public partial class ReferenceLyricEditStepSection : LyricEditorEditStepSection<
 
     private partial class ReferenceLyricVerifySelection : LyricEditorVerifySelection
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.Reference;
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditReference;
     }
 }

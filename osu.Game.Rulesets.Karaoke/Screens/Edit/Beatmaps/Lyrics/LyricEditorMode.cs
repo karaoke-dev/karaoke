@@ -18,19 +18,19 @@ public enum LyricEditorMode
     /// And typing the lyric.
     /// </summary>
     [Description("Text")]
-    Text,
+    EditText,
 
     /// <summary>
     /// Mark the lyric is "similar" to another lyric.
     /// </summary>
     [Description("Reference")]
-    Reference,
+    EditReference,
 
     /// <summary>
     /// Can edit each lyric's language.
     /// </summary>
     [Description("Select language")]
-    Language,
+    EditLanguage,
 
     /// <summary>
     /// Able to create/delete ruby.
@@ -60,5 +60,5 @@ public enum LyricEditorMode
     /// Can edit each lyric's singer.
     /// </summary>
     [Description("Select singer")]
-    Singer,
+    EditSinger,
 }

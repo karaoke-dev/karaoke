@@ -18,13 +18,13 @@ public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
     protected override IEnumerable<LyricEditorMode> ValidEnums => new[]
     {
         LyricEditorMode.View,
-        LyricEditorMode.Text,
-        LyricEditorMode.Reference,
-        LyricEditorMode.Language,
+        LyricEditorMode.EditText,
+        LyricEditorMode.EditReference,
+        LyricEditorMode.EditLanguage,
         LyricEditorMode.EditRuby,
         LyricEditorMode.EditTimeTag,
         LyricEditorMode.EditRomaji,
         LyricEditorMode.EditNote,
-        LyricEditorMode.Singer,
+        LyricEditorMode.EditSinger,
     };
 }

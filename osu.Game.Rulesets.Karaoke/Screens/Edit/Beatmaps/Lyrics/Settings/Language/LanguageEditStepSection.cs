@@ -50,6 +50,6 @@ public partial class LanguageEditStepSection : LyricEditorEditStepSection<ILangu
 
     private partial class LanguageVerifySelection : LyricEditorVerifySelection
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.Language;
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditLanguage;
     }
 }

@@ -54,6 +54,6 @@ public partial class TextEditStepSection : LyricEditorEditStepSection<ITextModeS
 
     private partial class TextVerifySelection : LyricEditorVerifySelection
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.Text;
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditText;
     }
 }

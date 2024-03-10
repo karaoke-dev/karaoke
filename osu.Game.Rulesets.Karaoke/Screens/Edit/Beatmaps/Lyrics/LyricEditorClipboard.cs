@@ -141,7 +141,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Text:
+            case LyricEditorMode.EditText:
                 switch (textModeState.EditStep)
                 {
                     case TextEditStep.Typing:
@@ -163,10 +163,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReference:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 languageChangeHandler?.SetLanguage(null);
                 return true;
 
@@ -198,7 +198,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 if (lyricSingerChangeHandler == null)
                     throw new NullDependencyException($"Missing {nameof(lyricSingerChangeHandler)}");
 
@@ -219,7 +219,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(lyric.Text);
                 return true;
 
-            case LyricEditorMode.Text:
+            case LyricEditorMode.EditText:
                 switch (textModeState.EditStep)
                 {
                     case TextEditStep.Typing:
@@ -239,10 +239,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReference:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 saveObjectToTheClipboardContent(lyric.Language);
                 copyObjectToClipboard(lyric.Language);
                 return true;
@@ -271,7 +271,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 saveObjectToTheClipboardContent(lyric.SingerIds);
                 var singers = getMatchedSinges(lyric.SingerIds);
                 copyObjectToClipboard(singers);
@@ -289,7 +289,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.View:
                 return false;
 
-            case LyricEditorMode.Text:
+            case LyricEditorMode.EditText:
                 switch (textModeState.EditStep)
                 {
                     case TextEditStep.Typing:
@@ -315,10 +315,10 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.Reference:
+            case LyricEditorMode.EditReference:
                 return false;
 
-            case LyricEditorMode.Language:
+            case LyricEditorMode.EditLanguage:
                 var pasteLanguage = getObjectFromClipboardContent<CultureInfo>();
                 if (pasteLanguage == null)
                     return false;
@@ -357,7 +357,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
             case LyricEditorMode.EditNote:
                 return false;
 
-            case LyricEditorMode.Singer:
+            case LyricEditorMode.EditSinger:
                 ElementId[]? pasteSingerIds = getObjectFromClipboardContent<ElementId[]>();
                 if (pasteSingerIds == null)
                     return false;

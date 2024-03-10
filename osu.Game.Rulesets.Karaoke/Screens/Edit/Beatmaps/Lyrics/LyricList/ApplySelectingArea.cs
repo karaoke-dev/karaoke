@@ -128,7 +128,7 @@ public partial class ApplySelectingArea : CompositeDrawable
 
         float getPrefixSpacing()
         {
-            bool containsHandler = state.Mode == LyricEditorMode.Text;
+            bool containsHandler = state.Mode == LyricEditorMode.EditText;
             return BaseLyricList.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricListItem.HANDLER_WIDTH : 0);
         }
     }

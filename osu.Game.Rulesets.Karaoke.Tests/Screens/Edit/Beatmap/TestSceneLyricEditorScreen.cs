@@ -53,22 +53,22 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     }
 
     [Test]
-    public void TestTextMode()
+    public void TestEditTextMode()
     {
-        switchToMode(LyricEditorMode.Text);
+        switchToMode(LyricEditorMode.EditText);
         clickEditStepButtons<TextEditStep>();
     }
 
     [Test]
-    public void TestReferenceMode()
+    public void TestEditReferenceMode()
     {
-        switchToMode(LyricEditorMode.Reference);
+        switchToMode(LyricEditorMode.EditReference);
     }
 
     [Test]
-    public void TestLanguageMode()
+    public void TestEditLanguageMode()
     {
-        switchToMode(LyricEditorMode.Language);
+        switchToMode(LyricEditorMode.EditLanguage);
         clickEditStepButtons<LanguageEditStep>();
     }
 
@@ -101,9 +101,9 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     }
 
     [Test]
-    public void TestSingerMode()
+    public void TestEditSingerMode()
     {
-        switchToMode(LyricEditorMode.Singer);
+        switchToMode(LyricEditorMode.EditSinger);
     }
 
     private void switchToMode(LyricEditorMode mode)

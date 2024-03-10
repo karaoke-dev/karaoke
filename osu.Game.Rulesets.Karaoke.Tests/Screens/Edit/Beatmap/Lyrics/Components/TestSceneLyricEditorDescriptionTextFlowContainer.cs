@@ -52,7 +52,7 @@ public partial class TestSceneDescriptionTextFlowContainer : OsuTestScene
                         "singer_mode", new SwitchModeDescriptionAction
                         {
                             Text = "edit text mode",
-                            Mode = LyricEditorMode.Singer,
+                            Mode = LyricEditorMode.EditSinger,
                         }
                     },
                 },

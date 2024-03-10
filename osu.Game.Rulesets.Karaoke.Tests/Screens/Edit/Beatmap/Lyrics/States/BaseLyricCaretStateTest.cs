@@ -96,16 +96,16 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                     return;
 
                 case TestCaretType.CaretEnable:
-                    state.SwitchMode(LyricEditorMode.Reference);
+                    state.SwitchMode(LyricEditorMode.EditReference);
                     break;
 
                 case TestCaretType.CaretWithIndex:
-                    state.SwitchMode(LyricEditorMode.Text);
+                    state.SwitchMode(LyricEditorMode.EditText);
                     state.SwitchEditStep(TextEditStep.Split);
                     break;
 
                 case TestCaretType.CaretDraggable:
-                    state.SwitchMode(LyricEditorMode.Text);
+                    state.SwitchMode(LyricEditorMode.EditText);
                     state.SwitchEditStep(TextEditStep.Typing);
                     break;
 
@@ -217,14 +217,14 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                 mode switch
                 {
                     LyricEditorMode.View => null,
-                    LyricEditorMode.Text => textModeState.EditStep,
-                    LyricEditorMode.Reference => null,
-                    LyricEditorMode.Language => throw new NotSupportedException(),
+                    LyricEditorMode.EditText => textModeState.EditStep,
+                    LyricEditorMode.EditReference => null,
+                    LyricEditorMode.EditLanguage => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
                     LyricEditorMode.EditTimeTag => throw new NotSupportedException(),
                     LyricEditorMode.EditRomaji => throw new NotSupportedException(),
                     LyricEditorMode.EditNote => throw new NotSupportedException(),
-                    LyricEditorMode.Singer => throw new NotSupportedException(),
+                    LyricEditorMode.EditSinger => throw new NotSupportedException(),
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
                 };
         }
