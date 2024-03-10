@@ -15,30 +15,30 @@ public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, L
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricSelfReference(this),
-        new IssueTemplateLyricInvalidReferenceLyric(this),
-        new IssueTemplateLyricNullReferenceLyricConfig(this),
-        new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this),
+        new IssueTemplateSelfReference(this),
+        new IssueTemplateInvalidReferenceLyric(this),
+        new IssueTemplateNullReferenceLyricConfig(this),
+        new IssueTemplateHasReferenceLyricConfigWhenNoReferenceLyric(this),
     };
 
     protected override IEnumerable<Issue> CheckReferenceProperty(Lyric lyric, IEnumerable<Lyric> allAvailableReferencedHitObjects)
     {
         if (lyric.ReferenceLyric == lyric)
-            yield return new IssueTemplateLyricSelfReference(this).Create(lyric);
+            yield return new IssueTemplateSelfReference(this).Create(lyric);
 
         if (lyric.ReferenceLyric != null && !allAvailableReferencedHitObjects.Contains(lyric.ReferenceLyric))
-            yield return new IssueTemplateLyricInvalidReferenceLyric(this).Create(lyric);
+            yield return new IssueTemplateInvalidReferenceLyric(this).Create(lyric);
 
         if (lyric.ReferenceLyric != null && lyric.ReferenceLyricConfig == null)
-            yield return new IssueTemplateLyricNullReferenceLyricConfig(this).Create(lyric);
+            yield return new IssueTemplateNullReferenceLyricConfig(this).Create(lyric);
 
         if (lyric.ReferenceLyric == null && lyric.ReferenceLyricConfig != null)
-            yield return new IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(this).Create(lyric);
+            yield return new IssueTemplateHasReferenceLyricConfigWhenNoReferenceLyric(this).Create(lyric);
     }
 
-    public class IssueTemplateLyricSelfReference : IssueTemplate
+    public class IssueTemplateSelfReference : IssueTemplate
     {
-        public IssueTemplateLyricSelfReference(ICheck check)
+        public IssueTemplateSelfReference(ICheck check)
             : base(check, IssueType.Error, "Lyric should not reference to itself.")
         {
         }
@@ -47,9 +47,9 @@ public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, L
             => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricInvalidReferenceLyric : IssueTemplate
+    public class IssueTemplateInvalidReferenceLyric : IssueTemplate
     {
-        public IssueTemplateLyricInvalidReferenceLyric(ICheck check)
+        public IssueTemplateInvalidReferenceLyric(ICheck check)
             : base(check, IssueType.Error, "Reference lyric does not exist in the beatmap.")
         {
         }
@@ -58,9 +58,9 @@ public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, L
             => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricNullReferenceLyricConfig : IssueTemplate
+    public class IssueTemplateNullReferenceLyricConfig : IssueTemplate
     {
-        public IssueTemplateLyricNullReferenceLyricConfig(ICheck check)
+        public IssueTemplateNullReferenceLyricConfig(ICheck check)
             : base(check, IssueType.Error, "Must have config if reference to another lyric.")
         {
         }
@@ -69,9 +69,9 @@ public class CheckLyricReferenceLyric : CheckHitObjectReferenceProperty<Lyric, L
             => new LyricIssue(lyric, this);
     }
 
-    public class IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric : IssueTemplate
+    public class IssueTemplateHasReferenceLyricConfigWhenNoReferenceLyric : IssueTemplate
     {
-        public IssueTemplateLyricHasReferenceLyricConfigIfNoReferenceLyric(ICheck check)
+        public IssueTemplateHasReferenceLyricConfigWhenNoReferenceLyric(ICheck check)
             : base(check, IssueType.Error, "Should not have the reference lyric config if reference to another lyric.")
         {
         }
