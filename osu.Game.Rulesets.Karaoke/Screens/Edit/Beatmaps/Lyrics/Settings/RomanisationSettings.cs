@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public partial class RomajiTagSettings : TextTagSettings<RomanisationTagEditStep>
+public partial class RomanisationSettings : TextTagSettings<RomanisationTagEditStep>
 {
     [BackgroundDependencyLoader]
     private void load(IEditRomanisationModeState romanisationModeState)

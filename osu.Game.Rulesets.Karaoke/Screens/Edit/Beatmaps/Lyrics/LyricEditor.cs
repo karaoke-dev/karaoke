@@ -259,7 +259,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                 LyricEditorMode.EditLanguage => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
-                LyricEditorMode.EditRomanisation => new RomajiTagSettings(),
+                LyricEditorMode.EditRomanisation => new RomanisationSettings(),
                 LyricEditorMode.EditNote => new NoteSettings(),
                 LyricEditorMode.EditSinger => new SingerSettings(),
                 _ => null,
