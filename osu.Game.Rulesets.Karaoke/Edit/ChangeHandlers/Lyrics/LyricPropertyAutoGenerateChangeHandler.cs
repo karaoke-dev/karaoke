@@ -54,7 +54,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return canGenerate(timeTagGenerator);
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+            case AutoGenerateType.AutoGenerateRomanisation:
                 var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 return canGenerate(timeTagRomajiGenerator);
 
@@ -95,7 +95,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 var timeTagGenerator = getSelector<TimeTag[], TimeTagGeneratorConfig>();
                 return getInvalidMessageFromGenerator(timeTagGenerator);
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+            case AutoGenerateType.AutoGenerateRomanisation:
                 var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 return getInvalidMessageFromGenerator(timeTagRomajiGenerator);
 
@@ -170,7 +170,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
                 });
                 break;
 
-            case AutoGenerateType.AutoGenerateTimeTagRomaji:
+            case AutoGenerateType.AutoGenerateRomanisation:
                 var timeTagRomajiGenerator = getSelector<IReadOnlyDictionary<TimeTag, RomanisationGenerateResult>, RomanisationGeneratorConfig>();
                 PerformOnSelection(lyric =>
                 {
@@ -213,7 +213,7 @@ public partial class LyricPropertyAutoGenerateChangeHandler : LyricPropertyChang
             AutoGenerateType.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
             AutoGenerateType.AutoGenerateRubyTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags)),
             AutoGenerateType.AutoGenerateTimeTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
-            AutoGenerateType.AutoGenerateTimeTagRomaji => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
+            AutoGenerateType.AutoGenerateRomanisation => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
             AutoGenerateType.AutoGenerateNotes => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric),
             _ => throw new ArgumentOutOfRangeException(),
         };
