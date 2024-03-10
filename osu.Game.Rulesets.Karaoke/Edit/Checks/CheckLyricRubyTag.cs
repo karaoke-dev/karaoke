@@ -15,9 +15,9 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateLyricRubyOutOfRange(this),
-        new IssueTemplateLyricRubyOverlapping(this),
-        new IssueTemplateLyricRubyEmptyText(this),
+        new IssueTemplateOutOfRange(this),
+        new IssueTemplateOverlapping(this),
+        new IssueTemplateEmptyText(this),
     };
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
@@ -33,17 +33,17 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
 
         foreach (var textTag in outOfRangeTags)
         {
-            yield return new IssueTemplateLyricRubyOutOfRange(this).Create(lyric, textTag);
+            yield return new IssueTemplateOutOfRange(this).Create(lyric, textTag);
         }
 
         foreach (var textTag in overlappingTags)
         {
-            yield return new IssueTemplateLyricRubyOverlapping(this).Create(lyric, textTag);
+            yield return new IssueTemplateOverlapping(this).Create(lyric, textTag);
         }
 
         foreach (var textTag in emptyTextTags)
         {
-            yield return new IssueTemplateLyricRubyEmptyText(this).Create(lyric, textTag);
+            yield return new IssueTemplateEmptyText(this).Create(lyric, textTag);
         }
     }
 
@@ -57,25 +57,25 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
         public Issue Create(Lyric lyric, RubyTag textTag) => new LyricRubyTagIssue(lyric, this, textTag, textTag);
     }
 
-    public class IssueTemplateLyricRubyOutOfRange : IssueTemplateLyricRuby
+    public class IssueTemplateOutOfRange : IssueTemplateLyricRuby
     {
-        public IssueTemplateLyricRubyOutOfRange(ICheck check)
+        public IssueTemplateOutOfRange(ICheck check)
             : base(check, IssueType.Error, "Ruby tag index is out of range.")
         {
         }
     }
 
-    public class IssueTemplateLyricRubyOverlapping : IssueTemplateLyricRuby
+    public class IssueTemplateOverlapping : IssueTemplateLyricRuby
     {
-        public IssueTemplateLyricRubyOverlapping(ICheck check)
+        public IssueTemplateOverlapping(ICheck check)
             : base(check, IssueType.Problem, "Ruby tag index is overlapping to another ruby tag.")
         {
         }
     }
 
-    public class IssueTemplateLyricRubyEmptyText : IssueTemplateLyricRuby
+    public class IssueTemplateEmptyText : IssueTemplateLyricRuby
     {
-        public IssueTemplateLyricRubyEmptyText(ICheck check)
+        public IssueTemplateEmptyText(ICheck check)
             : base(check, IssueType.Problem, "Ruby tag's text should not be empty or white-space only.")
         {
         }
