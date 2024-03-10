@@ -88,7 +88,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
             case CheckLyricTimeTagOnly:
                 return LyricEditorMode.EditTimeTag;
 
-            case CheckLyricTimeTagRomaji:
+            case CheckLyricRomanisation:
                 return LyricEditorMode.EditRomanisation;
 
             case CheckNoteReferenceLyric:
