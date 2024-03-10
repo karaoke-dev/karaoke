@@ -28,20 +28,20 @@ public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
     [TestCase("")]
     [TestCase(" ")] // but should not be empty or white space.
     [TestCase("　")] // but should not be empty or white space.
-    public void TestCheckNoText(string text)
+    public void TestCheckEmptyText(string text)
     {
         var note = new Note
         {
             Text = text,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteNoText>(note);
+        AssertNotOk<NoteIssue, IssueTemplateEmptyText>(note);
     }
 
     [TestCase("")]
     [TestCase(" ")] // but should not be empty or white space.
     [TestCase("　")] // but should not be empty or white space.
-    public void TestCheckNoRubyText(string? rubyText)
+    public void TestCheckEmptyRubyText(string? rubyText)
     {
         var note = new Note
         {
@@ -49,6 +49,6 @@ public class CheckNoteTextTest : HitObjectCheckTest<Note, CheckNoteText>
             RubyText = rubyText,
         };
 
-        AssertNotOk<NoteIssue, IssueTemplateNoteNoRubyText>(note);
+        AssertNotOk<NoteIssue, IssueTemplateEmptyRubyText>(note);
     }
 }
