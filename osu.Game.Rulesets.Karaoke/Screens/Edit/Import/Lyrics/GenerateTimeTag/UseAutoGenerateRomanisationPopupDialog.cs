@@ -7,13 +7,13 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 
-public partial class UseAutoGenerateRomajiPopupDialog : PopupDialog
+public partial class UseAutoGenerateRomanisationPopupDialog : PopupDialog
 {
-    public UseAutoGenerateRomajiPopupDialog(Action<bool> okAction)
+    public UseAutoGenerateRomanisationPopupDialog(Action<bool> okAction)
     {
         Icon = FontAwesome.Solid.Globe;
-        HeaderText = "Auto generate romaji";
-        BodyText = "Would you like to use romaji generator to auto generate each lyric's romaji?";
+        HeaderText = "Auto generate romanisation";
+        BodyText = "Would you like to use generator to auto generate each lyric's romanisation?";
         Buttons = new PopupDialogButton[]
         {
             new PopupDialogOkButton
