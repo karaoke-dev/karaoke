@@ -23,7 +23,7 @@ public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
         LyricEditorMode.EditLanguage,
         LyricEditorMode.EditRuby,
         LyricEditorMode.EditTimeTag,
-        LyricEditorMode.EditRomaji,
+        LyricEditorMode.EditRomanisation,
         LyricEditorMode.EditNote,
         LyricEditorMode.EditSinger,
     };

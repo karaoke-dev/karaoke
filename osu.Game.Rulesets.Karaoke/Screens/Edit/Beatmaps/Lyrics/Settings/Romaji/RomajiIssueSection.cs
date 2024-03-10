@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romaji
 
 public partial class RomajiIssueSection : LyricEditorIssueSection
 {
-    protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
+    protected override LyricEditorMode EditMode => LyricEditorMode.EditRomanisation;
 
     protected override LyricsIssueTable CreateLyricsIssueTable() => new RomajiIssueTable();
 

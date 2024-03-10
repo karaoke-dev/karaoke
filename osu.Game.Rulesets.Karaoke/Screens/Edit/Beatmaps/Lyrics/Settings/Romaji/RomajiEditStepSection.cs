@@ -88,6 +88,6 @@ public partial class RomajiEditStepSection : LyricEditorEditStepSection<IEditRom
 
     private partial class RomajiTagVerifySelection : LyricEditorVerifySelection
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditRomaji;
+        protected override LyricEditorMode EditMode => LyricEditorMode.EditRomanisation;
     }
 }

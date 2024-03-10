@@ -53,7 +53,7 @@ public class LyricEditorColourProvider
                 return 333 / 360f; // pink
 
             case LyricEditorMode.EditTimeTag:
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return 45 / 360f; // orange
 
             case LyricEditorMode.EditNote:

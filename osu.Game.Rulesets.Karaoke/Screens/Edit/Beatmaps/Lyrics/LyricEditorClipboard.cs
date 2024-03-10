@@ -192,7 +192,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricTimeTagsChangeHandler.RemoveRange(timeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:
@@ -265,7 +265,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 copyObjectToClipboard(timeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:
@@ -351,7 +351,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                 lyricTimeTagsChangeHandler.AddRange(pasteTimeTags);
                 return true;
 
-            case LyricEditorMode.EditRomaji:
+            case LyricEditorMode.EditRomanisation:
                 return false;
 
             case LyricEditorMode.EditNote:

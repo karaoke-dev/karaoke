@@ -102,7 +102,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             LyricEditorMode.EditLanguage => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
             LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RubyTags)),
             LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.TimeTags)),
-            LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RomajiTags)),
+            LyricEditorMode.EditRomanisation => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RomajiTags)),
             LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
             LyricEditorMode.EditSinger => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.SingerIds)),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
