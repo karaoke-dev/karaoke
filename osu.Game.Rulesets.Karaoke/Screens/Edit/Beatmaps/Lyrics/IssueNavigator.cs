@@ -77,7 +77,7 @@ public partial class IssueNavigator : Component, IIssueNavigator
                 return LyricEditorMode.EditText;
 
             case CheckLyricReferenceLyric:
-                return LyricEditorMode.EditReference;
+                return LyricEditorMode.EditReferenceLyric;
 
             case CheckLyricLanguage:
                 return LyricEditorMode.EditLanguage;

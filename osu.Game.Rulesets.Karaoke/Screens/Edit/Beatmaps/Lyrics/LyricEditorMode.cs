@@ -23,8 +23,8 @@ public enum LyricEditorMode
     /// <summary>
     /// Mark the lyric is "similar" to another lyric.
     /// </summary>
-    [Description("Reference")]
-    EditReference,
+    [Description("Reference lyric")]
+    EditReferenceLyric,
 
     /// <summary>
     /// Can edit each lyric's language.

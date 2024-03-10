@@ -32,7 +32,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         {
             LyricEditorMode.View => Array.Empty<ICheck>(),
             LyricEditorMode.EditText => new ICheck[] { new CheckLyricText() },
-            LyricEditorMode.EditReference => new ICheck[] { new CheckLyricReferenceLyric() },
+            LyricEditorMode.EditReferenceLyric => new ICheck[] { new CheckLyricReferenceLyric() },
             LyricEditorMode.EditLanguage => new ICheck[] { new CheckLyricLanguage() },
             LyricEditorMode.EditRuby => new ICheck[] { new CheckLyricRubyTag() },
             LyricEditorMode.EditTimeTag => new ICheck[] { new CheckLyricTimeTagOnly() },

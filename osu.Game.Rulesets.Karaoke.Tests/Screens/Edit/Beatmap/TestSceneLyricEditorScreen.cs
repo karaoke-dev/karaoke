@@ -62,7 +62,7 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     [Test]
     public void TestEditReferenceMode()
     {
-        switchToMode(LyricEditorMode.EditReference);
+        switchToMode(LyricEditorMode.EditReferenceLyric);
     }
 
     [Test]

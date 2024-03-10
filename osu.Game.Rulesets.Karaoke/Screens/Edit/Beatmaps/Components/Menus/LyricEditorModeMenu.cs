@@ -19,7 +19,7 @@ public class LyricEditorModeMenuItem : BindableEnumMenuItem<LyricEditorMode>
     {
         LyricEditorMode.View,
         LyricEditorMode.EditText,
-        LyricEditorMode.EditReference,
+        LyricEditorMode.EditReferenceLyric,
         LyricEditorMode.EditLanguage,
         LyricEditorMode.EditRuby,
         LyricEditorMode.EditTimeTag,

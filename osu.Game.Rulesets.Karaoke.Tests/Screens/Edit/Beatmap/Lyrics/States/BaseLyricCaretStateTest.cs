@@ -96,7 +96,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                     return;
 
                 case TestCaretType.CaretEnable:
-                    state.SwitchMode(LyricEditorMode.EditReference);
+                    state.SwitchMode(LyricEditorMode.EditReferenceLyric);
                     break;
 
                 case TestCaretType.CaretWithIndex:
@@ -218,7 +218,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
                 {
                     LyricEditorMode.View => null,
                     LyricEditorMode.EditText => editTextModeState.EditStep,
-                    LyricEditorMode.EditReference => null,
+                    LyricEditorMode.EditReferenceLyric => null,
                     LyricEditorMode.EditLanguage => throw new NotSupportedException(),
                     LyricEditorMode.EditRuby => throw new NotSupportedException(),
                     LyricEditorMode.EditTimeTag => throw new NotSupportedException(),

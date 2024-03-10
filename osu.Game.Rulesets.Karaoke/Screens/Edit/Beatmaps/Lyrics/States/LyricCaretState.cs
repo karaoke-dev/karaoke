@@ -140,7 +140,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
         {
             LyricEditorMode.View => null,
             LyricEditorMode.EditText => getTextModeAlgorithm(editorModeWithEditStep.GetEditStep<TextEditStep>()),
-            LyricEditorMode.EditReference => new NavigateCaretPositionAlgorithm(lyrics),
+            LyricEditorMode.EditReferenceLyric => new NavigateCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditLanguage => new ClickingCaretPositionAlgorithm(lyrics),
             LyricEditorMode.EditRuby => getRubyTagModeAlgorithm(),
             LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),

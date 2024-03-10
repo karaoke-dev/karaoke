@@ -178,7 +178,7 @@ public partial class InfoControl : Container, IHasContextMenu
                 case LyricEditorMode.EditText:
                     return null;
 
-                case LyricEditorMode.EditReference:
+                case LyricEditorMode.EditReferenceLyric:
                     return new ReferenceLyricInfo(Lyric);
 
                 case LyricEditorMode.EditLanguage:

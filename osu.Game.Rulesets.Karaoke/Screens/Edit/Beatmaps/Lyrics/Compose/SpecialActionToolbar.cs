@@ -111,7 +111,7 @@ public partial class SpecialActionToolbar : CompositeDrawable
         {
             LyricEditorMode.View => Array.Empty<Drawable>(),
             LyricEditorMode.EditText => createItemsForTextEditStep(editorModeWithEditStep.GetEditStep<TextEditStep>()),
-            LyricEditorMode.EditReference => Array.Empty<Drawable>(),
+            LyricEditorMode.EditReferenceLyric => Array.Empty<Drawable>(),
             LyricEditorMode.EditLanguage => Array.Empty<Drawable>(),
             LyricEditorMode.EditRuby => Array.Empty<Drawable>(),
             LyricEditorMode.EditTimeTag => createItemsForTimeTagEditStep(editorModeWithEditStep.GetEditStep<TimeTagEditStep>()),

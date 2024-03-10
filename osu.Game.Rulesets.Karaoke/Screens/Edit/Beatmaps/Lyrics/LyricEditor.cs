@@ -204,7 +204,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             {
                 LyricEditorMode.View => null,
                 LyricEditorMode.EditText => editTextModeState.BindableEditStep.Value,
-                LyricEditorMode.EditReference => editReferenceLyricModeState.BindableEditStep.Value,
+                LyricEditorMode.EditReferenceLyric => editReferenceLyricModeState.BindableEditStep.Value,
                 LyricEditorMode.EditLanguage => editLanguageModeState.BindableEditStep.Value,
                 LyricEditorMode.EditRuby => editRubyModeState.BindableEditStep.Value,
                 LyricEditorMode.EditTimeTag => editTimeTagModeState.BindableEditStep.Value,
@@ -255,7 +255,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             Mode switch
             {
                 LyricEditorMode.EditText => new TextSettings(),
-                LyricEditorMode.EditReference => new ReferenceSettings(),
+                LyricEditorMode.EditReferenceLyric => new ReferenceSettings(),
                 LyricEditorMode.EditLanguage => new LanguageSettings(),
                 LyricEditorMode.EditRuby => new RubyTagSettings(),
                 LyricEditorMode.EditTimeTag => new TimeTagSettings(),
@@ -290,7 +290,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             {
                 LyricEditorMode.View => LyricEditorLayout.Preview,
                 LyricEditorMode.EditText => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditReference => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
+                LyricEditorMode.EditReferenceLyric => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditLanguage => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
                 LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,

@@ -163,7 +163,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.EditReference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
             case LyricEditorMode.EditLanguage:
@@ -239,7 +239,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.EditReference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
             case LyricEditorMode.EditLanguage:
@@ -315,7 +315,7 @@ public partial class LyricEditorClipboard : Component, ILyricEditorClipboard
                         throw new ArgumentOutOfRangeException();
                 }
 
-            case LyricEditorMode.EditReference:
+            case LyricEditorMode.EditReferenceLyric:
                 return false;
 
             case LyricEditorMode.EditLanguage:
