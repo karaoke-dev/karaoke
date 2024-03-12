@@ -83,7 +83,7 @@ public partial class TestSceneResultsScreen : OsuManualInputManagerTestScene
     private partial class TestResultsScreen : ResultsScreen
     {
         public TestResultsScreen(ScoreInfo score)
-            : base(score, true)
+            : base(score)
         {
         }
 
