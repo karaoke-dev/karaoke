@@ -21,7 +21,7 @@
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
     <PackageReference Include="SixLabors.Fonts" Version="2.0.2" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.1" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.2" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
     <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
     <PackageReference Include="WanaKanaSharp" Version="0.2.0" />
