@@ -97,22 +97,22 @@ public class LyricFontInfo : IKaraokeSkinElement
         {
             // Apply text font info
             l.Font = getFont(KaraokeRulesetSetting.MainFont, MainTextFont);
-            l.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, RubyTextFont);
-            l.RomajiFont = getFont(KaraokeRulesetSetting.RomanisationFont, RomanisationTextFont);
+            l.TopTextFont = getFont(KaraokeRulesetSetting.RubyFont, RubyTextFont);
+            l.BottomTextFont = getFont(KaraokeRulesetSetting.RomanisationFont, RomanisationTextFont);
 
             // Layout to text
             l.KaraokeTextSmartHorizon = SmartHorizon;
             l.Spacing = new Vector2(LyricsInterval, l.Spacing.Y);
 
-            // Ruby
-            l.RubySpacing = new Vector2(RubyInterval, l.RubySpacing.Y);
-            l.RubyAlignment = RubyAlignment;
-            l.RubyMargin = RubyMargin;
+            // Top text
+            l.TopTextSpacing = new Vector2(RubyInterval, l.TopTextSpacing.Y);
+            l.TopTextAlignment = RubyAlignment;
+            l.TopTextMargin = RubyMargin;
 
-            // Romanisation
-            l.RomajiSpacing = new Vector2(RomanisationInterval, l.RomajiSpacing.Y);
-            l.RomajiAlignment = RomanisationAlignment;
-            l.RomajiMargin = RomanisationMargin;
+            // Bottom text
+            l.BottomTextSpacing = new Vector2(RomanisationInterval, l.BottomTextSpacing.Y);
+            l.BottomTextAlignment = RomanisationAlignment;
+            l.BottomTextMargin = RomanisationMargin;
         });
 
         // Apply translate font.

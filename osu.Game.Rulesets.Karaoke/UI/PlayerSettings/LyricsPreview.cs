@@ -125,8 +125,8 @@ public partial class LyricsPreview : CompositeDrawable
                 drawableLyric = new DrawableLyricSpriteText(lyric)
                 {
                     Font = new FontUsage(size: 25),
-                    RubyFont = new FontUsage(size: 10),
-                    RomajiFont = new FontUsage(size: 10),
+                    TopTextFont = new FontUsage(size: 10),
+                    BottomTextFont = new FontUsage(size: 10),
                     Margin = new MarginPadding { Left = 25 },
                 },
             };

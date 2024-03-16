@@ -228,8 +228,8 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
             var romajiFont = newConfig.RomanisationTextFont;
 
             Font = getFont(lyricFont.Size);
-            RubyFont = getFont(rubyFont.Size);
-            RomajiFont = getFont(romajiFont.Size);
+            TopTextFont = getFont(rubyFont.Size);
+            BottomTextFont = getFont(romajiFont.Size);
 
             triggerSizeChangedEvent();
 
@@ -243,10 +243,10 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     public partial class EditorLyricSpriteText : LyricSpriteText
     {
         public RectangleF? GetRubyTagPosition(RubyTag rubyTag)
-            => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
+            => GetTopPositionTextDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
 
         public RectangleF? GetRomajiTagPosition(RomajiTag romajiTag)
-            => GetRomajiTagDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
+            => GetBottomPositionTextDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
 
         public Vector2 GetTimeTagPosition(TextIndex index)
         {

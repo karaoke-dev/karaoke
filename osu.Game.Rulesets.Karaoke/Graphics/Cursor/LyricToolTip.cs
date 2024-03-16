@@ -23,8 +23,8 @@ public partial class LyricTooltip : BackgroundToolTip<Lyric>
         {
             Margin = new MarginPadding(10),
             Font = new FontUsage(size: 32),
-            RubyFont = new FontUsage(size: 12),
-            RomajiFont = new FontUsage(size: 12),
+            TopTextFont = new FontUsage(size: 12),
+            BottomTextFont = new FontUsage(size: 12),
         };
     }
 }
