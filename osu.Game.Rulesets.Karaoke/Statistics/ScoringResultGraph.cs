@@ -156,8 +156,8 @@ public partial class ScoringResultGraph : CompositeDrawable
             protected virtual DrawableLyricSpriteText CreateLyric(Lyric lyric) => new(lyric)
             {
                 Font = new FontUsage(size: 25),
-                RubyFont = new FontUsage(size: 10),
-                RomajiFont = new FontUsage(size: 10),
+                TopTextFont = new FontUsage(size: 10),
+                BottomTextFont = new FontUsage(size: 10),
                 Margin = new MarginPadding { Left = 25 },
             };
 
@@ -223,8 +223,8 @@ public partial class ScoringResultGraph : CompositeDrawable
                 => new(lyric)
                 {
                     Font = new FontUsage(size: 15),
-                    RubyFont = new FontUsage(size: 7),
-                    RomajiFont = new FontUsage(size: 7),
+                    TopTextFont = new FontUsage(size: 7),
+                    BottomTextFont = new FontUsage(size: 7),
                     Margin = new MarginPadding { Left = 5 },
                 };
 

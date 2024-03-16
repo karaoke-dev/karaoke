@@ -21,9 +21,9 @@ public abstract partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSp
     protected DrawableKaraokeSpriteText(Lyric lyric)
     {
         processor = new DisplayLyricProcessor(lyric);
-        processor.TopTextChanged = rubies =>
+        processor.TopTextChanged = topTexts =>
         {
-            Rubies = rubies;
+            TopTexts = topTexts;
             OnPropertyChanged();
         };
         processor.CenterTextChanged = text =>
@@ -31,9 +31,9 @@ public abstract partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSp
             Text = text;
             OnPropertyChanged();
         };
-        processor.BottomTextChanged = romajies =>
+        processor.BottomTextChanged = bottomTexts =>
         {
-            Romajies = romajies;
+            BottomTexts = bottomTexts;
             OnPropertyChanged();
         };
         processor.TimeTagsChanged = timeTags =>

@@ -236,8 +236,8 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             Truncate = true,
             Padding = new MarginPadding { Left = row_inner_spacing },
             Font = new FontUsage(size: 25),
-            RubyFont = new FontUsage(size: 10),
-            RomajiFont = new FontUsage(size: 10),
+            TopTextFont = new FontUsage(size: 10),
+            BottomTextFont = new FontUsage(size: 10),
         };
 
     private Drawable createTranslateTextBox(Lyric lyric) =>
