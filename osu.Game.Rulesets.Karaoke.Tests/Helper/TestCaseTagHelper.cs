@@ -222,7 +222,7 @@ public static class TestCaseTagHelper
     /// </summary>
     /// <example>
     /// [0]name:singer001       -> singer with id and name.<br/>
-    /// [0]romaji:singer001     -> singer with id and romaji.<br/>
+    /// [0]romanisation:singer001     -> singer with id and romanisation.<br/>
     /// [0]eg:singer001         -> singer with id and english name.<br/>
     /// </example>
     /// <param name="str">Singer string format</param>

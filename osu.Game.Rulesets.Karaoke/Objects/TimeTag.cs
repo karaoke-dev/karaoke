@@ -53,12 +53,12 @@ public class TimeTag : IDeepCloneable<TimeTag>
     public readonly Bindable<bool> FirstSyllableBindable = new();
 
     /// <summary>
-    /// Mark if this romaji is the first letter of the romaji word.
+    /// Mark if this romanised syllable is the first letter of the romanisation.
     /// </summary>
     /// <example>
     /// There's the Japanese lyric:<br/>
     /// 枯れた世界に輝く<br/>
-    /// There's the Romaji:<br/>
+    /// There's the romanisation:<br/>
     /// kareta sekai ni kagayaku.<br/>
     /// And it will be separated as:<br/>
     /// ka|re|ta se|kai ni ka|ga|ya|ku.<br/>
@@ -75,8 +75,11 @@ public class TimeTag : IDeepCloneable<TimeTag>
     public readonly Bindable<string?> RomanisedSyllableBindable = new();
 
     /// <summary>
-    /// Romaji
+    /// Romanised syllable
     /// </summary>
+    /// <example>
+    /// Ka, ra, o, ke.
+    /// </example>
     public string? RomanisedSyllable
     {
         get => RomanisedSyllableBindable.Value;

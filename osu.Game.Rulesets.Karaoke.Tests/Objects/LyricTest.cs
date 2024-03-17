@@ -161,7 +161,7 @@ public class LyricTest
     public void TestReferenceLyricListPropertyChanged()
     {
         // test modify property inside the list.
-        // ruby, romaji tag time-tag.
+        // e.g. ruby, time-tag and romanisation.
         var timeTag = TestCaseTagHelper.ParseTimeTag("[0,start]:1100#^ka");
         var rubyTag = TestCaseTagHelper.ParseRubyTag("[0]:か");
 
