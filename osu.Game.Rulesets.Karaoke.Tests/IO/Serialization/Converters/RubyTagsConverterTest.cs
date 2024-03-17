@@ -63,6 +63,6 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
             },
         };
         var actual = JsonConvert.DeserializeObject<RubyTag[]>(json, CreateSettings()) ?? throw new InvalidCastException();
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 }

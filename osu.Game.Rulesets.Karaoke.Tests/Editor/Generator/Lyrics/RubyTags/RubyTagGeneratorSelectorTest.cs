@@ -47,6 +47,6 @@ public class RubyTagGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<RubyT
 
     protected override void AssertEqual(RubyTag[] expected, RubyTag[] actual)
     {
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 }

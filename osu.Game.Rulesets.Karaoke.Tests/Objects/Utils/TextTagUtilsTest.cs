@@ -26,7 +26,7 @@ public class TextTagUtilsTest
 
         var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
         var actualRubyTag = generateFixedTag(rubyTag, lyric);
-        TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
+        RubyTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
         static T generateFixedTag<T>(T textTag, string lyric) where T : ITextTag, new()
         {
@@ -61,7 +61,7 @@ public class TextTagUtilsTest
         // test ruby tag.
         var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
         var actualRubyTag = generateShiftingTag(rubyTag, lyric, offset);
-        TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
+        RubyTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
         static T generateShiftingTag<T>(T textTag, string lyric, int offset) where T : ITextTag, new()
         {

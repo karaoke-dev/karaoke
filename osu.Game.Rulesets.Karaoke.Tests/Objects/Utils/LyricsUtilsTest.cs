@@ -70,8 +70,8 @@ public class LyricsUtilsTest
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
 
-        TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(firstRubyTags), firstLyric.RubyTags);
-        TextTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(secondRubyTags), secondLyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(firstRubyTags), firstLyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(TestCaseTagHelper.ParseRubyTags(secondRubyTags), secondLyric.RubyTags);
     }
 
     [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
@@ -200,7 +200,7 @@ public class LyricsUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTags(expectedRubyTags);
         var actual = combineLyric.RubyTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })]
