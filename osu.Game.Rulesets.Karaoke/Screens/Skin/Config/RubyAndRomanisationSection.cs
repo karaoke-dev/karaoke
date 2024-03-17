@@ -11,16 +11,16 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
 
-internal partial class RubyRomajiSection : LyricConfigSection
+internal partial class RubyAndRomanisationSection : LyricConfigSection
 {
     private readonly LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
-    private readonly LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
+    private readonly LabelledEnumDropdown<LyricTextAlignment> romanisationAlignmentDropdown;
     private readonly LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
-    private readonly LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> romanisationMarginSliderBar;
 
-    protected override LocalisableString Title => "Ruby/Romaji";
+    protected override LocalisableString Title => "Ruby/Romanisation";
 
-    public RubyRomajiSection()
+    public RubyAndRomanisationSection()
     {
         Children = new Drawable[]
         {
@@ -29,10 +29,10 @@ internal partial class RubyRomajiSection : LyricConfigSection
                 Label = "Ruby alignment",
                 Description = "Ruby alignment section",
             },
-            romajiAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
+            romanisationAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
             {
-                Label = "Romaji alignment",
-                Description = "Romaji alignment section",
+                Label = "Romanisation alignment",
+                Description = "Romanisation alignment section",
             },
             rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
             {
@@ -46,10 +46,10 @@ internal partial class RubyRomajiSection : LyricConfigSection
                     Default = 10,
                 },
             },
-            romajiMarginSliderBar = new LabelledRealTimeSliderBar<int>
+            romanisationMarginSliderBar = new LabelledRealTimeSliderBar<int>
             {
-                Label = "Romaji margin",
-                Description = "Romaji margin section",
+                Label = "Romanisation margin",
+                Description = "Romanisation margin section",
                 Current = new BindableNumber<int>
                 {
                     MinValue = 0,
@@ -68,17 +68,17 @@ internal partial class RubyRomajiSection : LyricConfigSection
         {
             var lyricFontInfo = e.NewValue;
             applyCurrent(rubyAlignmentDropdown.Current, lyricFontInfo.RubyAlignment);
-            applyCurrent(romajiAlignmentDropdown.Current, lyricFontInfo.RomanisationAlignment);
+            applyCurrent(romanisationAlignmentDropdown.Current, lyricFontInfo.RomanisationAlignment);
             applyCurrent(rubyMarginSliderBar.Current, lyricFontInfo.RubyMargin);
-            applyCurrent(romajiMarginSliderBar.Current, lyricFontInfo.RomanisationMargin);
+            applyCurrent(romanisationMarginSliderBar.Current, lyricFontInfo.RomanisationMargin);
 
             static void applyCurrent<T>(Bindable<T> bindable, T value)
                 => bindable.Value = bindable.Default = value;
         }, true);
 
         rubyAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyAlignment = x.NewValue));
-        romajiAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationAlignment = x.NewValue));
+        romanisationAlignmentDropdown.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationAlignment = x.NewValue));
         rubyMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyMargin = x.NewValue));
-        romajiMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationMargin = x.NewValue));
+        romanisationMarginSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationMargin = x.NewValue));
     }
 }

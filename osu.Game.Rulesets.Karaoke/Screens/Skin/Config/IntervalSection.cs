@@ -12,7 +12,7 @@ internal partial class IntervalSection : LyricConfigSection
 {
     private readonly LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
     private readonly LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
-    private readonly LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
+    private readonly LabelledRealTimeSliderBar<int> romanisationIntervalSliderBar;
 
     protected override LocalisableString Title => "Interval";
 
@@ -44,10 +44,10 @@ internal partial class IntervalSection : LyricConfigSection
                     Default = 10,
                 },
             },
-            romajiIntervalSliderBar = new LabelledRealTimeSliderBar<int>
+            romanisationIntervalSliderBar = new LabelledRealTimeSliderBar<int>
             {
-                Label = "Romaji interval",
-                Description = "Romaji interval section",
+                Label = "Romanisation interval",
+                Description = "Romanisation interval section",
                 Current = new BindableNumber<int>
                 {
                     MinValue = 0,
@@ -67,7 +67,7 @@ internal partial class IntervalSection : LyricConfigSection
             var lyricFontInfo = e.NewValue;
             applyCurrent(lyricIntervalSliderBar.Current, lyricFontInfo.LyricsInterval);
             applyCurrent(rubyIntervalSliderBar.Current, lyricFontInfo.RubyInterval);
-            applyCurrent(romajiIntervalSliderBar.Current, lyricFontInfo.RomanisationInterval);
+            applyCurrent(romanisationIntervalSliderBar.Current, lyricFontInfo.RomanisationInterval);
 
             static void applyCurrent<T>(Bindable<T> bindable, T value)
                 => bindable.Value = bindable.Default = value;
@@ -75,6 +75,6 @@ internal partial class IntervalSection : LyricConfigSection
 
         lyricIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.LyricsInterval = x.NewValue));
         rubyIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RubyInterval = x.NewValue));
-        romajiIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationInterval = x.NewValue));
+        romanisationIntervalSliderBar.Current.BindValueChanged(x => lyricFontInfoManager.ApplyCurrentLyricFontInfoChange(l => l.RomanisationInterval = x.NewValue));
     }
 }
