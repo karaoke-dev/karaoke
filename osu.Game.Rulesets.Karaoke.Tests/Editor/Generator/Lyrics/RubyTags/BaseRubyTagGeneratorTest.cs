@@ -26,6 +26,6 @@ public abstract class BaseRubyTagGeneratorTest<TRubyTagGenerator, TConfig> : Bas
 
     protected override void AssertEqual(RubyTag[] expected, RubyTag[] actual)
     {
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 }

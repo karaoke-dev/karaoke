@@ -3,13 +3,13 @@
 
 using System.Collections.Generic;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
-public class TextTagAssert : Assert
+public class RubyTagAssert : Assert
 {
-    public static void ArePropertyEqual<T>(IList<T> expected, IList<T> actual) where T : ITextTag
+    public static void ArePropertyEqual(IList<RubyTag> expected, IList<RubyTag> actual)
     {
         AreEqual(expected.Count, actual.Count);
 
@@ -20,7 +20,7 @@ public class TextTagAssert : Assert
         }
     }
 
-    public static void ArePropertyEqual<T>(T expected, T actual) where T : ITextTag
+    public static void ArePropertyEqual(RubyTag expected, RubyTag actual)
     {
         AreEqual(expected.Text, actual.Text);
         AreEqual(expected.StartIndex, actual.StartIndex);

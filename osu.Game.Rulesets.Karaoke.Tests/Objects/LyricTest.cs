@@ -61,7 +61,7 @@ public class LyricTest
 
         Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
         Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
-        TextTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
 
         Assert.AreNotSame(clonedLyric.StartTimeBindable, lyric.StartTimeBindable);
         Assert.AreEqual(clonedLyric.StartTime, lyric.StartTime);
@@ -121,7 +121,7 @@ public class LyricTest
 
         Assert.AreEqual(referencedLyric.Text, lyric.Text);
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
         Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
@@ -151,7 +151,7 @@ public class LyricTest
 
         Assert.AreEqual(referencedLyric.Text, lyric.Text);
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
         Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
@@ -187,7 +187,7 @@ public class LyricTest
 
         // property should be the same
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
 
         // and because there's no change inside the tag, so there's version change.
         Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
@@ -201,7 +201,7 @@ public class LyricTest
 
         // property should be equal.
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
-        TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+        RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
 
         // and note that because only one property is different, so version should change once.
         Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);

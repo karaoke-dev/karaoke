@@ -44,7 +44,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         TimeTagAssert.ArePropertyEqual(expected.TimeTags, actual.TimeTags);
         Assert.AreEqual(expected.LyricStartTime, actual.LyricStartTime);
         Assert.AreEqual(expected.LyricEndTime, actual.LyricEndTime);
-        TextTagAssert.ArePropertyEqual(expected.RubyTags, actual.RubyTags);
+        RubyTagAssert.ArePropertyEqual(expected.RubyTags, actual.RubyTags);
         Assert.AreEqual(expected.StartTime, actual.StartTime);
         Assert.AreEqual(expected.Duration, actual.Duration);
         Assert.AreEqual(expected.SingerIds, actual.SingerIds);

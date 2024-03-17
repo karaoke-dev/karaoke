@@ -19,7 +19,7 @@ public class TextTagsUtilsTest
     {
         var expected = TestCaseTagHelper.ParseRubyTags(expectedTextTags);
         var actual = TextTagsUtils.Sort(TestCaseTagHelper.ParseRubyTags(textTags), sorting);
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0,6]:ka" }, "karaoke", new string[] { })]
@@ -29,7 +29,7 @@ public class TextTagsUtilsTest
     {
         var expected = TestCaseTagHelper.ParseRubyTags(expectedTextTags);
         var actual = TextTagsUtils.FindOutOfRange(TestCaseTagHelper.ParseRubyTags(textTags), lyric);
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0]:ka", "[1]:ra", "[2]:o" }, TextTagsUtils.Sorting.Asc, new string[] { })]
@@ -45,7 +45,7 @@ public class TextTagsUtilsTest
     {
         var expected = TestCaseTagHelper.ParseRubyTags(expectedTextTags);
         var actual = TextTagsUtils.FindOverlapping(TestCaseTagHelper.ParseRubyTags(textTags), sorting);
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0]:ka", "[1]:ra", "[2]:o" }, new string[] { })]
@@ -56,7 +56,7 @@ public class TextTagsUtilsTest
     {
         var expected = TestCaseTagHelper.ParseRubyTags(expectedTextTags);
         var actual = TextTagsUtils.FindEmptyText(TestCaseTagHelper.ParseRubyTags(textTags));
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0]:ka" }, "[0]:ka")]
@@ -67,6 +67,6 @@ public class TextTagsUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTag(expectTextTag);
         var actual = TextTagsUtils.Combine(rubyTags);
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 }

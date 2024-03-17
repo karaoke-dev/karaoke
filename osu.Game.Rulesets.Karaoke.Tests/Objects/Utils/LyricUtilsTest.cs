@@ -52,7 +52,7 @@ public class LyricUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
         var actual = lyric.RubyTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
@@ -101,7 +101,7 @@ public class LyricUtilsTest
 
         var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
         var actual = lyric.RubyTags;
-        TextTagAssert.ArePropertyEqual(expected, actual);
+        RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, "karaoke", new[] { "[7,start]:1000", "[8,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
