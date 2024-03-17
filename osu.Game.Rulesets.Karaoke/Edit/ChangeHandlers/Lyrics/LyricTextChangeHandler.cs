@@ -40,5 +40,5 @@ public partial class LyricTextChangeHandler : LyricPropertyChangeHandler, ILyric
     }
 
     protected override bool IsWritePropertyLocked(Lyric lyric)
-        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags));
+        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.TimeTags));
 }

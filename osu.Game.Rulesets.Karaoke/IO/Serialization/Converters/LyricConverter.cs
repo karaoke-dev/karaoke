@@ -71,7 +71,6 @@ public class LyricConverter : JsonConverter<Lyric>
                     yield return nameof(Lyric.TimeTags);
 
                 yield return nameof(Lyric.RubyTags);
-                yield return nameof(Lyric.RomajiTags);
                 yield return nameof(Lyric.StartTime);
                 yield return nameof(Lyric.Duration);
                 yield return nameof(Lyric.EndTime);

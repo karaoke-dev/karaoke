@@ -64,7 +64,6 @@ public static class LyricsUtils
         firstLyric.Text = lyric.Text[..splitIndex];
         firstLyric.TimeTags = firstTimeTag.ToArray();
         firstLyric.RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex < splitIndex).ToArray();
-        firstLyric.RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex < splitIndex).ToArray();
 
         // todo : should implement time and duration
         string secondLyricText = lyric.Text[splitIndex..];
@@ -72,7 +71,6 @@ public static class LyricsUtils
         secondLyric.Text = secondLyricText;
         secondLyric.TimeTags = shiftingTimeTag(secondTimeTag.ToArray(), -splitIndex);
         secondLyric.RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
-        secondLyric.RomajiTags = shiftingTextTag(lyric.RomajiTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
 
         return new Tuple<Lyric, Lyric>(firstLyric, secondLyric);
     }
@@ -93,10 +91,6 @@ public static class LyricsUtils
         rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
         rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
-        var romajiTags = new List<RomajiTag>();
-        romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
-        romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, offsetIndexForSecondLyric));
-
         double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
         double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
@@ -112,7 +106,6 @@ public static class LyricsUtils
             Text = lyricText,
             TimeTags = timeTags.ToArray(),
             RubyTags = rubyTags.ToArray(),
-            RomajiTags = romajiTags.ToArray(),
             StartTime = startTime,
             Duration = endTime - startTime,
             SingerIds = singers.Distinct().ToArray(),

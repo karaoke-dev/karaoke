@@ -63,7 +63,6 @@ public class TestCaseCheckHelper
                 Type t when ReferenceEquals(t, typeof(Note)) => new Note(),
                 Type t when ReferenceEquals(t, typeof(RubyTag)) => new RubyTag(),
                 Type t when ReferenceEquals(t, typeof(TimeTag)) => new TimeTag(new TextIndex(), 0),
-                Type t when ReferenceEquals(t, typeof(RomajiTag)) => new RomajiTag(),
                 // Other type.
                 Type t when ReferenceEquals(t, typeof(int)) => 0,
                 Type t when ReferenceEquals(t, typeof(CultureInfo)) => new CultureInfo("Ja-jp"),

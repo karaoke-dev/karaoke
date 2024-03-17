@@ -125,20 +125,15 @@ public partial class LyricPreview : SettingsSubsectionPreview
                     Text = "お",
                 },
             },
-            RomajiTags = new[]
-            {
-                new RomajiTag
-                {
-                    StartIndex = 0,
-                    EndIndex = 3,
-                    Text = "karaoke",
-                },
-            },
             StartTime = 0,
             Duration = 1000000,
             TimeTags = new List<TimeTag>
             {
-                new(new TextIndex(0), 500),
+                new(new TextIndex(0), 500)
+                {
+                    FirstSyllable = true,
+                    RomanisedSyllable = "karaoke",
+                },
                 new(new TextIndex(1), 600),
                 new(new TextIndex(2), 1000),
                 new(new TextIndex(3), 1500),

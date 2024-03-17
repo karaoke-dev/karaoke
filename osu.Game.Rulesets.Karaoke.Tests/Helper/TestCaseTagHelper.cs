@@ -85,44 +85,6 @@ public static class TestCaseTagHelper
     }
 
     /// <summary>
-    /// Process test case romaji string format into <see cref="RomajiTag"/>
-    /// </summary>
-    /// <example>
-    /// [0]:romaji          -> has range index with text.<br/>
-    /// [0,3]:romaji        -> has range index with text.<br/>
-    /// [0]:                -> has range index with empty text.<br/>
-    /// [0,3]:              -> has range index with empty text.<br/>
-    /// [0]                 -> has range index with empty text.<br/>
-    /// [0,3]               -> has range index with empty text.<br/>
-    /// </example>
-    /// <param name="str">Romaji tag string format</param>
-    /// <returns><see cref="RomajiTag"/>Romaji tag object</returns>
-    public static RomajiTag ParseRomajiTag(string? str)
-    {
-        string regex = generateRegex(char_index_range_str, new[]
-        {
-            getStringPropertyRegex(':', "romaji"),
-        });
-
-        return getMatchByStatement<RomajiTag>(str, regex, result =>
-        {
-            if (result == null)
-                return new RomajiTag();
-
-            int startIndex = result.GetGroupValue<int>("start");
-            int? endIndex = result.GetGroupValue<int?>("end");
-            string text = result.GetGroupValue<string>("romaji");
-
-            return new RomajiTag
-            {
-                StartIndex = startIndex,
-                EndIndex = endIndex ?? startIndex,
-                Text = text,
-            };
-        });
-    }
-
-    /// <summary>
     /// Process test case time tag string format into <see cref="TimeTag"/>
     /// </summary>
     /// <example>
@@ -283,9 +245,6 @@ public static class TestCaseTagHelper
 
     public static RubyTag[] ParseRubyTags(IEnumerable<string?> strings)
         => strings.Select(ParseRubyTag).ToArray();
-
-    public static RomajiTag[] ParseRomajiTags(IEnumerable<string?> strings)
-        => strings.Select(ParseRomajiTag).ToArray();
 
     public static TimeTag[] ParseTimeTags(IEnumerable<string?> strings)
         => strings.Select(ParseTimeTag).ToArray();

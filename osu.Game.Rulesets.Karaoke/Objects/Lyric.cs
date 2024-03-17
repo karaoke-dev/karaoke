@@ -78,22 +78,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
-
-    /// <summary>
-    /// List of ruby tags
-    /// </summary>
-    public IList<RomajiTag> RomajiTags
-    {
-        get => RomajiTagsBindable;
-        set
-        {
-            RomajiTagsBindable.Clear();
-            RomajiTagsBindable.AddRange(value);
-        }
-    }
-
-    [JsonIgnore]
     public readonly BindableList<ElementId> SingerIdsBindable = new();
 
     /// <summary>

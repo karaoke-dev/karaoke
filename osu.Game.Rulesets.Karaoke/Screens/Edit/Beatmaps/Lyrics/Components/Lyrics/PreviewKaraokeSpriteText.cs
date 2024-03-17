@@ -245,13 +245,12 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
         public RectangleF? GetRubyTagPosition(RubyTag rubyTag)
             => GetTopPositionTextDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
 
-        public RectangleF? GetRomajiTagPosition(RomajiTag romajiTag)
-            => GetBottomPositionTextDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
-
         public Vector2 GetTimeTagPosition(TextIndex index)
         {
             var drawRectangle = GetCharacterDrawRectangle(index.Index);
             return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
         }
+
+        // todo: get romanization position.
     }
 }

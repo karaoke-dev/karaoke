@@ -35,11 +35,6 @@ public partial class Lyric
     private readonly Bindable<int> rubyTagsVersion = new();
 
     [JsonIgnore]
-    public IBindable<int> RomajiTagsVersion => romajiTagsVersion;
-
-    private readonly Bindable<int> romajiTagsVersion = new();
-
-    [JsonIgnore]
     public IBindable<int> ReferenceLyricConfigVersion => referenceLyricConfigVersion;
 
     private readonly Bindable<int> referenceLyricConfigVersion = new();
@@ -111,29 +106,6 @@ public partial class Lyric
             }
 
             void invalidate() => rubyTagsVersion.Value++;
-        };
-
-        RomajiTagsBindable.CollectionChanged += (_, args) =>
-        {
-            switch (args.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    Debug.Assert(args.NewItems != null);
-
-                    foreach (var c in args.NewItems.Cast<RomajiTag>())
-                        c.Changed += invalidate;
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                case NotifyCollectionChangedAction.Remove:
-                    Debug.Assert(args.OldItems != null);
-
-                    foreach (var c in args.OldItems.Cast<RomajiTag>())
-                        c.Changed -= invalidate;
-                    break;
-            }
-
-            void invalidate() => romajiTagsVersion.Value++;
         };
 
         SingerIdsBindable.CollectionChanged += (_, _) =>
@@ -248,28 +220,6 @@ public partial class Lyric
                     return;
 
                 syncProperty(x => x.RubyTags, (from, to) =>
-                {
-                    to.StartIndex = from.StartIndex;
-                    to.EndIndex = from.EndIndex;
-                    to.Text = from.Text;
-                });
-            }, false);
-
-            // romaji-tags.
-            bindListValueChange(e, l => l.RomajiTagsBindable, (lyric, config) =>
-            {
-                if (config is not SyncLyricConfig)
-                    return;
-
-                RomajiTags = lyric.RomajiTags.Select(x => x.DeepClone()).ToArray();
-            });
-
-            bindValueChange(e, l => l.RomajiTagsVersion, (_, config) =>
-            {
-                if (config is not SyncLyricConfig)
-                    return;
-
-                syncProperty(x => x.RomajiTags, (from, to) =>
                 {
                     to.StartIndex = from.StartIndex;
                     to.EndIndex = from.EndIndex;
