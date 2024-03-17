@@ -84,25 +84,21 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
         var actual = JaRomanisationGenerator.Convert(timeTags, results);
 
         AssertEqual(expected, actual);
-    }
+        return;
 
-    /// <summary>
-    /// Process test case time tag string format into <see cref="TimeTag"/>
-    /// </summary>
-    /// <param name="str">Time tag string format</param>
-    /// <returns><see cref="RomanisationGenerateResultHelper"/>Time tag object</returns>
-    private static JaRomanisationGenerator.RomanisationGeneratorParameter parseRomanisationGenerateResult(string str)
-    {
-        // because format is same as the text-tag testing format, so just use this helper.
-        var romajiTag = TestCaseTagHelper.ParseRomajiTag(str);
-        return new JaRomanisationGenerator.RomanisationGeneratorParameter
+        static JaRomanisationGenerator.RomanisationGeneratorParameter[] parseRomanisationGenerateResults(IEnumerable<string> strings)
+            => strings.Select(parseRomanisationGenerateResult).ToArray();
+
+        static JaRomanisationGenerator.RomanisationGeneratorParameter parseRomanisationGenerateResult(string str)
         {
-            StartIndex = romajiTag.StartIndex,
-            EndIndex = romajiTag.EndIndex,
-            RomanisedSyllable = romajiTag.Text,
-        };
+            // because format is same as the text-tag testing format, so just use the ruby helper.
+            var textTag = TestCaseTagHelper.ParseRubyTag(str);
+            return new JaRomanisationGenerator.RomanisationGeneratorParameter
+            {
+                StartIndex = textTag.StartIndex,
+                EndIndex = textTag.EndIndex,
+                RomanisedSyllable = textTag.Text,
+            };
+        }
     }
-
-    private static JaRomanisationGenerator.RomanisationGeneratorParameter[] parseRomanisationGenerateResults(IEnumerable<string> strings)
-        => strings.Select(parseRomanisationGenerateResult).ToArray();
 }
