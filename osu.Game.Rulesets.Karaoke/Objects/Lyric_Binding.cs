@@ -219,6 +219,18 @@ public partial class Lyric
                 });
             }, false);
 
+            bindValueChange(e, l => l.TimeTagsRomajiVersion, (_, config) =>
+            {
+                if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncTimeTagProperty)
+                    return;
+
+                syncProperty(x => x.TimeTags, (from, to) =>
+                {
+                    to.FirstSyllable = from.FirstSyllable;
+                    to.RomanisedSyllable = from.RomanisedSyllable;
+                });
+            }, false);
+
             // todo: start time and end time?
 
             // ruby-tags.
