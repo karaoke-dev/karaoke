@@ -14,7 +14,6 @@ public class KaraokeRulesetEditCheckerConfigManager : InMemoryConfigManager<Kara
 
         // Lyric
         SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, RubyTagsUtils.Sorting.Asc);
-        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, RubyTagsUtils.Sorting.Asc);
         SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
         SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeGroupCheck, GroupCheck.Asc);
     }
@@ -23,7 +22,6 @@ public class KaraokeRulesetEditCheckerConfigManager : InMemoryConfigManager<Kara
 public enum KaraokeRulesetEditCheckerSetting
 {
     LyricRubyPositionSorting,
-    LyricRomajiPositionSorting,
     LyricTimeTagTimeSelfCheck,
     LyricTimeTagTimeGroupCheck,
 }
