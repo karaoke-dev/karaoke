@@ -467,7 +467,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
     [TestCase(ShiftingDirection.Left, ShiftingType.Index, 1)]
     [TestCase(ShiftingDirection.Right, ShiftingType.State, 3)]
     [TestCase(ShiftingDirection.Right, ShiftingType.Index, 3)]
-    public void TestShiftingWithSameTextTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+    public void TestShiftingWithSameTimeTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
     {
         PrepareHitObject(() => new Lyric
         {
