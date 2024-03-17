@@ -196,7 +196,7 @@ public class LyricTest
 
         // it's time to change the property in the list.
         timeTag.Time = 2000;
-        timeTag.RomanisedSyllable = "romaji";
+        timeTag.RomanisedSyllable = "ka--";
         rubyTag.Text = "ruby";
 
         // property should be equal.
