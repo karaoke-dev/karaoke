@@ -4,12 +4,11 @@
 using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 
-public class RubyTag : ITextTag, IDeepCloneable<RubyTag>
+public class RubyTag : IDeepCloneable<RubyTag>
 {
     /// <summary>
     /// Invoked when any property of this <see cref="RubyTag"/> is changed.

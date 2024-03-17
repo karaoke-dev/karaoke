@@ -243,7 +243,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     public partial class EditorLyricSpriteText : LyricSpriteText
     {
         public RectangleF? GetRubyTagPosition(RubyTag rubyTag)
-            => GetTopPositionTextDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
+            => GetTopPositionTextDrawRectangle(RubyTagUtils.ToPositionText(rubyTag));
 
         public Vector2 GetTimeTagPosition(TextIndex index)
         {

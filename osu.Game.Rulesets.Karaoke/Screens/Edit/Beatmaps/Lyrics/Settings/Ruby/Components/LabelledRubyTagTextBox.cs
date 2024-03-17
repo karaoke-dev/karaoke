@@ -100,18 +100,18 @@ public partial class LabelledRubyTagTextBox : LabelledObjectFieldTextBox<RubyTag
                 {
                     int index = getNewIndex(rubyTag, indexType);
                     int newIndex = calculateNewIndex(index, action);
-                    if (TextTagUtils.OutOfRange(lyric.Text, newIndex))
+                    if (RubyTagUtils.OutOfRange(lyric.Text, newIndex))
                         return;
 
                     switch (indexType)
                     {
                         case AdjustIndex.Start:
-                            if (TextTagUtils.ValidNewStartIndex(rubyTag, newIndex))
+                            if (RubyTagUtils.ValidNewStartIndex(rubyTag, newIndex))
                                 setIndex(rubyTag, newIndex, null);
                             break;
 
                         case AdjustIndex.End:
-                            if (TextTagUtils.ValidNewEndIndex(rubyTag, newIndex))
+                            if (RubyTagUtils.ValidNewEndIndex(rubyTag, newIndex))
                                 setIndex(rubyTag, null, newIndex);
                             break;
 

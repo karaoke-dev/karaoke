@@ -13,8 +13,8 @@ public class KaraokeRulesetEditCheckerConfigManager : InMemoryConfigManager<Kara
         base.InitialiseDefaults();
 
         // Lyric
-        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, TextTagsUtils.Sorting.Asc);
-        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRubyPositionSorting, RubyTagsUtils.Sorting.Asc);
+        SetDefault(KaraokeRulesetEditCheckerSetting.LyricRomajiPositionSorting, RubyTagsUtils.Sorting.Asc);
         SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
         SetDefault(KaraokeRulesetEditCheckerSetting.LyricTimeTagTimeGroupCheck, GroupCheck.Asc);
     }

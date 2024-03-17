@@ -4,25 +4,32 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public partial class RomanisationSettings : TextTagSettings<RomanisationTagEditStep>
+public partial class RomanisationSettings : LyricEditorSettings
 {
+    public override SettingsDirection Direction => SettingsDirection.Right;
+
+    public override float SettingsWidth => 350;
+
+    private readonly IBindable<RomanisationTagEditStep> bindableEditStep = new Bindable<RomanisationTagEditStep>();
+
     [BackgroundDependencyLoader]
     private void load(IEditRomanisationModeState romanisationModeState)
     {
-        BindableEditStep.BindTo(romanisationModeState.BindableEditStep);
-        BindableEditStep.BindValueChanged(e =>
+        bindableEditStep.BindTo(romanisationModeState.BindableEditStep);
+        bindableEditStep.BindValueChanged(e =>
         {
             ReloadSections();
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => BindableEditStep.Value switch
+    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
     {
         RomanisationTagEditStep.Generate => new Drawable[]
         {

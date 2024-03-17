@@ -62,19 +62,19 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         var overlappingTimeTags = TimeTagsUtils.FindOverlapping(lyric.TimeTags, group_check, self_check).ToArray();
         var noTimeTimeTags = TimeTagsUtils.FindNoneTime(lyric.TimeTags);
 
-        foreach (var textTag in outOfRangeTags)
+        foreach (var timeTag in outOfRangeTags)
         {
-            yield return new IssueTemplateOutOfRange(this).Create(lyric, textTag);
+            yield return new IssueTemplateOutOfRange(this).Create(lyric, timeTag);
         }
 
-        foreach (var textTag in overlappingTimeTags)
+        foreach (var timeTag in overlappingTimeTags)
         {
-            yield return new IssueTemplateOverlapping(this).Create(lyric, textTag);
+            yield return new IssueTemplateOverlapping(this).Create(lyric, timeTag);
         }
 
-        foreach (var textTag in noTimeTimeTags)
+        foreach (var timeTag in noTimeTimeTags)
         {
-            yield return new IssueTemplateEmptyTime(this).Create(lyric, textTag);
+            yield return new IssueTemplateEmptyTime(this).Create(lyric, timeTag);
         }
     }
 

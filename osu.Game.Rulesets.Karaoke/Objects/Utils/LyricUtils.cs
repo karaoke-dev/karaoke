@@ -41,7 +41,7 @@ public static class LyricUtils
         string newLyric = lyric.Text[..charGap] + lyric.Text[(charGap + count)..];
         lyric.Text = newLyric;
 
-        static IList<T> processTags<T>(IList<T> tags, int charGap, int count) where T : class, ITextTag
+        static IList<RubyTag> processTags(IList<RubyTag> tags, int charGap, int count)
         {
             // shifting index.
             foreach (var tag in tags)
@@ -96,7 +96,7 @@ public static class LyricUtils
         string newLyricText = lyricText[..charGap] + text + lyricText[charGap..];
         lyric.Text = newLyricText;
 
-        static T[] processTags<T>(IEnumerable<T> tags, int charGap, int offset) where T : ITextTag =>
+        static RubyTag[] processTags(IEnumerable<RubyTag> tags, int charGap, int offset) =>
             tags.Select(x =>
                 {
                     if (x.StartIndex >= charGap)

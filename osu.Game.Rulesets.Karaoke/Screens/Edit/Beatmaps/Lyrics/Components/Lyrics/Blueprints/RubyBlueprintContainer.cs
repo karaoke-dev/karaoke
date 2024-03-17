@@ -106,7 +106,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
             {
                 case Anchor.CentreLeft:
                     int? newStartIndex = calculateNewIndex(selectedRubyTag, deltaScaleSize, anchor);
-                    if (newStartIndex == null || !TextTagUtils.ValidNewStartIndex(selectedRubyTag, newStartIndex.Value))
+                    if (newStartIndex == null || !RubyTagUtils.ValidNewStartIndex(selectedRubyTag, newStartIndex.Value))
                         return false;
 
                     setRubyTagIndex(selectedRubyTag, newStartIndex, null);
@@ -114,7 +114,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
 
                 case Anchor.CentreRight:
                     int? newEndIndex = calculateNewIndex(selectedRubyTag, deltaScaleSize, anchor);
-                    if (newEndIndex == null || !TextTagUtils.ValidNewEndIndex(selectedRubyTag, newEndIndex.Value))
+                    if (newEndIndex == null || !RubyTagUtils.ValidNewEndIndex(selectedRubyTag, newEndIndex.Value))
                         return false;
 
                     setRubyTagIndex(selectedRubyTag, null, newEndIndex);

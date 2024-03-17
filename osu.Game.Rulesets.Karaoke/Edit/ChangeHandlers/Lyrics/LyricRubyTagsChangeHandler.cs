@@ -94,7 +94,7 @@ public partial class LyricRubyTagsChangeHandler : LyricPropertyChangeHandler, IL
                 rubyTag.EndIndex = endIndex.Value;
 
             // after change the index, should check if index is valid.
-            if (TextTagUtils.OutOfRange(rubyTag, lyric.Text))
+            if (RubyTagUtils.OutOfRange(rubyTag, lyric.Text))
                 throw new InvalidOperationException($"{nameof(startIndex)} or {nameof(endIndex)} is not valid");
         });
     }
@@ -112,7 +112,7 @@ public partial class LyricRubyTagsChangeHandler : LyricPropertyChangeHandler, IL
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(rubyTag)} is not in the lyric");
 
-                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(rubyTag, lyric.Text, offset);
+                (int startIndex, int endIndex) = RubyTagUtils.GetShiftingIndex(rubyTag, lyric.Text, offset);
                 rubyTag.StartIndex = startIndex;
                 rubyTag.EndIndex = endIndex;
             }

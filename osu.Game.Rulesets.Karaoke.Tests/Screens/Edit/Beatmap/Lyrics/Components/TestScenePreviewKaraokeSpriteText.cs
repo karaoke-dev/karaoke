@@ -176,7 +176,7 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
     {
         foreach (var rubyTag in lyric.RubyTags)
         {
-            AddStep($"Show ruby-tag position: {TextTagUtils.PositionFormattedString(rubyTag)}", () =>
+            AddStep($"Show ruby-tag position: {RubyTagUtils.PositionFormattedString(rubyTag)}", () =>
             {
                 var position = karaokeSpriteText.GetRubyTagByPosition(rubyTag);
                 showPosition(position);

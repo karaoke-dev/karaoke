@@ -41,8 +41,8 @@ public partial class RubyTagEditSection : LyricPropertiesSection<RubyTag>
     {
         protected sealed override Drawable CreateDrawable(RubyTag item)
         {
-            string relativeToLyricText = TextTagUtils.GetTextFromLyric(item, CurrentLyric.Text);
-            string range = TextTagUtils.PositionFormattedString(item);
+            string relativeToLyricText = RubyTagUtils.GetTextFromLyric(item, CurrentLyric.Text);
+            string range = RubyTagUtils.PositionFormattedString(item);
 
             return new LabelledRubyTagTextBox(CurrentLyric, item).With(t =>
             {
