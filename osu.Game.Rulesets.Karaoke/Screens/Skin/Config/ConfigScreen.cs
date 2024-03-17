@@ -28,7 +28,7 @@ public partial class ConfigScreen : KaraokeSkinEditorScreen
         {
             new IntervalSection(),
             new PositionSection(),
-            new RubyRomajiSection(),
+            new RubyAndRomanisationSection(),
         };
 
     protected override Container CreatePreviewArea()

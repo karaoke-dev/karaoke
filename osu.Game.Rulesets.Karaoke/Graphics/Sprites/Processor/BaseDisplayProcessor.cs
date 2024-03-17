@@ -87,7 +87,7 @@ public abstract class BaseDisplayProcessor : IDisposable
         public readonly IBindable<int> RubyTagsVersion = new Bindable<int>();
         public readonly IBindable<string> TextBindable = new Bindable<string>();
         public readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
-        public readonly IBindable<int> TimeTagsRomajiVersion = new Bindable<int>();
+        public readonly IBindable<int> TimeTagsRomanisationVersion = new Bindable<int>();
         public readonly IBindable<int> TimeTagsTimingVersion = new Bindable<int>();
 
         public AvailableProperty(Lyric lyric)
@@ -96,7 +96,7 @@ public abstract class BaseDisplayProcessor : IDisposable
             RubyTagsVersion.BindTo(lyric.RubyTagsVersion);
             TextBindable.BindTo(lyric.TextBindable);
             TimeTagsBindable.BindTo(lyric.TimeTagsBindable);
-            TimeTagsRomajiVersion.BindTo(lyric.TimeTagsRomajiVersion);
+            TimeTagsRomanisationVersion.BindTo(lyric.TimeTagsRomanisationVersion);
             TimeTagsTimingVersion.BindTo(lyric.TimeTagsTimingVersion);
         }
 
@@ -106,7 +106,7 @@ public abstract class BaseDisplayProcessor : IDisposable
             RubyTagsVersion.UnbindAll();
             TextBindable.UnbindAll();
             TimeTagsBindable.UnbindAll();
-            TimeTagsRomajiVersion.UnbindAll();
+            TimeTagsRomanisationVersion.UnbindAll();
             TimeTagsTimingVersion.UnbindAll();
         }
     }

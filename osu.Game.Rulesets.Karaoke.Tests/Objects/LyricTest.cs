@@ -161,7 +161,7 @@ public class LyricTest
     public void TestReferenceLyricListPropertyChanged()
     {
         // test modify property inside the list.
-        // ruby, romaji tag time-tag.
+        // e.g. ruby, time-tag and romanisation.
         var timeTag = TestCaseTagHelper.ParseTimeTag("[0,start]:1100#^ka");
         var rubyTag = TestCaseTagHelper.ParseRubyTag("[0]:か");
 
@@ -191,12 +191,12 @@ public class LyricTest
 
         // and because there's no change inside the tag, so there's version change.
         Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(0, lyric.TimeTagsRomajiVersion.Value);
+        Assert.AreEqual(0, lyric.TimeTagsRomanisationVersion.Value);
         Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
 
         // it's time to change the property in the list.
         timeTag.Time = 2000;
-        timeTag.RomanisedSyllable = "romaji";
+        timeTag.RomanisedSyllable = "ka--";
         rubyTag.Text = "ruby";
 
         // property should be equal.
@@ -205,7 +205,7 @@ public class LyricTest
 
         // and note that because only one property is different, so version should change once.
         Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(1, lyric.TimeTagsRomajiVersion.Value);
+        Assert.AreEqual(1, lyric.TimeTagsRomanisationVersion.Value);
         Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
     }
 

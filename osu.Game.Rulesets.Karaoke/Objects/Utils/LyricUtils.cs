@@ -33,7 +33,8 @@ public static class LyricUtils
         if (charGap + count >= textLength)
             count = textLength - charGap;
 
-        // deal with ruby and romaji, might remove and shifting.
+        // deal with ruby and romanisation.
+        // might remove and shifting.
         lyric.RubyTags = processTags(lyric.RubyTags, charGap, count);
         lyric.TimeTags = processTimeTags(lyric.TimeTags, charGap, count);
 
@@ -88,7 +89,7 @@ public static class LyricUtils
         if (offset == 0)
             return;
 
-        // deal with ruby and romaji with shifting.
+        // deal with ruby and romanisation with shifting.
         lyric.RubyTags = processTags(lyric.RubyTags, charGap, offset);
         lyric.TimeTags = processTimeTags(lyric.TimeTags, charGap, offset);
 

@@ -50,7 +50,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
             return;
         }
 
-        if (line.ToLower().StartsWith("@ruby", StringComparison.Ordinal) || line.ToLower().StartsWith("@romaji", StringComparison.Ordinal))
+        if (line.ToLower().StartsWith("@ruby", StringComparison.Ordinal))
         {
             // lrc queue
             lrcLines.Add(line);

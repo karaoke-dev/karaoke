@@ -26,7 +26,7 @@ public class LrcEncoderTest
     {
         var decoded = decode(fileName, out var encoded);
 
-        // Note : this test case does not cover ruby and romaji property
+        // Note : this test case does not cover ruby property
         Assert.That(decoded.HitObjects.Count, Is.EqualTo(encoded.HitObjects.Count));
         Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
     }

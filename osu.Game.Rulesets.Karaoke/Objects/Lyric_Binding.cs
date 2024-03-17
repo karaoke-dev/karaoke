@@ -25,9 +25,9 @@ public partial class Lyric
     private readonly Bindable<int> timeTagsTimingVersion = new();
 
     [JsonIgnore]
-    public IBindable<int> TimeTagsRomajiVersion => timeTagsRomajiVersion;
+    public IBindable<int> TimeTagsRomanisationVersion => timeTagsRomanisationVersion;
 
-    private readonly Bindable<int> timeTagsRomajiVersion = new();
+    private readonly Bindable<int> timeTagsRomanisationVersion = new();
 
     [JsonIgnore]
     public IBindable<int> RubyTagsVersion => rubyTagsVersion;
@@ -56,7 +56,7 @@ public partial class Lyric
                     foreach (var c in args.NewItems.Cast<TimeTag>())
                     {
                         c.TimingChanged += timingInvalidate;
-                        c.SyllableChanged += romajiInvalidate;
+                        c.SyllableChanged += romanisationInvalidate;
                     }
 
                     break;
@@ -68,7 +68,7 @@ public partial class Lyric
                     foreach (var c in args.OldItems.Cast<TimeTag>())
                     {
                         c.TimingChanged -= timingInvalidate;
-                        c.SyllableChanged -= romajiInvalidate;
+                        c.SyllableChanged -= romanisationInvalidate;
                     }
 
                     break;
@@ -77,7 +77,7 @@ public partial class Lyric
             updateLyricTime();
 
             void timingInvalidate() => timeTagsTimingVersion.Value++;
-            void romajiInvalidate() => timeTagsRomajiVersion.Value++;
+            void romanisationInvalidate() => timeTagsRomanisationVersion.Value++;
         };
 
         TimeTagsTimingVersion.ValueChanged += _ =>
@@ -191,7 +191,7 @@ public partial class Lyric
                 });
             }, false);
 
-            bindValueChange(e, l => l.TimeTagsRomajiVersion, (_, config) =>
+            bindValueChange(e, l => l.TimeTagsRomanisationVersion, (_, config) =>
             {
                 if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncTimeTagProperty)
                     return;
