@@ -69,7 +69,7 @@ public static class LyricsUtils
         var secondLyric = lyric.DeepClone();
         secondLyric.Text = secondLyricText;
         secondLyric.TimeTags = shiftingTimeTag(secondTimeTag.ToArray(), -splitIndex);
-        secondLyric.RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
+        secondLyric.RubyTags = shiftingRubyTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex >= splitIndex).ToArray(), secondLyricText, -splitIndex);
 
         return new Tuple<Lyric, Lyric>(firstLyric, secondLyric);
     }
@@ -88,7 +88,7 @@ public static class LyricsUtils
 
         var rubyTags = new List<RubyTag>();
         rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
-        rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
+        rubyTags.AddRangeWithNullCheck(shiftingRubyTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
         double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
         double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
@@ -115,8 +115,8 @@ public static class LyricsUtils
     private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int offset)
         => timeTags.Select(t => TimeTagUtils.ShiftingTimeTag(t, offset)).ToArray();
 
-    private static RubyTag[] shiftingTextTag(IEnumerable<RubyTag> textTags, string lyric, int offset)
-        => textTags.Select(t =>
+    private static RubyTag[] shiftingRubyTag(IEnumerable<RubyTag> rubyTags, string lyric, int offset)
+        => rubyTags.Select(t =>
         {
             (int startIndex, int endIndex) = RubyTagUtils.GetShiftingIndex(t, lyric, offset);
             return new RubyTag
