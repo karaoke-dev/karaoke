@@ -20,9 +20,9 @@ public static class TextTagsUtils
             _ => throw new InvalidEnumArgumentException(nameof(sorting)),
         };
 
-    public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
+    public static RubyTag[] FindOutOfRange(IEnumerable<RubyTag> textTags, string lyric)
     {
-        return textTags.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
+        return textTags.Where(x => RubyTagUtils.OutOfRange(x, lyric)).ToArray();
     }
 
     public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
@@ -67,9 +67,9 @@ public static class TextTagsUtils
         return Sort(invalidList.Distinct());
     }
 
-    public static T[] FindEmptyText<T>(IEnumerable<T> textTags) where T : ITextTag
+    public static RubyTag[] FindEmptyText(IEnumerable<RubyTag> textTags)
     {
-        return textTags.Where(TextTagUtils.EmptyText).ToArray();
+        return textTags.Where(RubyTagUtils.EmptyText).ToArray();
     }
 
     public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()

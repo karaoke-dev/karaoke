@@ -52,7 +52,7 @@ public partial class RubyTagIssueSection : LyricEditorIssueSection
                 },
                 new OsuSpriteText
                 {
-                    Text = TextTagUtils.PositionFormattedString(rubyTag),
+                    Text = RubyTagUtils.PositionFormattedString(rubyTag),
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },

@@ -8,7 +8,6 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
@@ -116,11 +115,11 @@ public static class LyricsUtils
     private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int offset)
         => timeTags.Select(t => TimeTagUtils.ShiftingTimeTag(t, offset)).ToArray();
 
-    private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int offset) where T : ITextTag, new()
+    private static RubyTag[] shiftingTextTag(IEnumerable<RubyTag> textTags, string lyric, int offset)
         => textTags.Select(t =>
         {
-            (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, offset);
-            return new T
+            (int startIndex, int endIndex) = RubyTagUtils.GetShiftingIndex(t, lyric, offset);
+            return new RubyTag
             {
                 Text = t.Text,
                 StartIndex = startIndex,
