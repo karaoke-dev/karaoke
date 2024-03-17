@@ -191,7 +191,7 @@ public class LyricTest
 
         // and because there's no change inside the tag, so there's version change.
         Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(0, lyric.TimeTagsRomajiVersion.Value);
+        Assert.AreEqual(0, lyric.TimeTagsRomanisationVersion.Value);
         Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
 
         // it's time to change the property in the list.
@@ -205,7 +205,7 @@ public class LyricTest
 
         // and note that because only one property is different, so version should change once.
         Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(1, lyric.TimeTagsRomajiVersion.Value);
+        Assert.AreEqual(1, lyric.TimeTagsRomanisationVersion.Value);
         Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
     }
 

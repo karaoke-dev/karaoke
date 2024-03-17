@@ -40,7 +40,7 @@ public class LyricFirstDisplayProcessor : BaseDisplayProcessor
             UpdateBottomText();
             UpdateTimeTags();
         });
-        property.TimeTagsRomajiVersion.BindValueChanged(_ =>
+        property.TimeTagsRomanisationVersion.BindValueChanged(_ =>
         {
             UpdateBottomText();
         });

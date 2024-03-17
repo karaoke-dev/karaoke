@@ -38,7 +38,7 @@ public class RomanisedSyllableFirstDisplayProcessor : BaseDisplayProcessor
             // Ruby change might affect the center text, which will affect all property.
             UpdateAll();
         });
-        property.TimeTagsRomajiVersion.BindValueChanged(_ =>
+        property.TimeTagsRomanisationVersion.BindValueChanged(_ =>
         {
             // Ruby change might affect the center text, which will affect all property.
             UpdateAll();
