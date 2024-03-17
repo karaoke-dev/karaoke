@@ -91,13 +91,13 @@ public class JaRomanisationGeneratorTest : BaseRomanisationGeneratorTest<JaRoman
 
         static JaRomanisationGenerator.RomanisationGeneratorParameter parseRomanisationGenerateResult(string str)
         {
-            // because format is same as the text-tag testing format, so just use the ruby helper.
-            var textTag = TestCaseTagHelper.ParseRubyTag(str);
+            // because format is same as the ruby-tag testing format, so just use the ruby helper.
+            var tag = TestCaseTagHelper.ParseRubyTag(str);
             return new JaRomanisationGenerator.RomanisationGeneratorParameter
             {
-                StartIndex = textTag.StartIndex,
-                EndIndex = textTag.EndIndex,
-                RomanisedSyllable = textTag.Text,
+                StartIndex = tag.StartIndex,
+                EndIndex = tag.EndIndex,
+                RomanisedSyllable = tag.Text,
             };
         }
     }
