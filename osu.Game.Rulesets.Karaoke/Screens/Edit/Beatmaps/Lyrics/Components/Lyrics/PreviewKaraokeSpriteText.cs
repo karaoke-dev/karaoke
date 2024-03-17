@@ -251,6 +251,6 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
             return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
         }
 
-        // todo: get romanization position.
+        // todo: get romanisation position.
     }
 }
