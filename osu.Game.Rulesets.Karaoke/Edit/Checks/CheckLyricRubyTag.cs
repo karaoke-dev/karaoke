@@ -25,11 +25,11 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
         string text = lyric.Text;
         var rubyTags = lyric.RubyTags;
 
-        const TextTagsUtils.Sorting sorting = TextTagsUtils.Sorting.Asc;
+        const RubyTagsUtils.Sorting sorting = RubyTagsUtils.Sorting.Asc;
 
-        var outOfRangeTags = TextTagsUtils.FindOutOfRange(rubyTags, text);
-        var overlappingTags = TextTagsUtils.FindOverlapping(rubyTags, sorting);
-        var emptyTags = TextTagsUtils.FindEmptyText(rubyTags);
+        var outOfRangeTags = RubyTagsUtils.FindOutOfRange(rubyTags, text);
+        var overlappingTags = RubyTagsUtils.FindOverlapping(rubyTags, sorting);
+        var emptyTags = RubyTagsUtils.FindEmptyText(rubyTags);
 
         foreach (var rubyTag in outOfRangeTags)
         {

@@ -6,57 +6,56 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
-public static class TextTagsUtils
+public static class RubyTagsUtils
 {
-    public static T[] Sort<T>(IEnumerable<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
+    public static RubyTag[] Sort(IEnumerable<RubyTag> rubyTags, Sorting sorting = Sorting.Asc) =>
         sorting switch
         {
-            Sorting.Asc => textTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
-            Sorting.Desc => textTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
+            Sorting.Asc => rubyTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
+            Sorting.Desc => rubyTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
             _ => throw new InvalidEnumArgumentException(nameof(sorting)),
         };
 
-    public static RubyTag[] FindOutOfRange(IEnumerable<RubyTag> textTags, string lyric)
+    public static RubyTag[] FindOutOfRange(IEnumerable<RubyTag> rubyTags, string lyric)
     {
-        return textTags.Where(x => RubyTagUtils.OutOfRange(x, lyric)).ToArray();
+        return rubyTags.Where(x => RubyTagUtils.OutOfRange(x, lyric)).ToArray();
     }
 
-    public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
+    public static RubyTag[] FindOverlapping(IList<RubyTag> rubyTags, Sorting sorting = Sorting.Asc)
     {
         // check is null or empty
-        if (!textTags.Any())
-            return Array.Empty<T>();
+        if (!rubyTags.Any())
+            return Array.Empty<RubyTag>();
 
         // todo : need to make sure is need to sort in here?
-        var sortedTextTags = Sort(textTags, sorting);
+        var sortedRubyTags = Sort(rubyTags, sorting);
 
-        var invalidList = new List<T>();
+        var invalidList = new List<RubyTag>();
 
         // check end is less or equal to start index
-        invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex < x.StartIndex));
+        invalidList.AddRange(sortedRubyTags.Where(x => x.EndIndex < x.StartIndex));
 
         // find other is smaller or bigger
-        foreach (var textTag in sortedTextTags)
+        foreach (var rubyTag in sortedRubyTags)
         {
-            if (invalidList.Contains(textTag))
+            if (invalidList.Contains(rubyTag))
                 continue;
 
-            var checkTags = sortedTextTags.Except(new[] { textTag });
+            var checkTags = sortedRubyTags.Except(new[] { rubyTag });
 
             switch (sorting)
             {
                 case Sorting.Asc:
                     // start index within tne target
-                    invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex <= textTag.EndIndex));
+                    invalidList.AddRange(checkTags.Where(x => x.StartIndex >= rubyTag.StartIndex && x.StartIndex <= rubyTag.EndIndex));
                     break;
 
                 case Sorting.Desc:
                     // end index within tne target
-                    invalidList.AddRange(checkTags.Where(x => x.EndIndex >= textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
+                    invalidList.AddRange(checkTags.Where(x => x.EndIndex >= rubyTag.StartIndex && x.EndIndex <= rubyTag.EndIndex));
                     break;
 
                 default:
@@ -67,22 +66,22 @@ public static class TextTagsUtils
         return Sort(invalidList.Distinct());
     }
 
-    public static RubyTag[] FindEmptyText(IEnumerable<RubyTag> textTags)
+    public static RubyTag[] FindEmptyText(IEnumerable<RubyTag> rubyTags)
     {
-        return textTags.Where(RubyTagUtils.EmptyText).ToArray();
+        return rubyTags.Where(RubyTagUtils.EmptyText).ToArray();
     }
 
-    public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
+    public static RubyTag Combine(RubyTag rubyTagA, RubyTag rubyTagB)
     {
-        return Combine(new[] { textTagA, textTagB });
+        return Combine(new[] { rubyTagA, rubyTagB });
     }
 
-    public static T Combine<T>(T[] textTags) where T : ITextTag, new()
+    public static RubyTag Combine(RubyTag[] rubyTags)
     {
-        if (textTags == null || !textTags.Any())
-            throw new ArgumentNullException(nameof(textTags));
+        if (rubyTags == null || !rubyTags.Any())
+            throw new ArgumentNullException(nameof(rubyTags));
 
-        var sortingValue = Sort(textTags);
+        var sortingValue = Sort(rubyTags);
         var firstValue = sortingValue.FirstOrDefault();
         var lastValue = sortingValue.LastOrDefault();
 
@@ -92,7 +91,7 @@ public static class TextTagsUtils
         if (lastValue == null)
             throw new NoNullAllowedException(nameof(lastValue));
 
-        return new T
+        return new RubyTag
         {
             StartIndex = firstValue.StartIndex,
             EndIndex = lastValue.EndIndex,
