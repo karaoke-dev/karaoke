@@ -192,9 +192,9 @@ public static class LyricUtils
 
     #endregion
 
-    #region Ruby/romaji tag
+    #region Ruby tag
 
-    public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
+    public static bool AbleToInsertRubyTagAtIndex(Lyric lyric, int index)
         => index >= 0 && index <= lyric.Text.Length;
 
     #endregion

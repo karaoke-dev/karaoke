@@ -224,18 +224,18 @@ public class LyricUtilsTest
 
     #endregion
 
-    #region Ruby/romaji tag
+    #region Ruby tag
 
     [TestCase("からおけ", 0, true)]
     [TestCase("からおけ", 4, true)]
     [TestCase("からおけ", -1, false)]
     [TestCase("からおけ", 5, false)]
     [TestCase("", 0, true)]
-    public void TestAbleToInsertTextTagAtIndex(string text, int index, bool expected)
+    public void TestAbleToInsertRubyTagAtIndex(string text, int index, bool expected)
     {
         var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
 
-        bool actual = LyricUtils.AbleToInsertTextTagAtIndex(lyric, index);
+        bool actual = LyricUtils.AbleToInsertRubyTagAtIndex(lyric, index);
         Assert.AreEqual(expected, actual);
     }
 
