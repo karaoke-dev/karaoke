@@ -23,27 +23,27 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
         string text = lyric.Text;
-        var textTags = lyric.RubyTags;
+        var rubyTags = lyric.RubyTags;
 
         const TextTagsUtils.Sorting sorting = TextTagsUtils.Sorting.Asc;
 
-        var outOfRangeTags = TextTagsUtils.FindOutOfRange(textTags, text);
-        var overlappingTags = TextTagsUtils.FindOverlapping(textTags, sorting);
-        var emptyTextTags = TextTagsUtils.FindEmptyText(textTags);
+        var outOfRangeTags = TextTagsUtils.FindOutOfRange(rubyTags, text);
+        var overlappingTags = TextTagsUtils.FindOverlapping(rubyTags, sorting);
+        var emptyTags = TextTagsUtils.FindEmptyText(rubyTags);
 
-        foreach (var textTag in outOfRangeTags)
+        foreach (var rubyTag in outOfRangeTags)
         {
-            yield return new IssueTemplateOutOfRange(this).Create(lyric, textTag);
+            yield return new IssueTemplateOutOfRange(this).Create(lyric, rubyTag);
         }
 
-        foreach (var textTag in overlappingTags)
+        foreach (var rubyTag in overlappingTags)
         {
-            yield return new IssueTemplateOverlapping(this).Create(lyric, textTag);
+            yield return new IssueTemplateOverlapping(this).Create(lyric, rubyTag);
         }
 
-        foreach (var textTag in emptyTextTags)
+        foreach (var rubyTag in emptyTags)
         {
-            yield return new IssueTemplateEmptyText(this).Create(lyric, textTag);
+            yield return new IssueTemplateEmptyText(this).Create(lyric, rubyTag);
         }
     }
 
@@ -54,7 +54,7 @@ public class CheckLyricRubyTag : CheckHitObjectProperty<Lyric>
         {
         }
 
-        public Issue Create(Lyric lyric, RubyTag textTag) => new LyricRubyTagIssue(lyric, this, textTag, textTag);
+        public Issue Create(Lyric lyric, RubyTag rubyTag) => new LyricRubyTagIssue(lyric, this, rubyTag, rubyTag);
     }
 
     public class IssueTemplateOutOfRange : IssueTemplateLyricRuby

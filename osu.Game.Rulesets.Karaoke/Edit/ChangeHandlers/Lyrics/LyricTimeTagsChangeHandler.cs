@@ -277,8 +277,8 @@ public partial class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, IL
 
                 case InsertDirection.End:
                 {
-                    var previousTextTag = timeTags.Reverse().FirstOrDefault(x => x.Index <= timeTag.Index) ?? timeTags.First();
-                    int index = timeTags.IndexOf(previousTextTag) + 1;
+                    var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index <= timeTag.Index) ?? timeTags.First();
+                    int index = timeTags.IndexOf(previousTimeTag) + 1;
                     timeTags.Insert(index, timeTag);
                     break;
                 }
