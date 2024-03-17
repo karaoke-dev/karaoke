@@ -108,7 +108,7 @@ public partial class KaraokeRuleset : Ruleset
                 new KeyBinding(new[] { InputKey.Alt, InputKey.BracketLeft }, KaraokeEditAction.PreviousEditMode),
                 new KeyBinding(new[] { InputKey.Alt, InputKey.BracketRight }, KaraokeEditAction.NextEditMode),
 
-                // Edit Ruby / romaji tag.
+                // Edit Ruby tag.
                 new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.EditRubyTagReduceStartIndex),
                 new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.EditRubyTagIncreaseStartIndex),
                 new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditRubyTagReduceEndIndex),
