@@ -34,7 +34,6 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         SetDefault(KaraokeRulesetSetting.LyricAlpha, 1, 0.2, 1, 0.01);
 
         // Translate
-        SetDefault(KaraokeRulesetSetting.UseTranslate, true);
         SetDefault(KaraokeRulesetSetting.PreferLanguage, new CultureInfo("en-US"));
 
         // Pitch
@@ -112,7 +111,6 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         new TrackedSetting<double>(KaraokeRulesetSetting.ScrollTime, v => new SettingDescription(v, "Scroll Time", $"{v}ms")),
         new TrackedSetting<bool>(KaraokeRulesetSetting.DisplayNoteRubyText, b => new SettingDescription(b, "Toggle display", b ? "Show" : "Hide")),
         new TrackedSetting<bool>(KaraokeRulesetSetting.ShowCursor, b => new SettingDescription(b, "Cursor display", b ? "Show" : "Hide")),
-        new TrackedSetting<bool>(KaraokeRulesetSetting.UseTranslate, b => new SettingDescription(b, "Display translate", b ? "Show" : "Hide")),
         new TrackedSetting<CultureInfo>(KaraokeRulesetSetting.PreferLanguage, c => new SettingDescription(c, "Translate language", CultureInfoUtils.GetLanguageDisplayText(c))),
         new TrackedSetting<string>(KaraokeRulesetSetting.MicrophoneDevice, d => new SettingDescription(d, "Change to the new microphone device", d)),
     };
@@ -129,7 +127,6 @@ public enum KaraokeRulesetSetting
     LyricAlpha,
 
     // Translate
-    UseTranslate,
     PreferLanguage,
 
     // Pitch

@@ -58,13 +58,6 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
                 TooltipText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlayingTooltip,
                 Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor),
             },
-            // Translate
-            new SettingsCheckbox
-            {
-                LabelText = KaraokeSettingsSubsectionStrings.Translate,
-                TooltipText = KaraokeSettingsSubsectionStrings.TranslateTooltip,
-                Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate),
-            },
             // Device
             new SettingsMicrophoneDeviceDropdown
             {

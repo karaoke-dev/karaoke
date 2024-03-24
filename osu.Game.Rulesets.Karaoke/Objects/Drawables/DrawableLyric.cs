@@ -24,8 +24,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     private Container<DrawableKaraokeSpriteText> lyricPieces = null!;
     private OsuSpriteText translateText = null!;
 
-    private KaraokeRulesetConfigManager? config { get; set; }
-
     private readonly BindableBool useTranslateBindable = new();
     private readonly Bindable<CultureInfo> preferLanguageBindable = new();
 
@@ -55,7 +53,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     }
 
     [BackgroundDependencyLoader(true)]
-    private void load(KaraokeSessionStatics? session)
+    private void load(KaraokeRulesetConfigManager? config)
     {
         AutoSizeAxes = Axes.Both;
 
@@ -68,19 +66,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             Anchor = Anchor.BottomLeft,
             Origin = Anchor.TopLeft,
         });
-
-        if (session != null)
-        {
-            // gameplay.
-            session.BindWith(KaraokeRulesetSession.UseTranslate, useTranslateBindable);
-            session.BindWith(KaraokeRulesetSession.PreferLanguage, preferLanguageBindable);
-        }
-        else if (config != null)
-        {
-            // preview lyric effect.
-            config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslateBindable);
-            config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguageBindable);
-        }
 
         useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
         preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
@@ -115,6 +100,16 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     public void ChangeDisplayProperty(LyricDisplayProperty lyricDisplayProperty)
     {
         lyricPieces.ForEach(x => x.DisplayProperty = lyricDisplayProperty);
+    }
+
+    public void ChangePreferTranslationLanguage(CultureInfo? language)
+    {
+        if (language != null && translateTextBindable.TryGetValue(language, out string? translate))
+            translateText.Text = translate;
+        else
+        {
+            translateText.Text = string.Empty;
+        }
     }
 
     protected override void OnApply()

@@ -2,23 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration;
 
 public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRulesetEditSetting>
 {
-    protected override void InitialiseDefaults()
-    {
-        base.InitialiseDefaults();
-
-        // Lyric display.
-        SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
-    }
 }
 
 public enum KaraokeRulesetEditSetting
 {
-    // Lyric display type
-    DisplayTranslate,
 }

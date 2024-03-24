@@ -5,7 +5,6 @@ using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
-using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
@@ -23,11 +22,6 @@ public partial class TranslateSettings : KaraokeSettingsSubsection
     {
         Children = new Drawable[]
         {
-            new SettingsCheckbox
-            {
-                LabelText = "Translate",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate),
-            },
             new SettingsLanguage
             {
                 LabelText = "Prefer language",

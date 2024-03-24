@@ -33,7 +33,6 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
     private void load()
     {
         var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-        config.SetValue(KaraokeRulesetSetting.UseTranslate, true);
         config.SetValue(KaraokeRulesetSetting.PreferLanguage, cultureInfo);
     }
 

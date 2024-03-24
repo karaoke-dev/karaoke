@@ -118,20 +118,8 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
     }
 
     [BackgroundDependencyLoader]
-    private void load(IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session)
+    private void load(KaraokeSessionStatics session)
     {
-        // Add translate group if this beatmap has translate
-        if (beatmap.Value.Beatmap.AnyTranslate())
-        {
-            Add(new TranslateSettings
-            {
-                Expanded =
-                {
-                    Value = false,
-                },
-            });
-        }
-
         session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
         session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
         session.BindWith(KaraokeRulesetSession.ScoringPitch, bindableScoringPitch);

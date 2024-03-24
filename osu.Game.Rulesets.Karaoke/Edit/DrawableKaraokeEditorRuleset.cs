@@ -2,10 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
@@ -15,8 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit;
 
 public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
 {
-    private readonly Bindable<bool> bindableDisplayTranslateToggle = new();
-
     public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
 
     protected override bool DisplayNotePlayfield => true;
@@ -24,16 +19,9 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod>? mods)
         : base(ruleset, beatmap, mods)
     {
-        bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
     }
 
     protected override Playfield CreatePlayfield() => new KaraokeEditorPlayfield();
-
-    [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetEditConfigManager editConfigManager)
-    {
-        editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
-    }
 
     // todo: use default adjustment container because DrawableEditorRulesetWrapper will create it but contains no KaraokeRulesetConfigManager
     public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer() => new();
