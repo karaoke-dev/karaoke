@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
@@ -25,7 +23,7 @@ public class KaraokeLocalFontStore : FontStore
     /// <param name="renderer">The renderer to create textures with.</param>
     /// <param name="store">The texture source.</param>
     /// <param name="scaleAdjust">The raw pixel height of the font. Can be used to apply a global scale or metric to font usages.</param>
-    public KaraokeLocalFontStore(FontManager fontManager, IRenderer renderer, IResourceStore<TextureUpload> store = null, float scaleAdjust = 100)
+    public KaraokeLocalFontStore(FontManager fontManager, IRenderer renderer, IResourceStore<TextureUpload>? store = null, float scaleAdjust = 100)
         : base(renderer, store, scaleAdjust)
     {
         this.fontManager = fontManager;

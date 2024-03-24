@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -17,8 +15,8 @@ public abstract partial class DrawableKaraokeScrollingHitObject : DrawableHitObj
 
     protected readonly IBindable<double> TimeRange = new Bindable<double>();
 
-    protected DrawableKaraokeScrollingHitObject(KaraokeHitObject hitObject)
-        : base(hitObject)
+    protected DrawableKaraokeScrollingHitObject(KaraokeHitObject? hitObject)
+        : base(hitObject!)
     {
     }
 
@@ -102,9 +100,9 @@ public abstract partial class DrawableKaraokeScrollingHitObject : DrawableHitObj
 public abstract partial class DrawableKaraokeScrollingHitObject<TObject> : DrawableKaraokeScrollingHitObject
     where TObject : KaraokeHitObject
 {
-    public new TObject HitObject => base.HitObject as TObject;
+    public new TObject HitObject => (TObject)base.HitObject;
 
-    protected DrawableKaraokeScrollingHitObject(TObject hitObject)
+    protected DrawableKaraokeScrollingHitObject(TObject? hitObject)
         : base(hitObject)
     {
     }

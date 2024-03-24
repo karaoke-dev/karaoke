@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +20,7 @@ public class CachedFontArchiveReader : ArchiveReader
     private readonly Stream archiveStream;
     private readonly ZipArchive archive;
 
-    public CachedFontArchiveReader(Stream archiveStream, string name = null)
+    public CachedFontArchiveReader(Stream archiveStream, string name)
         : base(name)
     {
         this.archiveStream = archiveStream;

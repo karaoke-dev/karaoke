@@ -1,9 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -33,12 +30,12 @@ public partial class DrawableBarLine : DrawableKaraokeScrollingHitObject<BarLine
     /// <summary>
     /// The visual line tracker.
     /// </summary>
-    private Box line;
+    private Box line = null!;
 
     /// <summary>
     /// Container with triangles. Only visible for major lines.
     /// </summary>
-    private Container triangleContainer;
+    private Container triangleContainer = null!;
 
     private readonly Bindable<bool> major = new();
 
@@ -47,7 +44,7 @@ public partial class DrawableBarLine : DrawableKaraokeScrollingHitObject<BarLine
     {
     }
 
-    public DrawableBarLine([CanBeNull] BarLine barLine)
+    public DrawableBarLine(BarLine? barLine)
         : base(barLine)
     {
     }
