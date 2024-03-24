@@ -117,6 +117,16 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         lyricPieces.ForEach(x => x.DisplayProperty = lyricDisplayProperty);
     }
 
+    public void ChangePreferTranslationLanguage(CultureInfo? language)
+    {
+        if (language != null && translateTextBindable.TryGetValue(language, out string? translate))
+            translateText.Text = translate;
+        else
+        {
+            translateText.Text = string.Empty;
+        }
+    }
+
     protected override void OnApply()
     {
         base.OnApply();
