@@ -119,6 +119,16 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
     }
 
+    public void ChangeDisplayType(LyricDisplayType lyricDisplayType)
+    {
+        lyricPieces.ForEach(x => x.DisplayType = lyricDisplayType);
+    }
+
+    public void ChangeDisplayProperty(LyricDisplayProperty lyricDisplayProperty)
+    {
+        lyricPieces.ForEach(x => x.DisplayProperty = lyricDisplayProperty);
+    }
+
     protected override void OnApply()
     {
         base.OnApply();
