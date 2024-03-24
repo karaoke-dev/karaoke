@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -37,9 +36,6 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         // Translate
         SetDefault(KaraokeRulesetSetting.UseTranslate, true);
         SetDefault(KaraokeRulesetSetting.PreferLanguage, new CultureInfo("en-US"));
-
-        SetDefault(KaraokeRulesetSetting.DisplayType, LyricDisplayType.Lyric);
-        SetDefault(KaraokeRulesetSetting.DisplayProperty, LyricDisplayProperty.Both);
 
         // Pitch
         SetDefault(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
@@ -118,8 +114,6 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         new TrackedSetting<bool>(KaraokeRulesetSetting.ShowCursor, b => new SettingDescription(b, "Cursor display", b ? "Show" : "Hide")),
         new TrackedSetting<bool>(KaraokeRulesetSetting.UseTranslate, b => new SettingDescription(b, "Display translate", b ? "Show" : "Hide")),
         new TrackedSetting<CultureInfo>(KaraokeRulesetSetting.PreferLanguage, c => new SettingDescription(c, "Translate language", CultureInfoUtils.GetLanguageDisplayText(c))),
-        new TrackedSetting<LyricDisplayType>(KaraokeRulesetSetting.DisplayType, b => new SettingDescription(b, "Display type", b.ToString())),
-        new TrackedSetting<LyricDisplayProperty>(KaraokeRulesetSetting.DisplayProperty, b => new SettingDescription(b, "Display property", b.ToString())),
         new TrackedSetting<string>(KaraokeRulesetSetting.MicrophoneDevice, d => new SettingDescription(d, "Change to the new microphone device", d)),
     };
 }
@@ -137,10 +131,6 @@ public enum KaraokeRulesetSetting
     // Translate
     UseTranslate,
     PreferLanguage,
-
-    // Lyric display type
-    DisplayType,
-    DisplayProperty,
 
     // Pitch
     OverridePitchAtGameplay,

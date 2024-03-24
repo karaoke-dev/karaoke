@@ -32,8 +32,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
 
     private readonly BindableBool useTranslateBindable = new();
     private readonly Bindable<CultureInfo> preferLanguageBindable = new();
-    private readonly Bindable<LyricDisplayType> displayTypeBindable = new();
-    private readonly Bindable<LyricDisplayProperty> displayPropertyBindable = new();
 
     private readonly Bindable<FontUsage> mainFontUsageBindable = new();
     private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
@@ -80,22 +78,16 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             // gameplay.
             session.BindWith(KaraokeRulesetSession.UseTranslate, useTranslateBindable);
             session.BindWith(KaraokeRulesetSession.PreferLanguage, preferLanguageBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayType, displayTypeBindable);
-            session.BindWith(KaraokeRulesetSession.DisplayProperty, displayPropertyBindable);
         }
         else if (config != null)
         {
             // preview lyric effect.
             config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslateBindable);
             config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguageBindable);
-            config.BindWith(KaraokeRulesetSetting.DisplayType, displayTypeBindable);
-            config.BindWith(KaraokeRulesetSetting.DisplayProperty, displayPropertyBindable);
         }
 
         useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
         preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
-        displayTypeBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayType = e.NewValue));
-        displayPropertyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayProperty = e.NewValue));
 
         if (config != null)
         {
