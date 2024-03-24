@@ -13,8 +13,6 @@ public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRule
         base.InitialiseDefaults();
 
         // Lyric display.
-        SetDefault(KaraokeRulesetEditSetting.DisplayType, LyricDisplayType.Lyric);
-        SetDefault(KaraokeRulesetEditSetting.DisplayProperty, LyricDisplayProperty.Both);
         SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
     }
 }
@@ -22,7 +20,5 @@ public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRule
 public enum KaraokeRulesetEditSetting
 {
     // Lyric display type
-    DisplayType,
-    DisplayProperty,
     DisplayTranslate,
 }
