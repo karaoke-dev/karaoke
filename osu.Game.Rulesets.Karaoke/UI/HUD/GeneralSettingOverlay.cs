@@ -42,13 +42,6 @@ public partial class GeneralSettingOverlay : SettingOverlay, IKeyBindingHandler<
                     Value = false,
                 },
             },
-            new LyricDisplaySettings
-            {
-                Expanded =
-                {
-                    Value = false,
-                },
-            },
         };
     }
 

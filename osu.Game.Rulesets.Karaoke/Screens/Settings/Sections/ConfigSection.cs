@@ -23,7 +23,6 @@ public partial class ConfigSection : KaraokeSettingsSection
         {
             new GeneralSettings(),
             new NoteSettings(),
-            new LyricSettings(),
             new TranslateSettings(),
             new PracticeSettings(),
         };

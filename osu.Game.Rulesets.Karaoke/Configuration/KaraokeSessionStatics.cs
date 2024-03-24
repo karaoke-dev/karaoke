@@ -8,7 +8,6 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 
@@ -29,11 +28,6 @@ public class KaraokeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession
         var selectedLanguage = availableTranslate?.FirstOrDefault(t => EqualityComparer<CultureInfo>.Default.Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
         SetDefault(KaraokeRulesetSession.UseTranslate, useTranslate);
         SetDefault(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
-
-        var displayType = getValue<LyricDisplayType>(KaraokeRulesetSetting.DisplayType);
-        var displayProperty = getValue<LyricDisplayProperty>(KaraokeRulesetSetting.DisplayProperty);
-        SetDefault(KaraokeRulesetSession.DisplayType, displayType);
-        SetDefault(KaraokeRulesetSession.DisplayProperty, displayProperty);
 
         // Pitch
         bool overridePitch = getValue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
@@ -68,10 +62,6 @@ public enum KaraokeRulesetSession
     // Translate
     UseTranslate,
     PreferLanguage,
-
-    // Lyric display type
-    DisplayType,
-    DisplayProperty,
 
     // Pitch
     Pitch,
