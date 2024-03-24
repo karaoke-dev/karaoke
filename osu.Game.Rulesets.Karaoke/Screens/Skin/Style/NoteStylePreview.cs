@@ -37,7 +37,7 @@ public partial class NoteStylePreview : Container
     }
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider, StyleManager manager)
+    private void load(OverlayColourProvider colourProvider)
     {
         Masking = true;
         CornerRadius = 15;

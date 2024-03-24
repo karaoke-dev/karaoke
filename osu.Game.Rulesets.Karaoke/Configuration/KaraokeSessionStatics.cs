@@ -2,12 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 
@@ -20,14 +16,6 @@ public class KaraokeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession
     public KaraokeSessionStatics(KaraokeRulesetConfigManager config, IBeatmap? beatmap)
     {
         rulesetConfigManager = config;
-
-        // Translate
-        bool useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
-        var preferLanguage = getValue<CultureInfo>(KaraokeRulesetSetting.PreferLanguage);
-        var availableTranslate = beatmap?.AvailableTranslates();
-        var selectedLanguage = availableTranslate?.FirstOrDefault(t => EqualityComparer<CultureInfo>.Default.Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
-        SetDefault(KaraokeRulesetSession.UseTranslate, useTranslate);
-        SetDefault(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
         // Pitch
         bool overridePitch = getValue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
@@ -59,10 +47,6 @@ public class KaraokeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession
 
 public enum KaraokeRulesetSession
 {
-    // Translate
-    UseTranslate,
-    PreferLanguage,
-
     // Pitch
     Pitch,
     VocalPitch,

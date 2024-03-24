@@ -39,16 +39,6 @@ public static class KaraokeSettingsSubsectionStrings
         new TranslatableString(getKey(@"show_cursor_while_playing_tooltip"), @"Will not showing the cursor while gameplay if not select this option.");
 
     /// <summary>
-    /// "Translate"
-    /// </summary>
-    public static LocalisableString Translate => new TranslatableString(getKey(@"translate"), @"Translate");
-
-    /// <summary>
-    /// "Show the translation under the lyric if contains in the beatmap."
-    /// </summary>
-    public static LocalisableString TranslateTooltip => new TranslatableString(getKey(@"translate_tooltip"), @"Show the translation under the lyric if contains in the beatmap.");
-
-    /// <summary>
     /// "Prefer language"
     /// </summary>
     public static LocalisableString PreferLanguage => new TranslatableString(getKey(@"prefer_language"), @"Prefer language");
