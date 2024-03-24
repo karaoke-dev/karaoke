@@ -143,6 +143,7 @@ public partial class KaraokeRuleset : Ruleset
             ModType.DifficultyReduction => new Mod[]
             {
                 new KaraokeModNoFail(),
+                new KaraokeModLyricConfiguration(),
             },
             ModType.DifficultyIncrease => new Mod[]
             {
