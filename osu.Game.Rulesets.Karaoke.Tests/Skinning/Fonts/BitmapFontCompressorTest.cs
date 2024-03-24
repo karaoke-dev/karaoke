@@ -31,7 +31,7 @@ public class BitmapFontGeneratorTest
         if (normalGlyph == null)
             throw new ArgumentNullException(nameof(normalGlyph));
 
-        font = glyphStore.BitmapFont;
+        font = glyphStore.BitmapFont ?? throw new InvalidOperationException("Font should not be null in the test case.");
     }
 
     [TestCase("A", 1)]
