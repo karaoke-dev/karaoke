@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Diagnostics;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -44,7 +41,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
     private readonly IBindable<NotePositionCalculator> positionBindable = new Bindable<NotePositionCalculator>();
 
     public readonly IBindable<string> TextBindable = new Bindable<string>();
-    public readonly IBindable<string> RubyTextBindable = new Bindable<string>();
+    public readonly IBindable<string?> RubyTextBindable = new Bindable<string?>();
     public readonly IBindableDictionary<Singer, SingerState[]> SingersBindable = new BindableDictionary<Singer, SingerState[]>();
     public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
     public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
@@ -54,7 +51,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
     {
     }
 
-    public DrawableNote([CanBeNull] Note hitObject)
+    public DrawableNote(Note? hitObject)
         : base(hitObject)
     {
         AddRangeInternal(new Drawable[]
@@ -81,7 +78,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         TextBindable.BindValueChanged(_ => { changeText(HitObject); });
         RubyTextBindable.BindValueChanged(_ => { changeText(HitObject); });
         SingersBindable.BindCollectionChanged((_, _) => { ApplySkin(CurrentSkin, false); });
-        DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Scorable = e.NewValue; });
+        DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement)!.Scorable = e.NewValue; });
         ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
 
         void updateNotePositionAndHeight()

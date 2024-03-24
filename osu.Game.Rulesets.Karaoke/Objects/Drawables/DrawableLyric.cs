@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Globalization;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -24,11 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 public partial class DrawableLyric : DrawableKaraokeHitObject
 {
-    private Container<DrawableKaraokeSpriteText> lyricPieces;
-    private OsuSpriteText translateText;
+    private Container<DrawableKaraokeSpriteText> lyricPieces = null!;
+    private OsuSpriteText translateText = null!;
 
-    [Resolved(canBeNull: true)]
-    private KaraokeRulesetConfigManager config { get; set; }
+    private KaraokeRulesetConfigManager? config { get; set; }
 
     private readonly BindableBool useTranslateBindable = new();
     private readonly Bindable<CultureInfo> preferLanguageBindable = new();
@@ -43,8 +39,8 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     private readonly IBindableDictionary<Singer, SingerState[]> singersBindable = new BindableDictionary<Singer, SingerState[]>();
     private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
-    public event Action<DrawableLyric> OnLyricStart;
-    public event Action<DrawableLyric> OnLyricEnd;
+    public event Action<DrawableLyric>? OnLyricStart;
+    public event Action<DrawableLyric>? OnLyricEnd;
 
     public new Lyric HitObject => (Lyric)base.HitObject;
 
@@ -53,13 +49,13 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     {
     }
 
-    public DrawableLyric([CanBeNull] Lyric hitObject)
+    public DrawableLyric(Lyric? hitObject)
         : base(hitObject)
     {
     }
 
     [BackgroundDependencyLoader(true)]
-    private void load([CanBeNull] KaraokeSessionStatics session)
+    private void load(KaraokeSessionStatics? session)
     {
         AutoSizeAxes = Axes.Both;
 
@@ -180,11 +176,11 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
 
         if (!needTranslate || language == null)
         {
-            translateText.Text = (string)null;
+            translateText.Text = string.Empty;
         }
         else
         {
-            if (translateTextBindable.TryGetValue(language, out string translate))
+            if (translateTextBindable.TryGetValue(language, out string? translate))
                 translateText.Text = translate;
         }
     }
