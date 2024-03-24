@@ -44,8 +44,6 @@ public static class TestResources
 
     public static IStorageResourceProvider CreateSkinStorageResourceProvider(string skinName = "special-skin") => new TestStorageResourceProvider(skinName);
 
-#nullable disable
-
     private class TestStorageResourceProvider : IStorageResourceProvider
     {
         public TestStorageResourceProvider(string skinName)
@@ -55,13 +53,11 @@ public static class TestResources
 
         public IRenderer Renderer => new DummyRenderer();
 
-        public AudioManager AudioManager => null;
+        public AudioManager AudioManager => null!;
         public IResourceStore<byte[]> Files { get; }
         public IResourceStore<byte[]> Resources { get; }
-        public RealmAccess RealmAccess => null;
+        public RealmAccess RealmAccess => null!;
 
-        public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
+        public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null!;
     }
-
-#nullable enable
 }
