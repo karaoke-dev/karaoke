@@ -151,10 +151,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
             {
                 new("Config")
                 {
-                    Items = new MenuItem[]
-                    {
-                        new LyricDisplayPreviewMenuItem(editConfigManager, "Lyric display preview"),
-                    },
+                    Items = Array.Empty<MenuItem>(),
                 },
                 new("Tools")
                 {
