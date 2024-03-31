@@ -69,17 +69,15 @@ public partial class TestSceneLyricFirstDisplayProcessor : TestSceneDisplayProce
 
         TriggerChange(lyric =>
         {
-            lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000#^ka", "[1,start]:2000#ra", "[2,start]:3000#o", "[3,start]:4000#ke", "[3,end]:5000" });
+            lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000#^ka", "[1,start]:2000#ra", "[2,start]:3000#^o", "[3,start]:4000#ke", "[3,end]:5000" });
         });
 
         AssertTopTextNotChanged();
         AssertCenterTextNotChanged();
         AssertBottomTextChanged(new PositionText[]
         {
-            new("ka", 0, 0),
-            new("ra", 1, 1),
-            new("o", 2, 2),
-            new("ke", 3, 3),
+            new("kara", 0, 1),
+            new("oke", 2, 3),
         });
         AssertTimeTagsChanged(new Dictionary<double, TextIndex>
         {
@@ -133,10 +131,7 @@ public partial class TestSceneLyricFirstDisplayProcessor : TestSceneDisplayProce
         // it's OK not to filter the romanisation that out of range. karaoke/sprite text will not display that.
         AssertBottomTextChanged(new PositionText[]
         {
-            new("ka", 0, 0),
-            new("ra", 1, 1),
-            new("o", 2, 2),
-            new("ke", 3, 3),
+            new("karaoke", 0, 3),
         });
         // it's OK not to filter the time-tag that out of range. karaoke/sprite text will not display that.
         AssertTimeTagsChanged(new Dictionary<double, TextIndex>
