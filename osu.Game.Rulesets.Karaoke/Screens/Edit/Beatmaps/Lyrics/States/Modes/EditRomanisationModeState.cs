@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -17,8 +16,6 @@ public partial class EditRomanisationModeState : ModeStateWithBlueprintContainer
 
     public void ChangeEditStep(RomanisationTagEditStep step)
         => bindableEditMode.Value = step;
-
-    public Bindable<RomanisationEditPropertyMode> BindableRomanisationEditPropertyMode { get; } = new();
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags));

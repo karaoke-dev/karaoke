@@ -39,7 +39,6 @@ public partial class RomanisationSettings : LyricEditorSettings
         RomanisationTagEditStep.Edit => new Drawable[]
         {
             new RomanisationEditStepSection(),
-            new RomanisationEditPropertyModeSection(),
             new RomanisationEditSection(),
         },
         RomanisationTagEditStep.Verify => new Drawable[]
