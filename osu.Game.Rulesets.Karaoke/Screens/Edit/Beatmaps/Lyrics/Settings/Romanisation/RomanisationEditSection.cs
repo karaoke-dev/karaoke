@@ -2,15 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
@@ -41,95 +39,25 @@ public partial class RomanisationEditSection : LyricPropertiesSection<TimeTag>
 
     private partial class RomanisationTagsEditor : LyricPropertiesEditor
     {
-        private readonly Bindable<RomanisationEditPropertyMode> bindableRomanisationEditPropertyMode = new();
-
-        public RomanisationTagsEditor()
+        protected override Drawable? CreateDrawable(TimeTag item)
         {
-            bindableRomanisationEditPropertyMode.BindValueChanged(e =>
+            if (!isEditable(item))
             {
-                RedrewContent();
-            });
-        }
+                return null;
+            }
 
-        [BackgroundDependencyLoader]
-        private void load(IEditRomanisationModeState editRomanisationModeState)
-        {
-            bindableRomanisationEditPropertyMode.BindTo(editRomanisationModeState.BindableRomanisationEditPropertyMode);
-        }
-
-        protected override Drawable CreateDrawable(TimeTag item)
-        {
-            int index = Items.IndexOf(item);
-            return bindableRomanisationEditPropertyMode.Value switch
+            return new LabelledRomanisedTextBox(CurrentLyric, item)
             {
-                RomanisationEditPropertyMode.Text => new LabelledRomanisedSyllableTextBox(item)
-                {
-                    Label = $"#{index + 1}",
-                    TabbableContentContainer = this,
-                },
-                RomanisationEditPropertyMode.Initial => new LabelledFirstSyllableSwitchButton(item)
-                {
-                    Label = item.RomanisedSyllable ?? string.Empty,
-                },
-                _ => throw new ArgumentOutOfRangeException(nameof(bindableRomanisationEditPropertyMode.Value)),
+                TabbableContentContainer = this,
             };
+
+            static bool isEditable(TimeTag timeTag)
+                => timeTag.Index.State == TextIndex.IndexState.Start;
         }
 
         protected override EditorSectionButton? CreateCreateNewItemButton() => null;
 
         protected override IBindableList<TimeTag> GetItems(Lyric lyric)
             => lyric.TimeTagsBindable;
-    }
-
-    private partial class LabelledRomanisedSyllableTextBox : LabelledObjectFieldTextBox<TimeTag>
-    {
-        [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
-
-        [Resolved]
-        private IEditRomanisationModeState editRomanisationModeState { get; set; } = null!;
-
-        public LabelledRomanisedSyllableTextBox(TimeTag item)
-            : base(item)
-        {
-        }
-
-        protected override void TriggerSelect(TimeTag item)
-            => editRomanisationModeState.Select(item);
-
-        protected override string GetFieldValue(TimeTag timeTag)
-            => timeTag.RomanisedSyllable ?? string.Empty;
-
-        protected override void ApplyValue(TimeTag timeTag, string value)
-            => lyricTimeTagsChangeHandler.SetTimeTagRomanisedSyllable(timeTag, value);
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            SelectedItems.BindTo(editRomanisationModeState.SelectedItems);
-        }
-    }
-
-    private partial class LabelledFirstSyllableSwitchButton : LabelledObjectFieldSwitchButton<TimeTag>
-    {
-        [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
-
-        public LabelledFirstSyllableSwitchButton(TimeTag item)
-            : base(item)
-        {
-        }
-
-        protected override bool GetFieldValue(TimeTag timeTag)
-            => timeTag.FirstSyllable;
-
-        protected override void ApplyValue(TimeTag timeTag, bool value)
-            => lyricTimeTagsChangeHandler.SetTimeTagFirstSyllable(timeTag, value);
-
-        [BackgroundDependencyLoader]
-        private void load(IEditRomanisationModeState editRomanisationModeState)
-        {
-            SelectedItems.BindTo(editRomanisationModeState.SelectedItems);
-        }
     }
 }

@@ -85,6 +85,9 @@ public abstract partial class SectionItemsEditor<TModel> : CompositeDrawable, IS
         foreach (var item in items.Cast<TModel>())
         {
             var drawable = CreateDrawable(item);
+            if (drawable == null)
+                continue;
+
             content.Add(drawable);
             itemMap.Add(item, drawable);
         }
@@ -94,7 +97,9 @@ public abstract partial class SectionItemsEditor<TModel> : CompositeDrawable, IS
     {
         foreach (var item in items.Cast<TModel>())
         {
-            var drawable = itemMap[item];
+            if (!itemMap.TryGetValue(item, out var drawable))
+                continue;
+
             content.Remove(drawable, true);
             itemMap.Remove(item);
         }
@@ -115,7 +120,13 @@ public abstract partial class SectionItemsEditor<TModel> : CompositeDrawable, IS
         content.SetLayoutPosition(drawable, newPosition);
     }
 
-    protected abstract Drawable CreateDrawable(TModel item);
+    /// <summary>
+    /// Create editable drawable for the item.
+    /// Return null if the item is not editable.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    protected abstract Drawable? CreateDrawable(TModel item);
 
     protected abstract EditorSectionButton? CreateCreateNewItemButton();
 }

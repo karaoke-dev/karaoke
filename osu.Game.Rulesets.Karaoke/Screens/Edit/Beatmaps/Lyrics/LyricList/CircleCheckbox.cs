@@ -29,11 +29,6 @@ public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     private Sample? sampleChecked;
     private Sample? sampleUnchecked;
 
-    /// <summary>
-    /// Whether to play sounds when the state changes as a result of user interaction.
-    /// </summary>
-    protected virtual bool PlaySoundsOnUserChange => true;
-
     public CircleCheckbox()
     {
         Size = new Vector2(expanded_size);
@@ -98,9 +93,6 @@ public partial class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     protected override void OnUserChange(bool value)
     {
         base.OnUserChange(value);
-
-        if (!PlaySoundsOnUserChange)
-            return;
 
         if (value)
             sampleChecked?.Play();
