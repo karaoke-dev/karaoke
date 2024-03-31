@@ -44,12 +44,12 @@ public partial class RubyTagEditSection : LyricPropertiesSection<RubyTag>
             string relativeToLyricText = RubyTagUtils.GetTextFromLyric(item, CurrentLyric.Text);
             string range = RubyTagUtils.PositionFormattedString(item);
 
-            return new LabelledRubyTagTextBox(CurrentLyric, item).With(t =>
+            return new LabelledRubyTagTextBox(CurrentLyric, item)
             {
-                t.Label = relativeToLyricText;
-                t.Description = range;
-                t.TabbableContentContainer = this;
-            });
+                Label = relativeToLyricText,
+                Description = range,
+                TabbableContentContainer = this,
+            };
         }
 
         protected override EditorSectionButton? CreateCreateNewItemButton() => null;
