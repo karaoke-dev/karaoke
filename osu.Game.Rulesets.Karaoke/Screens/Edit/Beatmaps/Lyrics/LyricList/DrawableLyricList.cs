@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
@@ -25,7 +26,6 @@ public abstract partial class DrawableLyricList : OrderRearrangeableListContaine
         // update selected style to child
         bindableCaretPosition.BindValueChanged(e =>
         {
-            var oldLyric = e.OldValue?.Lyric;
             var newLyric = e.NewValue?.Lyric;
             if (newLyric == null || !ValueChangedEventUtils.LyricChanged(e))
                 return;
@@ -34,7 +34,7 @@ public abstract partial class DrawableLyricList : OrderRearrangeableListContaine
                 return;
 
             int skippingRows = SkipRows();
-            moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
+            moveItemToTargetPosition(newLyric, skippingRows);
         });
     }
 
@@ -67,32 +67,22 @@ public abstract partial class DrawableLyricList : OrderRearrangeableListContaine
         bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
     }
 
-    private bool moveItemToTargetPosition(Lyric newLyric, Lyric? oldLyric, int skippingRows)
+    private void moveItemToTargetPosition(Lyric targetLyric, int skippingRows)
     {
-        var oldItem = getListItem(oldLyric);
-        var newItem = getListItem(newLyric);
+        var drawable = getListItem(targetLyric);
+        if (drawable == null)
+            return;
 
-        // new item might been deleted.
-        if (newItem == null)
-            return false;
-
-        float spacing = newItem.Height * skippingRows;
-
-        // do not scroll if position is smaller then spacing.
-        float scrollPosition = ScrollContainer.GetChildPosInContent(newItem);
-        if (scrollPosition < spacing)
-            return false;
-
-        // do not scroll if position is too large and not able to move to target position.
-        float contentHeight = ScrollContainer.ScrollContent.Height;
-        float containerHeight = ScrollContainer.DrawHeight;
-        if (contentHeight - scrollPosition < containerHeight - spacing)
-            return false;
-
-        ScrollContainer.ScrollTo(scrollPosition - spacing);
-        return true;
+        float topSpacing = drawable.Height * skippingRows;
+        float bottomSpacing = DrawHeight - drawable.Height * (skippingRows + 1);
+        ScrollContainer.ScrollIntoViewWithSpacing(drawable, new MarginPadding
+        {
+            Top = topSpacing,
+            Bottom = bottomSpacing,
+        });
+        return;
 
         DrawableLyricListItem? getListItem(Lyric? lyric)
-            => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricListItem;
+            => ListContainer.Children.OfType<DrawableLyricListItem>().FirstOrDefault(x => x.Model == lyric);
     }
 }
