@@ -63,27 +63,40 @@ public class LyricFirstDisplayProcessor : BaseDisplayProcessor
 
     protected override IEnumerable<PositionText> CalculateBottomTexts(Lyric lyric)
     {
-        // should be able to combine the position text.
-        var groupByIndex = lyric.TimeTags.GroupBy(x => x.Index).ToDictionary(k => k.Key, v => v.ToArray());
+        var startTimeTag = lyric.TimeTags.FirstOrDefault();
+        if (startTimeTag == null)
+            yield break;
 
-        foreach (var (currentIndex, tags) in groupByIndex)
+        string collectedRomanisedSyllable = string.Empty;
+
+        // split the text by first romanisation syllable.
+        foreach (var timeTag in lyric.TimeTags)
         {
-            var nextIndex = groupByIndex.Keys.GetNext(currentIndex);
-            if (nextIndex == default)
-                yield break;
+            // collecting the romanised syllable.
+            collectedRomanisedSyllable += timeTag.RomanisedSyllable;
 
-            // note: need to change the [0,start], [1,start] to [0,start], [0,end]
-            int startCharIndex = TextIndexUtils.ToCharIndex(currentIndex);
-            int endCharIndex = TextIndexUtils.ToCharIndex(TextIndexUtils.GetPreviousIndex(nextIndex));
+            if (lyric.TimeTags.Last() == timeTag)
+            {
+                // should return the collected romanised syllable if is the last one.
+                yield return toPositionText(startTimeTag.Index, timeTag.Index, collectedRomanisedSyllable);
+            }
+            else if (lyric.TimeTags.GetNext(timeTag).FirstSyllable)
+            {
+                // should return the collected romanised syllable before timeTag with first syllable.
+                yield return toPositionText(startTimeTag.Index, timeTag.Index, collectedRomanisedSyllable);
 
-            yield return toPositionText(startCharIndex, endCharIndex, tags);
+                startTimeTag = lyric.TimeTags.GetNext(timeTag);
+                collectedRomanisedSyllable = string.Empty;
+            }
         }
 
         yield break;
 
-        static PositionText toPositionText(int startCharIndex, int endCharIndex, TimeTag[] timeTags)
+        static PositionText toPositionText(TextIndex startIndex, TextIndex endIndex, string text)
         {
-            string text = string.Join("", timeTags.Select(x => x.RomanisedSyllable));
+            int startCharIndex = TextIndexUtils.ToCharIndex(startIndex);
+            int endCharIndex = TextIndexUtils.ToCharIndex(endIndex);
+
             return new PositionText(text, startCharIndex, endCharIndex);
         }
     }
