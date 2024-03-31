@@ -9,8 +9,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
@@ -86,7 +88,15 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
         Schedule(() =>
         {
             var focusedDrawable = GetContainingInputManager().FocusedDrawable;
-            if (focusedDrawable != null && IsFocused(focusedDrawable))
+            if (focusedDrawable == null)
+                return;
+
+            // Make sure that view is visible in the scroll container.
+            // Give the top spacing larger space to let use able to see the previous item or the description text.
+            var parentScrollContainer = this.FindClosestParent<OsuScrollContainer>();
+            parentScrollContainer.ScrollIntoViewWithSpacing(this, new MarginPadding { Top = 150, Bottom = 50 });
+
+            if (IsFocused(focusedDrawable))
                 return;
 
             GetContainingInputManager().ChangeFocus(Component);
