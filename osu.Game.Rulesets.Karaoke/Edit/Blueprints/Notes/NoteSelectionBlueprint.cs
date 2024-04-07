@@ -2,15 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -20,7 +17,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 
-public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, IHasPopover
+public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>
 {
     [Resolved]
     private INotesChangeHandler notesChangeHandler { get; set; } = null!;
@@ -72,15 +69,12 @@ public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, I
         new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
     };
 
-    public Popover GetPopover() => new NoteEditPopover(HitObject);
-
     protected override bool OnClick(ClickEvent e)
     {
         // should only select current note before open the popover because note change handler will change property in all selected notes.
         beatmap.SelectedHitObjects.Clear();
         beatmap.SelectedHitObjects.Add(HitObject);
 
-        this.ShowPopover();
         return base.OnClick(e);
     }
 }

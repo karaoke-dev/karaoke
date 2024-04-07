@@ -8,12 +8,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomEditor.Notes;
 
 public partial class NoteEditPopover : OsuPopover
 {
@@ -40,6 +39,7 @@ public partial class NoteEditPopover : OsuPopover
 
     private partial class NoteSection : Section
     {
+        [Resolved]
         private INotePropertyChangeHandler notePropertyChangeHandler { get; set; } = null!;
 
         protected override LocalisableString Title => "Note property";
@@ -101,14 +101,6 @@ public partial class NoteEditPopover : OsuPopover
             {
                 notePropertyChangeHandler.ChangeDisplayState(v.NewValue);
             });
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(HitObjectComposer composer)
-        {
-            // todo: not a good way to get change handler, might remove or found another way eventually.
-            // cannot get change handler directly in editor screen, so should trying to get from karaoke hit object composer.
-            notePropertyChangeHandler = composer.Dependencies.Get<INotePropertyChangeHandler>();
         }
     }
 }
