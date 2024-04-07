@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
-using osu.Game.Rulesets.Karaoke.Edit.Export;
+using osu.Game.Rulesets.Karaoke.Edit.Debugging;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -67,7 +67,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
     private readonly BeatmapSingersChangeHandler beatmapSingersChangeHandler;
 
     [Cached]
-    private readonly ExportLyricManager exportLyricManager;
+    private readonly DebugBeatmapManager debugBeatmapManager;
 
     [Resolved]
     private Editor editor { get; set; } = null!;
@@ -89,7 +89,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
         AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
         AddInternal(beatmapSingersChangeHandler = new BeatmapSingersChangeHandler());
 
-        AddInternal(exportLyricManager = new ExportLyricManager());
+        AddInternal(debugBeatmapManager = new DebugBeatmapManager());
     }
 
     [BackgroundDependencyLoader]
@@ -166,7 +166,8 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                 {
                     Items = new MenuItem[]
                     {
-                        new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
+                        new EditorMenuItem("Export to json", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJson()),
+                        new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJsonBeatmap()),
                     },
                 },
             };

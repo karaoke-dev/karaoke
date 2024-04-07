@@ -10,6 +10,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
+using osu.Game.Rulesets.Karaoke.Edit.Debugging;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
@@ -54,6 +55,9 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
     private readonly ImportBeatmapChangeHandler importBeatmapChangeHandler;
 
     [Cached]
+    private readonly DebugBeatmapManager debugBeatmapManager;
+
+    [Cached]
     private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
 
     public KaraokeBeatmapEditor()
@@ -71,6 +75,8 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
         AddInternal(lyricsProvider = new LyricsProvider());
 
         AddInternal(importBeatmapChangeHandler = new ImportBeatmapChangeHandler());
+
+        AddInternal(debugBeatmapManager = new DebugBeatmapManager());
     }
 
     protected override GenericEditorScreen<KaraokeBeatmapEditorScreenMode> GenerateScreen(KaraokeBeatmapEditorScreenMode screenMode) =>
@@ -98,8 +104,6 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                         new OsuMenuItemSpacer(),
                         new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                         new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
-                        new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
-                        new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                     },
                 },
                 new LyricEditorModeMenuItem("Mode", bindableLyricEditorMode),
@@ -115,6 +119,14 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                 new("Config")
                 {
                     Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenuItem("Lock", lyricEditorConfigManager) },
+                },
+                new("Debug")
+                {
+                    Items = new MenuItem[]
+                    {
+                        new EditorMenuItem("Export to json", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJson()),
+                        new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJsonBeatmap()),
+                    },
                 },
             },
             _ => Array.Empty<MenuItem>(),
