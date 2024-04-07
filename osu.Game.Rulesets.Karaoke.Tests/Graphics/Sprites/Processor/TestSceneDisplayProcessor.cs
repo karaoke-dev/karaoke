@@ -57,7 +57,7 @@ public abstract partial class TestSceneDisplayProcessor : OsuGridTestScene
 
     #region Override properties.
 
-    protected abstract BaseDisplayProcessor CreateProcessor(Lyric lyric, LyricDisplayProperty displayProperty);
+    protected abstract LyricDisplayType DisplayType { get; }
 
     #endregion
 
@@ -140,7 +140,7 @@ public abstract partial class TestSceneDisplayProcessor : OsuGridTestScene
 
             // create processor
             lyric = createLyricFunc();
-            testProcessor = CreateProcessor(lyric, displayProperty);
+            testProcessor = DisplayLyricProcessor.GetLyricDisplayProcessor(lyric, DisplayType, displayProperty);
 
             // bind event
             testProcessor.TopTextChanged += texts =>
@@ -165,19 +165,25 @@ public abstract partial class TestSceneDisplayProcessor : OsuGridTestScene
             };
 
             // create the drawable for preview.
-            createSampleSpriteText(lyric);
+            createSampleSpriteText(lyric, DisplayType, displayProperty);
         });
     }
 
-    private void createSampleSpriteText(Lyric lyric)
+    private void createSampleSpriteText(Lyric lyric, LyricDisplayType displayType, LyricDisplayProperty displayProperty)
     {
         Cell(0).Child = createProvider("karaoke sprite text", new DrawableKaraokeSpriteText(lyric)
         {
             LeftTextColour = Color4.Green,
             RightTextColour = Color4.Red,
             Clock = new FramedClock(manualClock),
+            DisplayType = displayType,
+            DisplayProperty = displayProperty,
         });
-        Cell(1).Child = createProvider("lyric sprite text", new DrawableLyricSpriteText(lyric));
+        Cell(1).Child = createProvider("lyric sprite text", new DrawableLyricSpriteText(lyric)
+        {
+            DisplayType = displayType,
+            DisplayProperty = displayProperty,
+        });
         return;
 
         static Drawable createProvider(string name, Drawable sample) =>
