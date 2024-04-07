@@ -61,6 +61,7 @@ public class DisplayLyricProcessor : IDisposable
     {
         // re-create the processor.
         processor?.Dispose();
+        processor = GetLyricDisplayProcessor(lyric, DisplayType, DisplayProperty);
         processor = DisplayType switch
         {
             LyricDisplayType.Lyric => new LyricFirstDisplayProcessor(lyric, DisplayProperty),
@@ -105,4 +106,12 @@ public class DisplayLyricProcessor : IDisposable
     {
         processor?.Dispose();
     }
+
+    public static BaseDisplayProcessor GetLyricDisplayProcessor(Lyric lyric, LyricDisplayType displayType, LyricDisplayProperty displayProperty) =>
+        displayType switch
+        {
+            LyricDisplayType.Lyric => new LyricFirstDisplayProcessor(lyric, displayProperty),
+            LyricDisplayType.RomanisedSyllable => new RomanisedSyllableFirstDisplayProcessor(lyric, displayProperty),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites.Processor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
@@ -14,8 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics.Sprites.Processor;
 
 public partial class TestSceneLyricFirstDisplayProcessor : TestSceneDisplayProcessor
 {
-    protected override BaseDisplayProcessor CreateProcessor(Lyric lyric, LyricDisplayProperty displayProperty)
-        => new LyricFirstDisplayProcessor(lyric, displayProperty);
+    protected override LyricDisplayType DisplayType => LyricDisplayType.Lyric;
 
     #region Happy path
 
