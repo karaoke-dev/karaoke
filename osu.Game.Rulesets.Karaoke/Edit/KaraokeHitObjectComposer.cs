@@ -166,6 +166,9 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
                 {
                     Items = new MenuItem[]
                     {
+                        new EditorMenuItem("Override beatmap as json format", MenuItemType.Destructive, () => debugBeatmapManager.OverrideTheBeatmapWithJsonFormat()),
+                        new EditorMenuItem("Save beatmap to new difficulty as json format", MenuItemType.Destructive, () => debugBeatmapManager.SaveToNewDifficulty()),
+                        new OsuMenuItemSpacer(),
                         new EditorMenuItem("Export to json", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJson()),
                         new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => debugBeatmapManager.ExportToJsonBeatmap()),
                     },
