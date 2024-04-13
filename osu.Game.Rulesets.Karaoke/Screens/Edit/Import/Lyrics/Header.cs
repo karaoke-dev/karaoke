@@ -61,13 +61,14 @@ public partial class Header : Container
             },
         };
 
+        breadcrumbs.Current.TriggerChange();
         breadcrumbs.Current.ValueChanged += screen =>
         {
-            if (screen.NewValue is ILyricImporterStepScreen multiScreen)
-                title.Screen = multiScreen;
-        };
+            if (screen.NewValue is not ILyricImporterStepScreen importerStepScreen)
+                throw new NotImportStepScreenException();
 
-        breadcrumbs.Current.TriggerChange();
+            title.Screen = importerStepScreen;
+        };
     }
 
     [BackgroundDependencyLoader]
@@ -154,10 +155,10 @@ public partial class Header : Container
                 return;
 
             if (Current.Value is not ILyricImporterStepScreen currentScreen)
-                return;
+                throw new NotImportStepScreenException();
 
             if (tab.Value is not ILyricImporterStepScreen targetScreen)
-                return;
+                throw new NotImportStepScreenException();
 
             if (targetScreen.Step > currentScreen.Step)
                 throw new InvalidOperationException("Cannot roll back to next step. How did you did that?");

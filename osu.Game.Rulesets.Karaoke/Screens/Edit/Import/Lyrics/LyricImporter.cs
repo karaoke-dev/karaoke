@@ -133,7 +133,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
                 // as we don't want to display the back button, manual handling of exit action is required.
                 // follow how editor.cs does.
                 if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen screen)
-                    throw new InvalidOperationException("Screen stack should only contains step screen");
+                    throw new NotImportStepScreenException();
 
                 if (screen.Step != LyricImporterStep.ImportLyric)
                 {
