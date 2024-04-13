@@ -20,21 +20,6 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 
     public void Push(LyricImporterStep step)
     {
-        if (CurrentScreen != null)
-        {
-            if (CurrentScreen is not ILyricImporterStepScreen lyricSubScreen)
-                throw new NotImportStepScreenException();
-
-            if (step == lyricSubScreen.Step)
-                throw new ScreenNotCurrentException("Cannot push same screen.");
-
-            if (step <= lyricSubScreen.Step)
-                throw new ScreenNotCurrentException("Cannot push previous then current screen.");
-
-            if (lyricSubScreen.Step == LyricImporterStep.AssignLanguage && step > LyricImporterStep.GenerateTimeTag)
-                throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
-        }
-
         Push(getScreenByStep(step));
         return;
 
@@ -56,8 +41,24 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
         if (screen is not ILyricImporterStepScreen lyricSubScreen)
             throw new NotImportStepScreenException();
 
+        if (CurrentScreen is ILyricImporterStepScreen currentScreen)
+            checkStep(currentScreen.Step, lyricSubScreen.Step);
+
         stack.Push(lyricSubScreen);
         base.Push(screen);
+        return;
+
+        static void checkStep(LyricImporterStep currentStep, LyricImporterStep newStep)
+        {
+            if (newStep == currentStep)
+                throw new ScreenNotCurrentException("Cannot push same screen.");
+
+            if (newStep <= currentStep)
+                throw new ScreenNotCurrentException("Cannot push previous then current screen.");
+
+            if (currentStep == LyricImporterStep.AssignLanguage && newStep > LyricImporterStep.GenerateTimeTag)
+                throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
+        }
     }
 
     public void Pop(LyricImporterStep step)
