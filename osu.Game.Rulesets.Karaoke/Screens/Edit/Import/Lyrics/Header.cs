@@ -86,7 +86,7 @@ public partial class Header : Container
 
         public ILyricImporterStepScreen Screen
         {
-            set => pageTitle.Text = value.ShortTitle;
+            set => pageTitle.Text = value.Title;
         }
 
         public LyricImporterHeaderTitle()

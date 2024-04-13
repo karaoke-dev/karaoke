@@ -13,8 +13,6 @@ public interface ILyricImporterStepScreen : IScreen
 
     string Title { get; }
 
-    string ShortTitle { get; }
-
     IconUsage Icon { get; }
 
     void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack);

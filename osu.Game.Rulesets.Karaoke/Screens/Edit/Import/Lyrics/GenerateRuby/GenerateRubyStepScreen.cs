@@ -13,8 +13,6 @@ public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEd
 {
     public override string Title => "Generate ruby";
 
-    public override string ShortTitle => "Generate ruby";
-
     public override LyricImporterStep Step => LyricImporterStep.GenerateRuby;
 
     public override IconUsage Icon => FontAwesome.Solid.Gem;

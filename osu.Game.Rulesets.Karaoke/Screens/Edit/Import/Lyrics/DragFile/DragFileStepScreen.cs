@@ -20,7 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.DragFile;
 public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFiles
 {
     public override string Title => "Import";
-    public override string ShortTitle => "Import";
     public override LyricImporterStep Step => LyricImporterStep.ImportLyric;
     public override IconUsage Icon => FontAwesome.Solid.Upload;
 

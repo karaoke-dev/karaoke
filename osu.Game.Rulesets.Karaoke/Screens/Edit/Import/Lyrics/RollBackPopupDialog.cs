@@ -11,7 +11,7 @@ public partial class RollBackPopupDialog : PopupDialog
     public RollBackPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction)
     {
         Icon = screen.Icon;
-        HeaderText = screen.ShortTitle;
+        HeaderText = "Rollback?";
         BodyText = $"Will roll-back to step '{screen.Title}'";
         Buttons = new PopupDialogButton[]
         {
