@@ -57,14 +57,22 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 
     public void Pop(LyricImporterStep step)
     {
-        var screen = stack.FirstOrDefault(x => getStepByScreen(x) == step);
-        if (screen == null)
+        Pop(getScreenByStep(step));
+    }
+
+    public void Pop(IScreen screen)
+    {
+        if (screen is not ILyricImporterStepScreen newStepScreen)
+            throw new NotImportStepScreenException();
+
+        var targetScreen = stack.FirstOrDefault(x => x == newStepScreen);
+        if (targetScreen == null)
             throw new ScreenNotCurrentException("Screen is not in the lyric import step.");
 
-        screen.MakeCurrent();
+        targetScreen.MakeCurrent();
 
         // pop to target stack.
-        while (getStepByScreen(stack.Peek()) != step)
+        while (stack.Peek() != targetScreen)
         {
             stack.Pop();
         }

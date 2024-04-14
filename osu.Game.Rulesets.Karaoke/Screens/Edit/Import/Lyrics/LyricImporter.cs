@@ -2,46 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Allocation;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics.Containers;
 using osu.Game.Input.Bindings;
-using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
-using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
-[Cached(typeof(IImportStateResolver))]
-public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
+public partial class LyricImporter : ScreenWithBeatmapBackground, IKeyBindingHandler<GlobalAction>
 {
-    private readonly LyricImporterWaveContainer waves;
-    private readonly Box background;
-
-    [Cached]
-    protected LyricImporterSubScreenStack ScreenStack { get; private set; }
-
-    private readonly BindableBeatDivisor beatDivisor = new();
-
-    private EditorBeatmap editorBeatmap = null!;
-
-    private ImportLyricManager importManager = null!;
-
-    private LyricsProvider lyricsProvider = null!;
-
-    private DependencyContainer dependencies = null!;
-
-    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+    private readonly ImportLyricOverlay importLyricOverlay;
 
     // Hide the back button because we cannot show it only in the first step.
     public override bool AllowBackButton => false;
@@ -50,76 +22,21 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
 
     public LyricImporter()
     {
-        InternalChild = waves = new LyricImporterWaveContainer
+        InternalChild = importLyricOverlay = new ImportLyricOverlay
         {
-            RelativeSizeAxes = Axes.Both,
-            Child = new PopoverContainer
+            OnImportCancelled = this.Exit,
+            OnImportFinished = b =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
-                {
-                    background = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                    new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both },
-                    },
-                    new Header(ScreenStack),
-                },
+                this.Exit();
+                OnImportFinished?.Invoke(b);
             },
         };
-
-        ScreenStack.Push(LyricImporterStep.ImportLyric);
     }
 
     protected override void LoadComplete()
     {
         base.LoadComplete();
-        waves.Show();
-    }
-
-    [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider)
-    {
-        background.Colour = colourProvider.Background3;
-
-        // todo: remove caching of this and consume via editorBeatmap?
-        // follow how editor.cs do.
-        dependencies.Cache(beatDivisor);
-
-        // inject local editor beatmap handler because should not affect global beatmap data.
-        var playableBeatmap = new KaraokeBeatmap
-        {
-            BeatmapInfo =
-            {
-                Ruleset = new KaraokeRuleset().RulesetInfo,
-            },
-        };
-        AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
-        dependencies.CacheAs(editorBeatmap);
-
-        AddInternal(importManager = new ImportLyricManager());
-        dependencies.Cache(importManager);
-
-        AddInternal(lyricsProvider = new LyricsProvider());
-        dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-
-        dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
-    }
-
-    public void Cancel()
-    {
-        this.Exit();
-    }
-
-    public void Finish()
-    {
-        this.Exit();
-        OnImportFinished?.Invoke(editorBeatmap);
+        importLyricOverlay.Show();
     }
 
     public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
@@ -130,7 +47,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
         switch (e.Action)
         {
             case GlobalAction.Back:
-                if (ScreenStack.IsFirstStep())
+                if (importLyricOverlay.IsFirstStep())
                 {
                     // the better UX behavior should be move to the previous step.
                     // But it will not asking.
@@ -150,19 +67,5 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
 
     public void OnReleased(KeyBindingReleaseEvent<GlobalAction> e)
     {
-    }
-
-    private partial class LyricImporterWaveContainer : WaveContainer
-    {
-        protected override bool StartHidden => true;
-
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
-        {
-            FirstWaveColour = colourProvider.Light4;
-            SecondWaveColour = colourProvider.Light3;
-            ThirdWaveColour = colourProvider.Dark4;
-            FourthWaveColour = colourProvider.Dark3;
-        }
     }
 }

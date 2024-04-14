@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
-public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
+public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreen
 {
     // it's a tricky way to let navigation bar able to get the lyric state.
     // not a good solution, but have no better way now.
@@ -23,10 +23,14 @@ public abstract partial class LyricImporterStepScreenWithLyricEditor : LyricImpo
 
     protected LyricImporterStepScreenWithLyricEditor()
     {
-        AddInternal(lockChangeHandler = new LockChangeHandler());
+        InternalChildren = new[]
+        {
+            lockChangeHandler = new LockChangeHandler(),
+            CreateContent(),
+        };
     }
 
-    protected override Drawable CreateContent()
+    protected virtual Drawable CreateContent()
         => lyricEditor = new ImportLyricEditor
         {
             RelativeSizeAxes = Axes.Both,

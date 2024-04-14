@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateRuby;
 
-public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEditor
+public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEditor, IHasTopNavigation
 {
     public override string Title => "Generate ruby";
 
@@ -23,7 +23,7 @@ public partial class GenerateRubyStepScreen : LyricImporterStepScreenWithLyricEd
         AddInternal(lyricPropertyAutoGenerateChangeHandler = new LyricPropertyAutoGenerateChangeHandler());
     }
 
-    protected override TopNavigation CreateNavigation()
+    public TopNavigation CreateNavigation()
         => new GenerateRubyNavigation(this);
 
     protected override Drawable CreateContent()
