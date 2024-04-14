@@ -40,6 +40,8 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
 
     public bool IsFirstStep() => ScreenStack.IsFirstStep();
 
+    protected override bool DimMainContent => false;
+
     public ImportLyricOverlay()
         : base(OverlayColourScheme.Pink)
     {
