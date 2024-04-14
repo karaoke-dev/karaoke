@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.EditLyric;
 
-public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEditor
+public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEditor, IHasTopNavigation
 {
     public override string Title => "Edit lyric";
 
@@ -27,7 +27,7 @@ public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEdito
         AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
     }
 
-    protected override TopNavigation CreateNavigation()
+    public TopNavigation CreateNavigation()
         => new EditLyricNavigation(this);
 
     protected override Drawable CreateContent()

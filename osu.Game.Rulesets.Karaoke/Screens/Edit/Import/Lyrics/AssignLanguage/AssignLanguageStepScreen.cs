@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.AssignLanguage;
 
-public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
+public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor, IHasTopNavigation
 {
     public override string Title => "Language";
 
@@ -27,7 +27,7 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
         AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
     }
 
-    protected override TopNavigation CreateNavigation()
+    public TopNavigation CreateNavigation()
         => new AssignLanguageNavigation(this);
 
     protected override Drawable CreateContent()

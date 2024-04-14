@@ -18,7 +18,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
-public abstract partial class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreenWithTopNavigation
+public abstract partial class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreen, IHasTopNavigation
 {
     protected new T Screen => (T)base.Screen;
 

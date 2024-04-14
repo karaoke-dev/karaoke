@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
@@ -19,6 +20,8 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
     protected override OverlayTitle CreateTitle() => new ImportLyricHeaderTitle();
 
     protected override OsuTabControl<ILyricImporterStepScreen> CreateTabControl() => new ImportStepTabControl();
+
+    protected override Drawable CreateContent() => new ImportLyricHeaderContent();
 
     private LyricImporterSubScreenStack screenStack = null!;
 
@@ -112,6 +115,36 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
             protected override void OnActivated() => FadeHovered();
 
             protected override void OnDeactivated() => FadeUnhovered();
+        }
+    }
+
+    public partial class ImportLyricHeaderContent : Container
+    {
+        public ImportLyricHeaderContent()
+        {
+            Height = 40;
+            RelativeSizeAxes = Axes.X;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(LyricImporterSubScreenStack screenStack)
+        {
+            screenStack.ScreenPushed += onScreenChanged;
+            screenStack.ScreenExited += onScreenChanged;
+        }
+
+        private void onScreenChanged(IScreen _, IScreen newScreen)
+        {
+            Clear();
+
+            if (newScreen is not IHasTopNavigation screenWithNavigation)
+                return;
+
+            Schedule(() =>
+            {
+                // Should wait until DI loaded inside.
+                Add(screenWithNavigation.CreateNavigation());
+            });
         }
     }
 }

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics.GenerateTimeTag;
 
-public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
+public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor, IHasTopNavigation
 {
     public override string Title => "Generate time tag";
 
@@ -30,7 +30,7 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
         AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
     }
 
-    protected override TopNavigation CreateNavigation()
+    public TopNavigation CreateNavigation()
         => new GenerateTimeTagNavigation(this);
 
     protected override Drawable CreateContent()
