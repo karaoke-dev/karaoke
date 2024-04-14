@@ -4,7 +4,9 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -134,5 +136,19 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
             },
             _ => Array.Empty<MenuItem>(),
         };
+    }
+
+    public override void OnSuspending(ScreenTransitionEvent e)
+    {
+        // add fade-in/out effect for the lyric importer.
+        this.FadeOutFromOne(250);
+        base.OnSuspending(e);
+    }
+
+    public override void OnResuming(ScreenTransitionEvent e)
+    {
+        // add fade-in/out effect for the lyric importer.
+        base.OnResuming(e);
+        this.FadeInFromZero(250, Easing.OutQuint);
     }
 }
