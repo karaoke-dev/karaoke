@@ -122,7 +122,7 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
     {
         public ImportLyricHeaderContent()
         {
-            Height = 40;
+            Height = 32;
             RelativeSizeAxes = Axes.X;
         }
 

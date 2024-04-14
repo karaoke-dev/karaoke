@@ -13,6 +13,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -61,7 +62,7 @@ public abstract partial class TopNavigation : CompositeDrawable
                 t.Origin = Anchor.CentreLeft;
                 t.RelativeSizeAxes = Axes.X;
                 t.AutoSizeAxes = Axes.Y;
-                t.Margin = new MarginPadding { Left = 15 };
+                t.Margin = new MarginPadding { Left = WaveOverlayContainer.HORIZONTAL_PADDING };
             }),
             button = new IconButton
             {
@@ -165,11 +166,15 @@ public abstract partial class TopNavigation : CompositeDrawable
 
     public partial class NavigationTextContainer : CustomizableTextContainer
     {
+        private static readonly FontUsage default_font = new(size: 14);
+
+        protected override SpriteText CreateSpriteText() => base.CreateSpriteText().With(x => x.Font = default_font);
+
         protected void AddLinkFactory(string name, string text, Action action)
         {
             AddIconFactory(name, () => new ClickableSpriteText
             {
-                Font = new FontUsage(size: 20),
+                Font = default_font,
                 Text = text,
                 Action = action,
             });
