@@ -21,7 +21,7 @@ public class ImportLyricMenu : MenuItem
             return;
 
         var importer = new LyricImporter();
-        importer.OnImportFinished += importBeatmapChangeHandler.Import;
+        importer.OnImportFinished = importBeatmapChangeHandler.Import;
         screen.Push(importer);
     }
 }

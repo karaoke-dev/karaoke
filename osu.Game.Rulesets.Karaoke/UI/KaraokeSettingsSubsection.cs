@@ -26,13 +26,10 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
     {
     }
 
-    [Resolved]
-    protected OsuGame Game { get; private set; } = null!;
-
     private KaraokeChangelogOverlay? changelogOverlay;
 
     [BackgroundDependencyLoader]
-    private void load(IPerformFromScreenRunner performer)
+    private void load(OsuGame game, IPerformFromScreenRunner performer)
     {
         var config = (KaraokeRulesetConfigManager)Config;
 
@@ -80,8 +77,8 @@ public partial class KaraokeSettingsSubsection : RulesetSettingsSubsection
                 {
                     try
                     {
-                        var displayContainer = Game.GetChangelogPlacementContainer();
-                        var settingOverlay = Game.GetSettingsOverlay();
+                        var displayContainer = game.GetChangelogPlacementContainer();
+                        var settingOverlay = game.GetSettingsOverlay();
                         if (displayContainer == null)
                             return;
 

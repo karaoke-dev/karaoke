@@ -95,7 +95,11 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
 
         // should not continuous showing the caret position if move the caret by keyboard.
         if (Type == DrawableCaretType.Caret)
-            this.HidePopover();
+        {
+            // todo: should wait until layer is attached to the parent.
+            // use quick way to fix this because it will cause crash if open the
+            Schedule(this.HidePopover);
+        }
     }
 
     protected override bool OnClick(ClickEvent e)

@@ -6,7 +6,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
+using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -18,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 [Cached(typeof(IImportStateResolver))]
 public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, IImportStateResolver
 {
-    public Action? OnImportCancelled;
-
     public Action<IBeatmap>? OnImportFinished;
+
+    public Action? OverlayClosed;
 
     [Cached]
     protected LyricImporterSubScreenStack ScreenStack { get; private set; }
@@ -39,6 +41,8 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
         => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
     public bool IsFirstStep() => ScreenStack.IsFirstStep();
+
+    protected override bool DimMainContent => false;
 
     public ImportLyricOverlay()
         : base(OverlayColourScheme.Pink)
@@ -106,13 +110,47 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
 
     protected override ImportLyricHeader CreateHeader() => new();
 
+    public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+    {
+        if (e.Repeat)
+            return false;
+
+        switch (e.Action)
+        {
+            case GlobalAction.Back:
+                if (!IsFirstStep())
+                {
+                    // go to previous step.
+                    ScreenStack.Pop();
+                }
+                else
+                {
+                    Cancel();
+                }
+
+                return true;
+
+            default:
+                return base.OnPressed(e);
+        }
+    }
+
     public void Cancel()
     {
-        OnImportCancelled?.Invoke();
+        Hide();
     }
 
     public void Finish()
     {
         OnImportFinished?.Invoke(editorBeatmap);
+        Hide();
+    }
+
+    protected override void PopOutComplete()
+    {
+        if (LoadState < LoadState.Ready)
+            return;
+
+        OverlayClosed?.Invoke();
     }
 }
