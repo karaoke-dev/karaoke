@@ -135,7 +135,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
                 if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen screen)
                     throw new NotImportStepScreenException();
 
-                if (screen.Step != LyricImporterStep.ImportLyric)
+                if (ScreenStack.IsFirstStep())
                 {
                     // the better UX behavior should be move to the previous step.
                     // But it will not asking.

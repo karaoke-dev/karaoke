@@ -9,8 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 
 public interface ILyricImporterStepScreen : IScreen
 {
-    LyricImporterStep Step { get; }
-
     string Title { get; }
 
     IconUsage Icon { get; }

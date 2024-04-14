@@ -13,8 +13,6 @@ public partial class EditLyricStepScreen : LyricImporterStepScreenWithLyricEdito
 {
     public override string Title => "Edit lyric";
 
-    public override LyricImporterStep Step => LyricImporterStep.EditLyric;
-
     public override IconUsage Icon => FontAwesome.Solid.Globe;
 
     [Cached(typeof(ILyricsChangeHandler))]

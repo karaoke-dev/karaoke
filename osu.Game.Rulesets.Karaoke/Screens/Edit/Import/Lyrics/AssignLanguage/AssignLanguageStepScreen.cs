@@ -13,8 +13,6 @@ public partial class AssignLanguageStepScreen : LyricImporterStepScreenWithLyric
 {
     public override string Title => "Language";
 
-    public override LyricImporterStep Step => LyricImporterStep.AssignLanguage;
-
     public override IconUsage Icon => FontAwesome.Solid.Globe;
 
     [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]

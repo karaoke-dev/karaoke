@@ -18,33 +18,27 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 {
     private readonly Stack<ILyricImporterStepScreen> stack = new();
 
+    public LyricImporterStep CurrentStep => getStepByScreen(stack.Peek());
+
     public void Push(LyricImporterStep step)
     {
         Push(getScreenByStep(step));
-        return;
-
-        static ILyricImporterStepScreen getScreenByStep(LyricImporterStep step) =>
-            step switch
-            {
-                LyricImporterStep.ImportLyric => new DragFileStepScreen(),
-                LyricImporterStep.EditLyric => new EditLyricStepScreen(),
-                LyricImporterStep.AssignLanguage => new AssignLanguageStepScreen(),
-                LyricImporterStep.GenerateRuby => new GenerateRubyStepScreen(),
-                LyricImporterStep.GenerateTimeTag => new GenerateTimeTagStepScreen(),
-                LyricImporterStep.Success => new SuccessStepScreen(),
-                _ => throw new ScreenNotCurrentException("Screen is not in the lyric import step.")
-            };
     }
 
     public new void Push(IScreen screen)
     {
-        if (screen is not ILyricImporterStepScreen lyricSubScreen)
+        if (screen is not ILyricImporterStepScreen newStepScreen)
             throw new NotImportStepScreenException();
 
         if (CurrentScreen is ILyricImporterStepScreen currentScreen)
-            checkStep(currentScreen.Step, lyricSubScreen.Step);
+        {
+            var currentStep = getStepByScreen(currentScreen);
+            var newStep = getStepByScreen(newStepScreen);
 
-        stack.Push(lyricSubScreen);
+            checkStep(currentStep, newStep);
+        }
+
+        stack.Push(newStepScreen);
         base.Push(screen);
         return;
 
@@ -63,16 +57,45 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 
     public void Pop(LyricImporterStep step)
     {
-        var screen = stack.FirstOrDefault(x => x.Step == step);
+        var screen = stack.FirstOrDefault(x => getStepByScreen(x) == step);
         if (screen == null)
             throw new ScreenNotCurrentException("Screen is not in the lyric import step.");
 
         screen.MakeCurrent();
 
         // pop to target stack.
-        while (stack.Peek().Step != step)
+        while (getStepByScreen(stack.Peek()) != step)
         {
             stack.Pop();
         }
     }
+
+    public bool IsFirstStep()
+    {
+        return stack.Count == 1;
+    }
+
+    private static ILyricImporterStepScreen getScreenByStep(LyricImporterStep step) =>
+        step switch
+        {
+            LyricImporterStep.ImportLyric => new DragFileStepScreen(),
+            LyricImporterStep.EditLyric => new EditLyricStepScreen(),
+            LyricImporterStep.AssignLanguage => new AssignLanguageStepScreen(),
+            LyricImporterStep.GenerateRuby => new GenerateRubyStepScreen(),
+            LyricImporterStep.GenerateTimeTag => new GenerateTimeTagStepScreen(),
+            LyricImporterStep.Success => new SuccessStepScreen(),
+            _ => throw new ScreenNotCurrentException("Screen is not in the lyric import step."),
+        };
+
+    private static LyricImporterStep getStepByScreen(ILyricImporterStepScreen screen) =>
+        screen switch
+        {
+            DragFileStepScreen => LyricImporterStep.ImportLyric,
+            EditLyricStepScreen => LyricImporterStep.EditLyric,
+            AssignLanguageStepScreen => LyricImporterStep.AssignLanguage,
+            GenerateRubyStepScreen => LyricImporterStep.GenerateRuby,
+            GenerateTimeTagStepScreen => LyricImporterStep.GenerateTimeTag,
+            SuccessStepScreen => LyricImporterStep.Success,
+            _ => throw new ScreenNotCurrentException("Screen is not in the lyric import step."),
+        };
 }

@@ -73,16 +73,7 @@ public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImpo
 
         public void GoToStep(LyricImporterStep step)
         {
-            if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen lyricSubScreen)
-                return;
-
-            if (step == lyricSubScreen.Step)
-                return;
-
-            if (step <= lyricSubScreen.Step)
-                return;
-
-            var totalSteps = Enum.GetValues<LyricImporterStep>().Where(x => x > lyricSubScreen.Step && x <= step);
+            var totalSteps = Enum.GetValues<LyricImporterStep>().Where(x => x > ScreenStack.CurrentStep && x <= step);
 
             foreach (var gotoStep in totalSteps)
             {
