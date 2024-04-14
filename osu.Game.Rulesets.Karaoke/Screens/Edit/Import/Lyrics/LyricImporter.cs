@@ -130,12 +130,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IImportStateRe
         switch (e.Action)
         {
             case GlobalAction.Back:
-                // as we don't want to display the back button, manual handling of exit action is required.
-                // follow how editor.cs does.
-                if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen screen)
-                    throw new InvalidOperationException("Screen stack should only contains step screen");
-
-                if (screen.Step != LyricImporterStep.ImportLyric)
+                if (ScreenStack.IsFirstStep())
                 {
                     // the better UX behavior should be move to the previous step.
                     // But it will not asking.

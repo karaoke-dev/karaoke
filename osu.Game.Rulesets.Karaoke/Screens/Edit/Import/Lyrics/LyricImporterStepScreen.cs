@@ -26,10 +26,6 @@ public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporte
     [Resolved]
     protected IDialogOverlay DialogOverlay { get; private set; } = null!;
 
-    public abstract string ShortTitle { get; }
-
-    public abstract LyricImporterStep Step { get; }
-
     public abstract IconUsage Icon { get; }
 
     protected LyricImporterStepScreen()

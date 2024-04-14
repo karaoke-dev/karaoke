@@ -18,69 +18,84 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 {
     private readonly Stack<ILyricImporterStepScreen> stack = new();
 
+    public LyricImporterStep CurrentStep => getStepByScreen(stack.Peek());
+
     public void Push(LyricImporterStep step)
     {
-        if (CurrentScreen is ILyricImporterStepScreen lyricSubScreen)
-        {
-            if (step == lyricSubScreen.Step)
-                throw new ScreenNotCurrentException("Cannot push same screen.");
-
-            if (step <= lyricSubScreen.Step)
-                throw new ScreenNotCurrentException("Cannot push previous then current screen.");
-
-            if (lyricSubScreen.Step == LyricImporterStep.AssignLanguage && step > LyricImporterStep.GenerateTimeTag)
-                throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
-        }
-
-        switch (step)
-        {
-            case LyricImporterStep.ImportLyric:
-                Push(new DragFileStepScreen());
-                return;
-
-            case LyricImporterStep.EditLyric:
-                Push(new EditLyricStepScreen());
-                return;
-
-            case LyricImporterStep.AssignLanguage:
-                Push(new AssignLanguageStepScreen());
-                return;
-
-            case LyricImporterStep.GenerateRuby:
-                Push(new GenerateRubyStepScreen());
-                return;
-
-            case LyricImporterStep.GenerateTimeTag:
-                Push(new GenerateTimeTagStepScreen());
-                return;
-
-            case LyricImporterStep.Success:
-                Push(new SuccessStepScreen());
-                return;
-
-            default:
-                throw new ScreenNotCurrentException("Screen is not in the lyric import step.");
-        }
+        Push(getScreenByStep(step));
     }
 
-    public void Push(ILyricImporterStepScreen screen)
+    public new void Push(IScreen screen)
     {
-        stack.Push(screen);
-        Push(screen as IScreen);
+        if (screen is not ILyricImporterStepScreen newStepScreen)
+            throw new NotImportStepScreenException();
+
+        if (CurrentScreen is ILyricImporterStepScreen currentScreen)
+        {
+            var currentStep = getStepByScreen(currentScreen);
+            var newStep = getStepByScreen(newStepScreen);
+
+            checkStep(currentStep, newStep);
+        }
+
+        stack.Push(newStepScreen);
+        base.Push(screen);
+        return;
+
+        static void checkStep(LyricImporterStep currentStep, LyricImporterStep newStep)
+        {
+            if (newStep == currentStep)
+                throw new ScreenNotCurrentException("Cannot push same screen.");
+
+            if (newStep <= currentStep)
+                throw new ScreenNotCurrentException("Cannot push previous then current screen.");
+
+            if (currentStep == LyricImporterStep.AssignLanguage && newStep > LyricImporterStep.GenerateTimeTag)
+                throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
+        }
     }
 
     public void Pop(LyricImporterStep step)
     {
-        var screen = stack.FirstOrDefault(x => x.Step == step);
+        var screen = stack.FirstOrDefault(x => getStepByScreen(x) == step);
         if (screen == null)
             throw new ScreenNotCurrentException("Screen is not in the lyric import step.");
 
         screen.MakeCurrent();
 
         // pop to target stack.
-        while (stack.Peek().Step != step)
+        while (getStepByScreen(stack.Peek()) != step)
         {
             stack.Pop();
         }
     }
+
+    public bool IsFirstStep()
+    {
+        return CurrentStep == LyricImporterStep.ImportLyric;
+    }
+
+    private static ILyricImporterStepScreen getScreenByStep(LyricImporterStep step) =>
+        step switch
+        {
+            LyricImporterStep.ImportLyric => new DragFileStepScreen(),
+            LyricImporterStep.EditLyric => new EditLyricStepScreen(),
+            LyricImporterStep.AssignLanguage => new AssignLanguageStepScreen(),
+            LyricImporterStep.GenerateRuby => new GenerateRubyStepScreen(),
+            LyricImporterStep.GenerateTimeTag => new GenerateTimeTagStepScreen(),
+            LyricImporterStep.Success => new SuccessStepScreen(),
+            _ => throw new ScreenNotCurrentException("Screen is not in the lyric import step."),
+        };
+
+    private static LyricImporterStep getStepByScreen(ILyricImporterStepScreen screen) =>
+        screen switch
+        {
+            DragFileStepScreen => LyricImporterStep.ImportLyric,
+            EditLyricStepScreen => LyricImporterStep.EditLyric,
+            AssignLanguageStepScreen => LyricImporterStep.AssignLanguage,
+            GenerateRubyStepScreen => LyricImporterStep.GenerateRuby,
+            GenerateTimeTagStepScreen => LyricImporterStep.GenerateTimeTag,
+            SuccessStepScreen => LyricImporterStep.Success,
+            _ => throw new ScreenNotCurrentException("Screen is not in the lyric import step."),
+        };
 }

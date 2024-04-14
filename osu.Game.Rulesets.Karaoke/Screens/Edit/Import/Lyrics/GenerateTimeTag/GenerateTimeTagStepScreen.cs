@@ -16,10 +16,6 @@ public partial class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyri
 {
     public override string Title => "Generate time tag";
 
-    public override string ShortTitle => "Generate time tag";
-
-    public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
-
     public override IconUsage Icon => FontAwesome.Solid.Tag;
 
     [Cached(typeof(ILyricPropertyAutoGenerateChangeHandler))]

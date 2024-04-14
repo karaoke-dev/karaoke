@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -61,13 +60,14 @@ public partial class Header : Container
             },
         };
 
+        breadcrumbs.Current.TriggerChange();
         breadcrumbs.Current.ValueChanged += screen =>
         {
-            if (screen.NewValue is ILyricImporterStepScreen multiScreen)
-                title.Screen = multiScreen;
-        };
+            if (screen.NewValue is not ILyricImporterStepScreen importerStepScreen)
+                throw new NotImportStepScreenException();
 
-        breadcrumbs.Current.TriggerChange();
+            title.Screen = importerStepScreen;
+        };
     }
 
     [BackgroundDependencyLoader]
@@ -85,7 +85,7 @@ public partial class Header : Container
 
         public ILyricImporterStepScreen Screen
         {
-            set => pageTitle.Text = value.ShortTitle;
+            set => pageTitle.Text = value.Title;
         }
 
         public LyricImporterHeaderTitle()
@@ -154,13 +154,10 @@ public partial class Header : Container
                 return;
 
             if (Current.Value is not ILyricImporterStepScreen currentScreen)
-                return;
+                throw new NotImportStepScreenException();
 
             if (tab.Value is not ILyricImporterStepScreen targetScreen)
-                return;
-
-            if (targetScreen.Step > currentScreen.Step)
-                throw new InvalidOperationException("Cannot roll back to next step. How did you did that?");
+                throw new NotImportStepScreenException();
 
             // Should make sure that
             targetScreen.ConfirmRollBackFromStep(currentScreen, enabled =>
