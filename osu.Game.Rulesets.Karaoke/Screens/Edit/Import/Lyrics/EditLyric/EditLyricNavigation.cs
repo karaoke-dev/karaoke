@@ -28,9 +28,11 @@ public partial class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
         });
     }
 
-    [BackgroundDependencyLoader]
-    private void load(ILyricEditorState state)
+    protected override void LoadComplete()
     {
+        base.LoadComplete();
+
+        var state = GetDependency<ILyricEditorState>();
         bindableMode.BindTo(state.BindableMode);
     }
 

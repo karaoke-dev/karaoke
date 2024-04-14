@@ -192,6 +192,14 @@ public abstract partial class TopNavigation : CompositeDrawable
             }
         }
     }
+
+    /// <summary>
+    /// Get the dependency from the screen instead of <see cref="ImportLyricHeader"/>
+    /// </summary>
+    /// <typeparam name="TInject"></typeparam>
+    /// <returns></returns>
+    protected TInject GetDependency<TInject>() where TInject : class
+        => Screen.Dependencies.Get<TInject>();
 }
 
 public enum NavigationState
