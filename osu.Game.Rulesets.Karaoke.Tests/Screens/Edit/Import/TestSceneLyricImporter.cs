@@ -63,8 +63,19 @@ public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImpo
 
     public partial class TestLyricImporter : LyricImporter
     {
+        protected LyricImporterSubScreenStack ScreenStack => (InternalChild as ImportLyricOverlay)!.Dependencies.Get<LyricImporterSubScreenStack>();
+
+        private readonly FileInfo fileInfo;
+
         public TestLyricImporter(FileInfo fileInfo)
         {
+            this.fileInfo = fileInfo;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
             if (ScreenStack.CurrentScreen is not DragFileStepScreen dragFileSubScreen)
                 throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileStepScreen)} does not in the screen.");
 
