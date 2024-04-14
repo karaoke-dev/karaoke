@@ -15,8 +15,13 @@ public partial class LyricImporter : ScreenWithBeatmapBackground, IKeyBindingHan
 {
     private readonly ImportLyricOverlay importLyricOverlay;
 
-    // Hide the back button because we cannot show it only in the first step.
     public override bool AllowBackButton => false;
+
+    public override bool HideOverlaysOnEnter => true;
+
+    public override bool DisallowExternalBeatmapRulesetChanges => true;
+
+    public override bool? ApplyModTrackAdjustments => false;
 
     public event Action<IBeatmap>? OnImportFinished;
 
