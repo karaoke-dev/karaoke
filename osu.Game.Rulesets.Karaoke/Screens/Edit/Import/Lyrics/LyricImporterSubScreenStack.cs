@@ -72,7 +72,7 @@ public partial class LyricImporterSubScreenStack : OsuScreenStack
 
     public bool IsFirstStep()
     {
-        return stack.Count == 1;
+        return CurrentStep == LyricImporterStep.ImportLyric;
     }
 
     private static ILyricImporterStepScreen getScreenByStep(LyricImporterStep step) =>
