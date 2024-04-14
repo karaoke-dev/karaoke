@@ -6,7 +6,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
+using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -107,6 +109,32 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
     }
 
     protected override ImportLyricHeader CreateHeader() => new();
+
+    public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+    {
+        if (e.Repeat)
+            return false;
+
+        switch (e.Action)
+        {
+            case GlobalAction.Back:
+                if (!IsFirstStep())
+                {
+                    // go to previous step.
+                    ScreenStack.Pop();
+                }
+                else
+                {
+                    Hide();
+                    Cancel();
+                }
+
+                return true;
+
+            default:
+                return base.OnPressed(e);
+        }
+    }
 
     public void Cancel()
     {
