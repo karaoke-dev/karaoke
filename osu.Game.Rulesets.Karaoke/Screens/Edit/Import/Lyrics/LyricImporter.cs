@@ -20,18 +20,17 @@ public partial class LyricImporter : ScreenWithBeatmapBackground
 
     public override bool? ApplyModTrackAdjustments => false;
 
-    public event Action<IBeatmap>? OnImportFinished;
+    public Action<IBeatmap>? OnImportFinished;
 
     public LyricImporter()
     {
         InternalChild = importLyricOverlay = new ImportLyricOverlay
         {
-            OnImportCancelled = this.Exit,
             OnImportFinished = b =>
             {
-                this.Exit();
                 OnImportFinished?.Invoke(b);
             },
+            OverlayClosed = this.Exit,
         };
     }
 

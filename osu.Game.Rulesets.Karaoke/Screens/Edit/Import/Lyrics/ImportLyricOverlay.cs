@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Import.Lyrics;
 [Cached(typeof(IImportStateResolver))]
 public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, IImportStateResolver
 {
-    public Action? OnImportCancelled;
-
     public Action<IBeatmap>? OnImportFinished;
+
+    public Action? OverlayClosed;
 
     [Cached]
     protected LyricImporterSubScreenStack ScreenStack { get; private set; }
@@ -125,7 +125,6 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
                 }
                 else
                 {
-                    Hide();
                     Cancel();
                 }
 
@@ -138,11 +137,20 @@ public partial class ImportLyricOverlay : FullscreenOverlay<ImportLyricHeader>, 
 
     public void Cancel()
     {
-        OnImportCancelled?.Invoke();
+        Hide();
     }
 
     public void Finish()
     {
         OnImportFinished?.Invoke(editorBeatmap);
+        Hide();
+    }
+
+    protected override void PopOutComplete()
+    {
+        if (LoadState < LoadState.Ready)
+            return;
+
+        OverlayClosed?.Invoke();
     }
 }
