@@ -31,7 +31,7 @@ public partial class RecordTimeTagActionReceiver : Component, IKeyBindingHandler
     public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
         var caretPosition = lyricCaretState.CaretPosition;
-        if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
+        if (caretPosition is not RecordingTimeTagCaretPosition timeTagCaretPosition)
             throw new NotSupportedException(nameof(caretPosition));
 
         var currentTimeTag = timeTagCaretPosition.TimeTag;

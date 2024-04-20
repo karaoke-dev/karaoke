@@ -172,7 +172,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
             return timeTagEditMode switch
             {
                 TimeTagEditStep.Create => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
-                TimeTagEditStep.Recording => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
+                TimeTagEditStep.Recording => new RecordingTimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
                 TimeTagEditStep.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(timeTagEditMode)),
             };
