@@ -11,6 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosit
 
 [TestFixture(typeof(CreateRubyTagCaretPosition))]
 [TestFixture(typeof(CuttingCaretPosition))]
+[TestFixture(typeof(RecordingTimeTagCaretPosition))]
 [TestFixture(typeof(TimeTagCaretPosition))]
 [TestFixture(typeof(TimeTagIndexCaretPosition))]
 [TestFixture(typeof(TypingCaretPosition))]
@@ -87,22 +88,24 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         });
     }
 
-    private IIndexCaretPosition createSmallerCaretPosition(Lyric lyric) =>
+    private static IIndexCaretPosition createSmallerCaretPosition(Lyric lyric) =>
         typeof(TIndexCaretPosition) switch
         {
             Type t when t == typeof(CreateRubyTagCaretPosition) => new CreateRubyTagCaretPosition(lyric, 0),
             Type t when t == typeof(CuttingCaretPosition) => new CuttingCaretPosition(lyric, 0),
+            Type t when t == typeof(RecordingTimeTagCaretPosition) => new RecordingTimeTagCaretPosition(lyric, new TimeTag(new TextIndex())),
             Type t when t == typeof(TimeTagCaretPosition) => new TimeTagCaretPosition(lyric, new TimeTag(new TextIndex())),
             Type t when t == typeof(TimeTagIndexCaretPosition) => new TimeTagIndexCaretPosition(lyric, 0),
             Type t when t == typeof(TypingCaretPosition) => new TypingCaretPosition(lyric, 0),
             _ => throw new NotSupportedException(),
         };
 
-    private IIndexCaretPosition createBiggerCaretPosition(Lyric lyric) =>
+    private static IIndexCaretPosition createBiggerCaretPosition(Lyric lyric) =>
         typeof(TIndexCaretPosition) switch
         {
             Type t when t == typeof(CreateRubyTagCaretPosition) => new CreateRubyTagCaretPosition(lyric, 1),
             Type t when t == typeof(CuttingCaretPosition) => new CuttingCaretPosition(lyric, 1),
+            Type t when t == typeof(RecordingTimeTagCaretPosition) => new RecordingTimeTagCaretPosition(lyric, new TimeTag(new TextIndex(1))),
             Type t when t == typeof(TimeTagCaretPosition) => new TimeTagCaretPosition(lyric, new TimeTag(new TextIndex(1))),
             Type t when t == typeof(TimeTagIndexCaretPosition) => new TimeTagIndexCaretPosition(lyric, 1),
             Type t when t == typeof(TypingCaretPosition) => new TypingCaretPosition(lyric, 1),

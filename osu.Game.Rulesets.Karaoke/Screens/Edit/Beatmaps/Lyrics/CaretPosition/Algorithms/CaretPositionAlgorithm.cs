@@ -90,4 +90,6 @@ public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlg
 
         return movedCaretPosition;
     }
+
+    public Type GetCaretPositionType() => typeof(TCaretPosition);
 }

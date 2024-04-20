@@ -63,18 +63,14 @@ public partial class CaretLayer : BaseLayer
         AddInternal(caret);
 
         static DrawableCaret? createCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretType type) =>
-            algorithm switch
+            algorithm?.GetCaretPositionType() switch
             {
-                // cutting lyric
-                CuttingCaretPositionAlgorithm => new DrawableCuttingCaret(type),
-                // typing
-                TypingCaretPositionAlgorithm => new DrawableTypingCaret(type),
-                // creat ruby-tag
-                CreateRubyTagCaretPositionAlgorithm => new DrawableCreateRubyTagCaret(type),
-                // creat time-tag
-                TimeTagIndexCaretPositionAlgorithm => new DrawableTimeTagIndexCaret(type),
-                // record time-tag
-                TimeTagCaretPositionAlgorithm => new DrawableTimeTagCaret(type),
+                Type t when t == typeof(CreateRubyTagCaretPosition) => new DrawableCreateRubyTagCaret(type),
+                Type t when t == typeof(CuttingCaretPosition) => new DrawableCuttingCaret(type),
+                Type t when t == typeof(RecordingTimeTagCaretPosition) => new DrawableRecordingTimeTagCaret(type),
+                Type t when t == typeof(TimeTagCaretPosition) => new DrawableTimeTagCaret(type),
+                Type t when t == typeof(TimeTagIndexCaretPosition) => new DrawableTimeTagIndexCaret(type),
+                Type t when t == typeof(TypingCaretPosition) => new DrawableTypingCaret(type),
                 _ => null,
             };
     }
