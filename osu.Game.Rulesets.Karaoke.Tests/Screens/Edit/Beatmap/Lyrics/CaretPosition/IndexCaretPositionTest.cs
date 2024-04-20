@@ -87,7 +87,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         });
     }
 
-    private IIndexCaretPosition createSmallerCaretPosition(Lyric lyric) =>
+    private static IIndexCaretPosition createSmallerCaretPosition(Lyric lyric) =>
         typeof(TIndexCaretPosition) switch
         {
             Type t when t == typeof(CreateRubyTagCaretPosition) => new CreateRubyTagCaretPosition(lyric, 0),
@@ -98,7 +98,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
             _ => throw new NotSupportedException(),
         };
 
-    private IIndexCaretPosition createBiggerCaretPosition(Lyric lyric) =>
+    private static IIndexCaretPosition createBiggerCaretPosition(Lyric lyric) =>
         typeof(TIndexCaretPosition) switch
         {
             Type t when t == typeof(CreateRubyTagCaretPosition) => new CreateRubyTagCaretPosition(lyric, 1),
