@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
@@ -19,8 +20,8 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     private const float caret_move_time = 60;
     private const float caret_resize_time = 60;
 
-    // should be list of indexse.
-    private readonly FillFlowContainer<DrawableTextIndex> drawableTextIndexes;
+    // should be list of indexes.
+    private readonly TextIndexInfo textIndexInfo;
     private readonly Box indicator;
 
     public DrawableRecordingTimeTagCaret(DrawableCaretType type)
@@ -42,18 +43,16 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                     Alpha = 0.1f,
                 },
             },
-            drawableTextIndexes = new FillFlowContainer<DrawableTextIndex>()
+            textIndexInfo = new TextIndexInfo
             {
                 Y = -10,
-                Spacing = new Vector2(5),
                 Alpha = GetAlpha(type),
-                AutoSizeAxes = Axes.Both,
-                Direction = FillDirection.Horizontal,
             },
             indicator = new Box
             {
                 Width = border_spacing,
                 RelativeSizeAxes = Axes.Y,
+                Alpha = GetAlpha(type),
             },
         };
     }
@@ -66,35 +65,15 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
             LyricPositionProvider.GetRectByCharIndex(charRange.Item1),
             LyricPositionProvider.GetRectByCharIndex(charRange.Item2));
 
-        // to able to let user know now many indicator.
-        updateDisplayListTextIndex(caret);
-
         // update the caret.
         changeTheSizeByRect(rect);
-        drawableTextIndexes.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.TopLeft, Anchor.TopRight);
-        drawableTextIndexes.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
+        textIndexInfo.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.TopLeft, Anchor.TopRight);
+        textIndexInfo.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
+        textIndexInfo.X = TextIndexUtils.GetValueByState(timeTag.Index, -10, 10);
+        textIndexInfo.UpdateCaret(caret);
         indicator.Colour = Colours.GetRecordingTimeTagCaretColour(timeTag);
         indicator.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
         indicator.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
-    }
-
-    private void updateDisplayListTextIndex(RecordingTimeTagCaretPosition caret)
-    {
-        int paddingIndicator = caret.GetPaddingTextIndex();
-        drawableTextIndexes.Clear();
-
-        for (int i = 0; i <= paddingIndicator; i++)
-        {
-            bool isFirst = i == 0;
-            drawableTextIndexes.Add(new DrawableTextIndex
-            {
-                Size = new Vector2(isFirst ? 15 : 12),
-                State = caret.TimeTag.Index.State,
-                Colour = Colours.GetRecordingTimeTagCaretColour(caret.TimeTag),
-                Origin = Anchor.BottomLeft,
-                Alpha = isFirst ? 1 : 0.4f,
-            });
-        }
     }
 
     private void changeTheSizeByRect(RectangleF rect)
@@ -110,5 +89,119 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     protected override void TriggerDisallowEditEffect(OsuColour colour)
     {
         this.FlashColour(colour.Red, 200);
+    }
+
+    private partial class TextIndexInfo : CompositeDrawable
+    {
+        private const int border_radius = 5;
+
+        private DrawableTextIndex currentTextIndex = null!;
+        private FillFlowContainer<DrawableTextIndex> pendingTextIndexes = null!;
+
+        [Resolved]
+        private OsuColour colours { get; set; } = null!;
+
+        public TextIndexInfo()
+        {
+            Masking = true;
+            CornerRadius = border_radius;
+
+            AutoSizeAxes = Axes.Both;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state)
+        {
+            InternalChildren = new Drawable[]
+            {
+                new Box
+                {
+                    Name = "Background",
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = colourProvider.Background2(state.Mode),
+                },
+                new Container
+                {
+                    Name = "Background for pending text indexes",
+                    RelativeSizeAxes = Axes.Both,
+                    Padding = new MarginPadding
+                    {
+                        Horizontal = 5,
+                        Vertical = 7,
+                    },
+                    Child = new Container
+                    {
+                        Masking = true,
+                        CornerRadius = border_radius,
+                        RelativeSizeAxes = Axes.Both,
+                        Child = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = colourProvider.Background3(state.Mode),
+                        },
+                    },
+                },
+                new FillFlowContainer
+                {
+                    AutoSizeAxes = Axes.Both,
+                    Margin = new MarginPadding(5),
+                    Direction = FillDirection.Horizontal,
+                    Children = new Drawable[]
+                    {
+                        new Container
+                        {
+                            AutoSizeAxes = Axes.Both,
+                            Masking = true,
+                            CornerRadius = border_radius,
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = colourProvider.Background5(state.Mode),
+                                },
+                                currentTextIndex = new DrawableTextIndex
+                                {
+                                    Anchor = Anchor.Centre,
+                                    Origin = Anchor.Centre,
+                                    Margin = new MarginPadding(5),
+                                    Size = new Vector2(15),
+                                },
+                            },
+                        },
+                        pendingTextIndexes = new FillFlowContainer<DrawableTextIndex>
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            AutoSizeAxes = Axes.Both,
+                            Spacing = new Vector2(5),
+                            Direction = FillDirection.Horizontal,
+                        },
+                    },
+                },
+            };
+        }
+
+        public void UpdateCaret(RecordingTimeTagCaretPosition caret)
+        {
+            currentTextIndex.State = caret.TimeTag.Index.State;
+
+            int paddingIndicator = caret.GetPaddingTextIndex();
+            pendingTextIndexes.Clear();
+
+            for (int i = 0; i < paddingIndicator; i++)
+            {
+                pendingTextIndexes.Add(new DrawableTextIndex
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(12),
+                    Margin = new MarginPadding(5),
+                    State = caret.TimeTag.Index.State,
+                    Colour = colours.Yellow,
+                    Alpha = 0.5f,
+                });
+            }
+        }
     }
 }
