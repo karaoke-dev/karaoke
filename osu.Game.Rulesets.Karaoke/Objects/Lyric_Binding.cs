@@ -135,9 +135,17 @@ public partial class Lyric
 
         void updateLyricTime()
         {
-            // todo: should think about lyric time should be nullable?
-            LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
-            LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
+            double? startTime = TimeTagsUtils.GetStartTime(TimeTags);
+            double? endTime = TimeTagsUtils.GetEndTime(TimeTags);
+
+            if (startTime != null && endTime != null)
+            {
+                LyricTimingInfo = new LyricTimingInfo(startTime.Value, endTime.Value);
+            }
+            else
+            {
+                LyricTimingInfo = null;
+            }
         }
     }
 

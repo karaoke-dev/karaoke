@@ -71,7 +71,9 @@ public partial class NoteEditor : Container
             if (lyric == null)
                 return;
 
-            Playfield.Clock = new StopClock(lyric.LyricStartTime);
+            double? lyricStartTime = lyric.LyricTimingInfo?.StartTime;
+            if (lyricStartTime != null)
+                Playfield.Clock = new StopClock(lyricStartTime.Value);
 
             // add all matched notes into playfield
             var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);

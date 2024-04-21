@@ -66,11 +66,12 @@ public partial class SingerLyricTimeline : EditableTimeline
 
         const float preempt_time = 1000;
 
-        var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricStartTime > 0);
-        if (firstLyric == null)
+        var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricTimingInfo?.StartTime > 0);
+        double? lyricStartTime = firstLyric?.LyricTimingInfo?.StartTime;
+        if (lyricStartTime == null)
             return;
 
-        float position = PositionAtTime(firstLyric.LyricStartTime - preempt_time);
+        float position = PositionAtTime(lyricStartTime.Value - preempt_time);
         ScrollTo(position, false);
     }
 }

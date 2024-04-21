@@ -64,7 +64,7 @@ public class CheckBeatmapPageInfo : CheckBeatmapProperty<PageInfo, Lyric>
         if (pages.Count < 2)
             yield break;
 
-        var availablePagesInObject = hitObject.ToDictionary(k => k, v => property.GetPageAt(v.LyricStartTime));
+        var availablePagesInObject = hitObject.ToDictionary(k => k, v => v.LyricTimingInfo != null ? property.GetPageAt(v.LyricTimingInfo.StartTime) : null);
 
         var missingHitObjectPages = pages.Where(page => !availablePagesInObject.ContainsValue(page)).ToArray();
 
