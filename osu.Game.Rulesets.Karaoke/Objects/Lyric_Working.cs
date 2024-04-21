@@ -114,13 +114,13 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     }
 
     [JsonIgnore]
-    public double LyricStartTime { get; private set; }
+    public double? LyricStartTime { get; private set; }
 
     [JsonIgnore]
-    public double LyricEndTime { get; private set; }
+    public double? LyricEndTime { get; private set; }
 
     [JsonIgnore]
-    public double LyricDuration => LyricEndTime - LyricStartTime;
+    public double? LyricDuration => LyricEndTime - LyricStartTime;
 
     /// <summary>
     /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.
