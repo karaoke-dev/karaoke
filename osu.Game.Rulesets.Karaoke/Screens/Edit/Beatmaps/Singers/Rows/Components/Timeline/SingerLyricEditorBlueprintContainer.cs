@@ -25,7 +25,7 @@ public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBluep
     }
 
     protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
-        => blueprints.OrderBy(b => b.Item.LyricStartTime);
+        => blueprints.OrderBy(b => b.Item.LyricTimingInfo?.StartTime);
 
     protected override SelectionHandler<Lyric> CreateSelectionHandler()
         => new SingerLyricSelectionHandler();

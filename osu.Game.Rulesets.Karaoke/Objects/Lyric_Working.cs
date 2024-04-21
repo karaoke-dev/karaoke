@@ -58,7 +58,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
                     break;
 
                 case LyricWorkingProperty.Page:
-                    PageIndex = getPageIndex(beatmap, LyricStartTime);
+                    PageIndex = getPageIndex(beatmap, LyricTimingInfo?.StartTime);
                     break;
 
                 case LyricWorkingProperty.ReferenceLyric:
@@ -114,13 +114,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
     }
 
     [JsonIgnore]
-    public double? LyricStartTime { get; private set; }
-
-    [JsonIgnore]
-    public double? LyricEndTime { get; private set; }
-
-    [JsonIgnore]
-    public double? LyricDuration => LyricEndTime - LyricStartTime;
+    public LyricTimingInfo? LyricTimingInfo { get; private set; }
 
     /// <summary>
     /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.
@@ -230,5 +224,47 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
 
             updateStateByWorkingProperty(LyricWorkingProperty.EffectApplier);
         }
+    }
+}
+
+public class LyricTimingInfo : IEquatable<LyricTimingInfo>
+{
+    public LyricTimingInfo(double startTime, double endTime)
+    {
+        StartTime = startTime;
+        EndTime = endTime;
+    }
+
+    public double StartTime { get; }
+
+    public double EndTime { get; }
+
+    public double Duration => EndTime - StartTime;
+
+    public bool Equals(LyricTimingInfo? other)
+    {
+        if (ReferenceEquals(null, other))
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        return StartTime.Equals(other.StartTime) && EndTime.Equals(other.EndTime);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+            return false;
+
+        if (ReferenceEquals(this, obj))
+            return true;
+
+        return obj.GetType() == GetType() && Equals((LyricTimingInfo)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(StartTime, EndTime);
     }
 }

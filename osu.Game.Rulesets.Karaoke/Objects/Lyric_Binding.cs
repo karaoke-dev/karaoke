@@ -135,8 +135,17 @@ public partial class Lyric
 
         void updateLyricTime()
         {
-            LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags);
-            LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags);
+            double? startTime = TimeTagsUtils.GetStartTime(TimeTags);
+            double? endTime = TimeTagsUtils.GetEndTime(TimeTags);
+
+            if (startTime != null && endTime != null)
+            {
+                LyricTimingInfo = new LyricTimingInfo(startTime.Value, endTime.Value);
+            }
+            else
+            {
+                LyricTimingInfo = null;
+            }
         }
     }
 

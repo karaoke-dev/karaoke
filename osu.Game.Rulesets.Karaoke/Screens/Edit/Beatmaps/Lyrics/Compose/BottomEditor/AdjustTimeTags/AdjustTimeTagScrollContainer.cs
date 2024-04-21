@@ -65,7 +65,7 @@ public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPos
         // add the little bit delay to make sure that content width is not zero.
         this.FadeOut(1).OnComplete(x =>
         {
-            double? lyricStartTime = newLyric.LyricStartTime;
+            double? lyricStartTime = newLyric.LyricTimingInfo?.StartTime;
 
             if (lyricStartTime != null)
             {

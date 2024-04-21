@@ -71,7 +71,7 @@ public partial class NoteEditor : Container
             if (lyric == null)
                 return;
 
-            double? lyricStartTime = lyric.LyricStartTime;
+            double? lyricStartTime = lyric.LyricTimingInfo?.StartTime;
             if (lyricStartTime != null)
                 Playfield.Clock = new StopClock(lyricStartTime.Value);
 

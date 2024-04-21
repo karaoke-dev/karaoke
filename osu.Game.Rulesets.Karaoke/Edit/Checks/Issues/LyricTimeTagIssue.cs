@@ -15,6 +15,6 @@ public class LyricTimeTagIssue : LyricIssue
     {
         TimeTag = timeTag;
 
-        Time = TimeTag.Time ?? Lyric.LyricStartTime;
+        Time = TimeTag.Time ?? Lyric.LyricTimingInfo?.StartTime;
     }
 }

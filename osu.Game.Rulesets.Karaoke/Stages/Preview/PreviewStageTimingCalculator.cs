@@ -24,7 +24,7 @@ public class PreviewStageTimingCalculator
 
     public PreviewStageTimingCalculator(IBeatmap beatmap, PreviewStageDefinition definition)
     {
-        orderedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.LyricStartTime != null).OrderBy(x => x.LyricStartTime).ToArray();
+        orderedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.LyricTimingInfo != null).OrderBy(x => x.LyricTimingInfo!.StartTime).ToArray();
         numberOfLyrics = definition.NumberOfLyrics;
         fadingTime = definition.FadingTime;
         lineMovingOffsetTime = definition.LineMovingOffsetTime;
@@ -32,7 +32,7 @@ public class PreviewStageTimingCalculator
 
     public double CalculateStartTime(Lyric lyric)
     {
-        if (lyric.LyricStartTime == null)
+        if (lyric.LyricTimingInfo == null)
             throw new InvalidOperationException();
 
         var matchedLyrics = getRelatedLyrics(lyric, numberOfLyrics + 1).ToArray();
@@ -45,16 +45,16 @@ public class PreviewStageTimingCalculator
             return 0;
         }
 
-        double startEffectTime = matchedLyrics.Min(x => x.LyricEndTime!.Value) + numberOfLyrics * lineMovingOffsetTime;
+        double startEffectTime = matchedLyrics.Min(x => x.LyricTimingInfo!.EndTime) + numberOfLyrics * lineMovingOffsetTime;
         return startEffectTime + fadingTime;
     }
 
     public double CalculateEndTime(Lyric lyric)
     {
-        if (lyric.LyricEndTime == null)
+        if (lyric.LyricTimingInfo == null)
             throw new InvalidOperationException();
 
-        return lyric.LyricEndTime.Value;
+        return lyric.LyricTimingInfo.EndTime;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class PreviewStageTimingCalculator
         {
             // line should start from zero.
             int line = matchedLyrics.Length - i - 2;
-            double time = matchedLyrics[i].LyricEndTime!.Value + line * lineMovingOffsetTime;
+            double time = matchedLyrics[i].LyricTimingInfo!.EndTime + line * lineMovingOffsetTime;
 
             dictionary.Add(line, time);
         }
