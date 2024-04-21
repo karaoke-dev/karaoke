@@ -64,7 +64,7 @@ internal partial class TapButton : CircularContainer
     {
         Size = new Vector2(SIZE);
 
-        const float ring_width = 22;
+        const float ring_width = 10;
         const float light_padding = 3;
 
         InternalChild = scaleContainer = new Container
