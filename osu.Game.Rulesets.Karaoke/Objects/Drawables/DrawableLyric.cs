@@ -182,7 +182,11 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
 
     protected override void CheckForResult(bool userTriggered, double timeOffset)
     {
-        if (timeOffset + HitObject.LyricDuration >= 0 && HitObject.HitWindows.CanBeHit(timeOffset + HitObject.LyricDuration))
+        double? duration = HitObject.LyricDuration;
+        if (duration == null)
+            return;
+
+        if (timeOffset + HitObject.LyricDuration >= 0 && HitObject.HitWindows.CanBeHit(timeOffset + duration.Value))
         {
             // note: CheckForResult will not being triggered when roll-back the time.
             // so there's no need to consider the case while roll-back.

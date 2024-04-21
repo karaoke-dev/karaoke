@@ -14,12 +14,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
 public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineSelectionBlueprint<Lyric>, IHasCustomTooltip<Lyric>
 {
+    private const double default_time = 0;
+    private const double default_duration = 1000;
+
     private const float lyric_size = 20;
 
     public EditableLyricTimelineSelectionBlueprint(Lyric item)
         : base(item)
     {
-        X = (float)Item.LyricStartTime;
+        X = (float)(Item.LyricStartTime ?? default_time);
 
         RelativeSizeAxes = Axes.X;
         Height = lyric_size;
@@ -56,7 +59,7 @@ public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineS
         base.Update();
 
         // no bindable so we perform this every update
-        float duration = (float)Item.LyricDuration;
+        float duration = (float)(Item.LyricDuration ?? default_duration);
 
         if (Width != duration)
         {

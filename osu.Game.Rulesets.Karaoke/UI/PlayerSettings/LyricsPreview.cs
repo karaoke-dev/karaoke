@@ -70,8 +70,9 @@ public partial class LyricsPreview : CompositeDrawable
 
     private void triggerLyric(Lyric lyric)
     {
-        double time = lyric.LyricStartTime - bindablePreemptTime.Value;
-        beatmap.Value.Track.Seek(time);
+        double? time = lyric.LyricStartTime - bindablePreemptTime.Value;
+        if (time != null)
+            beatmap.Value.Track.Seek(time.Value);
 
         // because playback might not clear singing lyrics, so we should re-assign the lyric here.
         // todo: find a better place.
