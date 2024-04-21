@@ -58,7 +58,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
         }
     }
 
-    public Page? GetPageAt(double? time)
+    public Page? GetPageAt(double time)
     {
         if (SortedPages.Count < 2)
             return null;
@@ -73,7 +73,7 @@ public class PageInfo : IDeepCloneable<PageInfo>
         return page;
     }
 
-    public int? GetPageIndexAt(double? time)
+    public int? GetPageIndexAt(double time)
     {
         var page = GetPageAt(time);
         if (page == null)

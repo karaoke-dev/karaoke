@@ -58,7 +58,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
                     break;
 
                 case LyricWorkingProperty.Page:
-                    PageIndex = getPageIndex(beatmap, LyricTimingInfo?.StartTime);
+                    PageIndex = LyricTimingInfo != null ? getPageIndex(beatmap, LyricTimingInfo.StartTime) : null;
                     break;
 
                 case LyricWorkingProperty.ReferenceLyric:
@@ -97,7 +97,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasEffe
         static IDictionary<Singer, SingerState[]> getSingers(KaraokeBeatmap beatmap, IEnumerable<ElementId> singerIds)
             => beatmap.SingerInfo.GetSingerByIds(singerIds.ToArray());
 
-        static int? getPageIndex(KaraokeBeatmap beatmap, double? startTime)
+        static int? getPageIndex(KaraokeBeatmap beatmap, double startTime)
             => beatmap.PageInfo.GetPageIndexAt(startTime);
 
         static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
