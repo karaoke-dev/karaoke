@@ -191,12 +191,19 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
 
             for (int i = 0; i < paddingIndicator; i++)
             {
+                bool isFirst = i == 0;
+                bool isLast = i == paddingIndicator - 1;
+
                 pendingTextIndexes.Add(new DrawableTextIndex
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Size = new Vector2(12),
-                    Margin = new MarginPadding(5),
+                    Margin = new MarginPadding(5)
+                    {
+                        Left = isFirst ? 5 : 0,
+                        Right = isLast ? 5 : 0,
+                    },
                     State = caret.TimeTag.Index.State,
                     Colour = colours.Yellow,
                     Alpha = 0.5f,

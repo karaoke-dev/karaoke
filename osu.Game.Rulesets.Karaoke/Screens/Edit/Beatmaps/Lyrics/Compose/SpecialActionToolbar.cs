@@ -166,10 +166,6 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new MoveToPreviousIndexButton(),
                     new MoveToNextIndexButton(),
                     new MoveToLastIndexButton(),
-                    new Separator(),
-                    new SetTimeTagTimeButton(),
-                    new ClearTimeTagTimeButton(),
-                    new ClearAllTimeTagTimeButton(),
                 },
                 TimeTagEditStep.Adjust => new Drawable[]
                 {
