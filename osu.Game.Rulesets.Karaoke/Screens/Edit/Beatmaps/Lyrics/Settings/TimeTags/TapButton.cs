@@ -2,10 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -13,35 +10,31 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Threading;
-using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Input.Bindings;
-using osu.Game.Overlays;
+using osu.Game.Screens.Edit;
 using osuTK;
 using osuTK.Graphics;
-using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalAction>
+internal partial class TapButton : CircularContainer
 {
     public const float SIZE = 140;
 
-    public readonly BindableBool IsHandlingTapping = new();
+    public Action<double>? Tapped;
 
     [Resolved]
-    private OverlayColourProvider colourProvider { get; set; } = null!;
+    private EditorClock editorClock { get; set; } = null!;
 
     [Resolved]
-    private Bindable<ControlPointGroup>? selectedGroup { get; set; }
+    private ILyricEditorState lyricEditorState { get; set; } = null!;
 
     [Resolved]
-    private IBeatSyncProvider? beatSyncSource { get; set; }
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
     private Circle hoverLayer = null!;
 
@@ -53,7 +46,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
     private Container scaleContainer = null!;
     private Container lights = null!;
     private Container lightsGlow = null!;
-    private OsuSpriteText bpmText = null!;
+    private OsuSpriteText timeTagInfoText = null!;
     private Container textContainer = null!;
 
     private bool grabbedMouseDown;
@@ -62,15 +55,9 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
 
     private const int light_count = 8;
 
-    private const int initial_taps_to_ignore = 4;
-
-    private const int max_taps_to_consider = 128;
-
     private const double transition_length = 500;
 
     private const float angular_light_gap = 0.007f;
-
-    private readonly List<double> tapTimings = new();
 
     [BackgroundDependencyLoader]
     private void load()
@@ -90,7 +77,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                 new Circle
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = colourProvider.Background4,
+                    Colour = colourProvider.Background4(lyricEditorState.Mode),
                 },
                 lights = new Container
                 {
@@ -102,7 +89,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                     Name = "outer masking",
                     Masking = true,
                     BorderThickness = light_padding,
-                    BorderColour = colourProvider.Background4,
+                    BorderColour = colourProvider.Background4(lyricEditorState.Mode),
                     Children = new Drawable[]
                     {
                         new Box
@@ -120,7 +107,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                     Size = new Vector2(SIZE - ring_width * 2 + light_padding * 2),
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Colour = colourProvider.Background4,
+                    Colour = colourProvider.Background4(lyricEditorState.Mode),
                 },
                 lightsGlow = new Container
                 {
@@ -136,12 +123,12 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                     {
                         new Box
                         {
-                            Colour = colourProvider.Background2,
+                            Colour = colourProvider.Background2(lyricEditorState.Mode),
                             RelativeSizeAxes = Axes.Both,
                         },
                         innerCircleHighlight = new Box
                         {
-                            Colour = colourProvider.Colour3,
+                            Colour = colourProvider.Colour3(lyricEditorState.Mode),
                             Blending = BlendingParameters.Additive,
                             RelativeSizeAxes = Axes.Both,
                             Alpha = 0,
@@ -149,7 +136,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                         textContainer = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = colourProvider.Background1,
+                            Colour = colourProvider.Background1(lyricEditorState.Mode),
                             Children = new Drawable[]
                             {
                                 new OsuSpriteText
@@ -160,19 +147,19 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                                     Y = 5,
                                     Text = "Tap",
                                 },
-                                bpmText = new OsuSpriteText
+                                timeTagInfoText = new OsuSpriteText
                                 {
-                                    Font = OsuFont.Torus.With(size: 23, weight: FontWeight.Regular),
+                                    Font = OsuFont.Torus.With(size: 18, weight: FontWeight.Regular),
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.TopCentre,
-                                    Y = -1,
+                                    Y = 2,
                                 },
                             },
                         },
                         hoverLayer = new Circle
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = colourProvider.Background1.Opacity(0.3f),
+                            Colour = colourProvider.Background1(lyricEditorState.Mode).Opacity(0.3f),
                             Blending = BlendingParameters.Additive,
                             Alpha = 0,
                         },
@@ -203,12 +190,12 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
         get
         {
             if (grabbedMouseDown)
-                return colourProvider.Background4;
+                return colourProvider.Background4(lyricEditorState.Mode);
 
             if (IsHovered)
-                return colourProvider.Content2;
+                return colourProvider.Content2(lyricEditorState.Mode);
 
-            return colourProvider.Background1;
+            return colourProvider.Background1(lyricEditorState.Mode);
         }
     }
 
@@ -226,16 +213,23 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
         base.OnHoverLost(e);
     }
 
-    protected override bool OnMouseDown(MouseDownEvent e)
+    protected override bool OnClick(ClickEvent e)
+    {
+        Tapped?.Invoke(editorClock.CurrentTime);
+
+        mouseDownAnimation();
+        mouseUpAnimation();
+
+        return true;
+    }
+
+    private void mouseDownAnimation()
     {
         const double in_duration = 100;
 
         grabbedMouseDown = true;
-        IsHandlingTapping.Value = true;
 
         resetDelegate?.Cancel();
-
-        handleTap();
 
         textContainer.FadeColour(textColour, in_duration, Easing.OutQuint);
 
@@ -253,11 +247,9 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
 
         lights[currentLight % light_count].Show();
         lights[(currentLight + light_count / 2) % light_count].Show();
-
-        return true;
     }
 
-    protected override void OnMouseUp(MouseUpEvent e)
+    private void mouseUpAnimation()
     {
         const double out_duration = 800;
 
@@ -271,76 +263,24 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
         innerCircleHighlight.FadeOut(out_duration, Easing.OutQuint);
 
         resetDelegate = Scheduler.AddDelayed(reset, 1000);
-
-        base.OnMouseUp(e);
-    }
-
-    public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
-    {
-        if (e.Action == GlobalAction.EditorTapForBPM && !e.Repeat)
-        {
-            // Direct through mouse handling to achieve animation
-            OnMouseDown(new MouseDownEvent(e.CurrentState, MouseButton.Left));
-            return true;
-        }
-
-        return false;
-    }
-
-    public void OnReleased(KeyBindingReleaseEvent<GlobalAction> e)
-    {
-        if (e.Action == GlobalAction.EditorTapForBPM)
-            OnMouseUp(new MouseUpEvent(e.CurrentState, MouseButton.Left));
-    }
-
-    private void handleTap()
-    {
-        if (selectedGroup?.Value == null)
-            return;
-
-        tapTimings.Add(Clock.CurrentTime);
-
-        if (tapTimings.Count > initial_taps_to_ignore + max_taps_to_consider)
-            tapTimings.RemoveAt(0);
-
-        if (tapTimings.Count < initial_taps_to_ignore * 2)
-        {
-            bpmText.Text = new string('.', tapTimings.Count);
-            return;
-        }
-
-        double averageBeatLength = (tapTimings.Last() - tapTimings.Skip(initial_taps_to_ignore).First()) / (tapTimings.Count - initial_taps_to_ignore - 1);
-        double clockRate = beatSyncSource?.Clock.Rate ?? 1;
-
-        double bpm = Math.Round(60000 / averageBeatLength / clockRate);
-
-        bpmText.Text = $"{bpm} BPM";
-
-        var timingPoint = selectedGroup?.Value.ControlPoints.OfType<TimingControlPoint>().FirstOrDefault();
-
-        if (timingPoint != null)
-        {
-            // Intentionally use the rounded BPM here.
-            timingPoint.BeatLength = 60000 / bpm;
-        }
     }
 
     private void reset()
     {
-        bpmText.FadeOut(transition_length, Easing.OutQuint);
-
-        using (BeginDelayedSequence(tapTimings.Count > 0 ? transition_length : 0))
-        {
-            Schedule(() => bpmText.Text = "the beat!");
-            bpmText.FadeIn(800, Easing.OutQuint);
-        }
+        timeTagInfoText.FadeOut(transition_length, Easing.OutQuint);
+        timeTagInfoText.FadeIn(800, Easing.OutQuint);
 
         foreach (var light in lights)
             light.Hide();
 
-        tapTimings.Clear();
         currentLight = 0;
-        IsHandlingTapping.Value = false;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        timeTagInfoText.Text = editorClock.CurrentTime.ToEditorFormattedString();
     }
 
     private partial class Light : CompositeDrawable
@@ -350,7 +290,10 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
         private Container fillContent = null!;
 
         [Resolved]
-        private OverlayColourProvider colourProvider { get; set; } = null!;
+        private ILyricEditorState lyricEditorState { get; set; } = null!;
+
+        [Resolved]
+        private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -367,13 +310,13 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                 {
                     RelativeSizeAxes = Axes.Both,
                     Progress = 1f / light_count - angular_light_gap,
-                    Colour = colourProvider.Background2,
+                    Colour = colourProvider.Background2(lyricEditorState.Mode),
                 },
                 fillContent = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0,
-                    Colour = colourProvider.Colour1,
+                    Colour = colourProvider.Colour1(lyricEditorState.Mode),
                     Children = new[]
                     {
                         new CircularProgress
@@ -392,7 +335,7 @@ internal partial class TapButton : CircularContainer, IKeyBindingHandler<GlobalA
                             Blending = BlendingParameters.Additive,
                         }.WithEffect(new GlowEffect
                         {
-                            Colour = colourProvider.Colour1.Opacity(0.4f),
+                            Colour = colourProvider.Colour1(lyricEditorState.Mode).Opacity(0.4f),
                             BlurSigma = new Vector2(9f),
                             Strength = 10,
                             PadExtent = true,

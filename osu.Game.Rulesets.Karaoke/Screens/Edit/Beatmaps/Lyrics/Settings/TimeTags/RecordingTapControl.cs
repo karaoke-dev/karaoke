@@ -1,32 +1,48 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Overlays;
-using osu.Game.Screens.Edit.Timing;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-public partial class RecordingTapControl : CompositeDrawable
+public partial class RecordingTapControl : CompositeDrawable, IKeyBindingHandler<KaraokeEditAction>
 {
-    private readonly BindableBool isHandlingTapping = new();
+    [Resolved]
+    private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; } = null!;
 
-    private readonly MetronomeDisplay metronome = null!;
+    [Resolved]
+    private ILyricCaretState lyricCaretState { get; set; } = null!;
+
+    [Resolved]
+    private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
+
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
+
+    private InlineButton undoButton = null!;
+    private InlineButton resetButton = null!;
+    private TapButton tapButton = null!;
 
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider)
+    private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
     {
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;
 
-        InternalChildren = new Container
+        InternalChildren = new Drawable[]
         {
             new Container
             {
@@ -39,47 +55,111 @@ public partial class RecordingTapControl : CompositeDrawable
                 CornerRadius = 15,
                 Children = new Drawable[]
                 {
-                    new InlineButton(FontAwesome.Solid.Stop, Anchor.TopLeft)
+                    undoButton = new InlineButton(FontAwesome.Solid.Trash, Anchor.TopLeft)
                     {
-                        BackgroundColour = colourProvider.Background1,
+                        BackgroundColour = colourProvider.Background1(state.Mode),
                         RelativeSizeAxes = Axes.Both,
                         Height = 0.49f,
                         Action = reset,
                     },
-                    new InlineButton(FontAwesome.Solid.Play, Anchor.BottomLeft)
+                    resetButton = new InlineButton(FontAwesome.Solid.AngleLeft, Anchor.BottomLeft)
                     {
-                        BackgroundColour = colourProvider.Background1,
+                        BackgroundColour = colourProvider.Background1(state.Mode),
                         RelativeSizeAxes = Axes.Both,
                         Height = 0.49f,
                         Anchor = Anchor.BottomLeft,
                         Origin = Anchor.BottomLeft,
-                        Action = start,
+                        Action = undo,
                     },
                 },
             },
-            new TapButton
+            tapButton = new TapButton
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                IsHandlingTapping = { BindTarget = isHandlingTapping },
+                Tapped = onTapped,
             },
         };
-
-        isHandlingTapping.BindValueChanged(handling =>
-        {
-            metronome.EnableClicking = !handling.NewValue;
-
-            if (handling.NewValue)
-                start();
-        }, true);
     }
 
-    private void start()
+    public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
+    {
+        switch (e.Action)
+        {
+            case KaraokeEditAction.ClearTime:
+                resetButton.TriggerClick();
+
+                return true;
+
+            case KaraokeEditAction.SetTime:
+                tapButton.TriggerClick();
+
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
     {
     }
 
     private void reset()
     {
+        if (lyricCaretState.CaretPosition is not RecordingTimeTagCaretPosition timeTagCaretPosition)
+            throw new InvalidOperationException();
+
+        var timingInfo = timeTagCaretPosition.Lyric.LyricTimingInfo;
+
+        lyricTimeTagsChangeHandler.ClearAllTimeTagTime();
+
+        if (timingInfo != null)
+        {
+            editorClock.Seek(timingInfo.StartTime - 1000);
+        }
+
+        if (lyricCaretState.GetCaretPositionByAction(MovingCaretAction.FirstIndex)?.Lyric != timeTagCaretPosition.Lyric)
+            return;
+
+        lyricCaretState.MoveCaret(MovingCaretAction.FirstIndex);
+    }
+
+    private void undo()
+    {
+        if (lyricCaretState.CaretPosition is not RecordingTimeTagCaretPosition timeTagCaretPosition)
+            throw new InvalidOperationException();
+
+        double? currentTimeTagTime = timeTagCaretPosition.TimeTag.Time;
+
+        var timeTag = timeTagCaretPosition.TimeTag;
+        lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
+
+        if (lyricCaretState.GetCaretPositionByAction(MovingCaretAction.PreviousIndex)?.Lyric != timeTagCaretPosition.Lyric)
+            return;
+
+        lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex);
+
+        if (currentTimeTagTime != null)
+        {
+            editorClock.Seek(currentTimeTagTime.Value - 1000);
+        }
+        else
+        {
+            editorClock.Seek(editorClock.CurrentTime - 1000);
+        }
+    }
+
+    private void onTapped(double currentTime)
+    {
+        if (lyricCaretState.CaretPosition is not RecordingTimeTagCaretPosition timeTagCaretPosition)
+            throw new InvalidOperationException();
+
+        var timeTag = timeTagCaretPosition.TimeTag;
+        lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, currentTime);
+
+        if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
+            lyricCaretState.MoveCaret(MovingCaretAction.NextIndex);
     }
 
     private partial class InlineButton : OsuButton
@@ -90,7 +170,10 @@ public partial class RecordingTapControl : CompositeDrawable
         private SpriteIcon spriteIcon = null!;
 
         [Resolved]
-        private OverlayColourProvider colourProvider { get; set; } = null!;
+        private ILyricEditorState lyricEditorState { get; set; } = null!;
+
+        [Resolved]
+        private LyricEditorColourProvider colourProvider { get; set; } = null!;
 
         public InlineButton(IconUsage icon, Anchor anchor)
         {
@@ -105,7 +188,7 @@ public partial class RecordingTapControl : CompositeDrawable
             Content.CornerRadius = 0;
             Content.Masking = false;
 
-            BackgroundColour = colourProvider.Background2;
+            BackgroundColour = colourProvider.Background2(lyricEditorState.Mode);
 
             Content.Add(new Container
             {
@@ -119,7 +202,7 @@ public partial class RecordingTapControl : CompositeDrawable
                         Size = new Vector2(22),
                         Anchor = anchor,
                         Origin = anchor,
-                        Colour = colourProvider.Background1,
+                        Colour = colourProvider.Background1(lyricEditorState.Mode),
                     },
                 },
             });
@@ -133,13 +216,13 @@ public partial class RecordingTapControl : CompositeDrawable
 
         protected override bool OnHover(HoverEvent e)
         {
-            spriteIcon.FadeColour(colourProvider.Content2, 200, Easing.OutQuint);
+            spriteIcon.FadeColour(colourProvider.Content2(lyricEditorState.Mode), 200, Easing.OutQuint);
             return base.OnHover(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            spriteIcon.FadeColour(colourProvider.Background1, 200, Easing.OutQuint);
+            spriteIcon.FadeColour(colourProvider.Background1(lyricEditorState.Mode), 200, Easing.OutQuint);
             base.OnHoverLost(e);
         }
     }
