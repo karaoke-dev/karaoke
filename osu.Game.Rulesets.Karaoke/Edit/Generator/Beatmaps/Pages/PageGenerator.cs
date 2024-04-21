@@ -46,11 +46,14 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
             throw new InvalidOperationException("Interval time should be validate.");
 
         var existPages = Config.ClearExistPages.Value ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
-        var lyricTimingInfos = item.HitObjects.OfType<Lyric>().Select(x => new LyricTimingInfo
-        {
-            StartTime = x.LyricStartTime,
-            EndTime = x.LyricEndTime,
-        }).OrderBy(x => x).ToList();
+        var lyricTimingInfos = item.HitObjects.OfType<Lyric>()
+                                   .Where(x => x.LyricStartTime != null && x.LyricEndTime != null)
+                                   .Select(x => new LyricTimingInfo
+                                   {
+                                       StartTime = x.LyricStartTime!.Value,
+                                       EndTime = x.LyricEndTime!.Value,
+                                   })
+                                   .OrderBy(x => x).ToList();
 
         if (lyricTimingInfos.Count == 0)
             return existPages;
