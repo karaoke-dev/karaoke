@@ -40,6 +40,7 @@ public partial class TimeTagSettings : LyricEditorSettings
         TimeTagEditStep.Recording => new Drawable[]
         {
             new TimeTagEditStepSection(),
+            new TimeTagRecordingToolSection(),
             new TimeTagRecordingConfigSection(),
             new RecordTimeTagActionReceiver(),
         },
