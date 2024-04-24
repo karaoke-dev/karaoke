@@ -38,6 +38,16 @@ public readonly struct RecordingTimeTagCaretPosition : IIndexCaretPosition, ICom
         return CompareTo(recordingTagCaretPosition);
     }
 
+    public int GetTotalTimeTags()
+    {
+        return Lyric.TimeTags.Count;
+    }
+
+    public int GetCurrentTimeTagIndex()
+    {
+        return Lyric.TimeTags.IndexOf(TimeTag);
+    }
+
     public int GetPaddingTextIndex()
     {
         var currentTimeTag = TimeTag;
