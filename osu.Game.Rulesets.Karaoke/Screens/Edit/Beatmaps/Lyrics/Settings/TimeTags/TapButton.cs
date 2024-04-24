@@ -3,7 +3,9 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
@@ -15,6 +17,8 @@ using osu.Framework.Threading;
 using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Screens.Edit;
 using osuTK;
 using osuTK.Graphics;
@@ -41,10 +45,10 @@ internal partial class TapButton : CircularContainer
     private CircularContainer innerCircle = null!;
     private Box innerCircleHighlight = null!;
 
-    private int currentLight;
+    private int currentIndex = 0;
 
     private Container scaleContainer = null!;
-    private Container lights = null!;
+    private Container<Light> lights = null!;
     private Container lightsGlow = null!;
     private OsuSpriteText timeTagInfoText = null!;
     private Container textContainer = null!;
@@ -53,15 +57,17 @@ internal partial class TapButton : CircularContainer
 
     private ScheduledDelegate? resetDelegate;
 
-    private const int light_count = 8;
-
     private const double transition_length = 500;
 
     private const float angular_light_gap = 0.007f;
 
+    private readonly IBindable<ICaretPosition?> bindableCaret = new Bindable<ICaretPosition?>();
+
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(ILyricCaretState lyricCaretState)
     {
+        bindableCaret.BindTo(lyricCaretState.BindableCaretPosition);
+
         Size = new Vector2(SIZE);
 
         const float ring_width = 10;
@@ -79,7 +85,7 @@ internal partial class TapButton : CircularContainer
                     RelativeSizeAxes = Axes.Both,
                     Colour = colourProvider.Background4(lyricEditorState.Mode),
                 },
-                lights = new Container
+                lights = new Container<Light>
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
@@ -168,18 +174,51 @@ internal partial class TapButton : CircularContainer
             },
         };
 
-        for (int i = 0; i < light_count; i++)
+        reset();
+
+        bindableCaret.BindValueChanged(x =>
         {
-            var light = new Light
+            if (x.NewValue is RecordingTimeTagCaretPosition newCaret)
             {
-                Rotation = (i + 1) * (360f / light_count) + 360 * angular_light_gap / 2,
+                updateTimeTagAmount(newCaret.GetTotalTimeTags());
+                updateCurrentTimeTag(newCaret.GetCurrentTimeTagIndex());
+            }
+            else
+            {
+                updateTimeTagAmount(0);
+            }
+        }, true);
+    }
+
+    private void updateTimeTagAmount(int amount)
+    {
+        if (lights.Children.Count == amount)
+            return;
+
+        lights.Clear();
+        lightsGlow.Clear();
+
+        for (int i = 0; i < amount; i++)
+        {
+            var light = new Light(amount)
+            {
+                Rotation = i * (360f / amount) + 360 * angular_light_gap / 2,
             };
 
             lights.Add(light);
             lightsGlow.Add(light.Glow.CreateProxy());
         }
+    }
 
-        reset();
+    private void updateCurrentTimeTag(int currentTimeTagIndex)
+    {
+        currentIndex = currentTimeTagIndex;
+
+        for (int i = 0; i < lights.Children.Count; i++)
+        {
+            bool isTapped = i <= currentIndex;
+            lights.Children[i].IsTapped = isTapped;
+        }
     }
 
     public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
@@ -240,13 +279,8 @@ internal partial class TapButton : CircularContainer
             .FadeIn(50, Easing.OutQuint)
             .FlashColour(Color4.White, 1000, Easing.OutQuint);
 
-        lights[currentLight % light_count].Hide();
-        lights[(currentLight + light_count / 2) % light_count].Hide();
-
-        currentLight++;
-
-        lights[currentLight % light_count].Show();
-        lights[(currentLight + light_count / 2) % light_count].Show();
+        lights.ForEach(x => x.Hide());
+        lights[currentIndex].Show();
     }
 
     private void mouseUpAnimation()
@@ -272,8 +306,6 @@ internal partial class TapButton : CircularContainer
 
         foreach (var light in lights)
             light.Hide();
-
-        currentLight = 0;
     }
 
     protected override void Update()
@@ -283,10 +315,14 @@ internal partial class TapButton : CircularContainer
         timeTagInfoText.Text = editorClock.CurrentTime.ToEditorFormattedString();
     }
 
+    // todo: light should have states:
+    // 1. pending
+    // 2. finished
     private partial class Light : CompositeDrawable
     {
         public Drawable Glow { get; private set; } = null!;
 
+        private CircularProgress circularProgress = null!;
         private Container fillContent = null!;
 
         [Resolved]
@@ -294,6 +330,13 @@ internal partial class TapButton : CircularContainer
 
         [Resolved]
         private LyricEditorColourProvider colourProvider { get; set; } = null!;
+
+        private readonly int lightAmount;
+
+        public Light(int lightAmount)
+        {
+            this.lightAmount = lightAmount;
+        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -306,11 +349,10 @@ internal partial class TapButton : CircularContainer
 
             InternalChildren = new Drawable[]
             {
-                new CircularProgress
+                circularProgress = new CircularProgress
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Progress = 1f / light_count - angular_light_gap,
-                    Colour = colourProvider.Background2(lyricEditorState.Mode),
+                    Progress = 1f / lightAmount - angular_light_gap,
                 },
                 fillContent = new Container
                 {
@@ -322,7 +364,7 @@ internal partial class TapButton : CircularContainer
                         new CircularProgress
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Progress = 1f / light_count - angular_light_gap,
+                            Progress = 1f / lightAmount - angular_light_gap,
                             Blending = BlendingParameters.Additive,
                         },
                         // Please do not try and make sense of this.
@@ -331,7 +373,7 @@ internal partial class TapButton : CircularContainer
                         Glow = new CircularProgress
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Progress = 1f / light_count - 0.01f,
+                            Progress = 1f / lightAmount - 0.01f,
                             Blending = BlendingParameters.Additive,
                         }.WithEffect(new GlowEffect
                         {
@@ -343,6 +385,29 @@ internal partial class TapButton : CircularContainer
                     },
                 },
             };
+
+            updateColour();
+        }
+
+        private bool isTapped = false;
+
+        public bool IsTapped
+        {
+            get => isTapped;
+            set
+            {
+                if (value == isTapped)
+                    return;
+
+                isTapped = value;
+
+                updateColour();
+            }
+        }
+
+        private void updateColour()
+        {
+            circularProgress.Colour = isTapped ? colourProvider.Colour1(lyricEditorState.Mode) : colourProvider.Background2(lyricEditorState.Mode);
         }
 
         public override void Show()
