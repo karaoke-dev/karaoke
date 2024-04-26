@@ -54,6 +54,18 @@ public readonly struct RecordingTimeTagCaretPosition : IIndexCaretPosition, ICom
         return Lyric.TimeTags.SkipWhile(x => x != currentTimeTag).Skip(1).TakeWhile(x => x.Index == currentTimeTag.Index).Count();
     }
 
+    public TimeTag[] GetRecordedTimeTags()
+    {
+        var currentTimeTag = TimeTag;
+        return Lyric.TimeTags.TakeWhile(tag => tag != currentTimeTag).ToArray();
+    }
+
+    public TimeTag[] GetPendingTimeTags()
+    {
+        var currentTimeTag = TimeTag;
+        return Lyric.TimeTags.SkipWhile(tag => tag != currentTimeTag).Skip(1).ToArray();
+    }
+
     public Tuple<int, int> GetLyricCharRange()
     {
         return GetLyricCharRange(TimeTag);
