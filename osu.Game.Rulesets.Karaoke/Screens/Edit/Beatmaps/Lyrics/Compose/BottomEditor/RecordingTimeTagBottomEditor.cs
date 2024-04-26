@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
 
 public partial class RecordingTimeTagBottomEditor : BaseBottomEditor
 {
-    public override float ContentHeight => 60;
+    public override float ContentHeight => 100;
 
     protected override Drawable CreateInfo()
     {
