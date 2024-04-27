@@ -4,8 +4,9 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Components;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
 
@@ -34,8 +35,10 @@ public partial class TimeTagLayer : BaseLayer
         foreach (var timeTag in timeTagsBindable)
         {
             var position = previewLyricPositionProvider.GetPositionByTimeTag(timeTag);
-            AddInternal(new DrawableTimeTag(timeTag)
+            AddInternal(new DrawableTimeTag
             {
+                Size = new Vector2(6),
+                TimeTag = timeTag,
                 Position = position,
             });
         }
