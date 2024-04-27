@@ -95,8 +95,8 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     {
         private const int border_radius = 5;
 
-        private DrawableTextIndex currentTextIndex = null!;
-        private FillFlowContainer<DrawableTextIndex> pendingTextIndexes = null!;
+        private DrawableTimeTag currentTextTag = null!;
+        private FillFlowContainer<DrawableTimeTag> pendingTimeTags = null!;
 
         [Resolved]
         private OsuColour colours { get; set; } = null!;
@@ -160,7 +160,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                                     RelativeSizeAxes = Axes.Both,
                                     Colour = colourProvider.Background5(state.Mode),
                                 },
-                                currentTextIndex = new DrawableTextIndex
+                                currentTextTag = new DrawableTimeTag
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
@@ -169,7 +169,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                                 },
                             },
                         },
-                        pendingTextIndexes = new FillFlowContainer<DrawableTextIndex>
+                        pendingTimeTags = new FillFlowContainer<DrawableTimeTag>
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
@@ -184,17 +184,17 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
 
         public void UpdateCaret(RecordingTimeTagCaretPosition caret)
         {
-            currentTextIndex.State = caret.TimeTag.Index.State;
+            currentTextTag.TimeTag = caret.TimeTag;
 
             int paddingIndicator = caret.GetPaddingTextIndex();
-            pendingTextIndexes.Clear();
+            pendingTimeTags.Clear();
 
             for (int i = 0; i < paddingIndicator; i++)
             {
                 bool isFirst = i == 0;
                 bool isLast = i == paddingIndicator - 1;
 
-                pendingTextIndexes.Add(new DrawableTextIndex
+                pendingTimeTags.Add(new DrawableTimeTag
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -204,8 +204,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                         Left = isFirst ? 5 : 0,
                         Right = isLast ? 5 : 0,
                     },
-                    State = caret.TimeTag.Index.State,
-                    Colour = colours.Yellow,
+                    TimeTag = caret.TimeTag,
                     Alpha = 0.5f,
                 });
             }

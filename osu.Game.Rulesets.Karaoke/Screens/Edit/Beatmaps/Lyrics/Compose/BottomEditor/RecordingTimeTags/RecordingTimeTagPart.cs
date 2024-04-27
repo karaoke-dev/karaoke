@@ -8,11 +8,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
@@ -67,7 +65,7 @@ public partial class RecordingTimeTagPart : TimelinePart
 
         private readonly Lyric lyric;
 
-        private readonly DrawableTextIndex drawableTextIndex;
+        private readonly DrawableTimeTag drawableTimeTag;
 
         public CurrentRecordingTimeTagVisualization(Lyric lyric)
         {
@@ -77,17 +75,18 @@ public partial class RecordingTimeTagPart : TimelinePart
             RelativePositionAxes = Axes.X;
             Size = new Vector2(RecordingTimeTagScrollContainer.TIMELINE_HEIGHT / 2);
 
-            InternalChild = drawableTextIndex = new DrawableTextIndex
+            InternalChild = drawableTimeTag = new DrawableTimeTag
             {
                 Name = "Time tag triangle",
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
+                TimeTagColourFunc = (timeTag, colours) => colours.GetRecordingTimeTagCaretColour(timeTag),
             };
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, RecordingTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState)
+        private void load(RecordingTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState)
         {
             position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
             position.BindValueChanged(e =>
@@ -103,11 +102,9 @@ public partial class RecordingTimeTagPart : TimelinePart
 
                 var timeTag = recordingTimeTagCaretPosition.TimeTag;
                 var textIndex = timeTag.Index;
-                var state = timeTag.Index.State;
 
                 Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
-                drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-                drawableTextIndex.State = state;
+                drawableTimeTag.TimeTag = timeTag;
 
                 if (timeTag.Time.HasValue)
                 {
@@ -122,7 +119,7 @@ public partial class RecordingTimeTagPart : TimelinePart
         }
     }
 
-    private partial class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
+    private partial class RecordingTimeTagVisualization : CompositeDrawable, IHasContextMenu
     {
         [Resolved]
         private ILyricCaretState lyricCaretState { get; set; } = null!;
@@ -131,8 +128,6 @@ public partial class RecordingTimeTagPart : TimelinePart
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
         private readonly Bindable<double?> bindableTime;
-
-        private readonly TextIndexPiece textIndexPiece;
 
         private readonly Lyric lyric;
         private readonly TimeTag timeTag;
@@ -153,13 +148,13 @@ public partial class RecordingTimeTagPart : TimelinePart
             bindableTime = timeTag.TimeBindable.GetBoundCopy();
             InternalChildren = new Drawable[]
             {
-                textIndexPiece = new TextIndexPiece
+                new DrawableTimeTag
                 {
                     Name = "Time tag triangle",
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                    State = textIndex.State,
+                    TimeTag = timeTag,
                 },
                 new OsuSpriteText
                 {
@@ -171,11 +166,8 @@ public partial class RecordingTimeTagPart : TimelinePart
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorClock clock, OsuColour colours, RecordingTimeTagScrollContainer timeline)
+        private void load(RecordingTimeTagScrollContainer timeline)
         {
-            textIndexPiece.Clock = clock;
-            textIndexPiece.Colour = colours.GetTimeTagColour(timeTag);
-
             bindableTime.BindValueChanged(e =>
             {
                 bool hasValue = e.NewValue.HasValue;
@@ -191,15 +183,6 @@ public partial class RecordingTimeTagPart : TimelinePart
 
                     // adjust position.
                     X = (float)previewTime;
-
-                    // make tickle effect.
-                    textIndexPiece.ClearTransforms();
-
-                    using (textIndexPiece.BeginAbsoluteSequence(previewTime))
-                    {
-                        textIndexPiece.Colour = colours.GetTimeTagColour(timeTag);
-                        textIndexPiece.FlashColour(colours.RedDark, 750, Easing.OutQuint);
-                    }
                 });
             }, true);
         }
@@ -211,10 +194,6 @@ public partial class RecordingTimeTagPart : TimelinePart
             return base.OnClick(e);
         }
 
-        public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
-
-        public TimeTag TooltipContent => timeTag;
-
         public MenuItem[] ContextMenuItems =>
             new MenuItem[]
             {
@@ -223,10 +202,5 @@ public partial class RecordingTimeTagPart : TimelinePart
                     lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
                 }),
             };
-    }
-
-    private partial class TextIndexPiece : DrawableTextIndex
-    {
-        public override bool RemoveCompletedTransforms => false;
     }
 }

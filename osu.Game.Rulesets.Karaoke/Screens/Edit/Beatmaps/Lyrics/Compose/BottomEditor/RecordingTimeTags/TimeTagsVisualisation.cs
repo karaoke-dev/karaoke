@@ -72,10 +72,8 @@ public partial class TimeTagsVisualisation : CompositeDrawable
 
     private partial class FocusedTimeTagArea : CompositeDrawable
     {
-        private readonly IBindable<double?> bindableTime = new Bindable<double?>();
-
         private readonly Box background;
-        private readonly DrawableTextIndex drawableTextIndex;
+        private readonly DrawableTimeTag drawableTimeTag;
         private readonly OsuSpriteText timeTagText;
 
         public FocusedTimeTagArea()
@@ -94,7 +92,7 @@ public partial class TimeTagsVisualisation : CompositeDrawable
                         RelativeSizeAxes = Axes.Both,
                     },
                 },
-                drawableTextIndex = new DrawableTextIndex
+                drawableTimeTag = new DrawableTimeTag
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -115,25 +113,8 @@ public partial class TimeTagsVisualisation : CompositeDrawable
         {
             this.timeTag = timeTag;
 
-            drawableTextIndex.State = timeTag.Index.State;
+            drawableTimeTag.TimeTag = timeTag;
             timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag);
-
-            bindableTime.UnbindBindings();
-            bindableTime.BindTo(timeTag.TimeBindable);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            background.Colour = colours.Gray6;
-
-            bindableTime.BindValueChanged(x =>
-            {
-                if (timeTag == null)
-                    return;
-
-                drawableTextIndex.Colour = colours.GetTimeTagColour(timeTag);
-            });
         }
     }
 
@@ -141,7 +122,7 @@ public partial class TimeTagsVisualisation : CompositeDrawable
     {
         private readonly Box background;
 
-        private readonly FillFlowContainer drawableTimeTags;
+        private readonly FillFlowContainer<PendingTimeTag> drawableTimeTags;
 
         [Resolved]
         private OsuColour colours { get; set; } = null!;
@@ -162,7 +143,7 @@ public partial class TimeTagsVisualisation : CompositeDrawable
                         RelativeSizeAxes = Axes.Both,
                     },
                 },
-                drawableTimeTags = new FillFlowContainer
+                drawableTimeTags = new FillFlowContainer<PendingTimeTag>
                 {
                     Margin = new MarginPadding(5),
                     AutoSizeAxes = Axes.Both,
@@ -188,29 +169,22 @@ public partial class TimeTagsVisualisation : CompositeDrawable
 
             foreach (var timeTag in timeTags)
             {
-                drawableTimeTags.Add(new TimeTagDisplay(lyric, timeTag));
+                drawableTimeTags.Add(new PendingTimeTag(lyric, timeTag)
+                {
+                    Size = new Vector2(12),
+                });
             }
         }
 
-        private partial class TimeTagDisplay : CompositeDrawable
+        private partial class PendingTimeTag : CompositeDrawable
         {
-            private readonly IBindable<double?> bindableTime;
-
-            private readonly TimeTag timeTag;
-            private readonly DrawableTextIndex drawableTextIndex;
-
-            public TimeTagDisplay(Lyric lyric, TimeTag timeTag)
+            public PendingTimeTag(Lyric lyric, TimeTag timeTag)
             {
-                this.timeTag = timeTag;
-                bindableTime = timeTag.TimeBindable.GetBoundCopy();
-
-                Width = 12;
-                Height = 12;
                 InternalChildren = new Drawable[]
                 {
-                    drawableTextIndex = new DrawableTextIndex
+                    new DrawableTimeTag
                     {
-                        State = timeTag.Index.State,
+                        TimeTag = timeTag,
                         Size = new Vector2(12),
                     },
                     new OsuSpriteText
@@ -222,15 +196,6 @@ public partial class TimeTagsVisualisation : CompositeDrawable
                         Y = 10,
                     },
                 };
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                bindableTime.BindValueChanged(x =>
-                {
-                    drawableTextIndex.Colour = colours.GetTimeTagColour(timeTag);
-                }, true);
             }
         }
     }
