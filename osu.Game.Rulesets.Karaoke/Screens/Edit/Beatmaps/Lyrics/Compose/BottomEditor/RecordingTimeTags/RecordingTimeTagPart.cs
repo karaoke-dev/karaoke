@@ -65,7 +65,7 @@ public partial class RecordingTimeTagPart : TimelinePart
 
         private readonly Lyric lyric;
 
-        private readonly DrawableTextIndex drawableTextIndex;
+        private readonly DrawableTimeTag drawableTimeTag;
 
         public CurrentRecordingTimeTagVisualization(Lyric lyric)
         {
@@ -75,17 +75,18 @@ public partial class RecordingTimeTagPart : TimelinePart
             RelativePositionAxes = Axes.X;
             Size = new Vector2(RecordingTimeTagScrollContainer.TIMELINE_HEIGHT / 2);
 
-            InternalChild = drawableTextIndex = new DrawableTextIndex
+            InternalChild = drawableTimeTag = new DrawableTimeTag
             {
                 Name = "Time tag triangle",
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
+                TimeTagColourFunc = (timeTag, colours) => colours.GetRecordingTimeTagCaretColour(timeTag),
             };
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, RecordingTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState)
+        private void load(RecordingTimeTagScrollContainer timeline, ILyricCaretState lyricCaretState)
         {
             position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
             position.BindValueChanged(e =>
@@ -101,11 +102,9 @@ public partial class RecordingTimeTagPart : TimelinePart
 
                 var timeTag = recordingTimeTagCaretPosition.TimeTag;
                 var textIndex = timeTag.Index;
-                var state = timeTag.Index.State;
 
                 Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
-                drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-                drawableTextIndex.State = state;
+                drawableTimeTag.TimeTag = timeTag;
 
                 if (timeTag.Time.HasValue)
                 {

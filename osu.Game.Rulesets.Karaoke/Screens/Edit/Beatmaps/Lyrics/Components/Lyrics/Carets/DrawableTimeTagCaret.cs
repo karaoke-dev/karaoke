@@ -15,18 +15,19 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
 {
     private const float triangle_width = 8;
 
-    private readonly DrawableTextIndex drawableTextIndex;
+    private readonly DrawableTimeTag drawableTimeTag;
 
     public DrawableTimeTagCaret(DrawableCaretType type)
         : base(type)
     {
         AutoSizeAxes = Axes.Both;
 
-        InternalChild = drawableTextIndex = new DrawableTextIndex
+        InternalChild = drawableTimeTag = new DrawableTimeTag
         {
             Name = "Text index",
             Size = new Vector2(triangle_width),
             Alpha = GetAlpha(type),
+            TimeTagColourFunc = (timeTag, colours) => colours.GetRecordingTimeTagCaretColour(timeTag),
         };
     }
 
@@ -39,8 +40,7 @@ public partial class DrawableTimeTagCaret : DrawableCaret<TimeTagCaretPosition>
         this.MoveTo(position, getMoveToDuration(Type), Easing.OutCubic);
         Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
-        drawableTextIndex.State = textIndex.State;
-        drawableTextIndex.Colour = Colours.GetRecordingTimeTagCaretColour(timeTag);
+        drawableTimeTag.TimeTag = timeTag;
 
         static double getMoveToDuration(DrawableCaretType type) =>
             type switch
