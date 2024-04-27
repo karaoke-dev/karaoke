@@ -11,7 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
@@ -40,7 +40,7 @@ public sealed partial class DrawableTimeTag : CompositeDrawable, IHasCustomToolt
             if (timeTag == null)
                 return;
 
-            drawableTextIndex.Colour = TimeTagColourFunc?.Invoke(timeTag, colours) ?? colours.GetTimeTagColour(timeTag);
+            drawableTextIndex.Colour = TimeTagColourFunc?.Invoke(timeTag, colours) ?? GetDefaultTimeTagColour(colours, timeTag);
         }, true);
     }
 
@@ -69,4 +69,13 @@ public sealed partial class DrawableTimeTag : CompositeDrawable, IHasCustomToolt
     public TimeTag TooltipContent => timeTag ?? new TimeTag(new TextIndex());
 
     public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
+
+    public static Color4 GetDefaultTimeTagColour(OsuColour colours, TimeTag timeTag)
+    {
+        bool hasTime = timeTag.Time.HasValue;
+        if (!hasTime)
+            return colours.Gray7;
+
+        return TextIndexUtils.GetValueByState(timeTag.Index, colours.Yellow, colours.YellowDarker);
+    }
 }
