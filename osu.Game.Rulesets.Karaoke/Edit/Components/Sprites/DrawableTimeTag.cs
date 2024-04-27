@@ -6,14 +6,17 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 
-public sealed partial class DrawableTimeTag : CompositeDrawable
+public sealed partial class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<TimeTag>
 {
     private readonly IBindable<double?> bindableTime = new Bindable<double?>();
 
@@ -62,4 +65,8 @@ public sealed partial class DrawableTimeTag : CompositeDrawable
             drawableTextIndex.State = timeTag.Index.State;
         }
     }
+
+    public TimeTag TooltipContent => timeTag ?? new TimeTag(new TextIndex());
+
+    public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
 }
