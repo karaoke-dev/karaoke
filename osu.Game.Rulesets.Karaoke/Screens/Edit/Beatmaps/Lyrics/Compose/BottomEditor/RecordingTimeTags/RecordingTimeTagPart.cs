@@ -92,16 +92,16 @@ public partial class RecordingTimeTagPart : TimelinePart
             position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
             position.BindValueChanged(e =>
             {
-                if (e.NewValue is not TimeTagCaretPosition timeTagCaretPosition)
+                if (e.NewValue is not RecordingTimeTagCaretPosition recordingTimeTagCaretPosition)
                     return;
 
-                if (timeTagCaretPosition.Lyric != lyric)
+                if (recordingTimeTagCaretPosition.Lyric != lyric)
                 {
                     Hide();
                     return;
                 }
 
-                var timeTag = timeTagCaretPosition.TimeTag;
+                var timeTag = recordingTimeTagCaretPosition.TimeTag;
                 var textIndex = timeTag.Index;
                 var state = timeTag.Index.State;
 

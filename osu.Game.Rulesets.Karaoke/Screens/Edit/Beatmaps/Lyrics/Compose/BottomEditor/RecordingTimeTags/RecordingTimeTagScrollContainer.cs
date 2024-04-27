@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.BottomE
 [Cached]
 public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
 {
+    private const float time_tag_visualisation_spacing = 60;
     public const float TIMELINE_HEIGHT = 20;
 
     [Resolved]
@@ -67,11 +68,17 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
 
         AddRangeInternal(new Drawable[]
         {
+            new TimeTagsVisualisation
+            {
+                Anchor = Anchor.TopCentre,
+                Origin = Anchor.TopLeft,
+                Y = 5,
+            },
             new Box
             {
                 Name = "Background",
                 Depth = 1,
-                Y = 10,
+                Y = time_tag_visualisation_spacing,
                 RelativeSizeAxes = Axes.X,
                 Height = TIMELINE_HEIGHT,
                 Colour = colours.Gray3,
@@ -90,7 +97,7 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
     protected override void PostProcessContent(Container content)
     {
         content.Height = TIMELINE_HEIGHT;
-        content.Y = 10;
+        content.Y = time_tag_visualisation_spacing;
         content.AddRange(new[]
         {
             centreMarker.CreateProxy(),
