@@ -9,9 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 public static class OsuColourExtensions
 {
-    public static Color4 GetEditTimeTagCaretColour(this OsuColour colours)
-        => colours.Blue;
-
+    // todo: this should be moved to a more appropriate place.
+    // or just delete it.
     public static Color4 GetRecordingTimeTagCaretColour(this OsuColour colours, TimeTag timeTag)
         => timeTag.Time.HasValue ? colours.Red : colours.Gray3;
 }
