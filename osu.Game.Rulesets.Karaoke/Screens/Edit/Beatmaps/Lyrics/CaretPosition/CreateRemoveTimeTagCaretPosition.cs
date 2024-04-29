@@ -6,9 +6,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, IComparable<TimeTagIndexCaretPosition>
+public readonly struct CreateRemoveTimeTagCaretPosition : ICharIndexCaretPosition, IComparable<CreateRemoveTimeTagCaretPosition>
 {
-    public TimeTagIndexCaretPosition(Lyric lyric, int charIndex)
+    public CreateRemoveTimeTagCaretPosition(Lyric lyric, int charIndex)
     {
         Lyric = lyric;
         CharIndex = charIndex;
@@ -18,7 +18,7 @@ public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, ICom
 
     public int CharIndex { get; }
 
-    public int CompareTo(TimeTagIndexCaretPosition other)
+    public int CompareTo(CreateRemoveTimeTagCaretPosition other)
     {
         if (Lyric != other.Lyric)
             throw new InvalidOperationException();
@@ -28,7 +28,7 @@ public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, ICom
 
     public int CompareTo(IIndexCaretPosition? other)
     {
-        if (other is not TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+        if (other is not CreateRemoveTimeTagCaretPosition timeTagIndexCaretPosition)
             throw new InvalidOperationException();
 
         return CompareTo(timeTagIndexCaretPosition);

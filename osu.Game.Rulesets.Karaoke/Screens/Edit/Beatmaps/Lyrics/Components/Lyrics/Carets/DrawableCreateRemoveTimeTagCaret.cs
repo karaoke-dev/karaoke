@@ -10,11 +10,11 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics.Carets;
 
-public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaretPosition>
+public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemoveTimeTagCaretPosition>
 {
     private const float border_spacing = 5;
 
-    public DrawableTimeTagIndexCaret(DrawableCaretType type)
+    public DrawableCreateRemoveTimeTagCaret(DrawableCaretType type)
         : base(type)
     {
         InternalChild = new Container
@@ -32,7 +32,7 @@ public partial class DrawableTimeTagIndexCaret : DrawableCaret<TimeTagIndexCaret
         };
     }
 
-    protected override void ApplyCaretPosition(TimeTagIndexCaretPosition caret)
+    protected override void ApplyCaretPosition(CreateRemoveTimeTagCaretPosition caret)
     {
         var rect = LyricPositionProvider.GetRectByCharIndex(caret.CharIndex);
 

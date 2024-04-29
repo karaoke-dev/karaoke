@@ -32,7 +32,7 @@ public partial class RemoveTimeTagButton : KeyActionButton
 
         Action = () =>
         {
-            if (lyricCaretState.CaretPosition is not TimeTagIndexCaretPosition charIndexCaretPosition)
+            if (lyricCaretState.CaretPosition is not CreateRemoveTimeTagCaretPosition charIndexCaretPosition)
                 throw new InvalidOperationException();
 
             int index = charIndexCaretPosition.CharIndex;

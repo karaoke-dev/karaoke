@@ -93,7 +93,7 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
             TypingCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndicatorByPosition(xPosition),
             NavigateCaretPositionAlgorithm => null,
             CreateRubyTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
-            TimeTagIndexCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
+            CreateRemoveTimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
             TimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetTimeTagByPosition(xPosition),
             _ => null,
         };
