@@ -32,6 +32,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
     public DrawableCreateRemoveTimeTagCaret(DrawableCaretType type)
         : base(type)
     {
+        // todo: should re-design the drawable caret.
         InternalChildren = new Drawable[]
         {
             new Container
@@ -49,16 +50,16 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
             },
             startTimeTagInfo = new TimeTagsInfo(TextIndex.IndexState.Start)
             {
-                X = -10,
-                Anchor = Anchor.TopLeft,
-                Origin = Anchor.BottomRight,
+                X = 18,
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.CentreRight,
                 Alpha = GetAlpha(type),
             },
             endTimeTagInfo = new TimeTagsInfo(TextIndex.IndexState.End)
             {
-                X = 10,
-                Anchor = Anchor.TopRight,
-                Origin = Anchor.BottomLeft,
+                X = -18,
+                Anchor = Anchor.BottomRight,
+                Origin = Anchor.CentreLeft,
                 Alpha = GetAlpha(type),
             },
         };
@@ -122,8 +123,8 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                     RelativeSizeAxes = Axes.Both,
                     Padding = new MarginPadding
                     {
-                        Horizontal = 5,
-                        Vertical = 7,
+                        Horizontal = 3,
+                        Vertical = 5,
                     },
                     Child = new Container
                     {
@@ -140,7 +141,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                 contents = new FillFlowContainer
                 {
                     AutoSizeAxes = Axes.Both,
-                    Margin = new MarginPadding(5),
+                    Margin = new MarginPadding(3),
                     Direction = FillDirection.Horizontal,
                     Children = new Drawable[]
                     {
