@@ -2,7 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
@@ -17,6 +20,12 @@ public readonly struct CreateRemoveTimeTagCaretPosition : ICharIndexCaretPositio
     public Lyric Lyric { get; }
 
     public int CharIndex { get; }
+
+    public TimeTag[] GetTimeTagsWithState(TextIndex.IndexState state)
+    {
+        int charIndex = CharIndex;
+        return Lyric.TimeTags.Where(x => TextIndexUtils.ToCharIndex(x.Index) == charIndex && x.Index.State == state).ToArray();
+    }
 
     public int CompareTo(CreateRemoveTimeTagCaretPosition other)
     {
