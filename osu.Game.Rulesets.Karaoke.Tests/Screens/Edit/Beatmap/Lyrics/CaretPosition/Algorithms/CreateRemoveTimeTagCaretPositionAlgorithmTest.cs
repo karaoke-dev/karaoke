@@ -9,8 +9,8 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algor
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosition.Algorithms;
 
 [TestFixture]
-public class TimeTagIndexCaretPositionTest : BaseCharIndexCaretPositionAlgorithmTest<TimeTagIndexCaretPositionAlgorithm, TimeTagIndexCaretPosition>
+public class CreateRemoveTimeTagCaretPositionAlgorithmTest : BaseCharIndexCaretPositionAlgorithmTest<CreateRemoveTimeTagCaretPositionAlgorithm, CreateRemoveTimeTagCaretPosition>
 {
-    protected override TimeTagIndexCaretPosition CreateCaret(Lyric lyric, int index)
+    protected override CreateRemoveTimeTagCaretPosition CreateCaret(Lyric lyric, int index)
         => new(lyric, index);
 }

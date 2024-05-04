@@ -7,14 +7,14 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 
 /// <summary>
-/// Algorithm for navigate to the <see cref="TextIndex"/> position inside the <see cref="TimeTag"/>.
+/// Algorithm for able to create/remove the time-tag by lyric char index.
 /// </summary>
-public class TimeTagIndexCaretPositionAlgorithm : CharIndexCaretPositionAlgorithm<TimeTagIndexCaretPosition>
+public class CreateRemoveTimeTagCaretPositionAlgorithm : CharIndexCaretPositionAlgorithm<CreateRemoveTimeTagCaretPosition>
 {
-    public TimeTagIndexCaretPositionAlgorithm(Lyric[] lyrics)
+    public CreateRemoveTimeTagCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
     {
     }
 
-    protected override TimeTagIndexCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
+    protected override CreateRemoveTimeTagCaretPosition CreateCaretPosition(Lyric lyric, int index) => new(lyric, index);
 }

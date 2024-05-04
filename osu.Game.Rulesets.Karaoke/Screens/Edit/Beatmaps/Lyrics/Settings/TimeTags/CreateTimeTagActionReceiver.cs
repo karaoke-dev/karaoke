@@ -28,15 +28,15 @@ public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler
 
         return caretPosition switch
         {
-            TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
+            CreateRemoveTimeTagCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
             TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
             _ => throw new NotSupportedException(nameof(caretPosition)),
         };
     }
 
-    private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+    private bool processCreateTimeTagAction(CreateRemoveTimeTagCaretPosition createRemoveTimeTagCaretPosition, KaraokeEditAction action)
     {
-        int index = timeTagIndexCaretPosition.CharIndex;
+        int index = createRemoveTimeTagCaretPosition.CharIndex;
 
         switch (action)
         {

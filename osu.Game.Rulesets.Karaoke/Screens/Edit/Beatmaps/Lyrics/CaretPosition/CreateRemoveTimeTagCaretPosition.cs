@@ -2,13 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 
-public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, IComparable<TimeTagIndexCaretPosition>
+public readonly struct CreateRemoveTimeTagCaretPosition : ICharIndexCaretPosition, IComparable<CreateRemoveTimeTagCaretPosition>
 {
-    public TimeTagIndexCaretPosition(Lyric lyric, int charIndex)
+    public CreateRemoveTimeTagCaretPosition(Lyric lyric, int charIndex)
     {
         Lyric = lyric;
         CharIndex = charIndex;
@@ -18,7 +21,13 @@ public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, ICom
 
     public int CharIndex { get; }
 
-    public int CompareTo(TimeTagIndexCaretPosition other)
+    public TimeTag[] GetTimeTagsWithState(TextIndex.IndexState state)
+    {
+        int charIndex = CharIndex;
+        return Lyric.TimeTags.Where(x => TextIndexUtils.ToCharIndex(x.Index) == charIndex && x.Index.State == state).ToArray();
+    }
+
+    public int CompareTo(CreateRemoveTimeTagCaretPosition other)
     {
         if (Lyric != other.Lyric)
             throw new InvalidOperationException();
@@ -28,7 +37,7 @@ public readonly struct TimeTagIndexCaretPosition : ICharIndexCaretPosition, ICom
 
     public int CompareTo(IIndexCaretPosition? other)
     {
-        if (other is not TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+        if (other is not CreateRemoveTimeTagCaretPosition timeTagIndexCaretPosition)
             throw new InvalidOperationException();
 
         return CompareTo(timeTagIndexCaretPosition);
