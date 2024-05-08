@@ -4,4 +4,14 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke.Architectures</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\osu.Game.Rulesets.Karaoke.Tests\osu.Game.Rulesets.Karaoke.Tests.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="TngTech.ArchUnitNET" Version="0.10.6" />
+  </ItemGroup>
 </Project>
