@@ -287,7 +287,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     [Test]
     [Description("Should be able to generate the property if the lyric is not reference to other lyric.")]
-    public void ChangeWithNormalLyric([Values] AutoGenerateType type)
+    public void TestChangeWithNormalLyric([Values] AutoGenerateType type)
     {
         // for detect reference lyric.
         if (isLyricReferenceChangeHandler(type))
@@ -330,7 +330,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     [Test]
     [Description("Should not be able to generate the property if the lyric is missing detectable property.")]
-    public void ChangeWithMissingPropertyLyric([Values] AutoGenerateType type)
+    public void TestChangeWithMissingPropertyLyric([Values] AutoGenerateType type)
     {
         PrepareHitObject(() => new Lyric());
 
@@ -353,7 +353,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
     [Test]
     [Description("Should not be able to generate the property if the lyric is reference to other lyric.")]
-    public void CheckWithReferencedLyric([Values] AutoGenerateType type)
+    public void TestCheckWithReferencedLyric([Values] AutoGenerateType type)
     {
         if (isLyricReferenceChangeHandler(type))
             return;

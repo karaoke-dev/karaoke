@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.CaretPosit
 public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPosition : IIndexCaretPosition
 {
     [Test]
-    public void CompareWithLargerIndex()
+    public void TestCompareWithLargerIndex()
     {
         var lyric = new Lyric();
 
@@ -32,7 +32,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
     }
 
     [Test]
-    public void CompareEqualIndex()
+    public void TestCompareEqualIndex()
     {
         var lyric = new Lyric();
 
@@ -46,7 +46,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
     }
 
     [Test]
-    public void CompareWithSmallerIndex()
+    public void TestCompareWithSmallerIndex()
     {
         var lyric = new Lyric();
 
@@ -60,7 +60,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
     }
 
     [Test]
-    public void CompareWithDifferentLyric()
+    public void TestCompareWithDifferentLyric()
     {
         var lyric1 = new Lyric();
         var lyric2 = new Lyric();
@@ -75,7 +75,7 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
     }
 
     [Test]
-    public void CompareDifferentType()
+    public void TestCompareDifferentType()
     {
         var lyric = new Lyric();
 

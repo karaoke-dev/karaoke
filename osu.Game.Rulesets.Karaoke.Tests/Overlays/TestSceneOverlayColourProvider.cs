@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays;
 public partial class TestSceneOverlayColourProvider : OsuTestScene
 {
     [Test]
-    public void ShowWithNoFetch()
+    public void TestShowWithNoFetch()
     {
         var providers = Enum.GetValues<OverlayColourScheme>()
                             .Select(x => new OverlayColourProvider(x));

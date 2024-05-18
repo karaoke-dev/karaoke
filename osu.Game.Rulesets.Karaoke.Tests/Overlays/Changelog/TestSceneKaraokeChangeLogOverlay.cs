@@ -16,7 +16,7 @@ public partial class TestSceneKaraokeChangeLogOverlay : OsuTestScene
     public void SetUp() => Schedule(() => { Child = changelog = new TestChangelogOverlay(); });
 
     [Test]
-    public void ShowWithNoFetch()
+    public void TestShowWithNoFetch()
     {
         AddStep("Show", () => changelog.Show());
         AddAssert("listing displayed", () => changelog.Current.Value == null);

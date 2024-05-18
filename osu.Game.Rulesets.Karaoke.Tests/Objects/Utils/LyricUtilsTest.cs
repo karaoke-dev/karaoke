@@ -90,7 +90,7 @@ public class LyricUtilsTest
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 2, "karaoke", new[] { "[0]:か", "[1]:ら", "[9]:お", "[10]:け" })]
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 4, "karaoke", new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" })]
-    public void TextAddTextRuby(string[] rubies, int charGap, string addedText, string[] targetRubies)
+    public void TestAddTextRuby(string[] rubies, int charGap, string addedText, string[] targetRubies)
     {
         var lyric = new Lyric
         {

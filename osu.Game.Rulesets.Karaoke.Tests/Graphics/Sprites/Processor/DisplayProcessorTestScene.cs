@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics.Sprites.Processor;
 /// 1. Test one or more property changed, all related property should be changed.
 /// 2. Test if the property is being triggered.
 /// </summary>
-public abstract partial class TestSceneDisplayProcessor : OsuGridTestScene
+public abstract partial class DisplayProcessorTestScene : OsuGridTestScene
 {
     // check value.
     private IReadOnlyList<PositionText>? topText;
@@ -46,7 +46,7 @@ public abstract partial class TestSceneDisplayProcessor : OsuGridTestScene
 
     private readonly ManualClock manualClock = new();
 
-    protected TestSceneDisplayProcessor()
+    protected DisplayProcessorTestScene()
         : base(2, 1)
     {
         AddSliderStep("Adjust clock time", 0, 5000, 2500, time =>
