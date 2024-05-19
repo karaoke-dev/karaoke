@@ -8,7 +8,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+namespace osu.Game.Rulesets.Karaoke.Screens;
 
 public abstract partial class Section : Container
 {

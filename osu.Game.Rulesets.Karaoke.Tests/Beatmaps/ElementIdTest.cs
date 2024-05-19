@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 
-public class TestElementId
+public class ElementIdTest
 {
     [Test]
     public void TestEmptyElementId()

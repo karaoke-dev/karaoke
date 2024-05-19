@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 

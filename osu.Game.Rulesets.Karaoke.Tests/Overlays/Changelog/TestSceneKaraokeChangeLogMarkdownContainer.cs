@@ -52,7 +52,7 @@ public partial class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
     });
 
     [Test]
-    public void ShowWithNoFetch()
+    public void TestShowWithNoFetch()
     {
         AddStep("Show", () => markdownContainer.Show());
     }

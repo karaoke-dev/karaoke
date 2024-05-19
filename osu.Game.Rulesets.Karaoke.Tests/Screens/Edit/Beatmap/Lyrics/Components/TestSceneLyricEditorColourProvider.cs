@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components
 public partial class TestSceneLyricEditorColourProvider : OsuTestScene
 {
     [Test]
-    public void ShowWithNoFetch()
+    public void TestShowWithNoFetch()
     {
         var provider = new LyricEditorColourProvider();
         var types = Enum.GetValues<LyricEditorMode>();

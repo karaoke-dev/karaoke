@@ -27,7 +27,7 @@ public partial class TestSceneIssueIcon : OsuTestScene
     });
 
     [Test]
-    public void DisplayIconByIssues()
+    public void TestDisplayIconByIssues()
     {
         var availableIssues = TestCaseCheckHelper.CreateAllAvailableIssues();
 

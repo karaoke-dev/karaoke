@@ -41,7 +41,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     protected abstract TGlyphStore CreateFontStore(ResourceStore<byte[]> store, string assetName);
 
     [Test]
-    public void CompareFontNameWithOrigin()
+    public void TestCompareFontNameWithOrigin()
     {
         string expected = GlyphStore.FontName;
         string actual = CustomizeGlyphStore.FontName;
@@ -52,7 +52,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     [TestCase(' ')]
     [TestCase('ㄅ')] // should not have those texts in store.
     [TestCase('あ')] // should not have those texts in store.
-    public void CompareHasGlyphWithOrigin(char c)
+    public void TestCompareHasGlyphWithOrigin(char c)
     {
         bool expected = GlyphStore.HasGlyph(c);
         bool actual = CustomizeGlyphStore.HasGlyph(c);
@@ -60,7 +60,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     }
 
     [Test]
-    public void CompareGetBaseHeightWithOrigin()
+    public void TestCompareGetBaseHeightWithOrigin()
     {
         float? expected = GlyphStore.Baseline;
         float? actual = CustomizeGlyphStore.Baseline;
@@ -73,7 +73,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     [TestCase(' ')]
     [TestCase('@')]
     [TestCase('#')]
-    public void CompareGetCharacterGlyphWithOrigin(char c)
+    public void TestCompareGetCharacterGlyphWithOrigin(char c)
     {
         var expected = GlyphStore.Get(c)!;
         var actual = CustomizeGlyphStore.Get(c)!;
@@ -94,7 +94,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     [TestCase('i', 'v')] // todo: should got a result that is not zero.
     [TestCase('t', 'i')]
     [TestCase('a', 'あ')]
-    public void CompareGetKerningWithOrigin(char left, char right)
+    public void TestCompareGetKerningWithOrigin(char left, char right)
     {
         int expected = GlyphStore.GetKerning(left, right);
         int actual = CustomizeGlyphStore.GetKerning(left, right);
@@ -107,7 +107,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     [TestCase(' ')]
     [TestCase('@')]
     [TestCase('#')]
-    public void CompareGetTextureUploadWithOrigin(char c)
+    public void TestCompareGetTextureUploadWithOrigin(char c)
     {
         var expected = GlyphStore.Get(new string(new[] { c }));
         var actual = (CustomizeGlyphStore as IResourceStore<TextureUpload>)?.Get(new string(new[] { c }));

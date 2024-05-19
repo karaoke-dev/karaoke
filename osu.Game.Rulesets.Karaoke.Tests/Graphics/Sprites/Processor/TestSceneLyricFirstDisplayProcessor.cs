@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics.Sprites.Processor;
 
-public partial class TestSceneLyricFirstDisplayProcessor : TestSceneDisplayProcessor
+public partial class TestSceneLyricFirstDisplayProcessor : DisplayProcessorTestScene
 {
     protected override LyricDisplayType DisplayType => LyricDisplayType.Lyric;
 

@@ -30,7 +30,7 @@ public class VersionUtilsTest
     }
 
     [Test]
-    public void IsDeployedBuild()
+    public void TestIsDeployedBuild()
     {
         // should not be deploy build if not build by github action.
         const bool expected = false;

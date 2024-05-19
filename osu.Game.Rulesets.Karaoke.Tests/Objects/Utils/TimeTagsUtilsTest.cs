@@ -23,7 +23,7 @@ public class TimeTagsUtilsTest
     [TestCase("[1,start]", "[3,start]", 10, null)] // new index should be in the range.
     [TestCase("[10,start]", "[3,start]", 10, null)] // start index should be smaller then end index.
     [TestCase("[1,start]", null, 2, null)] // should not be null.
-    public void GenerateTimeTag(string startTag, string? endTag, int index, string? result)
+    public void TestGenerateTimeTag(string startTag, string? endTag, int index, string? result)
     {
         var startTimeTag = TestCaseTagHelper.ParseTimeTag(startTag);
         var endTimeTag = TestCaseTagHelper.ParseTimeTag(endTag);
