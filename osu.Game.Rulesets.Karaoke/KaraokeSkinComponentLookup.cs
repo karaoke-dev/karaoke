@@ -11,8 +11,4 @@ public class KaraokeSkinComponentLookup : GameplaySkinComponentLookup<KaraokeSki
         : base(component)
     {
     }
-
-    protected override string RulesetPrefix => KaraokeRuleset.SHORT_NAME;
-
-    protected override string ComponentName => Component.ToString().ToLower();
 }
