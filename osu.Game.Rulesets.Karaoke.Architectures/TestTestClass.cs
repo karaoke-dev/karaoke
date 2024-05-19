@@ -5,7 +5,6 @@ using System.Linq;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
 using osu.Framework.Testing;
-using osu.Game.Rulesets.Karaoke.Tests;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Architectures;
@@ -32,23 +31,10 @@ public class TestTestClass : BaseTest
         var headlessTestScene = architecture.GetAttributeOfType(typeof(HeadlessTestAttribute));
 
         // get all test classes
-        var testClasses = architecture.Classes.Where(x =>
-                                      {
-                                          if (x.Namespace.RelativeNameStartsWith(GetExecuteProject(), "Helper"))
-                                              return false;
-
-                                          return x.Namespace.RelativeNameStartsWith(GetExecuteProject(), "");
-                                      })
-                                      .Except(new[]
-                                      {
-                                          architecture.GetClassOfType(typeof(KaraokeTestBrowser)),
-                                          architecture.GetClassOfType(typeof(VisualTestRunner)),
-                                      }).ToArray();
+        var testClasses = architecture.GetAllTestClass().ToArray();
 
         Assertion(() =>
         {
-            Assert.NotZero(testClasses.Length, "No test class found");
-
             foreach (var testClass in testClasses)
             {
                 var testMethods = testClass.GetAllTestMembers(architecture).ToArray();

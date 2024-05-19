@@ -8,12 +8,39 @@ using System.Text.RegularExpressions;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Tests;
 using Attribute = ArchUnitNET.Domain.Attribute;
 
 namespace osu.Game.Rulesets.Karaoke.Architectures;
 
 public static class Extensions
 {
+    #region Architecture
+
+    public static IEnumerable<Class> GetAllTestClass(this Architecture architecture)
+    {
+        var testProject = new Project.KaraokeTestAttribute();
+        var testClasses = architecture.Classes.Where(x =>
+                                      {
+                                          if (x.Namespace.RelativeNameStartsWith(testProject, "Helper"))
+                                              return false;
+
+                                          return x.Namespace.RelativeNameStartsWith(testProject, "");
+                                      })
+                                      .Except(new[]
+                                      {
+                                          architecture.GetClassOfType(typeof(KaraokeTestBrowser)),
+                                          architecture.GetClassOfType(typeof(VisualTestRunner)),
+                                      }).ToArray();
+
+        if (testClasses.Length == 0)
+            throw new InvalidOperationException("No test class found in the project.");
+
+        return testClasses;
+    }
+
+    #endregion
+
     #region Class
 
     public static IEnumerable<Class> GetInnerClasses(this Class @class)
