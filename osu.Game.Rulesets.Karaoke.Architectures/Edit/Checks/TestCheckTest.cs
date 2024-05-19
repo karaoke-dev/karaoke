@@ -5,6 +5,7 @@ using System.Linq;
 using ArchUnitNET.Domain;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
 namespace osu.Game.Rulesets.Karaoke.Architectures.Edit.Checks;
@@ -47,9 +48,10 @@ public class TestCheckTest : BaseTest
 
     [Test]
     [Project.KaraokeTest(true)]
-    public void CheckTestMethod()
+    public void CheckTestClassAndMethod()
     {
-        var architecture = GetProjectArchitecture();
+        var architecture = GetProjectArchitecture(new Project.KaraokeAttribute());
+        var baseCheck = architecture.GetInterfaceOfType(typeof(ICheck));
         var baseCheckTest = architecture.GetClassOfType(typeof(BaseCheckTest<>));
 
         var assertOkMethod = baseCheckTest.GetMethodMembersContainsName("AssertOk").FirstOrDefault();
@@ -66,16 +68,40 @@ public class TestCheckTest : BaseTest
 
             foreach (var checkTest in allCheckTests)
             {
+                // check the class naming.
+                Assert.IsTrue(isTestClassValid(checkTest, baseCheck), $"Test class {checkTest} should have correct naming");
+
+                // check the test method naming in the test case.
                 var testMethods = checkTest.GetAllTestMembers(architecture).ToArray();
-                Assert.NotZero(testMethods.Length, $"No test method  in the {checkTest}");
+                Assert.NotZero(testMethods.Length, $"No test method in the {checkTest}");
 
                 foreach (var testMethod in testMethods)
                 {
+                    Assert.IsTrue(isTestNamingValid(testMethod), $"Test method {testMethod} should have correct naming");
                     Assert.IsTrue(isTestMethod(testMethod), $"Test method {testMethod} should call {assertOkMethod} or {assertNotOkMethod} method.");
                 }
             }
 
             return;
+
+            static bool isTestClassValid(Class testClass, Interface baseCheck)
+            {
+                var testCheck = testClass.GetGenericTypes().OfType<Class>().First(x => x.ImplementsInterface(baseCheck));
+                return testClass.NameStartsWith(testCheck.Name);
+            }
+
+            static bool isTestNamingValid(IMember testMethod)
+            {
+                var calledMethods = testMethod.GetMethodCallDependencies().FirstOrDefault(x => x.TargetMember.NameStartsWith("AssertNotOk"));
+
+                if (calledMethods != null)
+                {
+                    // todo: should get the generic type from the AssertNotOk method.
+                    return testMethod.NameStartsWith("IssueTemplate");
+                }
+
+                return true;
+            }
 
             static bool isTestMethod(IMember testMethod)
             {

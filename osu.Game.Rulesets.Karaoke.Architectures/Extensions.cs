@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ArchUnitNET.Domain;
+using ArchUnitNET.Domain.Dependencies;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Tests;
@@ -66,6 +67,11 @@ public static class Extensions
     #endregion
 
     #region Name
+
+    public static IEnumerable<IType> GetGenericTypes(this Class @class)
+    {
+        return @class.GetInheritsBaseClassDependencies().SelectMany(x => x.TargetGenericArguments.Select(arg => arg.Type));
+    }
 
     public static bool RelativeNameStartsWith(
         this IHasName cls,
