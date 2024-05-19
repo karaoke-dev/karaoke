@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar
 
 public partial class PlaybackSwitchButton : CompositeDrawable
 {
-    private readonly IBindable<ITrack> track = new Bindable<ITrack>();
+    private readonly IBindable<Track> track = new Bindable<Track>();
     private readonly BindableNumber<double> freqAdjust = new BindableDouble(1);
 
     public PlaybackSwitchButton()
