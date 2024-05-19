@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
+using osu.Framework.Extensions.ObjectExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -181,6 +182,10 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
     protected override void Dispose(bool isDisposing)
     {
         base.Dispose(isDisposing);
+
+        // todo: not very sure
+        if (!editorBeatmap.IsNull())
+            return;
 
         editorBeatmap.HitObjectAdded -= hitObjectAdded;
         editorBeatmap.HitObjectRemoved -= hitObjectRemoved;
