@@ -34,8 +34,8 @@ public class TestCheck : BaseTest
 
             foreach (var checkClass in issues)
             {
-                Assert.True(checkClass.InheritedClasses.Contains(baseIssue), $"Class inherit is invalid: {checkClass}");
-                Assert.True(checkClass.NameEndsWith("Issue"), $"Class name is invalid: {checkClass}");
+                Assert.IsTrue(checkClass.InheritedClasses.Contains(baseIssue), $"Class inherit is invalid: {checkClass}");
+                Assert.IsTrue(checkClass.NameEndsWith("Issue"), $"Class name is invalid: {checkClass}");
             }
 
             // checks
@@ -43,8 +43,8 @@ public class TestCheck : BaseTest
 
             foreach (var check in checks)
             {
-                Assert.True(check.ImplementsInterface(baseCheck), $"Class inherit is invalid: {check}");
-                Assert.True(check.NameStartsWith("Check"), $"Class name is invalid: {check}");
+                Assert.IsTrue(check.ImplementsInterface(baseCheck), $"Class inherit is invalid: {check}");
+                Assert.IsTrue(check.NameStartsWith("Check"), $"Class name is invalid: {check}");
             }
 
             // issue templates.
@@ -52,8 +52,8 @@ public class TestCheck : BaseTest
 
             foreach (var checkClass in issueTemplates)
             {
-                Assert.True(checkClass.InheritedClasses.Contains(baseIssueTemplate), $"Class inherit is invalid: {checkClass}");
-                Assert.True(checkClass.NameStartsWith("IssueTemplate"), $"Class name is invalid: {checkClass}");
+                Assert.IsTrue(checkClass.InheritedClasses.Contains(baseIssueTemplate), $"Class inherit is invalid: {checkClass}");
+                Assert.IsTrue(checkClass.NameStartsWith("IssueTemplate"), $"Class name is invalid: {checkClass}");
             }
         });
     }
