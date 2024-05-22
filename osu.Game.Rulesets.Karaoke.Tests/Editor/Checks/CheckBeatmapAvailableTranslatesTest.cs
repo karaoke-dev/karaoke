@@ -49,7 +49,20 @@ public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<Chec
     }
 
     [Test]
-    public void TestHaveLyricAndLanguage()
+    public void TestEveryLyricContainsTranslate()
+    {
+        var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
+        var beatmap = createTestingBeatmap(translateLanguages, new[]
+        {
+            createLyric(new CultureInfo("Ja-jp"), "translate1"),
+            createLyric(new CultureInfo("Ja-jp"), "translate2"),
+        });
+
+        AssertOk(getContext(beatmap));
+    }
+
+    [Test]
+    public void TestCheckMissingTranslate()
     {
         // no lyric with translate string. (should have issue)
         var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
@@ -75,39 +88,30 @@ public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<Chec
             createLyric(new CultureInfo("Ja-jp"), string.Empty),
         });
         AssertNotOk<IssueTemplateMissingTranslate>(getContext(beatmap3));
+    }
 
+    [Test]
+    public void TestCheckMissingPartialTranslate()
+    {
         // some lyric with translate string. (should have issue)
+        var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
         var beatmap4 = createTestingBeatmap(translateLanguages, new[]
         {
             createLyric(new CultureInfo("Ja-jp"), "translate1"),
             createLyric(new CultureInfo("Ja-jp")),
         });
         AssertNotOk<IssueTemplateMissingPartialTranslate>(getContext(beatmap4));
+    }
 
-        // every lyric with translate string. (should not have issue)
-        var beatmap5 = createTestingBeatmap(translateLanguages, new[]
-        {
-            createLyric(new CultureInfo("Ja-jp"), "translate1"),
-            createLyric(new CultureInfo("Ja-jp"), "translate2"),
-        });
-        AssertOk(getContext(beatmap5));
-
+    [Test]
+    public void TestCheckContainsNotListedLanguage()
+    {
         // lyric translate not listed. (should have issue)
         var beatmap6 = createTestingBeatmap(null, new[]
         {
             createLyric(new CultureInfo("en-US"), "translate1"),
         });
         AssertNotOk<IssueTemplateContainsNotListedLanguage>(getContext(beatmap6));
-
-        static Lyric createLyric(CultureInfo? cultureInfo = null, string translate = null!)
-        {
-            var lyric = new Lyric();
-            if (cultureInfo == null)
-                return lyric;
-
-            lyric.Translates.Add(cultureInfo, translate);
-            return lyric;
-        }
     }
 
     private static IBeatmap createTestingBeatmap(List<CultureInfo>? translateLanguage, IEnumerable<Lyric>? lyrics)
@@ -126,4 +130,14 @@ public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<Chec
 
     private static BeatmapVerifierContext getContext(IBeatmap beatmap)
         => new(beatmap, new TestWorkingBeatmap(beatmap));
+
+    private static Lyric createLyric(CultureInfo? cultureInfo = null, string translate = null!)
+    {
+        var lyric = new Lyric();
+        if (cultureInfo == null)
+            return lyric;
+
+        lyric.Translates.Add(cultureInfo, translate);
+        return lyric;
+    }
 }
