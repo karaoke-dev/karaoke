@@ -96,8 +96,8 @@ public class TestCheckTest : BaseTest
 
                 if (calledMethods != null)
                 {
-                    // todo: should get the generic type from the AssertNotOk method.
-                    return testMethod.NameStartsWith("IssueTemplate");
+                    // todo: should get the generic type from the AssertNotOk method. the end of the method should be the issue template.
+                    return testMethod.NameStartsWith("TestCheck");
                 }
 
                 return true;
