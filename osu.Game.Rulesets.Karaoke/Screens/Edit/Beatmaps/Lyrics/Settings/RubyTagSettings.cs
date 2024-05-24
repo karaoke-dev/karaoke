@@ -33,19 +33,19 @@ public partial class RubyTagSettings : LyricEditorSettings
     {
         RubyTagEditStep.Generate => new Drawable[]
         {
-            new RubyTagEditStepSection(),
+            new RubyTagSettingsHeader(),
             new RubyTagConfigToolSection(),
             new RubyTagAutoGenerateSection(),
         },
         RubyTagEditStep.Edit => new Drawable[]
         {
-            new RubyTagEditStepSection(),
+            new RubyTagSettingsHeader(),
             new RubyTagConfigToolSection(),
             new RubyTagEditSection(),
         },
         RubyTagEditStep.Verify => new Drawable[]
         {
-            new RubyTagEditStepSection(),
+            new RubyTagSettingsHeader(),
             new RubyTagConfigToolSection(),
             new RubyTagIssueSection(),
         },

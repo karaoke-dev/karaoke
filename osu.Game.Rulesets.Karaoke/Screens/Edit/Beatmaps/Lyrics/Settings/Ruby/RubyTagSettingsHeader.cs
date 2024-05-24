@@ -3,46 +3,20 @@
 
 using System;
 using System.Collections.Generic;
-using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Ruby;
 
-public partial class RubyTagEditStepSection : LyricEditorEditStepSection<IEditRubyModeState, RubyTagEditStep>
+public partial class RubyTagSettingsHeader : LyricEditorSettingsHeader<IEditRubyModeState, RubyTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;
 
-    protected override Selection CreateSelection(RubyTagEditStep step) =>
-        step switch
-        {
-            RubyTagEditStep.Generate => new Selection(),
-            RubyTagEditStep.Edit => new Selection(),
-            RubyTagEditStep.Verify => new RubyTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
-
-    protected override LocalisableString GetSelectionText(RubyTagEditStep step) =>
-        step switch
-        {
-            RubyTagEditStep.Generate => "Generate",
-            RubyTagEditStep.Edit => "Edit",
-            RubyTagEditStep.Verify => "Verify",
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
-
-    protected override Color4 GetSelectionColour(OsuColour colours, RubyTagEditStep step, bool active) =>
-        step switch
-        {
-            RubyTagEditStep.Generate => active ? colours.Blue : colours.BlueDarker,
-            RubyTagEditStep.Edit => active ? colours.Red : colours.RedDarker,
-            RubyTagEditStep.Verify => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
+    protected override EditStepTabControl CreateTabControl()
+        => new RubyTagEditStepTabControl();
 
     protected override DescriptionFormat GetSelectionDescription(RubyTagEditStep step) =>
         step switch
@@ -86,8 +60,33 @@ public partial class RubyTagEditStepSection : LyricEditorEditStepSection<IEditRu
             _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    private partial class RubyTagVerifySelection : LyricEditorVerifySelection
+    private partial class RubyTagEditStepTabControl : EditStepTabControl
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditRuby;
+        protected override StepTabButton CreateStepButton(OsuColour colours, RubyTagEditStep value)
+        {
+            return value switch
+            {
+                RubyTagEditStep.Generate => new StepTabButton(value)
+                {
+                    Text = "Generate",
+                    SelectedColour = colours.Blue,
+                    UnSelectedColour = colours.BlueDarker,
+                },
+                RubyTagEditStep.Edit => new StepTabButton(value)
+                {
+                    Text = "Edit",
+                    SelectedColour = colours.Red,
+                    UnSelectedColour = colours.RedDarker,
+                },
+                RubyTagEditStep.Verify => new VerifyStepTabButton(value)
+                {
+                    Text = "Verify",
+                    EditMode = LyricEditorMode.EditRuby,
+                    SelectedColour = colours.Yellow,
+                    UnSelectedColour = colours.YellowDarker,
+                },
+                _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
+            };
+        }
     }
 }

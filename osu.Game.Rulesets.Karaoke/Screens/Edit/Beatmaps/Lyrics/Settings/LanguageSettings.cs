@@ -33,12 +33,12 @@ public partial class LanguageSettings : LyricEditorSettings
     {
         LanguageEditStep.Generate => new Drawable[]
         {
-            new LanguageEditStepSection(),
+            new LanguageSettingsHeader(),
             new LanguageSwitchSpecialActionSection(),
         },
         LanguageEditStep.Verify => new Drawable[]
         {
-            new LanguageEditStepSection(),
+            new LanguageSettingsHeader(),
             new LanguageIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

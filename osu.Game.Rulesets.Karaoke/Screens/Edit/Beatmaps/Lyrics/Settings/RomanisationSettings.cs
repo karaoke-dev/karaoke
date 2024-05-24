@@ -33,17 +33,17 @@ public partial class RomanisationSettings : LyricEditorSettings
     {
         RomanisationTagEditStep.Generate => new Drawable[]
         {
-            new RomanisationEditStepSection(),
+            new RomanisationSettingsHeader(),
             new RomanisationAutoGenerateSection(),
         },
         RomanisationTagEditStep.Edit => new Drawable[]
         {
-            new RomanisationEditStepSection(),
+            new RomanisationSettingsHeader(),
             new RomanisationEditSection(),
         },
         RomanisationTagEditStep.Verify => new Drawable[]
         {
-            new RomanisationEditStepSection(),
+            new RomanisationSettingsHeader(),
             new RomanisationIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
