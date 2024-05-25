@@ -3,18 +3,22 @@
 
 using System;
 using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-public partial class CreateTimeTagActionReceiver : Component, IKeyBindingHandler<KaraokeEditAction>
+// todo: this section will display the action for creating time-tag.
+// will the visual part of https://github.com/karaoke-dev/karaoke/discussions/2225#discussioncomment-9244747
+public partial class CreateTimeTagActionSection : EditorSection, IKeyBindingHandler<KaraokeEditAction>
 {
+    protected override LocalisableString Title => "Action";
+
     [Resolved]
     private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
