@@ -94,18 +94,6 @@ public enum KaraokeEditAction
     [Description("Remove end time-tag")]
     RemoveEndTimeTag,
 
-    [Description("Shift the time-tag left.")]
-    ShiftTheTimeTagLeft,
-
-    [Description("Shift the time-tag right.")]
-    ShiftTheTimeTagRight,
-
-    [Description("Shift the time-tag state left.")]
-    ShiftTheTimeTagStateLeft,
-
-    [Description("Shift the time-tag state right.")]
-    ShiftTheTimeTagStateRight,
-
     [Description("Set time")]
     SetTime,
 
