@@ -40,7 +40,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
     // it might be special for create time-tag mode.
     private readonly IBindable<RubyTagEditMode> bindableRubyTagEditMode = new Bindable<RubyTagEditMode>();
-    private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
+    private readonly IBindable<RecordingTimeTagCaretMoveMode> bindableRecordingMovingCaretMode = new Bindable<RecordingTimeTagCaretMoveMode>();
     private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
     [Resolved]

@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.A
 /// </summary>
 public class RecordingTimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorithm<RecordingTimeTagCaretPosition, TimeTag>
 {
-    public MovingTimeTagCaretMode Mode { get; set; }
+    public RecordingTimeTagCaretMoveMode Mode { get; set; }
 
     public RecordingTimeTagCaretPositionAlgorithm(Lyric[] lyrics)
         : base(lyrics)
@@ -157,10 +157,10 @@ public class RecordingTimeTagCaretPositionAlgorithm : IndexCaretPositionAlgorith
     {
         return Mode switch
         {
-            MovingTimeTagCaretMode.None => true,
-            MovingTimeTagCaretMode.OnlyStartTag => timeTag.Index.State == TextIndex.IndexState.Start,
-            MovingTimeTagCaretMode.OnlyEndTag => timeTag.Index.State == TextIndex.IndexState.End,
-            _ => throw new InvalidOperationException(nameof(MovingTimeTagCaretMode)),
+            RecordingTimeTagCaretMoveMode.None => true,
+            RecordingTimeTagCaretMoveMode.OnlyStartTag => timeTag.Index.State == TextIndex.IndexState.Start,
+            RecordingTimeTagCaretMoveMode.OnlyEndTag => timeTag.Index.State == TextIndex.IndexState.End,
+            _ => throw new InvalidOperationException(nameof(RecordingTimeTagCaretMoveMode)),
         };
     }
 }

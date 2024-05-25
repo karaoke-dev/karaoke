@@ -20,16 +20,16 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
 
     #region Lyric
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, true)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, true)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, false)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.None, 0, not_exist_tag, false)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyStartTag, 0, not_exist_tag, false)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyEndTag, 0, not_exist_tag, false)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, not_exist_tag, false)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyStartTag, 0, not_exist_tag, false)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyEndTag, 0, not_exist_tag, false)]
-    public void TestPositionMovable(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int timeTagIndex, bool movable)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, true)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0, true)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 0, false)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.None, 0, not_exist_tag, false)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, not_exist_tag, false)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, not_exist_tag, false)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.None, 0, not_exist_tag, false)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, not_exist_tag, false)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, not_exist_tag, false)]
+    public void TestPositionMovable(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int timeTagIndex, bool movable)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var caret = createCaretPosition(lyrics, lyricIndex, timeTagIndex);
@@ -38,16 +38,16 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestPositionMovable(lyrics, caret, movable, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, null, null)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 0, 0, 0)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 3, 0, 0)] // should move to first start index.
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, 3, 0, 0)] // should move to first start index.
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 3, 0, 4)] // should move to first end index.
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 0, 0, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 3, 0, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, 3, 0, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 3, 0, 4)]
-    public void TestMoveToPreviousLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, null, null)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 1, 0, 0, 0)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 1, 3, 0, 0)] // should move to first start index.
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 1, 3, 0, 0)] // should move to first start index.
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 1, 3, 0, 4)] // should move to first end index.
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 2, 0, 0, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 2, 3, 0, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyStartTag, 2, 3, 0, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyEndTag, 2, 3, 0, 4)]
+    public void TestMoveToPreviousLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var caret = createCaretPosition(lyrics, lyricIndex, index);
@@ -57,16 +57,16 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToPreviousLyric(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, null, null)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 0, 1, 0)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 2, 1, 0)] // should move to first start index.
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, 2, 1, 0)] // should move to first start index.
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 1, 3)] // should move to first end index.
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 0, 2, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 2, 2, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, 2, 2, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 2, 3)]
-    public void TestMoveToNextLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, null, null)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 0, 0, 1, 0)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 0, 2, 1, 0)] // should move to first start index.
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 2, 1, 0)] // should move to first start index.
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 2, 1, 3)] // should move to first end index.
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 0, 0, 2, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 0, 2, 2, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 2, 2, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 2, 2, 3)]
+    public void TestMoveToNextLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var caret = createCaretPosition(lyrics, lyricIndex, index);
@@ -76,19 +76,19 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToNextLyric(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 4)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.None, null, null)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyStartTag, null, null)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyEndTag, null, null)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 0)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, 0)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 4)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, 0)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 4)]
-    public void TestMoveToFirstLyric(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 4)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.None, null, null)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyStartTag, null, null)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyEndTag, null, null)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 0, 0)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 4)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 0, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 4)]
+    public void TestMoveToFirstLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
@@ -97,19 +97,19 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToFirstLyric(lyrics, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 3)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 4)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.None, null, null)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyStartTag, null, null)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyEndTag, null, null)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 3)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, 2)]
-    [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 3)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 3)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, 2)]
-    [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 3)]
-    public void TestMoveToLastLyric(string sourceName, MovingTimeTagCaretMode mode, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 4)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 3)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 4)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.None, null, null)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyStartTag, null, null)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyEndTag, null, null)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.None, 1, 3)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 1, 2)]
+    [TestCase(nameof(twoLyricsWithText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 1, 3)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.None, 2, 3)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyStartTag, 2, 2)]
+    [TestCase(nameof(threeLyricsWithSpacing), RecordingTimeTagCaretMoveMode.OnlyEndTag, 2, 3)]
+    public void TestMoveToLastLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
@@ -118,14 +118,14 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToLastLyric(lyrics, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, 4)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.None, 0, null, null)] // should not hover to the lyric if contains no time-tag in the lyric.
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyStartTag, 0, null, null)]
-    [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyEndTag, 0, null, null)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, null, null)] // should not hover to the lyric if contains no text and no time-tag in the lyric
-    public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 0, 4)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.None, 0, null, null)] // should not hover to the lyric if contains no time-tag in the lyric.
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, null, null)]
+    [TestCase(nameof(singleLyricWithoutTimeTag), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, null, null)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.None, 0, null, null)] // should not hover to the lyric if contains no text and no time-tag in the lyric
+    public void TestMoveToTargetLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var lyric = lyrics[lyricIndex];
@@ -139,11 +139,11 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
 
     #region Lyric index
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, null, null)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, 0, 3)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 4, 0, 3)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 4, null, null)]
-    public void TestMoveToPreviousIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, null, null)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 4, 0, 3)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 4, 0, 3)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 4, null, null)]
+    public void TestMoveToPreviousIndex(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var caret = createCaretPosition(lyrics, lyricIndex, index);
@@ -153,11 +153,11 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToPreviousIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, null, null)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0, 1)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, 0, 1)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, 0, 4)]
-    public void TestMoveToNextIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 4, null, null)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, 0, 1)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0, 0, 1)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 0, 0, 4)]
+    public void TestMoveToNextIndex(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int index, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var caret = createCaretPosition(lyrics, lyricIndex, index);
@@ -167,13 +167,13 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToNextIndex(lyrics, caret, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, 4)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, null, null)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyStartTag, 0, null, null)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyEndTag, 0, null, null)]
-    public void TestMoveToFirstIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 0, 4)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.None, 0, null, null)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, null, null)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, null, null)]
+    public void TestMoveToFirstIndex(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var lyric = lyrics[lyricIndex];
@@ -183,13 +183,13 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToFirstIndex(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 4)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, 3)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, 4)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, null, null)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyStartTag, 0, null, null)]
-    [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.OnlyEndTag, 0, null, null)]
-    public void TestMoveToLastIndex(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, 4)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, 0, 3)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, 0, 4)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.None, 0, null, null)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyStartTag, 0, null, null)]
+    [TestCase(nameof(singleLyricWithNoText), RecordingTimeTagCaretMoveMode.OnlyEndTag, 0, null, null)]
+    public void TestMoveToLastIndex(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var lyric = lyrics[lyricIndex];
@@ -199,9 +199,9 @@ public class RecordingTimeTagCaretPositionAlgorithmTest : BaseIndexCaretPosition
         TestMoveToLastIndex(lyrics, lyric, expected, algorithms => algorithms.Mode = mode);
     }
 
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0, 0)]
-    [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 4, 0, 4)]
-    public void TestMoveToTargetLyric(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int timeTagIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 0, 0, 0)]
+    [TestCase(nameof(singleLyric), RecordingTimeTagCaretMoveMode.None, 0, 4, 0, 4)]
+    public void TestMoveToTargetLyric(string sourceName, RecordingTimeTagCaretMoveMode mode, int lyricIndex, int timeTagIndex, int? expectedLyricIndex, int? expectedTimeTagIndex)
     {
         var lyrics = GetLyricsByMethodName(sourceName);
         var lyric = lyrics[lyricIndex];

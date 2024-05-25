@@ -29,7 +29,7 @@ public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<Kara
         SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
         // Recording
-        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, RecordingTimeTagCaretMoveMode.None);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, true);

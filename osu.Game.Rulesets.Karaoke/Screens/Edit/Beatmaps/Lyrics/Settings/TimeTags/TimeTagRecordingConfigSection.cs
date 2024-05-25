@@ -22,11 +22,11 @@ public partial class TimeTagRecordingConfigSection : EditorSection
     {
         Children = new Drawable[]
         {
-            new LabelledEnumDropdown<MovingTimeTagCaretMode>
+            new LabelledEnumDropdown<RecordingTimeTagCaretMoveMode>
             {
                 Label = "Record tag mode",
                 Description = "Only record time with start/end time-tag while recording.",
-                Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode),
+                Current = lyricEditorConfigManager.GetBindable<RecordingTimeTagCaretMoveMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode),
             },
             new LabelledSwitchButton
             {
