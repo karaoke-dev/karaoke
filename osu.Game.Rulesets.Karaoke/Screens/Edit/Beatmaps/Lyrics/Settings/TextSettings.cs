@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Text;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -29,21 +28,21 @@ public partial class TextSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new TextSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        TextEditStep.Typing => new Drawable[]
+        TextEditStep.Typing => new[]
         {
-            new TextSettingsHeader(),
             new TextSwitchSpecialActionSection(),
         },
-        TextEditStep.Split => new Drawable[]
+        TextEditStep.Split => new[]
         {
-            new TextSettingsHeader(),
             new TextSwitchSpecialActionSection(),
         },
-        TextEditStep.Verify => new Drawable[]
+        TextEditStep.Verify => new[]
         {
-            new TextSettingsHeader(),
             new TextIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -29,23 +28,23 @@ public partial class NoteSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new NoteSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        NoteEditStep.Generate => new Drawable[]
+        NoteEditStep.Generate => new EditorSection[]
         {
-            new NoteSettingsHeader(),
             new NoteConfigSection(),
             new NoteSwitchSpecialActionSection(),
         },
-        NoteEditStep.Edit => new Drawable[]
+        NoteEditStep.Edit => new EditorSection[]
         {
-            new NoteSettingsHeader(),
             new NoteEditPropertyModeSection(),
             new NoteEditPropertySection(),
         },
-        NoteEditStep.Verify => new Drawable[]
+        NoteEditStep.Verify => new EditorSection[]
         {
-            new NoteSettingsHeader(),
             new NoteIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

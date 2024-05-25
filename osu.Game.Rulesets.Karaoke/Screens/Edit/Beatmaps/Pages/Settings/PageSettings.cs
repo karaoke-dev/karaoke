@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Overlays;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
@@ -27,21 +26,20 @@ public partial class PageSettings : EditorSettings
         ChangeBackgroundColour(colourProvider.Background3);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader() => new PageEditorSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableMode.Value switch
     {
-        PageEditorEditMode.Generate => new Drawable[]
+        PageEditorEditMode.Generate => new[]
         {
-            new PageEditorSettingsHeader(),
             new PageAutoGenerateSection(),
         },
-        PageEditorEditMode.Edit => new Drawable[]
+        PageEditorEditMode.Edit => new[]
         {
-            new PageEditorSettingsHeader(),
             new PagesSection(),
         },
-        PageEditorEditMode.Verify => new Drawable[]
+        PageEditorEditMode.Verify => new[]
         {
-            new PageEditorSettingsHeader(),
             new PageEditorIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

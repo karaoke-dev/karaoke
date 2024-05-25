@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -29,21 +28,21 @@ public partial class RomanisationSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new RomanisationSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        RomanisationTagEditStep.Generate => new Drawable[]
+        RomanisationTagEditStep.Generate => new[]
         {
-            new RomanisationSettingsHeader(),
             new RomanisationAutoGenerateSection(),
         },
-        RomanisationTagEditStep.Edit => new Drawable[]
+        RomanisationTagEditStep.Edit => new[]
         {
-            new RomanisationSettingsHeader(),
             new RomanisationEditSection(),
         },
-        RomanisationTagEditStep.Verify => new Drawable[]
+        RomanisationTagEditStep.Verify => new[]
         {
-            new RomanisationSettingsHeader(),
             new RomanisationIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),
