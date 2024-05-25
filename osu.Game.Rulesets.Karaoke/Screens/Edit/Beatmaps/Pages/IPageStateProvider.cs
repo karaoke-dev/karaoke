@@ -8,11 +8,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 
 public interface IPageStateProvider
 {
-    IBindable<PageEditorEditMode> BindableEditMode { get; }
+    Bindable<PageEditorEditMode> BindableEditMode { get; }
 
     PageEditorEditMode EditMode => BindableEditMode.Value;
-
-    void ChangeEditMode(PageEditorEditMode mode);
 
     PageInfo PageInfo { get; }
 

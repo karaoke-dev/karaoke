@@ -25,7 +25,7 @@ public partial class PageEditorSettingsHeader : EditorSettingsHeader<PageEditorE
 
     protected sealed override void UpdateEditStep(PageEditorEditMode step)
     {
-        pageStateProvider.ChangeEditMode(step);
+        pageStateProvider.BindableEditMode.Value = step;
     }
 
     protected override DescriptionFormat GetSelectionDescription(PageEditorEditMode step) =>

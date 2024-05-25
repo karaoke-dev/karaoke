@@ -32,7 +32,7 @@ public partial class StageEditorSettingsHeader : EditorSettingsHeader<StageEdito
 
     protected sealed override void UpdateEditStep(StageEditorEditMode step)
     {
-        stageEditorStateProvider.ChangeEditMode(step);
+        stageEditorStateProvider.BindableEditMode.Value = step;
     }
 
     protected override DescriptionFormat GetSelectionDescription(StageEditorEditMode step) =>
