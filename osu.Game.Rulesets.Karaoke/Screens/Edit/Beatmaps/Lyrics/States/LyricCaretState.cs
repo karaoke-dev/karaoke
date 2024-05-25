@@ -477,10 +477,10 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
         void navigateToTimeByCaretPosition(ICaretPosition? position)
         {
-            if (position is not TimeTagCaretPosition timeTagCaretPosition)
+            if (position is not RecordingTimeTagCaretPosition recordingTimeTagCaretPosition)
                 return;
 
-            double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
+            double? timeTagTime = recordingTimeTagCaretPosition.TimeTag.Time;
             if (timeTagTime.HasValue && !editorClock.IsRunning && bindableRecordingChangeTimeWhileMovingTheCaret.Value)
                 editorClock.SeekSmoothlyTo(timeTagTime.Value);
         }
