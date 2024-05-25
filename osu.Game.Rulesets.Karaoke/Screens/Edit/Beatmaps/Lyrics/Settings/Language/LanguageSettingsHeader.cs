@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 
-public partial class LanguageSettingsHeader : LyricEditorSettingsHeader<IEditLanguageModeState, LanguageEditStep>
+public partial class LanguageSettingsHeader : LyricEditorSettingsHeader<LanguageEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;

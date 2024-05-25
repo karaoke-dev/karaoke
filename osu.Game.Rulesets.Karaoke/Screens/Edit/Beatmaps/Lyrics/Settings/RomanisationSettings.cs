@@ -16,20 +16,19 @@ public partial class RomanisationSettings : LyricEditorSettings
 
     public override float SettingsWidth => 350;
 
-    private readonly IBindable<RomanisationTagEditStep> bindableEditStep = new Bindable<RomanisationTagEditStep>();
+    private readonly Bindable<RomanisationTagEditStep> bindableEditStep = new();
 
     [BackgroundDependencyLoader]
     private void load(IEditRomanisationModeState romanisationModeState)
     {
         bindableEditStep.BindTo(romanisationModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
-        => new RomanisationSettingsHeader();
+        => new RomanisationSettingsHeader
+        {
+            Current = bindableEditStep,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {

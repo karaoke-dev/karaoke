@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Romanisation;
 
-public partial class RomanisationSettingsHeader : LyricEditorSettingsHeader<IEditRomanisationModeState, RomanisationTagEditStep>
+public partial class RomanisationSettingsHeader : LyricEditorSettingsHeader<RomanisationTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Orange;

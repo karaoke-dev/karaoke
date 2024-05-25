@@ -16,20 +16,19 @@ public partial class RubyTagSettings : LyricEditorSettings
 
     public override float SettingsWidth => 350;
 
-    private readonly IBindable<RubyTagEditStep> bindableEditStep = new Bindable<RubyTagEditStep>();
+    private readonly Bindable<RubyTagEditStep> bindableEditStep = new();
 
     [BackgroundDependencyLoader]
     private void load(IEditRubyModeState editRubyModeState)
     {
         bindableEditStep.BindTo(editRubyModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
-        => new RubyTagSettingsHeader();
+        => new RubyTagSettingsHeader
+        {
+            Current = bindableEditStep,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {

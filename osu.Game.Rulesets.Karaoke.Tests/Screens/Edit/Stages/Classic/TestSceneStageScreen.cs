@@ -28,7 +28,7 @@ public partial class TestSceneStageScreen : ClassicStageScreenTestScene<StageScr
                 AddStep($"switch to mode {Enum.GetName(editMode)}", () =>
                 {
                     stageScreen.ChangeEditCategory(category);
-                    stageScreen.ChangeEditMode(editMode);
+                    stageScreen.BindableEditMode.Value = editMode;
                 });
                 AddWaitStep("wait for switch to new mode", 5);
             }

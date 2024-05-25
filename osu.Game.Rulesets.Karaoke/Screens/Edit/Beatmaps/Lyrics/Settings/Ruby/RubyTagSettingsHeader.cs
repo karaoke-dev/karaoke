@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Ruby;
 
-public partial class RubyTagSettingsHeader : LyricEditorSettingsHeader<IEditRubyModeState, RubyTagEditStep>
+public partial class RubyTagSettingsHeader : LyricEditorSettingsHeader<RubyTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;

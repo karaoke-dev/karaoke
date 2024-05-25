@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Notes;
 
-public partial class NoteSettingsHeader : LyricEditorSettingsHeader<IEditNoteModeState, NoteEditStep>
+public partial class NoteSettingsHeader : LyricEditorSettingsHeader<NoteEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Blue;

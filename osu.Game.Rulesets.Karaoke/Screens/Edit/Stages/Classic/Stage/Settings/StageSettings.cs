@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 public partial class StageSettings : EditorSettings
 {
     private readonly IBindable<StageEditorEditCategory> bindableCategory = new Bindable<StageEditorEditCategory>();
-    private readonly IBindable<StageEditorEditMode> bindableMode = new Bindable<StageEditorEditMode>();
+    private readonly Bindable<StageEditorEditMode> bindableMode = new();
 
     [BackgroundDependencyLoader]
     private void load(OverlayColourProvider colourProvider, IStageEditorStateProvider stageEditorStateProvider)
@@ -24,17 +24,16 @@ public partial class StageSettings : EditorSettings
         }, true);
 
         bindableMode.BindTo(stageEditorStateProvider.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
 
         // change the background colour to the lighter one.
         ChangeBackgroundColour(colourProvider.Background3);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
-        => new StageEditorSettingsHeader(bindableCategory.Value);
+        => new StageEditorSettingsHeader(bindableCategory.Value)
+        {
+            Current = bindableMode,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableCategory.Value switch
     {

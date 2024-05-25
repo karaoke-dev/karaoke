@@ -25,7 +25,7 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
     [Cached(typeof(IPageEditorVerifier))]
     private readonly PageEditorVerifier pageEditorVerifier;
 
-    public IBindable<PageEditorEditMode> BindableEditMode => bindableEditMode;
+    public Bindable<PageEditorEditMode> BindableEditMode { get; } = new();
 
     [Resolved]
     private EditorBeatmap editorBeatmap { get; set; } = null!;
@@ -37,8 +37,6 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
     public BindableFloat BindableZoom { get; } = new();
 
     public BindableFloat BindableCurrent { get; } = new();
-
-    private readonly Bindable<PageEditorEditMode> bindableEditMode = new();
 
     public PageScreen()
         : base(KaraokeBeatmapEditorScreenMode.Page)
@@ -79,11 +77,6 @@ public partial class PageScreen : BeatmapEditorRoundedScreen, IPageStateProvider
                 },
             },
         });
-    }
-
-    public void ChangeEditMode(PageEditorEditMode mode)
-    {
-        bindableEditMode.Value = mode;
     }
 
     public void Select(Page item)

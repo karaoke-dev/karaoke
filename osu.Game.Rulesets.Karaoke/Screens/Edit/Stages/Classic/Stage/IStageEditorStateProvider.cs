@@ -14,11 +14,9 @@ public interface IStageEditorStateProvider
 
     void ChangeEditCategory(StageEditorEditCategory mode);
 
-    IBindable<StageEditorEditMode> BindableEditMode { get; }
+    Bindable<StageEditorEditMode> BindableEditMode { get; }
 
     StageEditorEditMode EditMode => BindableEditMode.Value;
-
-    void ChangeEditMode(StageEditorEditMode mode);
 
     ClassicStageInfo StageInfo { get; }
 }

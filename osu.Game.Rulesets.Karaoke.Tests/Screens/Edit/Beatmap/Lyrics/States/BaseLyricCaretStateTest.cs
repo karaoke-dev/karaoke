@@ -234,7 +234,7 @@ public abstract partial class BaseLyricCaretStateTest : OsuTestScene
             if (editStep is not TextEditStep textEditStep)
                 throw new NotSupportedException();
 
-            editTextModeState.ChangeEditStep(textEditStep);
+            editTextModeState.BindableEditStep.Value = textEditStep;
         }
 
         public void NavigateToFix(LyricEditorMode mode)

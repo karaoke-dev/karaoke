@@ -5,27 +5,9 @@ using System;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
-
-public abstract partial class LyricEditorSettingsHeader<TEditStepState, TEditStep> : LyricEditorSettingsHeader<TEditStep>
-    where TEditStepState : class, IHasEditStep<TEditStep>
-    where TEditStep : struct, Enum
-{
-    [Resolved]
-    private TEditStepState tEditStepState { get; set; } = null!;
-
-    protected sealed override TEditStep DefaultStep() => tEditStepState.EditStep;
-
-    protected sealed override void UpdateEditStep(TEditStep step)
-    {
-        tEditStepState.ChangeEditStep(step);
-
-        base.UpdateEditStep(step);
-    }
-}
 
 public abstract partial class LyricEditorSettingsHeader<TEditStep> : EditorSettingsHeader<TEditStep>
     where TEditStep : struct, Enum

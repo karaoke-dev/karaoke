@@ -11,22 +11,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
 
 public partial class PageSettings : EditorSettings
 {
-    private readonly IBindable<PageEditorEditMode> bindableMode = new Bindable<PageEditorEditMode>();
+    private readonly Bindable<PageEditorEditMode> bindableMode = new();
 
     [BackgroundDependencyLoader]
     private void load(OverlayColourProvider colourProvider, IPageStateProvider pageStateProvider)
     {
         bindableMode.BindTo(pageStateProvider.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
 
         // change the background colour to the lighter one.
         ChangeBackgroundColour(colourProvider.Background3);
     }
 
-    protected override EditorSettingsHeader CreateSettingHeader() => new PageEditorSettingsHeader();
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new PageEditorSettingsHeader
+        {
+            Current = bindableMode,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableMode.Value switch
     {

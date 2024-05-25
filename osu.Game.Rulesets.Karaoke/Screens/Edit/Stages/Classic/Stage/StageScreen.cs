@@ -18,10 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
 {
     public IBindable<StageEditorEditCategory> BindableEditCategory => bindableCategory;
-    public IBindable<StageEditorEditMode> BindableEditMode => bindableEditMode;
+    public Bindable<StageEditorEditMode> BindableEditMode { get; } = new();
 
     private readonly Bindable<StageEditorEditCategory> bindableCategory = new();
-    private readonly Bindable<StageEditorEditMode> bindableEditMode = new();
 
     [Cached(typeof(IClassicStageChangeHandler))]
     private readonly ClassicStageChangeHandler classicStageChangeHandler;
@@ -77,10 +76,5 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     public void ChangeEditCategory(StageEditorEditCategory mode)
     {
         bindableCategory.Value = mode;
-    }
-
-    public void ChangeEditMode(StageEditorEditMode mode)
-    {
-        bindableEditMode.Value = mode;
     }
 }

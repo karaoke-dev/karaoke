@@ -34,6 +34,9 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
         set => tabControl.Current = value;
     }
 
+    [Resolved]
+    private EditorSettings editorSettings { get; set; } = null!;
+
     // for the DescriptionMarkdownTextFlowContainer.
     [Cached]
     private readonly OverlayColourProvider overlayColourProvider;
@@ -73,7 +76,6 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
         base.LoadComplete();
 
         tabControl.Items = Enum.GetValues<TEditStep>();
-        tabControl.Current.Value = DefaultStep();
         tabControl.Current.BindValueChanged(x =>
         {
             var step = x.NewValue;
@@ -84,6 +86,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
             // wait until description text ready.
             Schedule(() =>
             {
+                editorSettings.ReloadSections();
                 UpdateEditStep(step);
             });
         }, true);
@@ -93,13 +96,13 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
 
     protected abstract OverlayColourScheme CreateColourScheme();
 
-    protected abstract TEditStep DefaultStep();
-
     protected abstract EditStepTabControl CreateTabControl();
 
     protected abstract DescriptionFormat GetSelectionDescription(TEditStep step);
 
-    protected abstract void UpdateEditStep(TEditStep step);
+    protected virtual void UpdateEditStep(TEditStep step)
+    {
+    }
 
     protected abstract partial class EditStepTabControl : OsuTabControl<TEditStep>
     {

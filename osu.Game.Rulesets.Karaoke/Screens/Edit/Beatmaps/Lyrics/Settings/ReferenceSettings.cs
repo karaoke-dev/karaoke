@@ -16,20 +16,19 @@ public partial class ReferenceSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<ReferenceLyricEditStep> bindableEditStep = new Bindable<ReferenceLyricEditStep>();
+    private readonly Bindable<ReferenceLyricEditStep> bindableEditStep = new();
 
     [BackgroundDependencyLoader]
     private void load(IEditReferenceLyricModeState editReferenceLyricModeState)
     {
         bindableEditStep.BindTo(editReferenceLyricModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
-        => new ReferenceLyricSettingsHeader();
+        => new ReferenceLyricSettingsHeader
+        {
+            Current = bindableEditStep,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {

@@ -9,12 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class EditLanguageModeState : Component, IEditLanguageModeState
 {
-    private readonly Bindable<LanguageEditStep> bindableEditMode = new();
-
     public Bindable<LanguageEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
-    public IBindable<LanguageEditStep> BindableEditStep => bindableEditMode;
-
-    public void ChangeEditStep(LanguageEditStep step)
-        => bindableEditMode.Value = step;
+    public Bindable<LanguageEditStep> BindableEditStep { get; } = new();
 }

@@ -448,7 +448,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         if (editStepState == null)
             throw new ArgumentNullException();
 
-        editStepState.ChangeEditStep(editStep);
+        editStepState.BindableEditStep.Value = editStep;
     }
 
     private IHasEditStep<TEditStep>? getEditStepState<TEditStep>() where TEditStep : Enum

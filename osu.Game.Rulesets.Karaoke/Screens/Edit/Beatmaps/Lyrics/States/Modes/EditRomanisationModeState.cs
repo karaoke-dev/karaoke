@@ -10,12 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public partial class EditRomanisationModeState : ModeStateWithBlueprintContainer<TimeTag>, IEditRomanisationModeState
 {
-    private readonly Bindable<RomanisationTagEditStep> bindableEditMode = new();
-
-    public IBindable<RomanisationTagEditStep> BindableEditStep => bindableEditMode;
-
-    public void ChangeEditStep(RomanisationTagEditStep step)
-        => bindableEditMode.Value = step;
+    public Bindable<RomanisationTagEditStep> BindableEditStep { get; } = new();
 
     protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
         => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags));

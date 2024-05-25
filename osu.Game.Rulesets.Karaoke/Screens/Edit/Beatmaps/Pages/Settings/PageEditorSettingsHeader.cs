@@ -11,22 +11,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages.Settings;
 
 public partial class PageEditorSettingsHeader : EditorSettingsHeader<PageEditorEditMode>
 {
-    [Resolved]
-    private IPageStateProvider pageStateProvider { get; set; } = null!;
-
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Green;
 
-    protected override PageEditorEditMode DefaultStep()
-        => pageStateProvider.EditMode;
-
     protected override EditStepTabControl CreateTabControl()
         => new PageEditStepTabControl();
-
-    protected sealed override void UpdateEditStep(PageEditorEditMode step)
-    {
-        pageStateProvider.ChangeEditMode(step);
-    }
 
     protected override DescriptionFormat GetSelectionDescription(PageEditorEditMode step) =>
         step switch
