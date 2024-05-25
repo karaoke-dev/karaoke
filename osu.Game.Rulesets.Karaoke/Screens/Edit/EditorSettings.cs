@@ -38,7 +38,7 @@ public abstract partial class EditorSettings : EditorRoundedScreenSettings
             if (settingsHeader != null)
             {
                 var scrollContainer = this.ChildrenOfType<OsuScrollContainer>().First();
-                scrollContainer.Margin = new MarginPadding { Top = settingsHeader.DrawHeight };
+                scrollContainer.Padding = new MarginPadding { Top = settingsHeader.DrawHeight };
             }
 
             // re-create the content.
