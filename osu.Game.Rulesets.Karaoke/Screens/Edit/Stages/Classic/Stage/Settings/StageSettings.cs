@@ -46,11 +46,11 @@ public partial class StageSettings : EditorSettings
     {
         StageEditorEditMode.Edit => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Layout),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Layout),
         },
         StageEditorEditMode.Verify => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Layout),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Layout),
             new StageEditorIssueSection(StageEditorEditCategory.Layout),
         },
         _ => throw new ArgumentOutOfRangeException(),
@@ -60,12 +60,12 @@ public partial class StageSettings : EditorSettings
     {
         StageEditorEditMode.Edit => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Timing),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Timing),
             new TimingPointsSection(),
         },
         StageEditorEditMode.Verify => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Timing),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Timing),
             new StageEditorIssueSection(StageEditorEditCategory.Timing),
         },
         _ => throw new ArgumentOutOfRangeException(),
@@ -75,11 +75,11 @@ public partial class StageSettings : EditorSettings
     {
         StageEditorEditMode.Edit => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Style),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Style),
         },
         StageEditorEditMode.Verify => new Drawable[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Style),
+            new StageEditorSettingsHeader(StageEditorEditCategory.Style),
             new StageEditorIssueSection(StageEditorEditCategory.Style),
         },
         _ => throw new ArgumentOutOfRangeException(),
