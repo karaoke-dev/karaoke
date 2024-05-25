@@ -22,10 +22,6 @@ public partial class NoteSettings : LyricEditorSettings
     private void load(IEditNoteModeState editNoteModeState)
     {
         bindableEditStep.BindTo(editNoteModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()

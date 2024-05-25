@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -12,6 +13,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
+[Cached]
 public abstract partial class EditorSettings : EditorRoundedScreenSettings
 {
     protected override void LoadComplete()
@@ -25,7 +27,7 @@ public abstract partial class EditorSettings : EditorRoundedScreenSettings
         AddInternal(newSettingHeader);
     }
 
-    protected void ReloadSections()
+    public void ReloadSections()
     {
         // reload section after header ready.
         Schedule(() =>

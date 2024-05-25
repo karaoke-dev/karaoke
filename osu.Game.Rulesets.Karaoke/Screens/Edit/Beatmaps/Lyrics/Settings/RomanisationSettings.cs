@@ -22,10 +22,6 @@ public partial class RomanisationSettings : LyricEditorSettings
     private void load(IEditRomanisationModeState romanisationModeState)
     {
         bindableEditStep.BindTo(romanisationModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()

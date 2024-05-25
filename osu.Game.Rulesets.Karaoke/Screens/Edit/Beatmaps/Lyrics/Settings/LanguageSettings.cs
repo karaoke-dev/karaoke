@@ -22,10 +22,6 @@ public partial class LanguageSettings : LyricEditorSettings
     private void load(IEditLanguageModeState editLanguageModeState)
     {
         bindableEditStep.BindTo(editLanguageModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()

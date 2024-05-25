@@ -24,10 +24,6 @@ public partial class StageSettings : EditorSettings
         }, true);
 
         bindableMode.BindTo(stageEditorStateProvider.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
 
         // change the background colour to the lighter one.
         ChangeBackgroundColour(colourProvider.Background3);

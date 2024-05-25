@@ -17,10 +17,6 @@ public partial class PageSettings : EditorSettings
     private void load(OverlayColourProvider colourProvider, IPageStateProvider pageStateProvider)
     {
         bindableMode.BindTo(pageStateProvider.BindableEditMode);
-        bindableMode.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
 
         // change the background colour to the lighter one.
         ChangeBackgroundColour(colourProvider.Background3);

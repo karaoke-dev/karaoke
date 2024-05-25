@@ -21,10 +21,6 @@ public partial class TimeTagSettings : LyricEditorSettings
     private void load(IEditTimeTagModeState editTimeTagModeState)
     {
         bindableEditStep.BindTo(editTimeTagModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()

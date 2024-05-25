@@ -22,10 +22,6 @@ public partial class RubyTagSettings : LyricEditorSettings
     private void load(IEditRubyModeState editRubyModeState)
     {
         bindableEditStep.BindTo(editRubyModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()

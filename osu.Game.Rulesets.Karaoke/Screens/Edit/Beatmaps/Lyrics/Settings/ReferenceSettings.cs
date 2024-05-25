@@ -22,10 +22,6 @@ public partial class ReferenceSettings : LyricEditorSettings
     private void load(IEditReferenceLyricModeState editReferenceLyricModeState)
     {
         bindableEditStep.BindTo(editReferenceLyricModeState.BindableEditStep);
-        bindableEditStep.BindValueChanged(e =>
-        {
-            ReloadSections();
-        }, true);
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
