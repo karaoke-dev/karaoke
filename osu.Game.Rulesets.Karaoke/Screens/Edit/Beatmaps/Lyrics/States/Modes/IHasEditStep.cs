@@ -8,9 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 public interface IHasEditStep<TEditStep> where TEditStep : Enum
 {
-    IBindable<TEditStep> BindableEditStep { get; }
+    Bindable<TEditStep> BindableEditStep { get; }
 
     TEditStep EditStep => BindableEditStep.Value;
-
-    void ChangeEditStep(TEditStep step);
 }

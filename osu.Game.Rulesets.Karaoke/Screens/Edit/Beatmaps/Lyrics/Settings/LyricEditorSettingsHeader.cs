@@ -21,7 +21,7 @@ public abstract partial class LyricEditorSettingsHeader<TEditStepState, TEditSte
 
     protected sealed override void UpdateEditStep(TEditStep step)
     {
-        tEditStepState.ChangeEditStep(step);
+        tEditStepState.BindableEditStep.Value = step;
 
         base.UpdateEditStep(step);
     }
