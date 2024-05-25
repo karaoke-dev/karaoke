@@ -127,8 +127,8 @@ public partial class TestSceneLyricEditorScreen : BeatmapEditorScreenTestScene<L
     {
         AddStep("Click the button", () =>
         {
-            var editStepSection = this.ChildrenOfType<LyricEditorEditStepSection<T>>().Single();
-            editStepSection.UpdateEditStep(editMode);
+            var editStepSection = this.ChildrenOfType<LyricEditorSettingsHeader<T>>().Single();
+            editStepSection.Current.Value = editMode;
         });
         AddWaitStep("wait for switch to new edit mode.", 10);
     }

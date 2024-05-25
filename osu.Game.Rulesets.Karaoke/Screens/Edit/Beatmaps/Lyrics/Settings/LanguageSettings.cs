@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Language;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -29,16 +28,17 @@ public partial class LanguageSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new LanguageSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        LanguageEditStep.Generate => new Drawable[]
+        LanguageEditStep.Generate => new[]
         {
-            new LanguageEditStepSection(),
             new LanguageSwitchSpecialActionSection(),
         },
-        LanguageEditStep.Verify => new Drawable[]
+        LanguageEditStep.Verify => new[]
         {
-            new LanguageEditStepSection(),
             new LanguageIssueSection(),
         },
         _ => throw new ArgumentOutOfRangeException(),

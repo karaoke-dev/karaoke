@@ -3,46 +3,20 @@
 
 using System;
 using System.Collections.Generic;
-using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-public partial class TimeTagEditStepSection : LyricEditorEditStepSection<IEditTimeTagModeState, TimeTagEditStep>
+public partial class TimeTagSettingsHeader : LyricEditorSettingsHeader<IEditTimeTagModeState, TimeTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Orange;
 
-    protected override Selection CreateSelection(TimeTagEditStep step) =>
-        step switch
-        {
-            TimeTagEditStep.Create => new Selection(),
-            TimeTagEditStep.Recording => new Selection(),
-            TimeTagEditStep.Adjust => new TimeTagVerifySelection(),
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
-
-    protected override LocalisableString GetSelectionText(TimeTagEditStep step) =>
-        step switch
-        {
-            TimeTagEditStep.Create => "Create",
-            TimeTagEditStep.Recording => "Recording",
-            TimeTagEditStep.Adjust => "Adjust",
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
-
-    protected override Color4 GetSelectionColour(OsuColour colours, TimeTagEditStep step, bool active) =>
-        step switch
-        {
-            TimeTagEditStep.Create => active ? colours.Blue : colours.BlueDarker,
-            TimeTagEditStep.Recording => active ? colours.Red : colours.RedDarker,
-            TimeTagEditStep.Adjust => active ? colours.Yellow : colours.YellowDarker,
-            _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
-        };
+    protected override EditStepTabControl CreateTabControl()
+        => new RubyTagEditStepTabControl();
 
     protected override DescriptionFormat GetSelectionDescription(TimeTagEditStep step) =>
         step switch
@@ -72,8 +46,33 @@ public partial class TimeTagEditStepSection : LyricEditorEditStepSection<IEditTi
             _ => throw new ArgumentOutOfRangeException(nameof(step), step, null),
         };
 
-    private partial class TimeTagVerifySelection : LyricEditorVerifySelection
+    private partial class RubyTagEditStepTabControl : EditStepTabControl
     {
-        protected override LyricEditorMode EditMode => LyricEditorMode.EditTimeTag;
+        protected override StepTabButton CreateStepButton(OsuColour colours, TimeTagEditStep value)
+        {
+            return value switch
+            {
+                TimeTagEditStep.Create => new StepTabButton(value)
+                {
+                    Text = "Create",
+                    SelectedColour = colours.Blue,
+                    UnSelectedColour = colours.BlueDarker,
+                },
+                TimeTagEditStep.Recording => new StepTabButton(value)
+                {
+                    Text = "Recording",
+                    SelectedColour = colours.Red,
+                    UnSelectedColour = colours.RedDarker,
+                },
+                TimeTagEditStep.Adjust => new VerifyStepTabButton(value)
+                {
+                    Text = "Adjust",
+                    EditMode = LyricEditorMode.EditTimeTag,
+                    SelectedColour = colours.Yellow,
+                    UnSelectedColour = colours.YellowDarker,
+                },
+                _ => throw new ArgumentOutOfRangeException(nameof(value), value, null),
+            };
+        }
     }
 }

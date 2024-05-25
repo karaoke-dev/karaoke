@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Overlays;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
@@ -34,7 +33,10 @@ public partial class StageSettings : EditorSettings
         ChangeBackgroundColour(colourProvider.Background3);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableCategory.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new StageEditorSettingsHeader(bindableCategory.Value);
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableCategory.Value switch
     {
         StageEditorEditCategory.Layout => createSectionsForLayoutCategory(bindableMode.Value),
         StageEditorEditCategory.Timing => createSectionsForTimingCategory(bindableMode.Value),
@@ -42,44 +44,34 @@ public partial class StageSettings : EditorSettings
         _ => throw new ArgumentOutOfRangeException(),
     };
 
-    private static IReadOnlyList<Drawable> createSectionsForLayoutCategory(StageEditorEditMode editMode) => editMode switch
+    private static IReadOnlyList<EditorSection> createSectionsForLayoutCategory(StageEditorEditMode editMode) => editMode switch
     {
-        StageEditorEditMode.Edit => new Drawable[]
+        StageEditorEditMode.Edit => Array.Empty<EditorSection>(),
+        StageEditorEditMode.Verify => new EditorSection[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Layout),
-        },
-        StageEditorEditMode.Verify => new Drawable[]
-        {
-            new StageEditorEditStepSection(StageEditorEditCategory.Layout),
             new StageEditorIssueSection(StageEditorEditCategory.Layout),
         },
         _ => throw new ArgumentOutOfRangeException(),
     };
 
-    private static IReadOnlyList<Drawable> createSectionsForTimingCategory(StageEditorEditMode editMode) => editMode switch
+    private static IReadOnlyList<EditorSection> createSectionsForTimingCategory(StageEditorEditMode editMode) => editMode switch
     {
-        StageEditorEditMode.Edit => new Drawable[]
+        StageEditorEditMode.Edit => new[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Timing),
             new TimingPointsSection(),
         },
-        StageEditorEditMode.Verify => new Drawable[]
+        StageEditorEditMode.Verify => new[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Timing),
             new StageEditorIssueSection(StageEditorEditCategory.Timing),
         },
         _ => throw new ArgumentOutOfRangeException(),
     };
 
-    private static IReadOnlyList<Drawable> createSectionsForStyleCategory(StageEditorEditMode editMode) => editMode switch
+    private static IReadOnlyList<EditorSection> createSectionsForStyleCategory(StageEditorEditMode editMode) => editMode switch
     {
-        StageEditorEditMode.Edit => new Drawable[]
+        StageEditorEditMode.Edit => Array.Empty<EditorSection>(),
+        StageEditorEditMode.Verify => new[]
         {
-            new StageEditorEditStepSection(StageEditorEditCategory.Style),
-        },
-        StageEditorEditMode.Verify => new Drawable[]
-        {
-            new StageEditorEditStepSection(StageEditorEditCategory.Style),
             new StageEditorIssueSection(StageEditorEditCategory.Style),
         },
         _ => throw new ArgumentOutOfRangeException(),

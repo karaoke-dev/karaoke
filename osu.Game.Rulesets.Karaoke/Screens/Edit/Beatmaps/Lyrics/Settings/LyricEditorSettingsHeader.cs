@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 
-public abstract partial class LyricEditorEditStepSection<TEditStepState, TEditStep> : LyricEditorEditStepSection<TEditStep>
+public abstract partial class LyricEditorSettingsHeader<TEditStepState, TEditStep> : LyricEditorSettingsHeader<TEditStep>
     where TEditStepState : class, IHasEditStep<TEditStep>
     where TEditStep : struct, Enum
 {
@@ -19,7 +19,7 @@ public abstract partial class LyricEditorEditStepSection<TEditStepState, TEditSt
 
     protected sealed override TEditStep DefaultStep() => tEditStepState.EditStep;
 
-    internal sealed override void UpdateEditStep(TEditStep step)
+    protected sealed override void UpdateEditStep(TEditStep step)
     {
         tEditStepState.ChangeEditStep(step);
 
@@ -27,7 +27,7 @@ public abstract partial class LyricEditorEditStepSection<TEditStepState, TEditSt
     }
 }
 
-public abstract partial class LyricEditorEditStepSection<TEditStep> : EditStepSection<TEditStep>
+public abstract partial class LyricEditorSettingsHeader<TEditStep> : EditorSettingsHeader<TEditStep>
     where TEditStep : struct, Enum
 {
     [Resolved]
@@ -36,22 +36,36 @@ public abstract partial class LyricEditorEditStepSection<TEditStep> : EditStepSe
     protected override DescriptionTextFlowContainer CreateDescriptionTextFlowContainer()
         => new LyricEditorDescriptionTextFlowContainer();
 
-    internal override void UpdateEditStep(TEditStep step)
+    protected override void UpdateEditStep(TEditStep step)
     {
         // should cancel the selection after change to the new edit step.
         lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
-
-        base.UpdateEditStep(step);
     }
 
-    protected abstract partial class LyricEditorVerifySelection : VerifySelection
+    protected sealed partial class VerifyStepTabButton : IssueStepTabButton
     {
-        [BackgroundDependencyLoader]
-        private void load(ILyricEditorVerifier verifier)
+        [Resolved]
+        private ILyricEditorVerifier verifier { get; set; } = null!;
+
+        public VerifyStepTabButton(TEditStep value)
+            : base(value)
         {
-            Issues.BindTo(verifier.GetIssueByType(EditMode));
         }
 
-        protected abstract LyricEditorMode EditMode { get; }
+        private LyricEditorMode editorMode;
+
+        public LyricEditorMode EditMode
+        {
+            get => editorMode;
+            set
+            {
+                editorMode = value;
+
+                Schedule(() =>
+                {
+                    Issues.BindTo(verifier.GetIssueByType(EditMode));
+                });
+            }
+        }
     }
 }

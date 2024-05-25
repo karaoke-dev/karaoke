@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -28,24 +27,24 @@ public partial class TimeTagSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new TimeTagSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        TimeTagEditStep.Create => new Drawable[]
+        TimeTagEditStep.Create => new EditorSection[]
         {
-            new TimeTagEditStepSection(),
             new TimeTagAutoGenerateSection(),
             new TimeTagCreateConfigSection(),
-            new CreateTimeTagActionReceiver(),
+            new CreateTimeTagActionSection(),
         },
-        TimeTagEditStep.Recording => new Drawable[]
+        TimeTagEditStep.Recording => new EditorSection[]
         {
-            new TimeTagEditStepSection(),
             new TimeTagRecordingToolSection(),
             new TimeTagRecordingConfigSection(),
         },
-        TimeTagEditStep.Adjust => new Drawable[]
+        TimeTagEditStep.Adjust => new EditorSection[]
         {
-            new TimeTagEditStepSection(),
             new TimeTagAdjustConfigSection(),
             new TimeTagIssueSection(),
         },

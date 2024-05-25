@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Ruby;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
@@ -29,23 +28,23 @@ public partial class RubyTagSettings : LyricEditorSettings
         }, true);
     }
 
-    protected override IReadOnlyList<Drawable> CreateSections() => bindableEditStep.Value switch
+    protected override EditorSettingsHeader CreateSettingHeader()
+        => new RubyTagSettingsHeader();
+
+    protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {
-        RubyTagEditStep.Generate => new Drawable[]
+        RubyTagEditStep.Generate => new EditorSection[]
         {
-            new RubyTagEditStepSection(),
             new RubyTagConfigToolSection(),
             new RubyTagAutoGenerateSection(),
         },
-        RubyTagEditStep.Edit => new Drawable[]
+        RubyTagEditStep.Edit => new EditorSection[]
         {
-            new RubyTagEditStepSection(),
             new RubyTagConfigToolSection(),
             new RubyTagEditSection(),
         },
-        RubyTagEditStep.Verify => new Drawable[]
+        RubyTagEditStep.Verify => new EditorSection[]
         {
-            new RubyTagEditStepSection(),
             new RubyTagConfigToolSection(),
             new RubyTagIssueSection(),
         },
