@@ -16,7 +16,7 @@ public partial class TextSettings : LyricEditorSettings
 
     public override float SettingsWidth => 300;
 
-    private readonly IBindable<TextEditStep> bindableEditStep = new Bindable<TextEditStep>();
+    private readonly Bindable<TextEditStep> bindableEditStep = new();
 
     [BackgroundDependencyLoader]
     private void load(IEditTextModeState editTextModeState)
@@ -25,7 +25,10 @@ public partial class TextSettings : LyricEditorSettings
     }
 
     protected override EditorSettingsHeader CreateSettingHeader()
-        => new TextSettingsHeader();
+        => new TextSettingsHeader
+        {
+            Current = bindableEditStep,
+        };
 
     protected override IReadOnlyList<EditorSection> CreateEditorSections() => bindableEditStep.Value switch
     {

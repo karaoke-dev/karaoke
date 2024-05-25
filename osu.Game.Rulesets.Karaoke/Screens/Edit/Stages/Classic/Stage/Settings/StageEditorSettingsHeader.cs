@@ -11,9 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
 
 public partial class StageEditorSettingsHeader : EditorSettingsHeader<StageEditorEditMode>
 {
-    [Resolved]
-    private IStageEditorStateProvider stageEditorStateProvider { get; set; } = null!;
-
     private readonly StageEditorEditCategory category;
 
     public StageEditorSettingsHeader(StageEditorEditCategory category)
@@ -24,16 +21,8 @@ public partial class StageEditorSettingsHeader : EditorSettingsHeader<StageEdito
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Green;
 
-    protected override StageEditorEditMode DefaultStep()
-        => stageEditorStateProvider.EditMode;
-
     protected override EditStepTabControl CreateTabControl()
         => new StageEditStepTabControl(category);
-
-    protected sealed override void UpdateEditStep(StageEditorEditMode step)
-    {
-        stageEditorStateProvider.BindableEditMode.Value = step;
-    }
 
     protected override DescriptionFormat GetSelectionDescription(StageEditorEditMode step) =>
         step switch

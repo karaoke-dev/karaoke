@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Reference;
 
-public partial class ReferenceLyricSettingsHeader : LyricEditorSettingsHeader<IEditReferenceLyricModeState, ReferenceLyricEditStep>
+public partial class ReferenceLyricSettingsHeader : LyricEditorSettingsHeader<ReferenceLyricEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Pink;

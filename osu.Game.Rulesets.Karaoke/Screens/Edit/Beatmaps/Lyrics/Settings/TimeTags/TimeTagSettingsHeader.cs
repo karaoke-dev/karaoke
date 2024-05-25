@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-public partial class TimeTagSettingsHeader : LyricEditorSettingsHeader<IEditTimeTagModeState, TimeTagEditStep>
+public partial class TimeTagSettingsHeader : LyricEditorSettingsHeader<TimeTagEditStep>
 {
     protected override OverlayColourScheme CreateColourScheme()
         => OverlayColourScheme.Orange;
