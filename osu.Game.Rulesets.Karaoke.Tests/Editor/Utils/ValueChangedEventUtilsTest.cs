@@ -55,7 +55,7 @@ public class ValueChangedEventUtilsTest
         };
 
         var oldCaret = new ClickingCaretPosition(lyric1);
-        var newCaret = new TimeTagCaretPosition(lyric1, new TimeTag(new TextIndex(1)));
+        var newCaret = new RecordingTimeTagCaretPosition(lyric1, new TimeTag(new TextIndex(1)));
 
         Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
     }

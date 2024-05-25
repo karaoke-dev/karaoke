@@ -94,7 +94,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
             NavigateCaretPositionAlgorithm => null,
             CreateRubyTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
             CreateRemoveTimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
-            TimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetTimeTagByPosition(xPosition),
             _ => null,
         };
     }
