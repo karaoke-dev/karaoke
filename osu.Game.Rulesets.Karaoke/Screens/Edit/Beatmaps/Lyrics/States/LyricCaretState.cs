@@ -40,7 +40,6 @@ public partial class LyricCaretState : Component, ILyricCaretState
 
     // it might be special for create time-tag mode.
     private readonly IBindable<RubyTagEditMode> bindableRubyTagEditMode = new Bindable<RubyTagEditMode>();
-    private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
     private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
     private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
@@ -74,11 +73,6 @@ public partial class LyricCaretState : Component, ILyricCaretState
         });
 
         bindableRubyTagEditMode.BindValueChanged(_ =>
-        {
-            refreshAlgorithmAndCaretPosition();
-        });
-
-        bindableCreateMovingCaretMode.BindValueChanged(_ =>
         {
             refreshAlgorithmAndCaretPosition();
         });
@@ -184,7 +178,6 @@ public partial class LyricCaretState : Component, ILyricCaretState
         bindableModeWithEditStep.BindTo(state.BindableModeWithEditStep);
 
         bindableRubyTagEditMode.BindTo(editRubyModeState.BindableRubyTagEditMode);
-        lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, bindableRecordingChangeTimeWhileMovingTheCaret);
     }
