@@ -19,8 +19,6 @@ public partial class EditTimeTagModeState : ModeStateWithBlueprintContainer<Time
 
     public BindableFloat BindableAdjustZoom { get; } = new();
 
-    public Bindable<CreateTimeTagEditMode> BindableCreateTimeTagEditMode { get; } = new();
-
     [BackgroundDependencyLoader]
     private void load(EditorClock editorClock)
     {

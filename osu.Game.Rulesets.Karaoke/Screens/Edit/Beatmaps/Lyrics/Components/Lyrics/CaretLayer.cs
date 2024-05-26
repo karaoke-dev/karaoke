@@ -68,7 +68,6 @@ public partial class CaretLayer : BaseLayer
                 Type t when t == typeof(CreateRubyTagCaretPosition) => new DrawableCreateRubyTagCaret(type),
                 Type t when t == typeof(CuttingCaretPosition) => new DrawableCuttingCaret(type),
                 Type t when t == typeof(RecordingTimeTagCaretPosition) => new DrawableRecordingTimeTagCaret(type),
-                Type t when t == typeof(TimeTagCaretPosition) => new DrawableTimeTagCaret(type),
                 Type t when t == typeof(CreateRemoveTimeTagCaretPosition) => new DrawableCreateRemoveTimeTagCaret(type),
                 Type t when t == typeof(TypingCaretPosition) => new DrawableTypingCaret(type),
                 _ => null,

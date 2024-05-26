@@ -28,11 +28,8 @@ public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<Kara
         SetDefault(KaraokeRulesetLyricEditorSetting.ShowInvalidInfoInComposer, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, FontUtils.DEFAULT_FONT_SIZE_IN_COMPOSER);
 
-        // Create time-tag.
-        SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
-
         // Recording
-        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
+        SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, RecordingTimeTagCaretMoveMode.None);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, true);
@@ -66,9 +63,6 @@ public enum KaraokeRulesetLyricEditorSetting
     ShowPropertyPanelInComposer,
     ShowInvalidInfoInComposer,
     FontSizeInComposer,
-
-    // Create time-tag.
-    CreateTimeTagMovingCaretMode,
 
     // Recording
     RecordingTimeTagMovingCaretMode,

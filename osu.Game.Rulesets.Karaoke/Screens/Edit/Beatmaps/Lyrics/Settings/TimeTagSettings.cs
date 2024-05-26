@@ -34,7 +34,6 @@ public partial class TimeTagSettings : LyricEditorSettings
         TimeTagEditStep.Create => new EditorSection[]
         {
             new TimeTagAutoGenerateSection(),
-            new TimeTagCreateConfigSection(),
             new CreateTimeTagActionSection(),
         },
         TimeTagEditStep.Recording => new EditorSection[]
