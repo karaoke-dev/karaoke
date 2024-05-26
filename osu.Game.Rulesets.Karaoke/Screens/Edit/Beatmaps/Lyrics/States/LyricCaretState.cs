@@ -3,17 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit;
-using Component = osu.Framework.Graphics.Component;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
@@ -213,7 +212,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 MovingCaretAction.NextIndex => isTypingCaret(algorithm) ? largerPosition : performMoveToNextIndex(algorithm, largerPosition),
                 MovingCaretAction.FirstIndex => indexCaretPositionAlgorithm.MoveToFirstIndex(smallerPosition.Lyric),
                 MovingCaretAction.LastIndex => indexCaretPositionAlgorithm.MoveToLastIndex(largerPosition.Lyric),
-                _ => throw new InvalidEnumArgumentException(nameof(action)),
+                _ => throw new InvalidOperationException(nameof(action)),
             };
 
             static bool isTypingCaret(ICaretPositionAlgorithm algorithm)
@@ -234,7 +233,7 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 MovingCaretAction.NextIndex => performMoveToNextIndex(algorithm, currentPosition),
                 MovingCaretAction.FirstIndex => performMoveToFirstIndex(algorithm, currentPosition),
                 MovingCaretAction.LastIndex => performMoveToLastIndex(algorithm, currentPosition),
-                _ => throw new InvalidEnumArgumentException(nameof(action)),
+                _ => throw new InvalidOperationException(nameof(action)),
             };
         }
 

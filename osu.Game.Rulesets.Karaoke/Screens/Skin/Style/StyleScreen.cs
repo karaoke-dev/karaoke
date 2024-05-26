@@ -2,12 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.ComponentModel;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Skinning;
 using osuTK;
-using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
@@ -62,9 +61,9 @@ public partial class StyleScreen : KaraokeSkinEditorScreen
 
 public enum Style
 {
-    [Description("Lyric")]
+    [System.ComponentModel.Description("Lyric")]
     Lyric,
 
-    [Description("Note")]
+    [System.ComponentModel.Description("Note")]
     Note,
 }

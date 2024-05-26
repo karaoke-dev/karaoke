@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Objects.Drawables;
 using osuTK;
-using Anchor = osu.Framework.Graphics.Anchor;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
