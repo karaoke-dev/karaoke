@@ -26,7 +26,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
     private const int border_margin = 10;
 
     private const int tab_height = 40;
-    private const int description_margin = 10;
+    private const int description_padding = 10;
 
     public Bindable<TEditStep> Current
     {
@@ -65,7 +65,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
                 {
                     x.RelativeSizeAxes = Axes.X;
                     x.AutoSizeAxes = Axes.Y;
-                    x.Padding = new MarginPadding(description_margin);
+                    x.Padding = new MarginPadding(description_padding);
                 }),
             },
         });
