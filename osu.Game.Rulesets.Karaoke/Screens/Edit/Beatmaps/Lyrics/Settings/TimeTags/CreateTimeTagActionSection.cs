@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
@@ -10,11 +11,10 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.TimeTags;
 
-// todo: this section will display the action for creating time-tag.
-// will the visual part of https://github.com/karaoke-dev/karaoke/discussions/2225#discussioncomment-9244747
 public partial class CreateTimeTagActionSection : EditorSection, IKeyBindingHandler<KaraokeEditAction>
 {
     protected override LocalisableString Title => "Action";
@@ -24,6 +24,25 @@ public partial class CreateTimeTagActionSection : EditorSection, IKeyBindingHand
 
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
+
+    private readonly Bindable<CreateTimeTagType> bindableCreateType = new();
+
+    public CreateTimeTagActionSection()
+    {
+        Children = new[]
+        {
+            new CreateTimeTagTypeSubsection
+            {
+                Current = bindableCreateType,
+            },
+        };
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(IEditTimeTagModeState editTimeTagModeState)
+    {
+        bindableCreateType.BindTo(editTimeTagModeState.BindableCreateType);
+    }
 
     public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
