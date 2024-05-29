@@ -12,7 +12,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -105,7 +104,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
     {
     }
 
-    protected abstract partial class EditStepTabControl : OsuTabControl<TEditStep>
+    protected abstract partial class EditStepTabControl : TabControl<TEditStep>
     {
         public const int SPACING = 10;
 
@@ -116,6 +115,8 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
             Direction = FillDirection.Horizontal,
             Spacing = new Vector2(SPACING, 0),
         };
+
+        protected override Dropdown<TEditStep>? CreateDropdown() => null;
 
         protected sealed override TabItem<TEditStep> CreateTabItem(TEditStep value) => CreateStepButton(new OsuColour(), value);
 
