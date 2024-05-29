@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -181,7 +182,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
         {
             base.LoadComplete();
 
-            triggerActiveUpdate();
+            updateState();
             updateTabSize();
         }
 
@@ -200,43 +201,18 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
             set => text.Text = value;
         }
 
-        private Color4 selectedColour;
+        public Color4 SelectedColour { get; init; }
 
-        public Color4 SelectedColour
+        public Color4 UnSelectedColour { get; init; }
+
+        protected sealed override void OnActivated() => updateState();
+
+        protected sealed override void OnDeactivated() => updateState();
+
+        private void updateState()
         {
-            get => selectedColour;
-            set
-            {
-                selectedColour = value;
-                triggerActiveUpdate();
-            }
-        }
-
-        private Color4 unSelectedColour;
-
-        public Color4 UnSelectedColour
-        {
-            get => unSelectedColour;
-            set
-            {
-                unSelectedColour = value;
-                triggerActiveUpdate();
-            }
-        }
-
-        private void triggerActiveUpdate()
-        {
-            Active.TriggerChange();
-        }
-
-        protected override void OnActivated()
-        {
-            background.Colour = SelectedColour;
-        }
-
-        protected override void OnDeactivated()
-        {
-            background.Colour = UnSelectedColour;
+            background.Colour = Active.Value ? SelectedColour : UnSelectedColour;
+            Children.ForEach(x => x.Alpha = Active.Value ? 1.0f : 0.6f);
         }
     }
 
