@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
@@ -107,7 +108,10 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state, ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler)
+        private void load(LyricEditorColourProvider colourProvider,
+                          ILyricEditorState state,
+                          ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler,
+                          IEditTimeTagModeState editTimeTagModeState)
         {
             InternalChildren = new Drawable[]
             {
@@ -171,6 +175,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
 
                                         var textIndex = new TextIndex(previousCaret.Value.CharIndex, indexState);
                                         lyricTimeTagsChangeHandler.AddByPosition(textIndex);
+                                        editTimeTagModeState.BindableCreateType.Value = CreateTimeTagType.Mouse;
                                     },
                                 },
                             },
@@ -254,6 +259,9 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; } = null!;
 
+            [Resolved]
+            private IEditTimeTagModeState editTimeTagModeState { get; set; } = null!;
+
             private readonly TimeTag timeTag;
 
             public TimeTagVisualization(TimeTag timeTag)
@@ -277,6 +285,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
             protected override bool OnClick(ClickEvent e)
             {
                 lyricTimeTagsChangeHandler.Remove(timeTag);
+                editTimeTagModeState.BindableCreateType.Value = CreateTimeTagType.Mouse;
 
                 return true;
             }
