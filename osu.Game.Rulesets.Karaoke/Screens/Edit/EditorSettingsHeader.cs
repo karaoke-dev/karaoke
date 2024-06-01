@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -11,7 +12,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -26,7 +26,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
     private const int border_margin = 10;
 
     private const int tab_height = 40;
-    private const int description_margin = 10;
+    private const int description_padding = 10;
 
     public Bindable<TEditStep> Current
     {
@@ -65,7 +65,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
                 {
                     x.RelativeSizeAxes = Axes.X;
                     x.AutoSizeAxes = Axes.Y;
-                    x.Padding = new MarginPadding(description_margin);
+                    x.Padding = new MarginPadding(description_padding);
                 }),
             },
         });
@@ -104,7 +104,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
     {
     }
 
-    protected abstract partial class EditStepTabControl : OsuTabControl<TEditStep>
+    protected abstract partial class EditStepTabControl : TabControl<TEditStep>
     {
         public const int SPACING = 10;
 
@@ -115,6 +115,8 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
             Direction = FillDirection.Horizontal,
             Spacing = new Vector2(SPACING, 0),
         };
+
+        protected override Dropdown<TEditStep>? CreateDropdown() => null;
 
         protected sealed override TabItem<TEditStep> CreateTabItem(TEditStep value) => CreateStepButton(new OsuColour(), value);
 
@@ -181,7 +183,7 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
         {
             base.LoadComplete();
 
-            triggerActiveUpdate();
+            updateState();
             updateTabSize();
         }
 
@@ -200,43 +202,18 @@ public abstract partial class EditorSettingsHeader<TEditStep> : EditorSettingsHe
             set => text.Text = value;
         }
 
-        private Color4 selectedColour;
+        public Color4 SelectedColour { get; init; }
 
-        public Color4 SelectedColour
+        public Color4 UnSelectedColour { get; init; }
+
+        protected sealed override void OnActivated() => updateState();
+
+        protected sealed override void OnDeactivated() => updateState();
+
+        private void updateState()
         {
-            get => selectedColour;
-            set
-            {
-                selectedColour = value;
-                triggerActiveUpdate();
-            }
-        }
-
-        private Color4 unSelectedColour;
-
-        public Color4 UnSelectedColour
-        {
-            get => unSelectedColour;
-            set
-            {
-                unSelectedColour = value;
-                triggerActiveUpdate();
-            }
-        }
-
-        private void triggerActiveUpdate()
-        {
-            Active.TriggerChange();
-        }
-
-        protected override void OnActivated()
-        {
-            background.Colour = SelectedColour;
-        }
-
-        protected override void OnDeactivated()
-        {
-            background.Colour = UnSelectedColour;
+            background.Colour = Active.Value ? SelectedColour : UnSelectedColour;
+            Children.ForEach(x => x.Alpha = Active.Value ? 1.0f : 0.6f);
         }
     }
 
