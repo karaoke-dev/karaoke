@@ -394,19 +394,11 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, bindablePreferLayout);
     }
 
-    public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
-        e.Action switch
-        {
-            KaraokeEditAction.MoveToPreviousLyric => lyricCaretState.MoveCaret(MovingCaretAction.PreviousLyric),
-            KaraokeEditAction.MoveToNextLyric => lyricCaretState.MoveCaret(MovingCaretAction.NextLyric),
-            KaraokeEditAction.MoveToFirstLyric => lyricCaretState.MoveCaret(MovingCaretAction.FirstLyric),
-            KaraokeEditAction.MoveToLastLyric => lyricCaretState.MoveCaret(MovingCaretAction.LastLyric),
-            KaraokeEditAction.MoveToPreviousIndex => lyricCaretState.MoveCaret(MovingCaretAction.PreviousIndex),
-            KaraokeEditAction.MoveToNextIndex => lyricCaretState.MoveCaret(MovingCaretAction.NextIndex),
-            KaraokeEditAction.MoveToFirstIndex => lyricCaretState.MoveCaret(MovingCaretAction.FirstIndex),
-            KaraokeEditAction.MoveToLastIndex => lyricCaretState.MoveCaret(MovingCaretAction.LastIndex),
-            _ => false,
-        };
+    public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
+    {
+        var movingCaretAction = ToMovingCaretAction(e.Action);
+        return movingCaretAction != null && lyricCaretState.MoveCaret(movingCaretAction.Value);
+    }
 
     public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
     {
@@ -467,6 +459,22 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
             default:
                 throw new ArgumentOutOfRangeException(nameof(mode));
         }
+    }
+
+    public static MovingCaretAction? ToMovingCaretAction(KaraokeEditAction action)
+    {
+        return action switch
+        {
+            KaraokeEditAction.MoveToPreviousLyric => MovingCaretAction.PreviousLyric,
+            KaraokeEditAction.MoveToNextLyric => MovingCaretAction.NextLyric,
+            KaraokeEditAction.MoveToFirstLyric => MovingCaretAction.FirstLyric,
+            KaraokeEditAction.MoveToLastLyric => MovingCaretAction.LastLyric,
+            KaraokeEditAction.MoveToPreviousIndex => MovingCaretAction.PreviousIndex,
+            KaraokeEditAction.MoveToNextIndex => MovingCaretAction.NextIndex,
+            KaraokeEditAction.MoveToFirstIndex => MovingCaretAction.FirstIndex,
+            KaraokeEditAction.MoveToLastIndex => MovingCaretAction.LastIndex,
+            _ => null,
+        };
     }
 
     private class LocalScrollingInfo : IScrollingInfo
