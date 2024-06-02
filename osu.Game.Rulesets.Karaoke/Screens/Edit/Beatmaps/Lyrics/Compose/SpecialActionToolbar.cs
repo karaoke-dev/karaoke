@@ -8,13 +8,11 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Carets;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Panels;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.Playback;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.TimeTags;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose.Toolbar.View;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osuTK;
@@ -152,11 +150,6 @@ public partial class SpecialActionToolbar : CompositeDrawable
                     new MoveToPreviousIndexButton(),
                     new MoveToNextIndexButton(),
                     new MoveToLastIndexButton(),
-                    new Separator(),
-                    new RemoveTimeTagButton(TextIndex.IndexState.Start),
-                    new CreateTimeTagButton(TextIndex.IndexState.Start),
-                    new CreateTimeTagButton(TextIndex.IndexState.End),
-                    new RemoveTimeTagButton(TextIndex.IndexState.End),
                 },
                 TimeTagEditStep.Recording => new Drawable[]
                 {
