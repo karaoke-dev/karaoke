@@ -22,40 +22,30 @@ public partial class ApplySelectingArea : CompositeDrawable
     private const float spacing = 10;
     private const float button_width = 100;
 
-    private readonly IBindable<bool> selecting = new Bindable<bool>();
     private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
+    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
-    private ActionButton applyButton = null!;
+    private readonly Box background;
+    private readonly ActionButton applyButton;
+    private readonly ActionButton cancelButton;
+    private readonly ActionButton previewButton;
 
-    [BackgroundDependencyLoader]
-    private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
+    public ApplySelectingArea()
     {
         RelativeSizeAxes = Axes.X;
         Height = 45;
 
+        GridContainer gridContainer;
+
         InternalChildren = new Drawable[]
         {
-            new Box
+            background = new Box
             {
-                Colour = colours.Gray2,
                 RelativeSizeAxes = Axes.Both,
             },
-            new GridContainer
+            gridContainer = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                ColumnDimensions = new[]
-                {
-                    new Dimension(GridSizeMode.Absolute, getPrefixSpacing()),
-                    new Dimension(GridSizeMode.Absolute, Row.SELECT_AREA_WIDTH),
-                    new Dimension(),
-                    new Dimension(GridSizeMode.Absolute, spacing),
-                    new Dimension(GridSizeMode.Absolute, button_width),
-                    new Dimension(GridSizeMode.Absolute, spacing),
-                    new Dimension(GridSizeMode.Absolute, button_width),
-                    new Dimension(GridSizeMode.Absolute, spacing),
-                    new Dimension(GridSizeMode.Absolute, button_width),
-                    new Dimension(GridSizeMode.Absolute, spacing),
-                },
                 Content = new[]
                 {
                     new[]
@@ -73,30 +63,16 @@ public partial class ApplySelectingArea : CompositeDrawable
                         applyButton = new ActionButton
                         {
                             Text = "Apply",
-                            BackgroundColour = colours.Red,
-                            Action = () =>
-                            {
-                                lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Apply);
-                            },
                         },
                         Empty(),
-                        new ActionButton
+                        cancelButton = new ActionButton
                         {
                             Text = "Cancel",
-                            Action = () =>
-                            {
-                                lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
-                            },
                         },
                         Empty(),
-                        new ActionButton
+                        previewButton = new ActionButton
                         {
                             Text = "Preview",
-                            BackgroundColour = colours.Purple,
-                            Action = () =>
-                            {
-                                // todo : implement
-                            },
                         },
                         Empty(),
                     },
@@ -104,32 +80,66 @@ public partial class ApplySelectingArea : CompositeDrawable
             },
         };
 
-        selecting.BindTo(lyricSelectionState.Selecting);
-        selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
-
-        selecting.BindValueChanged(e =>
-        {
-            if (e.NewValue)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
-        }, true);
-
         selectedLyrics.BindCollectionChanged((_, _) =>
         {
             bool selectAny = selectedLyrics.Any();
             applyButton.Enabled.Value = selectAny;
         }, true);
 
-        float getPrefixSpacing()
+        bindableMode.BindValueChanged((x) =>
         {
-            bool containsHandler = state.Mode == LyricEditorMode.EditText;
+            gridContainer.ColumnDimensions = getColumnDimensions(x.NewValue);
+        }, true);
+    }
+
+    private static Dimension[] getColumnDimensions(LyricEditorMode mode)
+    {
+        return new[]
+        {
+            new Dimension(GridSizeMode.Absolute, getPrefixSpacing(mode)),
+            new Dimension(GridSizeMode.Absolute, Row.SELECT_AREA_WIDTH),
+            new Dimension(),
+            new Dimension(GridSizeMode.Absolute, spacing),
+            new Dimension(GridSizeMode.Absolute, button_width),
+            new Dimension(GridSizeMode.Absolute, spacing),
+            new Dimension(GridSizeMode.Absolute, button_width),
+            new Dimension(GridSizeMode.Absolute, spacing),
+            new Dimension(GridSizeMode.Absolute, button_width),
+            new Dimension(GridSizeMode.Absolute, spacing),
+        };
+
+        static float getPrefixSpacing(LyricEditorMode mode)
+        {
+            bool containsHandler = mode == LyricEditorMode.EditText;
             return BaseLyricList.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricListItem.HANDLER_WIDTH : 0);
         }
+    }
+
+    [BackgroundDependencyLoader]
+    private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
+    {
+        background.Colour = colours.Gray2;
+
+        selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
+        bindableMode.BindTo(state.BindableMode);
+
+        applyButton.BackgroundColour = colours.Red;
+        applyButton.Action = () =>
+        {
+            lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Apply);
+        };
+
+        cancelButton.BackgroundColour = colours.Gray2;
+        cancelButton.Action = () =>
+        {
+            lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
+        };
+
+        previewButton.BackgroundColour = colours.Purple;
+        previewButton.Action = () =>
+        {
+            // todo : implement
+        };
     }
 
     public partial class SelectAllArea : CompositeDrawable

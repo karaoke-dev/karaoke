@@ -29,6 +29,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
     private readonly GridContainer lyricEditorGridContainer;
     private readonly LyricEditorSkin skin;
     private readonly DrawableLyricList container;
+    private readonly ApplySelectingArea applySelectingArea;
 
     private Drawable? background;
 
@@ -37,6 +38,11 @@ public abstract partial class BaseLyricList : CompositeDrawable
         InternalChild = lyricEditorGridContainer = new GridContainer
         {
             RelativeSizeAxes = Axes.Both,
+            RowDimensions = new[]
+            {
+                new Dimension(),
+                new Dimension(GridSizeMode.AutoSize),
+            },
             Content = new[]
             {
                 new Drawable[]
@@ -53,7 +59,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
                 },
                 new Drawable[]
                 {
-                    new ApplySelectingArea(),
+                    applySelectingArea = new ApplySelectingArea(),
                 },
             },
         };
@@ -72,7 +78,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
         bindableSelecting.BindValueChanged(e =>
         {
             updateAddLyricState();
-            initializeApplySelectingArea();
+            updateApplySelectingArea();
         }, true);
     }
 
@@ -108,13 +114,16 @@ public abstract partial class BaseLyricList : CompositeDrawable
 
     protected virtual Drawable? CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode) => null;
 
-    private void initializeApplySelectingArea()
+    private void updateApplySelectingArea()
     {
-        lyricEditorGridContainer.RowDimensions = new[]
+        if (bindableSelecting.Value)
         {
-            new Dimension(),
-            new Dimension(GridSizeMode.AutoSize),
-        };
+            applySelectingArea.Show();
+        }
+        else
+        {
+            applySelectingArea.Hide();
+        }
     }
 
     private void updateAddLyricState()
