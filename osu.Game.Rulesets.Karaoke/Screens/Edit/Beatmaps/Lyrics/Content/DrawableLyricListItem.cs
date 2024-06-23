@@ -10,6 +10,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 
+/// <summary>
+/// Visualises a <see cref="Lyric"/> inside a <see cref="DrawableLyricList"/>.
+/// </summary>
 public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
 {
     public const float HANDLER_WIDTH = 22;

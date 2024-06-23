@@ -16,6 +16,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 
+/// <summary>
+/// Visualises a list of <see cref="Lyric"/>s.
+/// </summary>
 public abstract partial class DrawableLyricList : OrderRearrangeableListContainer<Lyric>
 {
     private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
