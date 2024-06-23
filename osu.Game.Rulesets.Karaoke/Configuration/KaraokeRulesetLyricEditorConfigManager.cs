@@ -17,7 +17,7 @@ public class KaraokeRulesetLyricEditorConfigManager : InMemoryConfigManager<Kara
         base.InitialiseDefaults();
 
         // General
-        SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.Preview);
+        SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorPreferLayout, LyricEditorLayout.List);
         SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, FontUtils.DEFAULT_FONT_SIZE);
         SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
         SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);

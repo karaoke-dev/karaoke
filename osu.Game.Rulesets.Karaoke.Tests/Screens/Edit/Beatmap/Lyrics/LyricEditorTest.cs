@@ -8,12 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics;
 
 public class LyricEditorTest
 {
-    [TestCase(LyricEditorLayout.Preview, LyricEditorLayout.Preview, LyricEditorLayout.Preview)]
-    [TestCase(LyricEditorLayout.Detail, LyricEditorLayout.Detail, LyricEditorLayout.Detail)]
-    [TestCase(LyricEditorLayout.Preview | LyricEditorLayout.Detail, LyricEditorLayout.Preview, LyricEditorLayout.Preview)]
-    [TestCase(LyricEditorLayout.Preview | LyricEditorLayout.Detail, LyricEditorLayout.Detail, LyricEditorLayout.Detail)]
-    [TestCase(LyricEditorLayout.Preview, LyricEditorLayout.Detail, LyricEditorLayout.Preview)] // should use the support layout if prefer layout is not matched.
-    [TestCase(LyricEditorLayout.Detail, LyricEditorLayout.Preview, LyricEditorLayout.Detail)]
+    [TestCase(LyricEditorLayout.List, LyricEditorLayout.List, LyricEditorLayout.List)]
+    [TestCase(LyricEditorLayout.Compose, LyricEditorLayout.Compose, LyricEditorLayout.Compose)]
+    [TestCase(LyricEditorLayout.List | LyricEditorLayout.Compose, LyricEditorLayout.List, LyricEditorLayout.List)]
+    [TestCase(LyricEditorLayout.List | LyricEditorLayout.Compose, LyricEditorLayout.Compose, LyricEditorLayout.Compose)]
+    [TestCase(LyricEditorLayout.List, LyricEditorLayout.Compose, LyricEditorLayout.List)] // should use the support layout if prefer layout is not matched.
+    [TestCase(LyricEditorLayout.Compose, LyricEditorLayout.List, LyricEditorLayout.Compose)]
     public void TestGetSuitableLayout(LyricEditorLayout supportedLayout, LyricEditorLayout preferLayout, LyricEditorLayout actualLayout)
     {
         var expectedLayout = LyricEditor.GetSuitableLayout(supportedLayout, preferLayout);
