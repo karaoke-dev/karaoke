@@ -40,7 +40,7 @@ public abstract partial class OrderRearrangeableListContainer<TModel> : OsuRearr
         }
     }
 
-    protected override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer()
+    protected sealed override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer()
         => base.CreateListFillFlowContainer().With(x => x.Spacing = Spacing);
 
     private bool displayBottomDrawable;
