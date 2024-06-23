@@ -79,7 +79,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
     private readonly Bindable<LyricEditorMode> bindableMode = new();
     private readonly Bindable<EditorModeWithEditStep> bindableModeWithEditStep = new();
-    private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.Preview);
+    private readonly IBindable<LyricEditorLayout> bindablePreferLayout = new Bindable<LyricEditorLayout>(LyricEditorLayout.List);
     private readonly Bindable<LyricEditorLayout> bindableCurrentLayout = new();
 
     public IBindable<LyricEditorMode> BindableMode => bindableMode;
@@ -288,15 +288,15 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         static LyricEditorLayout getSupportedLayout(LyricEditorMode mode) =>
             mode switch
             {
-                LyricEditorMode.View => LyricEditorLayout.Preview,
-                LyricEditorMode.EditText => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditReferenceLyric => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditLanguage => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditRuby => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditTimeTag => LyricEditorLayout.Detail,
-                LyricEditorMode.EditRomanisation => LyricEditorLayout.Preview | LyricEditorLayout.Detail,
-                LyricEditorMode.EditNote => LyricEditorLayout.Detail,
-                LyricEditorMode.EditSinger => LyricEditorLayout.Preview,
+                LyricEditorMode.View => LyricEditorLayout.List,
+                LyricEditorMode.EditText => LyricEditorLayout.List | LyricEditorLayout.Compose,
+                LyricEditorMode.EditReferenceLyric => LyricEditorLayout.List | LyricEditorLayout.Compose,
+                LyricEditorMode.EditLanguage => LyricEditorLayout.List | LyricEditorLayout.Compose,
+                LyricEditorMode.EditRuby => LyricEditorLayout.List | LyricEditorLayout.Compose,
+                LyricEditorMode.EditTimeTag => LyricEditorLayout.Compose,
+                LyricEditorMode.EditRomanisation => LyricEditorLayout.List | LyricEditorLayout.Compose,
+                LyricEditorMode.EditNote => LyricEditorLayout.Compose,
+                LyricEditorMode.EditSinger => LyricEditorLayout.List,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
             };
     }
@@ -345,7 +345,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         static Container getContent(LyricEditorLayout layout) =>
             layout switch
             {
-                LyricEditorLayout.Preview => new Container
+                LyricEditorLayout.List => new Container
                 {
                     Children = new[]
                     {
@@ -355,7 +355,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                         },
                     },
                 },
-                LyricEditorLayout.Detail => new Container
+                LyricEditorLayout.Compose => new Container
                 {
                     Children = new Drawable[]
                     {
