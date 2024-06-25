@@ -184,7 +184,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
         base.Dispose(isDisposing);
 
         // todo: not very sure
-        if (!editorBeatmap.IsNull())
+        if (editorBeatmap.IsNull())
             return;
 
         editorBeatmap.HitObjectAdded -= hitObjectAdded;
