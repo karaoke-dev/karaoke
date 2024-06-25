@@ -52,7 +52,7 @@ public partial class DrawableNoteJudgement : DrawableJudgement
                         .ScaleTo(0.75f, 250)
                         .FadeOut(200);
 
-                    // osu!mania uses a custom fade length, so the base call is intentionally omitted.
+                    // karaoke uses a custom fade length, so the base call is intentionally omitted.
                     break;
             }
         }
