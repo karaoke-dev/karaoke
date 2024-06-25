@@ -94,12 +94,15 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
             // Make sure that view is visible in the scroll container.
             // Give the top spacing larger space to let use able to see the previous item or the description text.
             var parentScrollContainer = this.FindClosestParent<OsuScrollContainer>();
+            if (parentScrollContainer == null)
+                throw new InvalidOperationException("Should have a parent scroll container.");
+
             parentScrollContainer.ScrollIntoViewWithSpacing(this, new MarginPadding { Top = 150, Bottom = 50 });
 
             if (IsFocused(focusedDrawable))
                 return;
 
-            GetContainingInputManager().ChangeFocus(Component);
+            GetContainingFocusManager().ChangeFocus(Component);
         });
     }
 

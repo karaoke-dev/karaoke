@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
@@ -10,13 +11,12 @@ using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Types;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 
 public class KaraokeBeatmapProcessor : BeatmapProcessor
 {
-    public new KaraokeBeatmap Beatmap => (KaraokeBeatmap)base.Beatmap;
-
     public KaraokeBeatmapProcessor(IBeatmap beatmap)
         : base(beatmap)
     {
@@ -24,10 +24,24 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
 
     public override void PreProcess()
     {
-        applyStage(Beatmap);
+        var karaokeBeatmap = getKaraokeBeatmap(Beatmap);
+        applyStage(karaokeBeatmap);
 
         base.PreProcess();
-        applyInvalidProperty(Beatmap);
+        applyInvalidProperty(karaokeBeatmap);
+
+        static KaraokeBeatmap getKaraokeBeatmap(IBeatmap beatmap)
+        {
+            // goes to there while parsing the beatmap.
+            if (beatmap is KaraokeBeatmap karaokeBeatmap)
+                return karaokeBeatmap;
+
+            // goes to there while editing the beatmap.
+            if (beatmap is EditorBeatmap editorBeatmap)
+                return getKaraokeBeatmap(editorBeatmap.PlayableBeatmap);
+
+            throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}");
+        }
     }
 
     private void applyStage(KaraokeBeatmap beatmap)
@@ -36,7 +50,7 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
         // trying to load the first stage or create a default one.
         if (beatmap.CurrentStageInfo == null)
         {
-            beatmap.CurrentStageInfo = getWorkingStage() ?? createDefaultWorkingStage();
+            beatmap.CurrentStageInfo = getWorkingStage(beatmap) ?? createDefaultWorkingStage();
 
             // should invalidate the working property here because the stage info is changed.
             beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
@@ -50,10 +64,10 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
         if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
             calculatedProperty.ValidateCalculatedProperty(beatmap);
 
-        StageInfo? getWorkingStage()
-            => Beatmap.StageInfos.FirstOrDefault();
+        static StageInfo? getWorkingStage(KaraokeBeatmap beatmap)
+            => beatmap.StageInfos.FirstOrDefault();
 
-        StageInfo createDefaultWorkingStage() => new PreviewStageInfo();
+        static StageInfo createDefaultWorkingStage() => new PreviewStageInfo();
     }
 
     private void applyInvalidProperty(KaraokeBeatmap beatmap)

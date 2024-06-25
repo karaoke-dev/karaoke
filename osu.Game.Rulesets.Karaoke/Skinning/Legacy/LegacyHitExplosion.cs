@@ -39,11 +39,8 @@ public partial class LegacyHitExplosion : LegacyKaraokeColumnElement
         if (tmp is IFramedAnimation { FrameCount: > 0 } tmpAnimation)
             frameLength = Math.Max(1000 / 60.0, 170.0 / tmpAnimation.FrameCount);
 
-        explosion = skin.GetAnimation(imageName, true, false, frameLength: frameLength).With(d =>
+        explosion = skin.GetAnimation(imageName, true, false, frameLength: frameLength)?.With(d =>
         {
-            if (d == null)
-                return;
-
             d.Origin = Anchor.Centre;
             d.Blending = BlendingParameters.Additive;
             d.Scale = new Vector2(explosionScale);

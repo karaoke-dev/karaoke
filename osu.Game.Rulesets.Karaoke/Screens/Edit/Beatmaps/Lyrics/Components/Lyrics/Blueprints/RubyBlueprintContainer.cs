@@ -49,7 +49,7 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
             base.OnSelectionChanged();
 
             // only select one ruby tag can let user drag to change start and end index.
-            SelectionBox.CanScaleX = SelectedItems.Count == 1;
+            ScaleHandler.CanScaleX.Value = SelectedItems.Count == 1;
 
             // should clear delta size before change start/end index.
             deltaScaleSize = 0;

@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Scoring;
@@ -19,7 +20,7 @@ public partial class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
         foreach (var result in Enum.GetValues<HitResult>().Skip(1))
         {
             AddStep("Show " + result.GetDescription(), () => SetContents(_ =>
-                new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, null)
+                new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, new DrawableNote())
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

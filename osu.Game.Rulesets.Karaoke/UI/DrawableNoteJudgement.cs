@@ -5,46 +5,18 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 
 public partial class DrawableNoteJudgement : DrawableJudgement
 {
-    public DrawableNoteJudgement(JudgementResult result, DrawableHitObject? judgedObject)
+    public DrawableNoteJudgement(JudgementResult result, DrawableHitObject judgedObject)
         : base(result, judgedObject)
     {
     }
 
-    protected override void ApplyMissAnimations()
+    public DrawableNoteJudgement()
     {
-        if (JudgementBody.Drawable is not DefaultKaraokeJudgementPiece)
-        {
-            // this is temporary logic until mania's skin transformer returns IAnimatableJudgements
-            JudgementBody.ScaleTo(1.6f);
-            JudgementBody.ScaleTo(1, 100, Easing.In);
-
-            JudgementBody.MoveTo(Vector2.Zero);
-            JudgementBody.MoveToOffset(new Vector2(0, 100), 800, Easing.InQuint);
-
-            JudgementBody.RotateTo(0);
-            JudgementBody.RotateTo(40, 800, Easing.InQuint);
-            JudgementBody.FadeOutFromOne(800);
-
-            LifetimeEnd = JudgementBody.LatestTransformEndTime;
-        }
-
-        base.ApplyMissAnimations();
-    }
-
-    protected override void ApplyHitAnimations()
-    {
-        JudgementBody.ScaleTo(0.8f);
-        JudgementBody.ScaleTo(1, 250, Easing.OutElastic);
-
-        JudgementBody.Delay(50)
-                     .ScaleTo(0.75f, 250)
-                     .FadeOut(200);
     }
 
     protected override Drawable CreateDefaultJudgement(HitResult result) => new DefaultKaraokeJudgementPiece(result);
@@ -61,6 +33,28 @@ public partial class DrawableNoteJudgement : DrawableJudgement
             base.LoadComplete();
 
             JudgementText.Font = JudgementText.Font.With(size: 25);
+        }
+
+        public override void PlayAnimation()
+        {
+            switch (Result)
+            {
+                case HitResult.None:
+                case HitResult.Miss:
+                    base.PlayAnimation();
+                    break;
+
+                default:
+                    this.ScaleTo(0.8f);
+                    this.ScaleTo(1, 250, Easing.OutElastic);
+
+                    this.Delay(50)
+                        .ScaleTo(0.75f, 250)
+                        .FadeOut(200);
+
+                    // karaoke uses a custom fade length, so the base call is intentionally omitted.
+                    break;
+            }
         }
     }
 }

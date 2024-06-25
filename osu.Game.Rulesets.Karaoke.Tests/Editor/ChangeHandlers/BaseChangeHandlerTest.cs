@@ -251,6 +251,10 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
             editorBeatmap.SaveStateTriggered += SaveState;
         }
 
+        public void RestoreState(int direction)
+        {
+        }
+
         protected override void UpdateState()
         {
             OnStateChange?.Invoke();

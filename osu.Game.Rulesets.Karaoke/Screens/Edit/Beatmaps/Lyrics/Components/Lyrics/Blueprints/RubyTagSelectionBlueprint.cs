@@ -214,7 +214,7 @@ public partial class RubyTagSelectionBlueprint : SelectionBlueprint<RubyTag>, IH
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            ScheduleAfterChildren(() => GetContainingInputManager().ChangeFocus(labelledRubyTextBox));
+            ScheduleAfterChildren(() => GetContainingFocusManager().ChangeFocus(labelledRubyTextBox));
         }
 
         private partial class DeleteRubyButton : EditorSectionButton

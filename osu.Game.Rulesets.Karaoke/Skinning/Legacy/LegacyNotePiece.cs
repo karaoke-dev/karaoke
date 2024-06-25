@@ -140,20 +140,14 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
             Name = name,
             Children = new[]
             {
-                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer).With(d =>
+                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer)?.With(d =>
                 {
-                    if (d == null)
-                        return;
-
                     d.Name = "Head";
                     d.Anchor = Anchor.CentreLeft;
                     d.Origin = Anchor.Centre;
                 }),
-                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
+                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer)?.With(d =>
                 {
-                    if (d == null)
-                        return;
-
                     d.Name = "Body";
                     d.Anchor = Anchor.Centre;
                     d.Origin = Anchor.Centre;
@@ -164,11 +158,8 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
 
                     d.Height = d.Texture?.DisplayHeight ?? 0;
                 }),
-                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer).With(d =>
+                getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer)?.With(d =>
                 {
-                    if (d == null)
-                        return;
-
                     d.Name = "Tail";
                     d.Anchor = Anchor.CentreRight;
                     d.Origin = Anchor.Centre;
@@ -195,13 +186,10 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
                 return null;
         }
 
-        Sprite? getSpriteByName(string spriteName) => (Sprite?)skin.GetAnimation(spriteName, true, true).With(d =>
+        Sprite? getSpriteByName(string spriteName) => (Sprite?)skin.GetAnimation(spriteName, true, true)?.With(d =>
         {
             switch (d)
             {
-                case null:
-                    return;
-
                 case TextureAnimation animation:
                     animation.IsPlaying = false;
                     break;

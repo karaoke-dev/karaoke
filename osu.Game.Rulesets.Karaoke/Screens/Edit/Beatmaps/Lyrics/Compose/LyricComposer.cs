@@ -304,11 +304,8 @@ public partial class LyricComposer : CompositeDrawable
         const double new_animation_time = 200;
 
         bool hasOldButtonEditor = bottomEditorContainer.Children.Any();
-        var newButtonEditor = createBottomEditor(bottomEditorType).With(x =>
+        var newButtonEditor = createBottomEditor(bottomEditorType)?.With(x =>
         {
-            if (x == null)
-                return;
-
             x.RelativePositionAxes = Axes.Y;
             x.Y = -1;
             x.Alpha = 0;

@@ -105,7 +105,7 @@ public partial class LabelledReferenceLyricSelector : LabelledComponent<Labelled
         {
             base.LoadComplete();
 
-            GetContainingInputManager().ChangeFocus(lyricSelector);
+            GetContainingFocusManager().ChangeFocus(lyricSelector);
         }
     }
 
