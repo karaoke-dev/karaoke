@@ -99,7 +99,7 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
             if (IsFocused(focusedDrawable))
                 return;
 
-            GetContainingInputManager().ChangeFocus(Component);
+            GetContainingFocusManager().ChangeFocus(Component);
         });
     }
 

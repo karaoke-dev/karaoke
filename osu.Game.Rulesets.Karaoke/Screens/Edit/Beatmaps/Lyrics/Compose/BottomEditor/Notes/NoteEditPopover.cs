@@ -75,7 +75,7 @@ public partial class NoteEditPopover : OsuPopover
 
             ScheduleAfterChildren(() =>
             {
-                GetContainingInputManager().ChangeFocus(text);
+                GetContainingFocusManager().ChangeFocus(text);
             });
 
             text.OnCommit += (sender, newText) =>

@@ -87,7 +87,7 @@ public partial class LyricSelector : CompositeDrawable, IHasCurrentValue<Lyric?>
     {
         base.OnFocus(e);
 
-        GetContainingInputManager().ChangeFocus(filter);
+        GetContainingFocusManager().ChangeFocus(filter);
     }
 
     private partial class LyricSelectionSearchTextBox : SearchTextBox

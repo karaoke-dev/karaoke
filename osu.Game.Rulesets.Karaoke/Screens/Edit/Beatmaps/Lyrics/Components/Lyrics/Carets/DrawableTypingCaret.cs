@@ -178,7 +178,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
             Schedule(() =>
             {
                 inputCaretTextBox.Text = string.Empty;
-                GetContainingInputManager().ChangeFocus(inputCaretTextBox);
+                GetContainingFocusManager().ChangeFocus(inputCaretTextBox);
             });
         }
     }
