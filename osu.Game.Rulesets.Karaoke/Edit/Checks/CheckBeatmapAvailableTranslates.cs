@@ -23,7 +23,7 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
     };
 
     protected override IList<CultureInfo> GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)
-        => karaokeBeatmap.AvailableTranslates;
+        => karaokeBeatmap.AvailableTranslationLanguages;
 
     protected override IEnumerable<Issue> CheckProperty(IList<CultureInfo> property)
     {

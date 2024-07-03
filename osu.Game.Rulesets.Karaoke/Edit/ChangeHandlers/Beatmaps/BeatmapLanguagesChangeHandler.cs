@@ -14,7 +14,7 @@ public partial class BeatmapLanguagesChangeHandler : BeatmapListPropertyChangeHa
     public IBindableList<CultureInfo> Languages => Items;
 
     protected override IList<CultureInfo> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
-        => beatmap.AvailableTranslates;
+        => beatmap.AvailableTranslationLanguages;
 
     protected override void OnItemAdded(CultureInfo item)
     {

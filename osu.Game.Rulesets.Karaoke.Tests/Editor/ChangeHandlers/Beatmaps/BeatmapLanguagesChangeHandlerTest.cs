@@ -18,7 +18,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
+            karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>
             {
                 new("zh-TW"),
             };
@@ -31,9 +31,9 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
-            Assert.AreEqual(2, karaokeBeatmap.AvailableTranslates.Count);
-            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslates[0]);
-            Assert.AreEqual(new CultureInfo("Ja-jp"), karaokeBeatmap.AvailableTranslates[1]);
+            Assert.AreEqual(2, karaokeBeatmap.AvailableTranslationLanguages.Count);
+            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslationLanguages[0]);
+            Assert.AreEqual(new CultureInfo("Ja-jp"), karaokeBeatmap.AvailableTranslationLanguages[1]);
         });
     }
 
@@ -42,7 +42,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
+            karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>
             {
                 new("zh-TW"),
                 new("Ja-jp"),
@@ -56,8 +56,8 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
-            Assert.AreEqual(1, karaokeBeatmap.AvailableTranslates.Count);
-            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslates[0]);
+            Assert.AreEqual(1, karaokeBeatmap.AvailableTranslationLanguages.Count);
+            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslationLanguages[0]);
         });
     }
 
@@ -66,7 +66,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
+            karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>
             {
                 new("zh-TW"),
                 new("Ja-jp"),
@@ -94,7 +94,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
     {
         base.SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
-            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>();
+            karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>();
 
             action(karaokeBeatmap);
         });

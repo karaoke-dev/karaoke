@@ -25,7 +25,7 @@ public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<Tra
     {
         var karaokeBeatmap = base.CreateBeatmap();
 
-        karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
+        karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>
         {
             new("zh-TW"),
             new("en-US"),

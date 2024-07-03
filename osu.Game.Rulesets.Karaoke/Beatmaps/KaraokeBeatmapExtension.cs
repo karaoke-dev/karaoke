@@ -17,7 +17,7 @@ public static class KaraokeBeatmapExtension
         return beatmap is KaraokeBeatmap karaokeBeatmap && karaokeBeatmap.Scorable;
     }
 
-    public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
+    public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslationLanguages ?? new List<CultureInfo>();
 
     public static bool AnyTranslate(this IBeatmap beatmap) => beatmap.AvailableTranslates().Any();
 
