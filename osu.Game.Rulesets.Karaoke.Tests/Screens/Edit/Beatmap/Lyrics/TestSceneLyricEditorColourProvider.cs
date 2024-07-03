@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Tests.Visual;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics.Components;
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap.Lyrics;
 
 public partial class TestSceneLyricEditorColourProvider : OsuTestScene
 {
