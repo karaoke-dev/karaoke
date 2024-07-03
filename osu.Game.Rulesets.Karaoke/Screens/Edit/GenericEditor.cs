@@ -66,7 +66,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
         AddInternal(new OsuContextMenuContainer
         {
             RelativeSizeAxes = Axes.Both,
-            Children = new[]
+            Children = new Drawable[]
             {
                 new Container
                 {
@@ -101,59 +101,7 @@ public abstract partial class GenericEditor<TScreenMode> : ScreenWithBeatmapBack
                         },
                     },
                 },
-                new Container
-                {
-                    Name = "Bottom bar",
-                    Anchor = Anchor.BottomLeft,
-                    Origin = Anchor.BottomLeft,
-                    RelativeSizeAxes = Axes.X,
-                    Height = 60,
-                    Children = new Drawable[]
-                    {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = colours.Gray2,
-                        },
-                        new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Padding = new MarginPadding { Vertical = 5, Horizontal = 10 },
-                            Child = new GridContainer
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                                ColumnDimensions = new[]
-                                {
-                                    new Dimension(GridSizeMode.Absolute, 220),
-                                    new Dimension(),
-                                    new Dimension(GridSizeMode.Absolute, 220),
-                                },
-                                Content = new[]
-                                {
-                                    new Drawable[]
-                                    {
-                                        new Container
-                                        {
-                                            RelativeSizeAxes = Axes.Both,
-                                            Padding = new MarginPadding { Right = 10 },
-                                            Child = new TimeInfoContainer { RelativeSizeAxes = Axes.Both },
-                                        },
-                                        new SummaryTimeline
-                                        {
-                                            RelativeSizeAxes = Axes.Both,
-                                        },
-                                        new Container
-                                        {
-                                            RelativeSizeAxes = Axes.Both,
-                                            Padding = new MarginPadding { Left = 10 },
-                                            Child = new PlaybackControl { RelativeSizeAxes = Axes.Both },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
+                new BottomBar(),
             },
         });
 
