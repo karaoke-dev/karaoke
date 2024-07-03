@@ -10,17 +10,17 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics;
 
-public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTranslateChangeHandler>
+public partial class LyricTranslationChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTranslationChangeHandler>
 {
     [Test]
-    public void TestUpdateTranslateWithNewLanguage()
+    public void TestUpdateTranslationWithNewLanguage()
     {
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
         });
 
-        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
+        TriggerHandlerChanged(c => c.UpdateTranslation(new CultureInfo(17), "からおけ"));
 
         AssertSelectedHitObject(h =>
         {
@@ -30,7 +30,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     }
 
     [Test]
-    public void TestUpdateTranslateWithExistLanguage()
+    public void TestUpdateTranslationWithExistLanguage()
     {
         PrepareHitObject(() => new Lyric
         {
@@ -41,7 +41,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             },
         });
 
-        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), "karaoke"));
+        TriggerHandlerChanged(c => c.UpdateTranslation(new CultureInfo(17), "karaoke"));
 
         AssertSelectedHitObject(h =>
         {
@@ -51,7 +51,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     }
 
     [Test]
-    public void TestUpdateTranslateWithEmptyText()
+    public void TestUpdateTranslationWithEmptyText()
     {
         PrepareHitObject(() => new Lyric
         {
@@ -62,7 +62,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             },
         });
 
-        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
+        TriggerHandlerChanged(c => c.UpdateTranslation(new CultureInfo(17), string.Empty));
 
         AssertSelectedHitObject(h =>
         {
@@ -71,7 +71,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
     }
 
     [Test]
-    public void TestUpdateTranslateWithNullText()
+    public void TestUpdateTranslationWithNullText()
     {
         PrepareHitObject(() => new Lyric
         {
@@ -82,7 +82,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             },
         });
 
-        TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
+        TriggerHandlerChanged(c => c.UpdateTranslation(new CultureInfo(17), string.Empty));
 
         AssertSelectedHitObject(h =>
         {
@@ -98,6 +98,6 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
             Text = "カラオケ",
         });
 
-        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
+        TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.UpdateTranslation(new CultureInfo(17), "からおけ"));
     }
 }

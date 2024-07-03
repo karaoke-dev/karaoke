@@ -8,24 +8,24 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-public partial class LyricTranslateChangeHandler : LyricPropertyChangeHandler, ILyricTranslateChangeHandler
+public partial class LyricTranslationChangeHandler : LyricPropertyChangeHandler, ILyricTranslationChangeHandler
 {
-    public void UpdateTranslate(CultureInfo cultureInfo, string translate)
+    public void UpdateTranslation(CultureInfo cultureInfo, string translation)
     {
         CheckExactlySelectedOneHitObject();
 
         PerformOnSelection(lyric =>
         {
-            // should not save translate if is null or empty or whitespace
-            if (string.IsNullOrWhiteSpace(translate))
+            // should not save translation if is null or empty or whitespace
+            if (string.IsNullOrWhiteSpace(translation))
             {
                 if (lyric.Translations.ContainsKey(cultureInfo))
                     lyric.Translations.Remove(cultureInfo);
             }
             else
             {
-                if (!lyric.Translations.TryAdd(cultureInfo, translate))
-                    lyric.Translations[cultureInfo] = translate;
+                if (!lyric.Translations.TryAdd(cultureInfo, translation))
+                    lyric.Translations[cultureInfo] = translation;
             }
         });
     }

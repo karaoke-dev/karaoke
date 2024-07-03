@@ -30,6 +30,6 @@ public partial class BeatmapLanguagesChangeHandler : BeatmapListPropertyChangeHa
         }
     }
 
-    public bool IsLanguageContainsTranslate(CultureInfo cultureInfo)
+    public bool IsLanguageContainsTranslation(CultureInfo cultureInfo)
         => Lyrics.Any(x => x.Translations.ContainsKey(cultureInfo));
 }

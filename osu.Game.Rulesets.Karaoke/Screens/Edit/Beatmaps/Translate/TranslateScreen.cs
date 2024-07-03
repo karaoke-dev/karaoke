@@ -17,14 +17,14 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
     [Cached(typeof(IBeatmapLanguagesChangeHandler))]
     private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
 
-    [Cached(typeof(ILyricTranslateChangeHandler))]
-    private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
+    [Cached(typeof(ILyricTranslationChangeHandler))]
+    private readonly LyricTranslationChangeHandler lyricTranslationChangeHandler;
 
     public TranslateScreen()
         : base(KaraokeBeatmapEditorScreenMode.Translate)
     {
         AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
-        AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
+        AddInternal(lyricTranslationChangeHandler = new LyricTranslationChangeHandler());
     }
 
     [BackgroundDependencyLoader]

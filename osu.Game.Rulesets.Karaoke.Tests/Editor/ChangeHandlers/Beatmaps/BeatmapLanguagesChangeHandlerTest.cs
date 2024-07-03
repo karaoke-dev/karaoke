@@ -62,7 +62,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
     }
 
     [Test]
-    public void TestIsLanguageContainsTranslate()
+    public void TestIsLanguageContainsTranslation()
     {
         SetUpKaraokeBeatmap(karaokeBeatmap =>
         {
@@ -85,8 +85,8 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
 
         TriggerHandlerChanged(c =>
         {
-            Assert.AreEqual(false, c.IsLanguageContainsTranslate(new CultureInfo("Ja-jp")));
-            Assert.AreEqual(true, c.IsLanguageContainsTranslate(new CultureInfo("zh-TW")));
+            Assert.AreEqual(false, c.IsLanguageContainsTranslation(new CultureInfo("Ja-jp")));
+            Assert.AreEqual(true, c.IsLanguageContainsTranslation(new CultureInfo("zh-TW")));
         });
     }
 

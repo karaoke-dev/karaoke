@@ -18,7 +18,7 @@ public partial class LyricTranslateTextBox : OsuTextBox
     private EditorBeatmap beatmap { get; set; } = null!;
 
     [Resolved]
-    private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; } = null!;
+    private ILyricTranslationChangeHandler lyricTranslationChangeHandler { get; set; } = null!;
 
     [Resolved]
     private ITranslateInfoProvider translateInfoProvider { get; set; } = null!;
@@ -54,7 +54,7 @@ public partial class LyricTranslateTextBox : OsuTextBox
             if (cultureInfo == null)
                 return;
 
-            lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, text);
+            lyricTranslationChangeHandler.UpdateTranslation(cultureInfo, text);
         };
     }
 

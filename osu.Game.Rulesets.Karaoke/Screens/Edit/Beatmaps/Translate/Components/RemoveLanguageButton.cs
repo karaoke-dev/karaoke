@@ -27,7 +27,7 @@ public partial class RemoveLanguageButton : IconButton
         Icon = FontAwesome.Solid.Trash;
         Action = () =>
         {
-            if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
+            if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslation(currentLanguage.Value))
             {
                 dialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
                 {
