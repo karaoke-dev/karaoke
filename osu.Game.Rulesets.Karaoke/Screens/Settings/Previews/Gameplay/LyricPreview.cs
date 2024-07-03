@@ -70,7 +70,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         });
         preferLanguage.BindValueChanged(e =>
         {
-            lyric.Translates = createPreviewTranslate(e.NewValue);
+            lyric.Translations = createPreviewTranslate(e.NewValue);
         });
 
         void addFont(FontUsage fontUsage)

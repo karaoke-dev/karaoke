@@ -91,7 +91,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
             }, new PreviewStageDefinition()),
         };
 
-        lyric.Translates.Add(cultureInfo, "karaoke");
+        lyric.Translations.Add(cultureInfo, "karaoke");
 
         lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

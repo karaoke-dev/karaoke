@@ -137,7 +137,7 @@ public class CheckBeatmapAvailableTranslatesTest : BeatmapPropertyCheckTest<Chec
         if (cultureInfo == null)
             return lyric;
 
-        lyric.Translates.Add(cultureInfo, translate);
+        lyric.Translations.Add(cultureInfo, translate);
         return lyric;
     }
 }

@@ -25,7 +25,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         var lyric = new Lyric();
 
         string expected =
-            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translates\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
+            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
         string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -36,7 +36,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         var expected = new Lyric();
 
         string json =
-            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{expected.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translates\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
+            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{expected.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
         var actual = JsonConvert.DeserializeObject<Lyric>(json, CreateSettings())!;
 
         Assert.AreEqual(expected.ID, actual.ID);
@@ -47,7 +47,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         Assert.AreEqual(expected.StartTime, actual.StartTime);
         Assert.AreEqual(expected.Duration, actual.Duration);
         Assert.AreEqual(expected.SingerIds, actual.SingerIds);
-        Assert.AreEqual(expected.Translates, actual.Translates);
+        Assert.AreEqual(expected.Translations, actual.Translations);
         Assert.AreEqual(expected.Language, actual.Language);
         Assert.AreEqual(expected.Lock, actual.Lock);
         Assert.AreEqual(expected.ReferenceLyric, actual.ReferenceLyric);
@@ -84,7 +84,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         };
 
         string expected =
-            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translates\":{{}},\"reference_lyric_id\":\"{lyric.ReferenceLyricId}\",\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
+            $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"reference_lyric_id\":\"{lyric.ReferenceLyricId}\",\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
         string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
         Assert.AreEqual(expected, actual);
     }

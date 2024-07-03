@@ -121,7 +121,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         ApplySkin(CurrentSkin, false);
 
         singersBindable.BindTo(HitObject.SingersBindable);
-        translateTextBindable.BindTo(HitObject.TranslateTextBindable);
+        translateTextBindable.BindTo(HitObject.TranslationsBindable);
     }
 
     protected override void OnFree()
@@ -129,7 +129,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         base.OnFree();
 
         singersBindable.UnbindFrom(HitObject.SingersBindable);
-        translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+        translateTextBindable.UnbindFrom(HitObject.TranslationsBindable);
     }
 
     protected override void ApplySkin(ISkinSource skin, bool allowFallback)

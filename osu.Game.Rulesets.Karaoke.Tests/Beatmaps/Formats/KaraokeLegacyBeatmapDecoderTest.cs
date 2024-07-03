@@ -93,18 +93,18 @@ public class KaraokeLegacyBeatmapDecoderTest
         Assert.AreEqual(2, translates.Count);
 
         // All lyric should have two translates
-        Assert.AreEqual(2, lyrics[0].Translates.Count);
-        Assert.AreEqual(2, lyrics[1].Translates.Count);
+        Assert.AreEqual(2, lyrics[0].Translations.Count);
+        Assert.AreEqual(2, lyrics[1].Translations.Count);
 
         // Check chinese translate
         var chineseLanguageId = translates[0];
-        Assert.AreEqual("卡拉OK", lyrics[0].Translates[chineseLanguageId]);
-        Assert.AreEqual("喜歡", lyrics[1].Translates[chineseLanguageId]);
+        Assert.AreEqual("卡拉OK", lyrics[0].Translations[chineseLanguageId]);
+        Assert.AreEqual("喜歡", lyrics[1].Translations[chineseLanguageId]);
 
         // Check english translate
         var englishLanguageId = translates[1];
-        Assert.AreEqual("karaoke", lyrics[0].Translates[englishLanguageId]);
-        Assert.AreEqual("like it", lyrics[1].Translates[englishLanguageId]);
+        Assert.AreEqual("karaoke", lyrics[0].Translations[englishLanguageId]);
+        Assert.AreEqual("like it", lyrics[1].Translations[englishLanguageId]);
     }
 
     private static KaraokeBeatmap decodeBeatmap(string fileName)

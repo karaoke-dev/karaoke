@@ -20,7 +20,7 @@ public class CheckLyricTranslate : CheckHitObjectProperty<Lyric>
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
-        var translates = lyric.Translates;
+        var translates = lyric.Translations;
 
         foreach ((var language, string translate) in translates)
         {

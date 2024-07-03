@@ -20,7 +20,7 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
     {
         var lyric = new Lyric
         {
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("Ja-jp"), text },
             },
@@ -37,7 +37,7 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
     {
         var lyric = new Lyric
         {
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("Ja-jp"), text },
             },

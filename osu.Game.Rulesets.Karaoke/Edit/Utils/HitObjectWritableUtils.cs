@@ -80,7 +80,7 @@ public static class HitObjectWritableUtils
             nameof(Lyric.StartTime) => lockState > LockState.Partial,
             nameof(Lyric.Duration) => lockState > LockState.Partial,
             nameof(Lyric.SingerIds) => lockState > LockState.Partial,
-            nameof(Lyric.Translates) => lockState > LockState.Partial,
+            nameof(Lyric.Translations) => lockState > LockState.Partial,
             nameof(Lyric.Language) => lockState > LockState.Partial,
             nameof(Lyric.Order) => false, // order can always be changed.
             nameof(Lyric.Lock) => false, // order can always be changed.
@@ -106,7 +106,7 @@ public static class HitObjectWritableUtils
                 nameof(Lyric.StartTime) => false,
                 nameof(Lyric.Duration) => false,
                 nameof(Lyric.SingerIds) => syncLyricConfig.SyncSingerProperty,
-                nameof(Lyric.Translates) => true,
+                nameof(Lyric.Translations) => true,
                 nameof(Lyric.Language) => true,
                 nameof(Lyric.Order) => true,
                 nameof(Lyric.Lock) => true,

@@ -94,18 +94,18 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
     }
 
     [JsonIgnore]
-    public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new();
+    public readonly BindableDictionary<CultureInfo, string> TranslationsBindable = new();
 
     /// <summary>
-    /// Translates
+    /// Translations
     /// </summary>
-    public IDictionary<CultureInfo, string> Translates
+    public IDictionary<CultureInfo, string> Translations
     {
-        get => TranslateTextBindable;
+        get => TranslationsBindable;
         set
         {
-            TranslateTextBindable.Clear();
-            TranslateTextBindable.AddRange(value);
+            TranslationsBindable.Clear();
+            TranslationsBindable.AddRange(value);
         }
     }
 

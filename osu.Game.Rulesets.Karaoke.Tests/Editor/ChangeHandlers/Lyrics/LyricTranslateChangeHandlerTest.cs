@@ -24,8 +24,8 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.Translates.Count);
-            Assert.AreEqual("からおけ", h.Translates[new CultureInfo(17)]);
+            Assert.AreEqual(1, h.Translations.Count);
+            Assert.AreEqual("からおけ", h.Translations[new CultureInfo(17)]);
         });
     }
 
@@ -35,7 +35,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },
@@ -45,8 +45,8 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.Translates.Count);
-            Assert.AreEqual("karaoke", h.Translates[new CultureInfo(17)]);
+            Assert.AreEqual(1, h.Translations.Count);
+            Assert.AreEqual("karaoke", h.Translations[new CultureInfo(17)]);
         });
     }
 
@@ -56,7 +56,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },
@@ -66,7 +66,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Translates);
+            Assert.IsEmpty(h.Translations);
         });
     }
 
@@ -76,7 +76,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
         PrepareHitObject(() => new Lyric
         {
             Text = "カラオケ",
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },
@@ -86,7 +86,7 @@ public partial class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Translates);
+            Assert.IsEmpty(h.Translations);
         });
     }
 

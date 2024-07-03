@@ -39,7 +39,7 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
         // check if some translate is missing or empty.
         foreach (var language in property)
         {
-            var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translates[language])).ToArray();
+            var notTranslateLyrics = hitObject.Where(x => !x.Translations.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translations[language])).ToArray();
 
             if (notTranslateLyrics.Length == hitObject.Count)
             {
@@ -53,12 +53,12 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
 
         // should check is lyric contains translate that is not listed in beatmap.
         // if got this issue, then it's a bug.
-        var allTranslateLanguageInLyric = hitObject.SelectMany(x => x.Translates.Keys).Distinct();
+        var allTranslateLanguageInLyric = hitObject.SelectMany(x => x.Translations.Keys).Distinct();
         var languageNotListInBeatmap = allTranslateLanguageInLyric.Except(property);
 
         foreach (var language in languageNotListInBeatmap)
         {
-            var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language));
+            var notTranslateLyrics = hitObject.Where(x => !x.Translations.ContainsKey(language));
 
             yield return new IssueTemplateContainsNotListedLanguage(this).Create(notTranslateLyrics, language);
         }

@@ -19,17 +19,17 @@ public partial class LyricTranslateChangeHandler : LyricPropertyChangeHandler, I
             // should not save translate if is null or empty or whitespace
             if (string.IsNullOrWhiteSpace(translate))
             {
-                if (lyric.Translates.ContainsKey(cultureInfo))
-                    lyric.Translates.Remove(cultureInfo);
+                if (lyric.Translations.ContainsKey(cultureInfo))
+                    lyric.Translations.Remove(cultureInfo);
             }
             else
             {
-                if (!lyric.Translates.TryAdd(cultureInfo, translate))
-                    lyric.Translates[cultureInfo] = translate;
+                if (!lyric.Translations.TryAdd(cultureInfo, translate))
+                    lyric.Translations[cultureInfo] = translate;
             }
         });
     }
 
     protected override bool IsWritePropertyLocked(Lyric lyric)
-        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Translates));
+        => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Translations));
 }

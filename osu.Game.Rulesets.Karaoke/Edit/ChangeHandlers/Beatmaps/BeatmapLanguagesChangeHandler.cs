@@ -24,12 +24,12 @@ public partial class BeatmapLanguagesChangeHandler : BeatmapListPropertyChangeHa
     protected override void OnItemRemoved(CultureInfo item)
     {
         // Delete from lyric also.
-        foreach (var lyric in Lyrics.Where(lyric => lyric.Translates.ContainsKey(item)))
+        foreach (var lyric in Lyrics.Where(lyric => lyric.Translations.ContainsKey(item)))
         {
-            lyric.Translates.Remove(item);
+            lyric.Translations.Remove(item);
         }
     }
 
     public bool IsLanguageContainsTranslate(CultureInfo cultureInfo)
-        => Lyrics.Any(x => x.Translates.ContainsKey(cultureInfo));
+        => Lyrics.Any(x => x.Translations.ContainsKey(cultureInfo));
 }

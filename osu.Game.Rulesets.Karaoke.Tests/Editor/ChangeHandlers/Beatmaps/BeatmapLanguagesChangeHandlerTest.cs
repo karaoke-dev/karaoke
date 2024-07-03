@@ -75,7 +75,7 @@ public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<B
 
         PrepareHitObject(() => new Lyric
         {
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 {
                     new("zh-TW"), "卡拉 OK"

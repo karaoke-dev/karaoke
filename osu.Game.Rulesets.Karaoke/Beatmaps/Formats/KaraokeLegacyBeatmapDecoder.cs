@@ -247,7 +247,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
             for (int j = 0; j < size; j++)
             {
-                lyrics[j].Translates.Add(cultureInfo, values[j]);
+                lyrics[j].Translations.Add(cultureInfo, values[j]);
             }
 
             availableTranslates.Add(cultureInfo);
