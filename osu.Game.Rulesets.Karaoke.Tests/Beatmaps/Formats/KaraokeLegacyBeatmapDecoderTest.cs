@@ -61,7 +61,7 @@ public class KaraokeLegacyBeatmapDecoderTest
     }
 
     [Test]
-    public void TestDecodeNote()
+    public void TestDecodeNotes()
     {
         // Karaoke beatmap
         var beatmap = decodeBeatmap("karaoke-note-samples");
@@ -77,32 +77,32 @@ public class KaraokeLegacyBeatmapDecoderTest
     }
 
     [Test]
-    public void TestDecodeTranslate()
+    public void TestDecodeTranslations()
     {
         // Karaoke beatmap
         var beatmap = decodeBeatmap("karaoke-translate-samples");
 
-        // Get translate
-        var translates = beatmap.AvailableTranslates();
+        // Get translations
+        var translations = beatmap.AvailableTranslationLanguages();
         var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
         // Check is not null
-        Assert.IsNotNull(translates);
+        Assert.IsNotNull(translations);
 
-        // Check translate count
-        Assert.AreEqual(2, translates.Count);
+        // Check translations count
+        Assert.AreEqual(2, translations.Count);
 
-        // All lyric should have two translates
+        // All lyric should have two translations
         Assert.AreEqual(2, lyrics[0].Translations.Count);
         Assert.AreEqual(2, lyrics[1].Translations.Count);
 
-        // Check chinese translate
-        var chineseLanguageId = translates[0];
+        // Check chinese translations
+        var chineseLanguageId = translations[0];
         Assert.AreEqual("卡拉OK", lyrics[0].Translations[chineseLanguageId]);
         Assert.AreEqual("喜歡", lyrics[1].Translations[chineseLanguageId]);
 
-        // Check english translate
-        var englishLanguageId = translates[1];
+        // Check english translations
+        var englishLanguageId = translations[1];
         Assert.AreEqual("karaoke", lyrics[0].Translations[englishLanguageId]);
         Assert.AreEqual("like it", lyrics[1].Translations[englishLanguageId]);
     }
