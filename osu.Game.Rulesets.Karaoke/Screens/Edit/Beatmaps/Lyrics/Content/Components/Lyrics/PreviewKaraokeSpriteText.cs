@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Components.Lyrics;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
 public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<PreviewKaraokeSpriteText.EditorLyricSpriteText>, IPreviewLyricPositionProvider
 {
