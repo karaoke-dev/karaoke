@@ -24,7 +24,7 @@ public static class KaraokeJsonSerializableExtensions
         globalSetting.Converters.Add(new TimeTagConverter());
         globalSetting.Converters.Add(new TimeTagsConverter());
         globalSetting.Converters.Add(new ToneConverter());
-        globalSetting.Converters.Add(new TranslatesConverter());
+        globalSetting.Converters.Add(new TranslationConverter());
         globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConverter());
         globalSetting.Converters.Add(new LyricConverter());
 
