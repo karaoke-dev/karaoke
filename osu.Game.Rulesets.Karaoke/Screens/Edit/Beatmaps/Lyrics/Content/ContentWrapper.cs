@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.List;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 
@@ -74,37 +73,11 @@ public partial class ContentWrapper : CompositeDrawable
         });
     }
 
-    private static Container getContent(LyricEditorLayout layout) =>
+    private static MainContent getContent(LyricEditorLayout layout) =>
         layout switch
         {
-            LyricEditorLayout.List => new Container
-            {
-                Children = new[]
-                {
-                    new PreviewLyricList
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                },
-            },
-            LyricEditorLayout.Compose => new Container
-            {
-                Children = new Drawable[]
-                {
-                    new LyricComposer
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Size = new Vector2(1, 0.6f),
-                    },
-                    new DetailLyricList
-                    {
-                        RelativePositionAxes = Axes.Y,
-                        Position = new Vector2(0, 0.6f),
-                        Size = new Vector2(1, 0.4f),
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                },
-            },
+            LyricEditorLayout.List => new ListContent(),
+            LyricEditorLayout.Compose => new ComposeContent(),
             _ => throw new ArgumentOutOfRangeException(nameof(layout), layout, null),
         };
 }
