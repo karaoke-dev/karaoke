@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.List;
 
-public partial class PreviewLyricList : BaseLyricList
+public partial class PreviewLyricList : LyricList
 {
     private readonly IBindable<float> bindableFontSize = new Bindable<float>();
 

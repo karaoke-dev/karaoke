@@ -13,7 +13,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 
-public abstract partial class BaseLyricList : CompositeDrawable
+public abstract partial class LyricList : CompositeDrawable
 {
     public const float LYRIC_LIST_PADDING = 10;
 
@@ -33,7 +33,7 @@ public abstract partial class BaseLyricList : CompositeDrawable
 
     private Drawable? background;
 
-    protected BaseLyricList()
+    protected LyricList()
     {
         InternalChild = lyricEditorGridContainer = new GridContainer
         {

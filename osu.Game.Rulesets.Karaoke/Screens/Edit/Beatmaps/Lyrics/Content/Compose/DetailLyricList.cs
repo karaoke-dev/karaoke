@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose;
 
-public partial class DetailLyricList : BaseLyricList
+public partial class DetailLyricList : LyricList
 {
     public DetailLyricList()
     {
