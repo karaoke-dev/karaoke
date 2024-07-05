@@ -13,7 +13,7 @@ public class KaraokeBeatmapVerifier : IBeatmapVerifier
 {
     private readonly List<ICheck> checks = new()
     {
-        new CheckBeatmapAvailableTranslates(),
+        new CheckBeatmapAvailableTranslations(),
         new CheckBeatmapClassicStageInfo(),
         new CheckBeatmapNoteInfo(),
         new CheckBeatmapPageInfo(),
@@ -24,7 +24,7 @@ public class KaraokeBeatmapVerifier : IBeatmapVerifier
         new CheckLyricText(),
         new CheckLyricTime(),
         new CheckLyricTimeTag(),
-        new CheckLyricTranslate(),
+        new CheckLyricTranslations(),
         new CheckNoteReferenceLyric(),
         new CheckNoteText(),
         new CheckNoteTime(),
