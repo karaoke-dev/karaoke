@@ -80,7 +80,7 @@ public class KaraokeLegacyBeatmapDecoderTest
     public void TestDecodeTranslations()
     {
         // Karaoke beatmap
-        var beatmap = decodeBeatmap("karaoke-translate-samples");
+        var beatmap = decodeBeatmap("karaoke-translation-samples");
 
         // Get translations
         var translations = beatmap.AvailableTranslationLanguages();
