@@ -95,8 +95,8 @@ public partial class LyricPreview : SettingsSubsectionPreview
         config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
         config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
         config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFont);
-        config.BindWith(KaraokeRulesetSetting.TranslateFont, translationFont);
-        config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
+        config.BindWith(KaraokeRulesetSetting.TranslationFont, translationFont);
+        config.BindWith(KaraokeRulesetSetting.PreferTranslationLanguage, preferLanguage);
     }
 
     protected override void Dispose(bool isDisposing)

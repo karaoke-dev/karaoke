@@ -118,7 +118,7 @@ public class LyricFontInfo : IKaraokeSkinElement
         // Apply translate font.
         drawableLyric.ApplyToTranslateText(text =>
         {
-            text.Font = getFont(KaraokeRulesetSetting.TranslateFont);
+            text.Font = getFont(KaraokeRulesetSetting.TranslationFont);
         });
 
         FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
@@ -141,8 +141,8 @@ public class LyricFontInfo : IKaraokeSkinElement
                     case KaraokeRulesetSetting.RomanisationFont:
                         return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
 
-                    case KaraokeRulesetSetting.TranslateFont:
-                        return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont) ?? false;
+                    case KaraokeRulesetSetting.TranslationFont:
+                        return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslationFont) ?? false;
 
                     default:
                         throw new InvalidOperationException(nameof(setting));

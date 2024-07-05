@@ -33,7 +33,7 @@ public class KaraokeModTranslation : Mod, IApplicableToDrawableHitObject
         static CultureInfo? getPreferLanguage(IReadOnlyDependencyContainer dependencyContainer)
         {
             var config = dependencyContainer.Get<KaraokeRulesetConfigManager>();
-            return config.Get<CultureInfo?>(KaraokeRulesetSetting.PreferLanguage);
+            return config.Get<CultureInfo?>(KaraokeRulesetSetting.PreferTranslationLanguage);
         }
     }
 }

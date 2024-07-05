@@ -26,7 +26,7 @@ public partial class TranslationSettings : KaraokeSettingsSubsection
             {
                 LabelText = "Prefer language",
                 TooltipText = "Select prefer translation.",
-                Current = Config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage),
+                Current = Config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferTranslationLanguage),
             },
         };
     }

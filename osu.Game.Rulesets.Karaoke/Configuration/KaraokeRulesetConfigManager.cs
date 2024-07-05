@@ -33,8 +33,8 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         SetDefault(KaraokeRulesetSetting.NoteAlpha, 1, 0.2, 1, 0.01);
         SetDefault(KaraokeRulesetSetting.LyricAlpha, 1, 0.2, 1, 0.01);
 
-        // Translate
-        SetDefault(KaraokeRulesetSetting.PreferLanguage, new CultureInfo("en-US"));
+        // Translation
+        SetDefault(KaraokeRulesetSetting.PreferTranslationLanguage, new CultureInfo("en-US"));
 
         // Pitch
         SetDefault(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
@@ -61,8 +61,8 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         SetDefault(KaraokeRulesetSetting.RomanisationFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
         SetDefault(KaraokeRulesetSetting.RomanisationMargin, 0, 0, 20);
         SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
-        SetDefault(KaraokeRulesetSetting.TranslateFont, new FontUsage("Torus", 18, "Bold"), 10f, 48f);
-        SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
+        SetDefault(KaraokeRulesetSetting.TranslationFont, new FontUsage("Torus", 18, "Bold"), 10f, 48f);
+        SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslationFont, false);
         SetDefault(KaraokeRulesetSetting.NoteFont, new FontUsage("Torus", 12, "Bold"), 10f, 32f);
         SetDefault(KaraokeRulesetSetting.ForceUseDefaultNoteFont, false);
     }
@@ -71,7 +71,7 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
     {
         switch (lookup)
         {
-            case KaraokeRulesetSetting.PreferLanguage:
+            case KaraokeRulesetSetting.PreferTranslationLanguage:
                 // todo : need to hve a default value here because it will cause error if object is null while saving.
                 base.AddBindable(lookup, new BindableCultureInfo(bindable.Value as CultureInfo));
                 break;
@@ -79,7 +79,7 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
             case KaraokeRulesetSetting.MainFont:
             case KaraokeRulesetSetting.RubyFont:
             case KaraokeRulesetSetting.RomanisationFont:
-            case KaraokeRulesetSetting.TranslateFont:
+            case KaraokeRulesetSetting.TranslationFont:
             case KaraokeRulesetSetting.NoteFont:
                 base.AddBindable(lookup, new BindableFontUsage(TypeUtils.ChangeType<FontUsage>(bindable.Value)));
                 break;
@@ -111,7 +111,7 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         new TrackedSetting<double>(KaraokeRulesetSetting.ScrollTime, v => new SettingDescription(v, "Scroll Time", $"{v}ms")),
         new TrackedSetting<bool>(KaraokeRulesetSetting.DisplayNoteRubyText, b => new SettingDescription(b, "Toggle display", b ? "Show" : "Hide")),
         new TrackedSetting<bool>(KaraokeRulesetSetting.ShowCursor, b => new SettingDescription(b, "Cursor display", b ? "Show" : "Hide")),
-        new TrackedSetting<CultureInfo>(KaraokeRulesetSetting.PreferLanguage, c => new SettingDescription(c, "Translate language", CultureInfoUtils.GetLanguageDisplayText(c))),
+        new TrackedSetting<CultureInfo>(KaraokeRulesetSetting.PreferTranslationLanguage, c => new SettingDescription(c, "Translation language", CultureInfoUtils.GetLanguageDisplayText(c))),
         new TrackedSetting<string>(KaraokeRulesetSetting.MicrophoneDevice, d => new SettingDescription(d, "Change to the new microphone device", d)),
     };
 }
@@ -126,8 +126,8 @@ public enum KaraokeRulesetSetting
     NoteAlpha,
     LyricAlpha,
 
-    // Translate
-    PreferLanguage,
+    // Translation
+    PreferTranslationLanguage,
 
     // Pitch
     OverridePitchAtGameplay,
@@ -154,8 +154,8 @@ public enum KaraokeRulesetSetting
     RomanisationFont,
     RomanisationMargin,
     ForceUseDefaultFont,
-    TranslateFont,
-    ForceUseDefaultTranslateFont,
+    TranslationFont,
+    ForceUseDefaultTranslationFont,
     NoteFont,
     ForceUseDefaultNoteFont,
 }

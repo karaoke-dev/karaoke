@@ -77,7 +77,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             config.BindWith(KaraokeRulesetSetting.RubyMargin, rubyMarginBindable);
             config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFontUsageBindable);
             config.BindWith(KaraokeRulesetSetting.RomanisationMargin, romanisationMarginBindable);
-            config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
+            config.BindWith(KaraokeRulesetSetting.TranslationFont, translateFontUsageBindable);
         }
 
         mainFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
