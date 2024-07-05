@@ -16,12 +16,12 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 
-[Cached(typeof(ITranslateInfoProvider))]
-public partial class TranslateEditSection : Container, ITranslateInfoProvider
+[Cached(typeof(ITranslationInfoProvider))]
+public partial class TranslationEditSection : Container, ITranslationInfoProvider
 {
     private const int row_height = 50;
     private const int column_spacing = 10;
@@ -39,7 +39,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
 
     private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
-    public TranslateEditSection()
+    public TranslationEditSection()
     {
         Padding = new MarginPadding(10);
 
@@ -51,7 +51,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             new Dimension(GridSizeMode.Absolute, column_spacing),
             new Dimension(),
         };
-        GridContainer translateGrid;
+        GridContainer translationsGrid;
 
         Child = new FillFlowContainer
         {
@@ -161,9 +161,9 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                                 },
                             },
                         },
-                        translateGrid = new GridContainer
+                        translationsGrid = new GridContainer
                         {
-                            Name = "Translates",
+                            Name = "Translations",
                             ColumnDimensions = columnDimensions,
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
@@ -182,8 +182,8 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
         bindableLyrics.BindCollectionChanged((_, _) =>
         {
             // just re-create all the view, lazy to save the performance in here.
-            translateGrid.RowDimensions = bindableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
-            translateGrid.Content = createContent();
+            translationsGrid.RowDimensions = bindableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+            translationsGrid.Content = createContent();
         });
     }
 
@@ -208,7 +208,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
                 Empty(),
                 createPreviewSpriteText(x),
                 Empty(),
-                createTranslateTextBox(x),
+                createTranslationTextBox(x),
             };
         }).ToArray();
     }
@@ -227,7 +227,7 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
     }
 
     private Drawable createPreviewSpriteText(Lyric lyric) =>
-        new TranslateLyricSpriteText(lyric)
+        new PreviewLyricSpriteText(lyric)
         {
             Anchor = Anchor.CentreLeft,
             Origin = Anchor.CentreLeft,
@@ -240,8 +240,8 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             BottomTextFont = new FontUsage(size: 10),
         };
 
-    private Drawable createTranslateTextBox(Lyric lyric) =>
-        new LyricTranslateTextBox(lyric)
+    private Drawable createTranslationTextBox(Lyric lyric) =>
+        new LyricTranslationTextBox(lyric)
         {
             Anchor = Anchor.CentreLeft,
             Origin = Anchor.CentreLeft,
@@ -250,10 +250,10 @@ public partial class TranslateEditSection : Container, ITranslateInfoProvider
             CommitOnFocusLost = true,
         };
 
-    public string? GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
+    public string? GetLyricTranslation(Lyric lyric, CultureInfo cultureInfo)
     {
         ArgumentNullException.ThrowIfNull(cultureInfo);
 
-        return lyric.Translations.TryGetValue(cultureInfo, out string? translate) ? translate : null;
+        return lyric.Translations.TryGetValue(cultureInfo, out string? translation) ? translation : null;
     }
 }

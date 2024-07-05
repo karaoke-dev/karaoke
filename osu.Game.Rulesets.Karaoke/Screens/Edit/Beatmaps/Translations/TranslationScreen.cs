@@ -10,9 +10,9 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 
-public partial class TranslateScreen : BeatmapEditorRoundedScreen
+public partial class TranslationScreen : BeatmapEditorRoundedScreen
 {
     [Cached(typeof(IBeatmapLanguagesChangeHandler))]
     private readonly BeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler;
@@ -20,7 +20,7 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
     [Cached(typeof(ILyricTranslationChangeHandler))]
     private readonly LyricTranslationChangeHandler lyricTranslationChangeHandler;
 
-    public TranslateScreen()
+    public TranslationScreen()
         : base(KaraokeBeatmapEditorScreenMode.Translate)
     {
         AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
@@ -32,11 +32,11 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
     {
         Add(new SectionsContainer<Container>
         {
-            FixedHeader = new TranslateScreenHeader(),
+            FixedHeader = new TranslationScreenHeader(),
             RelativeSizeAxes = Axes.Both,
             Children = new Container[]
             {
-                new TranslateEditSection
+                new TranslationEditSection
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -45,15 +45,15 @@ public partial class TranslateScreen : BeatmapEditorRoundedScreen
         });
     }
 
-    internal partial class TranslateScreenHeader : OverlayHeader
+    internal partial class TranslationScreenHeader : OverlayHeader
     {
-        protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
+        protected override OverlayTitle CreateTitle() => new TranslationScreenTitle();
 
-        private partial class TranslateScreenTitle : OverlayTitle
+        private partial class TranslationScreenTitle : OverlayTitle
         {
-            public TranslateScreenTitle()
+            public TranslationScreenTitle()
             {
-                Title = "translate";
+                Title = "translation";
                 Description = "create translation of your beatmap";
                 Icon = OsuIcon.Online;
             }

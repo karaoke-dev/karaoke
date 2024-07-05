@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
-public partial class LyricTranslateTextBox : OsuTextBox
+public partial class LyricTranslationTextBox : OsuTextBox
 {
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
@@ -21,13 +21,13 @@ public partial class LyricTranslateTextBox : OsuTextBox
     private ILyricTranslationChangeHandler lyricTranslationChangeHandler { get; set; } = null!;
 
     [Resolved]
-    private ITranslateInfoProvider translateInfoProvider { get; set; } = null!;
+    private ITranslationInfoProvider translationInfoProvider { get; set; } = null!;
 
     private readonly IBindable<CultureInfo?> currentLanguage = new Bindable<CultureInfo?>();
 
     private readonly Lyric lyric;
 
-    public LyricTranslateTextBox(Lyric lyric)
+    public LyricTranslationTextBox(Lyric lyric)
     {
         this.lyric = lyric;
 
@@ -36,7 +36,7 @@ public partial class LyricTranslateTextBox : OsuTextBox
             var cultureInfo = v.NewValue;
 
             // disable and clear text box if contains no language in language list.
-            Text = cultureInfo != null ? translateInfoProvider.GetLyricTranslate(lyric, cultureInfo) : null;
+            Text = cultureInfo != null ? translationInfoProvider.GetLyricTranslation(lyric, cultureInfo) : null;
             ScheduleAfterChildren(() =>
             {
                 Current.Disabled = cultureInfo == null;

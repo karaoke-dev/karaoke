@@ -4,9 +4,9 @@
 using System.Globalization;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 
-public interface ITranslateInfoProvider
+public interface ITranslationInfoProvider
 {
-    string? GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo);
+    string? GetLyricTranslation(Lyric lyric, CultureInfo cultureInfo);
 }
