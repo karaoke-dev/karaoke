@@ -21,7 +21,7 @@ public partial class TranslationScreen : BeatmapEditorRoundedScreen
     private readonly LyricTranslationChangeHandler lyricTranslationChangeHandler;
 
     public TranslationScreen()
-        : base(KaraokeBeatmapEditorScreenMode.Translate)
+        : base(KaraokeBeatmapEditorScreenMode.Translation)
     {
         AddInternal(beatmapLanguagesChangeHandler = new BeatmapLanguagesChangeHandler());
         AddInternal(lyricTranslationChangeHandler = new LyricTranslationChangeHandler());

@@ -86,7 +86,7 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
         {
             KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
             KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
-            KaraokeBeatmapEditorScreenMode.Translate => new TranslationScreen(),
+            KaraokeBeatmapEditorScreenMode.Translation => new TranslationScreen(),
             KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
             _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };
