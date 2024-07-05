@@ -33,7 +33,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
     private readonly IList<string> lrcLines = new List<string>();
     private readonly IList<string> noteLines = new List<string>();
-    private readonly IList<string> translates = new List<string>();
+    private readonly IList<string> translations = new List<string>();
 
     protected override void ParseLine(Beatmap beatmap, Section section, string line)
     {
@@ -62,8 +62,8 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
         }
         else if (line.ToLower().StartsWith("@tr", StringComparison.Ordinal))
         {
-            // add translate queue
-            translates.Add(line);
+            // add translation queue
+            translations.Add(line);
         }
         else if (line.StartsWith("@", StringComparison.Ordinal))
         {
@@ -91,7 +91,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
             }
 
             processNotes(beatmap, noteLines);
-            processTranslate(beatmap, translates);
+            processTranslations(beatmap, translations);
         }
     }
 
@@ -222,20 +222,20 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
         }
     }
 
-    private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
+    private void processTranslations(Beatmap beatmap, IEnumerable<string> translationLines)
     {
-        var availableTranslates = new List<CultureInfo>();
+        var availableTranslations = new List<CultureInfo>();
 
         var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-        var translations = translateLines.Select(translate => new
+        var translations = translationLines.Select(translation => new
         {
-            key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
-            value = translate.Split('=').LastOrDefault() ?? string.Empty,
+            key = translation.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
+            value = translation.Split('=').LastOrDefault() ?? string.Empty,
         }).GroupBy(x => x.key, y => y.value).ToList();
 
         foreach (var translation in translations)
         {
-            // get culture and translate
+            // get culture and translation
             string? languageCode = translation.Key;
             if (string.IsNullOrEmpty(languageCode))
                 continue;
@@ -247,15 +247,15 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
             for (int j = 0; j < size; j++)
             {
-                lyrics[j].Translates.Add(cultureInfo, values[j]);
+                lyrics[j].Translations.Add(cultureInfo, values[j]);
             }
 
-            availableTranslates.Add(cultureInfo);
+            availableTranslations.Add(cultureInfo);
         }
 
         var dictionary = new LegacyProperties
         {
-            AvailableTranslates = availableTranslates,
+            AvailableTranslationLanguages = availableTranslations,
         };
 
         beatmap.HitObjects.Add(dictionary);

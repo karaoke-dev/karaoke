@@ -7,20 +7,20 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Issues;
 using osu.Game.Rulesets.Karaoke.Objects;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTranslate;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckLyricTranslations;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
-public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTranslate>
+public class CheckLyricTranslationsTest : HitObjectCheckTest<Lyric, CheckLyricTranslations>
 {
-    [TestCase("translate")]
+    [TestCase("translation")]
     [TestCase("k")] // not limit min size for now.
     [TestCase("翻譯")] // not limit language.
     public void TestCheck(string text)
     {
         var lyric = new Lyric
         {
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("Ja-jp"), text },
             },
@@ -37,7 +37,7 @@ public class CheckLyricTranslateTest : HitObjectCheckTest<Lyric, CheckLyricTrans
     {
         var lyric = new Lyric
         {
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("Ja-jp"), text },
             },

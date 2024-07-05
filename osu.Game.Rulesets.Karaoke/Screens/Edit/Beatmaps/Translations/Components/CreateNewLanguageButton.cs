@@ -13,7 +13,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
 public partial class CreateNewLanguageButton : IconButton, IHasPopover
 {

@@ -13,8 +13,8 @@ public enum KaraokeBeatmapEditorScreenMode
     [Description("Singer")]
     Singer,
 
-    [Description("Translate")]
-    Translate,
+    [Description("Translation")]
+    Translation,
 
     [Description("Page")]
     Page,

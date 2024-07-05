@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-public interface ILyricTranslateChangeHandler : ILyricPropertyChangeHandler
+public interface ILyricTranslationChangeHandler : ILyricPropertyChangeHandler
 {
-    void UpdateTranslate(CultureInfo cultureInfo, string translate);
+    void UpdateTranslation(CultureInfo cultureInfo, string translation);
 }

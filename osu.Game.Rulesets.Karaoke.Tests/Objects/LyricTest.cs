@@ -29,7 +29,7 @@ public class LyricTest
             StartTime = 1000,
             Duration = 4000,
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo("en-US"), "karaoke" },
             },
@@ -69,8 +69,8 @@ public class LyricTest
         Assert.AreNotSame(clonedLyric.SingerIdsBindable, lyric.SingerIdsBindable);
         CollectionAssert.AreEquivalent(clonedLyric.SingerIds, lyric.SingerIds);
 
-        Assert.AreNotSame(clonedLyric.TranslateTextBindable, lyric.TranslateTextBindable);
-        CollectionAssert.AreEquivalent(clonedLyric.Translates, lyric.Translates);
+        Assert.AreNotSame(clonedLyric.TranslationsBindable, lyric.TranslationsBindable);
+        CollectionAssert.AreEquivalent(clonedLyric.Translations, lyric.Translations);
 
         Assert.AreNotSame(clonedLyric.LanguageBindable, lyric.LanguageBindable);
         Assert.AreEqual(clonedLyric.Language, lyric.Language);
@@ -103,7 +103,7 @@ public class LyricTest
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100#^ka" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },
@@ -121,7 +121,7 @@ public class LyricTest
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
-        Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
+        Assert.AreEqual(referencedLyric.Translations, lyric.Translations);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
     }
 
@@ -141,7 +141,7 @@ public class LyricTest
         referencedLyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100^ka" });
         referencedLyric.RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" });
         referencedLyric.SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 });
-        referencedLyric.Translates = new Dictionary<CultureInfo, string>
+        referencedLyric.Translations = new Dictionary<CultureInfo, string>
         {
             { new CultureInfo(17), "からおけ" },
         };
@@ -151,7 +151,7 @@ public class LyricTest
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
         Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
-        Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
+        Assert.AreEqual(referencedLyric.Translations, lyric.Translations);
         Assert.AreEqual(referencedLyric.Language, lyric.Language);
     }
 
@@ -169,7 +169,7 @@ public class LyricTest
             TimeTags = new[] { timeTag },
             RubyTags = new[] { rubyTag },
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },
@@ -224,7 +224,7 @@ public class LyricTest
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100#ka" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か" }),
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1 }),
-            Translates = new Dictionary<CultureInfo, string>
+            Translations = new Dictionary<CultureInfo, string>
             {
                 { new CultureInfo(17), "からおけ" },
             },

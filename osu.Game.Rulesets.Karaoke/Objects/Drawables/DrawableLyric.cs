@@ -22,9 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables;
 public partial class DrawableLyric : DrawableKaraokeHitObject
 {
     private Container<DrawableKaraokeSpriteText> lyricPieces = null!;
-    private OsuSpriteText translateText = null!;
+    private OsuSpriteText translationText = null!;
 
-    private readonly BindableBool useTranslateBindable = new();
+    private readonly BindableBool useTranslationBindable = new();
     private readonly Bindable<CultureInfo> preferLanguageBindable = new();
 
     private readonly Bindable<FontUsage> mainFontUsageBindable = new();
@@ -32,10 +32,10 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     private readonly Bindable<int> rubyMarginBindable = new();
     private readonly Bindable<FontUsage> romanisationFontUsageBindable = new();
     private readonly Bindable<int> romanisationMarginBindable = new();
-    private readonly Bindable<FontUsage> translateFontUsageBindable = new();
+    private readonly Bindable<FontUsage> translationFontUsageBindable = new();
 
     private readonly IBindableDictionary<Singer, SingerState[]> singersBindable = new BindableDictionary<Singer, SingerState[]>();
-    private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
+    private readonly BindableDictionary<CultureInfo, string> translationTextBindable = new();
 
     public event Action<DrawableLyric>? OnLyricStart;
     public event Action<DrawableLyric>? OnLyricEnd;
@@ -61,14 +61,14 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         {
             AutoSizeAxes = Axes.Both,
         });
-        AddInternal(translateText = new OsuSpriteText
+        AddInternal(translationText = new OsuSpriteText
         {
             Anchor = Anchor.BottomLeft,
             Origin = Anchor.TopLeft,
         });
 
-        useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
-        preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
+        useTranslationBindable.BindValueChanged(_ => applyTranslation(), true);
+        preferLanguageBindable.BindValueChanged(_ => applyTranslation(), true);
 
         if (config != null)
         {
@@ -77,7 +77,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             config.BindWith(KaraokeRulesetSetting.RubyMargin, rubyMarginBindable);
             config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFontUsageBindable);
             config.BindWith(KaraokeRulesetSetting.RomanisationMargin, romanisationMarginBindable);
-            config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
+            config.BindWith(KaraokeRulesetSetting.TranslationFont, translationFontUsageBindable);
         }
 
         mainFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
@@ -85,11 +85,11 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         rubyMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
         romanisationFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
         romanisationMarginBindable.BindValueChanged(_ => updateLyricFontInfo());
-        translateFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
+        translationFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
 
         // property in hitobject.
         singersBindable.BindCollectionChanged((_, _) => { updateFontStyle(); });
-        translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
+        translationTextBindable.BindCollectionChanged((_, _) => { applyTranslation(); });
     }
 
     public void ChangeDisplayType(LyricDisplayType lyricDisplayType)
@@ -104,11 +104,11 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
 
     public void ChangePreferTranslationLanguage(CultureInfo? language)
     {
-        if (language != null && translateTextBindable.TryGetValue(language, out string? translate))
-            translateText.Text = translate;
+        if (language != null && translationTextBindable.TryGetValue(language, out string? translation))
+            translationText.Text = translation;
         else
         {
-            translateText.Text = string.Empty;
+            translationText.Text = string.Empty;
         }
     }
 
@@ -121,7 +121,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         ApplySkin(CurrentSkin, false);
 
         singersBindable.BindTo(HitObject.SingersBindable);
-        translateTextBindable.BindTo(HitObject.TranslateTextBindable);
+        translationTextBindable.BindTo(HitObject.TranslationsBindable);
     }
 
     protected override void OnFree()
@@ -129,7 +129,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         base.OnFree();
 
         singersBindable.UnbindFrom(HitObject.SingersBindable);
-        translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+        translationTextBindable.UnbindFrom(HitObject.TranslationsBindable);
     }
 
     protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -164,19 +164,19 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         lyricFontInfo?.ApplyTo(this);
     }
 
-    private void applyTranslate()
+    private void applyTranslation()
     {
         var language = preferLanguageBindable.Value;
-        bool needTranslate = useTranslateBindable.Value;
+        bool useTranslation = useTranslationBindable.Value;
 
-        if (!needTranslate || language == null)
+        if (!useTranslation || language == null)
         {
-            translateText.Text = string.Empty;
+            translationText.Text = string.Empty;
         }
         else
         {
-            if (translateTextBindable.TryGetValue(language, out string? translate))
-                translateText.Text = translate;
+            if (translationTextBindable.TryGetValue(language, out string? translation))
+                translationText.Text = translation;
         }
     }
 
@@ -216,8 +216,8 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             action?.Invoke(lyricPiece);
     }
 
-    public void ApplyToTranslateText(Action<OsuSpriteText> action)
+    public void ApplyToTranslationText(Action<OsuSpriteText> action)
     {
-        action?.Invoke(translateText);
+        action?.Invoke(translationText);
     }
 }

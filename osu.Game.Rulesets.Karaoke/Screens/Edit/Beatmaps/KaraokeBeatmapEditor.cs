@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Pages;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Screens.Edit.Components.Menus;
 
@@ -86,7 +86,7 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
         {
             KaraokeBeatmapEditorScreenMode.Lyric => new LyricEditorScreen(),
             KaraokeBeatmapEditorScreenMode.Singer => new SingerScreen(),
-            KaraokeBeatmapEditorScreenMode.Translate => new TranslateScreen(),
+            KaraokeBeatmapEditorScreenMode.Translation => new TranslationScreen(),
             KaraokeBeatmapEditorScreenMode.Page => new PageScreen(),
             _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode"),
         };

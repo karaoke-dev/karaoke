@@ -246,13 +246,13 @@ public partial class Lyric
                 SingerIds = lyric.SingerIds;
             });
 
-            // translates.
-            bindDictionaryValueChange(e, l => l.TranslateTextBindable, (lyric, config) =>
+            // translations.
+            bindDictionaryValueChange(e, l => l.TranslationsBindable, (lyric, config) =>
             {
                 if (config is not SyncLyricConfig)
                     return;
 
-                Translates = lyric.Translates;
+                Translations = lyric.Translations;
             });
 
             // language.

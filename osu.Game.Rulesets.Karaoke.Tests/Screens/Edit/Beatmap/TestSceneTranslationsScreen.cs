@@ -10,22 +10,22 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
 
 [TestFixture]
-public partial class TestSceneTranslateScreen : BeatmapEditorScreenTestScene<TranslateScreen>
+public partial class TestSceneTranslationsScreen : BeatmapEditorScreenTestScene<TranslationScreen>
 {
     protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-    protected override TranslateScreen CreateEditorScreen() => new();
+    protected override TranslationScreen CreateEditorScreen() => new();
 
     protected override KaraokeBeatmap CreateBeatmap()
     {
         var karaokeBeatmap = base.CreateBeatmap();
 
-        karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
+        karaokeBeatmap.AvailableTranslationLanguages = new List<CultureInfo>
         {
             new("zh-TW"),
             new("en-US"),

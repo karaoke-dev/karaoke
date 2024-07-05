@@ -6,7 +6,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
 public partial class LanguageDropdown : OsuDropdown<CultureInfo>
 {

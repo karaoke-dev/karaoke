@@ -65,7 +65,7 @@ public partial class IssueIcon : CompositeDrawable
     private static IconUsage getIconUsageByCheck(ICheck check) =>
         check switch
         {
-            CheckBeatmapAvailableTranslates => FontAwesome.Solid.Language,
+            CheckBeatmapAvailableTranslations => FontAwesome.Solid.Language,
             CheckBeatmapClassicStageInfo => FontAwesome.Solid.AlignLeft,
             CheckBeatmapNoteInfo => FontAwesome.Solid.Microphone,
             CheckBeatmapPageInfo => FontAwesome.Solid.Pager,
@@ -76,7 +76,7 @@ public partial class IssueIcon : CompositeDrawable
             CheckLyricText => FontAwesome.Solid.TextHeight,
             CheckLyricTime => FontAwesome.Solid.Times,
             CheckLyricTimeTag => FontAwesome.Solid.Tag,
-            CheckLyricTranslate => FontAwesome.Solid.Language,
+            CheckLyricTranslations => FontAwesome.Solid.Language,
             CheckNoteReferenceLyric => FontAwesome.Solid.Link,
             CheckNoteText => FontAwesome.Solid.Link,
             CheckNoteTime => FontAwesome.Solid.Times,

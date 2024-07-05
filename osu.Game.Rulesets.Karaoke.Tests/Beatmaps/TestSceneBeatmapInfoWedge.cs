@@ -39,7 +39,7 @@ public partial class TestSceneBeatmapInfoWedge : OsuTestScene
     [TestCase("karaoke-file-samples")]
     [TestCase("karaoke-file-samples-without-note")]
     [TestCase("karaoke-note-samples")]
-    [TestCase("karaoke-translate-samples")]
+    [TestCase("karaoke-translation-samples")]
     public void TestNullBeatmap(string fileName)
     {
         using var resStream = TestResources.OpenBeatmapResource(fileName);

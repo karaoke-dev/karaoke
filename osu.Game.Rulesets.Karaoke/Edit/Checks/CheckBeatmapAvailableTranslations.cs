@@ -11,19 +11,19 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<CultureInfo>, Lyric>
+public class CheckBeatmapAvailableTranslations : CheckBeatmapProperty<IList<CultureInfo>, Lyric>
 {
     protected override string Description => "Beatmap with invalid localization info.";
 
     public override IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
     {
-        new IssueTemplateMissingTranslate(this),
-        new IssueTemplateMissingPartialTranslate(this),
-        new IssueTemplateContainsNotListedLanguage(this),
+        new IssueTemplateMissingTranslation(this),
+        new IssueTemplateMissingPartialTranslation(this),
+        new IssueTemplateTranslationNotInListedLanguage(this),
     };
 
     protected override IList<CultureInfo> GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)
-        => karaokeBeatmap.AvailableTranslates;
+        => karaokeBeatmap.AvailableTranslationLanguages;
 
     protected override IEnumerable<Issue> CheckProperty(IList<CultureInfo> property)
     {
@@ -36,37 +36,37 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
         if (hitObject.Count == 0)
             yield break;
 
-        // check if some translate is missing or empty.
+        // check if some translations is missing or empty.
         foreach (var language in property)
         {
-            var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translates[language])).ToArray();
+            var missingTranslationLyrics = hitObject.Where(x => !x.Translations.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translations[language])).ToArray();
 
-            if (notTranslateLyrics.Length == hitObject.Count)
+            if (missingTranslationLyrics.Length == hitObject.Count)
             {
-                yield return new IssueTemplateMissingTranslate(this).Create(notTranslateLyrics, language);
+                yield return new IssueTemplateMissingTranslation(this).Create(missingTranslationLyrics, language);
             }
-            else if (notTranslateLyrics.Any())
+            else if (missingTranslationLyrics.Any())
             {
-                yield return new IssueTemplateMissingPartialTranslate(this).Create(notTranslateLyrics, language);
+                yield return new IssueTemplateMissingPartialTranslation(this).Create(missingTranslationLyrics, language);
             }
         }
 
-        // should check is lyric contains translate that is not listed in beatmap.
+        // should check is lyric contains translation that is not listed in beatmap.
         // if got this issue, then it's a bug.
-        var allTranslateLanguageInLyric = hitObject.SelectMany(x => x.Translates.Keys).Distinct();
-        var languageNotListInBeatmap = allTranslateLanguageInLyric.Except(property);
+        var allTranslationLanguageInLyric = hitObject.SelectMany(x => x.Translations.Keys).Distinct();
+        var languageNotListInBeatmap = allTranslationLanguageInLyric.Except(property);
 
         foreach (var language in languageNotListInBeatmap)
         {
-            var notTranslateLyrics = hitObject.Where(x => !x.Translates.ContainsKey(language));
+            var notContainsTranslationLyrics = hitObject.Where(x => !x.Translations.ContainsKey(language));
 
-            yield return new IssueTemplateContainsNotListedLanguage(this).Create(notTranslateLyrics, language);
+            yield return new IssueTemplateTranslationNotInListedLanguage(this).Create(notContainsTranslationLyrics, language);
         }
     }
 
-    public class IssueTemplateMissingTranslate : IssueTemplate
+    public class IssueTemplateMissingTranslation : IssueTemplate
     {
-        public IssueTemplateMissingTranslate(ICheck check)
+        public IssueTemplateMissingTranslation(ICheck check)
             : base(check, IssueType.Problem, "There are no lyric translations for this language.")
         {
         }
@@ -75,9 +75,9 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
             => new(hitObjects, this, cultureInfo);
     }
 
-    public class IssueTemplateMissingPartialTranslate : IssueTemplate
+    public class IssueTemplateMissingPartialTranslation : IssueTemplate
     {
-        public IssueTemplateMissingPartialTranslate(ICheck check)
+        public IssueTemplateMissingPartialTranslation(ICheck check)
             : base(check, IssueType.Problem, "Some lyrics in this language are missing translations.")
         {
         }
@@ -86,10 +86,10 @@ public class CheckBeatmapAvailableTranslates : CheckBeatmapProperty<IList<Cultur
             => new(hitObjects, this, cultureInfo);
     }
 
-    public class IssueTemplateContainsNotListedLanguage : IssueTemplate
+    public class IssueTemplateTranslationNotInListedLanguage : IssueTemplate
     {
-        public IssueTemplateContainsNotListedLanguage(ICheck check)
-            : base(check, IssueType.Problem, "Seems some translate language is not listed, plz contact developer to fix that bug.")
+        public IssueTemplateTranslationNotInListedLanguage(ICheck check)
+            : base(check, IssueType.Problem, "Seems some translation language is not listed in the beatmap, please contact developer to fix that bug.")
         {
         }
 

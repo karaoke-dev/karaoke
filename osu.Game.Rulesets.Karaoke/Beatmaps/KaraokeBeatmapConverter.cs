@@ -33,7 +33,7 @@ public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
         if (beatmap is not KaraokeBeatmap karaokeBeatmap)
             throw new InvalidCastException(nameof(beatmap));
 
-        karaokeBeatmap.AvailableTranslates = propertyDictionary.AvailableTranslates;
+        karaokeBeatmap.AvailableTranslationLanguages = propertyDictionary.AvailableTranslationLanguages;
         beatmap.HitObjects.Remove(propertyDictionary);
 
         return beatmap;

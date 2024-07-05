@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations;
 
 public partial class DeleteLanguagePopupDialog : PopupDialog
 {
@@ -15,7 +15,7 @@ public partial class DeleteLanguagePopupDialog : PopupDialog
     {
         Icon = FontAwesome.Regular.TrashAlt;
         HeaderText = $"Confirm deletion of language {CultureInfoUtils.GetLanguageDisplayText(currentLanguage)}?";
-        BodyText = "It will also remove the translate.";
+        BodyText = "It will also remove the translations.";
         Buttons = new PopupDialogButton[]
         {
             new PopupDialogOkButton

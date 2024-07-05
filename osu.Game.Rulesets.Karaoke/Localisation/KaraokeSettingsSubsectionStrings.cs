@@ -44,9 +44,9 @@ public static class KaraokeSettingsSubsectionStrings
     public static LocalisableString PreferLanguage => new TranslatableString(getKey(@"prefer_language"), @"Prefer language");
 
     /// <summary>
-    /// "Select prefer translate language."
+    /// "Select prefer translation language."
     /// </summary>
-    public static LocalisableString PreferLanguageTooltip => new TranslatableString(getKey(@"prefer_language_tooltip"), @"Select prefer translate language.");
+    public static LocalisableString PreferTranslationLanguageTooltip => new TranslatableString(getKey(@"prefer_language_tooltip"), @"Select prefer translation language.");
 
     /// <summary>
     /// "Microphone device"

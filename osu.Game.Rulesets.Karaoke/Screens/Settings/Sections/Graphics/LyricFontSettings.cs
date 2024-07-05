@@ -58,14 +58,14 @@ public partial class LyricFontSettings : KaraokeSettingsSubsection
             },
             new SettingsFont
             {
-                LabelText = "Translate font",
-                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.TranslateFont),
+                LabelText = "Translation font",
+                Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.TranslationFont),
             },
             new SettingsCheckbox
             {
-                LabelText = "Force use default translate font.",
+                LabelText = "Force use default translation font.",
                 TooltipText = "Force use default font even has customize font in skin or beatmap.",
-                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont),
+                Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslationFont),
             },
         };
     }

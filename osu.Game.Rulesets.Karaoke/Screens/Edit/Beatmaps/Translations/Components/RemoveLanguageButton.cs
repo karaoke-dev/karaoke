@@ -9,7 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translate.Components;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
 public partial class RemoveLanguageButton : IconButton
 {
@@ -27,7 +27,7 @@ public partial class RemoveLanguageButton : IconButton
         Icon = FontAwesome.Solid.Trash;
         Action = () =>
         {
-            if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
+            if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslation(currentLanguage.Value))
             {
                 dialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
                 {

@@ -33,7 +33,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
     private void load()
     {
         var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-        config.SetValue(KaraokeRulesetSetting.PreferLanguage, cultureInfo);
+        config.SetValue(KaraokeRulesetSetting.PreferTranslationLanguage, cultureInfo);
     }
 
     private Drawable testSingle(double timeOffset = 0)
@@ -91,7 +91,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
             }, new PreviewStageDefinition()),
         };
 
-        lyric.Translates.Add(cultureInfo, "karaoke");
+        lyric.Translations.Add(cultureInfo, "karaoke");
 
         lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

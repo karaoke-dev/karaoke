@@ -17,14 +17,14 @@ public class KaraokeLegacyBeatmapEncoder
         var results = new List<string>
         {
             lrcEncoder.Encode(output),
-            string.Join("\n", encodeNote(output)),
-            string.Join("\n", encodeTranslate(output)),
+            string.Join("\n", encodeNotes(output)),
+            string.Join("\n", encodeTranslations(output)),
         };
 
         return string.Join("\n\n", results.Where(x => !string.IsNullOrEmpty(x)));
     }
 
-    private IEnumerable<string> encodeNote(Beatmap output)
+    private IEnumerable<string> encodeNotes(Beatmap output)
     {
         var notes = output.HitObjects.OfType<Note>().ToList();
         var lyrics = output.HitObjects.OfType<Lyric>().ToList();
@@ -61,20 +61,20 @@ public class KaraokeLegacyBeatmapEncoder
         }
     }
 
-    private IEnumerable<string> encodeTranslate(Beatmap output)
+    private IEnumerable<string> encodeTranslations(Beatmap output)
     {
-        if (!output.AnyTranslate())
+        if (!output.AnyTranslation())
             yield break;
 
         var lyrics = output.HitObjects.OfType<Lyric>().ToList();
-        var availableTranslates = output.AvailableTranslates();
+        var availableTranslations = output.AvailableTranslationLanguages();
 
-        foreach (var translate in availableTranslates)
+        foreach (var translation in availableTranslations)
         {
             foreach (var lyric in lyrics)
             {
-                string translateString = lyric.Translates.TryGetValue(translate, out string? value) ? value : string.Empty;
-                yield return $"@tr[{translate.Name}]={translateString}";
+                string translationString = lyric.Translations.TryGetValue(translation, out string? value) ? value : string.Empty;
+                yield return $"@tr[{translation.Name}]={translationString}";
             }
         }
     }

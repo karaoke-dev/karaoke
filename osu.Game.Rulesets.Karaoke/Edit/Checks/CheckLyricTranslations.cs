@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public class CheckLyricTranslate : CheckHitObjectProperty<Lyric>
+public class CheckLyricTranslations : CheckHitObjectProperty<Lyric>
 {
     protected override string Description => "Lyric with invalid translations.";
 
@@ -20,11 +20,11 @@ public class CheckLyricTranslate : CheckHitObjectProperty<Lyric>
 
     protected override IEnumerable<Issue> Check(Lyric lyric)
     {
-        var translates = lyric.Translates;
+        var translations = lyric.Translations;
 
-        foreach ((var language, string translate) in translates)
+        foreach ((var language, string translation) in translations)
         {
-            if (string.IsNullOrWhiteSpace(translate))
+            if (string.IsNullOrWhiteSpace(translation))
                 yield return new IssueTemplateEmptyText(this).Create(lyric, language);
         }
     }

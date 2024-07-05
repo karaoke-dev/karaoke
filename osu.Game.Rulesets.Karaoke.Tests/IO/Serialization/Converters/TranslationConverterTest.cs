@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters;
 
-public class TranslatesConverterTest : BaseSingleConverterTest<TranslatesConverter>
+public class TranslationConverterTest : BaseSingleConverterTest<TranslationConverter>
 {
     protected override IEnumerable<JsonConverter> CreateExtraConverts()
     {
@@ -20,14 +20,14 @@ public class TranslatesConverterTest : BaseSingleConverterTest<TranslatesConvert
     [Test]
     public void TestSerialize()
     {
-        var translates = new Dictionary<CultureInfo, string>
+        var translations = new Dictionary<CultureInfo, string>
         {
             { new CultureInfo("en-US"), "karaoke" },
             { new CultureInfo("Ja-jp"), "カラオケ" },
         };
 
         const string expected = "[{\"key\":1033,\"value\":\"karaoke\"},{\"key\":1041,\"value\":\"カラオケ\"}]";
-        string actual = JsonConvert.SerializeObject(translates, CreateSettings());
+        string actual = JsonConvert.SerializeObject(translations, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
 

@@ -14,5 +14,5 @@ public interface IBeatmapLanguagesChangeHandler
 
     void Remove(CultureInfo culture);
 
-    bool IsLanguageContainsTranslate(CultureInfo cultureInfo);
+    bool IsLanguageContainsTranslation(CultureInfo cultureInfo);
 }
