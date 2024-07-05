@@ -11,9 +11,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
 
-public partial class TranslateSettings : KaraokeSettingsSubsection
+public partial class TranslationSettings : KaraokeSettingsSubsection
 {
-    protected override LocalisableString Header => "Translate";
+    protected override LocalisableString Header => "Translation";
 
     public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 
@@ -25,7 +25,7 @@ public partial class TranslateSettings : KaraokeSettingsSubsection
             new SettingsLanguage
             {
                 LabelText = "Prefer language",
-                TooltipText = "Select prefer translate language.",
+                TooltipText = "Select prefer translation.",
                 Current = Config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage),
             },
         };

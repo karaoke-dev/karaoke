@@ -25,7 +25,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
     private readonly Bindable<FontUsage> mainFont = new();
     private readonly Bindable<FontUsage> rubyFont = new();
     private readonly Bindable<FontUsage> romanisationFont = new();
-    private readonly Bindable<FontUsage> translateFont = new();
+    private readonly Bindable<FontUsage> translationFont = new();
     private readonly Bindable<CultureInfo> preferLanguage = new();
 
     [Resolved]
@@ -64,13 +64,13 @@ public partial class LyricPreview : SettingsSubsectionPreview
         {
             addFont(e.NewValue);
         });
-        translateFont.BindValueChanged(e =>
+        translationFont.BindValueChanged(e =>
         {
             addFont(e.NewValue);
         });
         preferLanguage.BindValueChanged(e =>
         {
-            lyric.Translations = createPreviewTranslate(e.NewValue);
+            lyric.Translations = createPreviewTranslation(e.NewValue);
         });
 
         void addFont(FontUsage fontUsage)
@@ -95,7 +95,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
         config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
         config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFont);
-        config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
+        config.BindWith(KaraokeRulesetSetting.TranslateFont, translationFont);
         config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
     }
 
@@ -143,9 +143,9 @@ public partial class LyricPreview : SettingsSubsectionPreview
             EffectApplier = new PreviewLyricEffectApplier(),
         };
 
-    private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
+    private IDictionary<CultureInfo, string> createPreviewTranslation(CultureInfo cultureInfo)
     {
-        string translate = cultureInfo.Name switch
+        string translation = cultureInfo.Name switch
         {
             "ja" or "Ja-jp" => "カラオケ",
             "zh-Hant" or "zh-TW" => "卡拉OK",
@@ -154,7 +154,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
 
         return new Dictionary<CultureInfo, string>
         {
-            { cultureInfo, translate },
+            { cultureInfo, translation },
         };
     }
 }
