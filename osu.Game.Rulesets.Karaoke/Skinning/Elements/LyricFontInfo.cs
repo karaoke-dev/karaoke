@@ -115,8 +115,8 @@ public class LyricFontInfo : IKaraokeSkinElement
             l.BottomTextMargin = RomanisationMargin;
         });
 
-        // Apply translate font.
-        drawableLyric.ApplyToTranslateText(text =>
+        // Apply translation font.
+        drawableLyric.ApplyToTranslationText(text =>
         {
             text.Font = getFont(KaraokeRulesetSetting.TranslationFont);
         });

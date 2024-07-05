@@ -327,7 +327,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                     _ => throw new ArgumentOutOfRangeException(nameof(fontFormat)),
                 };
 
-                // todo : might apply translate.
+                // todo : might apply translation.
                 badgeText.Text = fontFormat.ToString();
             }
         }
