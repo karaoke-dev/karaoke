@@ -161,7 +161,7 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
     private void initializeBadge(EditorModeWithEditStep editorMode)
     {
         subInfoContainer.Clear();
-        var subInfo = createSubInfo();
+        var subInfo = createSubInfo(editorMode, Lyric);
         if (subInfo == null)
             return;
 
@@ -169,8 +169,9 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
         subInfo.Anchor = Anchor.TopRight;
         subInfo.Origin = Anchor.TopRight;
         subInfoContainer.Add(subInfo);
+        return;
 
-        Drawable? createSubInfo()
+        static Drawable? createSubInfo(EditorModeWithEditStep editorMode, Lyric lyric)
         {
             switch (editorMode.Mode)
             {
@@ -179,25 +180,25 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
                     return null;
 
                 case LyricEditorMode.EditReferenceLyric:
-                    return new ReferenceLyricInfo(Lyric);
+                    return new ReferenceLyricInfo(lyric);
 
                 case LyricEditorMode.EditLanguage:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageInfo(lyric);
 
                 case LyricEditorMode.EditRuby:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageInfo(lyric);
 
                 case LyricEditorMode.EditTimeTag:
-                    return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), Lyric);
+                    return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), lyric);
 
                 case LyricEditorMode.EditRomanisation:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageInfo(lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;
 
                 case LyricEditorMode.EditSinger:
-                    return new SingerInfo(Lyric);
+                    return new SingerInfo(lyric);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(editorMode));
