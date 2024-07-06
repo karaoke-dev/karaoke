@@ -226,11 +226,7 @@ public abstract partial class LyricList : CompositeDrawable
 
             private void updateDragHandler()
             {
-                ShowDragHandle.Value = showDragHandler(bindableMode.Value, bindableSelecting.Value);
-                return;
-
-                static bool showDragHandler(LyricEditorMode editorMode, bool selecting)
-                    => editorMode == LyricEditorMode.EditText && !selecting;
+                ShowDragHandle.Value = ShowDragHandler(bindableMode.Value, bindableSelecting.Value);
             }
 
             protected override Drawable CreateContent() => createRowFunc(Model);
@@ -243,4 +239,7 @@ public abstract partial class LyricList : CompositeDrawable
             }
         }
     }
+
+    protected static bool ShowDragHandler(LyricEditorMode editorMode, bool selecting)
+        => editorMode == LyricEditorMode.EditText && !selecting;
 }

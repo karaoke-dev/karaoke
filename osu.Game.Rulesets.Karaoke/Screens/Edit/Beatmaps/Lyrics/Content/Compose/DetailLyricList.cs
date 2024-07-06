@@ -8,19 +8,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose;
 
 public partial class DetailLyricList : LyricList
 {
-    [Resolved]
-    private LyricEditorColourProvider colourProvider { get; set; } = null!;
-
-    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
-    private Drawable? background;
-
     public DetailLyricList()
     {
         AdjustSkin(skin =>
@@ -28,66 +22,11 @@ public partial class DetailLyricList : LyricList
             skin.FontSize = 15;
         });
 
-        bindableMode.BindValueChanged(e =>
+        AddInternal(new DetailLyricListBackground
         {
-            redrawBackground();
+            RelativeSizeAxes = Axes.Both,
+            Depth = int.MaxValue,
         });
-    }
-
-    [BackgroundDependencyLoader]
-    private void load(ILyricEditorState state)
-    {
-        bindableMode.BindTo(state.BindableMode);
-
-        redrawBackground();
-    }
-
-    private void redrawBackground()
-    {
-        if (background != null)
-            RemoveInternal(background, true);
-
-        background = createBackground(colourProvider, bindableMode.Value);
-        if (background == null)
-            return;
-
-        AddInternal(background.With(x =>
-        {
-            x.RelativeSizeAxes = Axes.Both;
-            x.Depth = int.MaxValue;
-        }));
-    }
-
-    private static Drawable createBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
-    {
-        bool containsHandler = mode == LyricEditorMode.EditText;
-
-        const float timing_base_width = LYRIC_LIST_PADDING + DetailRow.TIMING_WIDTH;
-        float timingWidth = containsHandler ? HANDLER_WIDTH + timing_base_width : timing_base_width;
-        return new GridContainer
-        {
-            ColumnDimensions = new[]
-            {
-                new Dimension(GridSizeMode.Absolute, timingWidth),
-                new Dimension(),
-            },
-            Content = new[]
-            {
-                new[]
-                {
-                    new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colourProvider.Background3(mode),
-                    },
-                    new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colourProvider.Background4(mode),
-                    },
-                },
-            },
-        };
     }
 
     protected override DrawableLyricList CreateDrawableLyricList()
@@ -114,5 +53,67 @@ public partial class DetailLyricList : LyricList
 
         protected override Row GetCreateNewLyricRow()
             => new CreateNewLyricDetailRow();
+    }
+
+    public partial class DetailLyricListBackground : CompositeDrawable
+    {
+        private readonly Box infoBackground;
+        private readonly Box lyricBackground;
+
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
+
+        public DetailLyricListBackground()
+        {
+            InternalChildren = new Drawable[]
+            {
+                infoBackground = new Box
+                {
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    RelativeSizeAxes = Axes.Y,
+                },
+                lyricBackground = new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Depth = int.MaxValue,
+                },
+            };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
+        {
+            bindableMode.BindTo(state.BindableMode);
+            bindableSelecting.BindTo(lyricSelectionState.Selecting);
+
+            bindableMode.BindValueChanged(e =>
+            {
+                resizeBackground();
+                updateColour(colourProvider, e.NewValue);
+            }, true);
+
+            bindableSelecting.BindValueChanged(_ =>
+            {
+                resizeBackground();
+            }, true);
+        }
+
+        private void updateColour(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
+        {
+            infoBackground.Colour = colourProvider.Background3(mode);
+            lyricBackground.Colour = colourProvider.Background4(mode);
+        }
+
+        private void resizeBackground()
+        {
+            bool showDragHandler = ShowDragHandler(bindableMode.Value, bindableSelecting.Value);
+            bool selecting = bindableSelecting.Value;
+
+            float handlerWidth = showDragHandler ? HANDLER_WIDTH : 0;
+            float selectingAreaWidth = selecting ? Row.SELECT_AREA_WIDTH : 0;
+
+            infoBackground.Width = LYRIC_LIST_PADDING + handlerWidth + selectingAreaWidth + DetailRow.TIMING_WIDTH;
+        }
     }
 }
