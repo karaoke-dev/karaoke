@@ -11,11 +11,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Compose;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.LyricList;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
@@ -25,7 +23,6 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens;
 using osu.Game.Screens.Edit;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
@@ -87,8 +84,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     public IBindable<EditorModeWithEditStep> BindableModeWithEditStep => bindableModeWithEditStep;
 
     private readonly GridContainer gridContainer;
-    private readonly Container editArea;
-    private readonly LoadingSpinner loading;
+    private readonly ContentWrapper content;
     private readonly Container leftSideSettings;
     private readonly Container rightSideSettings;
 
@@ -123,16 +119,9 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    editArea = new Container
+                    content = new ContentWrapper
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Children = new[]
-                        {
-                            loading = new LoadingSpinner(true)
-                            {
-                                Depth = int.MinValue,
-                            },
-                        },
                     },
                     rightSideSettings = new Container
                     {
@@ -170,11 +159,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
 
         bindableCurrentLayout.BindValueChanged(e =>
         {
-            Schedule(() =>
-            {
-                // should switch the layout after loaded.
-                switchLayout(e.NewValue);
-            });
+            content.SwitchLayout(e.NewValue);
         }, true);
     }
 
@@ -305,76 +290,6 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
     {
         var union = supportedLayout & preferLayout;
         return union != 0 ? union : supportedLayout;
-    }
-
-    private void switchLayout(LyricEditorLayout layout)
-    {
-        loading.Show();
-
-        LoadComponentAsync(new DelayedLoadWrapper(getContent(layout).With(x =>
-        {
-            x.RelativeSizeAxes = Axes.Both;
-        })).With(x =>
-        {
-            x.RelativeSizeAxes = Axes.Both;
-            x.RelativePositionAxes = Axes.Y;
-            x.Y = -0.5f;
-            x.Alpha = 0;
-        }), content =>
-        {
-            const double remove_old_editor_time = 300;
-            const double new_animation_time = 1000;
-
-            var oldComponent = editArea.Children.Where(x => x != loading).OfType<DelayedLoadWrapper>().FirstOrDefault();
-            oldComponent?.MoveToY(-0.5f, remove_old_editor_time).FadeOut(remove_old_editor_time).OnComplete(x =>
-            {
-                x.Expire();
-            });
-
-            editArea.Add(content);
-            content.Delay(oldComponent != null ? remove_old_editor_time : 0)
-                   .Then()
-                   .FadeIn(new_animation_time)
-                   .MoveToY(0, new_animation_time)
-                   .OnComplete(_ =>
-                   {
-                       loading.Hide();
-                   });
-        });
-
-        static Container getContent(LyricEditorLayout layout) =>
-            layout switch
-            {
-                LyricEditorLayout.List => new Container
-                {
-                    Children = new[]
-                    {
-                        new PreviewLyricList
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                    },
-                },
-                LyricEditorLayout.Compose => new Container
-                {
-                    Children = new Drawable[]
-                    {
-                        new LyricComposer
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Size = new Vector2(1, 0.6f),
-                        },
-                        new DetailLyricList
-                        {
-                            RelativePositionAxes = Axes.Y,
-                            Position = new Vector2(0, 0.6f),
-                            Size = new Vector2(1, 0.4f),
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                    },
-                },
-                _ => throw new ArgumentOutOfRangeException(nameof(layout), layout, null),
-            };
     }
 
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

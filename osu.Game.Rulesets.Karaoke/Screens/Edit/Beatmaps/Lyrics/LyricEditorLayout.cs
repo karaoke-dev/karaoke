@@ -14,7 +14,7 @@ public enum LyricEditorLayout
     List = 1,
 
     /// <summary>
-    /// Show the compose area at the top of the main content area.
+    /// Show the composer at the top of the main content area.
     /// User can select the edit lyric at the bottom of the compose area.
     /// </summary>
     Compose = 1 << 1,
