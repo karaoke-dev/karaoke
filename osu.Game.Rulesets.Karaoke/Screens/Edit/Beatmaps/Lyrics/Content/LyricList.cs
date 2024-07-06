@@ -198,6 +198,7 @@ public abstract partial class LyricList : CompositeDrawable
             private ILyricCaretState lyricCaretState { get; set; } = null!;
 
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
 
             private readonly Func<Lyric, Row> createRowFunc;
 
@@ -206,10 +207,14 @@ public abstract partial class LyricList : CompositeDrawable
             {
                 this.createRowFunc = createRowFunc;
 
-                bindableMode.BindValueChanged(e =>
+                bindableMode.BindValueChanged(_ =>
                 {
-                    // Only draggable in edit mode.
-                    ShowDragHandle.Value = e.NewValue == LyricEditorMode.EditText;
+                    updateDragHandler();
+                }, true);
+
+                bindableSelecting.BindValueChanged(_ =>
+                {
+                    updateDragHandler();
                 }, true);
 
                 DragActive.BindValueChanged(e =>
@@ -219,12 +224,22 @@ public abstract partial class LyricList : CompositeDrawable
                 });
             }
 
+            private void updateDragHandler()
+            {
+                ShowDragHandle.Value = showDragHandler(bindableMode.Value, bindableSelecting.Value);
+                return;
+
+                static bool showDragHandler(LyricEditorMode editorMode, bool selecting)
+                    => editorMode == LyricEditorMode.EditText && !selecting;
+            }
+
             protected override Drawable CreateContent() => createRowFunc(Model);
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state)
+            private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState)
             {
                 bindableMode.BindTo(state.BindableMode);
+                bindableSelecting.BindTo(lyricSelectionState.Selecting);
             }
         }
     }

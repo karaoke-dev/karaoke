@@ -23,9 +23,9 @@ public partial class ApplySelectingArea : CompositeDrawable
     private const float button_width = 100;
 
     private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
-    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
     private readonly Box background;
+    private readonly GridContainer gridContainer;
     private readonly ActionButton applyButton;
     private readonly ActionButton cancelButton;
     private readonly ActionButton previewButton;
@@ -34,8 +34,6 @@ public partial class ApplySelectingArea : CompositeDrawable
     {
         RelativeSizeAxes = Axes.X;
         Height = 45;
-
-        GridContainer gridContainer;
 
         InternalChildren = new Drawable[]
         {
@@ -46,6 +44,19 @@ public partial class ApplySelectingArea : CompositeDrawable
             gridContainer = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
+                ColumnDimensions = new[]
+                {
+                    new Dimension(GridSizeMode.Absolute, LyricList.LYRIC_LIST_PADDING),
+                    new Dimension(GridSizeMode.Absolute, Row.SELECT_AREA_WIDTH),
+                    new Dimension(),
+                    new Dimension(GridSizeMode.Absolute, spacing),
+                    new Dimension(GridSizeMode.Absolute, button_width),
+                    new Dimension(GridSizeMode.Absolute, spacing),
+                    new Dimension(GridSizeMode.Absolute, button_width),
+                    new Dimension(GridSizeMode.Absolute, spacing),
+                    new Dimension(GridSizeMode.Absolute, button_width),
+                    new Dimension(GridSizeMode.Absolute, spacing),
+                },
                 Content = new[]
                 {
                     new[]
@@ -85,43 +96,14 @@ public partial class ApplySelectingArea : CompositeDrawable
             bool selectAny = selectedLyrics.Any();
             applyButton.Enabled.Value = selectAny;
         }, true);
-
-        bindableMode.BindValueChanged((x) =>
-        {
-            gridContainer.ColumnDimensions = getColumnDimensions(x.NewValue);
-        }, true);
-    }
-
-    private static Dimension[] getColumnDimensions(LyricEditorMode mode)
-    {
-        return new[]
-        {
-            new Dimension(GridSizeMode.Absolute, getPrefixSpacing(mode)),
-            new Dimension(GridSizeMode.Absolute, Row.SELECT_AREA_WIDTH),
-            new Dimension(),
-            new Dimension(GridSizeMode.Absolute, spacing),
-            new Dimension(GridSizeMode.Absolute, button_width),
-            new Dimension(GridSizeMode.Absolute, spacing),
-            new Dimension(GridSizeMode.Absolute, button_width),
-            new Dimension(GridSizeMode.Absolute, spacing),
-            new Dimension(GridSizeMode.Absolute, button_width),
-            new Dimension(GridSizeMode.Absolute, spacing),
-        };
-
-        static float getPrefixSpacing(LyricEditorMode mode)
-        {
-            bool containsHandler = mode == LyricEditorMode.EditText;
-            return LyricList.LYRIC_LIST_PADDING + (containsHandler ? LyricList.HANDLER_WIDTH : 0);
-        }
     }
 
     [BackgroundDependencyLoader]
-    private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
+    private void load(OsuColour colours, ILyricSelectionState lyricSelectionState)
     {
         background.Colour = colours.Gray2;
 
         selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
-        bindableMode.BindTo(state.BindableMode);
 
         applyButton.BackgroundColour = colours.Red;
         applyButton.Action = () =>
