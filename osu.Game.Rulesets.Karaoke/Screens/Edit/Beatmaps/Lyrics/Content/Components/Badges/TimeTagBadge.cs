@@ -24,7 +24,7 @@ public partial class TimeTagBadge : Badge
     [BackgroundDependencyLoader]
     private void load(OsuColour colours)
     {
-        BadgeColour = colours.Green;
+        BackgroundColour = colours.Green;
 
         bindableTimeTagsTimingVersion.BindValueChanged(_ => updateBadgeText());
         bindableTimeTags.BindCollectionChanged((_, _) => updateBadgeText());
@@ -32,6 +32,6 @@ public partial class TimeTagBadge : Badge
         updateBadgeText();
 
         void updateBadgeText()
-            => BadgeText = LyricUtils.TimeTagTimeFormattedString(Lyric);
+            => Text = LyricUtils.TimeTagTimeFormattedString(Lyric);
     }
 }

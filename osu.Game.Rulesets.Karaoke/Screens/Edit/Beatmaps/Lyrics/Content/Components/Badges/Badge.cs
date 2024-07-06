@@ -16,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compone
 
 public abstract partial class Badge : CompositeDrawable
 {
-    private readonly Box box;
-    private readonly OsuSpriteText badgeText;
+    private readonly Box background;
+    private readonly OsuSpriteText text;
 
     protected Lyric Lyric { get; }
 
@@ -33,11 +33,11 @@ public abstract partial class Badge : CompositeDrawable
         CornerRadius = 3;
         InternalChildren = new Drawable[]
         {
-            box = new Box
+            background = new Box
             {
                 RelativeSizeAxes = Axes.Both,
             },
-            badgeText = new OsuSpriteText
+            text = new OsuSpriteText
             {
                 Margin = new MarginPadding
                 {
@@ -49,16 +49,16 @@ public abstract partial class Badge : CompositeDrawable
         };
     }
 
-    protected LocalisableString BadgeText
+    protected LocalisableString Text
     {
-        get => badgeText.Text;
-        set => badgeText.Text = value;
+        get => text.Text;
+        set => text.Text = value;
     }
 
-    protected ColourInfo BadgeColour
+    protected ColourInfo BackgroundColour
     {
-        get => box.Colour;
-        set => box.Colour = value;
+        get => background.Colour;
+        set => background.Colour = value;
     }
 
     protected override bool OnClick(ClickEvent e)

@@ -26,7 +26,7 @@ public partial class ReferenceLyricBadge : Badge
     [BackgroundDependencyLoader]
     private void load(OsuColour colours)
     {
-        BadgeColour = colours.Red;
+        BackgroundColour = colours.Red;
 
         bindableReferenceLyric.BindValueChanged(e =>
         {
@@ -39,7 +39,7 @@ public partial class ReferenceLyricBadge : Badge
                 Show();
 
                 // note: there's no need to worry about referenced lyric change the order because there's no possible to change hhe order in reference lyric mode.
-                BadgeText = $"Ref: #{e.NewValue.Order}";
+                Text = $"Ref: #{e.NewValue.Order}";
             }
         }, true);
     }

@@ -42,10 +42,10 @@ public partial class LanguageBadge : Badge, IHasPopover
         });
         updateBadgeText(Lyric.Language);
 
-        BadgeColour = colours.BlueDarker;
+        BackgroundColour = colours.BlueDarker;
 
         void updateBadgeText(CultureInfo? language)
-            => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
+            => Text = CultureInfoUtils.GetLanguageDisplayText(language);
     }
 
     protected override bool OnClick(ClickEvent e)
