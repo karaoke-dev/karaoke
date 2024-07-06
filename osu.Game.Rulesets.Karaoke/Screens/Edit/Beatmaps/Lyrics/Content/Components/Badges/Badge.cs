@@ -12,9 +12,9 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public abstract partial class SubInfo : CompositeDrawable
+public abstract partial class Badge : CompositeDrawable
 {
     private readonly Box box;
     private readonly OsuSpriteText badgeText;
@@ -24,7 +24,7 @@ public abstract partial class SubInfo : CompositeDrawable
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    protected SubInfo(Lyric lyric)
+    protected Badge(Lyric lyric)
     {
         Lyric = lyric;
 

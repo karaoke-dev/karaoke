@@ -8,16 +8,16 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public partial class ReferenceLyricInfo : SubInfo
+public partial class ReferenceLyricBadge : Badge
 {
     private readonly IBindable<Lyric?> bindableReferenceLyric;
 
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    public ReferenceLyricInfo(Lyric lyric)
+    public ReferenceLyricBadge(Lyric lyric)
         : base(lyric)
     {
         bindableReferenceLyric = lyric.ReferenceLyricBindable.GetBoundCopy();

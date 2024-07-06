@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose;
@@ -17,7 +17,7 @@ public partial class EditLyricDetailRow : DetailRow
 
     protected override Drawable CreateTimingInfo(Lyric lyric)
     {
-        return new TimeTagInfo(lyric)
+        return new TimeTagBadge(lyric)
         {
             Anchor = Anchor.CentreRight,
             Origin = Anchor.CentreRight,

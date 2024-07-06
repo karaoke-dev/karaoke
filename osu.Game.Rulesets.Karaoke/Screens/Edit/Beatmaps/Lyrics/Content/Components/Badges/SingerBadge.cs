@@ -10,15 +10,15 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public partial class SingerInfo : CompositeDrawable
+public partial class SingerBadge : CompositeDrawable
 {
     private readonly SingerDisplay singerDisplay;
 
     private readonly IBindableDictionary<Singer, SingerState[]> singerIndexesBindable;
 
-    public SingerInfo(Lyric lyric)
+    public SingerBadge(Lyric lyric)
     {
         singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
 

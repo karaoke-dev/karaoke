@@ -7,14 +7,14 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public partial class TimeTagInfo : SubInfo
+public partial class TimeTagBadge : Badge
 {
     private readonly IBindable<int> bindableTimeTagsTimingVersion;
     private readonly IBindableList<TimeTag> bindableTimeTags;
 
-    public TimeTagInfo(Lyric lyric)
+    public TimeTagBadge(Lyric lyric)
         : base(lyric)
     {
         bindableTimeTagsTimingVersion = lyric.TimeTagsTimingVersion.GetBoundCopy();
