@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
 
-public partial class SingerInfo : Container
+public partial class SingerInfo : CompositeDrawable
 {
     private readonly SingerDisplay singerDisplay;
 
@@ -24,7 +24,7 @@ public partial class SingerInfo : Container
 
         AutoSizeAxes = Axes.Both;
 
-        Child = singerDisplay = new SingerDisplay
+        InternalChild = singerDisplay = new SingerDisplay
         {
             Anchor = Anchor.TopRight,
             Origin = Anchor.TopRight,

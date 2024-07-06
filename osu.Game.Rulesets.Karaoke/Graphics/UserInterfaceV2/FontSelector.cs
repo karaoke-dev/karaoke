@@ -285,7 +285,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
             }
         }
 
-        private partial class FontFormatBadge : Container
+        private partial class FontFormatBadge : CompositeDrawable
         {
             private readonly FontFormat fontFormat;
             private readonly Box box;
@@ -298,7 +298,7 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
                 AutoSizeAxes = Axes.Both;
                 Masking = true;
                 CornerRadius = 3;
-                Children = new Drawable[]
+                InternalChildren = new Drawable[]
                 {
                     box = new Box
                     {

@@ -4,7 +4,6 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Skinning;
 using osuTK;
 
@@ -36,7 +35,7 @@ public partial class StyleScreen : KaraokeSkinEditorScreen
             new NoteFontSection(),
         };
 
-    protected override Container CreatePreviewArea()
+    protected override Drawable CreatePreviewArea()
         => new LyricStylePreview
         {
             Name = "Lyric style preview area",

@@ -49,11 +49,11 @@ public partial class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
         return false;
     }
 
-    private partial class WindowsUpdateContainer : Container
+    private partial class WindowsUpdateContainer : CompositeDrawable
     {
         public WindowsUpdateContainer()
         {
-            Children = new Drawable[]
+            InternalChildren = new Drawable[]
             {
                 new Box
                 {

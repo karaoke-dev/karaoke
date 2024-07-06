@@ -27,7 +27,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 
 [Cached(typeof(ILyricEditorState))]
-public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
+public partial class LyricEditor : CompositeDrawable, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
 {
     [Cached]
     private readonly LyricEditorColourProvider colourProvider = new();
@@ -108,7 +108,7 @@ public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHand
         AddInternal(lyricEditorVerifier = new LyricEditorVerifier());
         AddInternal(issueNavigator = new IssueNavigator());
 
-        Add(gridContainer = new GridContainer
+        AddInternal(gridContainer = new GridContainer
         {
             RelativeSizeAxes = Axes.Both,
             Content = new[]

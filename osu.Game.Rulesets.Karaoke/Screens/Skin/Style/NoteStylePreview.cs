@@ -17,7 +17,7 @@ using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
-public partial class NoteStylePreview : Container
+public partial class NoteStylePreview : CompositeDrawable
 {
     private const int columns = 9;
 
@@ -43,7 +43,7 @@ public partial class NoteStylePreview : Container
         CornerRadius = 15;
         FillMode = FillMode.Fit;
         FillAspectRatio = 2f;
-        Children = new Drawable[]
+        InternalChildren = new Drawable[]
         {
             new Box
             {

@@ -116,5 +116,5 @@ public abstract partial class KaraokeSkinEditorScreen : GenericEditorScreen<Kara
     /// Create preview container.
     /// </summary>
     /// <returns></returns>
-    protected abstract Container CreatePreviewArea();
+    protected abstract Drawable CreatePreviewArea();
 }

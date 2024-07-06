@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
-internal partial class LyricStylePreview : Container
+internal partial class LyricStylePreview : CompositeDrawable
 {
     [BackgroundDependencyLoader]
     private void load(OverlayColourProvider colourProvider, StyleManager manager)
@@ -22,7 +22,7 @@ internal partial class LyricStylePreview : Container
         CornerRadius = 15;
         FillMode = FillMode.Fit;
         FillAspectRatio = 1.25f;
-        Children = new Drawable[]
+        InternalChildren = new Drawable[]
         {
             new Box
             {

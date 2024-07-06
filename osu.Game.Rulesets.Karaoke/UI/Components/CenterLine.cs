@@ -9,7 +9,7 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components;
 
-public partial class CenterLine : Container
+public partial class CenterLine : CompositeDrawable
 {
     private readonly Box centerLineBox;
 
@@ -17,7 +17,7 @@ public partial class CenterLine : Container
     {
         RelativeSizeAxes = Axes.X;
 
-        Child = centerLineBox = new Box
+        InternalChild = centerLineBox = new Box
         {
             RelativeSizeAxes = Axes.Both,
         };

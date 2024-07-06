@@ -118,7 +118,7 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
         }
     }
 
-    public partial class ImportLyricHeaderContent : Container
+    public partial class ImportLyricHeaderContent : CompositeDrawable
     {
         public ImportLyricHeaderContent()
         {
@@ -135,7 +135,7 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
 
         private void onScreenChanged(IScreen _, IScreen newScreen)
         {
-            Clear();
+            ClearInternal();
 
             if (newScreen is not IHasTopNavigation screenWithNavigation)
                 return;
@@ -143,7 +143,7 @@ public partial class ImportLyricHeader : TabControlOverlayHeader<ILyricImporterS
             Schedule(() =>
             {
                 // Should wait until DI loaded inside.
-                Add(screenWithNavigation.CreateNavigation());
+                AddInternal(screenWithNavigation.CreateNavigation());
             });
         }
     }

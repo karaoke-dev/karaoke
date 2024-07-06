@@ -26,7 +26,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.List;
 
-public partial class InfoControl : Container, IHasContextMenu
+public partial class InfoControl : CompositeDrawable, IHasContextMenu
 {
     private const int max_height = 120;
 
@@ -55,7 +55,7 @@ public partial class InfoControl : Container, IHasContextMenu
     {
         Lyric = lyric;
 
-        Children = new Drawable[]
+        InternalChildren = new Drawable[]
         {
             background = new Box
             {
