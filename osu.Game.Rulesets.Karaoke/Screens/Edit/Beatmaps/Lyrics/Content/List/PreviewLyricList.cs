@@ -59,11 +59,11 @@ public partial class PreviewLyricList : LyricList
             return bindableAutoFocusToEditLyricSkipRows.Value;
         }
 
+        protected override Row CreateEditRow(Lyric lyric)
+            => new EditLyricPreviewRow(lyric);
+
         protected override Row GetCreateNewLyricRow()
             => new CreateNewLyricPreviewRow();
-
-        protected override DrawableLyricListItem CreateLyricListItem(Lyric item)
-            => new DrawablePreviewLyricListItem(item);
 
         protected override Vector2 Spacing => new(0, 2);
 
@@ -74,17 +74,6 @@ public partial class PreviewLyricList : LyricList
 
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
-        }
-
-        public partial class DrawablePreviewLyricListItem : DrawableLyricListItem
-        {
-            public DrawablePreviewLyricListItem(Lyric item)
-                : base(item)
-            {
-            }
-
-            protected override Row CreateEditRow(Lyric lyric)
-                => new EditLyricPreviewRow(lyric);
         }
     }
 }

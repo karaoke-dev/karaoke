@@ -8,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -31,14 +30,13 @@ public abstract partial class LyricList : CompositeDrawable
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
 
-    private readonly GridContainer lyricEditorGridContainer;
     private readonly LyricEditorSkin skin;
     private readonly DrawableLyricList container;
     private readonly ApplySelectingArea applySelectingArea;
 
     protected LyricList()
     {
-        InternalChild = lyricEditorGridContainer = new GridContainer
+        InternalChild = new GridContainer
         {
             RelativeSizeAxes = Axes.Both,
             RowDimensions = new[]
@@ -111,8 +109,7 @@ public abstract partial class LyricList : CompositeDrawable
     }
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricEditorState state,
-                      ILyricSelectionState lyricSelectionState, ILyricsProvider lyricsProvider)
+    private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, ILyricsProvider lyricsProvider)
     {
         bindableMode.BindTo(state.BindableMode);
         bindableSelecting.BindTo(lyricSelectionState.Selecting);
@@ -144,35 +141,6 @@ public abstract partial class LyricList : CompositeDrawable
             });
         }
 
-        protected abstract bool ScrollToPosition(ICaretPosition caret);
-
-        protected abstract int SkipRows();
-
-        protected abstract DrawableLyricListItem CreateLyricListItem(Lyric item);
-
-        protected sealed override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
-            => CreateLyricListItem(item);
-
-        protected sealed override Drawable CreateBottomDrawable()
-        {
-            return new Container
-            {
-                // todo: should based on the row's height.
-                RelativeSizeAxes = Axes.X,
-                Height = 75,
-                Padding = new MarginPadding { Left = HANDLER_WIDTH },
-                Child = GetCreateNewLyricRow(),
-            };
-        }
-
-        protected abstract Row GetCreateNewLyricRow();
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
-        {
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
-        }
-
         private void moveItemToTargetPosition(Lyric targetLyric, int skippingRows)
         {
             var drawable = getListItem(targetLyric);
@@ -192,19 +160,52 @@ public abstract partial class LyricList : CompositeDrawable
                 => ListContainer.Children.OfType<DrawableLyricListItem>().FirstOrDefault(x => x.Model == lyric);
         }
 
+        protected abstract bool ScrollToPosition(ICaretPosition caret);
+
+        protected abstract int SkipRows();
+
+        protected abstract Row CreateEditRow(Lyric lyric);
+
+        protected abstract Row GetCreateNewLyricRow();
+
+        protected sealed override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
+            => new DrawableLyricListItem(item, CreateEditRow);
+
+        protected sealed override Drawable CreateBottomDrawable()
+        {
+            return new Container
+            {
+                // todo: should based on the row's height.
+                RelativeSizeAxes = Axes.X,
+                Height = 75,
+                Padding = new MarginPadding { Left = HANDLER_WIDTH },
+                Child = GetCreateNewLyricRow(),
+            };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricCaretState lyricCaretState)
+        {
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+        }
+
         /// <summary>
         /// Visualises a <see cref="Lyric"/> inside a <see cref="DrawableLyricList"/>.
         /// </summary>
-        public abstract partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
+        public sealed partial class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
         {
             [Resolved]
             private ILyricCaretState lyricCaretState { get; set; } = null!;
 
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
-            protected DrawableLyricListItem(Lyric item)
+            private readonly Func<Lyric, Row> createRowFunc;
+
+            public DrawableLyricListItem(Lyric item, Func<Lyric, Row> createRowFunc)
                 : base(item)
             {
+                this.createRowFunc = createRowFunc;
+
                 bindableMode.BindValueChanged(e =>
                 {
                     // Only draggable in edit mode.
@@ -218,9 +219,7 @@ public abstract partial class LyricList : CompositeDrawable
                 });
             }
 
-            protected sealed override Drawable CreateContent() => CreateEditRow(Model);
-
-            protected abstract Row CreateEditRow(Lyric lyric);
+            protected override Drawable CreateContent() => createRowFunc(Model);
 
             [BackgroundDependencyLoader]
             private void load(ILyricEditorState state)

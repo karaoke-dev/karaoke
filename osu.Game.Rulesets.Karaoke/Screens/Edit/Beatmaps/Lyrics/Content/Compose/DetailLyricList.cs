@@ -109,21 +109,10 @@ public partial class DetailLyricList : LyricList
             return 3;
         }
 
-        protected override DrawableLyricListItem CreateLyricListItem(Lyric item)
-            => new DrawableDetailLyricListItem(item);
+        protected override Row CreateEditRow(Lyric lyric)
+            => new EditLyricDetailRow(lyric);
 
         protected override Row GetCreateNewLyricRow()
             => new CreateNewLyricDetailRow();
-
-        public partial class DrawableDetailLyricListItem : DrawableLyricListItem
-        {
-            public DrawableDetailLyricListItem(Lyric item)
-                : base(item)
-            {
-            }
-
-            protected override Row CreateEditRow(Lyric lyric)
-                => new EditLyricDetailRow(lyric);
-        }
     }
 }
