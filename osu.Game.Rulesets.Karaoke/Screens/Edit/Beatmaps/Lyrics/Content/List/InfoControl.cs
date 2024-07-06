@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
@@ -161,7 +161,7 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
     private void initializeBadge(EditorModeWithEditStep editorMode)
     {
         subInfoContainer.Clear();
-        var subInfo = createSubInfo();
+        var subInfo = createSubInfo(editorMode, Lyric);
         if (subInfo == null)
             return;
 
@@ -169,8 +169,9 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
         subInfo.Anchor = Anchor.TopRight;
         subInfo.Origin = Anchor.TopRight;
         subInfoContainer.Add(subInfo);
+        return;
 
-        Drawable? createSubInfo()
+        static Drawable? createSubInfo(EditorModeWithEditStep editorMode, Lyric lyric)
         {
             switch (editorMode.Mode)
             {
@@ -179,25 +180,25 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
                     return null;
 
                 case LyricEditorMode.EditReferenceLyric:
-                    return new ReferenceLyricInfo(Lyric);
+                    return new ReferenceLyricBadge(lyric);
 
                 case LyricEditorMode.EditLanguage:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageBadge(lyric);
 
                 case LyricEditorMode.EditRuby:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageBadge(lyric);
 
                 case LyricEditorMode.EditTimeTag:
-                    return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), Lyric);
+                    return createTimeTagModeSubInfo(editorMode.GetEditStep<TimeTagEditStep>(), lyric);
 
                 case LyricEditorMode.EditRomanisation:
-                    return new LanguageInfo(Lyric);
+                    return new LanguageBadge(lyric);
 
                 case LyricEditorMode.EditNote:
                     return null;
 
                 case LyricEditorMode.EditSinger:
-                    return new SingerInfo(Lyric);
+                    return new SingerBadge(lyric);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(editorMode));
@@ -208,11 +209,11 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
                 switch (editMode)
                 {
                     case TimeTagEditStep.Create:
-                        return new LanguageInfo(lyric);
+                        return new LanguageBadge(lyric);
 
                     case TimeTagEditStep.Recording:
                     case TimeTagEditStep.Adjust:
-                        return new TimeTagInfo(lyric);
+                        return new TimeTagBadge(lyric);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(editMode));

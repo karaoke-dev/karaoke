@@ -12,19 +12,19 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public abstract partial class SubInfo : CompositeDrawable
+public abstract partial class Badge : CompositeDrawable
 {
-    private readonly Box box;
-    private readonly OsuSpriteText badgeText;
+    private readonly Box background;
+    private readonly OsuSpriteText text;
 
     protected Lyric Lyric { get; }
 
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    protected SubInfo(Lyric lyric)
+    protected Badge(Lyric lyric)
     {
         Lyric = lyric;
 
@@ -33,11 +33,11 @@ public abstract partial class SubInfo : CompositeDrawable
         CornerRadius = 3;
         InternalChildren = new Drawable[]
         {
-            box = new Box
+            background = new Box
             {
                 RelativeSizeAxes = Axes.Both,
             },
-            badgeText = new OsuSpriteText
+            text = new OsuSpriteText
             {
                 Margin = new MarginPadding
                 {
@@ -49,16 +49,16 @@ public abstract partial class SubInfo : CompositeDrawable
         };
     }
 
-    protected LocalisableString BadgeText
+    protected LocalisableString Text
     {
-        get => badgeText.Text;
-        set => badgeText.Text = value;
+        get => text.Text;
+        set => text.Text = value;
     }
 
-    protected ColourInfo BadgeColour
+    protected ColourInfo BackgroundColour
     {
-        get => box.Colour;
-        set => box.Colour = value;
+        get => background.Colour;
+        set => background.Colour = value;
     }
 
     protected override bool OnClick(ClickEvent e)

@@ -15,13 +15,13 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
+namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badges;
 
-public partial class LanguageInfo : SubInfo, IHasPopover
+public partial class LanguageBadge : Badge, IHasPopover
 {
     private readonly Bindable<CultureInfo?> languageBindable;
 
-    public LanguageInfo(Lyric lyric)
+    public LanguageBadge(Lyric lyric)
         : base(lyric)
     {
         languageBindable = lyric.LanguageBindable.GetBoundCopy();
@@ -42,10 +42,10 @@ public partial class LanguageInfo : SubInfo, IHasPopover
         });
         updateBadgeText(Lyric.Language);
 
-        BadgeColour = colours.BlueDarker;
+        BackgroundColour = colours.BlueDarker;
 
         void updateBadgeText(CultureInfo? language)
-            => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
+            => Text = CultureInfoUtils.GetLanguageDisplayText(language);
     }
 
     protected override bool OnClick(ClickEvent e)
