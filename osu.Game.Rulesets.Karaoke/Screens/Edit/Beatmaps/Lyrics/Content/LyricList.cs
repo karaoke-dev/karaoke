@@ -28,9 +28,6 @@ public abstract partial class LyricList : CompositeDrawable
     [Resolved]
     private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
 
-    [Resolved]
-    private LyricEditorColourProvider colourProvider { get; set; } = null!;
-
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
 
@@ -38,8 +35,6 @@ public abstract partial class LyricList : CompositeDrawable
     private readonly LyricEditorSkin skin;
     private readonly DrawableLyricList container;
     private readonly ApplySelectingArea applySelectingArea;
-
-    private Drawable? background;
 
     protected LyricList()
     {
@@ -80,7 +75,6 @@ public abstract partial class LyricList : CompositeDrawable
         bindableMode.BindValueChanged(e =>
         {
             updateAddLyricState();
-            Schedule(redrawBackground);
         }, true);
 
         bindableSelecting.BindValueChanged(e =>
@@ -95,32 +89,7 @@ public abstract partial class LyricList : CompositeDrawable
         action(skin);
     }
 
-    protected override void LoadComplete()
-    {
-        base.LoadComplete();
-
-        redrawBackground();
-    }
-
-    private void redrawBackground()
-    {
-        if (background != null)
-            RemoveInternal(background, true);
-
-        background = CreateBackground(colourProvider, bindableMode.Value);
-        if (background == null)
-            return;
-
-        AddInternal(background.With(x =>
-        {
-            x.RelativeSizeAxes = Axes.Both;
-            x.Depth = int.MaxValue;
-        }));
-    }
-
     protected abstract DrawableLyricList CreateDrawableLyricList();
-
-    protected virtual Drawable? CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode) => null;
 
     private void updateApplySelectingArea()
     {

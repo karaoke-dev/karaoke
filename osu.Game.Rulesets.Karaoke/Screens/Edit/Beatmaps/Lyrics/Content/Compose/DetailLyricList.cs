@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -12,18 +14,51 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose
 
 public partial class DetailLyricList : LyricList
 {
+    [Resolved]
+    private LyricEditorColourProvider colourProvider { get; set; } = null!;
+
+    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+
+    private Drawable? background;
+
     public DetailLyricList()
     {
         AdjustSkin(skin =>
         {
             skin.FontSize = 15;
         });
+
+        bindableMode.BindValueChanged(e =>
+        {
+            redrawBackground();
+        });
     }
 
-    protected override DrawableLyricList CreateDrawableLyricList()
-        => new DrawableDetailLyricList();
+    [BackgroundDependencyLoader]
+    private void load(ILyricEditorState state)
+    {
+        bindableMode.BindTo(state.BindableMode);
 
-    protected override Drawable CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
+        redrawBackground();
+    }
+
+    private void redrawBackground()
+    {
+        if (background != null)
+            RemoveInternal(background, true);
+
+        background = createBackground(colourProvider, bindableMode.Value);
+        if (background == null)
+            return;
+
+        AddInternal(background.With(x =>
+        {
+            x.RelativeSizeAxes = Axes.Both;
+            x.Depth = int.MaxValue;
+        }));
+    }
+
+    private static Drawable createBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode)
     {
         bool containsHandler = mode == LyricEditorMode.EditText;
 
@@ -54,6 +89,9 @@ public partial class DetailLyricList : LyricList
             },
         };
     }
+
+    protected override DrawableLyricList CreateDrawableLyricList()
+        => new DrawableDetailLyricList();
 
     public partial class DrawableDetailLyricList : DrawableLyricList
     {
