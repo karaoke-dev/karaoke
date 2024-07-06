@@ -46,7 +46,7 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
         Depth = 1,
     };
 
-    protected partial class SnowContainer : Container
+    protected partial class SnowContainer : CompositeDrawable
     {
         // Max can have 1000 snow at the scene
         public int SnowGenerateParSecond { get; set; }
@@ -81,8 +81,8 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
 
             double currentTime = Time.Current;
 
-            bool isCreateShow = !Children.Any() ||
-                                (Children.LastOrDefault() as SnowSprite)?.CreateTime
+            bool isCreateShow = !InternalChildren.Any() ||
+                                (InternalChildren.LastOrDefault() as SnowSprite)?.CreateTime
                                 + 1000 / SnowGenerateParSecond < currentTime;
 
             // If can generate new snow
@@ -103,11 +103,11 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
                     Alpha = currentAlpha,
                     HorizontalSpeed = RNG.Next(-100, 100) + WingAffection * 10,
                 };
-                Add(newFlake);
+                AddInternal(newFlake);
             }
 
             // Update each snow position
-            foreach (var drawable in Children)
+            foreach (var drawable in InternalChildren)
             {
                 if (drawable is not SnowSprite snow)
                     continue;
@@ -117,7 +117,7 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
 
                 // Recycle
                 if (snow.CreateTime + SnowExpireTime < currentTime)
-                    Children.ToList().Remove(snow);
+                    InternalChildren.ToList().Remove(snow);
             }
         }
 

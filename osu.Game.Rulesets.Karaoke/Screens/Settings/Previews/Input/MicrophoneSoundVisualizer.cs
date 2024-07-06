@@ -395,14 +395,14 @@ public partial class MicrophoneSoundVisualizer : CompositeDrawable
         private float calculateDotPosition(int index)
             => (dot_width + spacing) * index;
 
-        public partial class PitchDot : Container
+        public partial class PitchDot : CompositeDrawable
         {
             private readonly CircularContainer circle;
 
             public PitchDot()
             {
                 Size = new Vector2(dot_width, dot_height);
-                Children = new[]
+                InternalChildren = new[]
                 {
                     circle = new CircularContainer
                     {

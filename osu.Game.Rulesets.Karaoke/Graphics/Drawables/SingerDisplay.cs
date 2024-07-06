@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Drawables;
 
-public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<Singer>>
+public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<IReadOnlyList<Singer>>
 {
     private const int fade_duration = 1000;
 
@@ -45,7 +45,7 @@ public partial class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<S
     {
         AutoSizeAxes = Axes.Both;
 
-        Child = new FillFlowContainer
+        InternalChild = new FillFlowContainer
         {
             Anchor = Anchor.TopCentre,
             Origin = Anchor.TopCentre,

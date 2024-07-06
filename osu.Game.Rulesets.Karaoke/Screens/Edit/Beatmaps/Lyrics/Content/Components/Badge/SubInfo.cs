@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Badge;
 
-public abstract partial class SubInfo : Container
+public abstract partial class SubInfo : CompositeDrawable
 {
     private readonly Box box;
     private readonly OsuSpriteText badgeText;
@@ -31,7 +31,7 @@ public abstract partial class SubInfo : Container
         AutoSizeAxes = Axes.Both;
         Masking = true;
         CornerRadius = 3;
-        Children = new Drawable[]
+        InternalChildren = new Drawable[]
         {
             box = new Box
             {
