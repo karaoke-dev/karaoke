@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public abstract partial class BaseLayer : CompositeDrawable
+public abstract partial class Layer : CompositeDrawable
 {
     protected readonly Lyric Lyric;
 
-    protected BaseLayer(Lyric lyric)
+    protected Layer(Lyric lyric)
     {
         Lyric = lyric;
 

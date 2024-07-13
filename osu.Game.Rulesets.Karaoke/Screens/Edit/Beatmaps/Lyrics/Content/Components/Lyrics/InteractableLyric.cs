@@ -57,7 +57,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         });
     }
 
-    protected abstract IEnumerable<BaseLayer> CreateLayers(Lyric lyric);
+    protected abstract IEnumerable<Layer> CreateLayers(Lyric lyric);
 
     [BackgroundDependencyLoader]
     private void load(EditorClock clock, ILyricEditorState state)
@@ -74,7 +74,7 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
         // adjust the style.
         bool editable = lockReason == null;
-        InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
+        InternalChildren.OfType<Layer>().ForEach(x => x.UpdateDisableEditState(editable));
     }
 
     public LocalisableString TooltipText => lockReason ?? string.Empty;

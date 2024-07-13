@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public partial class CaretLayer : BaseLayer
+public partial class CaretLayer : Layer
 {
     private readonly IBindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm?>();
 

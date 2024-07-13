@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public partial class TimeTagLayer : BaseLayer
+public partial class TimeTagLayer : Layer
 {
     [Resolved]
     private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;

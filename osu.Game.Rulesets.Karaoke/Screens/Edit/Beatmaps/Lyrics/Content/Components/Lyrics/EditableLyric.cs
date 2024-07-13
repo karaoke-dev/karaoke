@@ -31,9 +31,9 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
         Padding = new MarginPadding { Bottom = 10 };
     }
 
-    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+    protected override IEnumerable<Layer> CreateLayers(Lyric lyric)
     {
-        return new BaseLayer[]
+        return new Layer[]
         {
             new TimeTagLayer(lyric),
             new CaretLayer(lyric),
@@ -43,7 +43,7 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     public void TriggerDisallowEditEffect()
     {
-        InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
+        InternalChildren.OfType<Layer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
     }
 
     #region Hover

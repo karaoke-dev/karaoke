@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public partial class LyricLayer : BaseLayer
+public partial class LyricLayer : Layer
 {
     [Resolved]
     private OsuColour colours { get; set; } = null!;

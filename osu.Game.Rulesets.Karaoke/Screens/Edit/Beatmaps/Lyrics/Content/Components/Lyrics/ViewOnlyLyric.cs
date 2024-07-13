@@ -19,9 +19,9 @@ public partial class ViewOnlyLyric : InteractableLyric
     {
     }
 
-    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
+    protected override IEnumerable<Layer> CreateLayers(Lyric lyric)
     {
-        return new BaseLayer[]
+        return new Layer[]
         {
             new TimeTagLayer(lyric),
         };
