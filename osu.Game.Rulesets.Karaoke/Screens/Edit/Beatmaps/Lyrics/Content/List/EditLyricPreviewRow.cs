@@ -28,10 +28,18 @@ public partial class EditLyricPreviewRow : PreviewRow
 
     protected override Drawable CreateContent(Lyric lyric)
     {
-        return new EditableLyric(lyric)
+        return new InteractableLyric(lyric)
         {
             Margin = new MarginPadding { Left = 10 },
             RelativeSizeAxes = Axes.X,
+            Layers = new Layer[]
+            {
+                new LyricLayer(lyric),
+                new EditLyricLayer(lyric),
+                new TimeTagLayer(lyric),
+                new CaretLayer(lyric),
+                new BlueprintLayer(lyric),
+            },
         };
     }
 }

@@ -27,12 +27,18 @@ public partial class EditLyricDetailRow : DetailRow
 
     protected override Drawable CreateContent(Lyric lyric)
     {
-        return new ViewOnlyLyric(lyric)
+        return new InteractableLyric(lyric)
         {
             Anchor = Anchor.BottomLeft,
             Origin = Anchor.BottomLeft,
             Margin = new MarginPadding { Left = 10 },
             RelativeSizeAxes = Axes.X,
+            Layers = new Layer[]
+            {
+                new LyricLayer(lyric),
+                new InteractLyricLayer(lyric),
+                new TimeTagLayer(lyric),
+            }
         };
     }
 }
