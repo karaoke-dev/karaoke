@@ -68,6 +68,12 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
         }
     }
 
+    public Vector2 LyricPosition
+    {
+        get => karaokeSpriteText.Position;
+        set => karaokeSpriteText.Position = value;
+    }
+
     public void TriggerDisallowEditEffect()
     {
         InternalChildren.OfType<Layer>().ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
