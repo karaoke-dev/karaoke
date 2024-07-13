@@ -6,35 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics.Carets;
-
-public abstract partial class DrawableRangeCaret<TCaretPosition> : DrawableCaret, ICanAcceptRangeIndex
-    where TCaretPosition : struct, IIndexCaretPosition
-{
-    protected DrawableRangeCaret(DrawableCaretState state)
-        : base(state)
-    {
-    }
-
-    public sealed override void ApplyCaretPosition(ICaretPosition caret)
-    {
-        if (caret is not TCaretPosition tCaret)
-            throw new InvalidCastException();
-
-        ApplyCaretPosition(tCaret);
-    }
-
-    public void ApplyRangeCaretPosition(RangeCaretPosition rangeCaretPosition)
-    {
-        ApplyRangeCaretPosition(rangeCaretPosition.GetRangeCaretPositionWithType<TCaretPosition>());
-    }
-
-    protected abstract void ApplyCaretPosition(TCaretPosition caret);
-
-    protected abstract void ApplyRangeCaretPosition(RangeCaretPosition<TCaretPosition> caret);
-}
 
 public abstract partial class DrawableCaret<TCaretPosition> : DrawableCaret
     where TCaretPosition : struct, ICaretPosition
