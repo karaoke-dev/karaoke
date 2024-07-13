@@ -28,33 +28,33 @@ public partial class CaretLayer : BaseLayer
     {
         bindableCaretPositionAlgorithm.BindValueChanged(e =>
         {
-            updateDrawableCaret(e.NewValue, DrawableCaretType.HoverCaret);
-            updateDrawableCaret(e.NewValue, DrawableCaretType.Caret);
+            updateDrawableCaret(e.NewValue, DrawableCaretState.HoverCaret);
+            updateDrawableCaret(e.NewValue, DrawableCaretState.Caret);
         }, true);
 
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.HoverCaret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretState.HoverCaret);
         }, true);
 
         bindableCaretPosition.BindValueChanged(e =>
         {
-            applyTheCaretPosition(e.NewValue, DrawableCaretType.Caret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretState.Caret);
         }, true);
 
         bindableRangeCaretPosition.BindValueChanged(e =>
         {
-            applyRangeCaretPosition(e.NewValue, DrawableCaretType.Caret);
+            applyRangeCaretPosition(e.NewValue, DrawableCaretState.Caret);
         }, true);
     }
 
-    private void updateDrawableCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretType type)
+    private void updateDrawableCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretState state)
     {
-        var oldCaret = getDrawableCaret(type);
+        var oldCaret = getDrawableCaret(state);
         if (oldCaret != null)
             RemoveInternal(oldCaret, true);
 
-        var caret = createCaret(algorithm, type);
+        var caret = createCaret(algorithm, state);
         if (caret == null)
             return;
 
@@ -62,24 +62,24 @@ public partial class CaretLayer : BaseLayer
 
         AddInternal(caret);
 
-        static DrawableCaret? createCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretType type) =>
+        static DrawableCaret? createCaret(ICaretPositionAlgorithm? algorithm, DrawableCaretState state) =>
             algorithm?.GetCaretPositionType() switch
             {
-                Type t when t == typeof(CreateRubyTagCaretPosition) => new DrawableCreateRubyTagCaret(type),
-                Type t when t == typeof(CuttingCaretPosition) => new DrawableCuttingCaret(type),
-                Type t when t == typeof(RecordingTimeTagCaretPosition) => new DrawableRecordingTimeTagCaret(type),
-                Type t when t == typeof(CreateRemoveTimeTagCaretPosition) => new DrawableCreateRemoveTimeTagCaret(type),
-                Type t when t == typeof(TypingCaretPosition) => new DrawableTypingCaret(type),
+                Type t when t == typeof(CreateRubyTagCaretPosition) => new DrawableCreateRubyTagCaret(state),
+                Type t when t == typeof(CuttingCaretPosition) => new DrawableCuttingCaret(state),
+                Type t when t == typeof(RecordingTimeTagCaretPosition) => new DrawableRecordingTimeTagCaret(state),
+                Type t when t == typeof(CreateRemoveTimeTagCaretPosition) => new DrawableCreateRemoveTimeTagCaret(state),
+                Type t when t == typeof(TypingCaretPosition) => new DrawableTypingCaret(state),
                 _ => null,
             };
     }
 
-    private void applyTheCaretPosition(ICaretPosition? position, DrawableCaretType type)
+    private void applyTheCaretPosition(ICaretPosition? position, DrawableCaretState state)
     {
         if (position == null)
             return;
 
-        var caret = getDrawableCaret(type);
+        var caret = getDrawableCaret(state);
         if (caret == null)
             return;
 
@@ -93,12 +93,12 @@ public partial class CaretLayer : BaseLayer
         caret.ApplyCaretPosition(position);
     }
 
-    private void applyRangeCaretPosition(RangeCaretPosition? rangeCaretPosition, DrawableCaretType type)
+    private void applyRangeCaretPosition(RangeCaretPosition? rangeCaretPosition, DrawableCaretState state)
     {
         if (rangeCaretPosition == null)
             return;
 
-        var caret = getDrawableCaret(type);
+        var caret = getDrawableCaret(state);
         if (caret == null)
             throw new InvalidOperationException("Should be able to get the drawable caret.");
 
@@ -116,8 +116,8 @@ public partial class CaretLayer : BaseLayer
         rangeIndexDrawableCaret.ApplyRangeCaretPosition(rangeCaretPosition);
     }
 
-    private DrawableCaret? getDrawableCaret(DrawableCaretType type)
-        => InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.Type == type);
+    private DrawableCaret? getDrawableCaret(DrawableCaretState state)
+        => InternalChildren.OfType<DrawableCaret>().FirstOrDefault(x => x.State == state);
 
     [BackgroundDependencyLoader]
     private void load(ILyricCaretState lyricCaretState)

@@ -29,18 +29,18 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
     private readonly Box drawableCaret;
     private readonly TypingCaretEventHandler? typingCaretEventHandler;
 
-    public DrawableTypingCaret(DrawableCaretType type)
-        : base(type)
+    public DrawableTypingCaret(DrawableCaretState state)
+        : base(state)
     {
         drawableCaret = new Box
         {
             RelativeSizeAxes = Axes.Both,
             Colour = Color4.White,
-            Alpha = GetAlpha(Type),
+            Alpha = GetAlpha(State),
         };
         AddInternal(drawableCaret);
 
-        if (Type != DrawableCaretType.Caret)
+        if (State != DrawableCaretState.Caret)
             return;
 
         var inputCaretTextBox = new InputCaretTextBox

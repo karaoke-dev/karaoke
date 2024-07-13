@@ -18,8 +18,8 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
     private readonly Container splitter;
     private readonly SpriteIcon splitIcon;
 
-    public DrawableCuttingCaret(DrawableCaretType type)
-        : base(type)
+    public DrawableCuttingCaret(DrawableCaretState state)
+        : base(state)
     {
         Width = 10;
         Origin = Anchor.TopCentre;
@@ -39,7 +39,7 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
             {
                 RelativeSizeAxes = Axes.Y,
                 AutoSizeAxes = Axes.X,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
                 Children = new Drawable[]
                 {
                     new Triangle
@@ -61,18 +61,18 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
             },
         };
 
-        switch (type)
+        switch (state)
         {
-            case DrawableCaretType.HoverCaret:
+            case DrawableCaretState.HoverCaret:
                 splitIcon.Show();
                 break;
 
-            case DrawableCaretType.Caret:
+            case DrawableCaretState.Caret:
                 splitIcon.Hide();
                 break;
 
             default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
     }
 

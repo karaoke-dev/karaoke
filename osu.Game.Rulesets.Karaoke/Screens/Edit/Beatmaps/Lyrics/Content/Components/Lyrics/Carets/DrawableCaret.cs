@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compone
 public abstract partial class DrawableRangeCaret<TCaretPosition> : DrawableCaret, ICanAcceptRangeIndex
     where TCaretPosition : struct, IIndexCaretPosition
 {
-    protected DrawableRangeCaret(DrawableCaretType type)
-        : base(type)
+    protected DrawableRangeCaret(DrawableCaretState state)
+        : base(state)
     {
     }
 
@@ -39,8 +39,8 @@ public abstract partial class DrawableRangeCaret<TCaretPosition> : DrawableCaret
 public abstract partial class DrawableCaret<TCaretPosition> : DrawableCaret
     where TCaretPosition : struct, ICaretPosition
 {
-    protected DrawableCaret(DrawableCaretType type)
-        : base(type)
+    protected DrawableCaret(DrawableCaretState state)
+        : base(state)
     {
     }
 
@@ -63,19 +63,19 @@ public abstract partial class DrawableCaret : CompositeDrawable
     [Resolved]
     protected IPreviewLyricPositionProvider LyricPositionProvider { get; private set; } = null!;
 
-    public readonly DrawableCaretType Type;
+    public readonly DrawableCaretState State;
 
-    protected DrawableCaret(DrawableCaretType type)
+    protected DrawableCaret(DrawableCaretState state)
     {
-        Type = type;
+        State = state;
     }
 
-    protected static float GetAlpha(DrawableCaretType type) =>
-        type switch
+    protected static float GetAlpha(DrawableCaretState state) =>
+        state switch
         {
-            DrawableCaretType.HoverCaret => 0.5f,
-            DrawableCaretType.Caret => 1,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
+            DrawableCaretState.HoverCaret => 0.5f,
+            DrawableCaretState.Caret => 1,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
 
     public abstract void ApplyCaretPosition(ICaretPosition caret);
