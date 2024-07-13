@@ -1,11 +1,7 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -15,35 +11,27 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-[Cached(typeof(IEditableLyricState))]
-public partial class EditableLyric : InteractableLyric, IEditableLyricState
+/// <summary>
+/// Compare to <see cref="InteractLyricLayer"/>, this layer can do more things:
+/// 1. Change the hover caret and index.
+/// 2. Change the caret and index.
+/// 3. Change the drag caret and index.
+/// 4. Do some special action like cut the lyric by double click.
+/// </summary>
+public partial class EditLyricLayer : UIEventLayer
 {
     [Resolved]
-    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
+    private IPreviewLyricPositionProvider previewLyricPositionProvider { get; set; } = null!;
 
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    public EditableLyric(Lyric lyric)
+    [Resolved]
+    private ILyricsChangeHandler lyricsChangeHandler { get; set; } = null!;
+
+    public EditLyricLayer(Lyric lyric)
         : base(lyric)
     {
-        CornerRadius = 5;
-        Padding = new MarginPadding { Bottom = 10 };
-    }
-
-    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
-    {
-        return new BaseLayer[]
-        {
-            new TimeTagLayer(lyric),
-            new CaretLayer(lyric),
-            new BlueprintLayer(lyric),
-        };
-    }
-
-    public void TriggerDisallowEditEffect()
-    {
-        InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
     }
 
     #region Hover
@@ -81,21 +69,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
         // lost hover caret and time-tag caret
         lyricCaretState.ClearHoverCaretPosition();
-    }
-
-    private object? getCaretIndexByPosition(UIEvent mouseEvent)
-    {
-        var algorithm = lyricCaretState.CaretPositionAlgorithm;
-        float xPosition = ToLocalSpace(mouseEvent.ScreenSpaceMousePosition).X;
-        return algorithm switch
-        {
-            CuttingCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndicatorByPosition(xPosition),
-            TypingCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndicatorByPosition(xPosition),
-            NavigateCaretPositionAlgorithm => null,
-            CreateRubyTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
-            CreateRemoveTimeTagCaretPositionAlgorithm => KaraokeSpriteText.GetCharIndexByPosition(xPosition),
-            _ => null,
-        };
     }
 
     #endregion
@@ -142,6 +115,23 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
 
     #endregion
 
+    private object? getCaretIndexByPosition(UIEvent mouseEvent)
+    {
+        var algorithm = lyricCaretState.CaretPositionAlgorithm;
+        float xPosition = ToLocalSpace(mouseEvent.ScreenSpaceMousePosition).X;
+        return algorithm switch
+        {
+            CuttingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(xPosition),
+            TypingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(xPosition),
+            NavigateCaretPositionAlgorithm => null,
+            CreateRubyTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(xPosition),
+            CreateRemoveTimeTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(xPosition),
+            _ => null,
+        };
+    }
+
+    #region Double click
+
     protected override bool OnDoubleClick(DoubleClickEvent e)
     {
         var position = lyricCaretState.CaretPosition;
@@ -156,4 +146,6 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
                 return false;
         }
     }
+
+    #endregion
 }

@@ -7,7 +7,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
@@ -17,36 +16,32 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
+[Cached(typeof(IInteractableLyricState))]
+public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, IInteractableLyricState
 {
     [Cached(typeof(IPreviewLyricPositionProvider))]
-    protected readonly PreviewKaraokeSpriteText KaraokeSpriteText;
+    private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
-    protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
+    private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<int> bindableLyricPropertyWritableVersion;
 
-    protected readonly Lyric Lyric;
+    private readonly Lyric lyric;
     private LocalisableString? lockReason;
 
-    protected InteractableLyric(Lyric lyric)
+    public InteractableLyric(Lyric lyric)
     {
-        Lyric = lyric;
+        this.lyric = lyric;
 
         bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
-        InternalChildren = new Drawable[]
+        karaokeSpriteText = new PreviewKaraokeSpriteText(lyric);
+
+        karaokeSpriteText.SizeChanged = () =>
         {
-            new LyricLayer(lyric, KaraokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
+            Height = karaokeSpriteText.DrawHeight;
         };
 
-        AddRangeInternal(CreateLayers(lyric));
-
-        KaraokeSpriteText.SizeChanged = () =>
-        {
-            Height = KaraokeSpriteText.DrawHeight;
-        };
-
-        BindableMode.BindValueChanged(x =>
+        bindableMode.BindValueChanged(x =>
         {
             triggerWritableVersionChanged();
         });
@@ -57,24 +52,40 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         });
     }
 
-    protected abstract IEnumerable<BaseLayer> CreateLayers(Lyric lyric);
+    public IEnumerable<Layer> Layers
+    {
+        get => InternalChildren.OfType<Layer>();
+        init
+        {
+            AddRangeInternal(value);
+
+            // todo: should apply proxy instead, but it let disable edit state not working.
+            var lyricLayers = value.OfType<LyricLayer>().Single();
+            lyricLayers.ApplyDrawableLyric(karaokeSpriteText);
+        }
+    }
+
+    public void TriggerDisallowEditEffect()
+    {
+        InternalChildren.OfType<Layer>().ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
+    }
 
     [BackgroundDependencyLoader]
     private void load(EditorClock clock, ILyricEditorState state)
     {
-        BindableMode.BindTo(state.BindableMode);
+        bindableMode.BindTo(state.BindableMode);
 
-        KaraokeSpriteText.Clock = clock;
+        karaokeSpriteText.Clock = clock;
     }
 
     private void triggerWritableVersionChanged()
     {
-        var loadReason = GetLyricPropertyLockedReason(Lyric, BindableMode.Value);
+        var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
         lockReason = loadReason;
 
         // adjust the style.
         bool editable = lockReason == null;
-        InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
+        InternalChildren.OfType<Layer>().ForEach(x => x.UpdateDisableEditState(editable));
     }
 
     public LocalisableString TooltipText => lockReason ?? string.Empty;

@@ -1,7 +1,6 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -9,22 +8,19 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public partial class ViewOnlyLyric : InteractableLyric
+/// <summary>
+/// Compare to <see cref="EditLyricLayer"/>, this layer only allows to:
+/// 1. Hover the whole lyric.
+/// 2. Selec the whole lyric.
+/// </summary>
+public partial class InteractLyricLayer : UIEventLayer
 {
     [Resolved]
     private ILyricCaretState lyricCaretState { get; set; } = null!;
 
-    public ViewOnlyLyric(Lyric lyric)
+    public InteractLyricLayer(Lyric lyric)
         : base(lyric)
     {
-    }
-
-    protected override IEnumerable<BaseLayer> CreateLayers(Lyric lyric)
-    {
-        return new BaseLayer[]
-        {
-            new TimeTagLayer(lyric),
-        };
     }
 
     protected override bool OnMouseMove(MouseMoveEvent e)

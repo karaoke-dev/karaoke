@@ -29,18 +29,18 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
     private readonly Box drawableCaret;
     private readonly TypingCaretEventHandler? typingCaretEventHandler;
 
-    public DrawableTypingCaret(DrawableCaretType type)
-        : base(type)
+    public DrawableTypingCaret(DrawableCaretState state)
+        : base(state)
     {
         drawableCaret = new Box
         {
             RelativeSizeAxes = Axes.Both,
             Colour = Color4.White,
-            Alpha = GetAlpha(Type),
+            Alpha = GetAlpha(State),
         };
         AddInternal(drawableCaret);
 
-        if (Type != DrawableCaretType.Caret)
+        if (State != DrawableCaretState.Idle)
             return;
 
         var inputCaretTextBox = new InputCaretTextBox
@@ -117,13 +117,13 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IInteractableLyricState interactableLyricState)
         {
             inputCaretTextBox.NewCommitText = text =>
             {
                 if (lyricTextChangeHandler.IsSelectionsLocked())
                 {
-                    editableLyricState.TriggerDisallowEditEffect();
+                    interactableLyricState.TriggerDisallowEditEffect();
                     return;
                 }
 
@@ -135,7 +135,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
             {
                 if (lyricTextChangeHandler.IsSelectionsLocked())
                 {
-                    editableLyricState.TriggerDisallowEditEffect();
+                    interactableLyricState.TriggerDisallowEditEffect();
                     return;
                 }
 

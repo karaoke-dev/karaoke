@@ -6,41 +6,14 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics.Carets;
-
-public abstract partial class DrawableRangeCaret<TCaretPosition> : DrawableCaret, ICanAcceptRangeIndex
-    where TCaretPosition : struct, IIndexCaretPosition
-{
-    protected DrawableRangeCaret(DrawableCaretType type)
-        : base(type)
-    {
-    }
-
-    public sealed override void ApplyCaretPosition(ICaretPosition caret)
-    {
-        if (caret is not TCaretPosition tCaret)
-            throw new InvalidCastException();
-
-        ApplyCaretPosition(tCaret);
-    }
-
-    public void ApplyRangeCaretPosition(RangeCaretPosition rangeCaretPosition)
-    {
-        ApplyRangeCaretPosition(rangeCaretPosition.GetRangeCaretPositionWithType<TCaretPosition>());
-    }
-
-    protected abstract void ApplyCaretPosition(TCaretPosition caret);
-
-    protected abstract void ApplyRangeCaretPosition(RangeCaretPosition<TCaretPosition> caret);
-}
 
 public abstract partial class DrawableCaret<TCaretPosition> : DrawableCaret
     where TCaretPosition : struct, ICaretPosition
 {
-    protected DrawableCaret(DrawableCaretType type)
-        : base(type)
+    protected DrawableCaret(DrawableCaretState state)
+        : base(state)
     {
     }
 
@@ -63,19 +36,19 @@ public abstract partial class DrawableCaret : CompositeDrawable
     [Resolved]
     protected IPreviewLyricPositionProvider LyricPositionProvider { get; private set; } = null!;
 
-    public readonly DrawableCaretType Type;
+    public readonly DrawableCaretState State;
 
-    protected DrawableCaret(DrawableCaretType type)
+    protected DrawableCaret(DrawableCaretState state)
     {
-        Type = type;
+        State = state;
     }
 
-    protected static float GetAlpha(DrawableCaretType type) =>
-        type switch
+    protected static float GetAlpha(DrawableCaretState state) =>
+        state switch
         {
-            DrawableCaretType.HoverCaret => 0.5f,
-            DrawableCaretType.Caret => 1,
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
+            DrawableCaretState.Idle => 1,
+            DrawableCaretState.Hover => 0.5f,
+            _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
 
     public abstract void ApplyCaretPosition(ICaretPosition caret);

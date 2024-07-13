@@ -30,8 +30,8 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
     private readonly TimeTagsInfo startTimeTagInfo;
     private readonly TimeTagsInfo endTimeTagInfo;
 
-    public DrawableCreateRemoveTimeTagCaret(DrawableCaretType type)
-        : base(type)
+    public DrawableCreateRemoveTimeTagCaret(DrawableCaretState state)
+        : base(state)
     {
         // todo: should re-design the drawable caret.
         InternalChildren = new Drawable[]
@@ -54,14 +54,14 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                 X = 18,
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.CentreRight,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
             },
             endTimeTagInfo = new TimeTagsInfo(TextIndex.IndexState.End)
             {
                 X = -18,
                 Anchor = Anchor.BottomRight,
                 Origin = Anchor.CentreLeft,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
             },
         };
     }

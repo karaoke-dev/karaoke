@@ -24,8 +24,8 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     private readonly TextIndexInfo textIndexInfo;
     private readonly Box indicator;
 
-    public DrawableRecordingTimeTagCaret(DrawableCaretType type)
-        : base(type)
+    public DrawableRecordingTimeTagCaret(DrawableCaretState state)
+        : base(state)
     {
         InternalChildren = new Drawable[]
         {
@@ -35,7 +35,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                 BorderThickness = border_spacing,
                 BorderColour = Colour4.White,
                 RelativeSizeAxes = Axes.Both,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
                 Child = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
@@ -46,13 +46,13 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
             textIndexInfo = new TextIndexInfo
             {
                 Y = -10,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
             },
             indicator = new Box
             {
                 Width = border_spacing,
                 RelativeSizeAxes = Axes.Y,
-                Alpha = GetAlpha(type),
+                Alpha = GetAlpha(state),
             },
         };
     }

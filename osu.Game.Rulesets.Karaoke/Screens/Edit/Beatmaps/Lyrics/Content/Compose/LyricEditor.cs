@@ -39,10 +39,18 @@ public partial class LyricEditor : CompositeDrawable
             if (lyric == null)
                 return;
 
-            skinProvidingContainer.Add(new EditableLyric(lyric)
+            skinProvidingContainer.Add(new InteractableLyric(lyric)
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
+                Layers = new Layer[]
+                {
+                    new LyricLayer(lyric),
+                    new EditLyricLayer(lyric),
+                    new TimeTagLayer(lyric),
+                    new CaretLayer(lyric),
+                    new BlueprintLayer(lyric),
+                },
             });
         });
 

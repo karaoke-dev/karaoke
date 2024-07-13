@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public interface IEditableLyricState
+public interface IInteractableLyricState
 {
     void TriggerDisallowEditEffect();
 }
