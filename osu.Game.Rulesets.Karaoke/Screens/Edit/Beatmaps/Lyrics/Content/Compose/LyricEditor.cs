@@ -54,6 +54,10 @@ public partial class LyricEditor : CompositeDrawable
                 },
                 Layers = new Layer[]
                 {
+                    new GridLayer(lyric)
+                    {
+                        Spacing = 10,
+                    },
                     new LyricLayer(lyric),
                     new EditLyricLayer(lyric),
                     new TimeTagLayer(lyric),
