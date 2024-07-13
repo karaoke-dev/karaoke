@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -18,12 +17,10 @@ public partial class EditableLyric : InteractableLyric, IEditableLyricState
     {
         CornerRadius = 5;
         Padding = new MarginPadding { Bottom = 10 };
-    }
 
-    protected override IEnumerable<Layer> CreateLayers(Lyric lyric)
-    {
-        return new Layer[]
+        Layers = new Layer[]
         {
+            new LyricLayer(lyric),
             new EditLyricLayer(lyric),
             new TimeTagLayer(lyric),
             new CaretLayer(lyric),

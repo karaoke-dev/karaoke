@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
@@ -11,12 +10,9 @@ public partial class ViewOnlyLyric : InteractableLyric
     public ViewOnlyLyric(Lyric lyric)
         : base(lyric)
     {
-    }
-
-    protected override IEnumerable<Layer> CreateLayers(Lyric lyric)
-    {
-        return new Layer[]
+        Layers = new Layer[]
         {
+            new LyricLayer(lyric),
             new InteractLyricLayer(lyric),
             new TimeTagLayer(lyric),
         };

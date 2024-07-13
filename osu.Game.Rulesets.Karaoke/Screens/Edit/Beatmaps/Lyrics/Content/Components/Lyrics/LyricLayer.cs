@@ -13,10 +13,14 @@ public partial class LyricLayer : Layer
     [Resolved]
     private OsuColour colours { get; set; } = null!;
 
-    public LyricLayer(Lyric lyric, Drawable karaokeSpriteText)
+    public LyricLayer(Lyric lyric)
         : base(lyric)
     {
-        InternalChild = karaokeSpriteText;
+    }
+
+    public void ApplyDrawableLyric(Drawable drawable)
+    {
+        InternalChild = drawable;
     }
 
     public override void UpdateDisableEditState(bool editable)

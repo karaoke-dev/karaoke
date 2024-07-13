@@ -7,7 +7,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Localisation;
@@ -20,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compone
 public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 {
     [Cached(typeof(IPreviewLyricPositionProvider))]
-    protected readonly PreviewKaraokeSpriteText KaraokeSpriteText;
+    private readonly PreviewKaraokeSpriteText karaokeSpriteText;
 
     protected readonly IBindable<LyricEditorMode> BindableMode = new Bindable<LyricEditorMode>();
     private readonly IBindable<int> bindableLyricPropertyWritableVersion;
@@ -34,16 +33,11 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
 
         bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
-        InternalChildren = new Drawable[]
-        {
-            new LyricLayer(lyric, KaraokeSpriteText = new PreviewKaraokeSpriteText(lyric)),
-        };
+        karaokeSpriteText = new PreviewKaraokeSpriteText(lyric);
 
-        AddRangeInternal(CreateLayers(lyric));
-
-        KaraokeSpriteText.SizeChanged = () =>
+        karaokeSpriteText.SizeChanged = () =>
         {
-            Height = KaraokeSpriteText.DrawHeight;
+            Height = karaokeSpriteText.DrawHeight;
         };
 
         BindableMode.BindValueChanged(x =>
@@ -57,14 +51,25 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
         });
     }
 
-    protected abstract IEnumerable<Layer> CreateLayers(Lyric lyric);
+    public IEnumerable<Layer> Layers
+    {
+        get => InternalChildren.OfType<Layer>();
+        init
+        {
+            AddRangeInternal(value);
+
+            // todo: should apply proxy instead, but it let disable edit state not working.
+            var lyricLayers = value.OfType<LyricLayer>().Single();
+            lyricLayers.ApplyDrawableLyric(karaokeSpriteText);
+        }
+    }
 
     [BackgroundDependencyLoader]
     private void load(EditorClock clock, ILyricEditorState state)
     {
         BindableMode.BindTo(state.BindableMode);
 
-        KaraokeSpriteText.Clock = clock;
+        karaokeSpriteText.Clock = clock;
     }
 
     private void triggerWritableVersionChanged()
