@@ -126,7 +126,7 @@ public partial class RubyTagSelectionBlueprint : SelectionBlueprint<RubyTag>, IH
     public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
         => previewTextArea.ReceivePositionalInputAt(screenSpacePos);
 
-    public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+    public override Vector2 ScreenSpaceSelectionPoint => previewTextArea.ScreenSpaceDrawQuad.Centre;
 
     public override Quad SelectionQuad => previewTextArea.ScreenSpaceDrawQuad;
 

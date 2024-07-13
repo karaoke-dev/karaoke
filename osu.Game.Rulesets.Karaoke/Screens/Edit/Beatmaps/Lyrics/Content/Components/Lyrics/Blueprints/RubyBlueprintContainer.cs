@@ -34,6 +34,9 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
     protected override SelectionBlueprint<RubyTag> CreateBlueprintFor(RubyTag item)
         => new RubyTagSelectionBlueprint(item);
 
+    protected override IEnumerable<SelectionBlueprint<RubyTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<RubyTag>> blueprints)
+        => blueprints.OrderBy(b => b.Item.StartIndex);
+
     protected partial class RubyTagSelectionHandler : LyricPropertySelectionHandler<IEditRubyModeState>
     {
         [Resolved]
