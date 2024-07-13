@@ -16,7 +16,8 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
-public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
+[Cached(typeof(IInteractableLyricState))]
+public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip, IInteractableLyricState
 {
     [Cached(typeof(IPreviewLyricPositionProvider))]
     private readonly PreviewKaraokeSpriteText karaokeSpriteText;
@@ -62,6 +63,11 @@ public abstract partial class InteractableLyric : CompositeDrawable, IHasTooltip
             var lyricLayers = value.OfType<LyricLayer>().Single();
             lyricLayers.ApplyDrawableLyric(karaokeSpriteText);
         }
+    }
+
+    public void TriggerDisallowEditEffect()
+    {
+        InternalChildren.OfType<Layer>().ForEach(x => x.TriggerDisallowEditEffect(BindableMode.Value));
     }
 
     [BackgroundDependencyLoader]

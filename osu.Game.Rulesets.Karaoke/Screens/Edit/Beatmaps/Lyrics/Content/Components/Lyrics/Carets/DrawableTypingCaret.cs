@@ -117,13 +117,13 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditableLyricState editableLyricState)
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IInteractableLyricState interactableLyricState)
         {
             inputCaretTextBox.NewCommitText = text =>
             {
                 if (lyricTextChangeHandler.IsSelectionsLocked())
                 {
-                    editableLyricState.TriggerDisallowEditEffect();
+                    interactableLyricState.TriggerDisallowEditEffect();
                     return;
                 }
 
@@ -135,7 +135,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
             {
                 if (lyricTextChangeHandler.IsSelectionsLocked())
                 {
-                    editableLyricState.TriggerDisallowEditEffect();
+                    interactableLyricState.TriggerDisallowEditEffect();
                     return;
                 }
 
