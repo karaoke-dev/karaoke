@@ -13,6 +13,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
@@ -28,6 +29,8 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
     private readonly Lyric lyric;
     private LocalisableString? lockReason;
 
+    public Action<InteractableLyric, Vector2>? TextSizeChanged = null;
+
     public InteractableLyric(Lyric lyric)
     {
         this.lyric = lyric;
@@ -36,9 +39,9 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
 
         karaokeSpriteText = new PreviewKaraokeSpriteText(lyric);
 
-        karaokeSpriteText.SizeChanged = () =>
+        karaokeSpriteText.SizeChanged = (size) =>
         {
-            Height = karaokeSpriteText.DrawHeight;
+            TextSizeChanged?.Invoke(this, size);
         };
 
         bindableMode.BindValueChanged(x =>

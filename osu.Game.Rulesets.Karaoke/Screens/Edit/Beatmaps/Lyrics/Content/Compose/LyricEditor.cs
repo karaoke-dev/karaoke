@@ -39,10 +39,17 @@ public partial class LyricEditor : CompositeDrawable
             if (lyric == null)
                 return;
 
+            const int border = 36;
+
             skinProvidingContainer.Add(new InteractableLyric(lyric)
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
+                TextSizeChanged = (self, size) =>
+                {
+                    self.Width = size.X + border * 2;
+                    self.Height = size.Y + border * 2;
+                },
                 Layers = new Layer[]
                 {
                     new LyricLayer(lyric),

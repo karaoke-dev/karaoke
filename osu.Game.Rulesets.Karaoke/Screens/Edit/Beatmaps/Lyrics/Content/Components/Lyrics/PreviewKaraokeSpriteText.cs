@@ -26,7 +26,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     public Lyric HitObject;
 
-    public Action? SizeChanged;
+    public Action<Vector2>? SizeChanged;
 
     private readonly EditorLyricSpriteText spriteText;
 
@@ -59,7 +59,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     {
         ScheduleAfterChildren(() =>
         {
-            SizeChanged?.Invoke();
+            SizeChanged?.Invoke(DrawSize);
         });
     }
 
