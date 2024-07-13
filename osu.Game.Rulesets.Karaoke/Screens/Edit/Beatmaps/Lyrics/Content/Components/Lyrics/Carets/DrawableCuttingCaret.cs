@@ -63,12 +63,12 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 
         switch (state)
         {
-            case DrawableCaretState.HoverCaret:
-                splitIcon.Show();
+            case DrawableCaretState.Idle:
+                splitIcon.Hide();
                 break;
 
-            case DrawableCaretState.Caret:
-                splitIcon.Hide();
+            case DrawableCaretState.Hover:
+                splitIcon.Show();
                 break;
 
             default:

@@ -75,7 +75,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     protected override void ApplyCaretPosition(CreateRubyTagCaretPosition caret)
     {
         // should not show the hover caret if already contains the selected range.
-        if (State == DrawableCaretState.HoverCaret)
+        if (State == DrawableCaretState.Hover)
         {
             bool isClickToThisCaret = lyricCaretState.CaretPosition?.Lyric == caret.Lyric;
             bool isDraggingToThisCaret = lyricCaretState.RangeCaretPosition?.IsInRange(caret.Lyric) ?? false;
@@ -94,7 +94,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
         changeTheSizeByRect(rect);
 
         // should not continuous showing the caret position if move the caret by keyboard.
-        if (State == DrawableCaretState.Caret)
+        if (State == DrawableCaretState.Idle)
         {
             // todo: should wait until layer is attached to the parent.
             // use quick way to fix this because it will cause crash if open the
@@ -104,7 +104,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
 
     protected override bool OnClick(ClickEvent e)
     {
-        if (State == DrawableCaretState.HoverCaret)
+        if (State == DrawableCaretState.Hover)
             return false;
 
         this.ShowPopover();
@@ -119,7 +119,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
         var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndex(startCharIndex), LyricPositionProvider.GetRectByCharIndex(endCharIndex));
         changeTheSizeByRect(rect);
 
-        if (State == DrawableCaretState.Caret && caret.DraggingState == RangeCaretDraggingState.EndDrag)
+        if (State == DrawableCaretState.Idle && caret.DraggingState == RangeCaretDraggingState.EndDrag)
             this.ShowPopover();
     }
 

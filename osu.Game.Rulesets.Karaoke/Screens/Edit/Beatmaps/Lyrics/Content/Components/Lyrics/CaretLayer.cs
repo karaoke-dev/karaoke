@@ -28,23 +28,23 @@ public partial class CaretLayer : BaseLayer
     {
         bindableCaretPositionAlgorithm.BindValueChanged(e =>
         {
-            updateDrawableCaret(e.NewValue, DrawableCaretState.HoverCaret);
-            updateDrawableCaret(e.NewValue, DrawableCaretState.Caret);
+            updateDrawableCaret(e.NewValue, DrawableCaretState.Idle);
+            updateDrawableCaret(e.NewValue, DrawableCaretState.Hover);
         }, true);
 
         bindableHoverCaretPosition.BindValueChanged(e =>
         {
-            applyTheCaretPosition(e.NewValue, DrawableCaretState.HoverCaret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretState.Hover);
         }, true);
 
         bindableCaretPosition.BindValueChanged(e =>
         {
-            applyTheCaretPosition(e.NewValue, DrawableCaretState.Caret);
+            applyTheCaretPosition(e.NewValue, DrawableCaretState.Idle);
         }, true);
 
         bindableRangeCaretPosition.BindValueChanged(e =>
         {
-            applyRangeCaretPosition(e.NewValue, DrawableCaretState.Caret);
+            applyRangeCaretPosition(e.NewValue, DrawableCaretState.Idle);
         }, true);
     }
 

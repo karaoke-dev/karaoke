@@ -73,8 +73,8 @@ public abstract partial class DrawableCaret : CompositeDrawable
     protected static float GetAlpha(DrawableCaretState state) =>
         state switch
         {
-            DrawableCaretState.HoverCaret => 0.5f,
-            DrawableCaretState.Caret => 1,
+            DrawableCaretState.Idle => 1,
+            DrawableCaretState.Hover => 0.5f,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
 

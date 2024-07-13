@@ -40,7 +40,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         };
         AddInternal(drawableCaret);
 
-        if (State != DrawableCaretState.Caret)
+        if (State != DrawableCaretState.Idle)
             return;
 
         var inputCaretTextBox = new InputCaretTextBox
