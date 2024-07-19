@@ -23,54 +23,73 @@ public partial class RomanisationIssueSection : LyricEditorIssueSection
 
     private partial class RomanisationIssueTable : LyricsIssueTable
     {
-        protected override TableColumn[] CreateHeaders() => new[]
+        protected override Dimension[] CreateDimensions()
         {
-            new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-            new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
-            new TableColumn("Position", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 60)),
-            new TableColumn("Message", Anchor.CentreLeft),
-        };
-
-        protected override Drawable[] CreateContent(Issue issue)
-        {
-            (var lyric, TimeTag timeTag) = getInvalidByIssue(issue);
-
-            return new Drawable[]
+            return new[]
             {
-                new IssueIcon
-                {
-                    Origin = Anchor.Centre,
-                    Size = new Vector2(10),
-                    Margin = new MarginPadding { Left = 10 },
-                    Issue = issue,
-                },
-                new OsuSpriteText
-                {
-                    Text = $"#{lyric.Order}",
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                    Margin = new MarginPadding { Right = 10 },
-                },
-                new OsuSpriteText
-                {
-                    Text = TimeTagUtils.FormattedString(timeTag),
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                    Margin = new MarginPadding { Right = 10 },
-                },
-                new TruncatingSpriteText
-                {
-                    Text = issue.ToString(),
-                    RelativeSizeAxes = Axes.X,
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
-                },
+                new Dimension(GridSizeMode.AutoSize, minSize: 30),
+                new Dimension(GridSizeMode.AutoSize, minSize: 40),
+                new Dimension(GridSizeMode.AutoSize, minSize: 60),
+                new Dimension(),
             };
         }
 
-        private Tuple<Lyric, TimeTag> getInvalidByIssue(Issue issue)
+        protected override IssueTableHeaderText[] CreateHeaders() => new[]
         {
-            if (issue is not LyricTimeTagIssue timeTagIssue)
-                throw new InvalidCastException();
+            new IssueTableHeaderText(string.Empty, Anchor.CentreLeft),
+            new IssueTableHeaderText("Lyric", Anchor.CentreLeft),
+            new IssueTableHeaderText("Position", Anchor.CentreLeft),
+            new IssueTableHeaderText("Message", Anchor.CentreLeft),
+        };
 
-            return new Tuple<Lyric, TimeTag>(timeTagIssue.Lyric, timeTagIssue.TimeTag);
+        protected override Tuple<Drawable[], Action<Issue>> CreateContent()
+        {
+            IssueIcon issueIcon;
+            OsuSpriteText orderSpriteText;
+            OsuSpriteText timeSpriteText;
+            TruncatingSpriteText issueSpriteText;
+
+            return new Tuple<Drawable[], Action<Issue>>(
+                new Drawable[]
+                {
+                    issueIcon = new IssueIcon
+                    {
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(10),
+                        Margin = new MarginPadding { Left = 10 },
+                    },
+                    orderSpriteText = new OsuSpriteText
+                    {
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                        Margin = new MarginPadding { Right = 10 },
+                    },
+                    timeSpriteText = new OsuSpriteText
+                    {
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                        Margin = new MarginPadding { Right = 10 },
+                    },
+                    issueSpriteText = new TruncatingSpriteText
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
+                    },
+                }, issue =>
+                {
+                    (var lyric, TimeTag timeTag) = getInvalidByIssue(issue);
+
+                    issueIcon.Issue = issue;
+                    orderSpriteText.Text = $"#{lyric.Order}";
+                    timeSpriteText.Text = TimeTagUtils.FormattedString(timeTag);
+                    issueSpriteText.Text = issue.ToString();
+                });
+
+            static Tuple<Lyric, TimeTag> getInvalidByIssue(Issue issue)
+            {
+                if (issue is not LyricTimeTagIssue timeTagIssue)
+                    throw new InvalidCastException();
+
+                return new Tuple<Lyric, TimeTag>(timeTagIssue.Lyric, timeTagIssue.TimeTag);
+            }
         }
     }
 }

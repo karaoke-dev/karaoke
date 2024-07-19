@@ -22,47 +22,60 @@ public partial class TextIssueSection : LyricEditorIssueSection
 
     private partial class TextIssueTable : LyricsIssueTable
     {
-        protected override TableColumn[] CreateHeaders() => new[]
+        protected override Dimension[] CreateDimensions() => new[]
         {
-            new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-            new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
-            new TableColumn("Message", Anchor.CentreLeft),
+            new Dimension(GridSizeMode.AutoSize, minSize: 30),
+            new Dimension(GridSizeMode.AutoSize, minSize: 40),
+            new Dimension(),
         };
 
-        protected override Drawable[] CreateContent(Issue issue)
+        protected override IssueTableHeaderText[] CreateHeaders() => new[]
         {
-            var lyric = getInvalidByIssue(issue);
+            new IssueTableHeaderText(string.Empty, Anchor.CentreLeft),
+            new IssueTableHeaderText("Lyric", Anchor.CentreLeft),
+            new IssueTableHeaderText("Message", Anchor.CentreLeft),
+        };
 
-            return new Drawable[]
+        protected override Tuple<Drawable[], Action<Issue>> CreateContent()
+        {
+            IssueIcon issueIcon;
+            OsuSpriteText orderSpriteText;
+            TruncatingSpriteText issueSpriteText;
+
+            return new Tuple<Drawable[], Action<Issue>>(new Drawable[]
             {
-                new IssueIcon
+                issueIcon = new IssueIcon
                 {
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
                     Margin = new MarginPadding { Left = 10 },
-                    Issue = issue,
                 },
-                new OsuSpriteText
+                orderSpriteText = new OsuSpriteText
                 {
-                    Text = $"#{lyric.Order}",
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
-                new TruncatingSpriteText
+                issueSpriteText = new TruncatingSpriteText
                 {
-                    Text = issue.ToString(),
                     RelativeSizeAxes = Axes.X,
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
-            };
-        }
+            }, issue =>
+            {
+                var lyric = getInvalidByIssue(issue);
 
-        private Lyric getInvalidByIssue(Issue issue)
-        {
-            if (issue is not LyricIssue lyricIssue)
-                throw new InvalidCastException();
+                issueIcon.Issue = issue;
+                orderSpriteText.Text = $"#{lyric.Order}";
+                issueSpriteText.Text = issue.ToString();
+            });
 
-            return lyricIssue.Lyric;
+            static Lyric getInvalidByIssue(Issue issue)
+            {
+                if (issue is not LyricIssue lyricIssue)
+                    throw new InvalidCastException();
+
+                return lyricIssue.Lyric;
+            }
         }
     }
 }
