@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -111,10 +110,10 @@ public partial class DrawableLayoutPreview : CompositeDrawable
             float verticalMargin = Layout.VerticalMargin * scale + padding;
             previewLyric.Margin = new MarginPadding
             {
-                Left = Layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
-                Right = Layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
-                Top = Layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
-                Bottom = Layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0,
+                Left = Layout.Alignment.HasFlag(Anchor.x0) ? horizontalMargin : 0,
+                Right = Layout.Alignment.HasFlag(Anchor.x2) ? horizontalMargin : 0,
+                Top = Layout.Alignment.HasFlag(Anchor.y0) ? verticalMargin : 0,
+                Bottom = Layout.Alignment.HasFlag(Anchor.y2) ? verticalMargin : 0,
             };
         }
     }

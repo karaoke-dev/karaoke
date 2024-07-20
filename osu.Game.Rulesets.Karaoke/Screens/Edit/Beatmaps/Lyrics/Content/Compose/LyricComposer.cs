@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -163,7 +162,7 @@ public partial class LyricComposer : CompositeDrawable
 
     protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
     {
-        if (invalidation.HasFlagFast(Invalidation.DrawSize) && source == InvalidationSource.Parent)
+        if (invalidation.HasFlag(Invalidation.DrawSize) && source == InvalidationSource.Parent)
             calculatePanelPosition();
 
         return base.OnInvalidate(invalidation, source);

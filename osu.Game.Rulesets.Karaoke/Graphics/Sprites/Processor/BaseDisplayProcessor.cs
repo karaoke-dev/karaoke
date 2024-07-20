@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -44,7 +43,7 @@ public abstract class BaseDisplayProcessor : IDisposable
 
     protected void UpdateTopText()
     {
-        if (!displayProperty.HasFlagFast(LyricDisplayProperty.TopText))
+        if (!displayProperty.HasFlag(LyricDisplayProperty.TopText))
             return;
 
         TopTextChanged?.Invoke(CalculateTopTexts(lyric).ToArray());
@@ -57,7 +56,7 @@ public abstract class BaseDisplayProcessor : IDisposable
 
     protected void UpdateBottomText()
     {
-        if (!displayProperty.HasFlagFast(LyricDisplayProperty.BottomText))
+        if (!displayProperty.HasFlag(LyricDisplayProperty.BottomText))
             return;
 
         BottomTextChanged?.Invoke(CalculateBottomTexts(lyric).ToArray());

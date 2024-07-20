@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Layout;
@@ -58,7 +57,7 @@ public partial class SettingButtonsDisplay : CompositeDrawable, ISerialisableDra
         // trying to change relative position in here.
         if ((invalidation & Invalidation.MiscGeometry) != 0)
         {
-            var overlayDirection = Anchor.HasFlagFast(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
+            var overlayDirection = Anchor.HasFlag(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
             settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
         }
 

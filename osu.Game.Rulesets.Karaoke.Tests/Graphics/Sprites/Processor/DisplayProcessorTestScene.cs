@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -92,7 +91,7 @@ public abstract partial class DisplayProcessorTestScene : OsuGridTestScene
             }
         });
 
-        if (property.HasFlagFast(LyricDisplayProperty.TopText))
+        if (property.HasFlag(LyricDisplayProperty.TopText))
         {
             AssertTopTextChanged();
         }
@@ -103,7 +102,7 @@ public abstract partial class DisplayProcessorTestScene : OsuGridTestScene
 
         AssertCenterTextChanged();
 
-        if (property.HasFlagFast(LyricDisplayProperty.BottomText))
+        if (property.HasFlag(LyricDisplayProperty.BottomText))
         {
             AssertBottomTextChanged();
         }
