@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
@@ -43,10 +42,10 @@ public class LyricLayout : IKaraokeSkinElement
         drawableLyric.Origin = Alignment;
         drawableLyric.Margin = new MarginPadding
         {
-            Left = Alignment.HasFlagFast(Anchor.x0) ? HorizontalMargin : 0,
-            Right = Alignment.HasFlagFast(Anchor.x2) ? HorizontalMargin : 0,
-            Top = Alignment.HasFlagFast(Anchor.y0) ? VerticalMargin : 0,
-            Bottom = Alignment.HasFlagFast(Anchor.y2) ? VerticalMargin : 0,
+            Left = Alignment.HasFlag(Anchor.x0) ? HorizontalMargin : 0,
+            Right = Alignment.HasFlag(Anchor.x2) ? HorizontalMargin : 0,
+            Top = Alignment.HasFlag(Anchor.y0) ? VerticalMargin : 0,
+            Bottom = Alignment.HasFlag(Anchor.y2) ? VerticalMargin : 0,
         };
     }
 }

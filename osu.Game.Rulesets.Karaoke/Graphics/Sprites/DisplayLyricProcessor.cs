@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites.Processor;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -90,13 +89,13 @@ public class DisplayLyricProcessor : IDisposable
         processor.UpdateAll();
 
         // should trigger top text update even not display.
-        if (!displayProperty.HasFlagFast(LyricDisplayProperty.TopText))
+        if (!displayProperty.HasFlag(LyricDisplayProperty.TopText))
         {
             TopTextChanged?.Invoke(Array.Empty<PositionText>());
         }
 
         // should trigger bottom text update even not display.
-        if (!displayProperty.HasFlagFast(LyricDisplayProperty.BottomText))
+        if (!displayProperty.HasFlag(LyricDisplayProperty.BottomText))
         {
             BottomTextChanged?.Invoke(Array.Empty<PositionText>());
         }

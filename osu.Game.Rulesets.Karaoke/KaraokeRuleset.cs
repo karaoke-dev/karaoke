@@ -280,7 +280,11 @@ public partial class KaraokeRuleset : Ruleset
         return statistic.ToArray();
     }
 
-    public override RulesetSetupSection CreateEditorSetupSection() => new KaraokeSetupSection();
+    public override IEnumerable<SetupSection> CreateEditorSetupSections() => new SetupSection[]
+    {
+        new KaraokeSingerSection(),
+        new KaraokeNoteSection(),
+    };
 
     public KaraokeRuleset()
     {
