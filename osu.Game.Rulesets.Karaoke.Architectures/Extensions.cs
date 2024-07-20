@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ArchUnitNET.Domain;
-using ArchUnitNET.Domain.Dependencies;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Tests;

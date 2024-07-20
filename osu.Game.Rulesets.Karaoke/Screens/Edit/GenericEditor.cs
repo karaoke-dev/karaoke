@@ -8,7 +8,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
@@ -19,9 +18,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Components;
 using osu.Game.Screens.Edit.Components.Menus;
-using osu.Game.Screens.Edit.Components.Timelines.Summary;
 using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
