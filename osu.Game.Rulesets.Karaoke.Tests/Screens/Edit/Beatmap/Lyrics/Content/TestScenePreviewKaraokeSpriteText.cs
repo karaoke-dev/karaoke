@@ -57,7 +57,10 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
                     RelativeSizeAxes = Axes.Both,
                     Colour = colour.BlueDarker,
                 },
-                karaokeSpriteText = new PreviewKaraokeSpriteText(lyric),
+                karaokeSpriteText = new PreviewKaraokeSpriteText(lyric)
+                {
+                    Position = new Vector2(24, 8),
+                },
                 mask = new Container
                 {
                     Masking = true,

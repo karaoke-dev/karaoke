@@ -26,7 +26,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     public Lyric HitObject;
 
-    public Action? SizeChanged;
+    public Action<Vector2>? SizeChanged;
 
     private readonly EditorLyricSpriteText spriteText;
 
@@ -59,13 +59,16 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     {
         ScheduleAfterChildren(() =>
         {
-            SizeChanged?.Invoke();
+            SizeChanged?.Invoke(DrawSize);
         });
     }
 
     #region Text char index
 
     public int? GetCharIndexByPosition(float position)
+        => getCharIndexByPosition(position - Position.X);
+
+    private int? getCharIndexByPosition(float position)
     {
         for (int i = 0; i < Text.Length; i++)
         {
@@ -84,6 +87,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     }
 
     public RectangleF GetRectByCharIndex(int charIndex)
+        => getRectByCharIndex(charIndex).Offset(Position);
+
+    private RectangleF getRectByCharIndex(int charIndex)
     {
         if (charIndex < 0 || charIndex >= Text.Length)
             throw new ArgumentOutOfRangeException(nameof(charIndex));
@@ -96,6 +102,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     #region Text indicator
 
     public int GetCharIndicatorByPosition(float position)
+        => getCharIndicatorByPosition(position - Position.X);
+
+    private int getCharIndicatorByPosition(float position)
     {
         for (int i = 0; i < Text.Length; i++)
         {
@@ -114,6 +123,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     }
 
     public RectangleF GetRectByCharIndicator(int charIndex)
+        => getRectByCharIndicator(charIndex).Offset(Position);
+
+    private RectangleF getRectByCharIndicator(int charIndex)
     {
         if (charIndex < 0 || charIndex > Text.Length)
             throw new ArgumentOutOfRangeException(nameof(charIndex));
@@ -142,6 +154,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     #region Ruby tag
 
     public RectangleF? GetRubyTagByPosition(RubyTag rubyTag) =>
+        getRubyTagByPosition(rubyTag)?.Offset(Position);
+
+    private RectangleF? getRubyTagByPosition(RubyTag rubyTag) =>
         spriteText.GetRubyTagPosition(rubyTag);
 
     #endregion
@@ -149,6 +164,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     #region Time tag
 
     public TimeTag? GetTimeTagByPosition(float position)
+        => getTimeTagByPosition(position - Position.X);
+
+    private TimeTag? getTimeTagByPosition(float position)
     {
         var hoverIndex = getHoverIndex();
         if (hoverIndex == null)
@@ -184,6 +202,9 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     }
 
     public Vector2 GetPositionByTimeTag(TimeTag timeTag)
+        => getPositionByTimeTag(timeTag) + Position;
+
+    private Vector2 getPositionByTimeTag(TimeTag timeTag)
     {
         var basePosition = spriteText.GetTimeTagPosition(timeTag.Index);
         float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);

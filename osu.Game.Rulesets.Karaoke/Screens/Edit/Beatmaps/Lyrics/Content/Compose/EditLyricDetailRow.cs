@@ -33,6 +33,10 @@ public partial class EditLyricDetailRow : DetailRow
             Origin = Anchor.BottomLeft,
             Margin = new MarginPadding { Left = 10 },
             RelativeSizeAxes = Axes.X,
+            TextSizeChanged = (self, size) =>
+            {
+                self.Height = size.Y;
+            },
             Layers = new Layer[]
             {
                 new LyricLayer(lyric),

@@ -13,6 +13,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
@@ -28,6 +29,8 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
     private readonly Lyric lyric;
     private LocalisableString? lockReason;
 
+    public Action<InteractableLyric, Vector2>? TextSizeChanged = null;
+
     public InteractableLyric(Lyric lyric)
     {
         this.lyric = lyric;
@@ -36,9 +39,9 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
 
         karaokeSpriteText = new PreviewKaraokeSpriteText(lyric);
 
-        karaokeSpriteText.SizeChanged = () =>
+        karaokeSpriteText.SizeChanged = (size) =>
         {
-            Height = karaokeSpriteText.DrawHeight;
+            TextSizeChanged?.Invoke(this, size);
         };
 
         bindableMode.BindValueChanged(x =>
@@ -63,6 +66,12 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
             var lyricLayers = value.OfType<LyricLayer>().Single();
             lyricLayers.ApplyDrawableLyric(karaokeSpriteText);
         }
+    }
+
+    public Vector2 LyricPosition
+    {
+        get => karaokeSpriteText.Position;
+        set => karaokeSpriteText.Position = value;
     }
 
     public void TriggerDisallowEditEffect()
@@ -108,14 +117,14 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
         return mode switch
         {
             LyricEditorMode.View => null,
-            LyricEditorMode.EditText => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Text), nameof(Objects.Lyric.RubyTags), nameof(Objects.Lyric.TimeTags)),
-            LyricEditorMode.EditReferenceLyric => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.ReferenceLyric), nameof(Objects.Lyric.ReferenceLyricConfig)),
-            LyricEditorMode.EditLanguage => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.Language)),
-            LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.RubyTags)),
-            LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.TimeTags)),
-            LyricEditorMode.EditRomanisation => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.TimeTags)),
+            LyricEditorMode.EditText => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.TimeTags)),
+            LyricEditorMode.EditReferenceLyric => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
+            LyricEditorMode.EditLanguage => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Language)),
+            LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags)),
+            LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
+            LyricEditorMode.EditRomanisation => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.TimeTags)),
             LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric),
-            LyricEditorMode.EditSinger => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Objects.Lyric.SingerIds)),
+            LyricEditorMode.EditSinger => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.SingerIds)),
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null),
         };
     }

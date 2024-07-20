@@ -7,7 +7,6 @@ using ArchUnitNET.Domain;
 using ArchUnitNET.Domain.Extensions;
 using NUnit.Framework;
 using osu.Framework.Testing;
-using osu.Game.Rulesets.Karaoke.Tests;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Architectures;

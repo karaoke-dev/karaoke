@@ -32,6 +32,10 @@ public partial class EditLyricPreviewRow : PreviewRow
         {
             Margin = new MarginPadding { Left = 10 },
             RelativeSizeAxes = Axes.X,
+            TextSizeChanged = (self, size) =>
+            {
+                self.Height = size.Y;
+            },
             Layers = new Layer[]
             {
                 new LyricLayer(lyric),
