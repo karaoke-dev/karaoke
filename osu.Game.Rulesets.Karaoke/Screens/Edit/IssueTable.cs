@@ -7,7 +7,6 @@ using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
