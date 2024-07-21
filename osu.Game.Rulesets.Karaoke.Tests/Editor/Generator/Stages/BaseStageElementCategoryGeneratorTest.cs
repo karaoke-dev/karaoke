@@ -16,9 +16,7 @@ public abstract class BaseLyricStageElementCategoryGeneratorTest<TGenerator, TOb
     where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, Lyric>
     where TStageElement : StageElement, IComparable<TStageElement>, new()
-    where TConfig : GeneratorConfig, new()
-{
-}
+    where TConfig : GeneratorConfig, new();
 
 public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, THitObject, TConfig>
     : BaseStageInfoPropertyGeneratorTest<TGenerator, TObject, TConfig>

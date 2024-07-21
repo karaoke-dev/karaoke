@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
 
-public class NoteGeneratorConfig : GeneratorConfig
-{
-}
+public class NoteGeneratorConfig : GeneratorConfig;

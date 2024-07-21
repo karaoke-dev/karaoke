@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-public abstract partial class LyricPropertyChangeHandler : HitObjectPropertyChangeHandler<Lyric>, ILyricPropertyChangeHandler
-{
-}
+public abstract partial class LyricPropertyChangeHandler : HitObjectPropertyChangeHandler<Lyric>, ILyricPropertyChangeHandler;

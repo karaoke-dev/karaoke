@@ -10,6 +10,4 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Stages;
 public abstract class BaseStageInfoPropertyGeneratorTest<TGenerator, TObject, TConfig>
     : BasePropertyGeneratorTest<TGenerator, KaraokeBeatmap, TObject, TConfig>
     where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
-    where TConfig : GeneratorConfig, new()
-{
-}
+    where TConfig : GeneratorConfig, new();

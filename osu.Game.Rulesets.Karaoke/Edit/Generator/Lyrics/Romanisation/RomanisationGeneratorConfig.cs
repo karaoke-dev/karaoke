@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Romanisation;
 
-public abstract class RomanisationGeneratorConfig : GeneratorConfig
-{
-}
+public abstract class RomanisationGeneratorConfig : GeneratorConfig;

@@ -222,8 +222,6 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
             }
         }
 
-        private partial class CreateRubyButton : EditorSectionButton
-        {
-        }
+        private partial class CreateRubyButton : EditorSectionButton;
     }
 }

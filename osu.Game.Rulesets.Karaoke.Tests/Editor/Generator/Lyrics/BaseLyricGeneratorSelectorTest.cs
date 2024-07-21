@@ -8,6 +8,4 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics;
 
 public abstract class BaseLyricGeneratorSelectorTest<TGenerator, TProperty>
     : BaseGeneratorSelectorTest<TGenerator, Lyric, TProperty>
-    where TGenerator : PropertyGenerator<Lyric, TProperty>
-{
-}
+    where TGenerator : PropertyGenerator<Lyric, TProperty>;

@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
-public class PreviewLyricStageElement : StageElement
-{
-}
+public class PreviewLyricStageElement : StageElement;

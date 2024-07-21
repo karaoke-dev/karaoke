@@ -44,7 +44,5 @@ public class TypeUtilsTest
         Assert.AreEqual(default(double?), TypeUtils.ChangeType<double?>(null));
     }
 
-    private class TestClass
-    {
-    }
+    private class TestClass;
 }

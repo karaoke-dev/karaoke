@@ -147,8 +147,6 @@ public abstract partial class AutoGenerateSubsection : FillFlowContainer
                 },
             };
 
-        private partial class AutoGenerateButton : EditorSectionButton
-        {
-        }
+        private partial class AutoGenerateButton : EditorSectionButton;
     }
 }

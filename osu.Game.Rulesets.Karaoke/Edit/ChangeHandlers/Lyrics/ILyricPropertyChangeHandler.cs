@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 
-public interface ILyricPropertyChangeHandler : IHitObjectPropertyChangeHandler
-{
-}
+public interface ILyricPropertyChangeHandler : IHitObjectPropertyChangeHandler;

@@ -6,9 +6,7 @@ using osu.Framework.Graphics.Transforms;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Stages;
 
-public interface IStageComponent : IDrawable
-{
-}
+public interface IStageComponent : IDrawable;
 
 internal class TransformAddStageComponent<TStageComponent> : Transform<TStageComponent, IAcceptStageComponent>
     where TStageComponent : class, IStageComponent

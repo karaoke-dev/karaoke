@@ -10,6 +10,4 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Lyrics;
 public abstract class BaseLyricDetectorTest<TDetector, TObject, TConfig>
     : BasePropertyDetectorTest<TDetector, Lyric, TObject, TConfig>
     where TDetector : LyricPropertyDetector<TObject, TConfig>
-    where TConfig : GeneratorConfig, new()
-{
-}
+    where TConfig : GeneratorConfig, new();

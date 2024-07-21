@@ -5,6 +5,4 @@ using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content;
 
-public partial class MainContent : CompositeDrawable
-{
-}
+public partial class MainContent : CompositeDrawable;

@@ -5,6 +5,4 @@ using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 
-public class TranslationConverter : DictionaryConverter<CultureInfo, string>
-{
-}
+public class TranslationConverter : DictionaryConverter<CultureInfo, string>;

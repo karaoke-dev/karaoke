@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Text;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditTextModeState : IHasEditStep<TextEditStep>, IHasSpecialAction<TextEditModeSpecialAction>
-{
-}
+public interface IEditTextModeState : IHasEditStep<TextEditStep>, IHasSpecialAction<TextEditModeSpecialAction>;

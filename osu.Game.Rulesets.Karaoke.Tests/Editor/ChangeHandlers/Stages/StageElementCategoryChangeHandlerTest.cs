@@ -284,9 +284,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         }
     }
 
-    private class TestCategory : StageElementCategory<TestStageElement, Lyric>
-    {
-    }
+    private class TestCategory : StageElementCategory<TestStageElement, Lyric>;
 
     public class TestStageElement : StageElement, IComparable<TestStageElement>
     {
