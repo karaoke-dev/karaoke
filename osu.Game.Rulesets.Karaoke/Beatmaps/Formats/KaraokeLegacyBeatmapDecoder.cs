@@ -65,7 +65,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
             // add translation queue
             translations.Add(line);
         }
-        else if (line.StartsWith("@", StringComparison.Ordinal))
+        else if (line.StartsWith('@'))
         {
             // Remove @ in time tag and add into lrc queue
             lrcLines.Add(line[1..]);
@@ -127,7 +127,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
                 var defaultNote = defaultNotes[i];
 
                 // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
-                if (!note.StartsWith("(", StringComparison.Ordinal) || !note.EndsWith(")", StringComparison.Ordinal))
+                if (!note.StartsWith('(') || !note.EndsWith(')'))
                 {
                     // Process and add note
                     applyNote(defaultNote, note);
@@ -147,7 +147,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
                         string? ruby = defaultNote.RubyText?.ElementAtOrDefault(j).ToString();
 
                         // Format like [1;0.5;か]
-                        if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))
+                        if (note.StartsWith('[') && note.EndsWith(']'))
                         {
                             string[] rubyNoteProperty = note.Replace("[", string.Empty).Replace("]", string.Empty).Split(';');
 
