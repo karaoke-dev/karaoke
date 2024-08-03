@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 
-public class KaraokeModPerfect : ModPerfect
-{
-}
+public class KaraokeModPerfect : ModPerfect;

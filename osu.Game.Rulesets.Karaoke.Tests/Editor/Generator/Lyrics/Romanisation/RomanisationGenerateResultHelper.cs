@@ -25,7 +25,7 @@ public class RomanisationGenerateResultHelper
     {
         var result = new RomanisationGenerateResult
         {
-            FirstSyllable = str.StartsWith("^", StringComparison.Ordinal),
+            FirstSyllable = str.StartsWith('^'),
             RomanisedSyllable = str.Replace("^", ""),
         };
 

@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail;
 
-internal abstract partial class EditSingerSection : Section
-{
-}
+internal abstract partial class EditSingerSection : Section;

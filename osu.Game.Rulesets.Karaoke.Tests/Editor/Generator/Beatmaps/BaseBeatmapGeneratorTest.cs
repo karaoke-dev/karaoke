@@ -10,6 +10,4 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Beatmaps;
 public abstract class BaseBeatmapGeneratorTest<TGenerator, TObject, TConfig>
     : BasePropertyGeneratorTest<TGenerator, KaraokeBeatmap, TObject, TConfig>
     where TGenerator : BeatmapPropertyGenerator<TObject, TConfig>
-    where TConfig : GeneratorConfig, new()
-{
-}
+    where TConfig : GeneratorConfig, new();

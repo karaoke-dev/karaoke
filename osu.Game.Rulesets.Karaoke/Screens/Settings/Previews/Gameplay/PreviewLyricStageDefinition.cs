@@ -8,6 +8,4 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 /// <summary>
 /// Definition for preview single lyric.
 /// </summary>
-public class PreviewLyricStageDefinition : StageDefinition
-{
-}
+public class PreviewLyricStageDefinition : StageDefinition;

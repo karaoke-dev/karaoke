@@ -114,7 +114,7 @@ public static class TestCaseTagHelper
             var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
             int? time = result.GetGroupValue<int?>("time");
             string? text = result.GetGroupValue<string?>("text");
-            bool? firstSyllable = text?.StartsWith("^");
+            bool? firstSyllable = text?.StartsWith('^');
 
             return new TimeTag(new TextIndex(index, state), time)
             {

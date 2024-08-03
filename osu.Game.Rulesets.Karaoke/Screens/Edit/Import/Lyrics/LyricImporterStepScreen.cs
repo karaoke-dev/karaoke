@@ -81,7 +81,5 @@ public abstract partial class LyricImporterStepScreen : OsuScreen, ILyricImporte
 
     public override string ToString() => Title;
 
-    private partial class LyricImporterStepButton : OsuButton
-    {
-    }
+    private partial class LyricImporterStepButton : OsuButton;
 }

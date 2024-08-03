@@ -58,7 +58,5 @@ public abstract partial class LyricEditorIssueSection : IssueSection
             => verifier.Refresh();
     }
 
-    protected abstract partial class LyricsIssueTable : LyricEditorIssueTable
-    {
-    }
+    protected abstract partial class LyricsIssueTable : LyricEditorIssueTable;
 }

@@ -5,10 +5,6 @@ using osu.Game.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration;
 
-public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRulesetEditSetting>
-{
-}
+public class KaraokeRulesetEditConfigManager : InMemoryConfigManager<KaraokeRulesetEditSetting>;
 
-public enum KaraokeRulesetEditSetting
-{
-}
+public enum KaraokeRulesetEditSetting;

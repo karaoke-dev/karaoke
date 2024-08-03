@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
 
-public class StageInfoGeneratorConfig : GeneratorConfig
-{
-}
+public class StageInfoGeneratorConfig : GeneratorConfig;

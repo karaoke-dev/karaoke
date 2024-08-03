@@ -6,6 +6,4 @@ using osu.Game.Rulesets.Karaoke.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 
-public partial class TestSceneKaraokeModPreviewStage : KaraokeModStageTestScene<KaraokeModPreviewStage, PreviewStageInfo>
-{
-}
+public partial class TestSceneKaraokeModPreviewStage : KaraokeModStageTestScene<KaraokeModPreviewStage, PreviewStageInfo>;

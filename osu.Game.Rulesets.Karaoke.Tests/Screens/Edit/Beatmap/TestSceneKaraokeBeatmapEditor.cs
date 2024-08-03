@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
 
-public partial class TestSceneKaraokeBeatmapEditor : GenericEditorTestScene<KaraokeBeatmapEditor, KaraokeBeatmapEditorScreenMode>
-{
-}
+public partial class TestSceneKaraokeBeatmapEditor : GenericEditorTestScene<KaraokeBeatmapEditor, KaraokeBeatmapEditorScreenMode>;

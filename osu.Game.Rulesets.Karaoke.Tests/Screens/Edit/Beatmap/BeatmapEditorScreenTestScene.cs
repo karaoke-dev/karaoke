@@ -6,6 +6,4 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps;
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Beatmap;
 
 public abstract partial class BeatmapEditorScreenTestScene<T> : GenericEditorScreenTestScene<T, KaraokeBeatmapEditorScreenMode>
-    where T : BeatmapEditorScreen
-{
-}
+    where T : BeatmapEditorScreen;

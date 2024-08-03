@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Scoring;
 
-public abstract class KaraokeHitWindows : HitWindows
-{
-}
+public abstract class KaraokeHitWindows : HitWindows;

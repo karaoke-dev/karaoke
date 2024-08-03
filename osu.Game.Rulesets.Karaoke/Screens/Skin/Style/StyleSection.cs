@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
-internal abstract partial class StyleSection : Section
-{
-}
+internal abstract partial class StyleSection : Section;

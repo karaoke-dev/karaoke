@@ -5,6 +5,4 @@ using System;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 
-public class InvalidWorkingPropertyAssignException : Exception
-{
-}
+public class InvalidWorkingPropertyAssignException : Exception;

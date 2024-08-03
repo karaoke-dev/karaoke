@@ -5,6 +5,4 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 
-public interface IEditRomanisationModeState : IHasEditStep<RomanisationTagEditStep>, IHasBlueprintSelection<TimeTag>
-{
-}
+public interface IEditRomanisationModeState : IHasEditStep<RomanisationTagEditStep>, IHasBlueprintSelection<TimeTag>;

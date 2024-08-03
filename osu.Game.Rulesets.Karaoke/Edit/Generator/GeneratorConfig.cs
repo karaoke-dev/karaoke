@@ -3,6 +3,4 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator;
 
-public abstract class GeneratorConfig
-{
-}
+public abstract class GeneratorConfig;
