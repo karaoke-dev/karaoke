@@ -82,7 +82,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
                 writer.Flush();
                 stream.Position = 0;
 
-                // Create lec decoder
+                // Create lrc decoder
                 var decoder = new LrcDecoder();
                 var lrcBeatmap = decoder.Decode(reader);
 
