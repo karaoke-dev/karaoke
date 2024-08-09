@@ -31,7 +31,7 @@ public partial class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImpo
 
     protected override TestLyricImporter CreateScreen()
     {
-        string temp = TestResources.GetTestLrcForImport("light");
+        string temp = TestResources.GetTestKarForImport("light");
         return new TestLyricImporter(new FileInfo(temp));
     }
 

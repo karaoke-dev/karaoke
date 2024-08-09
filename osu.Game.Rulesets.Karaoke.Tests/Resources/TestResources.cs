@@ -24,13 +24,13 @@ public static class TestResources
 
     public static Stream OpenSkinResource(string name) => OpenResource($"Testing/Skin/{name}.skin");
 
-    public static Stream OpenLrcResource(string name) => OpenResource($"Testing/Lrc/{name}.lrc");
+    public static Stream OpenKarResource(string name) => OpenResource($"Testing/Kar/{name}.kar");
 
-    public static string GetTestLrcForImport(string name)
+    public static string GetTestKarForImport(string name)
     {
-        string tempPath = Path.GetTempFileName() + ".lrc";
+        string tempPath = Path.GetTempFileName() + ".kar";
 
-        using (var stream = OpenLrcResource(name))
+        using (var stream = OpenKarResource(name))
         using (var newFile = File.Create(tempPath))
             stream.CopyTo(newFile);
 

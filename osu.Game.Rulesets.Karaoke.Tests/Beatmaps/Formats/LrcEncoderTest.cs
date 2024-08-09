@@ -33,7 +33,7 @@ public class LrcEncoderTest
 
     private static Beatmap decode(string filename, out Beatmap encoded)
     {
-        using var stream = TestResources.OpenLrcResource(filename);
+        using var stream = TestResources.OpenKarResource(filename);
         using var sr = new LineBufferedReader(stream);
 
         // Read file and decode to file
