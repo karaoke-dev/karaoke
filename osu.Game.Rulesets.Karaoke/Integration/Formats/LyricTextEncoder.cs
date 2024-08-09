@@ -5,9 +5,9 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+namespace osu.Game.Rulesets.Karaoke.Integration.Formats;
 
-public class LyricTextEncoder
+public class LyricTextEncoder : IEncoder<IBeatmap>
 {
     public string Encode(IBeatmap output)
     {
