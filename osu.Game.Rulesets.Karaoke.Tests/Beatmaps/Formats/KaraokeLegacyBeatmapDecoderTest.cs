@@ -113,10 +113,10 @@ public class KaraokeLegacyBeatmapDecoderTest
         using var stream = new LineBufferedReader(resStream);
 
         // Create karaoke beatmap decoder
-        var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+        var decoder = new KaraokeLegacyBeatmapDecoder();
 
         // Create initial beatmap
-        var beatmap = lrcDecoder.Decode(stream);
+        var beatmap = decoder.Decode(stream);
 
         // Convert to karaoke beatmap
         return (KaraokeBeatmap)new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();

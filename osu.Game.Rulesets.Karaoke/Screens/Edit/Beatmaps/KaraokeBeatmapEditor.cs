@@ -102,9 +102,9 @@ public partial class KaraokeBeatmapEditor : GenericEditor<KaraokeBeatmapEditorSc
                     Items = new MenuItem[]
                     {
                         new ImportLyricMenu(this, "Import from text", importBeatmapChangeHandler),
-                        new ImportLyricMenu(this, "Import from .lrc file", importBeatmapChangeHandler),
+                        new ImportLyricMenu(this, "Import from .kar file", importBeatmapChangeHandler),
                         new OsuMenuItemSpacer(),
-                        new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
+                        new EditorMenuItem("Export to .kar", MenuItemType.Standard, () => exportLyricManager.ExportToKar()),
                         new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
                     },
                 },

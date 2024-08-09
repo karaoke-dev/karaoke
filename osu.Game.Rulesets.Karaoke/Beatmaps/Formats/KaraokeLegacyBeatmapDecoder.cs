@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
-using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Lyrics.Notes;
+using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 
@@ -31,7 +31,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
     {
     }
 
-    private readonly IList<string> lrcLines = new List<string>();
+    private readonly IList<string> karFormatLines = new List<string>();
     private readonly IList<string> noteLines = new List<string>();
     private readonly IList<string> translations = new List<string>();
 
@@ -52,8 +52,8 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
 
         if (line.ToLower().StartsWith("@ruby", StringComparison.Ordinal))
         {
-            // lrc queue
-            lrcLines.Add(line);
+            // kar format queue
+            karFormatLines.Add(line);
         }
         else if (line.ToLower().StartsWith("@note", StringComparison.Ordinal))
         {
@@ -67,28 +67,19 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
         }
         else if (line.StartsWith('@'))
         {
-            // Remove @ in time tag and add into lrc queue
-            lrcLines.Add(line[1..]);
+            // Remove @ in time tag and add into kar queue
+            karFormatLines.Add(line[1..]);
         }
         else if (line.ToLower() == "end")
         {
-            // Start processing file
-            using (var stream = new MemoryStream())
-            using (var writer = new StreamWriter(stream))
-            using (var reader = new LineBufferedReader(stream))
-            {
-                // Create stream
-                writer.Write(string.Join("\n", lrcLines));
-                writer.Flush();
-                stream.Position = 0;
+            string content = string.Join("\n", karFormatLines);
 
-                // Create lrc decoder
-                var decoder = new LrcDecoder();
-                var lrcBeatmap = decoder.Decode(reader);
+            // Create decoder
+            var decoder = new KarDecoder();
+            var lyrics = decoder.Decode(content);
 
-                // Apply hitobjects
-                beatmap.HitObjects = lrcBeatmap.HitObjects;
-            }
+            // Apply hitobjects
+            beatmap.HitObjects = lyrics.OfType<HitObject>().ToList();
 
             processNotes(beatmap, noteLines);
             processTranslations(beatmap, translations);

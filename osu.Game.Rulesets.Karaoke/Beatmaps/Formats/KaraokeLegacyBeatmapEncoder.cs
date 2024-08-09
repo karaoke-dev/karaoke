@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
@@ -13,10 +14,10 @@ public class KaraokeLegacyBeatmapEncoder
 {
     public string Encode(Beatmap output)
     {
-        var lrcEncoder = new LrcEncoder();
+        var encoder = new KarEncoder();
         var results = new List<string>
         {
-            lrcEncoder.Encode(output),
+            encoder.Encode(output),
             string.Join("\n", encodeNotes(output)),
             string.Join("\n", encodeTranslations(output)),
         };

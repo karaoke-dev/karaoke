@@ -86,7 +86,7 @@ public partial class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFil
 
                 try
                 {
-                    importManager.ImportLrcFile(fileInfo);
+                    importManager.ImportFile(fileInfo);
                     DialogOverlay.Push(createCompleteDialog());
                 }
                 catch (Exception ex)
