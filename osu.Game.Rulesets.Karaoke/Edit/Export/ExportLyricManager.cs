@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Export;
@@ -20,15 +20,15 @@ public partial class ExportLyricManager : Component
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
 
-    public void ExportToLrc()
+    public void ExportToKar()
     {
-        var exportStorage = storage.GetStorageForDirectory("lrc");
-        string filename = $"{beatmap.Name}.lrc";
+        var exportStorage = storage.GetStorageForDirectory("kar");
+        string filename = $"{beatmap.Name}.kar";
 
         using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
         using (var sw = new StreamWriter(outputStream))
         {
-            var encoder = new LrcEncoder();
+            var encoder = new KarEncoder();
             sw.WriteLine(encoder.Encode(new Beatmap
             {
                 HitObjects = beatmap.HitObjects.ToList(),

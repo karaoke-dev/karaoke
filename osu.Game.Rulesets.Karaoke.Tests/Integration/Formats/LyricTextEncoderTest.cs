@@ -4,11 +4,11 @@
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats;
+namespace osu.Game.Rulesets.Karaoke.Tests.Integration.Formats;
 
 [TestFixture]
 public class LyricTextEncoderTest

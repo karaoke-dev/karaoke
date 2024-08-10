@@ -3,15 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 
@@ -203,18 +201,9 @@ public static class TestCaseTagHelper
         if (string.IsNullOrEmpty(str))
             return new Lyric();
 
-        using var stream = new MemoryStream();
-        using var writer = new StreamWriter(stream);
-        using var reader = new LineBufferedReader(stream);
-
-        // Create stream
-        writer.Write(str);
-        writer.Flush();
-        stream.Position = 0;
-
         // Create karaoke note decoder
-        var decoder = new LrcDecoder();
-        return decoder.Decode(reader).HitObjects.OfType<Lyric>().First();
+        var decoder = new KarDecoder();
+        return decoder.Decode(str).First();
     }
 
     /// <summary>

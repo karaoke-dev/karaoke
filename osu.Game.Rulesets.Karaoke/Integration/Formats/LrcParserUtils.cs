@@ -1,4 +1,4 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -10,22 +10,20 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
-using RubyTag = LrcParser.Model.RubyTag;
+using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
 using TextIndex = osu.Framework.Graphics.Sprites.TextIndex;
 
-namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+namespace osu.Game.Rulesets.Karaoke.Integration.Formats;
 
-public class LrcEncoder
+public class LrcParserUtils
 {
-    public string Encode(Beatmap output)
+    public static Song ConvertToSong(Beatmap beatmap)
     {
         // Note : save to lyric will lost some tags with no value.
-        var song = new Song
+        return new Song
         {
-            Lyrics = output.HitObjects.OfType<Lyric>().Select(encodeLyric).ToList(),
+            Lyrics = beatmap.HitObjects.OfType<Lyric>().Select(encodeLyric).ToList(),
         };
-        string encodeResult = new LrcParser.Parser.Lrc.LrcParser().Encode(song);
-        return encodeResult;
 
         static LrcParser.Model.Lyric encodeLyric(Lyric lyric) =>
             new()
@@ -50,8 +48,8 @@ public class LrcEncoder
             return new LrcParser.Model.TextIndex(index, state);
         }
 
-        static List<RubyTag> convertRubyTag(IEnumerable<Objects.RubyTag> rubyTags)
-            => rubyTags.Select(x => new RubyTag
+        static List<LrcParser.Model.RubyTag> convertRubyTag(IEnumerable<RubyTag> rubyTags)
+            => rubyTags.Select(x => new LrcParser.Model.RubyTag
             {
                 Text = x.Text,
                 StartCharIndex = x.StartIndex,
@@ -79,5 +77,48 @@ public class LrcEncoder
                              .ToDictionary(
                                  k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
                                  v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
+    }
+
+    public static IEnumerable<Lyric> ConvertToLyrics(Song song)
+    {
+        return song.Lyrics.Select((lrcLyric, index) =>
+        {
+            var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToArray();
+            var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
+            var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
+
+            return new Lyric
+            {
+                Order = index + 1, // should create default order.
+                Text = lrcLyric.Text,
+                TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
+                RubyTags = lrcRubies,
+            };
+        });
+
+        static TimeTag convertTimeTag(KeyValuePair<LrcParser.Model.TextIndex, int?> timeTag)
+            => new(convertTextIndex(timeTag.Key), timeTag.Value);
+
+        static TextIndex convertTextIndex(LrcParser.Model.TextIndex textIndex)
+        {
+            int index = textIndex.Index;
+            var state = textIndex.State == IndexState.Start ? Framework.Graphics.Sprites.TextIndex.IndexState.Start : Framework.Graphics.Sprites.TextIndex.IndexState.End;
+
+            return new TextIndex(index, state);
+        }
+
+        static RubyTag convertRubyTag(LrcParser.Model.RubyTag rubyTag)
+            => new()
+            {
+                Text = rubyTag.Text,
+                StartIndex = rubyTag.StartCharIndex,
+                EndIndex = rubyTag.EndCharIndex,
+            };
+
+        static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
+        {
+            int startIndex = rubyTag.StartCharIndex;
+            return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<LrcParser.Model.TextIndex, int?>(new LrcParser.Model.TextIndex(startIndex), x.Value))).ToArray();
+        }
     }
 }
