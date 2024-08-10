@@ -119,7 +119,7 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
     {
         private readonly IReadOnlyDependencyContainer dependencyContainer;
 
-        public IssueTablePopover(IReadOnlyDependencyContainer dependencyContainer, IReadOnlyCollection<Issue> issues)
+        public IssueTablePopover(IReadOnlyDependencyContainer dependencyContainer, IBindableList<Issue> issues)
         {
             this.dependencyContainer = dependencyContainer;
 
@@ -131,7 +131,7 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
                 {
                     new SingleLyricIssueTable
                     {
-                        Issues = issues,
+                        Issues = { BindTarget = issues, },
                     },
                     new IconButton
                     {
@@ -166,30 +166,43 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
 
         private partial class SingleLyricIssueTable : LyricEditorIssueTable
         {
-            protected override TableColumn[] CreateHeaders() => new[]
+            protected override Dimension[] CreateDimensions() => new[]
             {
-                new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-                new TableColumn("Message", Anchor.CentreLeft),
+                new Dimension(GridSizeMode.AutoSize, minSize: 30),
+                new Dimension(),
             };
 
-            protected override Drawable[] CreateContent(Issue issue) =>
-                new Drawable[]
+            protected override IssueTableHeaderText[] CreateHeaders() => new[]
+            {
+                new IssueTableHeaderText(string.Empty, Anchor.CentreLeft),
+                new IssueTableHeaderText("Message", Anchor.CentreLeft),
+            };
+
+            protected override Tuple<Drawable[], Action<Issue>> CreateContent()
+            {
+                IssueIcon issueIcon;
+                TruncatingSpriteText issueSpriteText;
+
+                return new Tuple<Drawable[], Action<Issue>>(new Drawable[]
                 {
-                    new IssueIcon
+                    issueIcon = new IssueIcon
                     {
                         Origin = Anchor.Centre,
                         Size = new Vector2(10),
                         Margin = new MarginPadding { Left = 10 },
-                        Issue = issue,
                     },
-                    new TruncatingSpriteText
+                    issueSpriteText = new TruncatingSpriteText
                     {
-                        Text = issue.ToString(),
                         RelativeSizeAxes = Axes.X,
                         Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                         ShowTooltip = false,
                     },
-                };
+                }, issue =>
+                {
+                    issueIcon.Issue = issue;
+                    issueSpriteText.Text = issue.ToString();
+                });
+            }
 
             protected override void OnIssueClicked(Issue issue)
             {

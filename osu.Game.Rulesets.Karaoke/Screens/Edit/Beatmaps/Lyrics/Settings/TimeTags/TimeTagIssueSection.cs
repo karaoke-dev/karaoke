@@ -4,7 +4,6 @@
 using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -24,88 +23,69 @@ public partial class TimeTagIssueSection : LyricEditorIssueSection
 
     private partial class TimeTagIssueTable : LyricsIssueTable
     {
-        protected override TableColumn[] CreateHeaders() => new[]
+        protected override Dimension[] CreateDimensions() => new[]
         {
-            new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-            new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
-            new TableColumn("Position", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 60)),
-            new TableColumn("Message", Anchor.CentreLeft),
+            new Dimension(GridSizeMode.AutoSize, minSize: 30),
+            new Dimension(GridSizeMode.AutoSize, minSize: 40),
+            new Dimension(GridSizeMode.AutoSize, minSize: 60),
+            new Dimension(),
         };
 
-        protected override Drawable[] CreateContent(Issue issue)
+        protected override IssueTableHeaderText[] CreateHeaders() => new[]
         {
-            (var lyric, TimeTag? timeTag) = getInvalidByIssue(issue);
+            new IssueTableHeaderText(string.Empty, Anchor.CentreLeft),
+            new IssueTableHeaderText("Lyric", Anchor.CentreLeft),
+            new IssueTableHeaderText("Position", Anchor.CentreLeft),
+            new IssueTableHeaderText("Message", Anchor.CentreLeft),
+        };
 
-            // show the issue with the invalid time-tag.
-            if (timeTag != null)
-            {
-                return new Drawable[]
-                {
-                    new IssueIcon
-                    {
-                        Origin = Anchor.Centre,
-                        Size = new Vector2(10),
-                        Margin = new MarginPadding { Left = 10 },
-                        Issue = issue,
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = $"#{lyric.Order}",
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                        Margin = new MarginPadding { Right = 10 },
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = TextIndexUtils.PositionFormattedString(timeTag.Index),
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                        Margin = new MarginPadding { Right = 10 },
-                    },
-                    new TruncatingSpriteText
-                    {
-                        Text = issue.ToString(),
-                        RelativeSizeAxes = Axes.X,
-                        Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
-                    },
-                };
-            }
+        protected override Tuple<Drawable[], Action<Issue>> CreateContent()
+        {
+            IssueIcon issueIcon;
+            OsuSpriteText orderSpriteText;
+            OsuSpriteText timeSpriteText;
+            TruncatingSpriteText issueSpriteText;
 
-            // show the default issue if not able to get the time-tag.
-            return new Drawable[]
+            return new Tuple<Drawable[], Action<Issue>>(new Drawable[]
             {
-                new SpriteIcon
+                issueIcon = new IssueIcon
                 {
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
-                    Colour = issue.Template.Colour,
                     Margin = new MarginPadding { Left = 10 },
-                    Icon = FontAwesome.Solid.AlignLeft,
                 },
-                new OsuSpriteText
-                {
-                    Text = $"#{lyric.Order}",
-                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
-                    Margin = new MarginPadding { Right = 10 },
-                },
-                new OsuSpriteText
+                orderSpriteText = new OsuSpriteText
                 {
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
-                new TruncatingSpriteText
+                timeSpriteText = new OsuSpriteText
                 {
-                    Text = issue.ToString(),
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                    Margin = new MarginPadding { Right = 10 },
+                },
+                issueSpriteText = new TruncatingSpriteText
+                {
                     RelativeSizeAxes = Axes.X,
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium),
                 },
-            };
-        }
-
-        private Tuple<Lyric, TimeTag?> getInvalidByIssue(Issue issue) =>
-            issue switch
+            }, issue =>
             {
-                LyricTimeTagIssue timeTagIssue => new Tuple<Lyric, TimeTag?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
-                LyricIssue lyricIssue => new Tuple<Lyric, TimeTag?>(lyricIssue.Lyric, null),
-                _ => throw new InvalidCastException(),
-            };
+                (var lyric, TimeTag? timeTag) = getInvalidByIssue(issue);
+
+                issueIcon.Issue = issue;
+                orderSpriteText.Text = $"#{lyric.Order}";
+                timeSpriteText.Text = timeTag != null ? TextIndexUtils.PositionFormattedString(timeTag.Index) : string.Empty;
+                issueSpriteText.Text = issue.ToString();
+            });
+
+            static Tuple<Lyric, TimeTag?> getInvalidByIssue(Issue issue) =>
+                issue switch
+                {
+                    LyricTimeTagIssue timeTagIssue => new Tuple<Lyric, TimeTag?>(timeTagIssue.Lyric, timeTagIssue.TimeTag),
+                    LyricIssue lyricIssue => new Tuple<Lyric, TimeTag?>(lyricIssue.Lyric, null),
+                    _ => throw new InvalidCastException(),
+                };
+        }
     }
 }

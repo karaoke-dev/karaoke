@@ -52,6 +52,7 @@ public abstract partial class IssueSection : EditorSection
             issueTable = CreateIssueTable(),
         };
 
+        issueTable.Issues.BindTo(Issues);
         Issues.BindCollectionChanged((_, _) =>
         {
             bool hasIssue = Issues.Any();
@@ -62,7 +63,6 @@ public abstract partial class IssueSection : EditorSection
             issueNavigator.Issues = Issues;
 
             issueTable.Alpha = hasIssue ? 1 : 0;
-            issueTable.Issues = Issues.Take(100);
         }, true);
     }
 
