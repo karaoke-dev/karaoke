@@ -9,9 +9,9 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
-public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
+public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag, TFillProperty>
     where TFlag : struct, Enum
-    where THitObject : KaraokeHitObject, IHasWorkingProperty<TFlag>, new()
+    where THitObject : KaraokeHitObject, IHasWorkingProperty<TFlag, TFillProperty>, new()
 {
     [Test]
     public void TestInitialState([Values] TFlag flag)

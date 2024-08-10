@@ -1,19 +1,16 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects.Workings;
 
-public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty>
+public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidatorTest<Note, NoteWorkingProperty, KaraokeBeatmap>
 {
     [Test]
     public void TestPage()
@@ -73,16 +70,6 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = new Lyric().ChangeId(3));
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = null);
-    }
-
-    [Test]
-    public void TestEffectApplier()
-    {
-        var note = new Note();
-
-        // page state is valid because assign the property.
-        Assert.DoesNotThrow(() => note.EffectApplier = new NoteClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
-        AssetIsValid(note, NoteWorkingProperty.EffectApplier, true);
     }
 
     protected override bool IsInitialStateValid(NoteWorkingProperty flag)

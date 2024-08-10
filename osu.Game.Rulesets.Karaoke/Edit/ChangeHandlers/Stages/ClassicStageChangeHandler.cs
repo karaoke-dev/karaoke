@@ -119,7 +119,7 @@ public partial class ClassicStageChangeHandler : BeatmapPropertyChangeHandler, I
         {
             action(stageInfo.LyricTimingInfo);
 
-            InvalidateAllHitObjectWorkingProperty(LyricWorkingProperty.Timing);
+            InvalidateAllHitObjectWorkingProperty(LyricStageWorkingProperty.Timing);
         });
     }
 }

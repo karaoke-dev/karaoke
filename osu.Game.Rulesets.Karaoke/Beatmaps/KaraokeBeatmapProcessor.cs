@@ -55,10 +55,10 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
             // should invalidate the working property here because the stage info is changed.
             beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
             {
-                x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-                x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+                x.InvalidateWorkingProperty(LyricStageWorkingProperty.Timing);
+                x.InvalidateWorkingProperty(LyricStageWorkingProperty.EffectApplier);
             });
-            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
+            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteStageWorkingProperty.EffectApplier));
         }
 
         if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
@@ -74,9 +74,18 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
     {
         // should convert to array here because validate the working property might change the start-time and the end time.
         // which will cause got the wrong item in the array.
-        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty>().ToArray())
+        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty<KaraokeBeatmap>>().ToArray())
         {
             hitObject.ValidateWorkingProperty(beatmap);
+        }
+
+        var stageInfo = beatmap.CurrentStageInfo;
+        if (stageInfo == null)
+            throw new InvalidCastException();
+
+        foreach (var hitObject in beatmap.HitObjects.OfType<IHasWorkingProperty<StageInfo>>().ToArray())
+        {
+            hitObject.ValidateWorkingProperty(stageInfo);
         }
     }
 }

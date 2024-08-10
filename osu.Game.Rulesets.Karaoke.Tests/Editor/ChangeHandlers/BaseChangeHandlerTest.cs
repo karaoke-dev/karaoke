@@ -12,6 +12,9 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Types;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -233,11 +236,27 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
 
             return editorBeatmap.HitObjects.OfType<KaraokeHitObject>().All(hitObject => hitObject switch
             {
-                Lyric lyric => lyric.GetAllInvalidWorkingProperties().Length == 0,
-                Note note => note.GetAllInvalidWorkingProperties().Length == 0,
+                Lyric lyric => !hasInvalidWorkingProperty(lyric),
+                Note note => !hasInvalidWorkingProperty(note),
                 _ => throw new NotSupportedException(),
             });
         });
+    }
+
+    private static bool hasInvalidWorkingProperty(Lyric lyric)
+    {
+        if (lyric is not (IHasWorkingProperty<LyricWorkingProperty, KaraokeBeatmap> workingProperty and IHasWorkingProperty<LyricStageWorkingProperty, StageInfo> stageWorkingProperty))
+            throw new NotSupportedException();
+
+        return workingProperty.HasInvalidWorkingProperty() || stageWorkingProperty.HasInvalidWorkingProperty();
+    }
+
+    private static bool hasInvalidWorkingProperty(Note note)
+    {
+        if (note is not (IHasWorkingProperty<NoteWorkingProperty, KaraokeBeatmap> workingProperty and IHasWorkingProperty<NoteStageWorkingProperty, StageInfo> stageWorkingProperty))
+            throw new NotSupportedException();
+
+        return workingProperty.HasInvalidWorkingProperty() || stageWorkingProperty.HasInvalidWorkingProperty();
     }
 
     private partial class MockEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler

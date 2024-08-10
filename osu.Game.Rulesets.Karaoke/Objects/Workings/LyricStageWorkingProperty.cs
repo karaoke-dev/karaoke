@@ -9,20 +9,25 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 /// Specifies which properties in the <see cref="Lyric"/> are being invalidated.
 /// </summary>
 [Flags]
-public enum LyricWorkingProperty
+public enum LyricStageWorkingProperty
 {
     /// <summary>
-    /// <see cref="Lyric.Singers"/> is being invalidated.
+    /// <see cref="Lyric.StartTime"/> is being invalidated.
     /// </summary>
-    Singers = 1,
+    StartTime = 1,
 
     /// <summary>
-    /// <see cref="Lyric.PageIndex"/> is being invalidated.
+    /// <see cref="Lyric.Duration"/> is being invalidated.
     /// </summary>
-    Page = 1 << 1,
+    Duration = 1 << 1,
 
     /// <summary>
-    /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
+    /// <see cref="Lyric.StartTime"/> and <see cref="Lyric.Duration"/> is being invalidated.
     /// </summary>
-    ReferenceLyric = 1 << 2,
+    Timing = StartTime | Duration,
+
+    /// <summary>
+    /// <see cref="Lyric.EffectApplier"/> is being invalidated.
+    /// </summary>
+    EffectApplier = 1 << 2,
 }

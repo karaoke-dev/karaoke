@@ -127,6 +127,7 @@ public partial class Note : KaraokeHitObject, IHasPage, IHasDuration, IHasText, 
     public Note()
     {
         workingPropertyValidator = new NoteWorkingPropertyValidator(this);
+        stageWorkingPropertyValidator = new NoteStageWorkingPropertyValidator(this);
 
         initInternalBindingEvent();
         initReferenceLyricEvent();
