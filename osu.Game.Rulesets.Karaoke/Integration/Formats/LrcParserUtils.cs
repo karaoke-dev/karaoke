@@ -102,7 +102,7 @@ public class LrcParserUtils
         static TextIndex convertTextIndex(LrcParser.Model.TextIndex textIndex)
         {
             int index = textIndex.Index;
-            var state = textIndex.State == IndexState.Start ? Framework.Graphics.Sprites.TextIndex.IndexState.Start : Framework.Graphics.Sprites.TextIndex.IndexState.End;
+            var state = textIndex.State == IndexState.Start ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
 
             return new TextIndex(index, state);
         }
