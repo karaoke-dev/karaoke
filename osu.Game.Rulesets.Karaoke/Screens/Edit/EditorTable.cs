@@ -47,7 +47,7 @@ public abstract partial class EditorTable : TableContainer
             RelativeSizeAxes = Axes.Both,
             Depth = 1f,
             Padding = new MarginPadding { Horizontal = -horizontal_inset },
-            Margin = new MarginPadding { Top = ROW_HEIGHT }
+            Margin = new MarginPadding { Top = ROW_HEIGHT },
         });
     }
 

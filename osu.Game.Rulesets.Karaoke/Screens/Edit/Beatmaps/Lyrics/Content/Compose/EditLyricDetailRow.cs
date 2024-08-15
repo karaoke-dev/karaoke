@@ -42,7 +42,7 @@ public partial class EditLyricDetailRow : DetailRow
                 new LyricLayer(lyric),
                 new InteractLyricLayer(lyric),
                 new TimeTagLayer(lyric),
-            }
+            },
         };
     }
 }
