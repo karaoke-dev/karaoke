@@ -28,7 +28,11 @@ public partial class LyricEditor : CompositeDrawable
 
         InternalChild = skinProvidingContainer = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
         {
-            Margin = new MarginPadding { Left = 30 },
+            Padding = new MarginPadding
+            {
+                Vertical = 64,
+                Horizontal = 120,
+            },
             RelativeSizeAxes = Axes.Both,
         };
 

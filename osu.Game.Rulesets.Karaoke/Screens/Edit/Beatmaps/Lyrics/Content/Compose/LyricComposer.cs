@@ -146,7 +146,7 @@ public partial class LyricComposer : CompositeDrawable
                     closeOtherPanelsInTheSameDirection(type);
                 }
 
-                togglePanel(type, show);
+                panelInstance[type].State.Value = show ? Visibility.Visible : Visibility.Hidden;
             }, true);
         }
     }
@@ -191,13 +191,6 @@ public partial class LyricComposer : CompositeDrawable
             };
     }
 
-    private void togglePanel(PanelType panel, bool show)
-    {
-        panelInstance[panel].State.Value = show ? Visibility.Visible : Visibility.Hidden;
-
-        calculateLyricEditorSize();
-    }
-
     private void calculatePanelPosition()
     {
         float radio = DrawWidth / DrawHeight;
@@ -234,7 +227,6 @@ public partial class LyricComposer : CompositeDrawable
         }
 
         closeOtherPanelsInTheSameDirection(PanelType.Property);
-        calculateLyricEditorSize();
     }
 
     private void closeOtherPanelsInTheSameDirection(PanelType exceptPanel)
@@ -246,36 +238,6 @@ public partial class LyricComposer : CompositeDrawable
             var status = panelStatus[panel];
             status.Value = false;
         }
-    }
-
-    private void calculateLyricEditorSize()
-    {
-        var padding = new MarginPadding();
-
-        foreach (var (position, panelTypes) in panelDirections)
-        {
-            var instances = panelTypes.Select(panelType => panelInstance[panelType]).ToArray();
-            float maxWidth = instances.Any() ? instances.Max(getWidth) : 0;
-
-            switch (position)
-            {
-                case PanelDirection.Left:
-                    padding.Left = maxWidth;
-                    break;
-
-                case PanelDirection.Right:
-                    padding.Right = maxWidth;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(position), position, null);
-            }
-        }
-
-        mainEditorArea.Padding = padding;
-
-        static float getWidth(Panel panel)
-            => panel.State.Value == Visibility.Visible ? panel.Width : 0;
     }
 
     #endregion
