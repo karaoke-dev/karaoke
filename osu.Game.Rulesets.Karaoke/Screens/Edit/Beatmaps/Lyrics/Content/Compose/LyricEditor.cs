@@ -5,6 +5,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Primitives;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
@@ -20,20 +22,20 @@ public partial class LyricEditor : CompositeDrawable
     private readonly IBindable<float> bindableFontSize = new Bindable<float>();
 
     private readonly LyricEditorSkin skin;
-    private readonly SkinProvidingContainer skinProvidingContainer;
+    private readonly DragContainer dragContainer;
 
     public LyricEditor()
     {
         RelativeSizeAxes = Axes.Both;
 
-        InternalChild = skinProvidingContainer = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
+        InternalChild = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
         {
-            Padding = new MarginPadding
-            {
-                Vertical = 64,
-                Horizontal = 120,
-            },
             RelativeSizeAxes = Axes.Both,
+            Child = dragContainer = new DragContainer
+            {
+                Position = new Vector2(64, 120),
+                AutoSizeAxes = Axes.Both,
+            },
         };
 
         bindableFocusedLyric.BindValueChanged(e =>
@@ -50,17 +52,15 @@ public partial class LyricEditor : CompositeDrawable
 
     private void refreshPreviewLyric(Lyric? lyric)
     {
-        skinProvidingContainer.Clear();
+        dragContainer.Clear();
 
         if (lyric == null)
             return;
 
         const int border = 36;
 
-        skinProvidingContainer.Add(new InteractableLyric(lyric)
+        dragContainer.Add(new InteractableLyric(lyric)
         {
-            Anchor = Anchor.CentreLeft,
-            Origin = Anchor.CentreLeft,
             TextSizeChanged = (self, size) =>
             {
                 self.Width = size.X + border * 2;
@@ -96,5 +96,23 @@ public partial class LyricEditor : CompositeDrawable
         bindableFocusedLyric.BindTo(lyricCaretState.BindableFocusedLyric);
 
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
+    }
+
+    private partial class DragContainer : Container
+    {
+        protected override bool OnDragStart(DragStartEvent e) => true;
+
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
+        {
+            // only receive input only if outside the content
+            return !ScreenSpaceDrawQuad.AABBFloat.Contains(screenSpacePos);
+        }
+
+        protected override bool ComputeIsMaskedAway(RectangleF maskingBounds) => false;
+
+        protected override void OnDrag(DragEvent e)
+        {
+            Position += e.Delta;
+        }
     }
 }
