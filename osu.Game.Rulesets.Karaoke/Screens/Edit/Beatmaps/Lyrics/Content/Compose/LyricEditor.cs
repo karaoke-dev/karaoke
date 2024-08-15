@@ -102,16 +102,15 @@ public partial class LyricEditor : CompositeDrawable
     {
         protected override bool OnDragStart(DragStartEvent e) => true;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
-        {
-            // only receive input only if outside the content
-            return !ScreenSpaceDrawQuad.AABBFloat.Contains(screenSpacePos);
-        }
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => true;
 
         protected override bool ComputeIsMaskedAway(RectangleF maskingBounds) => false;
 
         protected override void OnDrag(DragEvent e)
         {
+            if (!e.AltPressed)
+                return;
+
             Position += e.Delta;
         }
     }
