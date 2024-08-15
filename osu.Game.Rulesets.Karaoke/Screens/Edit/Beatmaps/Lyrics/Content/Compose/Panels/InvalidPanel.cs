@@ -11,6 +11,7 @@ public partial class InvalidPanel : Panel
     public InvalidPanel()
     {
         Width = 200;
+        Height = 300;
     }
 
     protected override IReadOnlyList<Drawable> CreateSections() =>

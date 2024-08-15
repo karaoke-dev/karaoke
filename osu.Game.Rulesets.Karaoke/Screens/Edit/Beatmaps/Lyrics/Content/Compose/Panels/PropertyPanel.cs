@@ -12,6 +12,7 @@ public partial class PropertyPanel : Panel
     public PropertyPanel()
     {
         Width = 200;
+        RelativeSizeAxes = Axes.Y;
     }
 
     protected override IReadOnlyList<Drawable> CreateSections()

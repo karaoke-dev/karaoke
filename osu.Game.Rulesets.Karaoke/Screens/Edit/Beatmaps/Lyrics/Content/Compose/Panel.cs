@@ -26,30 +26,38 @@ public abstract partial class Panel : FocusedOverlayContainer
     protected virtual string PopOutSampleName => "UI/overlay-pop-out";
 
     private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
     private readonly Box background;
     private readonly FillFlowContainer fillFlowContainer;
 
+    protected override bool BlockPositionalInput => false;
+
     protected Panel()
     {
-        RelativeSizeAxes = Axes.Y;
+        Padding = new MarginPadding(10);
 
-        InternalChildren = new Drawable[]
+        InternalChild = new Container
         {
-            background = new Box
+            Masking = true,
+            CornerRadius = 10,
+            RelativeSizeAxes = Axes.Both,
+            Children = new Drawable[]
             {
-                Name = "Background",
-                RelativeSizeAxes = Axes.Both,
-            },
-            new OsuScrollContainer
-            {
-                RelativeSizeAxes = Axes.Both,
-                Child = fillFlowContainer = new FillFlowContainer
+                background = new Box
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
-                    Spacing = new Vector2(10),
+                    Name = "Background",
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0.6f,
+                },
+                new OsuScrollContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = fillFlowContainer = new FillFlowContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Vertical,
+                        Spacing = new Vector2(10),
+                    },
                 },
             },
         };
@@ -85,22 +93,17 @@ public abstract partial class Panel : FocusedOverlayContainer
             switch (direction)
             {
                 case PanelDirection.Left:
-                    Anchor = Anchor.CentreLeft;
-                    Origin = Anchor.CentreLeft;
+                    Anchor = Anchor.TopLeft;
+                    Origin = Anchor.TopLeft;
                     break;
 
                 case PanelDirection.Right:
-                    Anchor = Anchor.CentreRight;
-                    Origin = Anchor.CentreRight;
+                    Anchor = Anchor.TopRight;
+                    Origin = Anchor.TopRight;
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction));
-            }
-
-            if (State.Value == Visibility.Hidden)
-            {
-                X = getHideXPosition();
             }
         }
     }
@@ -109,8 +112,6 @@ public abstract partial class Panel : FocusedOverlayContainer
     {
         samplePopIn?.Play();
 
-        // todo: adjust the effect.
-        this.MoveToX(0, transition_length, Easing.OutQuint);
         this.FadeTo(1, transition_length, Easing.OutQuint);
 
         // should load the content after opened.
@@ -121,20 +122,10 @@ public abstract partial class Panel : FocusedOverlayContainer
     {
         samplePopOut?.Play();
 
-        float width = getHideXPosition();
-        this.MoveToX(width, transition_length, Easing.OutQuint);
         this.FadeTo(0, transition_length, Easing.OutQuint).OnComplete(_ =>
         {
             // should clear the content if close.
             fillFlowContainer.Clear();
         });
     }
-
-    private float getHideXPosition() =>
-        direction switch
-        {
-            PanelDirection.Left => -DrawWidth,
-            PanelDirection.Right => DrawWidth,
-            _ => throw new ArgumentOutOfRangeException(),
-        };
 }
