@@ -143,11 +143,11 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
             switch (anchor)
             {
                 case Anchor.CentreLeft:
-                    float leftPosition = rect.Value.Left + offset;
+                    var leftPosition = rect.Value.BottomLeft + new Vector2(offset, 0);
                     return previewLyricPositionProvider.GetCharIndexByPosition(leftPosition);
 
                 case Anchor.CentreRight:
-                    float rightPosition = rect.Value.Right + offset;
+                    var rightPosition = rect.Value.BottomRight + new Vector2(offset, 0);
                     return previewLyricPositionProvider.GetCharIndexByPosition(rightPosition);
 
                 default:

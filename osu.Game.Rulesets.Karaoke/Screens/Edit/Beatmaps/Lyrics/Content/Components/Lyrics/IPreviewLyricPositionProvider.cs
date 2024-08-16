@@ -9,17 +9,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compone
 
 public interface IPreviewLyricPositionProvider
 {
-    int? GetCharIndexByPosition(float position);
+    int? GetCharIndexByPosition(Vector2 position);
 
     RectangleF GetRectByCharIndex(int charIndex);
 
-    int GetCharIndicatorByPosition(float position);
+    int? GetCharIndicatorByPosition(Vector2 position);
 
     RectangleF GetRectByCharIndicator(int gapIndex);
 
     RectangleF? GetRubyTagByPosition(RubyTag rubyTag);
 
-    TimeTag? GetTimeTagByPosition(float position);
+    TimeTag? GetTimeTagByPosition(Vector2 position);
 
     Vector2 GetPositionByTimeTag(TimeTag timeTag);
 }

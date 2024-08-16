@@ -65,22 +65,16 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #region Text char index
 
-    public int? GetCharIndexByPosition(float position)
+    public int? GetCharIndexByPosition(Vector2 position)
     {
         for (int i = 0; i < Text.Length; i++)
         {
-            (double startX, double endX) = getTriggerPositionByTimeIndex(i);
-            if (position >= startX && position <= endX)
+            var rectangle = spriteText.GetCharacterDrawRectangle(i);
+            if (rectangle.Contains(position))
                 return i;
         }
 
         return null;
-
-        Tuple<double, double> getTriggerPositionByTimeIndex(int charIndex)
-        {
-            var rectangle = spriteText.GetCharacterDrawRectangle(charIndex);
-            return new Tuple<double, double>(rectangle.Left, rectangle.Right);
-        }
     }
 
     public RectangleF GetRectByCharIndex(int charIndex)
@@ -95,21 +89,40 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #region Text indicator
 
-    public int GetCharIndicatorByPosition(float position)
+    public int? GetCharIndicatorByPosition(Vector2 position)
     {
-        for (int i = 0; i < Text.Length; i++)
+        for (int i = 0; i < Text.Length + 1; i++)
         {
-            float textCenterPosition = getTriggerPositionByTimeIndex(i);
-            if (position < textCenterPosition)
+            var rect = getTriggerPositionByTimeIndex(i);
+            if (rect.Contains(position))
                 return i;
         }
 
-        return Text.Length;
+        return null;
 
-        float getTriggerPositionByTimeIndex(int charIndex)
+        RectangleF getTriggerPositionByTimeIndex(int gapIndex)
         {
-            var rectangle = spriteText.GetCharacterDrawRectangle(charIndex);
-            return rectangle.Centre.X;
+            if (gapIndex == 0)
+            {
+                var rectangle = spriteText.GetCharacterDrawRectangle(gapIndex);
+                return new RectangleF(rectangle.Left, rectangle.Top, rectangle.Width / 2, rectangle.Height);
+            }
+
+            if (gapIndex == Text.Length)
+            {
+                var rectangle = spriteText.GetCharacterDrawRectangle(gapIndex - 1);
+                return new RectangleF(rectangle.Centre.X, rectangle.Top, rectangle.Width / 2, rectangle.Height);
+            }
+
+            var leftRectangle = spriteText.GetCharacterDrawRectangle(gapIndex - 1);
+            var rightRectangle = spriteText.GetCharacterDrawRectangle(gapIndex);
+
+            float x = leftRectangle.Centre.X;
+            float y = Math.Min(leftRectangle.Y, rightRectangle.Y);
+            float width = rightRectangle.Centre.X - leftRectangle.Centre.X;
+            float height = Math.Max(leftRectangle.Height, rightRectangle.Height);
+
+            return new RectangleF(x, y, width, height);
         }
     }
 
@@ -148,7 +161,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
 
     #region Time tag
 
-    public TimeTag? GetTimeTagByPosition(float position)
+    public TimeTag? GetTimeTagByPosition(Vector2 position)
     {
         var hoverIndex = getHoverIndex();
         if (hoverIndex == null)
@@ -165,7 +178,7 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
                 {
                     var textIndex = new TextIndex(i, indexState);
                     var triggerRange = getTriggerRange(textIndex);
-                    if (position >= triggerRange.Item1 && position <= triggerRange.Item2)
+                    if (triggerRange.Contains(position))
                         return textIndex;
                 }
             }
@@ -173,12 +186,12 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
             // hover the last time-tag if exceed the range.
             return null;
 
-            Tuple<float, float> getTriggerRange(TextIndex textIndex)
+            RectangleF getTriggerRange(TextIndex textIndex)
             {
                 var rect = spriteText.GetCharacterDrawRectangle(textIndex.Index);
                 return TextIndexUtils.GetValueByState(textIndex,
-                    () => new Tuple<float, float>(rect.Left, rect.Centre.X),
-                    () => new Tuple<float, float>(rect.Centre.X, rect.Right));
+                    () => new RectangleF(rect.Left, rect.Top, rect.Width / 2, rect.Height),
+                    () => new RectangleF(rect.Centre.X, rect.Top, rect.Width / 2, rect.Height));
             }
         }
     }

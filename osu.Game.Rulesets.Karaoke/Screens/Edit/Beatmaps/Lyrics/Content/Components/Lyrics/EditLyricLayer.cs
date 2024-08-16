@@ -118,14 +118,14 @@ public partial class EditLyricLayer : UIEventLayer
     private object? getCaretIndexByPosition(UIEvent mouseEvent)
     {
         var algorithm = lyricCaretState.CaretPositionAlgorithm;
-        float xPosition = ToLocalSpace(mouseEvent.ScreenSpaceMousePosition).X;
+        var position = ToLocalSpace(mouseEvent.ScreenSpaceMousePosition);
         return algorithm switch
         {
-            CuttingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(xPosition),
-            TypingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(xPosition),
+            CuttingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(position),
+            TypingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(position),
             NavigateCaretPositionAlgorithm => null,
-            CreateRubyTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(xPosition),
-            CreateRemoveTimeTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(xPosition),
+            CreateRubyTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(position),
+            CreateRemoveTimeTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(position),
             _ => null,
         };
     }
