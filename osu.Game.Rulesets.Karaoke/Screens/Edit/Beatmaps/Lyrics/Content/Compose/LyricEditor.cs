@@ -50,7 +50,6 @@ public partial class LyricEditor : CompositeDrawable
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
-                LyricPosition = new Vector2(border),
                 TextSizeChanged = (self, size) =>
                 {
                     self.Width = size.X + border * 2;
@@ -62,7 +61,10 @@ public partial class LyricEditor : CompositeDrawable
                     {
                         Spacing = 10,
                     },
-                    new LyricLayer(lyric),
+                    new LyricLayer(lyric)
+                    {
+                        LyricPosition = new Vector2(border),
+                    },
                     new EditLyricLayer(lyric),
                     new TimeTagLayer(lyric),
                     new CaretLayer(lyric),
