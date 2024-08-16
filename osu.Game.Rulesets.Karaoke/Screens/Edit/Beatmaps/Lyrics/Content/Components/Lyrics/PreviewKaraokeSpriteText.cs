@@ -113,27 +113,27 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
         }
     }
 
-    public RectangleF GetRectByCharIndicator(int charIndex)
+    public RectangleF GetRectByCharIndicator(int gapIndex)
     {
-        if (charIndex < 0 || charIndex > Text.Length)
-            throw new ArgumentOutOfRangeException(nameof(charIndex));
+        if (gapIndex < 0 || gapIndex > Text.Length)
+            throw new ArgumentOutOfRangeException(nameof(gapIndex));
 
         const float min_spacing_width = 1;
 
-        if (charIndex == 0)
+        if (gapIndex == 0)
         {
-            var referenceRectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+            var referenceRectangle = spriteText.GetCharacterDrawRectangle(gapIndex);
             return new RectangleF(referenceRectangle.X - min_spacing_width, referenceRectangle.Y, min_spacing_width, referenceRectangle.Height);
         }
 
-        if (charIndex == Text.Length)
+        if (gapIndex == Text.Length)
         {
-            var referenceRectangle = spriteText.GetCharacterDrawRectangle(charIndex - 1);
+            var referenceRectangle = spriteText.GetCharacterDrawRectangle(gapIndex - 1);
             return new RectangleF(referenceRectangle.Right, referenceRectangle.Top, min_spacing_width, referenceRectangle.Height);
         }
 
-        var leftRectangle = spriteText.GetCharacterDrawRectangle(charIndex - 1);
-        var rightRectangle = spriteText.GetCharacterDrawRectangle(charIndex);
+        var leftRectangle = spriteText.GetCharacterDrawRectangle(gapIndex - 1);
+        var rightRectangle = spriteText.GetCharacterDrawRectangle(gapIndex);
         return new RectangleF(leftRectangle.Right, leftRectangle.Top, rightRectangle.X - leftRectangle.Right, leftRectangle.Y);
     }
 

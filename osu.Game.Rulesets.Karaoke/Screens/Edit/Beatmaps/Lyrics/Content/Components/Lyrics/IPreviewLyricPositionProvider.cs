@@ -15,7 +15,7 @@ public interface IPreviewLyricPositionProvider
 
     int GetCharIndicatorByPosition(float position);
 
-    RectangleF GetRectByCharIndicator(int charIndex);
+    RectangleF GetRectByCharIndicator(int gapIndex);
 
     RectangleF? GetRubyTagByPosition(RubyTag rubyTag);
 

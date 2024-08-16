@@ -69,8 +69,8 @@ public partial class LyricLayer : Layer, IPreviewLyricPositionProvider
     public int GetCharIndicatorByPosition(float position)
         => previewKaraokeSpriteText.GetCharIndicatorByPosition(position - LyricPosition.X);
 
-    public RectangleF GetRectByCharIndicator(int charIndex)
-        => previewKaraokeSpriteText.GetRectByCharIndicator(charIndex).Offset(LyricPosition);
+    public RectangleF GetRectByCharIndicator(int gapIndex)
+        => previewKaraokeSpriteText.GetRectByCharIndicator(gapIndex).Offset(LyricPosition);
 
     #endregion
 
