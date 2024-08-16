@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -112,6 +113,26 @@ public partial class LyricEditor : CompositeDrawable
                 return;
 
             Position += e.Delta;
+        }
+
+        protected override bool OnScroll(ScrollEvent e)
+        {
+            if (!e.AltPressed)
+                return false;
+
+            var triggerKey = e.ScrollDelta.Y > 0 ? KaraokeEditAction.DecreasePreviewFontSize : KaraokeEditAction.IncreasePreviewFontSize;
+            return trigger(triggerKey);
+
+            bool trigger(KaraokeEditAction action)
+            {
+                var inputManager = this.FindClosestParent<KeyBindingContainer<KaraokeEditAction>>();
+                if (inputManager == null)
+                    return false;
+
+                inputManager.TriggerPressed(action);
+                inputManager.TriggerReleased(action);
+                return true;
+            }
         }
     }
 }
