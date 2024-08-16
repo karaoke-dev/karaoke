@@ -3,22 +3,12 @@
 
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 
 public partial class DrawableNoteJudgement : DrawableJudgement
 {
-    public DrawableNoteJudgement(JudgementResult result, DrawableHitObject judgedObject)
-        : base(result, judgedObject)
-    {
-    }
-
-    public DrawableNoteJudgement()
-    {
-    }
-
     protected override Drawable CreateDefaultJudgement(HitResult result) => new DefaultKaraokeJudgementPiece(result);
 
     private partial class DefaultKaraokeJudgementPiece : DefaultJudgementPiece

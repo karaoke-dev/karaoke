@@ -19,12 +19,24 @@ public partial class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
     {
         foreach (var result in Enum.GetValues<HitResult>().Skip(1))
         {
-            AddStep("Show " + result.GetDescription(), () => SetContents(_ =>
-                new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, new DrawableNote())
+            AddStep("Show " + result.GetDescription(), () =>
+            {
+                SetContents(_ =>
                 {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                }));
+                    var drawableManiaJudgement = new DrawableNoteJudgement
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    };
+
+                    drawableManiaJudgement.Apply(new JudgementResult(new HitObject { StartTime = Time.Current }, new Judgement())
+                    {
+                        Type = result,
+                    }, null);
+
+                    return drawableManiaJudgement;
+                });
+            });
         }
     }
 }
