@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,10 +15,12 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Skinning;
 using osuTK;
@@ -33,6 +36,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
 
     private readonly Container judgementArea;
     private readonly JudgementContainer<DrawableNoteJudgement> judgements;
+    private readonly JudgementPooler<DrawableNoteJudgement> judgementPooler;
     private readonly Drawable judgementLine;
     private readonly ScoringMarker scoringMarker;
 
@@ -121,6 +125,9 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         });
 
         AddInternal(scoringStatus = new ScoringStatus(ScoringStatusMode.NotInitialized));
+
+        var hitWindows = new KaraokeNoteHitWindows();
+        AddInternal(judgementPooler = new JudgementPooler<DrawableNoteJudgement>(Enum.GetValues<HitResult>().Where(r => hitWindows.IsHitResultAllowed(r))));
     }
 
     protected override void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
@@ -186,12 +193,14 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
             return;
 
         judgements.Clear();
-        judgements.Add(new DrawableNoteJudgement(result, judgedObject)
+        judgements.Add(judgementPooler.Get(result.Type, j =>
         {
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone + 2),
-        });
+            j.Apply(result, judgedObject);
+
+            j.Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone + 2);
+            j.Anchor = Anchor.Centre;
+            j.Origin = Anchor.Centre;
+        })!);
 
         // Add hit explosion
         if (!result.IsHit)
