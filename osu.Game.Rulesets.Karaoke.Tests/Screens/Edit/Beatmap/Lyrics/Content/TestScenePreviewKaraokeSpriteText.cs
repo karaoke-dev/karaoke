@@ -57,20 +57,29 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
                     RelativeSizeAxes = Axes.Both,
                     Colour = colour.BlueDarker,
                 },
-                karaokeSpriteText = new PreviewKaraokeSpriteText(lyric)
+                new Container
                 {
-                    Position = new Vector2(24, 8),
-                },
-                mask = new Container
-                {
-                    Masking = true,
-                    BorderThickness = 1,
-                    BorderColour = colour.RedDarker,
-                    Child = new Box
+                    Padding = new MarginPadding
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colour.RedDarker,
-                        Alpha = 0.3f,
+                        Vertical = 8,
+                        Horizontal = 24,
+                    },
+                    RelativeSizeAxes = Axes.Both,
+                    Children = new Drawable[]
+                    {
+                        karaokeSpriteText = new PreviewKaraokeSpriteText(lyric),
+                        mask = new Container
+                        {
+                            Masking = true,
+                            BorderThickness = 1,
+                            BorderColour = colour.RedDarker,
+                            Child = new Box
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = colour.RedDarker,
+                                Alpha = 0.3f,
+                            },
+                        },
                     },
                 },
                 spriteText = new OsuSpriteText
@@ -105,7 +114,7 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
             triggerUpdate(() =>
             {
                 var mousePosition = getMousePosition();
-                int? charIndex = karaokeSpriteText.GetCharIndexByPosition(mousePosition.X);
+                int? charIndex = karaokeSpriteText.GetCharIndexByPosition(mousePosition);
                 updateText(charIndex.ToString());
 
                 if (charIndex == null)
@@ -147,11 +156,18 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
             triggerUpdate(() =>
             {
                 var mousePosition = getMousePosition();
-                int charIndex = karaokeSpriteText.GetCharIndicatorByPosition(mousePosition.X);
+                int? charIndex = karaokeSpriteText.GetCharIndicatorByPosition(mousePosition);
                 updateText(charIndex.ToString());
 
-                var position = karaokeSpriteText.GetRectByCharIndicator(charIndex);
-                showPosition(position);
+                if (charIndex == null)
+                {
+                    hidePosition();
+                }
+                else
+                {
+                    var position = karaokeSpriteText.GetRectByCharIndicator(charIndex.Value);
+                    showPosition(position);
+                }
             });
         });
     }
@@ -199,7 +215,7 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
             triggerUpdate(() =>
             {
                 var mousePosition = getMousePosition();
-                var timeTag = karaokeSpriteText.GetTimeTagByPosition(mousePosition.X);
+                var timeTag = karaokeSpriteText.GetTimeTagByPosition(mousePosition);
                 updateText(timeTag != null ? TimeTagUtils.FormattedString(timeTag) : null);
 
                 if (timeTag == null)

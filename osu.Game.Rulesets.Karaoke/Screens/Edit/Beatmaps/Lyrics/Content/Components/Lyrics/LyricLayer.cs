@@ -56,8 +56,8 @@ public partial class LyricLayer : Layer, IPreviewLyricPositionProvider
 
     #region Text char index
 
-    public int? GetCharIndexByPosition(float position)
-        => previewKaraokeSpriteText.GetCharIndexByPosition(position - LyricPosition.X);
+    public int? GetCharIndexByPosition(Vector2 position)
+        => previewKaraokeSpriteText.GetCharIndexByPosition(position - LyricPosition);
 
     public RectangleF GetRectByCharIndex(int charIndex)
         => previewKaraokeSpriteText.GetRectByCharIndex(charIndex).Offset(LyricPosition);
@@ -66,11 +66,11 @@ public partial class LyricLayer : Layer, IPreviewLyricPositionProvider
 
     #region Text indicator
 
-    public int GetCharIndicatorByPosition(float position)
-        => previewKaraokeSpriteText.GetCharIndicatorByPosition(position - LyricPosition.X);
+    public int? GetCharIndicatorByPosition(Vector2 position)
+        => previewKaraokeSpriteText.GetCharIndicatorByPosition(position - LyricPosition);
 
-    public RectangleF GetRectByCharIndicator(int charIndex)
-        => previewKaraokeSpriteText.GetRectByCharIndicator(charIndex).Offset(LyricPosition);
+    public RectangleF GetRectByCharIndicator(int gapIndex)
+        => previewKaraokeSpriteText.GetRectByCharIndicator(gapIndex).Offset(LyricPosition);
 
     #endregion
 
@@ -83,8 +83,8 @@ public partial class LyricLayer : Layer, IPreviewLyricPositionProvider
 
     #region Time tag
 
-    public TimeTag? GetTimeTagByPosition(float position)
-        => previewKaraokeSpriteText.GetTimeTagByPosition(position - LyricPosition.X);
+    public TimeTag? GetTimeTagByPosition(Vector2 position)
+        => previewKaraokeSpriteText.GetTimeTagByPosition(position - LyricPosition);
 
     public Vector2 GetPositionByTimeTag(TimeTag timeTag)
         => previewKaraokeSpriteText.GetPositionByTimeTag(timeTag) + LyricPosition;
