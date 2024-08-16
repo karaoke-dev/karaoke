@@ -70,7 +70,7 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
 
     public void TriggerDisallowEditEffect()
     {
-        InternalChildren.OfType<Layer>().ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
+        Layers.ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
     }
 
     [BackgroundDependencyLoader]
@@ -86,7 +86,7 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
 
         // adjust the style.
         bool editable = lockReason == null;
-        InternalChildren.OfType<Layer>().ForEach(x => x.UpdateDisableEditState(editable));
+        Layers.ForEach(x => x.UpdateDisableEditState(editable));
     }
 
     public LocalisableString TooltipText => lockReason ?? string.Empty;
