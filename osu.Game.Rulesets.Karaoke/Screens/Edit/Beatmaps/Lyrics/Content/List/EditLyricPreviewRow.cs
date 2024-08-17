@@ -36,13 +36,13 @@ public partial class EditLyricPreviewRow : PreviewRow
             {
                 self.Height = size.Y;
             },
-            Layers = new Layer[]
+            Loaders = new LayerLoader[]
             {
-                new LyricLayer(lyric),
-                new EditLyricLayer(lyric),
-                new TimeTagLayer(lyric),
-                new CaretLayer(lyric),
-                new BlueprintLayer(lyric),
+                new LayerLoader<LyricLayer>(),
+                new LayerLoader<EditLyricLayer>(),
+                new LayerLoader<TimeTagLayer>(),
+                new LayerLoader<CaretLayer>(),
+                new LayerLoader<BlueprintLayer>(),
             },
         };
     }
