@@ -99,4 +99,11 @@ public enum KaraokeEditAction
 
     [Description("Clear time")]
     ClearTime,
+
+    // Action for compose mode.
+    [Description("Increase font size.")]
+    IncreasePreviewFontSize,
+
+    [Description("Decrease font size.")]
+    DecreasePreviewFontSize,
 }
