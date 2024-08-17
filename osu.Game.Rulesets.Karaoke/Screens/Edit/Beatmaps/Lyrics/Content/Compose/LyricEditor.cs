@@ -38,50 +38,55 @@ public partial class LyricEditor : CompositeDrawable
 
         bindableFocusedLyric.BindValueChanged(e =>
         {
-            skinProvidingContainer.Clear();
-
-            var lyric = e.NewValue;
-            if (lyric == null)
-                return;
-
-            const int border = 36;
-
-            skinProvidingContainer.Add(new InteractableLyric(lyric)
-            {
-                Anchor = Anchor.CentreLeft,
-                Origin = Anchor.CentreLeft,
-                TextSizeChanged = (self, size) =>
-                {
-                    self.Width = size.X + border * 2;
-                    self.Height = size.Y + border * 2;
-                },
-                Loaders = new LayerLoader[]
-                {
-                    new LayerLoader<GridLayer>
-                    {
-                        OnLoad = layer =>
-                        {
-                            layer.Spacing = 10;
-                        },
-                    },
-                    new LayerLoader<LyricLayer>
-                    {
-                        OnLoad = layer =>
-                        {
-                            layer.LyricPosition = new Vector2(border);
-                        },
-                    },
-                    new LayerLoader<EditLyricLayer>(),
-                    new LayerLoader<TimeTagLayer>(),
-                    new LayerLoader<CaretLayer>(),
-                    new LayerLoader<BlueprintLayer>(),
-                },
-            });
+            refreshPreviewLyric(e.NewValue);
         });
 
         bindableFontSize.BindValueChanged(e =>
         {
             skin.FontSize = e.NewValue;
+            refreshPreviewLyric(bindableFocusedLyric.Value);
+        });
+    }
+
+    private void refreshPreviewLyric(Lyric? lyric)
+    {
+        skinProvidingContainer.Clear();
+
+        if (lyric == null)
+            return;
+
+        const int border = 36;
+
+        skinProvidingContainer.Add(new InteractableLyric(lyric)
+        {
+            Anchor = Anchor.CentreLeft,
+            Origin = Anchor.CentreLeft,
+            TextSizeChanged = (self, size) =>
+            {
+                self.Width = size.X + border * 2;
+                self.Height = size.Y + border * 2;
+            },
+            Loaders = new LayerLoader[]
+            {
+                new LayerLoader<GridLayer>
+                {
+                    OnLoad = layer =>
+                    {
+                        layer.Spacing = 10;
+                    },
+                },
+                new LayerLoader<LyricLayer>
+                {
+                    OnLoad = layer =>
+                    {
+                        layer.LyricPosition = new Vector2(border);
+                    },
+                },
+                new LayerLoader<EditLyricLayer>(),
+                new LayerLoader<TimeTagLayer>(),
+                new LayerLoader<CaretLayer>(),
+                new LayerLoader<BlueprintLayer>(),
+            },
         });
     }
 
