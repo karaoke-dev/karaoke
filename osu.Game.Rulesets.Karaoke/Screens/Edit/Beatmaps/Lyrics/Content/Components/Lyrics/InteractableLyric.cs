@@ -44,14 +44,17 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
         });
     }
 
-    public IEnumerable<Layer> Layers
+    public IEnumerable<LayerLoader> Loaders
     {
-        get => InternalChildren.OfType<Layer>();
         init
         {
-            AddRangeInternal(value);
+            foreach (var loader in value)
+            {
+                var layer = loader.CreateLayer(lyric);
+                AddInternal(layer);
+            }
 
-            var lyricLayers = value.OfType<LyricLayer>().Single();
+            var lyricLayers = layers.OfType<LyricLayer>().Single();
             lyricLayers.SizeChanged = size =>
             {
                 TextSizeChanged?.Invoke(this, size);
@@ -59,18 +62,20 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
         }
     }
 
+    private IEnumerable<Layer> layers => InternalChildren.OfType<Layer>();
+
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
     {
         var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
-        var lyricLayer = Layers.OfType<LyricLayer>().Single();
+        var lyricLayer = layers.OfType<LyricLayer>().Single();
         baseDependencies.CacheAs<IPreviewLyricPositionProvider>(lyricLayer);
         return baseDependencies;
     }
 
     public void TriggerDisallowEditEffect()
     {
-        Layers.ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
+        layers.ForEach(x => x.TriggerDisallowEditEffect(bindableMode.Value));
     }
 
     [BackgroundDependencyLoader]
@@ -86,7 +91,7 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
 
         // adjust the style.
         bool editable = lockReason == null;
-        Layers.ForEach(x => x.UpdateDisableEditState(editable));
+        layers.ForEach(x => x.UpdateDisableEditState(editable));
     }
 
     public LocalisableString TooltipText => lockReason ?? string.Empty;

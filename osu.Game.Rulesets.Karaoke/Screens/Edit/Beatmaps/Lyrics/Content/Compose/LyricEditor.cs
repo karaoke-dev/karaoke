@@ -55,20 +55,26 @@ public partial class LyricEditor : CompositeDrawable
                     self.Width = size.X + border * 2;
                     self.Height = size.Y + border * 2;
                 },
-                Layers = new Layer[]
+                Loaders = new LayerLoader[]
                 {
-                    new GridLayer(lyric)
+                    new LayerLoader<GridLayer>
                     {
-                        Spacing = 10,
+                        OnLoad = layer =>
+                        {
+                            layer.Spacing = 10;
+                        },
                     },
-                    new LyricLayer(lyric)
+                    new LayerLoader<LyricLayer>
                     {
-                        LyricPosition = new Vector2(border),
+                        OnLoad = layer =>
+                        {
+                            layer.LyricPosition = new Vector2(border);
+                        },
                     },
-                    new EditLyricLayer(lyric),
-                    new TimeTagLayer(lyric),
-                    new CaretLayer(lyric),
-                    new BlueprintLayer(lyric),
+                    new LayerLoader<EditLyricLayer>(),
+                    new LayerLoader<TimeTagLayer>(),
+                    new LayerLoader<CaretLayer>(),
+                    new LayerLoader<BlueprintLayer>(),
                 },
             });
         });

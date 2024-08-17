@@ -37,11 +37,11 @@ public partial class EditLyricDetailRow : DetailRow
             {
                 self.Height = size.Y;
             },
-            Layers = new Layer[]
+            Loaders = new LayerLoader[]
             {
-                new LyricLayer(lyric),
-                new InteractLyricLayer(lyric),
-                new TimeTagLayer(lyric),
+                new LayerLoader<LyricLayer>(),
+                new LayerLoader<InteractLyricLayer>(),
+                new LayerLoader<TimeTagLayer>(),
             },
         };
     }
