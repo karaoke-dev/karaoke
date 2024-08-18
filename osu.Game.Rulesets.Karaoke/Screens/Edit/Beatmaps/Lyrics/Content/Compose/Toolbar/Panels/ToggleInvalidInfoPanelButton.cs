@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose.Toolbar.Panels;
 
-public partial class ToggleInvalidInfoPanelButton : ToggleButton
+public partial class ToggleInvalidInfoPanelButton : ToolbarToggleButton
 {
     public ToggleInvalidInfoPanelButton()
     {
