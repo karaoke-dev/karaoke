@@ -17,10 +17,11 @@ public abstract partial class ToolbarEditActionButton : ToolbarButton, IKeyBindi
 
     public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
     {
-        if (e.Action == EditAction)
-            ToggleClickEffect();
+        if (e.Action != EditAction)
+            return false;
 
-        return false;
+        // press button should did the same things as click.
+        return TriggerClick();
     }
 
     public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
