@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose
 /// <summary>
 /// Button that able to receive the <see cref="KaraokeEditAction"/> event.
 /// </summary>
-public abstract partial class KeyActionButton : ActionButton, IKeyBindingHandler<KaraokeEditAction>, IHasIKeyBindingHandlerOrder
+public abstract partial class KeyActionButton : ToolbarButton, IKeyBindingHandler<KaraokeEditAction>, IHasIKeyBindingHandlerOrder
 {
     protected abstract KaraokeEditAction EditAction { get; }
 
