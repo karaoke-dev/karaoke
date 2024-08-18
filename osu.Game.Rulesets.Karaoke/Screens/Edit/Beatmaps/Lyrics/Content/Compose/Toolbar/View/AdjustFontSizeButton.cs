@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
@@ -21,10 +20,7 @@ public partial class AdjustFontSizeButton : CompositeDrawable
 
     public AdjustFontSizeButton()
     {
-        IconButton previousSizeButton;
         OsuSpriteText fontSizeSpriteText;
-        IconButton nextSizeButton;
-        float[] sizes = FontUtils.ComposerFontSize();
 
         Height = SpecialActionToolbar.HEIGHT;
         AutoSizeAxes = Axes.X;
@@ -36,18 +32,9 @@ public partial class AdjustFontSizeButton : CompositeDrawable
             Direction = FillDirection.Horizontal,
             Children = new Drawable[]
             {
-                previousSizeButton = new IconButton
+                new DecreasePreviewFontSizeActionButton
                 {
                     Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
-                    Icon = FontAwesome.Solid.Minus,
-                    Action = () =>
-                    {
-                        float previousSize = sizes.GetPrevious(bindableFontSize.Value);
-                        if (previousSize == default)
-                            return;
-
-                        bindableFontSize.Value = previousSize;
-                    },
                 },
                 new Container
                 {
@@ -59,18 +46,9 @@ public partial class AdjustFontSizeButton : CompositeDrawable
                         Origin = Anchor.Centre,
                     },
                 },
-                nextSizeButton = new IconButton
+                new IncreasePreviewFontSizeActionButton
                 {
                     Size = new Vector2(SpecialActionToolbar.ICON_SIZE),
-                    Icon = FontAwesome.Solid.Plus,
-                    Action = () =>
-                    {
-                        float nextSize = sizes.GetNext(bindableFontSize.Value);
-                        if (nextSize == default)
-                            return;
-
-                        bindableFontSize.Value = nextSize;
-                    },
                 },
             },
         };
@@ -78,8 +56,6 @@ public partial class AdjustFontSizeButton : CompositeDrawable
         bindableFontSize.BindValueChanged(e =>
         {
             fontSizeSpriteText.Text = FontUtils.GetText(e.NewValue);
-            previousSizeButton.Enabled.Value = sizes.GetPrevious(e.NewValue) != default;
-            nextSizeButton.Enabled.Value = sizes.GetNext(e.NewValue) != default;
         });
     }
 
@@ -87,5 +63,59 @@ public partial class AdjustFontSizeButton : CompositeDrawable
     private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
     {
         lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
+    }
+
+    private partial class DecreasePreviewFontSizeActionButton : PreviewFontSizeActionButton
+    {
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.DecreasePreviewFontSize;
+
+        protected override float GetTriggeredFontSize(float[] sizes, float currentFontSize) => sizes.GetPrevious(currentFontSize);
+
+        public DecreasePreviewFontSizeActionButton()
+        {
+            SetIcon(FontAwesome.Solid.Minus);
+        }
+    }
+
+    private partial class IncreasePreviewFontSizeActionButton : PreviewFontSizeActionButton
+    {
+        protected override KaraokeEditAction EditAction => KaraokeEditAction.IncreasePreviewFontSize;
+
+        protected override float GetTriggeredFontSize(float[] sizes, float currentFontSize) => sizes.GetNext(currentFontSize);
+
+        public IncreasePreviewFontSizeActionButton()
+        {
+            SetIcon(FontAwesome.Solid.Plus);
+        }
+    }
+
+    private abstract partial class PreviewFontSizeActionButton : ToolbarEditActionButton
+    {
+        private static readonly float[] sizes = FontUtils.ComposerFontSize();
+
+        private readonly Bindable<float> bindableFontSize = new();
+
+        protected PreviewFontSizeActionButton()
+        {
+            Action = () =>
+            {
+                float triggeredFontSize = GetTriggeredFontSize(sizes, bindableFontSize.Value);
+                bindableFontSize.Value = triggeredFontSize != default ? triggeredFontSize : bindableFontSize.Value;
+            };
+
+            bindableFontSize.BindValueChanged(e =>
+            {
+                float triggeredFontSize = GetTriggeredFontSize(sizes, e.NewValue);
+                SetState(triggeredFontSize != default);
+            });
+        }
+
+        protected abstract float GetTriggeredFontSize(float[] sizes, float currentFontSize);
+
+        [BackgroundDependencyLoader]
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        {
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.FontSizeInComposer, bindableFontSize);
+        }
     }
 }
