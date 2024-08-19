@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -17,9 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose
 /// </summary>
 public abstract partial class ToolbarButton : OsuClickableContainer
 {
-    [Resolved]
-    private TextureStore textures { get; set; } = null!;
-
     [Resolved]
     private OsuColour colours { get; set; } = null!;
 
