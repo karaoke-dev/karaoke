@@ -121,6 +121,10 @@ public partial class KaraokeRuleset : Ruleset
                 new KeyBinding(InputKey.S, KaraokeEditAction.RemoveEndTimeTag),
                 new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
                 new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
+
+                // Action for compose mode.
+                new KeyBinding(new[] { InputKey.Control, InputKey.Plus }, KaraokeEditAction.IncreasePreviewFontSize),
+                new KeyBinding(new[] { InputKey.Control, InputKey.Minus }, KaraokeEditAction.DecreasePreviewFontSize),
             },
             _ => Array.Empty<KeyBinding>(),
         };
