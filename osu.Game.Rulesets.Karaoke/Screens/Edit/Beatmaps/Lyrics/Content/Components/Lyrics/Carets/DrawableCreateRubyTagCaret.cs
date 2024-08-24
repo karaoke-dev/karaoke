@@ -28,9 +28,6 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
     private const float caret_move_time = 60;
     private const float caret_resize_time = 60;
 
-    [Resolved]
-    private ILyricCaretState lyricCaretState { get; set; } = null!;
-
     private readonly SpriteIcon icon;
 
     public DrawableCreateRubyTagCaret(DrawableCaretState state)
@@ -74,19 +71,6 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
 
     protected override void ApplyCaretPosition(CreateRubyTagCaretPosition caret)
     {
-        // should not show the hover caret if already contains the selected range.
-        if (State == DrawableCaretState.Hover)
-        {
-            bool isClickToThisCaret = lyricCaretState.CaretPosition?.Lyric == caret.Lyric;
-            bool isDraggingToThisCaret = lyricCaretState.RangeCaretPosition?.IsInRange(caret.Lyric) ?? false;
-
-            if (isClickToThisCaret || isDraggingToThisCaret)
-            {
-                Hide();
-                return;
-            }
-        }
-
         startCharIndex = caret.CharIndex;
         endCharIndex = caret.CharIndex;
 
