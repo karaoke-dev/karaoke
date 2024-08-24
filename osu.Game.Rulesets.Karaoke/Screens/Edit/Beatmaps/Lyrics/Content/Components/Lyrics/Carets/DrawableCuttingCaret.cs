@@ -15,13 +15,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compone
 
 public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
 {
+    private const float caret_width = 10;
+
     private readonly Container splitter;
     private readonly SpriteIcon splitIcon;
 
     public DrawableCuttingCaret(DrawableCaretState state)
         : base(state)
     {
-        Width = 10;
+        Width = caret_width;
         Origin = Anchor.TopCentre;
 
         InternalChildren = new Drawable[]
@@ -87,7 +89,7 @@ public partial class DrawableCuttingCaret : DrawableCaret<CuttingCaretPosition>
     {
         var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
 
-        Position = rect.TopLeft;
+        Position = rect.TopLeft + new Vector2(rect.Width / 2 - caret_width / 2, 0);
         Height = rect.Height;
     }
 

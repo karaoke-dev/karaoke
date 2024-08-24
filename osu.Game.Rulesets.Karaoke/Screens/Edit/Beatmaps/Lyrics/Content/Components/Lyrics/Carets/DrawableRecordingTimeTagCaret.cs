@@ -21,8 +21,8 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     private const float caret_resize_time = 60;
 
     // should be list of indexes.
-    private readonly TextIndexInfo textIndexInfo;
-    private readonly Box indicator;
+    private readonly TextIndexInfo? textIndexInfo;
+    private readonly Box? indicator;
 
     public DrawableRecordingTimeTagCaret(DrawableCaretState state)
         : base(state)
@@ -43,18 +43,25 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                     Alpha = 0.1f,
                 },
             },
-            textIndexInfo = new TextIndexInfo
-            {
-                Y = -10,
-                Alpha = GetAlpha(state),
-            },
-            indicator = new Box
-            {
-                Width = border_spacing,
-                RelativeSizeAxes = Axes.Y,
-                Alpha = GetAlpha(state),
-            },
         };
+
+        if (state == DrawableCaretState.Idle)
+        {
+            AddRangeInternal(new Drawable[]
+            {
+                textIndexInfo = new TextIndexInfo
+                {
+                    Y = -10,
+                    Alpha = GetAlpha(state),
+                },
+                indicator = new Box
+                {
+                    Width = border_spacing,
+                    RelativeSizeAxes = Axes.Y,
+                    Alpha = GetAlpha(state),
+                },
+            });
+        }
     }
 
     protected override void ApplyCaretPosition(RecordingTimeTagCaretPosition caret)
@@ -67,13 +74,21 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
 
         // update the caret.
         changeTheSizeByRect(rect);
-        textIndexInfo.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.TopLeft, Anchor.TopRight);
-        textIndexInfo.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
-        textIndexInfo.X = TextIndexUtils.GetValueByState(timeTag.Index, -10, 10);
-        textIndexInfo.UpdateCaret(caret);
-        indicator.Colour = Colours.GetRecordingTimeTagCaretColour(timeTag);
-        indicator.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
-        indicator.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
+
+        if (textIndexInfo != null)
+        {
+            textIndexInfo.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.TopLeft, Anchor.TopRight);
+            textIndexInfo.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
+            textIndexInfo.X = TextIndexUtils.GetValueByState(timeTag.Index, -10, 10);
+            textIndexInfo.UpdateCaret(caret);
+        }
+
+        if (indicator != null)
+        {
+            indicator.Colour = Colours.GetRecordingTimeTagCaretColour(timeTag);
+            indicator.Anchor = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
+            indicator.Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.CentreLeft, Anchor.CentreRight);
+        }
     }
 
     private void changeTheSizeByRect(RectangleF rect)
