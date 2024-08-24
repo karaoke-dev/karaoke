@@ -27,8 +27,8 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
 {
     private const float border_spacing = 5;
 
-    private readonly TimeTagsInfo startTimeTagInfo;
-    private readonly TimeTagsInfo endTimeTagInfo;
+    private readonly TimeTagsInfo? startTimeTagInfo;
+    private readonly TimeTagsInfo? endTimeTagInfo;
 
     public DrawableCreateRemoveTimeTagCaret(DrawableCaretState state)
         : base(state)
@@ -42,6 +42,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                 BorderThickness = border_spacing,
                 BorderColour = Colour4.White,
                 RelativeSizeAxes = Axes.Both,
+                Alpha = GetAlpha(state),
                 Child = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
@@ -49,6 +50,13 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                     Alpha = 0.1f,
                 },
             },
+        };
+
+        if (state != DrawableCaretState.Idle)
+            return;
+
+        AddRangeInternal(new[]
+        {
             startTimeTagInfo = new TimeTagsInfo(TextIndex.IndexState.Start)
             {
                 X = 18,
@@ -63,7 +71,7 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
                 Origin = Anchor.CentreLeft,
                 Alpha = GetAlpha(state),
             },
-        };
+        });
     }
 
     protected override void ApplyCaretPosition(CreateRemoveTimeTagCaretPosition caret)
@@ -73,8 +81,8 @@ public partial class DrawableCreateRemoveTimeTagCaret : DrawableCaret<CreateRemo
         Position = rect.TopLeft - new Vector2(border_spacing);
         Size = rect.Size + new Vector2(border_spacing * 2);
 
-        startTimeTagInfo.UpdateCaretPosition(caret);
-        endTimeTagInfo.UpdateCaretPosition(caret);
+        startTimeTagInfo?.UpdateCaretPosition(caret);
+        endTimeTagInfo?.UpdateCaretPosition(caret);
     }
 
     protected override void TriggerDisallowEditEffect(OsuColour colour)

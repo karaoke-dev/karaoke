@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -125,9 +126,13 @@ public partial class EditLyricLayer : UIEventLayer
             TypingCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndicatorByPosition(position),
             NavigateCaretPositionAlgorithm => null,
             CreateRubyTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(position),
+            RecordingTimeTagCaretPositionAlgorithm => getTimeTagByIndex(Lyric, previewLyricPositionProvider.GetCharIndexByPosition(position)),
             CreateRemoveTimeTagCaretPositionAlgorithm => previewLyricPositionProvider.GetCharIndexByPosition(position),
             _ => null,
         };
+
+        TimeTag? getTimeTagByIndex(Lyric lyric, int? charIndex)
+            => lyric.TimeTags.FirstOrDefault(tag => tag.Index.Index == charIndex);
     }
 
     #region Double click
