@@ -24,7 +24,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
     private const float fading_time = 200;
     private const float caret_move_time = 60;
     private const float caret_resize_time = 60;
-    private const float caret_width = 3;
+    private const float caret_width = 2;
 
     private readonly Box drawableCaret;
     private readonly TypingCaretEventHandler? typingCaretEventHandler;
@@ -75,7 +75,7 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         typingCaretEventHandler?.ChangeCharGapAndOffset(caret.CharGap);
         typingCaretEventHandler?.FocusInputCaretTextBox();
 
-        var rect = LyricPositionProvider.GetRectByCharIndicator(caret.CharGap);
+        var rect = toRectWithFixedWidth(LyricPositionProvider.GetRectByCharIndicator(caret.CharGap));
         changeTheSizeByRect(rect);
     }
 
@@ -88,8 +88,19 @@ public partial class DrawableTypingCaret : DrawableRangeCaret<TypingCaretPositio
         typingCaretEventHandler?.ChangeCharGapAndOffset(maxGap, maxGap - minGap);
         typingCaretEventHandler?.FocusInputCaretTextBox();
 
-        var rect = RectangleF.Union(LyricPositionProvider.GetRectByCharIndicator(minGap), LyricPositionProvider.GetRectByCharIndicator(maxGap));
+        var minGapRect = toRectWithFixedWidth(LyricPositionProvider.GetRectByCharIndicator(minGap));
+        var maxGapRect = toRectWithFixedWidth(LyricPositionProvider.GetRectByCharIndicator(maxGap));
+
+        var rect = RectangleF.Union(minGapRect, maxGapRect);
         changeTheSizeByRect(rect);
+    }
+
+    private RectangleF toRectWithFixedWidth(RectangleF rect)
+    {
+        var position = rect.TopLeft + new Vector2(rect.Width / 2 - caret_width / 2, 0);
+        var size = new Vector2(caret_width, rect.Height);
+
+        return new RectangleF(position, size);
     }
 
     private void changeTheSizeByRect(RectangleF rect)
