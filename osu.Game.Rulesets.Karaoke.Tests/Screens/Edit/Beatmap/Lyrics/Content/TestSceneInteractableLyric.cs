@@ -11,6 +11,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.IO.Stores;
 using osu.Framework.Testing;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -24,6 +25,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Screens.Edit;
+using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 using osuTK;
 
@@ -170,7 +172,7 @@ public partial class TestSceneInteractableLyric : EditorClockTestScene
     }
 
     [BackgroundDependencyLoader]
-    private void load()
+    private void load(OsuGameBase game)
     {
         Dependencies.CacheAs<ILyricsProvider>(new LyricsProvider().With(Add));
         Dependencies.CacheAs<ILyricsChangeHandler>(new LyricsChangeHandler().With(Add));
@@ -178,6 +180,8 @@ public partial class TestSceneInteractableLyric : EditorClockTestScene
         Dependencies.CacheAs<ILyricRubyTagsChangeHandler>(new LyricRubyTagsChangeHandler().With(Add));
         Dependencies.CacheAs<ILyricTimeTagsChangeHandler>(new LyricTimeTagsChangeHandler().With(Add));
         Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
+
+        game.Resources.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
     }
 
     #region Testing tools
@@ -276,7 +280,6 @@ public partial class TestSceneInteractableLyric : EditorClockTestScene
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
             AutoSizeAxes = Axes.Both,
-            Scale = new Vector2(2),
             Children = new Drawable[]
             {
                 new Box
@@ -288,7 +291,15 @@ public partial class TestSceneInteractableLyric : EditorClockTestScene
                 {
                     AutoSizeAxes = Axes.Both,
                     Padding = new MarginPadding(48),
-                    Child = createInteractableLyric(loaders.ToArray()),
+                    Child = new SkinProvidingContainer(new LyricEditorSkin(null)
+                    {
+                        FontSize = 48,
+                    })
+                    {
+                        RelativeSizeAxes = Axes.None,
+                        AutoSizeAxes = Axes.Both,
+                        Child = createInteractableLyric(loaders.ToArray()),
+                    },
                 },
             },
         });
