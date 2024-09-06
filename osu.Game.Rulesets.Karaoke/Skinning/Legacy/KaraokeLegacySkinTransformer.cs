@@ -35,7 +35,7 @@ public class KaraokeLegacySkinTransformer : KaraokeDefaultSkinTransformer
     {
         switch (lookup)
         {
-            case GameplaySkinComponentLookup<HitResult> resultComponent:
+            case SkinComponentLookup<HitResult> resultComponent:
                 return getResult(resultComponent.Component);
 
             case KaraokeSkinComponentLookup karaokeComponent:

@@ -28,14 +28,14 @@ public class KaraokeDefaultSkinTransformer : SkinTransformer
     {
         switch (lookup)
         {
-            case SkinComponentsContainerLookup containerLookup:
+            case GlobalSkinnableContainerLookup containerLookup:
                 // Only handle ruleset level defaults for now.
                 if (containerLookup.Ruleset == null)
                     return base.GetDrawableComponent(lookup);
 
-                switch (containerLookup.Target)
+                switch (containerLookup.Lookup)
                 {
-                    case SkinComponentsContainerLookup.TargetArea.MainHUDComponents:
+                    case GlobalSkinnableContainers.MainHUDComponents:
                         // see the fall-back strategy in the SkinManager.AllSources.
                         // will receive the:
                         // 1. Legacy beatmap skin.
@@ -59,7 +59,7 @@ public class KaraokeDefaultSkinTransformer : SkinTransformer
 
                         return component;
 
-                    case SkinComponentsContainerLookup.TargetArea.SongSelect:
+                    case GlobalSkinnableContainers.SongSelect:
                     default:
                         return base.GetDrawableComponent(lookup);
                 }

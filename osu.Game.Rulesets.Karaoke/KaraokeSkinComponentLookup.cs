@@ -5,7 +5,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke;
 
-public class KaraokeSkinComponentLookup : GameplaySkinComponentLookup<KaraokeSkinComponents>
+public class KaraokeSkinComponentLookup : SkinComponentLookup<KaraokeSkinComponents>
 {
     public KaraokeSkinComponentLookup(KaraokeSkinComponents component)
         : base(component)
