@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Text.RegularExpressions;
 
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
@@ -75,5 +76,15 @@ public class APIChangelogBuild
             },
             PublishedAt = PublishedAt,
         };
+    }
+
+    public string? GetFormattedContent()
+    {
+        if (Content == null)
+            return null;
+
+        // for able to parsing the badge, need to replace the " [content] " with " [content](content) ";
+        const string pattern = @"(?<=\s)\[(.*?)\](?=\s)";
+        return Regex.Replace(Content, pattern, m => $"[{m.Groups[1].Value}]({m.Groups[1].Value})");
     }
 }

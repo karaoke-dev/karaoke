@@ -22,22 +22,35 @@ public class ChangelogPullRequestInfo
         { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" },
     };
 
-    public PullRequestInfo[] PullRequests { get; set; } = Array.Empty<PullRequestInfo>();
+    public string RepoName { get; init; } = string.Empty;
 
-    public UserInfo[] Users { get; set; } = Array.Empty<UserInfo>();
+    public PullRequestInfo[] PullRequests { get; init; } = Array.Empty<PullRequestInfo>();
 
-    public class PullRequestInfo
+    public UserInfo[] Users { get; init; } = Array.Empty<UserInfo>();
+
+    public readonly struct PullRequestInfo
     {
-        public int Number { get; set; }
+        public PullRequestInfo(string repoName, int number)
+        {
+            Number = number;
+            Url = new Uri(new Uri(repo_urls[repoName]), $"pull/{number}").AbsoluteUri;
+        }
 
-        public string Url { get; set; } = string.Empty;
+        public int Number { get; } = 0;
+
+        public string Url { get; } = string.Empty;
     }
 
-    public class UserInfo
+    public readonly struct UserInfo
     {
-        public string UserName { get; set; } = string.Empty;
+        public UserInfo(string useName)
+        {
+            UserName = useName;
+        }
 
-        public string UserUrl => $"https://github.com/{UserName}";
+        public string UserName { get; } = string.Empty;
+
+        public string Url => $"https://github.com/{UserName}";
     }
 
     /// <summary>
@@ -50,12 +63,12 @@ public class ChangelogPullRequestInfo
     /// @andy840119<br/>
     /// @andy@andy840119
     /// </example>
-    /// <param name="text">Link text</param>
-    /// <param name="url">Link url</param>
+    /// <param name="repo">Link text</param>
+    /// <param name="info">Link url</param>
     /// <returns></returns>
-    public static ChangelogPullRequestInfo? GetPullRequestInfoFromLink(string text, string url)
+    public static ChangelogPullRequestInfo? GetPullRequestInfoFromLink(string repo, string info)
     {
-        if (!repo_urls.ContainsKey(text))
+        if (!repo_urls.ContainsKey(repo))
             return null;
 
         const string pull_request_key = "pull_request";
@@ -63,7 +76,7 @@ public class ChangelogPullRequestInfo
         const string pull_request_regex = $"#(?<{pull_request_key}>[0-9]+)|@(?<{username_key}>[0-9A-z]+)";
 
         // note: should have at least one pr number or one username,
-        var result = Regex.Matches(url, pull_request_regex, RegexOptions.IgnoreCase);
+        var result = Regex.Matches(info, pull_request_regex, RegexOptions.IgnoreCase);
         if (!result.Any())
             return null;
 
@@ -77,21 +90,9 @@ public class ChangelogPullRequestInfo
 
         return new ChangelogPullRequestInfo
         {
-            PullRequests = prs.Select(x => generatePullRequestInfo(repo_urls[text], x)).ToArray(),
-            Users = usernames.Select(generateUserInfo).ToArray(),
+            RepoName = repo,
+            PullRequests = prs.Select(pr => new PullRequestInfo(repo, int.Parse(pr))).ToArray(),
+            Users = usernames.Select(userName => new UserInfo(userName)).ToArray(),
         };
-
-        static PullRequestInfo generatePullRequestInfo(string url, string pr) =>
-            new()
-            {
-                Number = int.Parse(pr),
-                Url = new Uri(new Uri(url), $"pull/{pr}").AbsoluteUri,
-            };
-
-        static UserInfo generateUserInfo(string username) =>
-            new()
-            {
-                UserName = username,
-            };
     }
 }

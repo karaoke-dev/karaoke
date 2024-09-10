@@ -110,7 +110,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
     {
         private const int border_radius = 5;
 
-        private DrawableTimeTag currentTextTag = null!;
+        private DrawableTimeTag currentTimeTag = null!;
         private FillFlowContainer<DrawableTimeTag> pendingTimeTags = null!;
 
         [Resolved]
@@ -175,7 +175,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
                                     RelativeSizeAxes = Axes.Both,
                                     Colour = colourProvider.Background5(state.Mode),
                                 },
-                                currentTextTag = new DrawableTimeTag
+                                currentTimeTag = new DrawableTimeTag
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
@@ -199,7 +199,7 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
 
         public void UpdateCaret(RecordingTimeTagCaretPosition caret)
         {
-            currentTextTag.TimeTag = caret.TimeTag;
+            currentTimeTag.TimeTag = caret.TimeTag;
 
             int paddingIndicator = caret.GetPaddingTextIndex();
             pendingTimeTags.Clear();
