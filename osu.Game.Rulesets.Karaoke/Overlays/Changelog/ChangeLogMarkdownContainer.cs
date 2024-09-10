@@ -5,10 +5,14 @@ using System;
 using System.Linq;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Colour;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 
@@ -20,7 +24,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
     {
         DocumentUrl = build.DocumentUrl;
         RootUrl = build.RootUrl;
-        Text = build.Content;
+        Text = build.GetFormattedContent();
     }
 
     public override OsuMarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
@@ -47,6 +51,14 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
             if (pullRequestInfo != null)
             {
                 addPullRequestInfo(pullRequestInfo);
+                return;
+            }
+
+            var badgeInfo = ChangelogBadgeInfo.GetBadgeInfoFromLink(text);
+
+            if (badgeInfo != null)
+            {
+                addBadgeInfo(badgeInfo);
                 return;
             }
 
@@ -94,6 +106,15 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
                     Anchor = Anchor.BottomLeft,
                 });
             }
+        }
+
+        private void addBadgeInfo(ChangelogBadgeInfo badgeInfo)
+        {
+            AddDrawable(new Badge
+            {
+                BadgeText = badgeInfo.Text,
+                BadgeColour = badgeInfo.Color,
+            });
         }
 
         /// <summary>
@@ -149,6 +170,47 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
                 : base(text, linkInline)
             {
                 Padding = new MarginPadding { Top = 6 };
+            }
+        }
+
+        private partial class Badge : CompositeDrawable
+        {
+            private readonly Box background;
+            private readonly OsuSpriteText text;
+
+            public Badge()
+            {
+                AutoSizeAxes = Axes.Both;
+                Masking = true;
+                CornerRadius = 5;
+
+                InternalChildren = new Drawable[]
+                {
+                    background = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Colour4.White,
+                    },
+                    text = new OsuSpriteText
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Font = OsuFont.GetFont(size: 12, weight: FontWeight.Bold),
+                        Margin = new MarginPadding { Horizontal = 5, Vertical = 3 },
+                    },
+                };
+            }
+
+            public ColourInfo BadgeColour
+            {
+                get => background.Colour;
+                set => background.Colour = value;
+            }
+
+            public string BadgeText
+            {
+                get => text.Text.ToString();
+                set => text.Text = value;
             }
         }
     }
