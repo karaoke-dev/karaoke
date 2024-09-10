@@ -44,12 +44,17 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
 
             var pullRequestInfo = ChangelogPullRequestInfo.GetPullRequestInfoFromLink(text, linkInline.Url);
 
-            if (pullRequestInfo == null)
+            if (pullRequestInfo != null)
             {
-                base.AddLinkText(text, linkInline);
+                addPullRequestInfo(pullRequestInfo);
                 return;
             }
 
+            base.AddLinkText(text, linkInline);
+        }
+
+        private void addPullRequestInfo(ChangelogPullRequestInfo pullRequestInfo)
+        {
             var pullRequests = pullRequestInfo.PullRequests;
             var users = pullRequestInfo.Users;
 
@@ -57,14 +62,15 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
             {
                 AddText("(");
 
-                foreach (var pullRequest in pullRequests)
+                for (int index = 0; index < pullRequests.Length; index++)
                 {
-                    AddDrawable(new OsuMarkdownLinkText($"{text}#{pullRequest.Number}", new LinkInline
+                    var pullRequest = pullRequests[index];
+                    AddDrawable(new OsuMarkdownLinkText($"{pullRequestInfo.RepoName}#{pullRequest.Number}", new LinkInline
                     {
                         Url = pullRequest.Url,
                     }));
 
-                    if (pullRequest != pullRequests.LastOrDefault())
+                    if (index != pullRequests.Length - 1)
                         AddText(", ");
                 }
 
@@ -81,7 +87,7 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
                 });
                 AddDrawable(new UserLinkText(user.UserName, new LinkInline
                 {
-                    Url = user.UserUrl,
+                    Url = user.Url,
                 })
                 {
                     Scale = textScale,
