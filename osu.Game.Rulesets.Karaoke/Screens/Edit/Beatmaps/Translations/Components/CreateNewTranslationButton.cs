@@ -15,14 +15,14 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Components.UserInterfaceV2
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
-public partial class CreateNewLanguageButton : IconButton, IHasPopover
+public partial class CreateNewTranslationButton : IconButton, IHasPopover
 {
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
+    private IBeatmapTranslationsChangeHandler beatmapTranslationsChangeHandler { get; set; } = null!;
 
     private readonly Bindable<CultureInfo?> currentLanguage = new();
 
-    public CreateNewLanguageButton()
+    public CreateNewTranslationButton()
     {
         Icon = FontAwesome.Solid.Plus;
         Action = this.ShowPopover;
@@ -33,9 +33,9 @@ public partial class CreateNewLanguageButton : IconButton, IHasPopover
             if (newLanguage == null)
                 return;
 
-            if (!beatmapLanguagesChangeHandler.Languages.Contains(newLanguage))
+            if (!beatmapTranslationsChangeHandler.Languages.Contains(newLanguage))
             {
-                beatmapLanguagesChangeHandler.Add(newLanguage);
+                beatmapTranslationsChangeHandler.Add(newLanguage);
             }
 
             // after selected the language, should always hide the popover.

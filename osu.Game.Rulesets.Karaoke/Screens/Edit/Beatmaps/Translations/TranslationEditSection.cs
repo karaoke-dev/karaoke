@@ -35,7 +35,7 @@ public partial class TranslationEditSection : Container, ITranslationInfoProvide
     private readonly Bindable<CultureInfo?> currentLanguage = new();
 
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
+    private IBeatmapTranslationsChangeHandler beatmapTranslationsChangeHandler { get; set; } = null!;
 
     private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -102,12 +102,12 @@ public partial class TranslationEditSection : Container, ITranslationInfoProvide
                                             RelativeSizeAxes = Axes.X,
                                         },
                                         Empty(),
-                                        new CreateNewLanguageButton
+                                        new CreateNewTranslationButton
                                         {
                                             Y = 5,
                                         },
                                         Empty(),
-                                        new RemoveLanguageButton
+                                        new RemoveTranslationButton
                                         {
                                             Y = 5,
                                         },
@@ -190,7 +190,7 @@ public partial class TranslationEditSection : Container, ITranslationInfoProvide
     [BackgroundDependencyLoader]
     private void load(ILyricsProvider lyricsProvider, OverlayColourProvider colourProvider)
     {
-        languageDropdown.ItemSource = beatmapLanguagesChangeHandler.Languages;
+        languageDropdown.ItemSource = beatmapTranslationsChangeHandler.Languages;
 
         bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
 
