@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Components;
 
-public partial class RemoveLanguageButton : IconButton
+public partial class RemoveTranslationButton : IconButton
 {
     [Resolved]
     private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
@@ -22,7 +22,7 @@ public partial class RemoveLanguageButton : IconButton
     [Resolved]
     private IBindable<CultureInfo> currentLanguage { get; set; } = null!;
 
-    public RemoveLanguageButton()
+    public RemoveTranslationButton()
     {
         Icon = FontAwesome.Solid.Trash;
         Action = () =>

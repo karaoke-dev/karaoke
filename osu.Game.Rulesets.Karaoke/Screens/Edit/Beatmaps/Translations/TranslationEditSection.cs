@@ -102,12 +102,12 @@ public partial class TranslationEditSection : Container, ITranslationInfoProvide
                                             RelativeSizeAxes = Axes.X,
                                         },
                                         Empty(),
-                                        new CreateNewLanguageButton
+                                        new CreateNewTranslationButton
                                         {
                                             Y = 5,
                                         },
                                         Empty(),
-                                        new RemoveLanguageButton
+                                        new RemoveTranslationButton
                                         {
                                             Y = 5,
                                         },
