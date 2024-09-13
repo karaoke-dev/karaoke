@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Beatmaps;
 
-public partial class BeatmapLanguagesChangeHandlerTest : BaseChangeHandlerTest<BeatmapLanguagesChangeHandler>
+public partial class BeatmapTranslationsChangeHandlerTest : BaseChangeHandlerTest<BeatmapTranslationsChangeHandler>
 {
     [Test]
     public void TestAdd()

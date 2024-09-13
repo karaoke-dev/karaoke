@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Translations.Component
 public partial class RemoveTranslationButton : IconButton
 {
     [Resolved]
-    private IBeatmapLanguagesChangeHandler beatmapLanguagesChangeHandler { get; set; } = null!;
+    private IBeatmapTranslationsChangeHandler beatmapTranslationsChangeHandler { get; set; } = null!;
 
     [Resolved]
     private IDialogOverlay dialogOverlay { get; set; } = null!;
@@ -27,17 +27,17 @@ public partial class RemoveTranslationButton : IconButton
         Icon = FontAwesome.Solid.Trash;
         Action = () =>
         {
-            if (beatmapLanguagesChangeHandler.IsLanguageContainsTranslation(currentLanguage.Value))
+            if (beatmapTranslationsChangeHandler.IsLanguageContainsTranslation(currentLanguage.Value))
             {
                 dialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
                 {
                     if (isOk)
-                        beatmapLanguagesChangeHandler.Remove(currentLanguage.Value);
+                        beatmapTranslationsChangeHandler.Remove(currentLanguage.Value);
                 }));
             }
             else
             {
-                beatmapLanguagesChangeHandler.Remove(currentLanguage.Value);
+                beatmapTranslationsChangeHandler.Remove(currentLanguage.Value);
             }
         };
     }

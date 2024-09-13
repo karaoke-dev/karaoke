@@ -6,7 +6,7 @@ using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 
-public interface IBeatmapLanguagesChangeHandler
+public interface IBeatmapTranslationsChangeHandler
 {
     IBindableList<CultureInfo> Languages { get; }
 
