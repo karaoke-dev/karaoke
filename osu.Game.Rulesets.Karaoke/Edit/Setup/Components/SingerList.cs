@@ -102,7 +102,6 @@ public partial class SingerList : CompositeDrawable
 
         singers.Add(new AddSingerButton
         {
-            // todo : use better way to create singer with right id.
             Action = () => Singers.Add(new Singer
             {
                 Name = "New singer",
