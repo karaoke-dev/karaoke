@@ -7,7 +7,6 @@ using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -41,18 +40,5 @@ public partial class SettingsLanguage : SettingsItem<CultureInfo>
 
         public Popover GetPopover()
             => new LanguageSelectorPopover(Current);
-    }
-
-    private partial class LanguageSelectorPopover : OsuPopover
-    {
-        public LanguageSelectorPopover(Bindable<CultureInfo?> bindableCultureInfo)
-        {
-            Child = new LanguageSelector
-            {
-                Width = 260,
-                Height = 400,
-                Current = bindableCultureInfo,
-            };
-        }
     }
 }
