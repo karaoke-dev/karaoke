@@ -287,6 +287,7 @@ public partial class KaraokeRuleset : Ruleset
     public override IEnumerable<SetupSection> CreateEditorSetupSections() => new SetupSection[]
     {
         new KaraokeSingerSection(),
+        new KaraokeTranslationSection(),
         new KaraokeNoteSection(),
     };
 
