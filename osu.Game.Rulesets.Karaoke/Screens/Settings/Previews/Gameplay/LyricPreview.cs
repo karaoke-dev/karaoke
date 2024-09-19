@@ -148,7 +148,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
         string translation = cultureInfo.Name switch
         {
             "ja" or "Ja-jp" => "カラオケ",
-            "zh-Hant" or "zh-TW" => "卡拉OK",
+            "zh-Hans" or "zh-CN" or "zh-Hant" or "zh-TW" => "卡拉OK",
             _ => "karaoke",
         };
 
