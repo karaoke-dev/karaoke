@@ -254,7 +254,7 @@ public partial class LyricEditor : CompositeDrawable
             base.OnHoverLost(e);
         }
 
-        public Popover? GetPopover() => new DescriptionPopover();
+        public Popover GetPopover() => new DescriptionPopover();
 
         private partial class DescriptionPopover : OsuPopover
         {

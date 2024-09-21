@@ -25,7 +25,7 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
     private readonly Lyric lyric;
     private LocalisableString? lockReason;
 
-    public Action<InteractableLyric, Vector2>? TextSizeChanged = null;
+    public Action<InteractableLyric, Vector2>? TextSizeChanged;
 
     public InteractableLyric(Lyric lyric)
     {
