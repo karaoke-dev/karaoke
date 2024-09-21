@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Utils;
 
@@ -83,19 +82,19 @@ public static class LyricsUtils
         string lyricText = firstLyric.Text + secondLyric.Text;
 
         var timeTags = new List<TimeTag>();
-        timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
-        timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, offsetIndexForSecondLyric));
+        timeTags.AddRange(firstLyric.TimeTags);
+        timeTags.AddRange(shiftingTimeTag(secondLyric.TimeTags, offsetIndexForSecondLyric));
 
         var rubyTags = new List<RubyTag>();
-        rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
-        rubyTags.AddRangeWithNullCheck(shiftingRubyTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
+        rubyTags.AddRange(firstLyric.RubyTags);
+        rubyTags.AddRange(shiftingRubyTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
         double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
         double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
         var singers = new List<ElementId>();
-        singers.AddRangeWithNullCheck(firstLyric.SingerIds);
-        singers.AddRangeWithNullCheck(secondLyric.SingerIds);
+        singers.AddRange(firstLyric.SingerIds);
+        singers.AddRange(secondLyric.SingerIds);
 
         bool sameLanguage = EqualityComparer<CultureInfo?>.Default.Equals(firstLyric.Language, secondLyric.Language);
         var language = sameLanguage ? firstLyric.Language : null;
