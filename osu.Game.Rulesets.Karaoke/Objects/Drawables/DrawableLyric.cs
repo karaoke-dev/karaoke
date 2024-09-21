@@ -6,6 +6,7 @@ using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Extensions.ObjectExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -145,7 +146,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         if (CurrentSkin == null)
             return;
 
-        if (HitObject == null)
+        if (HitObject.IsNull())
             return;
 
         var lyricStyle = CurrentSkin.GetConfig<Lyric, LyricStyle>(HitObject)?.Value;
@@ -157,7 +158,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         if (CurrentSkin == null)
             return;
 
-        if (HitObject == null)
+        if (HitObject.IsNull())
             return;
 
         var lyricFontInfo = CurrentSkin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.Value;
