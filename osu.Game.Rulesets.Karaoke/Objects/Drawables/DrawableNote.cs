@@ -208,7 +208,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         EndSing();
     }
 
-    public void ApplyToLyricText(Action<OsuSpriteText> action) => action?.Invoke(textPiece);
+    public void ApplyToLyricText(Action<OsuSpriteText> action) => action.Invoke(textPiece);
 
-    public void ApplyToBackground(Action<SkinnableDrawable> action) => action?.Invoke(background);
+    public void ApplyToBackground(Action<SkinnableDrawable> action) => action.Invoke(background);
 }

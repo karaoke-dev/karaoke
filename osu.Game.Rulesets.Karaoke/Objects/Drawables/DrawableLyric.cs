@@ -217,8 +217,5 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
             action?.Invoke(lyricPiece);
     }
 
-    public void ApplyToTranslationText(Action<OsuSpriteText> action)
-    {
-        action?.Invoke(translationText);
-    }
+    public void ApplyToTranslationText(Action<OsuSpriteText> action) => action.Invoke(translationText);
 }

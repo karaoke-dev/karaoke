@@ -30,11 +30,11 @@ public class KarDecoderTest
     {
         // Get first lyric from beatmap
         var lyrics = new KarDecoder().Decode(text);
-        var lyric = lyrics.FirstOrDefault()!;
+        var lyric = lyrics.First();
 
         // Check time tag
         var expected = TestCaseTagHelper.ParseTimeTags(timeTags);
-        var actual = lyric?.TimeTags ?? throw new ArgumentNullException(nameof(lyric));
+        var actual = lyric.TimeTags;
         TimeTagAssert.ArePropertyEqual(expected, actual);
     }
 
