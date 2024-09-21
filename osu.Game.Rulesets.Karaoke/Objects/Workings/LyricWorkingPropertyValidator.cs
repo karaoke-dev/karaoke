@@ -31,13 +31,13 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool IsWorkingPropertySynced(Lyric hitObject, LyricWorkingProperty flags) =>
         flags switch
         {
-            LyricWorkingProperty.StartTime => true,
-            LyricWorkingProperty.Duration => true,
-            LyricWorkingProperty.Timing => true,
+            LyricWorkingProperty.StartTime => throw new InvalidOperationException(),
+            LyricWorkingProperty.Duration => throw new InvalidOperationException(),
+            LyricWorkingProperty.Timing => throw new InvalidOperationException(),
             LyricWorkingProperty.Singers => isWorkingSingerSynced(hitObject),
-            LyricWorkingProperty.Page => true,
+            LyricWorkingProperty.Page => throw new InvalidOperationException(),
             LyricWorkingProperty.ReferenceLyric => isReferenceLyricSynced(hitObject),
-            LyricWorkingProperty.EffectApplier => true,
+            LyricWorkingProperty.EffectApplier => throw new InvalidOperationException(),
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
