@@ -74,7 +74,7 @@ public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
     {
         public Bindable<Singer> Current { get; } = new();
 
-        public Action? DeleteRequested { get; set; }
+        public Action? DeleteRequested { get; init; }
 
         private readonly DrawableSingerAvatar singerAvatar;
 

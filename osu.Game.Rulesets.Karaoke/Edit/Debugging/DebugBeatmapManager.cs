@@ -103,9 +103,7 @@ public partial class DebugBeatmapManager : Component
     private void save(BeatmapInfo beatmapInfo, IBeatmap beatmapContent)
     {
         // get realm from beatmapManager using reflection
-        var realm = beatmapManager.GetType().GetProperty("Realm", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(beatmapManager) as RealmAccess;
-
-        if (realm == null)
+        if (beatmapManager.GetType().GetProperty("Realm", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(beatmapManager) is not RealmAccess realm)
         {
             throw new InvalidOperationException();
         }

@@ -45,7 +45,7 @@ internal partial class TapButton : CircularContainer
     private CircularContainer innerCircle = null!;
     private Box innerCircleHighlight = null!;
 
-    private int currentIndex = 0;
+    private int currentIndex;
 
     private Container scaleContainer = null!;
     private Container<Light> lights = null!;
@@ -389,7 +389,7 @@ internal partial class TapButton : CircularContainer
             updateColour();
         }
 
-        private bool isTapped = false;
+        private bool isTapped;
 
         public bool IsTapped
         {

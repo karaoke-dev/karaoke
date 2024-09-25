@@ -207,12 +207,12 @@ public partial class BeatmapMetadataGraph : Container
                 };
             }
 
-            private Singer? singer;
+            private readonly Singer? singer;
 
             public Singer? Singer
             {
                 get => singer;
-                set
+                init
                 {
                     singer = value;
                     osuSpriteText.Text = singer?.Name ?? "Known singer";

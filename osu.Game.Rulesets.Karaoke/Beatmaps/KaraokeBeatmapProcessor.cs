@@ -29,19 +29,17 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
 
         base.PreProcess();
         applyInvalidProperty(karaokeBeatmap);
+        return;
 
-        static KaraokeBeatmap getKaraokeBeatmap(IBeatmap beatmap)
-        {
-            // goes to there while parsing the beatmap.
-            if (beatmap is KaraokeBeatmap karaokeBeatmap)
-                return karaokeBeatmap;
-
-            // goes to there while editing the beatmap.
-            if (beatmap is EditorBeatmap editorBeatmap)
-                return getKaraokeBeatmap(editorBeatmap.PlayableBeatmap);
-
-            throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}");
-        }
+        static KaraokeBeatmap getKaraokeBeatmap(IBeatmap beatmap) =>
+            beatmap switch
+            {
+                // goes to there while parsing the beatmap.
+                KaraokeBeatmap karaokeBeatmap => karaokeBeatmap,
+                // goes to there while editing the beatmap.
+                EditorBeatmap editorBeatmap => getKaraokeBeatmap(editorBeatmap.PlayableBeatmap),
+                _ => throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}"),
+            };
     }
 
     private void applyStage(KaraokeBeatmap beatmap)

@@ -73,7 +73,7 @@ public partial class LabelledRomanisedTextBox : LabelledObjectFieldTextBox<TimeT
         });
 
         bindableRomanisationVersion.BindTo(lyric.TimeTagsRomanisationVersion);
-        bindableRomanisationVersion.BindValueChanged((_) =>
+        bindableRomanisationVersion.BindValueChanged(_ =>
         {
             // change the label and the description.
             updateLabel(lyric, timeTag);

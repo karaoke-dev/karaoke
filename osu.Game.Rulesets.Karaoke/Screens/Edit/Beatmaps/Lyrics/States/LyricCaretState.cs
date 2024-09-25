@@ -154,16 +154,14 @@ public partial class LyricCaretState : Component, ILyricCaretState
                 _ => throw new InvalidOperationException(nameof(bindableRubyTagEditMode.Value)),
             };
 
-        ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditStep timeTagEditMode)
-        {
-            return timeTagEditMode switch
+        ICaretPositionAlgorithm getTimeTagModeAlgorithm(TimeTagEditStep timeTagEditMode) =>
+            timeTagEditMode switch
             {
                 TimeTagEditStep.Create => new CreateRemoveTimeTagCaretPositionAlgorithm(lyrics),
                 TimeTagEditStep.Recording => new RecordingTimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
                 TimeTagEditStep.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(timeTagEditMode)),
             };
-        }
     }
 
     [BackgroundDependencyLoader]

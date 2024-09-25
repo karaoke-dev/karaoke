@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.ObjectExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
@@ -117,7 +118,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         if (CurrentSkin == null)
             return;
 
-        if (HitObject == null)
+        if (HitObject.IsNull())
             return;
 
         var noteSkin = skin.GetConfig<Note, NoteStyle>(HitObject)?.Value;
@@ -207,7 +208,7 @@ public partial class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKe
         EndSing();
     }
 
-    public void ApplyToLyricText(Action<OsuSpriteText> action) => action?.Invoke(textPiece);
+    public void ApplyToLyricText(Action<OsuSpriteText> action) => action.Invoke(textPiece);
 
-    public void ApplyToBackground(Action<SkinnableDrawable> action) => action?.Invoke(background);
+    public void ApplyToBackground(Action<SkinnableDrawable> action) => action.Invoke(background);
 }

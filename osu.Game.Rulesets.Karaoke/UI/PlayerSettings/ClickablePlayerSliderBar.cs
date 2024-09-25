@@ -90,7 +90,7 @@ public partial class ClickablePlayerSliderBar : SettingsSlider<int>
 
     private partial class ToolTipButton : OsuButton, IHasTooltip
     {
-        public LocalisableString TooltipText { get; set; }
+        public LocalisableString TooltipText { get; init; }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
