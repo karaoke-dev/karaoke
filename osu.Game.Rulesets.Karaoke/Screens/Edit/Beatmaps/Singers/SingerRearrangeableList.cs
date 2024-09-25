@@ -4,6 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
@@ -11,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
-public partial class SingerRearrangeableList : OrderRearrangeableListContainer<ISinger>
+public partial class SingerRearrangeableList : OrderRearrangeableListContainer<Singer>
 {
     protected override Vector2 Spacing => new(0, 5);
 
@@ -24,7 +25,7 @@ public partial class SingerRearrangeableList : OrderRearrangeableListContainer<I
         };
     }
 
-    protected override OsuRearrangeableListItem<ISinger> CreateOsuDrawable(ISinger item)
+    protected override OsuRearrangeableListItem<Singer> CreateOsuDrawable(Singer item)
         => new SingerRearrangeableListItem(item);
 
     protected override Drawable CreateBottomDrawable()

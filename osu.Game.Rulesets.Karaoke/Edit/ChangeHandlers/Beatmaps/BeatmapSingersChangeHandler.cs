@@ -24,7 +24,7 @@ public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler,
 
     private SingerInfo singerInfo => KaraokeBeatmap.SingerInfo;
 
-    public BindableList<ISinger> Singers => singerInfo.Singers;
+    public BindableList<Singer> Singers => singerInfo.Singers;
 
     public void ChangeOrder(ISinger singer, int newIndex)
     {
@@ -111,7 +111,7 @@ public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler,
     {
         performSingerInfoChanged(singerInfo =>
         {
-            if (!singerInfo.Singers.Contains(singer))
+            if (!singerInfo.HasSinger(singer))
                 throw new InvalidOperationException("Singer should be in the beatmap");
 
             action(singer);

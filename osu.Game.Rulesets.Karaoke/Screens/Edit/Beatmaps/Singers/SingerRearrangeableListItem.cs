@@ -15,20 +15,17 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers;
 
-public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISinger>
+public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
 {
     private Box dragAlert = null!;
 
-    public SingerRearrangeableListItem(ISinger item)
+    public SingerRearrangeableListItem(Singer item)
         : base(item)
     {
     }
 
     protected override Drawable CreateContent()
     {
-        if (Model is not Singer singer)
-            throw new InvalidCastException($"Currently we are only able to edit the {nameof(Singer)}.");
-
         return new Container
         {
             Masking = true,
@@ -42,7 +39,7 @@ public partial class SingerRearrangeableListItem : OsuRearrangeableListItem<ISin
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0,
                 },
-                new SingerLyricPlacementColumn(singer)
+                new SingerLyricPlacementColumn(Model)
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
