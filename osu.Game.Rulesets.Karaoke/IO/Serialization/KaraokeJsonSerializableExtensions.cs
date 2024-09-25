@@ -13,9 +13,6 @@ public static class KaraokeJsonSerializableExtensions
     {
         var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
 
-        // karaoke beatmap.
-        globalSetting.Converters.Add(new SingerConverter());
-
         // hit-object
         globalSetting.Converters.Add(new CultureInfoConverter());
         globalSetting.Converters.Add(new ElementIdConverter());
