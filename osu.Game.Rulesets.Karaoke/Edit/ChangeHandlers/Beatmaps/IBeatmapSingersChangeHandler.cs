@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 public interface IBeatmapSingersChangeHandler
 {
     // todo: should use IBindableList eventually, but cannot do that because it's bind to selection item.
-    BindableList<ISinger> Singers { get; }
+    BindableList<Singer> Singers { get; }
 
     void ChangeOrder(ISinger singer, int newIndex);
 

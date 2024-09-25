@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Settings.Singer
 
 public partial class SingerEditSection : LyricPropertySection
 {
-    private readonly IBindableList<ISinger> bindableSingers = new BindableList<ISinger>();
+    private readonly IBindableList<Singer> bindableSingers = new BindableList<Singer>();
     private readonly IBindableList<ElementId> singerIndexes = new BindableList<ElementId>();
     protected override LocalisableString Title => "Singer";
 

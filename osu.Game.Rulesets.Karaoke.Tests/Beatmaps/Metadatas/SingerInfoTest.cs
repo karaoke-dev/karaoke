@@ -17,10 +17,10 @@ public class SingerInfoTest
         var singer = singerInfo.AddSinger();
         var singerState = singerInfo.AddSingerState(singer);
 
-        var allSingers = singerInfo.Singers;
-        Assert.AreEqual(2, allSingers.Count);
-        Assert.AreEqual(singer, allSingers[0]);
-        Assert.AreEqual(singerState, allSingers[1]);
+        Assert.AreEqual(1, singerInfo.Singers.Count);
+        Assert.AreEqual(1, singerInfo.SingerState.Count);
+        Assert.AreEqual(singer, singerInfo.Singers[0]);
+        Assert.AreEqual(singerState, singerInfo.SingerState[0]);
     }
 
     [Test]
@@ -102,7 +102,8 @@ public class SingerInfoTest
         var singer = singerInfo.AddSinger();
         var singerState = singerInfo.AddSingerState(singer);
 
-        Assert.AreEqual(2, singerInfo.Singers.Count);
+        Assert.AreEqual(1, singerInfo.Singers.Count);
+        Assert.AreEqual(1, singerInfo.SingerState.Count);
         Assert.IsNotEmpty(singerState.ID.ToString());
         Assert.IsNotEmpty(singerState.MainSingerId.ToString());
     }

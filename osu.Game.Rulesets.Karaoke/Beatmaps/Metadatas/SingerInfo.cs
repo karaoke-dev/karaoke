@@ -14,13 +14,16 @@ public class SingerInfo
     public bool SupportSingerState { get; set; }
 
     // todo: should make the property as readonly.
-    public BindableList<ISinger> Singers { get; set; } = new();
+    public BindableList<Singer> Singers { get; set; } = new();
+
+    // todo: should make the property as readonly.
+    public BindableList<SingerState> SingerState { get; set; } = new();
 
     public IEnumerable<Singer> GetAllSingers() =>
-        Singers.OfType<Singer>().OrderBy(x => x.Order);
+        Singers.OrderBy(x => x.Order);
 
     public IEnumerable<SingerState> GetAllAvailableSingerStates(Singer singer) =>
-        Singers.OfType<SingerState>().Where(x => x.MainSingerId == singer.ID).OrderBy(x => x.Order);
+        SingerState.Where(x => x.MainSingerId == singer.ID).OrderBy(x => x.Order);
 
     public IDictionary<Singer, SingerState[]> GetSingerByIds(ElementId[] singerIds)
     {
@@ -58,7 +61,7 @@ public class SingerInfo
         var singerState = new SingerState(mainSingerId);
         action?.Invoke(singerState);
 
-        Singers.Add(singerState);
+        SingerState.Add(singerState);
 
         return singerState;
     }
@@ -76,14 +79,24 @@ public class SingerInfo
                     RemoveSinger(singerState);
                 }
 
-                return Singers.Remove(singer);
+                return Singers.Remove(mainSinger);
             }
 
-            case SingerState:
-                return Singers.Remove(singer);
+            case SingerState singerState:
+                return SingerState.Remove(singerState);
 
             default:
                 throw new InvalidCastException();
         }
+    }
+
+    public bool HasSinger(ISinger singer)
+    {
+        return singer switch
+        {
+            Singer mainSinger => Singers.Contains(mainSinger),
+            SingerState singerState => SingerState.Contains(singerState),
+            _ => throw new InvalidCastException(),
+        };
     }
 }
