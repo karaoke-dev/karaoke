@@ -105,11 +105,11 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
         }
     }
 
-    private struct LyricTimingInfo : IComparable<LyricTimingInfo>
+    private readonly struct LyricTimingInfo : IComparable<LyricTimingInfo>
     {
-        public double StartTime { get; set; }
+        public double StartTime { get; init; }
 
-        public double EndTime { get; set; }
+        public double EndTime { get; init; }
 
         public int CompareTo(LyricTimingInfo other)
         {

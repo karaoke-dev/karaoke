@@ -126,9 +126,9 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
         /// </summary>
         private partial class SnowSprite : Circle
         {
-            public float HorizontalSpeed { get; set; }
+            public float HorizontalSpeed { get; init; }
 
-            public double CreateTime { get; set; }
+            public double CreateTime { get; init; }
         }
     }
 }

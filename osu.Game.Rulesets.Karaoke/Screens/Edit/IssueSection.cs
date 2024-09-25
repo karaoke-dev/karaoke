@@ -316,7 +316,7 @@ public abstract partial class IssueSection : EditorSection
                 };
             }
 
-            public IssueType Type { get; set; }
+            public IssueType Type { get; init; }
 
             public LocalisableString Text
             {
