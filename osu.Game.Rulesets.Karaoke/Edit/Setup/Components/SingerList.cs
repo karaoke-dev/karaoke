@@ -35,26 +35,7 @@ public partial class SingerList : CompositeDrawable
 {
     public BindableList<Singer> Singers { get; } = new();
 
-    private string singerNamePrefix = "Singer";
-
-    public string SingerNamePrefix
-    {
-        get => singerNamePrefix;
-        set
-        {
-            if (singerNamePrefix == value)
-                return;
-
-            singerNamePrefix = value;
-
-            if (IsLoaded)
-                reindexItems();
-        }
-    }
-
     private FillFlowContainer singers = null!;
-
-    private IEnumerable<SingerDisplay> singerDisplays => singers.OfType<SingerDisplay>();
 
     [BackgroundDependencyLoader]
     private void load()
@@ -107,23 +88,10 @@ public partial class SingerList : CompositeDrawable
                 Name = "New singer",
             }),
         });
-
-        reindexItems();
     }
 
     // todo : might have dialog to ask should delete singer or not if contains lyric.
     private void singerDeletionRequested(Singer singer) => Singers.Remove(singer);
-
-    private void reindexItems()
-    {
-        int index = 1;
-
-        foreach (var singerDisplay in singerDisplays)
-        {
-            // todo : might call singer manager to update singer id?
-            index += 1;
-        }
-    }
 
     /// <summary>
     /// A component which displays a singer along with related description text.

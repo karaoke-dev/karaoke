@@ -34,7 +34,6 @@ public partial class KaraokeSingerSection : SetupSection
                 Label = "Singer list",
                 Description = "All the singers in beatmap.",
                 FixedLabelWidth = LABEL_WIDTH,
-                SingerNamePrefix = "#",
             },
         };
 
