@@ -38,7 +38,7 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
                 KaraokeBeatmap karaokeBeatmap => karaokeBeatmap,
                 // goes to there while editing the beatmap.
                 EditorBeatmap editorBeatmap => getKaraokeBeatmap(editorBeatmap.PlayableBeatmap),
-                _ => throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}")
+                _ => throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}"),
             };
     }
 

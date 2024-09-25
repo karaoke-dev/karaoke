@@ -56,31 +56,16 @@ public partial class InvalidInfo : SpriteIcon, IHasCustomTooltip<Issue[]>, IHasP
             var displayIssueType = issue.Template.Type;
             var targetColour = issue.Template.Colour;
 
-            switch (displayIssueType)
+            Icon = displayIssueType switch
             {
-                case IssueType.Problem:
-                    Icon = FontAwesome.Solid.TimesCircle;
-                    Colour = targetColour;
-                    break;
-
-                case IssueType.Warning:
-                    Icon = FontAwesome.Solid.ExclamationCircle;
-                    Colour = targetColour;
-                    break;
-
-                case IssueType.Error: // it's caused by internal error.
-                    Icon = FontAwesome.Solid.ExclamationTriangle;
-                    Colour = targetColour;
-                    break;
-
-                case IssueType.Negligible:
-                    Icon = FontAwesome.Solid.InfoCircle;
-                    Colour = targetColour;
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                IssueType.Problem => FontAwesome.Solid.TimesCircle,
+                IssueType.Warning => FontAwesome.Solid.ExclamationCircle,
+                // it's caused by internal error.
+                IssueType.Error => FontAwesome.Solid.ExclamationTriangle,
+                IssueType.Negligible => FontAwesome.Solid.InfoCircle,
+                _ => throw new ArgumentOutOfRangeException(),
+            };
+            Colour = targetColour;
         }, true);
     }
 
