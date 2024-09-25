@@ -16,11 +16,5 @@ public partial class LabelledSingerList : LabelledDrawable<SingerList>
 
     public BindableList<Singer> Singers => Component.Singers;
 
-    public string SingerNamePrefix
-    {
-        get => Component.SingerNamePrefix;
-        set => Component.SingerNamePrefix = value;
-    }
-
     protected override SingerList CreateComponent() => new();
 }

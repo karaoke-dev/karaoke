@@ -4,6 +4,8 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 using osu.Game.Screens.Edit.Setup;
 
@@ -13,11 +15,18 @@ public partial class KaraokeSingerSection : SetupSection
 {
     public override LocalisableString Title => "Singers";
 
+    [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+    private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider = new();
+
+    private readonly IBeatmapSingersChangeHandler changeHandler = new BeatmapSingersChangeHandler();
+
     private LabelledSingerList singerList = null!;
 
     [BackgroundDependencyLoader]
     private void load()
     {
+        AddInternal(karaokeBeatmapResourcesProvider);
+
         Children = new Drawable[]
         {
             singerList = new LabelledSingerList
@@ -25,8 +34,10 @@ public partial class KaraokeSingerSection : SetupSection
                 Label = "Singer list",
                 Description = "All the singers in beatmap.",
                 FixedLabelWidth = LABEL_WIDTH,
-                SingerNamePrefix = "#",
             },
         };
+
+        if (Beatmap.BeatmapSkin != null)
+            singerList.Singers.BindTo(changeHandler.Singers);
     }
 }
