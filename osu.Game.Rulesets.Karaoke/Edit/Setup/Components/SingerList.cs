@@ -7,12 +7,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
@@ -21,6 +23,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Drawables;
+using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Singers.Detail;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
@@ -88,20 +91,13 @@ public partial class SingerList : CompositeDrawable
     {
         singers.Clear();
 
-        for (int i = 0; i < Singers.Count; ++i)
+        foreach (var singer in Singers)
         {
-            // copy to avoid accesses to modified closure.
-            int singerIndex = i;
-            SingerDisplay display;
-
-            singers.Add(display = new SingerDisplay
+            singers.Add(new SingerDisplay
             {
-                Current = { Value = Singers[singerIndex] },
+                Current = { Value = singer },
+                DeleteRequested = singerDeletionRequested,
             });
-
-            // todo : might check does this like works because singer is object.
-            display.Current.BindValueChanged(singer => Singers[singerIndex] = singer.NewValue);
-            display.DeleteRequested += singerDeletionRequested;
         }
 
         singers.Add(new AddSingerButton
@@ -117,7 +113,7 @@ public partial class SingerList : CompositeDrawable
     }
 
     // todo : might have dialog to ask should delete singer or not if contains lyric.
-    private void singerDeletionRequested(SingerDisplay display) => Singers.RemoveAt(singers.IndexOf(display));
+    private void singerDeletionRequested(Singer singer) => Singers.Remove(singer);
 
     private void reindexItems()
     {
@@ -133,13 +129,13 @@ public partial class SingerList : CompositeDrawable
     /// <summary>
     /// A component which displays a singer along with related description text.
     /// </summary>
-    public partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>
+    private partial class SingerDisplay : CompositeDrawable, IHasCurrentValue<Singer>, IHasContextMenu, IHasPopover
     {
         /// <summary>
         /// Invoked when the user has requested the singer corresponding to this <see cref="SingerDisplay"/>.<br/>
         /// to be removed from its palette.
         /// </summary>
-        public event Action<SingerDisplay>? DeleteRequested;
+        public Action<Singer>? DeleteRequested;
 
         private readonly BindableWithCurrent<Singer> current = new();
 
@@ -168,7 +164,6 @@ public partial class SingerList : CompositeDrawable
                     new SingerCircle
                     {
                         Current = { BindTarget = Current },
-                        DeleteRequested = () => DeleteRequested?.Invoke(this),
                     },
                     singerName = new OsuSpriteText
                     {
@@ -181,11 +176,26 @@ public partial class SingerList : CompositeDrawable
             Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name ?? "unknown singer", true);
         }
 
-        private partial class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
+        protected override bool OnClick(ClickEvent e)
+        {
+            this.ShowPopover();
+            return base.OnClick(e);
+        }
+
+        public MenuItem[] ContextMenuItems => new MenuItem[]
+        {
+            new OsuMenuItem("Edit singer info", MenuItemType.Standard, this.ShowPopover),
+            new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
+            {
+                DeleteRequested?.Invoke(Current.Value);
+            }),
+        };
+
+        public Popover GetPopover() => new SingerEditPopover(Current.Value);
+
+        private partial class SingerCircle : Container, IHasCustomTooltip<Singer>
         {
             public Bindable<Singer> Current { get; } = new();
-
-            public Action? DeleteRequested { get; init; }
 
             private readonly DrawableSingerAvatar singerAvatar;
 
@@ -196,10 +206,6 @@ public partial class SingerList : CompositeDrawable
                 CornerRadius = 50;
                 Masking = true;
                 BorderThickness = 5;
-                Action = () =>
-                {
-                    // todo: show edit singer dialog.
-                };
 
                 Children = new Drawable[]
                 {
@@ -224,11 +230,6 @@ public partial class SingerList : CompositeDrawable
                 BorderColour = SingerUtils.GetContentColour(Current.Value);
                 singerAvatar.Singer = Current.Value;
             }
-
-            public MenuItem[] ContextMenuItems => new MenuItem[]
-            {
-                new OsuMenuItem("Delete", MenuItemType.Destructive, () => DeleteRequested?.Invoke()),
-            };
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
