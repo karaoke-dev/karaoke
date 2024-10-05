@@ -16,7 +16,7 @@ public abstract class StageInfo
 
     public IStageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
     {
-        var elements = getStageElements(hitObject);
+        var elements = GetStageElements(hitObject);
 
         return hitObject switch
         {
@@ -26,7 +26,7 @@ public abstract class StageInfo
         };
     }
 
-    private IEnumerable<StageElement> getStageElements(KaraokeHitObject hitObject) =>
+    public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
         {
             Lyric lyric => GetLyricStageElements(lyric),
