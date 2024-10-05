@@ -1,11 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
-public interface IHasEffectApplier
+public interface IHasCommandGenerator
 {
-    IStageEffectApplier EffectApplier { get; }
+    IHitObjectCommandGenerator? CommandGenerator { get; }
 }

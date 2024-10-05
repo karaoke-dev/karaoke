@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages.Classic;
 
@@ -57,15 +55,11 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
-    {
-        return new LyricClassicStageEffectApplier(elements, StageDefinition);
-    }
+    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
+        => new ClassicLyricCommandGenerator(this);
 
-    protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
-    {
-        return new NoteClassicStageEffectApplier(elements, StageDefinition);
-    }
+    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+        => null;
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {

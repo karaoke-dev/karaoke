@@ -7,7 +7,6 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Classic;
@@ -190,13 +189,13 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
     }
 
     [Test]
-    public void TestEffectApplier()
+    public void TestCommandGenerator()
     {
         var lyric = new Lyric();
 
         // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.EffectApplier = new LyricClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
-        AssetIsValid(lyric, LyricWorkingProperty.EffectApplier, true);
+        Assert.DoesNotThrow(() => lyric.CommandGenerator = new ClassicLyricCommandGenerator(new ClassicStageInfo()));
+        AssetIsValid(lyric, LyricWorkingProperty.CommandGenerator, true);
     }
 
     protected override bool IsInitialStateValid(LyricWorkingProperty flag)

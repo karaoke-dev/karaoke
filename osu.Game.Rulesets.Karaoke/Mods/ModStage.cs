@@ -39,9 +39,9 @@ public abstract class ModStage<TStageInfo> : ModStage, IApplicableAfterBeatmapCo
         beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
         {
             x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-            x.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+            x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
         });
-        beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.EffectApplier));
+        beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));
     }
 
     protected abstract void ApplyToCurrentStageInfo(TStageInfo stageInfo);

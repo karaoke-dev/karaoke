@@ -13,7 +13,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Preview;
 using osu.Game.Rulesets.Mods;
 
@@ -77,18 +76,7 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                     Text = "お",
                 },
             },
-            EffectApplier = new LyricPreviewStageEffectApplier(new[]
-            {
-                new PreviewLyricLayout
-                {
-                    StartTime = startTime,
-                    EndTime = startTime + duration,
-                    Timings = new Dictionary<int, double>
-                    {
-                        { 0, startTime },
-                    },
-                },
-            }, new PreviewStageDefinition()),
+            CommandGenerator = new PreviewLyricCommandGenerator(new PreviewStageInfo()),
         };
 
         lyric.Translations.Add(cultureInfo, "karaoke");

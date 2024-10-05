@@ -8,8 +8,6 @@ using Newtonsoft.Json;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages.Types;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
@@ -90,7 +88,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
             // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
             lyric.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
-            lyric.InvalidateWorkingProperty(LyricWorkingProperty.EffectApplier);
+            lyric.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
         }
 
         calculatedPropertyIsUpdated = true;
@@ -117,15 +115,11 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
-    {
-        return new LyricPreviewStageEffectApplier(elements, StageDefinition);
-    }
+    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
+        => new PreviewLyricCommandGenerator(this);
 
-    protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
-    {
-        return new NotePreviewStageEffectApplier(elements, StageDefinition);
-    }
+    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+        => null;
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {
