@@ -15,17 +15,17 @@ public partial class KaraokeNoteSection : SetupSection
 {
     public override LocalisableString Title => "Note";
 
-    private LabelledSwitchButton scorable = null!;
+    private FormCheckBox scorable = null!;
 
     [BackgroundDependencyLoader]
     private void load()
     {
         Children = new Drawable[]
         {
-            scorable = new LabelledSwitchButton
+            scorable = new FormCheckBox
             {
-                Label = "Scorable",
-                Description = "Will not show score playfield if the option is unchecked.",
+                Caption = "Scorable",
+                HintText = "Will not show score playfield if the option is unchecked.",
                 Current = { Value = true },
             },
         };

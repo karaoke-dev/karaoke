@@ -21,7 +21,7 @@ public partial class KaraokeTranslationSection : SetupSection
     [Cached(typeof(IBeatmapTranslationsChangeHandler))]
     private readonly BeatmapTranslationsChangeHandler changeHandler = new();
 
-    private LabelledLanguageList singerList = null!;
+    private FormLanguageList singerList = null!;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -30,11 +30,10 @@ public partial class KaraokeTranslationSection : SetupSection
 
         Children = new Drawable[]
         {
-            singerList = new LabelledLanguageList
+            singerList = new FormLanguageList
             {
-                Label = "Translation list",
-                Description = "All the lyric translation in beatmap.",
-                FixedLabelWidth = LABEL_WIDTH,
+                Caption = "Translation list",
+                HintText = "All the lyric translation in beatmap.",
             },
         };
 

@@ -2,9 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -15,10 +13,13 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
@@ -28,30 +29,69 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 
-/// <summary>
-/// A component which displays a collection of singers in individual <see cref="SingerDisplay"/>s.
-/// </summary>
-public partial class SingerList : CompositeDrawable
+public partial class FormSingerList : CompositeDrawable
 {
-    public BindableList<Singer> Singers { get; } = new();
+     public BindableList<Singer> Singers { get; } = new();
 
-    private FillFlowContainer singers = null!;
+    public LocalisableString Caption { get; init; }
+
+    public LocalisableString HintText { get; init; }
+
+    private Box background = null!;
+    private FormFieldCaption caption = null!;
+    private FillFlowContainer flow = null!;
+
+    [Resolved]
+    private OverlayColourProvider colourProvider { get; set; } = null!;
 
     [BackgroundDependencyLoader]
     private void load()
     {
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;
-        AutoSizeDuration = fade_duration;
-        AutoSizeEasing = Easing.OutQuint;
 
-        InternalChild = singers = new FillFlowContainer
+        Masking = true;
+        CornerRadius = 5;
+
+        AddSingerButton button;
+
+        InternalChildren = new Drawable[]
         {
-            RelativeSizeAxes = Axes.X,
-            AutoSizeAxes = Axes.Y,
-            Spacing = new Vector2(10),
-            Direction = FillDirection.Full,
+            background = new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background5,
+            },
+            new FillFlowContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Padding = new MarginPadding(9),
+                Spacing = new Vector2(7),
+                Direction = FillDirection.Vertical,
+                Children = new Drawable[]
+                {
+                    caption = new FormFieldCaption
+                    {
+                        Caption = Caption,
+                        TooltipText = HintText,
+                    },
+                    flow = new FillFlowContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Full,
+                        Spacing = new Vector2(10),
+                        Child = button = new AddSingerButton
+                        {
+                            Action = singerInsertionRequested,
+                        },
+                    },
+                },
+            },
         };
+
+        flow.SetLayoutPosition(button, float.MaxValue);
     }
 
     protected override void LoadComplete()
@@ -63,35 +103,56 @@ public partial class SingerList : CompositeDrawable
             if (args.Action != NotifyCollectionChangedAction.Replace)
                 updateSingers();
         }, true);
-        FinishTransforms(true);
+        updateState();
     }
 
-    private const int fade_duration = 200;
+    protected override bool OnHover(HoverEvent e)
+    {
+        updateState();
+        return true;
+    }
+
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+        updateState();
+    }
+
+    private void updateState()
+    {
+        background.Colour = colourProvider.Background5;
+        caption.Colour = colourProvider.Content2;
+
+        BorderThickness = IsHovered ? 2 : 0;
+
+        if (IsHovered)
+            BorderColour = colourProvider.Light4;
+    }
 
     private void updateSingers()
     {
-        singers.Clear();
+        flow.RemoveAll(d => d is SingerDisplay, true);
 
         foreach (var singer in Singers)
         {
-            singers.Add(new SingerDisplay
+            flow.Add(new SingerDisplay
             {
                 Current = { Value = singer },
-                DeleteRequested = singerDeletionRequested,
+                DeleteRequested = languageDeletionRequested,
             });
         }
-
-        singers.Add(new AddSingerButton
-        {
-            Action = () => Singers.Add(new Singer
-            {
-                Name = "New singer",
-            }),
-        });
     }
 
-    // todo : might have dialog to ask should delete singer or not if contains lyric.
-    private void singerDeletionRequested(Singer singer) => Singers.Remove(singer);
+    private void singerInsertionRequested()
+    {
+        var singer = new Singer
+        {
+            Name = "New singer",
+        };
+        Singers.Add(singer);
+    }
+
+    private void languageDeletionRequested(Singer singer) => Singers.Remove(singer);
 
     /// <summary>
     /// A component which displays a singer along with related description text.
@@ -118,7 +179,7 @@ public partial class SingerList : CompositeDrawable
         private void load()
         {
             AutoSizeAxes = Axes.Y;
-            Width = 100;
+            Width = 50;
 
             InternalChild = new FillFlowContainer
             {
@@ -169,8 +230,9 @@ public partial class SingerList : CompositeDrawable
             public SingerCircle()
             {
                 RelativeSizeAxes = Axes.X;
-                Height = 100;
-                CornerRadius = 50;
+                Height = 50;
+
+                CornerRadius = 25;
                 Masking = true;
                 BorderThickness = 5;
 
@@ -216,7 +278,7 @@ public partial class SingerList : CompositeDrawable
         public AddSingerButton()
         {
             AutoSizeAxes = Axes.Y;
-            Width = 100;
+            Width = 50;
 
             InternalChild = new FillFlowContainer
             {
@@ -229,8 +291,8 @@ public partial class SingerList : CompositeDrawable
                     circularButton = new OsuClickableContainer
                     {
                         RelativeSizeAxes = Axes.X,
-                        Height = 100,
-                        CornerRadius = 50,
+                        Height = 50,
+                        CornerRadius = 25,
                         Masking = true,
                         BorderThickness = 5,
                         Children = new Drawable[]

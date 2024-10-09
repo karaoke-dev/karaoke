@@ -20,7 +20,7 @@ public partial class KaraokeSingerSection : SetupSection
 
     private readonly IBeatmapSingersChangeHandler changeHandler = new BeatmapSingersChangeHandler();
 
-    private LabelledSingerList singerList = null!;
+    private FormSingerList singerList = null!;
 
     [BackgroundDependencyLoader]
     private void load()
@@ -29,11 +29,10 @@ public partial class KaraokeSingerSection : SetupSection
 
         Children = new Drawable[]
         {
-            singerList = new LabelledSingerList
+            singerList = new FormSingerList
             {
-                Label = "Singer list",
-                Description = "All the singers in beatmap.",
-                FixedLabelWidth = LABEL_WIDTH,
+                Caption = "Singer list",
+                HintText = "All the singers in beatmap.",
             },
         };
 
