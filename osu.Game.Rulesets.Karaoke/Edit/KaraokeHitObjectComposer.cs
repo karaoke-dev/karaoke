@@ -177,7 +177,7 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
         });
     }
 
-    protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
+    protected override IReadOnlyList<CompositionTool> CompositionTools => Array.Empty<CompositionTool>();
 
     protected override IEnumerable<TernaryButton> CreateTernaryButtons() => Array.Empty<TernaryButton>();
 }
