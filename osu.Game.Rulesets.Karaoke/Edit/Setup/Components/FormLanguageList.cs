@@ -13,41 +13,82 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 
-/// <summary>
-/// A component which displays a collection of <see cref="CultureInfo"/>
-/// </summary>
-public partial class LanguageList : CompositeDrawable
+public partial class FormLanguageList : CompositeDrawable
 {
     public BindableList<CultureInfo> Languages { get; } = new();
 
-    private FillFlowContainer languages = null!;
+    public LocalisableString Caption { get; init; }
 
-    private const int fade_duration = 200;
+    public LocalisableString HintText { get; init; }
+
+    private Box background = null!;
+    private FormFieldCaption caption = null!;
+    private FillFlowContainer flow = null!;
+
+    [Resolved]
+    private OverlayColourProvider colourProvider { get; set; } = null!;
 
     [BackgroundDependencyLoader]
     private void load()
     {
         RelativeSizeAxes = Axes.X;
         AutoSizeAxes = Axes.Y;
-        AutoSizeDuration = fade_duration;
-        AutoSizeEasing = Easing.OutQuint;
 
-        InternalChild = languages = new FillFlowContainer
+        Masking = true;
+        CornerRadius = 5;
+
+        AddLanguageButton button;
+
+        InternalChildren = new Drawable[]
         {
-            RelativeSizeAxes = Axes.X,
-            AutoSizeAxes = Axes.Y,
-            Spacing = new Vector2(8),
-            Direction = FillDirection.Full,
+            background = new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background5,
+            },
+            new FillFlowContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                Padding = new MarginPadding(9),
+                Spacing = new Vector2(7),
+                Direction = FillDirection.Vertical,
+                Children = new Drawable[]
+                {
+                    caption = new FormFieldCaption
+                    {
+                        Caption = Caption,
+                        TooltipText = HintText,
+                    },
+                    flow = new FillFlowContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Full,
+                        Spacing = new Vector2(5),
+                        Child = button = new AddLanguageButton
+                        {
+                            Action = languageInsertionRequested,
+                        },
+                    },
+                },
+            },
         };
+
+        flow.SetLayoutPosition(button, float.MaxValue);
     }
 
     protected override void LoadComplete()
@@ -57,28 +98,46 @@ public partial class LanguageList : CompositeDrawable
         Languages.BindCollectionChanged((_, args) =>
         {
             if (args.Action != NotifyCollectionChangedAction.Replace)
-                updateSingers();
+                updateLanguages();
         }, true);
-        FinishTransforms(true);
+        updateState();
     }
 
-    private void updateSingers()
+    protected override bool OnHover(HoverEvent e)
     {
-        languages.Clear();
+        updateState();
+        return true;
+    }
 
-        foreach (CultureInfo language in Languages)
+    protected override void OnHoverLost(HoverLostEvent e)
+    {
+        base.OnHoverLost(e);
+        updateState();
+    }
+
+    private void updateState()
+    {
+        background.Colour = colourProvider.Background5;
+        caption.Colour = colourProvider.Content2;
+
+        BorderThickness = IsHovered ? 2 : 0;
+
+        if (IsHovered)
+            BorderColour = colourProvider.Light4;
+    }
+
+    private void updateLanguages()
+    {
+        flow.RemoveAll(d => d is LanguageDisplay, true);
+
+        foreach (var language in Languages)
         {
-            languages.Add(new LanguageDisplay
+            flow.Add(new LanguageDisplay
             {
                 Current = { Value = language },
                 DeleteRequested = languageDeletionRequested,
             });
         }
-
-        languages.Add(new AddLanguageButton
-        {
-            Action = languageInsertionRequested,
-        });
     }
 
     private void languageInsertionRequested(CultureInfo language)
@@ -162,6 +221,8 @@ public partial class LanguageList : CompositeDrawable
 
         public AddLanguageButton()
         {
+            Size = new Vector2(35);
+
             InternalChild = new IconButton
             {
                 Action = this.ShowPopover,
