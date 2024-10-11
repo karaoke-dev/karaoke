@@ -19,6 +19,7 @@ public class KaraokeNoteHitWindows : KaraokeHitWindows
         {
             HitResult.Perfect => true,
             HitResult.Meh => true,
+            HitResult.Miss => true,
             _ => false,
         };
 
