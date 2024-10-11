@@ -201,22 +201,6 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
             j.Anchor = Anchor.Centre;
             j.Origin = Anchor.Centre;
         })!);
-
-        // Add hit explosion
-        if (!result.IsHit)
-            return;
-
-        var explosion = new SkinnableDrawable(new KaraokeSkinComponentLookup(KaraokeSkinComponents.HitExplosion), _ =>
-            new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
-        {
-            Y = notePositionInfo.Calculator.YPositionAt(note.HitObject),
-        };
-
-        // todo : should be added into hitObjectArea.Explosions
-        // see how mania ruleset do
-        HitObjectArea.Add(explosion);
-
-        explosion.Delay(200).Expire(true);
     }
 
     [BackgroundDependencyLoader]
