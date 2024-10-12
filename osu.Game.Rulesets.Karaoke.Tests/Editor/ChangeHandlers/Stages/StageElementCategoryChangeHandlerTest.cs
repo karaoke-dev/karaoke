@@ -8,10 +8,11 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
@@ -268,15 +269,11 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             return Array.Empty<StageElement>();
         }
 
-        protected override IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements)
-        {
-            return new TestApplier();
-        }
+        protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
+            => new TestCommandGenerator(this);
 
-        protected override IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements)
-        {
-            return new TestApplier();
-        }
+        protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+            => null;
 
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
         {
@@ -296,21 +293,27 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         }
     }
 
-    private class TestApplier : IStageEffectApplier
+    private class TestCommandGenerator : HitObjectCommandGenerator<TestStageInfo, Lyric>
     {
-        public double PreemptTime => 0;
+        public TestCommandGenerator(TestStageInfo stageInfo)
+            : base(stageInfo)
+        {
+        }
 
-        public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
+        protected override double GeneratePreemptTime(Lyric hitObject)
+            => 0;
+
+        protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject)
+        protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateHitStateTransforms(DrawableHitObject drawableHitObject, ArmedState state)
+        protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
         {
             throw new NotImplementedException();
         }

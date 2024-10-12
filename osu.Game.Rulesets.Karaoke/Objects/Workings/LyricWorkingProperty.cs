@@ -42,7 +42,7 @@ public enum LyricWorkingProperty
     ReferenceLyric = 1 << 4,
 
     /// <summary>
-    /// <see cref="Lyric.EffectApplier"/> is being invalidated.
+    /// <see cref="Lyric.CommandGenerator"/> is being invalidated.
     /// </summary>
-    EffectApplier = 1 << 5,
+    CommandGenerator = 1 << 5,
 }

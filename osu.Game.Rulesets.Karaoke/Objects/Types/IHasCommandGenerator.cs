@@ -3,6 +3,9 @@
 
 using osu.Game.Rulesets.Karaoke.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
+namespace osu.Game.Rulesets.Karaoke.Objects.Types;
 
-public class PreviewLyricStageElement : StageElement;
+public interface IHasCommandGenerator
+{
+    IHitObjectCommandGenerator? CommandGenerator { get; }
+}

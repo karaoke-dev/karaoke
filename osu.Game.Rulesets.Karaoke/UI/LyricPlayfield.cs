@@ -69,11 +69,11 @@ public partial class LyricPlayfield : Playfield
         {
             // Manually set to reduce the number of future alive objects to a bare minimum.
             LifetimeEnd = Lyric.EndTime;
-            LifetimeStart = HitObject.StartTime - Lyric.EffectApplier.PreemptTime;
+            LifetimeStart = HitObject.StartTime - Lyric.CommandGenerator.GeneratePreemptTime(HitObject);
         }
 
         protected Lyric Lyric => (Lyric)HitObject;
 
-        protected override double InitialLifetimeOffset => Lyric.EffectApplier.PreemptTime;
+        protected override double InitialLifetimeOffset => Lyric.CommandGenerator.GeneratePreemptTime(HitObject);
     }
 }

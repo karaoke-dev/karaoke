@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Stages;
@@ -14,19 +13,17 @@ public abstract class StageInfo
     public IPlayfieldStageApplier GetPlayfieldStageApplier()
         => CreatePlayfieldStageApplier();
 
-    public IStageEffectApplier GetStageAppliers(KaraokeHitObject hitObject)
+    public IHitObjectCommandGenerator? GetHitObjectCommandGenerator(KaraokeHitObject hitObject)
     {
-        var elements = getStageElements(hitObject);
-
         return hitObject switch
         {
-            Lyric => ConvertToLyricStageAppliers(elements),
-            Note => ConvertToNoteStageAppliers(elements),
+            Lyric => GetLyricCommandGenerator(),
+            Note => GetNoteCommandGenerator(),
             _ => throw new InvalidOperationException(),
         };
     }
 
-    private IEnumerable<StageElement> getStageElements(KaraokeHitObject hitObject) =>
+    public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
         {
             Lyric lyric => GetLyricStageElements(lyric),
@@ -49,9 +46,9 @@ public abstract class StageInfo
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
 
-    protected abstract IStageEffectApplier ConvertToLyricStageAppliers(IEnumerable<StageElement> elements);
+    protected abstract IHitObjectCommandGenerator? GetLyricCommandGenerator();
 
-    protected abstract IStageEffectApplier ConvertToNoteStageAppliers(IEnumerable<StageElement> elements);
+    protected abstract IHitObjectCommandGenerator? GetNoteCommandGenerator();
 
     protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 

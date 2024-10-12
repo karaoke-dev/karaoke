@@ -10,9 +10,9 @@ using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects.Stages;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
+using osu.Game.Rulesets.Karaoke.Stages;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffectApplier
+public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasCommandGenerator
 {
     [JsonIgnore]
     private readonly NoteWorkingPropertyValidator workingPropertyValidator;
@@ -48,8 +48,8 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
                     ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
                     break;
 
-                case NoteWorkingProperty.EffectApplier:
-                    EffectApplier = getStageEffectApplier(beatmap, this);
+                case NoteWorkingProperty.CommandGenerator:
+                    CommandGenerator = getCommandGenerator(beatmap, this);
                     break;
 
                 default:
@@ -63,13 +63,13 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
         static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
 
-        static IStageEffectApplier getStageEffectApplier(KaraokeBeatmap beatmap, Note note)
+        static IHitObjectCommandGenerator? getCommandGenerator(KaraokeBeatmap beatmap, Note note)
         {
             var stageInfo = beatmap.CurrentStageInfo;
             if (stageInfo == null)
                 throw new InvalidCastException();
 
-            return stageInfo.GetStageAppliers(note);
+            return stageInfo.GetHitObjectCommandGenerator(note);
         }
     }
 
@@ -158,7 +158,7 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
     }
 
     [JsonIgnore]
-    public readonly Bindable<IStageEffectApplier> EffectApplierBindable = new();
+    public readonly Bindable<IHitObjectCommandGenerator?> EffectApplierBindable = new();
 
     /// <summary>
     /// Stage elements.
@@ -166,14 +166,14 @@ public partial class Note : IHasWorkingProperty<NoteWorkingProperty>, IHasEffect
     /// The element might include something like style or layout info.
     /// </summary>
     [JsonIgnore]
-    public IStageEffectApplier EffectApplier
+    public IHitObjectCommandGenerator? CommandGenerator
     {
         get => EffectApplierBindable.Value;
         set
         {
             EffectApplierBindable.Value = value;
 
-            updateStateByWorkingProperty(NoteWorkingProperty.EffectApplier);
+            updateStateByWorkingProperty(NoteWorkingProperty.CommandGenerator);
         }
     }
 

@@ -1,13 +1,9 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
@@ -76,13 +72,14 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
     }
 
     [Test]
-    public void TestEffectApplier()
+    public void TestCommandGenerator()
     {
         var note = new Note();
 
         // page state is valid because assign the property.
-        Assert.DoesNotThrow(() => note.EffectApplier = new NoteClassicStageEffectApplier(Array.Empty<StageElement>(), new ClassicStageDefinition()));
-        AssetIsValid(note, NoteWorkingProperty.EffectApplier, true);
+        // todo: note does not have command generator now.
+        Assert.DoesNotThrow(() => note.CommandGenerator = null);
+        AssetIsValid(note, NoteWorkingProperty.CommandGenerator, true);
     }
 
     protected override bool IsInitialStateValid(NoteWorkingProperty flag)

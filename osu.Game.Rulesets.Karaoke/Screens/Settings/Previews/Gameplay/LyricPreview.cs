@@ -140,7 +140,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 new(new TextIndex(4), 2000),
             },
             HitWindows = new KaraokeLyricHitWindows(),
-            EffectApplier = new PreviewLyricEffectApplier(),
+            CommandGenerator = new PreviewLyricCommandGenerator(),
         };
 
     private IDictionary<CultureInfo, string> createPreviewTranslation(CultureInfo cultureInfo)

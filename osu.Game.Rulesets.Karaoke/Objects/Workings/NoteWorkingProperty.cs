@@ -22,7 +22,7 @@ public enum NoteWorkingProperty
     ReferenceLyric = 1 << 1,
 
     /// <summary>
-    /// <see cref="Note.EffectApplier"/> is being invalidated.
+    /// <see cref="Note.CommandGenerator"/> is being invalidated.
     /// </summary>
-    EffectApplier = 1 << 2,
+    CommandGenerator = 1 << 2,
 }
