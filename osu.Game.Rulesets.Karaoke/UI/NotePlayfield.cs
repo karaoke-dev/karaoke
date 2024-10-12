@@ -185,14 +185,13 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
 
     internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
     {
-        // Add judgement
         if (!judgedObject.DisplayResult || !DisplayJudgements.Value)
             return;
 
         if (judgedObject is not DrawableNote note)
             return;
 
-        judgements.Clear();
+        judgements.Clear(false);
         judgements.Add(judgementPooler.Get(result.Type, j =>
         {
             j.Apply(result, judgedObject);
