@@ -20,7 +20,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 
-public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponent
+public partial class KaraokePlayfield : ScrollingPlayfield
 {
     [Resolved]
     private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
@@ -180,21 +180,5 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
         session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
         session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
         session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
-    }
-
-    public void Add(IStageComponent component)
-    {
-        if (component is not Drawable drawableComponent)
-            throw new ArgumentException($"Component must be {nameof(Drawable)}");
-
-        AddInternal(drawableComponent);
-    }
-
-    public bool Remove(IStageComponent component)
-    {
-        if (component is not Drawable drawableComponent)
-            throw new ArgumentException($"Component must be {nameof(Drawable)}");
-
-        return RemoveInternal(drawableComponent, true);
     }
 }

@@ -18,13 +18,5 @@ public class PlayfieldPreviewStageApplier : PlayfieldStageApplier<PreviewStageDe
 
     protected override void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield)
     {
-        transformSequence.TransformAddStageComponent(new BeatmapCoverInfo
-        {
-            Size = new Vector2(displayNotePlayfield ? 200 : 380),
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            X = displayNotePlayfield ? -360 : -270,
-            Y = displayNotePlayfield ? 100 : 0,
-        }).FadeIn(300);
     }
 }
