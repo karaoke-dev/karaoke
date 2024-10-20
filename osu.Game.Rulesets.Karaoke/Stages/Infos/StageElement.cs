@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Stages;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 public abstract class StageElement : IHasPrimaryKey
 {

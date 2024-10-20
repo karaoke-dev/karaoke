@@ -5,7 +5,7 @@ using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
 public class PreviewStyle : StageElement, IComparable<PreviewStyle>
 {

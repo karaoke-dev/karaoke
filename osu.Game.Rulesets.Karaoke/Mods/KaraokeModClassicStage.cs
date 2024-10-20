@@ -4,7 +4,7 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
-using osu.Game.Rulesets.Karaoke.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 

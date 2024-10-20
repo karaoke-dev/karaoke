@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
 public class PreviewStageDefinition : StageDefinition
 {

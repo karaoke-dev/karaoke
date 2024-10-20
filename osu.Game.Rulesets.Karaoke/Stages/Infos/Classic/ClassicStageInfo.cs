@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages.Classic;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicStageInfo : StageInfo
 {

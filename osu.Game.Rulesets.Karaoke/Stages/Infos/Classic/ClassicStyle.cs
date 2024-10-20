@@ -7,7 +7,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicStyle : StageElement, IComparable<ClassicStyle>
 {

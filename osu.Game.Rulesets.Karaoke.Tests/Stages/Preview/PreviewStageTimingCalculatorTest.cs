@@ -7,7 +7,7 @@ using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;

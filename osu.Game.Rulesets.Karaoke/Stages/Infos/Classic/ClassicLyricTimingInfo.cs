@@ -11,7 +11,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicLyricTimingInfo
 {

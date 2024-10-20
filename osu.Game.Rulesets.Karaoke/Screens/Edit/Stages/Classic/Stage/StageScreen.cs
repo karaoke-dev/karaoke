@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage.Settings;
-using osu.Game.Rulesets.Karaoke.Stages.Classic;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;

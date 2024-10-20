@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.Stages;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 public abstract class StageInfo
 {

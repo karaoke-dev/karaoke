@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
 public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewStageInfo, Lyric>
 {

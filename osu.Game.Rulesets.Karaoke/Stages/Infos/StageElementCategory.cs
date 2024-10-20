@@ -11,7 +11,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Stages;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 /// <summary>
 /// It's a category to record the list of <typeparamref name="TStageElement"/> and handle the mapping by several rules.

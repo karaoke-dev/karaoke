@@ -3,6 +3,6 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class ClassicLyricLayoutCategory : StageElementCategory<ClassicLyricLayout, Lyric>;
+public class PreviewStyleCategory : StageElementCategory<PreviewStyle, Lyric>;

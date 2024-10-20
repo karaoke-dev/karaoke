@@ -7,7 +7,7 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
 public class PreviewStageTimingCalculator
 {

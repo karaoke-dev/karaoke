@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicLyricTimingPoint : IDeepCloneable<ClassicLyricTimingPoint>, IComparable<ClassicLyricTimingPoint>, IHasPrimaryKey
 {

@@ -4,7 +4,7 @@
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Types;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 
 public interface IHasCalculatedProperty
 {

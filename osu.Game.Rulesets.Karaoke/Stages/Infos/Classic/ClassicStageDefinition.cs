@@ -4,7 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicStageDefinition : StageDefinition
 {
