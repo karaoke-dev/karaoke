@@ -6,11 +6,10 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Stages;
+namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Infos;
 
 public class StageElementCategoryTest
 {

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Preview;
+namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Infos.Preview;
 
 public class PreviewStageTimingCalculatorTest
 {

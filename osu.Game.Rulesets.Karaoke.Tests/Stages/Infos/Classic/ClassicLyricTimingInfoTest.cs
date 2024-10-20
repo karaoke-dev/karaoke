@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Classic;
+namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Infos.Classic;
 
 public class ClassicLyricTimingInfoTest
 {
