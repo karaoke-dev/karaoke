@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods;
 

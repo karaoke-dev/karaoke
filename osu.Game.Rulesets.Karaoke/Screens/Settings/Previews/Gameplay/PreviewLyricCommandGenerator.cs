@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
-using osu.Game.Rulesets.Karaoke.Stages.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Objects.Drawables;
 using osuTK;
 

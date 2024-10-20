@@ -9,8 +9,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Preview;
-using osu.Game.Rulesets.Karaoke.Stages.Types;
+using osu.Game.Rulesets.Karaoke.Stages.Infos;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
+using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
