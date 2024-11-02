@@ -18,9 +18,6 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool HasDataProperty(LyricWorkingProperty flags) =>
         flags switch
         {
-            LyricWorkingProperty.StartTime => false,
-            LyricWorkingProperty.Duration => false,
-            LyricWorkingProperty.Timing => false,
             LyricWorkingProperty.Singers => true,
             LyricWorkingProperty.Page => false,
             LyricWorkingProperty.ReferenceLyric => true,
@@ -31,9 +28,6 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
     protected override bool IsWorkingPropertySynced(Lyric hitObject, LyricWorkingProperty flags) =>
         flags switch
         {
-            LyricWorkingProperty.StartTime => throw new InvalidOperationException(),
-            LyricWorkingProperty.Duration => throw new InvalidOperationException(),
-            LyricWorkingProperty.Timing => throw new InvalidOperationException(),
             LyricWorkingProperty.Singers => isWorkingSingerSynced(hitObject),
             LyricWorkingProperty.Page => throw new InvalidOperationException(),
             LyricWorkingProperty.ReferenceLyric => isReferenceLyricSynced(hitObject),

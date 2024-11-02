@@ -119,7 +119,7 @@ public partial class ClassicStageChangeHandler : BeatmapPropertyChangeHandler, I
         {
             action(stageInfo.LyricTimingInfo);
 
-            InvalidateAllHitObjectWorkingProperty(LyricWorkingProperty.Timing);
+            // todo: should trigger the stage wrapper to update the view.
         });
     }
 }

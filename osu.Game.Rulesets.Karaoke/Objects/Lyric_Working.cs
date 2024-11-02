@@ -41,18 +41,6 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
         {
             switch (flag)
             {
-                case LyricWorkingProperty.StartTime:
-                    StartTime = getStartTime(beatmap, this);
-                    break;
-
-                case LyricWorkingProperty.Duration:
-                    Duration = getDuration(beatmap, this);
-                    break;
-
-                case LyricWorkingProperty.Timing:
-                    // start time and duration should be set by other condition.
-                    break;
-
                 case LyricWorkingProperty.Singers:
                     Singers = getSingers(beatmap, SingerIds);
                     break;
@@ -72,26 +60,6 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        static double getStartTime(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
-        {
-            var stageInfo = beatmap.CurrentStageInfo;
-            if (stageInfo == null)
-                throw new InvalidCastException();
-
-            (double? startTime, double? _) = stageInfo.GetStartAndEndTime(lyric);
-            return startTime ?? 0;
-        }
-
-        static double getDuration(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
-        {
-            var stageInfo = beatmap.CurrentStageInfo;
-            if (stageInfo == null)
-                throw new InvalidCastException();
-
-            (double? startTime, double? endTime) = stageInfo.GetStartAndEndTime(lyric);
-            return endTime - startTime ?? 0;
         }
 
         static IDictionary<Singer, SingerState[]> getSingers(KaraokeBeatmap beatmap, IEnumerable<ElementId> singerIds)
@@ -120,11 +88,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
     public override double StartTime
     {
         get => base.StartTime;
-        set
-        {
-            base.StartTime = value;
-            updateStateByWorkingProperty(LyricWorkingProperty.StartTime);
-        }
+        set => base.StartTime = value;
     }
 
     [JsonIgnore]
@@ -137,11 +101,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
     public double Duration
     {
         get => DurationBindable.Value;
-        set
-        {
-            DurationBindable.Value = value;
-            updateStateByWorkingProperty(LyricWorkingProperty.Duration);
-        }
+        set => DurationBindable.Value = value;
     }
 
     /// <summary>
