@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
 public interface IStageHitObjectRunner
 {
-    double GetPreemptTime(DrawableKaraokeHitObject hitObject);
+    double GenerateStartTimeOffset(DrawableKaraokeHitObject hitObject);
 
     /// <summary>
     /// Apply (generally fade-in) transforms leading into the <see cref="KaraokeHitObject"/> start time.

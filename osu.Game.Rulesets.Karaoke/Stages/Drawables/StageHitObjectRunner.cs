@@ -19,9 +19,9 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
         this.commandGenerator = commandGenerator;
     }
 
-    public double GetPreemptTime(DrawableKaraokeHitObject hitObject)
+    public double GenerateStartTimeOffset(DrawableKaraokeHitObject hitObject)
     {
-        return commandGenerator.GeneratePreemptTime(hitObject.HitObject);
+        return commandGenerator.GenerateStartTimeOffset(hitObject.HitObject);
     }
 
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
@@ -33,7 +33,8 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
     public void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject)
     {
         var commands = commandGenerator.GenerateStartTimeStateCommands(drawableHitObject.HitObject);
-        ApplyTransforms(drawableHitObject, commands);
+        double startTimeOffset = -commandGenerator.GenerateStartTimeOffset(drawableHitObject.HitObject);
+        ApplyTransforms(drawableHitObject, commands, startTimeOffset);
     }
 
     public void UpdateHitStateTransforms(DrawableHitObject drawableHitObject, ArmedState state)
@@ -45,7 +46,7 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
         ApplyTransforms(drawableHitObject, commands);
     }
 
-    public static void ApplyTransforms<TDrawable>(TDrawable drawable, IEnumerable<IStageCommand> commands)
+    public static void ApplyTransforms<TDrawable>(TDrawable drawable, IEnumerable<IStageCommand> commands, double offset = 0)
         where TDrawable : DrawableHitObject
     {
         var appliedProperties = new HashSet<string>();
@@ -55,7 +56,7 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
             if (appliedProperties.Add(command.PropertyName))
                 command.ApplyInitialValue(drawable);
 
-            using (drawable.BeginDelayedSequence(command.StartTime))
+            using (drawable.BeginDelayedSequence(command.StartTime + offset))
                 command.ApplyTransforms(drawable);
         }
     }
