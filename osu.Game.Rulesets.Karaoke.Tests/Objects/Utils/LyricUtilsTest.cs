@@ -247,9 +247,9 @@ public class LyricUtilsTest
 
     [TestCase(0, 0, "00:00:000 - 00:00:000")]
     [TestCase(0, 1000, "00:00:000 - 00:01:000")]
-    [TestCase(1000, 0, "00:01:000 - 00:00:000")] // do not check time order in here
+    [TestCase(1000, 0, "00:00:000 - 00:01:000")] // should check the order of time.
     [TestCase(-1000, 0, "-00:01:000 - 00:00:000")]
-    [TestCase(0, -1000, "00:00:000 - -00:01:000")]
+    [TestCase(0, -1000, "-00:01:000 - 00:00:000")] // should check the order of time.
     public void TestLyricTimeFormattedString(double startTime, double endTime, string expected)
     {
         var lyric = new Lyric
