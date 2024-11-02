@@ -1,8 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
@@ -252,8 +254,11 @@ public class LyricUtilsTest
     {
         var lyric = new Lyric
         {
-            StartTime = startTime,
-            Duration = endTime - startTime,
+            TimeTags = new List<TimeTag>
+            {
+                new (new TextIndex(), startTime),
+                new (new TextIndex(), endTime),
+            },
         };
 
         string actual = LyricUtils.LyricTimeFormattedString(lyric);

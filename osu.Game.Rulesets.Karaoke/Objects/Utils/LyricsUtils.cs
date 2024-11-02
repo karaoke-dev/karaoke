@@ -89,9 +89,6 @@ public static class LyricsUtils
         rubyTags.AddRange(firstLyric.RubyTags);
         rubyTags.AddRange(shiftingRubyTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
-        double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
-        double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
-
         var singers = new List<ElementId>();
         singers.AddRange(firstLyric.SingerIds);
         singers.AddRange(secondLyric.SingerIds);
@@ -104,8 +101,6 @@ public static class LyricsUtils
             Text = lyricText,
             TimeTags = timeTags.ToArray(),
             RubyTags = rubyTags.ToArray(),
-            StartTime = startTime,
-            Duration = endTime - startTime,
             SingerIds = singers.Distinct().ToArray(),
             Language = language,
         };

@@ -26,8 +26,6 @@ public class LyricTest
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000^ka", "[1,start]:2000^ra", "[2,start]:3000^o", "[3,start]:4000^ke", "[3,end]:5000" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
-            StartTime = 1000,
-            Duration = 4000,
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
             Translations = new Dictionary<CultureInfo, string>
             {

@@ -195,8 +195,6 @@ public partial class Lyric : KaraokeHitObject, IHasPage, IHasDuration, IHasSinge
         var lyric = JsonConvert.DeserializeObject<Lyric>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
 
         lyric.ChangeId(ElementId.NewElementId());
-        lyric.StartTime = StartTime;
-        lyric.Duration = Duration;
         lyric.ReferenceLyric = ReferenceLyric;
 
         return lyric;
