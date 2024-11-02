@@ -69,7 +69,6 @@ public partial class LyricPlayfield : Playfield
         {
             // Manually set to reduce the number of future alive objects to a bare minimum.
             LifetimeEnd = Lyric.EndTime;
-            LifetimeStart = HitObject.StartTime - Lyric.CommandGenerator.GeneratePreemptTime(HitObject);
         }
 
         protected Lyric Lyric => (Lyric)HitObject;
