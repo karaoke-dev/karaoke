@@ -244,44 +244,4 @@ public static class LyricUtils
     }
 
     #endregion
-
-    #region Check
-
-    /// <summary>
-    /// Check start time is larger than end time.
-    /// </summary>
-    /// <param name="lyric"></param>
-    /// <returns></returns>
-    public static bool CheckIsTimeOverlapping(Lyric lyric)
-    {
-        return lyric.StartTime > lyric.EndTime;
-    }
-
-    /// <summary>
-    /// Start time should be smaller than any time-tag.
-    /// </summary>
-    /// <param name="lyric"></param>
-    /// <returns></returns>
-    public static bool CheckIsStartTimeInvalid(Lyric lyric)
-    {
-        if (!lyric.TimeTags.Any())
-            return false;
-
-        return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
-    }
-
-    /// <summary>
-    /// End time should be larger than any time-tag.
-    /// </summary>
-    /// <param name="lyric"></param>
-    /// <returns></returns>
-    public static bool CheckIsEndTimeInvalid(Lyric lyric)
-    {
-        if (!lyric.TimeTags.Any())
-            return false;
-
-        return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);
-    }
-
-    #endregion
 }

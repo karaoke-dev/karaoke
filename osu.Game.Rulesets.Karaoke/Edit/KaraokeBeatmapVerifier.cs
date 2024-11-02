@@ -22,7 +22,6 @@ public class KaraokeBeatmapVerifier : IBeatmapVerifier
         new CheckLyricRubyTag(),
         new CheckLyricSinger(),
         new CheckLyricText(),
-        new CheckLyricTime(),
         new CheckLyricTimeTag(),
         new CheckLyricTranslations(),
         new CheckNoteReferenceLyric(),
