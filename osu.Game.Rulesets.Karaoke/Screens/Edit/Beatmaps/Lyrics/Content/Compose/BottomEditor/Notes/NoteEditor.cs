@@ -71,9 +71,11 @@ public partial class NoteEditor : CompositeDrawable
             if (lyric == null)
                 return;
 
-            double? lyricStartTime = lyric.LyricTimingInfo?.StartTime;
-            if (lyricStartTime != null)
-                Playfield.Clock = new StopClock(lyricStartTime.Value);
+            if (lyric.TimeValid)
+            {
+                // set the clock to the lyric start time
+                Playfield.Clock = new StopClock(lyric.StartTime);
+            }
 
             // add all matched notes into playfield
             var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);

@@ -22,7 +22,7 @@ public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineS
     public EditableLyricTimelineSelectionBlueprint(Lyric item)
         : base(item)
     {
-        X = (float)(Item.LyricTimingInfo?.StartTime ?? default_time);
+        X = Item.TimeValid ? (float)Item.StartTime : (float)default_time;
 
         RelativeSizeAxes = Axes.X;
         Height = lyric_size;
@@ -59,11 +59,12 @@ public partial class EditableLyricTimelineSelectionBlueprint : EditableTimelineS
         base.Update();
 
         // no bindable so we perform this every update
-        float duration = (float)(Item.LyricTimingInfo?.Duration ?? default_duration);
+        double duration = Item.TimeValid ? Item.Duration : default_duration;
+        float durationWidth = (float)duration;
 
-        if (Width != duration)
+        if (Width != durationWidth)
         {
-            Width = duration;
+            Width = durationWidth;
         }
     }
 

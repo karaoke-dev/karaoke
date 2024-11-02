@@ -24,7 +24,7 @@ public class PreviewStageTimingCalculator
 
     public PreviewStageTimingCalculator(IBeatmap beatmap, PreviewStageDefinition definition)
     {
-        orderedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.LyricTimingInfo != null).OrderBy(x => x.LyricTimingInfo!.StartTime).ToArray();
+        orderedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.TimeValid).OrderBy(x => x.StartTime).ToArray();
         numberOfLyrics = definition.NumberOfLyrics;
         fadingTime = definition.FadingTime;
         lineMovingOffsetTime = definition.LineMovingOffsetTime;
@@ -32,7 +32,7 @@ public class PreviewStageTimingCalculator
 
     public double CalculateStartTime(Lyric lyric)
     {
-        if (lyric.LyricTimingInfo == null)
+        if (!lyric.TimeValid)
             throw new InvalidOperationException();
 
         var matchedLyrics = getRelatedLyrics(lyric, numberOfLyrics + 1).ToArray();
@@ -45,16 +45,16 @@ public class PreviewStageTimingCalculator
             return 0;
         }
 
-        double startEffectTime = matchedLyrics.Min(x => x.LyricTimingInfo!.EndTime) + numberOfLyrics * lineMovingOffsetTime;
+        double startEffectTime = matchedLyrics.Min(x => x.EndTime) + numberOfLyrics * lineMovingOffsetTime;
         return startEffectTime + fadingTime;
     }
 
     public double CalculateEndTime(Lyric lyric)
     {
-        if (lyric.LyricTimingInfo == null)
+        if (!lyric.TimeValid)
             throw new InvalidOperationException();
 
-        return lyric.LyricTimingInfo.EndTime;
+        return lyric.EndTime;
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class PreviewStageTimingCalculator
         {
             // line should start from zero.
             int line = matchedLyrics.Length - i - 2;
-            double time = matchedLyrics[i].LyricTimingInfo!.EndTime + line * lineMovingOffsetTime;
+            double time = matchedLyrics[i].EndTime + line * lineMovingOffsetTime;
 
             dictionary.Add(line, time);
         }

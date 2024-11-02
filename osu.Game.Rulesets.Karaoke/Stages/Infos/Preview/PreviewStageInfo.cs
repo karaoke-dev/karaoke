@@ -73,7 +73,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         layoutCategory.ClearElements();
 
         // Note: only deal with those lyrics has time.
-        var matchedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.LyricTimingInfo != null).OrderBy(x => x.LyricTimingInfo!.StartTime).ToArray();
+        var matchedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.TimeValid).OrderBy(x => x.StartTime).ToArray();
 
         foreach (var lyric in matchedLyrics)
         {

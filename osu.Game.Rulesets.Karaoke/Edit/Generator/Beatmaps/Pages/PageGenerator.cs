@@ -47,11 +47,11 @@ public class PageGenerator : BeatmapPropertyGenerator<Page[], PageGeneratorConfi
 
         var existPages = Config.ClearExistPages.Value ? Array.Empty<Page>() : item.PageInfo.SortedPages.ToArray();
         var lyricTimingInfos = item.HitObjects.OfType<Lyric>()
-                                   .Where(x => x.LyricTimingInfo != null)
+                                   .Where(x => x.TimeValid)
                                    .Select(x => new LyricTimingInfo
                                    {
-                                       StartTime = x.LyricTimingInfo!.StartTime,
-                                       EndTime = x.LyricTimingInfo.EndTime,
+                                       StartTime = x.StartTime,
+                                       EndTime = x.EndTime,
                                    })
                                    .OrderBy(x => x).ToList();
 

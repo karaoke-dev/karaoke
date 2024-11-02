@@ -70,7 +70,7 @@ public partial class LyricsPreview : CompositeDrawable
 
     private void triggerLyric(Lyric lyric)
     {
-        double? time = lyric.LyricTimingInfo!.StartTime - bindablePreemptTime.Value;
+        double? time = lyric.StartTime - bindablePreemptTime.Value;
         if (time != null)
             beatmap.Value.Track.Seek(time.Value);
 

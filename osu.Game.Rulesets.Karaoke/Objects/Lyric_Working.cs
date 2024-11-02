@@ -58,7 +58,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
                     break;
 
                 case LyricWorkingProperty.Page:
-                    PageIndex = LyricTimingInfo != null ? getPageIndex(beatmap, LyricTimingInfo.StartTime) : null;
+                    PageIndex = getPageIndex(beatmap, StartTime);
                     break;
 
                 case LyricWorkingProperty.ReferenceLyric:
@@ -113,11 +113,8 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
         }
     }
 
-    [JsonIgnore]
-    public LyricTimingInfo? LyricTimingInfo { get; private set; }
-
     /// <summary>
-    /// Lyric's start time is created from <see cref="StageInfo"/> and should not be saved.
+    /// Min value of <see cref="TimeTags"/> time.
     /// </summary>
     [JsonIgnore]
     public override double StartTime
@@ -134,7 +131,7 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
     public readonly Bindable<double> DurationBindable = new BindableDouble();
 
     /// <summary>
-    /// Lyric's duration is created from <see cref="StageInfo"/> and should not be saved.
+    /// Duration of <see cref="TimeTags"/>
     /// </summary>
     [JsonIgnore]
     public double Duration
@@ -148,10 +145,12 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
     }
 
     /// <summary>
-    /// The time at which the HitObject end.
+    /// Max value of <see cref="TimeTags"/> time.
     /// </summary>
     [JsonIgnore]
     public double EndTime => StartTime + Duration;
+
+    public bool TimeValid { get; private set; }
 
     [JsonIgnore]
     public readonly BindableDictionary<Singer, SingerState[]> SingersBindable = new();
@@ -224,47 +223,5 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
 
             updateStateByWorkingProperty(LyricWorkingProperty.CommandGenerator);
         }
-    }
-}
-
-public class LyricTimingInfo : IEquatable<LyricTimingInfo>
-{
-    public LyricTimingInfo(double startTime, double endTime)
-    {
-        StartTime = startTime;
-        EndTime = endTime;
-    }
-
-    public double StartTime { get; }
-
-    public double EndTime { get; }
-
-    public double Duration => EndTime - StartTime;
-
-    public bool Equals(LyricTimingInfo? other)
-    {
-        if (ReferenceEquals(null, other))
-            return false;
-
-        if (ReferenceEquals(this, other))
-            return true;
-
-        return StartTime.Equals(other.StartTime) && EndTime.Equals(other.EndTime);
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (ReferenceEquals(null, obj))
-            return false;
-
-        if (ReferenceEquals(this, obj))
-            return true;
-
-        return obj.GetType() == GetType() && Equals((LyricTimingInfo)obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(StartTime, EndTime);
     }
 }

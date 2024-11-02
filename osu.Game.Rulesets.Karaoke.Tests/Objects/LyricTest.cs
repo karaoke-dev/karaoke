@@ -55,8 +55,6 @@ public class LyricTest
         Assert.AreNotSame(clonedLyric.TimeTagsBindable, lyric.TimeTagsBindable);
         TimeTagAssert.ArePropertyEqual(clonedLyric.TimeTags, lyric.TimeTags);
 
-        Assert.AreEqual(clonedLyric.LyricTimingInfo, lyric.LyricTimingInfo);
-
         Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
         Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
         RubyTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
@@ -65,6 +63,8 @@ public class LyricTest
         Assert.AreEqual(clonedLyric.StartTime, lyric.StartTime);
 
         Assert.AreEqual(clonedLyric.Duration, lyric.Duration);
+
+        Assert.AreEqual(clonedLyric.EndTime, lyric.EndTime);
 
         Assert.AreNotSame(clonedLyric.SingerIdsBindable, lyric.SingerIdsBindable);
         CollectionAssert.AreEquivalent(clonedLyric.SingerIds, lyric.SingerIds);

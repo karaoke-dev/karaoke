@@ -110,13 +110,12 @@ public partial class RecordingTapControl : CompositeDrawable, IKeyBindingHandler
         if (lyricCaretState.CaretPosition is not RecordingTimeTagCaretPosition timeTagCaretPosition)
             throw new InvalidOperationException();
 
-        var timingInfo = timeTagCaretPosition.Lyric.LyricTimingInfo;
-
         lyricTimeTagsChangeHandler.ClearAllTimeTagTime();
 
-        if (timingInfo != null)
+        var lyric = timeTagCaretPosition.Lyric;
+        if (lyric.TimeValid)
         {
-            editorClock.Seek(timingInfo.StartTime - 1000);
+            editorClock.Seek(lyric.StartTime - 1000);
         }
 
         if (lyricCaretState.GetCaretPositionByAction(MovingCaretAction.FirstIndex)?.Lyric != timeTagCaretPosition.Lyric)
