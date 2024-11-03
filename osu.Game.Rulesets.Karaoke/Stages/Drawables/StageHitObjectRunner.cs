@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics;
@@ -12,16 +13,36 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
 public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
 {
-    private readonly IHitObjectCommandGenerator commandGenerator;
+    public event Action? OnStageChanged;
 
-    public StageHitObjectRunner(IHitObjectCommandGenerator commandGenerator)
+    public event Action? OnCommandUpdated;
+
+    private IHitObjectCommandGenerator commandGenerator = null!;
+
+    public void UpdateCommandGenerator(IHitObjectCommandGenerator generator)
     {
-        this.commandGenerator = commandGenerator;
+        commandGenerator = generator;
+        OnStageChanged?.Invoke();
+    }
+
+    public void TriggerUpdateCommand()
+    {
+        OnCommandUpdated?.Invoke();
+    }
+
+    public double GetPreemptTime(HitObject hitObject)
+    {
+        return commandGenerator.GeneratePreemptTime(hitObject);
     }
 
     public double GetStartTimeOffset(HitObject hitObject)
     {
         return commandGenerator.GenerateStartTimeOffset(hitObject);
+    }
+
+    public double GetEndTimeOffset(HitObject hitObject)
+    {
+        return commandGenerator.GenerateEndTimeOffset(hitObject);
     }
 
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)

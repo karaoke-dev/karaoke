@@ -12,14 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 public partial class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObject>
 {
-    private IStageHitObjectRunner? createCommandRunner()
-    {
-        if (HitObject is IHasCommandGenerator { CommandGenerator: not null } hasCommandGenerator)
-            return new StageHitObjectRunner(hasCommandGenerator.CommandGenerator);
-
-        return null;
-    }
-
+    [Resolved]
+    private IStageHitObjectRunner? stageRunner { get; set; }
 
     protected DrawableKaraokeHitObject(KaraokeHitObject? hitObject)
         : base(hitObject!)
@@ -27,16 +21,16 @@ public partial class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObje
     }
 
     protected sealed override double InitialLifetimeOffset
-        => createCommandRunner()?.GetStartTimeOffset(HitObject) ?? base.InitialLifetimeOffset;
+        => stageRunner?.GetStartTimeOffset(HitObject) ?? base.InitialLifetimeOffset;
 
     protected override JudgementResult CreateResult(Judgement judgement) => new KaraokeJudgementResult(HitObject, judgement);
 
     protected override void UpdateInitialTransforms()
-        => createCommandRunner()?.UpdateInitialTransforms(this);
+        => stageRunner?.UpdateInitialTransforms(this);
 
     protected override void UpdateStartTimeStateTransforms()
-        => createCommandRunner()?.UpdateStartTimeStateTransforms(this);
+        => stageRunner?.UpdateStartTimeStateTransforms(this);
 
     protected override void UpdateHitStateTransforms(ArmedState state)
-        => createCommandRunner()?.UpdateHitStateTransforms(this, state);
+        => stageRunner?.UpdateHitStateTransforms(this, state);
 }

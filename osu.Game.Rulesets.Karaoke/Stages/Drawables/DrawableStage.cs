@@ -24,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 /// </summary>
 public partial class DrawableStage : Container
 {
+    [Cached(typeof(IStageHitObjectRunner))]
+    private readonly StageHitObjectRunner stageRunner = new();
+
     public DrawableStage()
     {
         RelativeSizeAxes = Axes.Both;
@@ -41,6 +44,9 @@ public partial class DrawableStage : Container
     public void TriggerRecalculate(KaraokeBeatmap karaokeBeatmap, IReadOnlyList<Mod> mods)
     {
         var stageInfo = getStageInfo(mods, karaokeBeatmap);
+
+        // todo: refactor needed.
+        stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandGenerator(new Lyric())!);
         applyStageInfoToHitObject(stageInfo, karaokeBeatmap);
     }
 
