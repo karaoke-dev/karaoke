@@ -16,16 +16,16 @@ public class KaraokeModPreviewStage : ModStage<PreviewStageInfo>
 
     public override LocalisableString Description => "Focus on preview the lyric text.";
 
-    protected override void ApplyToCurrentStageInfo(PreviewStageInfo stageInfo)
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override PreviewStageInfo CreateStageInfo(KaraokeBeatmap beatmap)
     {
         var config = new PreviewStageInfoGeneratorConfig();
         var generator = new PreviewStageInfoGenerator(config);
 
         return (PreviewStageInfo)generator.Generate(beatmap);
+    }
+
+    protected override void ApplyToCurrentStageInfo(PreviewStageInfo stageInfo)
+    {
+        // todo: adjust stage by config.
     }
 }

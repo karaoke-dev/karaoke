@@ -3,56 +3,43 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Mods;
 
-public abstract class ModStage<TStageInfo> : ModStage, IApplicableAfterBeatmapConversion
+public abstract class ModStage<TStageInfo> : ModStage
     where TStageInfo : StageInfo
 {
-    public override void ApplyToBeatmap(IBeatmap beatmap)
+    public override bool IsStageInfoMatched(StageInfo stageInfo)
+    {
+       return stageInfo is TStageInfo;
+    }
+
+    public override StageInfo GenerateDefaultStageInfo(IBeatmap beatmap)
     {
         if (beatmap is not KaraokeBeatmap karaokeBeatmap)
-            throw new InvalidCastException();
+            throw new InvalidOperationException();
 
-        var stageInfos = karaokeBeatmap.StageInfos;
-        var matchedStageInfo = stageInfos.OfType<TStageInfo>().FirstOrDefault();
+        return CreateStageInfo(karaokeBeatmap) ?? throw new InvalidOperationException();
+    }
 
-        if (matchedStageInfo != null)
-        {
-            ApplyToCurrentStageInfo(matchedStageInfo);
-        }
+    public override void ApplyToStageInfo(StageInfo stageInfo)
+    {
+        if (stageInfo is not TStageInfo tStageInfo)
+            throw new InvalidOperationException();
 
-        // use the matched stage info as current stage info.
-        // trying to create a new one if has no matched stage info.
-        // it's ok to like it as null if is not able to create the default one, beatmap processor will handle that.
-        karaokeBeatmap.CurrentStageInfo = matchedStageInfo ?? CreateStageInfo(karaokeBeatmap)!;
-
-        // should invalidate the working property here because the stage info is changed.
-        // has the same logic in the beatmap processor.
-        beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
-        {
-            x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
-        });
-        beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));
+        ApplyToCurrentStageInfo(tStageInfo);
     }
 
     protected abstract void ApplyToCurrentStageInfo(TStageInfo stageInfo);
 
-    protected virtual TStageInfo? CreateStageInfo(KaraokeBeatmap beatmap)
-    {
-        return null;
-    }
+    protected abstract TStageInfo? CreateStageInfo(KaraokeBeatmap beatmap);
 }
 
-public abstract class ModStage : Mod, IApplicableAfterBeatmapConversion
+public abstract class ModStage : Mod, IApplicableMod
 {
     public sealed override ModType Type => ModType.Conversion;
 
@@ -63,5 +50,9 @@ public abstract class ModStage : Mod, IApplicableAfterBeatmapConversion
 
     public override Type[] IncompatibleMods => new[] { typeof(ModStage) }.Except(new[] { GetType() }).ToArray();
 
-    public abstract void ApplyToBeatmap(IBeatmap beatmap);
+    public abstract bool IsStageInfoMatched(StageInfo stageInfo);
+
+    public abstract StageInfo GenerateDefaultStageInfo(IBeatmap beatmap);
+
+    public abstract void ApplyToStageInfo(StageInfo stageInfo);
 }
