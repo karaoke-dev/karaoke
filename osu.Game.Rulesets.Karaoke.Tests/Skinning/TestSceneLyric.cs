@@ -73,7 +73,6 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
                     Text = "お",
                 },
             },
-            CommandGenerator = new PreviewLyricCommandGenerator(new PreviewStageInfo()),
         };
 
         lyric.Translations.Add(cultureInfo, "karaoke");
