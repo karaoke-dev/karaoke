@@ -3,15 +3,8 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
-using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Infos;
-using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
-using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -26,7 +19,6 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
     public override void PreProcess()
     {
         var karaokeBeatmap = getKaraokeBeatmap(Beatmap);
-        applyStage(karaokeBeatmap);
 
         base.PreProcess();
         applyInvalidProperty(karaokeBeatmap);
@@ -41,24 +33,6 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
                 EditorBeatmap editorBeatmap => getKaraokeBeatmap(editorBeatmap.PlayableBeatmap),
                 _ => throw new InvalidCastException($"The beatmap is not a {nameof(KaraokeBeatmap)}"),
             };
-    }
-
-    private void applyStage(KaraokeBeatmap beatmap)
-    {
-        // current stage info will be null if not select any mod or first load.
-        // trying to load the first stage or create a default one.
-        if (beatmap.CurrentStageInfo == null)
-        {
-            beatmap.CurrentStageInfo = getWorkingStage(beatmap) ?? createDefaultWorkingStage();
-        }
-
-        if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
-            calculatedProperty.ValidateCalculatedProperty(beatmap);
-
-        static StageInfo? getWorkingStage(KaraokeBeatmap beatmap)
-            => beatmap.StageInfos.FirstOrDefault();
-
-        static StageInfo createDefaultWorkingStage() => new PreviewStageInfo();
     }
 
     private void applyInvalidProperty(KaraokeBeatmap beatmap)
