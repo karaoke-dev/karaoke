@@ -71,8 +71,8 @@ public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHi
     [BackgroundDependencyLoader]
     private void load()
     {
-        // todo: use better way to assign the stage info.
-        // also, should monitor the stage info change.
+        // todo: should use StageWrapper to control the playfield
+        // after remove the code, should remove the logic in the StageWrapper.TriggerRecalculate also.
         var stageInfo = Beatmap.CurrentStageInfo;
         if (stageInfo == null)
             throw new ArgumentNullException();

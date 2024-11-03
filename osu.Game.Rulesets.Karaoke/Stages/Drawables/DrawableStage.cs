@@ -45,6 +45,10 @@ public partial class DrawableStage : Container
     {
         var stageInfo = getStageInfo(mods, karaokeBeatmap);
 
+        // for able to get the stage info in DrawableKaraokeRuleset.
+        // Can be removed after refactor.
+        karaokeBeatmap.CurrentStageInfo = stageInfo;
+
         // todo: refactor needed.
         stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandGenerator(new Lyric())!);
         applyStageInfoToHitObject(stageInfo, karaokeBeatmap);
