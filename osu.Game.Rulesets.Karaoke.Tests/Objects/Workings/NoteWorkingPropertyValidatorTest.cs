@@ -71,17 +71,6 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = null);
     }
 
-    [Test]
-    public void TestCommandGenerator()
-    {
-        var note = new Note();
-
-        // page state is valid because assign the property.
-        // todo: note does not have command generator now.
-        Assert.DoesNotThrow(() => note.CommandGenerator = null);
-        AssetIsValid(note, NoteWorkingProperty.CommandGenerator, true);
-    }
-
     protected override bool IsInitialStateValid(NoteWorkingProperty flag)
     {
         return new NoteWorkingPropertyValidator(new Note()).IsValid(flag);

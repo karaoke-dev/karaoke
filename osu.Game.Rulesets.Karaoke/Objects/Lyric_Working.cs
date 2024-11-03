@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects;
 /// Placing the properties that set by <see cref="KaraokeBeatmapProcessor"/> or being calculated.
 /// Those properties will not be saved into the beatmap.
 /// </summary>
-public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasCommandGenerator
+public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>
 {
     [JsonIgnore]
     private readonly LyricWorkingPropertyValidator workingPropertyValidator;
@@ -53,10 +53,6 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
                     ReferenceLyric = findLyricById(beatmap, ReferenceLyricId);
                     break;
 
-                case LyricWorkingProperty.CommandGenerator:
-                    CommandGenerator = getCommandGenerator(beatmap, this);
-                    break;
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -70,15 +66,6 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
 
         static Lyric? findLyricById(IBeatmap beatmap, ElementId? id) =>
             id == null ? null : beatmap.HitObjects.OfType<Lyric>().Single(x => x.ID == id);
-
-        static IHitObjectCommandGenerator getCommandGenerator(KaraokeBeatmap beatmap, KaraokeHitObject lyric)
-        {
-            var stageInfo = beatmap.CurrentStageInfo;
-            if (stageInfo == null)
-                throw new InvalidCastException();
-
-            return stageInfo.GetHitObjectCommandGenerator(lyric) ?? throw new InvalidOperationException();
-        }
     }
 
     /// <summary>
@@ -162,26 +149,6 @@ public partial class Lyric : IHasWorkingProperty<LyricWorkingProperty>, IHasComm
         {
             ReferenceLyricBindable.Value = value;
             updateStateByWorkingProperty(LyricWorkingProperty.ReferenceLyric);
-        }
-    }
-
-    [JsonIgnore]
-    public readonly Bindable<IHitObjectCommandGenerator> EffectApplierBindable = new();
-
-    /// <summary>
-    /// Stage elements.
-    /// Will save all the elements that related to the lyric.
-    /// The element might include something like style or layout info.
-    /// </summary>
-    [JsonIgnore]
-    public IHitObjectCommandGenerator CommandGenerator
-    {
-        get => EffectApplierBindable.Value;
-        set
-        {
-            EffectApplierBindable.Value = value;
-
-            updateStateByWorkingProperty(LyricWorkingProperty.CommandGenerator);
         }
     }
 }

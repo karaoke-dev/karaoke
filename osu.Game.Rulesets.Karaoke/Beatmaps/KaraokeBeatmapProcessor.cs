@@ -50,14 +50,6 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
         if (beatmap.CurrentStageInfo == null)
         {
             beatmap.CurrentStageInfo = getWorkingStage(beatmap) ?? createDefaultWorkingStage();
-
-            // todo: should move the logic into the stage wrapper.
-            // should invalidate the working property here because the stage info is changed.
-            beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
-            {
-                x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
-            });
-            beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));
         }
 
         if (beatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)

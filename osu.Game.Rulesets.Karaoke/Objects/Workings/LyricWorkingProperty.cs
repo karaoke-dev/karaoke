@@ -25,9 +25,4 @@ public enum LyricWorkingProperty
     /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
     /// </summary>
     ReferenceLyric = 1 << 2,
-
-    /// <summary>
-    /// <see cref="Lyric.CommandGenerator"/> is being invalidated.
-    /// </summary>
-    CommandGenerator = 1 << 3,
 }

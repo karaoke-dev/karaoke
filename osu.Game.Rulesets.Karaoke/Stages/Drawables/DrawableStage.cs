@@ -70,13 +70,6 @@ public partial class DrawableStage : Container
 
     private static void applyStageInfoToHitObject(StageInfo stageInfo, KaraokeBeatmap beatmap)
     {
-        // should invalidate the working property and fill it again.
-        beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
-        {
-            x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
-        });
-        beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));
-
         // fill the working property.
         if (stageInfo is IHasCalculatedProperty calculatedProperty)
             calculatedProperty.ValidateCalculatedProperty(beatmap);
