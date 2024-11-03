@@ -4,8 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
@@ -19,9 +19,9 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
         this.commandGenerator = commandGenerator;
     }
 
-    public double GenerateStartTimeOffset(DrawableKaraokeHitObject hitObject)
+    public double GetStartTimeOffset(HitObject hitObject)
     {
-        return commandGenerator.GenerateStartTimeOffset(hitObject.HitObject);
+        return commandGenerator.GenerateStartTimeOffset(hitObject);
     }
 
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)

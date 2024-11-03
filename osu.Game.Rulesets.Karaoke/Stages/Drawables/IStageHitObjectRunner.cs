@@ -3,13 +3,19 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
 public interface IStageHitObjectRunner
 {
-    double GenerateStartTimeOffset(DrawableKaraokeHitObject hitObject);
+    /// <summary>
+    /// Get the offset time between <see cref="HitObject.StartTime"/> and stage start time.
+    /// </summary>
+    /// <param name="hitObject"></param>
+    /// <returns></returns>
+    double GetStartTimeOffset(HitObject hitObject);
 
     /// <summary>
     /// Apply (generally fade-in) transforms leading into the <see cref="KaraokeHitObject"/> start time.
