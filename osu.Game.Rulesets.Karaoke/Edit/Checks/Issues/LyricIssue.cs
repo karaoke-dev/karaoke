@@ -15,6 +15,6 @@ public class LyricIssue : Issue
     {
         Lyric = lyric;
 
-        Time = Lyric.LyricTimingInfo?.StartTime;
+        Time = Lyric.TimeValid ? Lyric.StartTime : null;
     }
 }

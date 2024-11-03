@@ -73,7 +73,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         layoutCategory.ClearElements();
 
         // Note: only deal with those lyrics has time.
-        var matchedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.LyricTimingInfo != null).OrderBy(x => x.LyricTimingInfo!.StartTime).ToArray();
+        var matchedLyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => x.TimeValid).OrderBy(x => x.StartTime).ToArray();
 
         foreach (var lyric in matchedLyrics)
         {
@@ -87,7 +87,7 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
             layoutCategory.AddToMapping(element, lyric);
 
             // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
-            lyric.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
+            // todo: should update the timing in the lyric wrapper.
             lyric.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
         }
 

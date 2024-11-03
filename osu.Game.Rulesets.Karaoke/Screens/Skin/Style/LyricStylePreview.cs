@@ -36,12 +36,9 @@ internal partial class LyricStylePreview : CompositeDrawable
     private Lyric createDefaultLyricLine()
     {
         double startTime = Time.Current;
-        const double duration = 1000000;
 
         return new Lyric
         {
-            StartTime = startTime,
-            Duration = duration,
             Text = "カラオケ！",
             TimeTags = new List<TimeTag>
             {

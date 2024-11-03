@@ -22,6 +22,20 @@ public interface IHitObjectCommandGenerator
     double GeneratePreemptTime(HitObject hitObject);
 
     /// <summary>
+    /// Generate the offset time between <see cref="HitObject.StartTime"/> and stage start time.
+    /// </summary>
+    /// <param name="hitObject"></param>
+    /// <returns></returns>
+    double GenerateStartTimeOffset(HitObject hitObject);
+
+    /// <summary>
+    /// Generate the offset time between <see cref="HitObjectExtensions.GetEndTime"/> and stage start time.
+    /// </summary>
+    /// <param name="hitObject"></param>
+    /// <returns></returns>
+    double GenerateEndTimeOffset(HitObject hitObject);
+
+    /// <summary>
     /// Apply (generally fade-in) transforms leading into the <see cref="DrawableKaraokeHitObject"/> start time.
     /// </summary>
     /// <param name="hitObject"></param>

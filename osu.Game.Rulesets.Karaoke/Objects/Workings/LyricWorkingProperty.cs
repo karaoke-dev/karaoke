@@ -12,37 +12,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Workings;
 public enum LyricWorkingProperty
 {
     /// <summary>
-    /// <see cref="Lyric.StartTime"/> is being invalidated.
-    /// </summary>
-    StartTime = 1,
-
-    /// <summary>
-    /// <see cref="Lyric.Duration"/> is being invalidated.
-    /// </summary>
-    Duration = 1 << 1,
-
-    /// <summary>
-    /// <see cref="Lyric.StartTime"/> and <see cref="Lyric.Duration"/> is being invalidated.
-    /// </summary>
-    Timing = StartTime | Duration,
-
-    /// <summary>
     /// <see cref="Lyric.Singers"/> is being invalidated.
     /// </summary>
-    Singers = 1 << 2,
+    Singers = 1 << 0,
 
     /// <summary>
     /// <see cref="Lyric.PageIndex"/> is being invalidated.
     /// </summary>
-    Page = 1 << 3,
+    Page = 1 << 1,
 
     /// <summary>
     /// <see cref="Lyric.ReferenceLyric"/> is being invalidated.
     /// </summary>
-    ReferenceLyric = 1 << 4,
+    ReferenceLyric = 1 << 2,
 
     /// <summary>
     /// <see cref="Lyric.CommandGenerator"/> is being invalidated.
     /// </summary>
-    CommandGenerator = 1 << 5,
+    CommandGenerator = 1 << 3,
 }

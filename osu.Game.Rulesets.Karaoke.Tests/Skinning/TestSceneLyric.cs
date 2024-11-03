@@ -38,12 +38,9 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
     private Drawable testSingle(double timeOffset = 0)
     {
         double startTime = Time.Current + 1000 + timeOffset;
-        const double duration = 2500;
 
         var lyric = new Lyric
         {
-            StartTime = startTime,
-            Duration = duration,
             Text = "カラオケ！",
             TimeTags = new List<TimeTag>
             {

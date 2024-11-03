@@ -27,7 +27,7 @@ public partial class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObje
     }
 
     protected sealed override double InitialLifetimeOffset
-        => createCommandRunner()?.GetPreemptTime(this) ?? base.InitialLifetimeOffset;
+        => createCommandRunner()?.GenerateStartTimeOffset(this) ?? base.InitialLifetimeOffset;
 
     protected override JudgementResult CreateResult(Judgement judgement) => new KaraokeJudgementResult(HitObject, judgement);
 

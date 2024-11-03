@@ -26,8 +26,6 @@ public class LyricTest
             Text = "カラオケ",
             TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000^ka", "[1,start]:2000^ra", "[2,start]:3000^o", "[3,start]:4000^ke", "[3,end]:5000" }),
             RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }),
-            StartTime = 1000,
-            Duration = 4000,
             SingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(new[] { 1, 2 }),
             Translations = new Dictionary<CultureInfo, string>
             {
@@ -55,8 +53,6 @@ public class LyricTest
         Assert.AreNotSame(clonedLyric.TimeTagsBindable, lyric.TimeTagsBindable);
         TimeTagAssert.ArePropertyEqual(clonedLyric.TimeTags, lyric.TimeTags);
 
-        Assert.AreEqual(clonedLyric.LyricTimingInfo, lyric.LyricTimingInfo);
-
         Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
         Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
         RubyTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
@@ -65,6 +61,8 @@ public class LyricTest
         Assert.AreEqual(clonedLyric.StartTime, lyric.StartTime);
 
         Assert.AreEqual(clonedLyric.Duration, lyric.Duration);
+
+        Assert.AreEqual(clonedLyric.EndTime, lyric.EndTime);
 
         Assert.AreNotSame(clonedLyric.SingerIdsBindable, lyric.SingerIdsBindable);
         CollectionAssert.AreEquivalent(clonedLyric.SingerIds, lyric.SingerIds);

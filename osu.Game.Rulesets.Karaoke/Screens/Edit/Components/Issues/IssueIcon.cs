@@ -74,7 +74,6 @@ public partial class IssueIcon : CompositeDrawable
             CheckLyricRubyTag => FontAwesome.Solid.Tag,
             CheckLyricSinger => FontAwesome.Solid.Music,
             CheckLyricText => FontAwesome.Solid.TextHeight,
-            CheckLyricTime => FontAwesome.Solid.Times,
             CheckLyricTimeTag => FontAwesome.Solid.Tag,
             CheckLyricTranslations => FontAwesome.Solid.Language,
             CheckNoteReferenceLyric => FontAwesome.Solid.Link,

@@ -140,11 +140,15 @@ public partial class Lyric
 
             if (startTime != null && endTime != null)
             {
-                LyricTimingInfo = new LyricTimingInfo(startTime.Value, endTime.Value);
+                StartTime = startTime.Value;
+                Duration = endTime.Value - StartTime;
+                TimeValid = true;
             }
             else
             {
-                LyricTimingInfo = null;
+                StartTime = 0;
+                Duration = 0;
+                TimeValid = false;
             }
         }
     }

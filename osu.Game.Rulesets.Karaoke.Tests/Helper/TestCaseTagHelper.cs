@@ -176,8 +176,6 @@ public static class TestCaseTagHelper
 
             return new Lyric
             {
-                StartTime = startTime,
-                Duration = endTime - startTime,
                 Text = text,
                 TimeTags = new[]
                 {

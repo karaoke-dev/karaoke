@@ -66,8 +66,6 @@ public partial class NotePlayfieldPreview : SettingsSubsectionPreview
 
         var lyric = new Lyric
         {
-            StartTime = startTime,
-            Duration = duration,
             Text = "Note",
             TimeTags = new List<TimeTag>
             {

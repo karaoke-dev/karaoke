@@ -203,32 +203,6 @@ public class LyricsUtilsTest
         RubyTagAssert.ArePropertyEqual(expected, actual);
     }
 
-    [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })]
-    [TestCase(new double[] { 1000, 0 }, new double[] { 2000, 0 }, new double[] { 1000, 1000 })]
-    [TestCase(new double[] { 1000, 0 }, new double[] { 2000, 2000 }, new double[] { 1000, 3000 })]
-    [TestCase(new double[] { 1000, 5000 }, new double[] { 1000, 0 }, new double[] { 1000, 5000 })]
-    [TestCase(new double[] { 1000, 5000 }, new double[] { 2000, 0 }, new double[] { 1000, 5000 })]
-    [TestCase(new double[] { 2000, 5000 }, new double[] { 1000, 0 }, new double[] { 1000, 6000 })]
-    [TestCase(new double[] { 2000, 5000 }, new double[] { 1000, 10000 }, new double[] { 1000, 10000 })]
-    public void TestCombineLyricTime(double[] firstLyricTime, double[] secondLyricTime, double[] expectedTime)
-    {
-        var lyric1 = new Lyric
-        {
-            StartTime = firstLyricTime[0],
-            Duration = firstLyricTime[1],
-        };
-        var lyric2 = new Lyric
-        {
-            StartTime = secondLyricTime[0],
-            Duration = secondLyricTime[1],
-        };
-
-        // use min time as start time, and use max end time - min star time as duration
-        var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
-        Assert.AreEqual(expectedTime[0], combineLyric.StartTime);
-        Assert.AreEqual(expectedTime[1], combineLyric.Duration);
-    }
-
     [TestCase(new[] { 1 }, new[] { 2 }, new[] { 1, 2 })]
     [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })] // deal with duplicated case.
     [TestCase(new[] { 1 }, new[] { -2 }, new[] { 1, -2 })] // deal with id not right case.

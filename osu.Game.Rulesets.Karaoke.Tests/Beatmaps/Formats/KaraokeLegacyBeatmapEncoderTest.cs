@@ -20,7 +20,6 @@ public class KaraokeLegacyBeatmapEncoderTest
     {
         // Because encoder is not fully implemented, so just test not crash during encoding.
         const int start_time = 1000;
-        const int duration = 2500;
 
         var beatmap = new Beatmap
         {
@@ -28,8 +27,6 @@ public class KaraokeLegacyBeatmapEncoderTest
             {
                 new Lyric
                 {
-                    StartTime = start_time,
-                    Duration = duration,
                     Text = "カラオケ！",
                     TimeTags = new List<TimeTag>
                     {

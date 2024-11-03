@@ -29,7 +29,7 @@ public class ClassicLyricTimingInfoGenerator : StageInfoPropertyGenerator<Classi
     {
         int lyricAmount = Config.LyricRowAmount.Value;
 
-        var lyrics = item.HitObjects.OfType<Lyric>().Where(x => x.LyricTimingInfo != null).ToArray();
+        var lyrics = item.HitObjects.OfType<Lyric>().Where(x => x.TimeValid).ToArray();
         var timingInfo = new ClassicLyricTimingInfo();
 
         // lazy to generate the info if the lyric amount is not enough.
@@ -51,13 +51,13 @@ public class ClassicLyricTimingInfoGenerator : StageInfoPropertyGenerator<Classi
             var disappearLyric = lyrics.ElementAt(i);
             var showLyric = lyrics.ElementAt(i + lyricAmount);
 
-            var timingPoint = timingInfo.AddTimingPoint(x => x.Time = disappearLyric.LyricTimingInfo!.EndTime);
+            var timingPoint = timingInfo.AddTimingPoint(x => x.Time = disappearLyric.EndTime);
             timingInfo.AddToMapping(timingPoint, disappearLyric);
             timingInfo.AddToMapping(timingPoint, showLyric);
         }
 
         // add end timing info.
-        var lastTimingPoint = timingInfo.AddTimingPoint(x => x.Time = lyrics.Last().LyricTimingInfo!.EndTime);
+        var lastTimingPoint = timingInfo.AddTimingPoint(x => x.Time = lyrics.Last().EndTime);
 
         for (int i = lyrics.Length - lyricAmount; i < lyrics.Length; i++)
         {

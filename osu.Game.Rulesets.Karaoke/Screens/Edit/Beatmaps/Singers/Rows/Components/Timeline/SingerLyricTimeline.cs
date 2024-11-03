@@ -66,8 +66,8 @@ public partial class SingerLyricTimeline : EditableTimeline
 
         const float preempt_time = 1000;
 
-        var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricTimingInfo?.StartTime > 0);
-        double? lyricStartTime = firstLyric?.LyricTimingInfo?.StartTime;
+        var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.StartTime > 0);
+        double? lyricStartTime = firstLyric?.StartTime;
         if (lyricStartTime == null)
             return;
 

@@ -125,8 +125,6 @@ public partial class LyricPreview : SettingsSubsectionPreview
                     Text = "お",
                 },
             },
-            StartTime = 0,
-            Duration = 1000000,
             TimeTags = new List<TimeTag>
             {
                 new(new TextIndex(0), 500)

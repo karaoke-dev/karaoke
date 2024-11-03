@@ -51,10 +51,10 @@ public class KaraokeBeatmapProcessor : BeatmapProcessor
         {
             beatmap.CurrentStageInfo = getWorkingStage(beatmap) ?? createDefaultWorkingStage();
 
+            // todo: should move the logic into the stage wrapper.
             // should invalidate the working property here because the stage info is changed.
             beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
             {
-                x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
                 x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
             });
             beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));

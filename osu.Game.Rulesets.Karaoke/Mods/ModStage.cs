@@ -39,7 +39,6 @@ public abstract class ModStage<TStageInfo> : ModStage, IApplicableAfterBeatmapCo
         // has the same logic in the beatmap processor.
         beatmap.HitObjects.OfType<Lyric>().ForEach(x =>
         {
-            x.InvalidateWorkingProperty(LyricWorkingProperty.Timing);
             x.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
         });
         beatmap.HitObjects.OfType<Note>().ForEach(x => x.InvalidateWorkingProperty(NoteWorkingProperty.CommandGenerator));

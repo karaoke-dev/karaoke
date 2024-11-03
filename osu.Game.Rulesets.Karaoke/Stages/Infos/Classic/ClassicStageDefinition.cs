@@ -64,12 +64,12 @@ public class ClassicStageDefinition : StageDefinition
     public double FirstLyricStartTimeOffset { get; set; } = 1000;
 
     /// <summary>
-    /// The delay disappear time after touch to the <see cref="Lyric"/>'s <see cref="LyricTimingInfo.StartTime"/>
+    /// The delay disappear time after touch to the <see cref="Lyric"/>'s <see cref="Lyric.StartTime"/>
     /// </summary>
     public double LyricEndTimeOffset { get; set; } = 300;
 
     /// <summary>
-    /// The delay disappear time after touch to the last <see cref="Lyric"/>'s <see cref="LyricTimingInfo.EndTime"/>
+    /// The delay disappear time after touch to the last <see cref="Lyric"/>'s <see cref="Lyric.EndTime"/>
     /// </summary>
     public double LastLyricEndTimeOffset { get; set; } = 10000;
 
