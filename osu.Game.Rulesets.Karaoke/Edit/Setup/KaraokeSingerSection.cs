@@ -18,7 +18,7 @@ public partial class KaraokeSingerSection : SetupSection
     [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
     private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider = new();
 
-    private readonly IBeatmapSingersChangeHandler changeHandler = new BeatmapSingersChangeHandler();
+    private readonly BeatmapSingersChangeHandler changeHandler = new();
 
     private FormSingerList singerList = null!;
 
@@ -26,6 +26,7 @@ public partial class KaraokeSingerSection : SetupSection
     private void load()
     {
         AddInternal(karaokeBeatmapResourcesProvider);
+        AddInternal(changeHandler);
 
         Children = new Drawable[]
         {
