@@ -138,7 +138,6 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 new(new TextIndex(4), 2000),
             },
             HitWindows = new KaraokeLyricHitWindows(),
-            CommandGenerator = new PreviewLyricCommandGenerator(),
         };
 
     private IDictionary<CultureInfo, string> createPreviewTranslation(CultureInfo cultureInfo)

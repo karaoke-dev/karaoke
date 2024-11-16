@@ -16,16 +16,16 @@ public class KaraokeModClassicStage : ModStage<ClassicStageInfo>
 
     public override LocalisableString Description => "Karaoke mod like other karaoke game or software.";
 
-    protected override void ApplyToCurrentStageInfo(ClassicStageInfo stageInfo)
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override ClassicStageInfo CreateStageInfo(KaraokeBeatmap beatmap)
     {
         var config = new ClassicStageInfoGeneratorConfig();
         var generator = new ClassicStageInfoGenerator(config);
 
         return (ClassicStageInfo)generator.Generate(beatmap);
+    }
+
+    protected override void ApplyToCurrentStageInfo(ClassicStageInfo stageInfo)
+    {
+        // todo: adjust stage by config.
     }
 }

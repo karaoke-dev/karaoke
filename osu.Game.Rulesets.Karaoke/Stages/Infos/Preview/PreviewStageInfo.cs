@@ -85,10 +85,6 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
                 x.Timings = calculator.CalculateTimings(lyric);
             });
             layoutCategory.AddToMapping(element, lyric);
-
-            // Need to invalidate the working property in the lyric to let the property re-fill in the beatmap processor.
-            // todo: should update the timing in the lyric wrapper.
-            lyric.InvalidateWorkingProperty(LyricWorkingProperty.CommandGenerator);
         }
 
         calculatedPropertyIsUpdated = true;

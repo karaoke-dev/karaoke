@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Objects;
@@ -41,15 +42,20 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
 
     public KaraokePlayfield()
     {
-        AddInternal(LyricPlayfield = CreateLyricPlayfield().With(x =>
+        AddInternal(new DrawableStage
         {
-            x.RelativeSizeAxes = Axes.Both;
-        }));
-
-        AddInternal(NotePlayfield = CreateNotePlayfield(9).With(x =>
-        {
-            x.RelativeSizeAxes = Axes.X;
-        }));
+            Children = new Drawable[]
+            {
+                LyricPlayfield = CreateLyricPlayfield().With(x =>
+                {
+                    x.RelativeSizeAxes = Axes.Both;
+                }),
+                NotePlayfield = CreateNotePlayfield(9).With(x =>
+                {
+                    x.RelativeSizeAxes = Axes.X;
+                })
+            }
+        });
 
         AddNested(LyricPlayfield);
         AddNested(NotePlayfield);

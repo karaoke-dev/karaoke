@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
@@ -16,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.UI;
 
 public partial class LyricPlayfield : Playfield
 {
+    [Resolved]
+    private IStageHitObjectRunner? stageRunner { get; set; }
+
     private readonly Bindable<Lyric[]> singingLyrics = new();
 
     protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
@@ -60,19 +64,47 @@ public partial class LyricPlayfield : Playfield
         RegisterPool<Lyric, DrawableLyric>(50);
     }
 
-    protected override HitObjectLifetimeEntry CreateLifetimeEntry(HitObject hitObject) => new LyricHitObjectLifetimeEntry(hitObject);
+    protected override HitObjectLifetimeEntry CreateLifetimeEntry(HitObject hitObject) => new LyricHitObjectLifetimeEntry(hitObject, stageRunner);
 
     private class LyricHitObjectLifetimeEntry : HitObjectLifetimeEntry
     {
-        public LyricHitObjectLifetimeEntry(HitObject hitObject)
+        private readonly IStageHitObjectRunner? stageRunner;
+
+        public LyricHitObjectLifetimeEntry(HitObject hitObject, IStageHitObjectRunner? runner)
             : base(hitObject)
         {
+            stageRunner = runner;
+            if (stageRunner == null)
+                return;
+
             // Manually set to reduce the number of future alive objects to a bare minimum.
-            LifetimeEnd = lyric.EndTime + lyric.CommandGenerator.GenerateEndTimeOffset(lyric);
+            updateLifetime();
+
+            stageRunner.OnStageChanged += updateLifetime;
+            stageRunner.OnCommandUpdated += updateLifetime;
+        }
+
+        private void updateLifetime()
+        {
+            if (stageRunner == null)
+                throw new InvalidOperationException();
+
+            // follow the same event as SetInitialLifetime() in the base class.
+            LifetimeStart = HitObject.StartTime - InitialLifetimeOffset;
+            LifetimeEnd = lyric.EndTime + stageRunner.GetEndTimeOffset(lyric);
         }
 
         private Lyric lyric => (Lyric)HitObject;
 
-        protected override double InitialLifetimeOffset => lyric.CommandGenerator.GenerateStartTimeOffset(HitObject) + lyric.CommandGenerator.GeneratePreemptTime(HitObject);
+        protected override double InitialLifetimeOffset
+        {
+            get
+            {
+                if (stageRunner == null)
+                    return base.InitialLifetimeOffset;
+
+                return stageRunner.GetStartTimeOffset(lyric) + stageRunner.GetPreemptTime(HitObject);
+            }
+        }
     }
 }

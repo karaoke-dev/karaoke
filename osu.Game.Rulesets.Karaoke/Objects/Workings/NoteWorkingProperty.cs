@@ -20,9 +20,4 @@ public enum NoteWorkingProperty
     /// <see cref="Note.ReferenceLyric"/> is being invalidated.
     /// </summary>
     ReferenceLyric = 1 << 1,
-
-    /// <summary>
-    /// <see cref="Note.CommandGenerator"/> is being invalidated.
-    /// </summary>
-    CommandGenerator = 1 << 2,
 }

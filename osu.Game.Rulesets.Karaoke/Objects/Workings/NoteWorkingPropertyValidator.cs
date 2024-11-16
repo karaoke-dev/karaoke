@@ -17,7 +17,6 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
         {
             NoteWorkingProperty.Page => false,
             NoteWorkingProperty.ReferenceLyric => true,
-            NoteWorkingProperty.CommandGenerator => false,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
@@ -26,7 +25,6 @@ public class NoteWorkingPropertyValidator : HitObjectWorkingPropertyValidator<No
         {
             NoteWorkingProperty.Page => true,
             NoteWorkingProperty.ReferenceLyric => hitObject.ReferenceLyric?.ID == hitObject.ReferenceLyricId,
-            NoteWorkingProperty.CommandGenerator => true,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 }

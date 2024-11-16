@@ -154,16 +154,6 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = null);
     }
 
-    [Test]
-    public void TestCommandGenerator()
-    {
-        var lyric = new Lyric();
-
-        // state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.CommandGenerator = new ClassicLyricCommandGenerator(new ClassicStageInfo()));
-        AssetIsValid(lyric, LyricWorkingProperty.CommandGenerator, true);
-    }
-
     protected override bool IsInitialStateValid(LyricWorkingProperty flag)
     {
         return new LyricWorkingPropertyValidator(new Lyric()).IsValid(flag);

@@ -21,7 +21,6 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
             LyricWorkingProperty.Singers => true,
             LyricWorkingProperty.Page => false,
             LyricWorkingProperty.ReferenceLyric => true,
-            LyricWorkingProperty.CommandGenerator => false,
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
@@ -31,7 +30,6 @@ public class LyricWorkingPropertyValidator : HitObjectWorkingPropertyValidator<L
             LyricWorkingProperty.Singers => isWorkingSingerSynced(hitObject),
             LyricWorkingProperty.Page => throw new InvalidOperationException(),
             LyricWorkingProperty.ReferenceLyric => isReferenceLyricSynced(hitObject),
-            LyricWorkingProperty.CommandGenerator => throw new InvalidOperationException(),
             _ => throw new ArgumentOutOfRangeException(nameof(flags), flags, null),
         };
 
