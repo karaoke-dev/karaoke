@@ -277,14 +277,6 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         {
             return Array.Empty<StageElement>();
         }
-
-        protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-        {
-            if(!lyric.TimeValid)
-                return new Tuple<double?, double?>(null, null);
-
-            return new Tuple<double?, double?>(lyric.StartTime, lyric.EndTime);
-        }
     }
 
     private class TestCategory : StageElementCategory<TestStageElement, Lyric>;
@@ -308,6 +300,14 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
 
         protected override double GeneratePreemptTime(Lyric hitObject)
             => 0;
+
+        protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+        {
+            if(!lyric.TimeValid)
+                return new Tuple<double?, double?>(null, null);
+
+            return new Tuple<double?, double?>(lyric.StartTime, lyric.EndTime);
+        }
 
         protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
         {

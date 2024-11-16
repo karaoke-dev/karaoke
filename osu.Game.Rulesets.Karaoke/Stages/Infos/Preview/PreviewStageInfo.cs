@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages.Preview;
@@ -117,12 +116,6 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     {
         // todo: should check the real-time mapping result.
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
-    }
-
-    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-    {
-        var element = layoutCategory.GetElementByItem(lyric);
-        return new Tuple<double?, double?>(element.StartTime, element.EndTime);
     }
 
     #endregion

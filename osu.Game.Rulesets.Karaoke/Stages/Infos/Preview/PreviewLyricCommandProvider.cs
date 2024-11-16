@@ -22,6 +22,12 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
         return StageInfo.StageDefinition.FadingTime;
     }
 
+    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+    {
+        var element = StageInfo.GetStageElements(lyric).OfType<PreviewLyricLayout>().Single();
+        return new Tuple<double?, double?>(element.StartTime, element.EndTime);
+    }
+
     protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);

@@ -35,7 +35,7 @@ public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObj
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        (double? startTime, _) = StageInfo.GetStartAndEndTime(tHitObject);
+        (double? startTime, _) = GetStartAndEndTime(tHitObject);
 
         if (startTime == null)
             return 0;
@@ -49,7 +49,7 @@ public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObj
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        (_, double? endTime) = StageInfo.GetStartAndEndTime(tHitObject);
+        (_, double? endTime) = GetStartAndEndTime(tHitObject);
 
         if (endTime == null)
             return 0;
@@ -84,6 +84,8 @@ public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObj
     protected abstract double GeneratePreemptTime(THitObject hitObject);
 
     protected abstract IEnumerable<IStageCommand> GetInitialCommands(THitObject hitObject);
+
+    protected abstract Tuple<double?, double?> GetStartAndEndTime(THitObject lyric);
 
     protected abstract IEnumerable<IStageCommand> GetStartTimeStateCommands(THitObject hitObject);
 

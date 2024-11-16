@@ -23,13 +23,6 @@ public abstract class StageInfo
             _ => Array.Empty<StageElement>(),
         };
 
-    public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
-        hitObject switch
-        {
-            Lyric lyric => GetStartAndEndTime(lyric),
-            _ => throw new InvalidOperationException(),
-        };
-
     #region Stage element
 
     protected abstract IPlayfieldStageApplier CreatePlayfieldStageApplier();
@@ -37,8 +30,6 @@ public abstract class StageInfo
     protected abstract IEnumerable<StageElement> GetLyricStageElements(Lyric lyric);
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
-
-    protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 
     #endregion
 }

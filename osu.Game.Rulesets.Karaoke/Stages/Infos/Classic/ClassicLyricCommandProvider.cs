@@ -23,6 +23,40 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         return StageInfo.StageDefinition.FadeInTime;
     }
 
+    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+    {
+        (double? startTime, double? endTime) = StageInfo.LyricTimingInfo.GetStartAndEndTime(lyric);
+        return new Tuple<double?, double?>(startTime + getStartTimeOffset(StageInfo, startTime), endTime + getEndTimeOffset(StageInfo, endTime));
+
+        static double? getStartTimeOffset(ClassicStageInfo stageInfo, double? lyricStartTime)
+        {
+            if (lyricStartTime == null)
+                return null;
+
+            bool isFirstAppearLyric = lyricStartTime.Value == stageInfo.LyricTimingInfo.GetStartTime();
+            var stageDefinition = stageInfo.StageDefinition;
+
+            if (isFirstAppearLyric)
+            {
+                return stageDefinition.FirstLyricStartTimeOffset + stageDefinition.FadeOutTime;
+            }
+
+            // should add the previous lyric's end time offset.
+            return stageDefinition.LyricEndTimeOffset + stageDefinition.FadeOutTime + stageDefinition.FadeInTime;
+        }
+
+        static double? getEndTimeOffset(ClassicStageInfo stageInfo, double? lyricEndTime)
+        {
+            if (lyricEndTime == null)
+                return null;
+
+            bool isLastDisappearLyric = lyricEndTime.Value == stageInfo.LyricTimingInfo.GetEndTime();
+            var stageDefinition = stageInfo.StageDefinition;
+
+            return isLastDisappearLyric ? stageDefinition.LastLyricEndTimeOffset : stageDefinition.LyricEndTimeOffset;
+        }
+    }
+
     protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);

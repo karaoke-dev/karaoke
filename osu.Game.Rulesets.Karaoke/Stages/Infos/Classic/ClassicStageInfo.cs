@@ -63,36 +63,5 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-    {
-        (double? startTime, double? endTime) = LyricTimingInfo.GetStartAndEndTime(lyric);
-        return new Tuple<double?, double?>(startTime + getStartTimeOffset(startTime), endTime + getEndTimeOffset(endTime));
-    }
-
-    private double? getStartTimeOffset(double? lyricStartTime)
-    {
-        if (lyricStartTime == null)
-            return null;
-
-        bool isFirstAppearLyric = lyricStartTime.Value == LyricTimingInfo.GetStartTime();
-
-        if (isFirstAppearLyric)
-        {
-            return StageDefinition.FirstLyricStartTimeOffset + StageDefinition.FadeOutTime;
-        }
-
-        // should add the previous lyric's end time offset.
-        return StageDefinition.LyricEndTimeOffset + StageDefinition.FadeOutTime + StageDefinition.FadeInTime;
-    }
-
-    private double? getEndTimeOffset(double? lyricEndTime)
-    {
-        if (lyricEndTime == null)
-            return null;
-
-        bool isLastDisappearLyric = lyricEndTime.Value == LyricTimingInfo.GetEndTime();
-        return isLastDisappearLyric ? StageDefinition.LastLyricEndTimeOffset : StageDefinition.LyricEndTimeOffset;
-    }
-
     #endregion
 }
