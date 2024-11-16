@@ -61,7 +61,7 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
 
     protected virtual bool ApplyOffsetResult(TItem[] items, double time) => false;
 
-    protected override Container<SelectionBlueprint<TItem>> CreateSelectionBlueprintContainer()
+    protected override SelectionBlueprintContainer CreateSelectionBlueprintContainer()
         => new EditableTimelineSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
 
     protected override SelectionHandler<TItem> CreateSelectionHandler()
@@ -122,7 +122,7 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
         }
     }
 
-    protected partial class EditableTimelineSelectionBlueprintContainer : Container<SelectionBlueprint<TItem>>
+    protected partial class EditableTimelineSelectionBlueprintContainer : SelectionBlueprintContainer
     {
         protected override Container<SelectionBlueprint<TItem>> Content { get; }
 

@@ -66,7 +66,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
         return true;
     }
 
-    protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
+    protected override SelectionBlueprintContainer CreateSelectionBlueprintContainer()
         => new TimeTagEditorSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
 
     protected override SelectionHandler<TimeTag> CreateSelectionHandler()
@@ -170,7 +170,7 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
         }
     }
 
-    protected partial class TimeTagEditorSelectionBlueprintContainer : Container<SelectionBlueprint<TimeTag>>
+    protected partial class TimeTagEditorSelectionBlueprintContainer : SelectionBlueprintContainer
     {
         protected override Container<SelectionBlueprint<TimeTag>> Content { get; }
 
