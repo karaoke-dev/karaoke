@@ -23,7 +23,7 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         return StageInfo.StageDefinition.FadeInTime;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -82,13 +82,13 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         }
     }
 
-    protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
     {
         // there's no transformer in here.
         yield break;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+    protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
     {
         var definition = StageInfo.StageDefinition;
         yield return new StageAlphaCommand(definition.FadeOutEasing, 0, definition.FadeOutTime, 1, 0);

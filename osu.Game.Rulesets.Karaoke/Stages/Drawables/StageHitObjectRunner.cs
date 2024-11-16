@@ -32,29 +32,29 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
 
     public double GetPreemptTime(HitObject hitObject)
     {
-        return commandProvider.GeneratePreemptTime(hitObject);
+        return commandProvider.GetPreemptTime(hitObject);
     }
 
     public double GetStartTimeOffset(HitObject hitObject)
     {
-        return commandProvider.GenerateStartTimeOffset(hitObject);
+        return commandProvider.GetStartTimeOffset(hitObject);
     }
 
     public double GetEndTimeOffset(HitObject hitObject)
     {
-        return commandProvider.GenerateEndTimeOffset(hitObject);
+        return commandProvider.GetEndTimeOffset(hitObject);
     }
 
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
     {
-        var commands = commandProvider.GenerateInitialCommands(drawableHitObject.HitObject);
+        var commands = commandProvider.GetInitialCommands(drawableHitObject.HitObject);
         ApplyTransforms(drawableHitObject, commands);
     }
 
     public void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject)
     {
-        var commands = commandProvider.GenerateStartTimeStateCommands(drawableHitObject.HitObject);
-        double startTimeOffset = -commandProvider.GenerateStartTimeOffset(drawableHitObject.HitObject);
+        var commands = commandProvider.GetStartTimeStateCommands(drawableHitObject.HitObject);
+        double startTimeOffset = -commandProvider.GetStartTimeOffset(drawableHitObject.HitObject);
         ApplyTransforms(drawableHitObject, commands, startTimeOffset);
     }
 
@@ -63,7 +63,7 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
         if (state == ArmedState.Idle)
             return;
 
-        var commands = commandProvider.GenerateHitStateCommands(drawableHitObject.HitObject, state);
+        var commands = commandProvider.GetHitStateCommands(drawableHitObject.HitObject, state);
         ApplyTransforms(drawableHitObject, commands);
     }
 

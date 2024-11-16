@@ -307,17 +307,17 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         protected override double GeneratePreemptTime(Lyric hitObject)
             => 0;
 
-        protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+        protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+        protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+        protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
         {
             throw new NotImplementedException();
         }

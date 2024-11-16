@@ -22,7 +22,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
         return StageInfo.StageDefinition.FadingTime;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -88,7 +88,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
         static bool isLastLyricInView(PreviewLyricLayout layout) => layout.StartTime != 0;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -122,7 +122,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
         }
     }
 
-    protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+    protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
