@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.Objects.Drawables;
 

@@ -13,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
@@ -255,10 +254,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
 
         #endregion
 
-        protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-        {
-            throw new NotImplementedException();
-        }
+        #region Stage element
 
         protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
         {
@@ -270,19 +266,22 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             return Array.Empty<StageElement>();
         }
 
-        protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-            => new TestCommandGenerator(this);
+        #endregion
 
-        protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
-            => null;
+        #region Provider
 
-        protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-        {
-            if(!lyric.TimeValid)
-                return new Tuple<double?, double?>(null, null);
+        public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+            => throw new NotImplementedException();
 
-            return new Tuple<double?, double?>(lyric.StartTime, lyric.EndTime);
-        }
+        public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+            typeof(TObject) switch
+            {
+                Type type when type == typeof(Lyric) => new TestCommandProvider(this),
+                Type type when type == typeof(Note) => null,
+                _ => null
+            };
+
+        #endregion
     }
 
     private class TestCategory : StageElementCategory<TestStageElement, Lyric>;
@@ -297,9 +296,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         }
     }
 
-    private class TestCommandGenerator : HitObjectCommandGenerator<TestStageInfo, Lyric>
+    private class TestCommandProvider : HitObjectCommandProvider<TestStageInfo, Lyric>
     {
-        public TestCommandGenerator(TestStageInfo stageInfo)
+        public TestCommandProvider(TestStageInfo stageInfo)
             : base(stageInfo)
         {
         }
@@ -307,17 +306,25 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         protected override double GeneratePreemptTime(Lyric hitObject)
             => 0;
 
-        protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+        protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+        {
+            if(!lyric.TimeValid)
+                return new Tuple<double?, double?>(null, null);
+
+            return new Tuple<double?, double?>(lyric.StartTime, lyric.EndTime);
+        }
+
+        protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+        protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
         {
             throw new NotImplementedException();
         }
 
-        protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+        protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
         {
             throw new NotImplementedException();
         }

@@ -10,18 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 public abstract class StageInfo
 {
-    public IPlayfieldStageApplier GetPlayfieldStageApplier()
-        => CreatePlayfieldStageApplier();
-
-    public IHitObjectCommandGenerator? GetHitObjectCommandGenerator(KaraokeHitObject hitObject)
-    {
-        return hitObject switch
-        {
-            Lyric => GetLyricCommandGenerator(),
-            Note => GetNoteCommandGenerator(),
-            _ => throw new InvalidOperationException(),
-        };
-    }
+    #region Stage element
 
     public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
@@ -31,26 +20,17 @@ public abstract class StageInfo
             _ => Array.Empty<StageElement>(),
         };
 
-    public Tuple<double?, double?> GetStartAndEndTime(KaraokeHitObject hitObject) =>
-        hitObject switch
-        {
-            Lyric lyric => GetStartAndEndTime(lyric),
-            _ => throw new InvalidOperationException(),
-        };
-
-    #region Stage element
-
-    protected abstract IPlayfieldStageApplier CreatePlayfieldStageApplier();
-
     protected abstract IEnumerable<StageElement> GetLyricStageElements(Lyric lyric);
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
 
-    protected abstract IHitObjectCommandGenerator? GetLyricCommandGenerator();
+    #endregion
 
-    protected abstract IHitObjectCommandGenerator? GetNoteCommandGenerator();
+    #region Provider
 
-    protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
+    public abstract IPlayfieldStageApplier GetPlayfieldStageApplier();
+
+    public abstract IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() where TObject : KaraokeHitObject;
 
     #endregion
 }

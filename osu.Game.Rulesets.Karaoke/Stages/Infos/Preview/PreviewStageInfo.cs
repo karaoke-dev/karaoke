@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Workings;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.UI.Stages.Preview;
@@ -94,11 +93,6 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
     #region Stage element
 
-    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-    {
-        return new PlayfieldPreviewStageApplier(StageDefinition);
-    }
-
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return styleCategory.GetElementByItem(lyric);
@@ -111,17 +105,20 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-        => new PreviewLyricCommandGenerator(this);
+    #endregion
 
-    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
-        => null;
+    #region Provider
 
-    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-    {
-        var element = layoutCategory.GetElementByItem(lyric);
-        return new Tuple<double?, double?>(element.StartTime, element.EndTime);
-    }
+    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+        => new PlayfieldPreviewStageApplier(StageDefinition);
+
+    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+        typeof(TObject) switch
+        {
+            Type type when type == typeof(Lyric) => new PreviewLyricCommandProvider(this),
+            Type type when type == typeof(Note) => null,
+            _ => null
+        };
 
     #endregion
 }

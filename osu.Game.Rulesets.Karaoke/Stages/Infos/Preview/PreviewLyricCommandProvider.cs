@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewStageInfo, Lyric>
+public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStageInfo, Lyric>
 {
-    public PreviewLyricCommandGenerator(PreviewStageInfo stageInfo)
+    public PreviewLyricCommandProvider(PreviewStageInfo stageInfo)
         : base(stageInfo)
     {
     }
@@ -22,7 +22,13 @@ public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewSta
         return StageInfo.StageDefinition.FadingTime;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+    {
+        var element = StageInfo.GetStageElements(lyric).OfType<PreviewLyricLayout>().Single();
+        return new Tuple<double?, double?>(element.StartTime, element.EndTime);
+    }
+
+    protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -88,7 +94,7 @@ public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewSta
         static bool isLastLyricInView(PreviewLyricLayout layout) => layout.StartTime != 0;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -122,7 +128,7 @@ public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewSta
         }
     }
 
-    protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+    protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch

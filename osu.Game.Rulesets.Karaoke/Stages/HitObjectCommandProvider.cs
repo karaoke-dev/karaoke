@@ -11,18 +11,18 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages;
 
-public abstract class HitObjectCommandGenerator<TStageInfo, THitObject> : IHitObjectCommandGenerator
+public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObjectCommandProvider
     where THitObject : KaraokeHitObject
     where TStageInfo : StageInfo
 {
     protected readonly TStageInfo StageInfo;
 
-    protected HitObjectCommandGenerator(TStageInfo stageInfo)
+    protected HitObjectCommandProvider(TStageInfo stageInfo)
     {
         StageInfo = stageInfo;
     }
 
-    public double GeneratePreemptTime(HitObject hitObject)
+    public double GetPreemptTime(HitObject hitObject)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
@@ -30,12 +30,12 @@ public abstract class HitObjectCommandGenerator<TStageInfo, THitObject> : IHitOb
         return GeneratePreemptTime(tHitObject);
     }
 
-    public double GenerateStartTimeOffset(HitObject hitObject)
+    public double GetStartTimeOffset(HitObject hitObject)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        (double? startTime, _) = StageInfo.GetStartAndEndTime(tHitObject);
+        (double? startTime, _) = GetStartAndEndTime(tHitObject);
 
         if (startTime == null)
             return 0;
@@ -44,12 +44,12 @@ public abstract class HitObjectCommandGenerator<TStageInfo, THitObject> : IHitOb
         return hitObject.StartTime - startTime.Value;
     }
 
-    public double GenerateEndTimeOffset(HitObject hitObject)
+    public double GetEndTimeOffset(HitObject hitObject)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        (_, double? endTime) = StageInfo.GetStartAndEndTime(tHitObject);
+        (_, double? endTime) = GetStartAndEndTime(tHitObject);
 
         if (endTime == null)
             return 0;
@@ -57,35 +57,37 @@ public abstract class HitObjectCommandGenerator<TStageInfo, THitObject> : IHitOb
         return endTime.Value - hitObject.GetEndTime();
     }
 
-    public IEnumerable<IStageCommand> GenerateInitialCommands(HitObject hitObject)
+    public IEnumerable<IStageCommand> GetInitialCommands(HitObject hitObject)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        return GenerateInitialCommands(tHitObject);
+        return GetInitialCommands(tHitObject);
     }
 
-    public IEnumerable<IStageCommand> GenerateStartTimeStateCommands(HitObject hitObject)
+    public IEnumerable<IStageCommand> GetStartTimeStateCommands(HitObject hitObject)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        return GenerateStartTimeStateCommands(tHitObject);
+        return GetStartTimeStateCommands(tHitObject);
     }
 
-    public IEnumerable<IStageCommand> GenerateHitStateCommands(HitObject hitObject, ArmedState state)
+    public IEnumerable<IStageCommand> GetHitStateCommands(HitObject hitObject, ArmedState state)
     {
         if (hitObject is not THitObject tHitObject)
             throw new InvalidCastException();
 
-        return GenerateHitStateCommands(tHitObject, state);
+        return GetHitStateCommands(tHitObject, state);
     }
 
     protected abstract double GeneratePreemptTime(THitObject hitObject);
 
-    protected abstract IEnumerable<IStageCommand> GenerateInitialCommands(THitObject hitObject);
+    protected abstract IEnumerable<IStageCommand> GetInitialCommands(THitObject hitObject);
 
-    protected abstract IEnumerable<IStageCommand> GenerateStartTimeStateCommands(THitObject hitObject);
+    protected abstract Tuple<double?, double?> GetStartAndEndTime(THitObject lyric);
 
-    protected abstract IEnumerable<IStageCommand> GenerateHitStateCommands(THitObject hitObject, ArmedState state);
+    protected abstract IEnumerable<IStageCommand> GetStartTimeStateCommands(THitObject hitObject);
+
+    protected abstract IEnumerable<IStageCommand> GetHitStateCommands(THitObject hitObject, ArmedState state);
 }

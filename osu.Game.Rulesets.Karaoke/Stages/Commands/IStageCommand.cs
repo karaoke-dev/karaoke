@@ -3,7 +3,6 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
-using osu.Game.Storyboards.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Commands;
 

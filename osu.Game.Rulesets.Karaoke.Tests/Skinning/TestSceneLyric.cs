@@ -13,7 +13,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning;

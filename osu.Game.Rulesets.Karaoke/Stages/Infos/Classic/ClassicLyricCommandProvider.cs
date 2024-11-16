@@ -11,9 +11,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
-public class ClassicLyricCommandGenerator : HitObjectCommandGenerator<ClassicStageInfo, Lyric>
+public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStageInfo, Lyric>
 {
-    public ClassicLyricCommandGenerator(ClassicStageInfo stageInfo)
+    public ClassicLyricCommandProvider(ClassicStageInfo stageInfo)
         : base(stageInfo)
     {
     }
@@ -23,7 +23,41 @@ public class ClassicLyricCommandGenerator : HitObjectCommandGenerator<ClassicSta
         return StageInfo.StageDefinition.FadeInTime;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateInitialCommands(Lyric hitObject)
+    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
+    {
+        (double? startTime, double? endTime) = StageInfo.LyricTimingInfo.GetStartAndEndTime(lyric);
+        return new Tuple<double?, double?>(startTime + getStartTimeOffset(StageInfo, startTime), endTime + getEndTimeOffset(StageInfo, endTime));
+
+        static double? getStartTimeOffset(ClassicStageInfo stageInfo, double? lyricStartTime)
+        {
+            if (lyricStartTime == null)
+                return null;
+
+            bool isFirstAppearLyric = lyricStartTime.Value == stageInfo.LyricTimingInfo.GetStartTime();
+            var stageDefinition = stageInfo.StageDefinition;
+
+            if (isFirstAppearLyric)
+            {
+                return stageDefinition.FirstLyricStartTimeOffset + stageDefinition.FadeOutTime;
+            }
+
+            // should add the previous lyric's end time offset.
+            return stageDefinition.LyricEndTimeOffset + stageDefinition.FadeOutTime + stageDefinition.FadeInTime;
+        }
+
+        static double? getEndTimeOffset(ClassicStageInfo stageInfo, double? lyricEndTime)
+        {
+            if (lyricEndTime == null)
+                return null;
+
+            bool isLastDisappearLyric = lyricEndTime.Value == stageInfo.LyricTimingInfo.GetEndTime();
+            var stageDefinition = stageInfo.StageDefinition;
+
+            return isLastDisappearLyric ? stageDefinition.LastLyricEndTimeOffset : stageDefinition.LyricEndTimeOffset;
+        }
+    }
+
+    protected override IEnumerable<IStageCommand> GetInitialCommands(Lyric hitObject)
     {
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
@@ -82,13 +116,13 @@ public class ClassicLyricCommandGenerator : HitObjectCommandGenerator<ClassicSta
         }
     }
 
-    protected override IEnumerable<IStageCommand> GenerateStartTimeStateCommands(Lyric hitObject)
+    protected override IEnumerable<IStageCommand> GetStartTimeStateCommands(Lyric hitObject)
     {
         // there's no transformer in here.
         yield break;
     }
 
-    protected override IEnumerable<IStageCommand> GenerateHitStateCommands(Lyric hitObject, ArmedState state)
+    protected override IEnumerable<IStageCommand> GetHitStateCommands(Lyric hitObject, ArmedState state)
     {
         var definition = StageInfo.StageDefinition;
         yield return new StageAlphaCommand(definition.FadeOutEasing, 0, definition.FadeOutTime, 1, 0);

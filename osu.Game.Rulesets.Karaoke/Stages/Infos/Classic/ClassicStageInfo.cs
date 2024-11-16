@@ -38,11 +38,6 @@ public class ClassicStageInfo : StageInfo
 
     #region Stage element
 
-    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-    {
-        return new PlayfieldClassicStageApplier(StageDefinition);
-    }
-
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return StyleCategory.GetElementByItem(lyric);
@@ -55,42 +50,20 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-        => new ClassicLyricCommandGenerator(this);
+    #endregion
 
-    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
-        => null;
+    #region Provider
 
-    protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
-    {
-        (double? startTime, double? endTime) = LyricTimingInfo.GetStartAndEndTime(lyric);
-        return new Tuple<double?, double?>(startTime + getStartTimeOffset(startTime), endTime + getEndTimeOffset(endTime));
-    }
+    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+        => new PlayfieldClassicStageApplier(StageDefinition);
 
-    private double? getStartTimeOffset(double? lyricStartTime)
-    {
-        if (lyricStartTime == null)
-            return null;
-
-        bool isFirstAppearLyric = lyricStartTime.Value == LyricTimingInfo.GetStartTime();
-
-        if (isFirstAppearLyric)
+    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+        typeof(TObject) switch
         {
-            return StageDefinition.FirstLyricStartTimeOffset + StageDefinition.FadeOutTime;
-        }
-
-        // should add the previous lyric's end time offset.
-        return StageDefinition.LyricEndTimeOffset + StageDefinition.FadeOutTime + StageDefinition.FadeInTime;
-    }
-
-    private double? getEndTimeOffset(double? lyricEndTime)
-    {
-        if (lyricEndTime == null)
-            return null;
-
-        bool isLastDisappearLyric = lyricEndTime.Value == LyricTimingInfo.GetEndTime();
-        return isLastDisappearLyric ? StageDefinition.LastLyricEndTimeOffset : StageDefinition.LyricEndTimeOffset;
-    }
+            Type type when type == typeof(Lyric) => new ClassicLyricCommandProvider(this),
+            Type type when type == typeof(Note) => null,
+            _ => null
+        };
 
     #endregion
 }

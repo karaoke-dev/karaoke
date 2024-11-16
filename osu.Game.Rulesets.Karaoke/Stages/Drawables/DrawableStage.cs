@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
@@ -45,13 +44,18 @@ public partial class DrawableStage : Container
     {
         var stageInfo = getStageInfo(mods, karaokeBeatmap);
 
+        // fill the working property.
+        if (stageInfo is IHasCalculatedProperty calculatedProperty)
+            calculatedProperty.ValidateCalculatedProperty(karaokeBeatmap);
+
         // for able to get the stage info in DrawableKaraokeRuleset.
         // Can be removed after refactor.
         karaokeBeatmap.CurrentStageInfo = stageInfo;
 
-        // todo: refactor needed.
-        stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandGenerator(new Lyric())!);
-        applyStageInfoToHitObject(stageInfo, karaokeBeatmap);
+        // todo: should handle the note case.
+        var lyricCommandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>();
+        if (lyricCommandProvider != null)
+            stageRunner.UpdateCommandGenerator(lyricCommandProvider);
     }
 
     private static StageInfo getStageInfo(IReadOnlyList<Mod> mods, KaraokeBeatmap beatmap)
@@ -70,12 +74,5 @@ public partial class DrawableStage : Container
 
         stageMod.ApplyToStageInfo(matchedStageInfo);
         return matchedStageInfo;
-    }
-
-    private static void applyStageInfoToHitObject(StageInfo stageInfo, KaraokeBeatmap beatmap)
-    {
-        // fill the working property.
-        if (stageInfo is IHasCalculatedProperty calculatedProperty)
-            calculatedProperty.ValidateCalculatedProperty(beatmap);
     }
 }
