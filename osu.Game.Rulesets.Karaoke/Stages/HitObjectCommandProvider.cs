@@ -11,13 +11,13 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages;
 
-public abstract class HitObjectCommandGenerator<TStageInfo, THitObject> : IHitObjectCommandGenerator
+public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObjectCommandProvider
     where THitObject : KaraokeHitObject
     where TStageInfo : StageInfo
 {
     protected readonly TStageInfo StageInfo;
 
-    protected HitObjectCommandGenerator(TStageInfo stageInfo)
+    protected HitObjectCommandProvider(TStageInfo stageInfo)
     {
         StageInfo = stageInfo;
     }

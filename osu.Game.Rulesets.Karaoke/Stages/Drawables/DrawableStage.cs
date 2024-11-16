@@ -54,7 +54,7 @@ public partial class DrawableStage : Container
         karaokeBeatmap.CurrentStageInfo = stageInfo;
 
         // todo: refactor needed.
-        stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandGenerator(new Lyric())!);
+        stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandProvider(new Lyric())!);
     }
 
     private static StageInfo getStageInfo(IReadOnlyList<Mod> mods, KaraokeBeatmap beatmap)

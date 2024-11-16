@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class PreviewLyricCommandGenerator : HitObjectCommandGenerator<PreviewStageInfo, Lyric>
+public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStageInfo, Lyric>
 {
-    public PreviewLyricCommandGenerator(PreviewStageInfo stageInfo)
+    public PreviewLyricCommandProvider(PreviewStageInfo stageInfo)
         : base(stageInfo)
     {
     }

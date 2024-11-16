@@ -11,9 +11,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
-public class ClassicLyricCommandGenerator : HitObjectCommandGenerator<ClassicStageInfo, Lyric>
+public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStageInfo, Lyric>
 {
-    public ClassicLyricCommandGenerator(ClassicStageInfo stageInfo)
+    public ClassicLyricCommandProvider(ClassicStageInfo stageInfo)
         : base(stageInfo)
     {
     }

@@ -55,10 +55,10 @@ public class ClassicStageInfo : StageInfo
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-        => new ClassicLyricCommandGenerator(this);
+    protected override IHitObjectCommandProvider GetLyricCommandProvider()
+        => new ClassicLyricCommandProvider(this);
 
-    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+    protected override IHitObjectCommandProvider? GetNoteCommandProvider()
         => null;
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)

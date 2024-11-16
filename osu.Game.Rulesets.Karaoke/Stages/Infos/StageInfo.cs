@@ -13,12 +13,12 @@ public abstract class StageInfo
     public IPlayfieldStageApplier GetPlayfieldStageApplier()
         => CreatePlayfieldStageApplier();
 
-    public IHitObjectCommandGenerator? GetHitObjectCommandGenerator(KaraokeHitObject hitObject)
+    public IHitObjectCommandProvider? GetHitObjectCommandProvider(KaraokeHitObject hitObject)
     {
         return hitObject switch
         {
-            Lyric => GetLyricCommandGenerator(),
-            Note => GetNoteCommandGenerator(),
+            Lyric => GetLyricCommandProvider(),
+            Note => GetNoteCommandProvider(),
             _ => throw new InvalidOperationException(),
         };
     }
@@ -46,9 +46,9 @@ public abstract class StageInfo
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
 
-    protected abstract IHitObjectCommandGenerator? GetLyricCommandGenerator();
+    protected abstract IHitObjectCommandProvider? GetLyricCommandProvider();
 
-    protected abstract IHitObjectCommandGenerator? GetNoteCommandGenerator();
+    protected abstract IHitObjectCommandProvider? GetNoteCommandProvider();
 
     protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 

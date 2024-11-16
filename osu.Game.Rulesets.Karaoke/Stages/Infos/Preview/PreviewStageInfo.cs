@@ -111,10 +111,10 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
 
-    protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-        => new PreviewLyricCommandGenerator(this);
+    protected override IHitObjectCommandProvider GetLyricCommandProvider()
+        => new PreviewLyricCommandProvider(this);
 
-    protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+    protected override IHitObjectCommandProvider? GetNoteCommandProvider()
         => null;
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)

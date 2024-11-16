@@ -270,10 +270,10 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             return Array.Empty<StageElement>();
         }
 
-        protected override IHitObjectCommandGenerator GetLyricCommandGenerator()
-            => new TestCommandGenerator(this);
+        protected override IHitObjectCommandProvider GetLyricCommandProvider()
+            => new TestCommandProvider(this);
 
-        protected override IHitObjectCommandGenerator? GetNoteCommandGenerator()
+        protected override IHitObjectCommandProvider? GetNoteCommandProvider()
             => null;
 
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
@@ -297,9 +297,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         }
     }
 
-    private class TestCommandGenerator : HitObjectCommandGenerator<TestStageInfo, Lyric>
+    private class TestCommandProvider : HitObjectCommandProvider<TestStageInfo, Lyric>
     {
-        public TestCommandGenerator(TestStageInfo stageInfo)
+        public TestCommandProvider(TestStageInfo stageInfo)
             : base(stageInfo)
         {
         }

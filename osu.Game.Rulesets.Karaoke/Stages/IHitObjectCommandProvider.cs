@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 namespace osu.Game.Rulesets.Karaoke.Stages;
 
 /// <summary>
-/// Generate commands for <see cref="DrawableKaraokeHitObject"/> by <see cref="HitObject"/>,
+/// Provide commands for <see cref="DrawableKaraokeHitObject"/> by <see cref="HitObject"/>,
 /// </summary>
-public interface IHitObjectCommandGenerator
+public interface IHitObjectCommandProvider
 {
     /// <summary>
     /// Generate the preempt time for the <see cref="DrawableKaraokeHitObject"/>.
