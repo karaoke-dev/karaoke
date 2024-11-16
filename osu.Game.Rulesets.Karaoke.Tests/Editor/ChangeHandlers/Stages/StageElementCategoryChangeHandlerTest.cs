@@ -13,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;

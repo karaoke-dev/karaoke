@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;

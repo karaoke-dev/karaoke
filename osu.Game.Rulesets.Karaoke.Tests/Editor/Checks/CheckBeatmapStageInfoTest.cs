@@ -11,7 +11,6 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Screens.Edit;

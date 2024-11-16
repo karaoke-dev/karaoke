@@ -7,7 +7,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;

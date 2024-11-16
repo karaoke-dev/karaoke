@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 

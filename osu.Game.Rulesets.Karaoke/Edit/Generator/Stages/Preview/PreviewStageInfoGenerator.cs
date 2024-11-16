@@ -3,7 +3,6 @@
 
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 

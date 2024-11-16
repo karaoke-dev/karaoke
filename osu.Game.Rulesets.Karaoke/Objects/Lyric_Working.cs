@@ -12,8 +12,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Objects.Workings;
-using osu.Game.Rulesets.Karaoke.Stages;
-using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Objects;
 

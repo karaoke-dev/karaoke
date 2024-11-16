@@ -3,7 +3,6 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;

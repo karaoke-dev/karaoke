@@ -3,7 +3,6 @@
 
 using System;
 using System.Reflection;
-using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
