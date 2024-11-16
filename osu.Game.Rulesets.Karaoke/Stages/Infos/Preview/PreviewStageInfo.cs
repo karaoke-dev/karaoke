@@ -99,6 +99,14 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         return new PlayfieldPreviewStageApplier(StageDefinition);
     }
 
+    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+        typeof(TObject) switch
+        {
+            Type type when type == typeof(Lyric) => new PreviewLyricCommandProvider(this),
+            Type type when type == typeof(Note) => null,
+            _ => null
+        };
+
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return styleCategory.GetElementByItem(lyric);
@@ -110,12 +118,6 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         // todo: should check the real-time mapping result.
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
-
-    protected override IHitObjectCommandProvider GetLyricCommandProvider()
-        => new PreviewLyricCommandProvider(this);
-
-    protected override IHitObjectCommandProvider? GetNoteCommandProvider()
-        => null;
 
     protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
     {

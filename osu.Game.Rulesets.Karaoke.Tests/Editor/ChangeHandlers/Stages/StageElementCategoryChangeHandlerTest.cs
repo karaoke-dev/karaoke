@@ -260,6 +260,14 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             throw new NotImplementedException();
         }
 
+        public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+            typeof(TObject) switch
+            {
+                Type type when type == typeof(Lyric) => new TestCommandProvider(this),
+                Type type when type == typeof(Note) => null,
+                _ => null
+            };
+
         protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
         {
             return Array.Empty<StageElement>();
@@ -269,12 +277,6 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         {
             return Array.Empty<StageElement>();
         }
-
-        protected override IHitObjectCommandProvider GetLyricCommandProvider()
-            => new TestCommandProvider(this);
-
-        protected override IHitObjectCommandProvider? GetNoteCommandProvider()
-            => null;
 
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
         {

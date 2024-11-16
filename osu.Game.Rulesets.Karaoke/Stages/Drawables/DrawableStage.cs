@@ -53,8 +53,10 @@ public partial class DrawableStage : Container
         // Can be removed after refactor.
         karaokeBeatmap.CurrentStageInfo = stageInfo;
 
-        // todo: refactor needed.
-        stageRunner.UpdateCommandGenerator(stageInfo.GetHitObjectCommandProvider(new Lyric())!);
+        // todo: should handle the note case.
+        var lyricCommandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>();
+        if (lyricCommandProvider != null)
+            stageRunner.UpdateCommandGenerator(lyricCommandProvider);
     }
 
     private static StageInfo getStageInfo(IReadOnlyList<Mod> mods, KaraokeBeatmap beatmap)

@@ -13,15 +13,7 @@ public abstract class StageInfo
     public IPlayfieldStageApplier GetPlayfieldStageApplier()
         => CreatePlayfieldStageApplier();
 
-    public IHitObjectCommandProvider? GetHitObjectCommandProvider(KaraokeHitObject hitObject)
-    {
-        return hitObject switch
-        {
-            Lyric => GetLyricCommandProvider(),
-            Note => GetNoteCommandProvider(),
-            _ => throw new InvalidOperationException(),
-        };
-    }
+    public abstract IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() where TObject : KaraokeHitObject;
 
     public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
@@ -45,10 +37,6 @@ public abstract class StageInfo
     protected abstract IEnumerable<StageElement> GetLyricStageElements(Lyric lyric);
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
-
-    protected abstract IHitObjectCommandProvider? GetLyricCommandProvider();
-
-    protected abstract IHitObjectCommandProvider? GetNoteCommandProvider();
 
     protected abstract Tuple<double?, double?> GetStartAndEndTime(Lyric lyric);
 
