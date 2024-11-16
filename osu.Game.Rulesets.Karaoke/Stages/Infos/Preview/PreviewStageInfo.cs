@@ -93,19 +93,6 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
     #region Stage element
 
-    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-    {
-        return new PlayfieldPreviewStageApplier(StageDefinition);
-    }
-
-    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
-        typeof(TObject) switch
-        {
-            Type type when type == typeof(Lyric) => new PreviewLyricCommandProvider(this),
-            Type type when type == typeof(Note) => null,
-            _ => null
-        };
-
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return styleCategory.GetElementByItem(lyric);
@@ -117,6 +104,21 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
         // todo: should check the real-time mapping result.
         yield return styleCategory.GetElementByItem(note.ReferenceLyric!);
     }
+
+    #endregion
+
+    #region Provider
+
+    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+        => new PlayfieldPreviewStageApplier(StageDefinition);
+
+    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+        typeof(TObject) switch
+        {
+            Type type when type == typeof(Lyric) => new PreviewLyricCommandProvider(this),
+            Type type when type == typeof(Note) => null,
+            _ => null
+        };
 
     #endregion
 }

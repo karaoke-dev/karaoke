@@ -255,18 +255,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
 
         #endregion
 
-        protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
-            typeof(TObject) switch
-            {
-                Type type when type == typeof(Lyric) => new TestCommandProvider(this),
-                Type type when type == typeof(Note) => null,
-                _ => null
-            };
+        #region Stage element
 
         protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
         {
@@ -277,6 +266,23 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         {
             return Array.Empty<StageElement>();
         }
+
+        #endregion
+
+        #region Provider
+
+        public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+            => throw new NotImplementedException();
+
+        public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+            typeof(TObject) switch
+            {
+                Type type when type == typeof(Lyric) => new TestCommandProvider(this),
+                Type type when type == typeof(Note) => null,
+                _ => null
+            };
+
+        #endregion
     }
 
     private class TestCategory : StageElementCategory<TestStageElement, Lyric>;

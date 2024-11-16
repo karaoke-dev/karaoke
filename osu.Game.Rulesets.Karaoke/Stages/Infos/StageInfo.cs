@@ -10,10 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 public abstract class StageInfo
 {
-    public IPlayfieldStageApplier GetPlayfieldStageApplier()
-        => CreatePlayfieldStageApplier();
-
-    public abstract IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() where TObject : KaraokeHitObject;
+    #region Stage element
 
     public IEnumerable<StageElement> GetStageElements(KaraokeHitObject hitObject) =>
         hitObject switch
@@ -23,13 +20,17 @@ public abstract class StageInfo
             _ => Array.Empty<StageElement>(),
         };
 
-    #region Stage element
-
-    protected abstract IPlayfieldStageApplier CreatePlayfieldStageApplier();
-
     protected abstract IEnumerable<StageElement> GetLyricStageElements(Lyric lyric);
 
     protected abstract IEnumerable<StageElement> GetNoteStageElements(Note note);
+
+    #endregion
+
+    #region Provider
+
+    public abstract IPlayfieldStageApplier GetPlayfieldStageApplier();
+
+    public abstract IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() where TObject : KaraokeHitObject;
 
     #endregion
 }

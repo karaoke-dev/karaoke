@@ -38,19 +38,6 @@ public class ClassicStageInfo : StageInfo
 
     #region Stage element
 
-    protected override IPlayfieldStageApplier CreatePlayfieldStageApplier()
-    {
-        return new PlayfieldClassicStageApplier(StageDefinition);
-    }
-
-    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
-        typeof(TObject) switch
-        {
-            Type type when type == typeof(Lyric) => new ClassicLyricCommandProvider(this),
-            Type type when type == typeof(Note) => null,
-            _ => null
-        };
-
     protected override IEnumerable<StageElement> GetLyricStageElements(Lyric lyric)
     {
         yield return StyleCategory.GetElementByItem(lyric);
@@ -62,6 +49,21 @@ public class ClassicStageInfo : StageInfo
         // todo: should check the real-time mapping result.
         yield return StyleCategory.GetElementByItem(note.ReferenceLyric!);
     }
+
+    #endregion
+
+    #region Provider
+
+    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+        => new PlayfieldClassicStageApplier(StageDefinition);
+
+    public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
+        typeof(TObject) switch
+        {
+            Type type when type == typeof(Lyric) => new ClassicLyricCommandProvider(this),
+            Type type when type == typeof(Note) => null,
+            _ => null
+        };
 
     #endregion
 }
