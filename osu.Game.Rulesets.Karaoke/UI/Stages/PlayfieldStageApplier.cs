@@ -3,11 +3,15 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Transforms;
+using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
-using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Stages;
 
+/// <summary>
+/// TODO: This class will be removed once <see cref="DrawableStage"/> support create custom drawable elements.
+/// </summary>
+/// <typeparam name="TStageDefinition"></typeparam>
 public abstract class PlayfieldStageApplier<TStageDefinition> : IPlayfieldStageApplier
     where TStageDefinition : StageDefinition
 {
@@ -20,30 +24,13 @@ public abstract class PlayfieldStageApplier<TStageDefinition> : IPlayfieldStageA
 
     public void UpdatePlayfieldArrangement(KaraokePlayfield playfield, bool displayNotePlayfield)
     {
-        var lyricPlayfield = playfield.LyricPlayfield;
-        var notePlayfield = playfield.NotePlayfield;
-
         playfield.ClearTransforms();
-        lyricPlayfield.ClearTransforms();
-        notePlayfield.ClearTransforms();
 
         // Note that we should handle the fade-in effect in here.
         var playfieldTransformSequence = playfield.FadeOut().Then();
-        var lyricPlayfieldTransformSequence = lyricPlayfield.FadeOut().Then();
-        var notePlayfieldTransformSequence = notePlayfield.FadeOut().Then();
 
         UpdatePlayfieldArrangement(playfieldTransformSequence, displayNotePlayfield);
-        UpdateLyricPlayfieldArrangement(lyricPlayfieldTransformSequence, displayNotePlayfield);
-
-        if (displayNotePlayfield)
-        {
-            UpdateNotePlayfieldArrangement(notePlayfieldTransformSequence);
-        }
     }
 
     protected abstract void UpdatePlayfieldArrangement(TransformSequence<KaraokePlayfield> transformSequence, bool displayNotePlayfield);
-
-    protected abstract void UpdateLyricPlayfieldArrangement(TransformSequence<LyricPlayfield> transformSequence, bool displayNotePlayfield);
-
-    protected abstract void UpdateNotePlayfieldArrangement(TransformSequence<ScrollingNotePlayfield> transformSequence);
 }
