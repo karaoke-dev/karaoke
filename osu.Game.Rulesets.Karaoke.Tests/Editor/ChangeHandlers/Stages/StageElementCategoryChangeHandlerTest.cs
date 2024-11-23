@@ -276,6 +276,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
             => throw new NotImplementedException();
 
+        public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+            => throw new NotImplementedException();
+
         public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
             typeof(TObject) switch
             {

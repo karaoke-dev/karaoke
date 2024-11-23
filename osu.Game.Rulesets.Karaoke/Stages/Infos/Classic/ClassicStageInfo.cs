@@ -60,6 +60,9 @@ public class ClassicStageInfo : StageInfo
     public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
         => new ClassicPlayfieldCommandProvider(this, displayNotePlayfield);
 
+    public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+        => null;
+
     public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
         typeof(TObject) switch
         {
