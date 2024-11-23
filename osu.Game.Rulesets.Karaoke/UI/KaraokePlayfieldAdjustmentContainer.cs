@@ -3,12 +3,15 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
+using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
@@ -23,6 +26,17 @@ public partial class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentCo
     private FontStore fontStore { get; set; } = null!;
 
     private KaraokeLocalFontStore localFontStore = null!;
+
+    protected override Container<Drawable> Content => content;
+    private readonly DrawableStage content;
+
+    public KaraokePlayfieldAdjustmentContainer()
+    {
+        InternalChild = content = new DrawableStage
+        {
+            RelativeSizeAxes = Axes.Both,
+        };
+    }
 
     [BackgroundDependencyLoader]
     private void load(FontManager fontManager, IRenderer renderer, KaraokeRulesetConfigManager manager)

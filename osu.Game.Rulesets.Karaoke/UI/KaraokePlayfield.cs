@@ -42,20 +42,15 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
 
     public KaraokePlayfield()
     {
-        AddInternal(new DrawableStage
+        AddInternal(LyricPlayfield = CreateLyricPlayfield().With(x =>
         {
-            Children = new Drawable[]
-            {
-                LyricPlayfield = CreateLyricPlayfield().With(x =>
-                {
-                    x.RelativeSizeAxes = Axes.Both;
-                }),
-                NotePlayfield = CreateNotePlayfield(9).With(x =>
-                {
-                    x.RelativeSizeAxes = Axes.X;
-                })
-            }
-        });
+            x.RelativeSizeAxes = Axes.Both;
+        }));
+
+        AddInternal(NotePlayfield = CreateNotePlayfield(9).With(x =>
+        {
+            x.RelativeSizeAxes = Axes.X;
+        }));
 
         AddNested(LyricPlayfield);
         AddNested(NotePlayfield);

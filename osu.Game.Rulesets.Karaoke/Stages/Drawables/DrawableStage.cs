@@ -26,11 +26,6 @@ public partial class DrawableStage : Container
     [Cached(typeof(IStageHitObjectRunner))]
     private readonly StageHitObjectRunner stageRunner = new();
 
-    public DrawableStage()
-    {
-        RelativeSizeAxes = Axes.Both;
-    }
-
     [BackgroundDependencyLoader]
     private void load(IReadOnlyList<Mod> mods, IBeatmap beatmap)
     {
