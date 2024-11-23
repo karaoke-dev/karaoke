@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
+using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
@@ -25,6 +26,9 @@ public partial class DrawableStage : Container
 {
     [Cached(typeof(IStageHitObjectRunner))]
     private readonly StageHitObjectRunner stageRunner = new();
+
+    [Cached(typeof(IStagePlayfieldRunner))]
+    private readonly StagePlayfieldRunner stagePlayfieldRunner = new();
 
     [BackgroundDependencyLoader]
     private void load(IReadOnlyList<Mod> mods, IBeatmap beatmap)
@@ -51,6 +55,18 @@ public partial class DrawableStage : Container
         var lyricCommandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>();
         if (lyricCommandProvider != null)
             stageRunner.UpdateCommandGenerator(lyricCommandProvider);
+
+        bool scorable = karaokeBeatmap.IsScorable();
+        var playfieldCommandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
+        stagePlayfieldRunner.UpdateCommandGenerator(playfieldCommandProvider);
+    }
+
+    public override void Add(Drawable drawable)
+    {
+        base.Add(drawable);
+
+        if(drawable is KaraokePlayfield karaokePlayfield)
+            stagePlayfieldRunner.UpdatePlayfieldTransforms(karaokePlayfield);
     }
 
     private static StageInfo getStageInfo(IReadOnlyList<Mod> mods, KaraokeBeatmap beatmap)
