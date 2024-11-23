@@ -48,14 +48,14 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
     {
         var commands = commandProvider.GetInitialCommands(drawableHitObject.HitObject);
-        ApplyTransforms(drawableHitObject, commands);
+        applyTransforms(drawableHitObject, commands);
     }
 
     public void UpdateStartTimeStateTransforms(DrawableHitObject drawableHitObject)
     {
         var commands = commandProvider.GetStartTimeStateCommands(drawableHitObject.HitObject);
         double startTimeOffset = -commandProvider.GetStartTimeOffset(drawableHitObject.HitObject);
-        ApplyTransforms(drawableHitObject, commands, startTimeOffset);
+        applyTransforms(drawableHitObject, commands, startTimeOffset);
     }
 
     public void UpdateHitStateTransforms(DrawableHitObject drawableHitObject, ArmedState state)
@@ -64,10 +64,10 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
             return;
 
         var commands = commandProvider.GetHitStateCommands(drawableHitObject.HitObject, state);
-        ApplyTransforms(drawableHitObject, commands);
+        applyTransforms(drawableHitObject, commands);
     }
 
-    public static void ApplyTransforms<TDrawable>(TDrawable drawable, IEnumerable<IStageCommand> commands, double offset = 0)
+    private static void applyTransforms<TDrawable>(TDrawable drawable, IEnumerable<IStageCommand> commands, double offset = 0)
         where TDrawable : DrawableHitObject
     {
         var appliedProperties = new HashSet<string>();

@@ -30,6 +30,8 @@ public abstract class StageInfo
 
     public abstract IPlayfieldStageApplier GetPlayfieldStageApplier();
 
+    public abstract IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield);
+
     public abstract IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() where TObject : KaraokeHitObject;
 
     #endregion

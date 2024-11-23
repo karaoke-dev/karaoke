@@ -112,6 +112,9 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     public override IPlayfieldStageApplier GetPlayfieldStageApplier()
         => new PlayfieldPreviewStageApplier(StageDefinition);
 
+    public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
+        => new PreviewPlayfieldCommandProvider(this, displayNotePlayfield);
+
     public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
         typeof(TObject) switch
         {

@@ -3,7 +3,9 @@
 
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -23,6 +25,12 @@ public partial class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
 
     protected override Playfield CreatePlayfield() => new KaraokeEditorPlayfield();
 
-    // todo: use default adjustment container because DrawableEditorRulesetWrapper will create it but contains no KaraokeRulesetConfigManager
-    public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer() => new();
+    public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer()
+    {
+        bool isCalledByComposer = StackTraceUtils.IsStackTraceContains("DrawableEditorRulesetWrapper");
+        if (isCalledByComposer)
+            return new PlayfieldAdjustmentContainer();
+
+        return base.CreatePlayfieldAdjustmentContainer();
+    }
 }
