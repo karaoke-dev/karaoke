@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class StageElementCategoryChangeHandler<TStageElement, THitObject> : BeatmapPropertyChangeHandler, IStageElementCategoryChangeHandler<TStageElement>
+public partial class StageElementCategoryChangeHandler<TStageElement, THitObject> : StagePropertyChangeHandler, IStageElementCategoryChangeHandler<TStageElement>
     where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
@@ -102,10 +102,6 @@ public partial class StageElementCategoryChangeHandler<TStageElement, THitObject
 
     private void performStageInfoChanged(Action<StageElementCategory<TStageElement, THitObject>> stageAction)
     {
-        PerformBeatmapChanged(beatmap =>
-        {
-            var stageCategory = stageCategoryAction(beatmap.StageInfos);
-            stageAction(stageCategory);
-        });
+        throw new NotImplementedException();
     }
 }

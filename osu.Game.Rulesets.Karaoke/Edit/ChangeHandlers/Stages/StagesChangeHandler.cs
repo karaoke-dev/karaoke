@@ -2,18 +2,27 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class StagesChangeHandler : BeatmapPropertyChangeHandler, IStagesChangeHandler
+public partial class StagesChangeHandler : StagePropertyChangeHandler, IStagesChangeHandler
 {
+    [Resolved]
+    private EditorBeatmap beatmap { get; set; } = null!;
+
+    private KaraokeBeatmap karaokeBeatmap => EditorBeatmapUtils.GetPlayableBeatmap(beatmap);
+
     [Resolved]
     private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; } = null!;
 
@@ -27,12 +36,12 @@ public partial class StagesChangeHandler : BeatmapPropertyChangeHandler, IStages
 
     public LocalisableString? GetGeneratorNotSupportedMessage<TStageInfo>() where TStageInfo : StageInfo
     {
-        var stage = getStageInfo<TStageInfo>(KaraokeBeatmap);
+        var stage = getStageInfo<TStageInfo>();
         if (stage != null)
             return $"{nameof(TStageInfo)} already exist in the beatmap.";
 
         var generator = new StageInfoGeneratorSelector<TStageInfo>(generatorConfigManager);
-        return generator.GetInvalidMessage(KaraokeBeatmap);
+        return generator.GetInvalidMessage(karaokeBeatmap);
     }
 
     void IAutoGenerateChangeHandler<StageInfo>.AutoGenerate<TStageInfo>()
@@ -40,38 +49,30 @@ public partial class StagesChangeHandler : BeatmapPropertyChangeHandler, IStages
 
     public void AutoGenerate<TStageInfo>() where TStageInfo : StageInfo
     {
-        PerformBeatmapChanged(beatmap =>
-        {
-            var stage = getStageInfo<TStageInfo>(beatmap);
-            if (stage != null)
-                throw new InvalidOperationException($"{nameof(TStageInfo)} already exist in the beatmap.");
+        var stage = getStageInfo<TStageInfo>();
+        if (stage != null)
+            throw new InvalidOperationException($"{nameof(TStageInfo)} already exist in the beatmap.");
 
-            var generator = new StageInfoGeneratorSelector<TStageInfo>(generatorConfigManager);
-            var stageInfo = generator.Generate(beatmap);
+        var generator = new StageInfoGeneratorSelector<TStageInfo>(generatorConfigManager);
+        var stageInfo = generator.Generate(karaokeBeatmap);
 
-            beatmap.StageInfos.Add(stageInfo);
-        });
+        getStageInfos().Add(stageInfo);
     }
 
     public void Remove<TStageInfo>() where TStageInfo : StageInfo
     {
-        PerformBeatmapChanged(beatmap =>
-        {
-            var stage = getStageInfo<TStageInfo>(beatmap);
-            if (stage == null)
-                throw new InvalidOperationException($"There's no {nameof(TStageInfo)} in the beatmap.");
+        var stage = getStageInfo<TStageInfo>();
+        if (stage == null)
+            throw new InvalidOperationException($"There's no {nameof(TStageInfo)} in the beatmap.");
 
-            beatmap.StageInfos.Remove(stage);
+        getStageInfos().Remove(stage);
 
-            // Should clear the current stage info if stage is removed.
-            // Beatmap processor will load the suitable stage info.
-            if (beatmap.CurrentStageInfo == stage)
-            {
-                beatmap.CurrentStageInfo = null!;
-            }
-        });
+        // todo: maybe should update the current stage.
     }
 
-    private TStageInfo? getStageInfo<TStageInfo>(KaraokeBeatmap beatmap) where TStageInfo : StageInfo
-        => beatmap.StageInfos.OfType<TStageInfo>().FirstOrDefault();
+    private IList<StageInfo> getStageInfos()
+        => throw new NotImplementedException();
+
+    private TStageInfo? getStageInfo<TStageInfo>() where TStageInfo : StageInfo
+        => throw new NotImplementedException();
 }

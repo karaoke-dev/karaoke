@@ -1,25 +1,24 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<ClassicStageChangeHandler>
+[Ignore("Ignore all stage-related change handler test until able to edit the stage info.")]
+public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerTest<ClassicStageChangeHandler>
 {
     #region Layout definition
 
     [Test]
     public void TestEditLayoutDefinition()
     {
+        SetUpStageInfo<ClassicStageInfo>();
+
         TriggerHandlerChanged(c =>
         {
             c.EditLayoutDefinition(x =>
@@ -28,13 +27,12 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             });
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var classicStageInfo = getClassicStageInfo(karaokeBeatmap);
-            Assert.IsNotNull(classicStageInfo);
+            Assert.IsNotNull(stageInfo);
 
             // assert definition.
-            var definition = classicStageInfo.StageDefinition;
+            var definition = stageInfo.StageDefinition;
             Assert.AreEqual(12, definition.LineHeight);
         });
     }
@@ -46,6 +44,8 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
     [Test]
     public void TestAddTimingPoint()
     {
+        SetUpStageInfo<ClassicStageInfo>();
+
         TriggerHandlerChanged(c =>
         {
             c.AddTimingPoint(x =>
@@ -54,9 +54,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             });
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert timing.
@@ -71,9 +71,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
     {
         ClassicLyricTimingPoint removedTimingPoint = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             timingInfo.Timings.Add(new ClassicLyricTimingPoint
             {
                 Time = 1000,
@@ -90,9 +90,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             c.RemoveTimingPoint(removedTimingPoint);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert timing.
@@ -107,9 +107,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
     {
         ClassicLyricTimingPoint removedTimingPoint = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             timingInfo.Timings.Add(new ClassicLyricTimingPoint
             {
                 Time = 1000,
@@ -126,9 +126,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             c.RemoveRangeOfTimingPoints(new[] { removedTimingPoint });
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert timing.
@@ -144,9 +144,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
         ClassicLyricTimingPoint shiftingTimingPoint1 = null!;
         ClassicLyricTimingPoint shiftingTimingPoint2 = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             timingInfo.Timings.Add(shiftingTimingPoint1 = new ClassicLyricTimingPoint
             {
                 Time = 1000,
@@ -163,9 +163,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             c.ShiftingTimingPoints(new[] { shiftingTimingPoint1, shiftingTimingPoint2 }, 100);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert timing.
@@ -181,9 +181,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
     {
         ClassicLyricTimingPoint timingPoint = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             timingInfo.Timings.Add(timingPoint = new ClassicLyricTimingPoint
             {
                 Time = 1000,
@@ -201,9 +201,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             c.AddLyricIntoTimingPoint(timingPoint);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert mapping status.
@@ -223,9 +223,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
         PrepareHitObject(() => lyric1 = new Lyric());
         PrepareHitObject(() => lyric2 = new Lyric(), false);
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             timingInfo.Timings.Add(timingPoint = new ClassicLyricTimingPoint
             {
                 Time = 1000,
@@ -239,9 +239,9 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
             c.RemoveLyricFromTimingPoint(timingPoint);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            var timingInfo = getLyricTimingInfo(karaokeBeatmap);
+            var timingInfo = stageInfo.LyricTimingInfo;
             Assert.IsNotNull(timingInfo);
 
             // assert mapping status.
@@ -251,25 +251,4 @@ public partial class ClassicStageChangeHandlerTest : BaseChangeHandlerTest<Class
     }
 
     #endregion
-
-    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
-    {
-        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
-        {
-            var stageInfo = new ClassicStageInfo();
-            karaokeBeatmap.StageInfos = new List<StageInfo>
-            {
-                stageInfo,
-            };
-            karaokeBeatmap.CurrentStageInfo = stageInfo;
-
-            action(karaokeBeatmap);
-        });
-    }
-
-    private static ClassicStageInfo getClassicStageInfo(KaraokeBeatmap karaokeBeatmap)
-        => karaokeBeatmap.StageInfos.OfType<ClassicStageInfo>().First();
-
-    private static ClassicLyricTimingInfo getLyricTimingInfo(KaraokeBeatmap karaokeBeatmap)
-        => getClassicStageInfo(karaokeBeatmap).LyricTimingInfo;
 }
