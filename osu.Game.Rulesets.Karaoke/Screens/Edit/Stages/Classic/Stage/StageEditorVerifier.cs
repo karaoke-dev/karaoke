@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapClassicStageInfo;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckClassicStageInfo;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 
@@ -15,9 +15,9 @@ public partial class StageEditorVerifier : EditorVerifier<StageEditorEditCategor
     protected override IEnumerable<ICheck> CreateChecks(StageEditorEditCategory type) =>
         type switch
         {
-            StageEditorEditCategory.Layout => new ICheck[] { new CheckBeatmapClassicStageInfo() },
-            StageEditorEditCategory.Timing => new ICheck[] { new CheckBeatmapClassicStageInfo() },
-            StageEditorEditCategory.Style => new ICheck[] { new CheckBeatmapClassicStageInfo() },
+            StageEditorEditCategory.Layout => new ICheck[] { new CheckClassicStageInfo() },
+            StageEditorEditCategory.Timing => new ICheck[] { new CheckClassicStageInfo() },
+            StageEditorEditCategory.Style => new ICheck[] { new CheckClassicStageInfo() },
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null),
         };
 

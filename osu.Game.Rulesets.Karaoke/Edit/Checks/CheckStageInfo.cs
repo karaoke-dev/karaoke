@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<TStageInfo, KaraokeHitObject>
+public abstract class CheckStageInfo<TStageInfo> : CheckBeatmapProperty<TStageInfo, KaraokeHitObject>
     where TStageInfo : StageInfo
 {
     public sealed override IEnumerable<IssueTemplate> PossibleTemplates => checkTemplates.Concat(StageTemplates);

@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageInfo>
+public class CheckClassicStageInfo : CheckStageInfo<ClassicStageInfo>
 {
     public const float MIN_ROW_HEIGHT = 30;
     public const float MAX_ROW_HEIGHT = 200;
@@ -37,7 +37,7 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
         new IssueTemplateLyricLayoutInvalidLineNumber(this),
     };
 
-    public CheckBeatmapClassicStageInfo()
+    public CheckClassicStageInfo()
     {
         RegisterCategory(x => x.StyleCategory, 0);
         RegisterCategory(x => x.LyricLayoutCategory, 2);

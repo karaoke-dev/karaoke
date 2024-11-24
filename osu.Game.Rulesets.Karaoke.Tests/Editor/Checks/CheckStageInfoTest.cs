@@ -15,11 +15,11 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapStageInfo<osu.Game.Rulesets.Karaoke.Stages.Infos.Classic.ClassicStageInfo>;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckStageInfo<osu.Game.Rulesets.Karaoke.Stages.Infos.Classic.ClassicStageInfo>;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
-public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapStageInfoTest.CheckBeatmapStageInfo>
+public class CheckStageInfoTest : BeatmapPropertyCheckTest<CheckStageInfoTest.CheckStageInfo>
 {
     [Test]
     public void TestCheckNoElement()
@@ -63,11 +63,11 @@ public class CheckBeatmapStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapSt
         AssertNotOk<IssueTemplateMappingItemNotExist>(getContext(beatmap));
     }
 
-    public class CheckBeatmapStageInfo : CheckBeatmapStageInfo<ClassicStageInfo>
+    public class CheckStageInfo : CheckStageInfo<ClassicStageInfo>
     {
         protected override string Description => "Checks for testing the shared logic";
 
-        public CheckBeatmapStageInfo()
+        public CheckStageInfo()
         {
             // Note that we only test the lyric layout category.
             RegisterCategory(x => x.StyleCategory, 0);

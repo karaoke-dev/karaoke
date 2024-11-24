@@ -15,11 +15,11 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Beatmaps;
-using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckBeatmapClassicStageInfo;
+using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckClassicStageInfo;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks;
 
-public class CheckBeatmapClassicStageInfoTest : BeatmapPropertyCheckTest<CheckBeatmapClassicStageInfo>
+public class CheckClassicStageInfoTest : BeatmapPropertyCheckTest<CheckClassicStageInfo>
 {
     #region stage definition
 
