@@ -9,8 +9,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
-using osu.Game.Rulesets.Karaoke.UI.Stages;
-using osu.Game.Rulesets.Karaoke.UI.Stages.Preview;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
@@ -109,11 +107,11 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
 
     #region Provider
 
-    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
-        => new PlayfieldPreviewStageApplier(StageDefinition);
-
     public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
         => new PreviewPlayfieldCommandProvider(this, displayNotePlayfield);
+
+    public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+        => new PreviewElementProvider(this, displayNotePlayfield);
 
     public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
         typeof(TObject) switch

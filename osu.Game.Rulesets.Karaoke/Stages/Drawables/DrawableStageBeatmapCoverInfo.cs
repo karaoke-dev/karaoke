@@ -14,14 +14,17 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Resources.Localisation.Web;
-using osu.Game.Rulesets.Karaoke.UI.Stages;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components;
+namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
-public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
+public partial class DrawableStageBeatmapCoverInfo : CompositeDrawable
 {
-    public BeatmapCoverInfo()
+    private readonly StageBeatmapCoverInfo stageBeatmapCoverInfo;
+
+    public DrawableStageBeatmapCoverInfo(StageBeatmapCoverInfo info)
     {
+        stageBeatmapCoverInfo = info;
+
         Masking = true;
         CornerRadius = 10;
     }
@@ -29,6 +32,8 @@ public partial class BeatmapCoverInfo : CompositeDrawable, IStageComponent
     [BackgroundDependencyLoader]
     private void load(IBindable<WorkingBeatmap> beatmap, OsuColour colours)
     {
+        stageBeatmapCoverInfo.ApplyTransforms(this);
+
         var metadata = beatmap.Value.Metadata;
 
         InternalChildren = new Drawable[]

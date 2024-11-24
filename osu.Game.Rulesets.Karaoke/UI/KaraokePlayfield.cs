@@ -10,9 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
-using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -20,7 +18,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI;
 
-public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponent
+public partial class KaraokePlayfield : ScrollingPlayfield
 {
     [Resolved]
     private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
@@ -180,21 +178,5 @@ public partial class KaraokePlayfield : ScrollingPlayfield, IAcceptStageComponen
         session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
         session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
         session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
-    }
-
-    public void Add(IStageComponent component)
-    {
-        if (component is not Drawable drawableComponent)
-            throw new ArgumentException($"Component must be {nameof(Drawable)}");
-
-        AddInternal(drawableComponent);
-    }
-
-    public bool Remove(IStageComponent component)
-    {
-        if (component is not Drawable drawableComponent)
-            throw new ArgumentException($"Component must be {nameof(Drawable)}");
-
-        return RemoveInternal(drawableComponent, true);
     }
 }

@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.UI.Stages;
-using osu.Game.Rulesets.Karaoke.UI.Stages.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
@@ -54,11 +52,11 @@ public class ClassicStageInfo : StageInfo
 
     #region Provider
 
-    public override IPlayfieldStageApplier GetPlayfieldStageApplier()
-        => new PlayfieldClassicStageApplier(StageDefinition);
-
     public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
         => new ClassicPlayfieldCommandProvider(this, displayNotePlayfield);
+
+    public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+        => null;
 
     public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
         typeof(TObject) switch

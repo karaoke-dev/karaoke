@@ -22,7 +22,7 @@ public class StagePlayfieldRunner : IStagePlayfieldRunner
 
     public void UpdatePlayfieldTransforms(KaraokePlayfield playfield)
     {
-        this.karaokePlayfield = playfield;
+        karaokePlayfield = playfield;
 
         applyTransforms();
     }

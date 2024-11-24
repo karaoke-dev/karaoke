@@ -11,7 +11,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
-using osu.Game.Rulesets.Karaoke.UI.Stages;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Drawables;
 
@@ -270,10 +269,10 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
 
         #region Provider
 
-        public override IPlayfieldStageApplier GetPlayfieldStageApplier()
+        public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
             => throw new NotImplementedException();
 
-        public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
+        public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
             => throw new NotImplementedException();
 
         public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>

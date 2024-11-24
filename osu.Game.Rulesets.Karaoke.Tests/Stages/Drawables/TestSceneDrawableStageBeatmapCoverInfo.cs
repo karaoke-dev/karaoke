@@ -3,19 +3,20 @@
 
 using NUnit.Framework;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.Stages;
+using osu.Game.Rulesets.Karaoke.Stages.Drawables;
 using osu.Game.Tests.Visual;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.UI;
+namespace osu.Game.Rulesets.Karaoke.Tests.Stages.Drawables;
 
-public partial class TestSceneBeatmapCoverInfo : OsuTestScene
+public partial class TestSceneDrawableStageBeatmapCoverInfo : OsuTestScene
 {
-    private readonly BeatmapCoverInfo beatmapCoverInfo;
+    private readonly DrawableStageBeatmapCoverInfo beatmapCoverInfo;
 
-    public TestSceneBeatmapCoverInfo()
+    public TestSceneDrawableStageBeatmapCoverInfo()
     {
-        Add(beatmapCoverInfo = new BeatmapCoverInfo
+        Add(beatmapCoverInfo = new DrawableStageBeatmapCoverInfo(new StageBeatmapCoverInfo())
         {
             Anchor = Anchor.Centre,
             Origin = Anchor.Centre,
