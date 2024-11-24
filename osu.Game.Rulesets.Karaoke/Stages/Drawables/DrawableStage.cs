@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
@@ -30,6 +31,20 @@ public partial class DrawableStage : Container
     [Cached(typeof(IStagePlayfieldRunner))]
     private readonly StagePlayfieldRunner stagePlayfieldRunner = new();
 
+    private readonly StageElementRunner stageElementRunner = new();
+
+    private readonly Container stageLayer;
+
+    public DrawableStage()
+    {
+        AddInternal(stageLayer = new Container
+        {
+            RelativeSizeAxes = Axes.Both,
+        });
+
+        stageElementRunner.UpdateStageElements(stageLayer);
+    }
+
     [BackgroundDependencyLoader]
     private void load(IReadOnlyList<Mod> mods, IBeatmap beatmap)
     {
@@ -51,14 +66,19 @@ public partial class DrawableStage : Container
         // Can be removed after refactor.
         karaokeBeatmap.CurrentStageInfo = stageInfo;
 
+        bool scorable = karaokeBeatmap.IsScorable();
+        var playfieldCommandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
+        stagePlayfieldRunner.UpdateCommandGenerator(playfieldCommandProvider);
+
+        var stageElementProvider = stageInfo.CreateStageElementProvider(scorable);
+
+        if (stageElementProvider != null)
+            stageElementRunner.UpdateCommandGenerator(stageElementProvider);
+
         // todo: should handle the note case.
         var lyricCommandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>();
         if (lyricCommandProvider != null)
             stageRunner.UpdateCommandGenerator(lyricCommandProvider);
-
-        bool scorable = karaokeBeatmap.IsScorable();
-        var playfieldCommandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
-        stagePlayfieldRunner.UpdateCommandGenerator(playfieldCommandProvider);
     }
 
     public override void Add(Drawable drawable)
