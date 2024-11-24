@@ -71,14 +71,6 @@ public partial class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHi
     [BackgroundDependencyLoader]
     private void load()
     {
-        // todo: should use StageWrapper to control the playfield
-        // after remove the code, should remove the logic in the StageWrapper.TriggerRecalculate also.
-        var stageInfo = Beatmap.CurrentStageInfo;
-        if (stageInfo == null)
-            throw new ArgumentNullException();
-
-        updatePlayfieldArrangement(stageInfo);
-
         // TODO : it should be moved into NotePlayfield
         new BarLineGenerator<BarLine>(Beatmap).BarLines.ForEach(bar => base.Playfield.Add(bar));
 

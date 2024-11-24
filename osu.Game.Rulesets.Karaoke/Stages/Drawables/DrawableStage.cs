@@ -62,10 +62,6 @@ public partial class DrawableStage : Container
         if (stageInfo is IHasCalculatedProperty calculatedProperty)
             calculatedProperty.ValidateCalculatedProperty(karaokeBeatmap);
 
-        // for able to get the stage info in DrawableKaraokeRuleset.
-        // Can be removed after refactor.
-        karaokeBeatmap.CurrentStageInfo = stageInfo;
-
         bool scorable = karaokeBeatmap.IsScorable();
         var playfieldCommandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
         stagePlayfieldRunner.UpdateCommandGenerator(playfieldCommandProvider);
