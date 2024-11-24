@@ -24,7 +24,7 @@ public class CheckClassicStageInfo : CheckStageInfo<ClassicStageInfo>
 
     protected override string Description => "Check invalid info in the classic stage info.";
 
-    public override IEnumerable<IssueTemplate> StageTemplates => new IssueTemplate[]
+    public override IEnumerable<IssueTemplate> CustomTemplates => new IssueTemplate[]
     {
         new IssueTemplateInvalidRowHeight(this),
         new IssueTemplateLessThanTwoTimingPoints(this),
@@ -43,7 +43,7 @@ public class CheckClassicStageInfo : CheckStageInfo<ClassicStageInfo>
         RegisterCategory(x => x.LyricLayoutCategory, 2);
     }
 
-    public override IEnumerable<Issue> CheckStageInfo(ClassicStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects)
+    public override IEnumerable<Issue> CheckStageInfoWithHitObjects(ClassicStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects)
     {
         var issues = new List<Issue>();
 
