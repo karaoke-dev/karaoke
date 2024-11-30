@@ -21,14 +21,6 @@ public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
 
     public PageInfo PageInfo { get; set; } = new();
 
-    public IList<StageInfo> StageInfos { get; set; } = new List<StageInfo>();
-
-    /// <summary>
-    /// This property will not be null after <see cref="KaraokeBeatmapProcessor.PreProcess"/> is called.
-    /// </summary>
-    [JsonIgnore]
-    public StageInfo? CurrentStageInfo { get; set; }
-
     public NoteInfo NoteInfo { get; set; } = new();
 
     public bool Scorable { get; set; }
