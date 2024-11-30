@@ -14,7 +14,7 @@ public class KaraokeBeatmapVerifier : IBeatmapVerifier
     private readonly List<ICheck> checks = new()
     {
         new CheckBeatmapAvailableTranslations(),
-        new CheckBeatmapClassicStageInfo(),
+        new CheckClassicStageInfo(),
         new CheckBeatmapNoteInfo(),
         new CheckBeatmapPageInfo(),
         new CheckLyricLanguage(),

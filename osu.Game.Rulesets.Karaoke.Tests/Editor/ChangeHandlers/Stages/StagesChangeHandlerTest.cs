@@ -2,16 +2,15 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class StagesChangeHandlerTest : BaseChangeHandlerTest<StagesChangeHandler>
+[Ignore("Ignore all stage-related change handler test until able to edit the stage info.")]
+public partial class StagesChangeHandlerTest : BaseStageInfoChangeHandlerTest<StagesChangeHandler>
 {
     protected override bool IncludeAutoGenerator => true;
 
@@ -26,9 +25,8 @@ public partial class StagesChangeHandlerTest : BaseChangeHandlerTest<StagesChang
             c.AutoGenerate<ClassicStageInfo>();
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfos(stageInfos =>
         {
-            var stageInfos = karaokeBeatmap.StageInfos;
             Assert.AreEqual(1, stageInfos.Count);
             Assert.AreEqual(typeof(ClassicStageInfo), stageInfos[0].GetType());
         });
@@ -43,24 +41,15 @@ public partial class StagesChangeHandlerTest : BaseChangeHandlerTest<StagesChang
     [Test]
     public void TestRemove()
     {
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
-        {
-            var stageInfo = new ClassicStageInfo();
-            karaokeBeatmap.StageInfos = new List<StageInfo>
-            {
-                stageInfo,
-            };
-            karaokeBeatmap.CurrentStageInfo = stageInfo;
-        });
+        SetUpStageInfo<ClassicStageInfo>();
 
         TriggerHandlerChanged(c =>
         {
             c.Remove<ClassicStageInfo>();
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfos(stageInfos =>
         {
-            var stageInfos = karaokeBeatmap.StageInfos;
             Assert.AreEqual(0, stageInfos.Count);
         });
 

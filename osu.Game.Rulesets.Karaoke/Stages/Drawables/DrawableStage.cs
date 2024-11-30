@@ -33,21 +33,17 @@ public partial class DrawableStage : Container
 
     private readonly StageElementRunner stageElementRunner = new();
 
-    private readonly Container stageLayer;
-
-    public DrawableStage()
-    {
-        AddInternal(stageLayer = new Container
-        {
-            RelativeSizeAxes = Axes.Both,
-        });
-
-        stageElementRunner.UpdateStageElements(stageLayer);
-    }
-
     [BackgroundDependencyLoader]
     private void load(IReadOnlyList<Mod> mods, IBeatmap beatmap)
     {
+        Container stageLayer = new Container
+        {
+            RelativeSizeAxes = Axes.Both,
+        };
+
+        AddInternal(stageLayer);
+        stageElementRunner.UpdateStageElements(stageLayer);
+
         if (beatmap is not KaraokeBeatmap karaokeBeatmap)
             throw new InvalidOperationException();
 

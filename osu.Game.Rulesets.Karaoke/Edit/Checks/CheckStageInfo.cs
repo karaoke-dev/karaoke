@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -11,19 +12,23 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<TStageInfo, KaraokeHitObject>
+public abstract class CheckStageInfo<TStageInfo> : ICheck
     where TStageInfo : StageInfo
 {
-    public sealed override IEnumerable<IssueTemplate> PossibleTemplates => checkTemplates.Concat(StageTemplates);
+    public CheckMetadata Metadata => new(CheckCategory.Files, Description);
 
-    private IEnumerable<IssueTemplate> checkTemplates => new IssueTemplate[]
+    protected abstract string Description { get; }
+
+    public IEnumerable<IssueTemplate> PossibleTemplates => baseTemplates.Concat(CustomTemplates);
+
+    private IEnumerable<IssueTemplate> baseTemplates => new IssueTemplate[]
     {
         new IssueTemplateNoElement(this),
         new IssueTemplateMappingHitObjectNotExist(this),
         new IssueTemplateMappingItemNotExist(this),
     };
 
-    public abstract IEnumerable<IssueTemplate> StageTemplates { get; }
+    public abstract IEnumerable<IssueTemplate> CustomTemplates { get; }
 
     private readonly IList<Func<TStageInfo, IReadOnlyList<KaraokeHitObject>, IEnumerable<Issue>>> stageInfoCategoryActions
         = new List<Func<TStageInfo, IReadOnlyList<KaraokeHitObject>, IEnumerable<Issue>>>();
@@ -38,23 +43,6 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
             return checkElementCategory(category, hitObjects.OfType<THitObject>().ToList(), minimumRequiredElements);
         });
     }
-
-    protected sealed override TStageInfo? GetPropertyFromBeatmap(KaraokeBeatmap karaokeBeatmap)
-        => karaokeBeatmap.StageInfos.OfType<TStageInfo>().FirstOrDefault();
-
-    protected sealed override IEnumerable<Issue> CheckHitObjects(TStageInfo property, IReadOnlyList<KaraokeHitObject> hitObjects)
-    {
-        var issues = CheckStageInfo(property, hitObjects).ToList();
-
-        foreach (var stageInfoCategoryAction in stageInfoCategoryActions)
-        {
-            issues.AddRange(stageInfoCategoryAction(property, hitObjects));
-        }
-
-        return issues;
-    }
-
-    public abstract IEnumerable<Issue> CheckStageInfo(TStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects);
 
     private IEnumerable<Issue> checkElementCategory<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects,
                                                                                int minimumRequiredElements)
@@ -79,8 +67,6 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
         return issues;
     }
 
-    protected abstract IEnumerable<Issue> CheckElement<TStageElement>(TStageElement element) where TStageElement : StageElement;
-
     private IEnumerable<Issue> checkMappings<TStageElement, THitObject>(StageElementCategory<TStageElement, THitObject> category, IReadOnlyList<THitObject> hitObjects)
         where TStageElement : StageElement, IComparable<TStageElement>, new()
         where THitObject : KaraokeHitObject, IHasPrimaryKey
@@ -97,6 +83,31 @@ public abstract class CheckBeatmapStageInfo<TStageInfo> : CheckBeatmapProperty<T
                 yield return new IssueTemplateMappingItemNotExist(this).Create();
         }
     }
+
+    public IEnumerable<Issue> Run(BeatmapVerifierContext context)
+    {
+        var property = getStageInfo(context);
+        if (property == null)
+            return Array.Empty<Issue>();
+
+        var hitObjects = context.Beatmap.HitObjects.OfType<KaraokeHitObject>().ToList();
+        var issues = CheckStageInfoWithHitObjects(property, hitObjects).ToList();
+
+        foreach (var stageInfoCategoryAction in stageInfoCategoryActions)
+        {
+            issues.AddRange(stageInfoCategoryAction(property, hitObjects));
+        }
+
+        return issues;
+
+        // todo: get stage info from context.
+        static TStageInfo? getStageInfo(BeatmapVerifierContext context)
+            => throw new NotImplementedException();
+    }
+
+    public abstract IEnumerable<Issue> CheckStageInfoWithHitObjects(TStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects);
+
+    protected abstract IEnumerable<Issue> CheckElement<TStageElement>(TStageElement element) where TStageElement : StageElement;
 
     public class IssueTemplateNoElement : IssueTemplate
     {

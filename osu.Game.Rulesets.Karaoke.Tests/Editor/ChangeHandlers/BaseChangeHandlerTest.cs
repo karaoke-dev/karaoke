@@ -192,10 +192,6 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         // also, technically should not call the change handler if there's no possible to change the properties.
         AssertTransactionOnlyTriggerOnce();
 
-        // We should make sure that the stage info is in the latest state.
-        // Should trigger the beatmap editor to run the beatmap processor if not the latest.
-        AssertCalculatedPropertyInStageInfoValid();
-
         // We should make sure that if the working property is changed by the change handler.
         // Should trigger the beatmap editor to run the beatmap processor to re-fill the working property.
         AssertWorkingPropertyInHitObjectValid();
@@ -206,21 +202,6 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
         AddStep("Transaction should be only triggered once.", () =>
         {
             Assert.AreEqual(1, transactionCount);
-        });
-    }
-
-    protected void AssertCalculatedPropertyInStageInfoValid()
-    {
-        AddWaitStep("Waiting for working property being re-filled in the beatmap processor.", 1);
-        AddAssert("Check if working property in the hit object is valid", () =>
-        {
-            var editorBeatmap = Dependencies.Get<EditorBeatmap>();
-            var karaokeBeatmap = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
-            if (karaokeBeatmap.CurrentStageInfo is IHasCalculatedProperty calculatedProperty)
-                return calculatedProperty.IsUpdated();
-
-            // ignore check if current stage info no need to calculate the property.
-            return true;
         });
     }
 

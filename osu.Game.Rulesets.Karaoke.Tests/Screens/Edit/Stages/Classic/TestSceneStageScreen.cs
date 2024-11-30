@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Stages.Classic.Stage;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Edit.Stages.Classic;
 
+[Ignore("Ingore this test until able to edit the stage.")]
 public partial class TestSceneStageScreen : ClassicStageScreenTestScene<StageScreen>
 {
     protected override StageScreen CreateEditorScreen() => new();

@@ -11,7 +11,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 
-public partial class ClassicStageChangeHandler : BeatmapPropertyChangeHandler, IClassicStageChangeHandler
+public partial class ClassicStageChangeHandler : StagePropertyChangeHandler, IClassicStageChangeHandler
 {
     [Resolved]
     private EditorBeatmap beatmap { get; set; } = null!;
@@ -103,22 +103,11 @@ public partial class ClassicStageChangeHandler : BeatmapPropertyChangeHandler, I
 
     private void performStageInfoChanged(Action<ClassicStageInfo> action)
     {
-        PerformBeatmapChanged(beatmap =>
-        {
-            if (beatmap.CurrentStageInfo is not ClassicStageInfo classicStageInfo)
-                throw new NotSupportedException($"Current stage info in the beatmap should be {nameof(ClassicStageInfo)}");
-
-            action(classicStageInfo);
-        });
+        throw new NotImplementedException();
     }
 
     private void performTimingInfoChanged(Action<ClassicLyricTimingInfo> action)
     {
-        performStageInfoChanged(stageInfo =>
-        {
-            action(stageInfo.LyricTimingInfo);
-
-            // todo: should trigger the stage wrapper to update the view.
-        });
+        throw new NotImplementedException();
     }
 }

@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks;
 
-public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageInfo>
+public class CheckClassicStageInfo : CheckStageInfo<ClassicStageInfo>
 {
     public const float MIN_ROW_HEIGHT = 30;
     public const float MAX_ROW_HEIGHT = 200;
@@ -24,7 +24,7 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
 
     protected override string Description => "Check invalid info in the classic stage info.";
 
-    public override IEnumerable<IssueTemplate> StageTemplates => new IssueTemplate[]
+    public override IEnumerable<IssueTemplate> CustomTemplates => new IssueTemplate[]
     {
         new IssueTemplateInvalidRowHeight(this),
         new IssueTemplateLessThanTwoTimingPoints(this),
@@ -37,13 +37,13 @@ public class CheckBeatmapClassicStageInfo : CheckBeatmapStageInfo<ClassicStageIn
         new IssueTemplateLyricLayoutInvalidLineNumber(this),
     };
 
-    public CheckBeatmapClassicStageInfo()
+    public CheckClassicStageInfo()
     {
         RegisterCategory(x => x.StyleCategory, 0);
         RegisterCategory(x => x.LyricLayoutCategory, 2);
     }
 
-    public override IEnumerable<Issue> CheckStageInfo(ClassicStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects)
+    public override IEnumerable<Issue> CheckStageInfoWithHitObjects(ClassicStageInfo stageInfo, IReadOnlyList<KaraokeHitObject> hitObjects)
     {
         var issues = new List<Issue>();
 

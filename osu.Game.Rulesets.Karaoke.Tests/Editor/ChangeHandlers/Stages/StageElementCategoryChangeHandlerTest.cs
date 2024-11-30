@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Stages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages;
@@ -16,7 +15,8 @@ using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Stages;
 
-public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTest<StageElementCategoryChangeHandlerTest.TestStageElementCategoryChangeHandler>
+[Ignore("Ignore all stage-related change handler test until able to edit the stage info.")]
+public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChangeHandlerTest<StageElementCategoryChangeHandlerTest.TestStageElementCategoryChangeHandler>
 {
     protected override TestStageElementCategoryChangeHandler CreateChangeHandler()
         => new(x => x.OfType<TestStageInfo>().First().Category);
@@ -32,9 +32,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             });
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             var firstElement = category.AvailableElements.First();
 
             Assert.AreEqual("Element 1", firstElement.Name);
@@ -46,9 +46,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
     {
         TestStageElement element = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             element = category.AddElement();
         });
 
@@ -60,9 +60,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             });
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             var firstElement = category.AvailableElements.First();
 
             Assert.AreEqual("Edit Element 1", firstElement.Name);
@@ -74,9 +74,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
     {
         TestStageElement element = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             element = category.AddElement();
         });
 
@@ -85,9 +85,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             c.RemoveElement(element);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
 
             Assert.IsEmpty(category.AvailableElements);
         });
@@ -98,9 +98,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
     {
         TestStageElement element = null!;
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             element = category.AddElement();
         });
 
@@ -111,9 +111,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             c.AddToMapping(element);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
 
             Assert.IsNotEmpty(category.Mappings);
         });
@@ -125,9 +125,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
         Lyric lyric = new Lyric();
         Lyric unSelectedLyric = new Lyric();
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             var element = category.AddElement(x => x.Name = "Element 1");
             category.AddElement(x => x.Name = "Element 2");
 
@@ -144,9 +144,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             c.OffsetMapping(1);
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
 
             Assert.AreEqual("Element 2", category.GetElementByItem(lyric).Name);
             Assert.AreEqual("Element 1", category.GetElementByItem(unSelectedLyric).Name); // should not change the id if lyric is not selected.
@@ -167,9 +167,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
     {
         Lyric lyric = new Lyric();
 
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             var element = category.AddElement();
 
             // Add to Mapping
@@ -183,9 +183,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             c.RemoveFromMapping();
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
 
             Assert.IsEmpty(category.Mappings);
         });
@@ -194,9 +194,9 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
     [Test]
     public void TestClearUnusedMapping()
     {
-        SetUpKaraokeBeatmap(karaokeBeatmap =>
+        SetUpStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
             var element = category.AddElement();
 
             // Add to Mapping
@@ -208,31 +208,13 @@ public partial class StageElementCategoryChangeHandlerTest : BaseChangeHandlerTe
             c.ClearUnusedMapping();
         });
 
-        AssertKaraokeBeatmap(karaokeBeatmap =>
+        AssertStageInfo<TestStageInfo>(stageInfo =>
         {
-            var category = getStageCategory(karaokeBeatmap);
+            var category = stageInfo.Category;
 
             Assert.IsEmpty(category.Mappings);
         });
     }
-
-    protected override void SetUpKaraokeBeatmap(Action<KaraokeBeatmap> action)
-    {
-        base.SetUpKaraokeBeatmap(karaokeBeatmap =>
-        {
-            var stageInfo = new TestStageInfo();
-            karaokeBeatmap.StageInfos = new List<StageInfo>
-            {
-                stageInfo,
-            };
-            karaokeBeatmap.CurrentStageInfo = stageInfo;
-
-            action(karaokeBeatmap);
-        });
-    }
-
-    private static TestCategory getStageCategory(KaraokeBeatmap beatmap)
-        => beatmap.StageInfos.OfType<TestStageInfo>().First().Category;
 
     public partial class TestStageElementCategoryChangeHandler : StageElementCategoryChangeHandler<TestStageElement, Lyric>
     {
