@@ -28,20 +28,12 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     [Cached(typeof(IStageEditorVerifier))]
     private readonly StageEditorVerifier stageEditorVerifier;
 
-    [Resolved]
-    private EditorBeatmap editorBeatmap { get; set; } = null!;
-
     public ClassicStageInfo StageInfo
     {
         get
         {
-            // we should make sure that current stage info is classic stage info.
-            // otherwise, we might not able to see the edit result in the editor.
-            var currentStageInfo = EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap).CurrentStageInfo;
-            if (currentStageInfo is not ClassicStageInfo classicStageInfo)
-                throw new NotSupportedException();
-
-            return classicStageInfo;
+            // todo: should be able to read the stage info from the beatmap.
+            throw new NotImplementedException();
         }
     }
 
