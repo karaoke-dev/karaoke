@@ -40,22 +40,4 @@ public class KaraokeBeatmapSkinDecodingTest
         Assert.IsNotNull(defaultLyricStyle.Name, "Default lyric style");
         Assert.IsNotNull(defaultNoteStyle.Name, "Default note style");
     }
-
-    [Test]
-    public void TestKaraokeBeatmapSkinLayout()
-    {
-        var storage = TestResources.CreateSkinStorageResourceProvider();
-        var skin = new KaraokeBeatmapSkin(new SkinInfo { Name = "special-skin" }, storage);
-
-        var firstLyric = new Lyric();
-        var secondLyric = new Lyric();
-
-        // try to get customized value from the skin.
-        var firstLyricLayout = skin.GetConfig<Lyric, LyricLayout>(firstLyric)!.Value;
-        var secondLyricLayout = skin.GetConfig<Lyric, LyricLayout>(secondLyric)!.Value;
-
-        // There's no default layout in the skin.
-        Assert.IsNull(firstLyricLayout);
-        Assert.IsNull(secondLyricLayout);
-    }
 }

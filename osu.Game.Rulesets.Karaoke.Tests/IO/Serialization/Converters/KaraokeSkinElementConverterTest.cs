@@ -45,40 +45,6 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
     }
 
     [Test]
-    public void TestLyricLayoutSerializer()
-    {
-        var lyricLayout = new LyricLayout
-        {
-            ID = 1,
-            Name = "Testing layout",
-            Alignment = Anchor.TopLeft,
-            HorizontalMargin = 10,
-            VerticalMargin = 20,
-        };
-
-        const string expected = "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20}";
-        string actual = JsonConvert.SerializeObject(lyricLayout, CreateSettings());
-        Assert.AreEqual(expected, actual);
-    }
-
-    [Test]
-    public void TestLyricLayoutDeserialize()
-    {
-        const string json = "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20}";
-
-        var expected = new LyricLayout
-        {
-            ID = 1,
-            Name = "Testing layout",
-            Alignment = Anchor.TopLeft,
-            HorizontalMargin = 10,
-            VerticalMargin = 20,
-        };
-        var actual = (LyricLayout)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-        ObjectAssert.ArePropertyEqual(expected, actual);
-    }
-
-    [Test]
     public void TestLyricStyleSerializer()
     {
         var lyricStyle = LyricStyle.CreateDefault();
