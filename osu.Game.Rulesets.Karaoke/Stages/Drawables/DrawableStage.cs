@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Preview;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
@@ -77,16 +78,39 @@ public partial class DrawableStage : Container
         // todo: get all available stages from resource provider.
         var availableStageInfos = Array.Empty<StageInfo>();
 
-        var stageMod = mods.OfType<ModStage>().SingleOrDefault();
+        // Get list of matched mods.
+        // Return the first stage info if no stage mod is found.
+        var stageMod = mods.OfType<IApplicableToStageInfo>().SingleOrDefault();
         if (stageMod == null)
-            return availableStageInfos.FirstOrDefault() ?? new PreviewStageInfo();
+            return availableStageInfos.FirstOrDefault() ?? createDefaultStageInfo(beatmap);
 
-        var matchedStageInfo = availableStageInfos.FirstOrDefault(x => stageMod.IsStageInfoMatched(x));
+        // If user select a stage mod, means user want to use the specific type of stage.
+        // We should find the matched stage info from the available stage infos.
+        var matchedStageInfo = availableStageInfos.FirstOrDefault(x => stageMod.CanApply(x));
 
+        // If the matched stage info is not found, then trying to create a default one.
         if (matchedStageInfo == null)
-            matchedStageInfo = stageMod.GenerateDefaultStageInfo(beatmap);
+        {
+            // Note that not every stage mod can create the default stage info.
+            // If not possible to create, then use the default one and not override the value in the stage info.
+            var newStageInfo = stageMod.CreateDefaultStageInfo(beatmap);
+            if (newStageInfo == null)
+            {
+                return createDefaultStageInfo(beatmap);
+            }
+
+            matchedStageInfo = newStageInfo;
+        }
 
         stageMod.ApplyToStageInfo(matchedStageInfo);
         return matchedStageInfo;
+    }
+
+    private static StageInfo createDefaultStageInfo(KaraokeBeatmap beatmap)
+    {
+        var config = new PreviewStageInfoGeneratorConfig();
+        var generator = new PreviewStageInfoGenerator(config);
+
+        return (PreviewStageInfo)generator.Generate(beatmap);
     }
 }

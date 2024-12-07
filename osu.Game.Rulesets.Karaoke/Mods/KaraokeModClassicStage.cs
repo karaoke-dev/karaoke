@@ -24,7 +24,7 @@ public class KaraokeModClassicStage : ModStage<ClassicStageInfo>
         return (ClassicStageInfo)generator.Generate(beatmap);
     }
 
-    protected override void ApplyToCurrentStageInfo(ClassicStageInfo stageInfo)
+    protected override void ApplyToStageInfo(ClassicStageInfo stageInfo)
     {
         // todo: adjust stage by config.
     }
