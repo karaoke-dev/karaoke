@@ -15,7 +15,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit;
 
 /// <summary>
-/// Copy the Component from the <see cref="osu.Game.Screens.Edit"/>
+/// Copy the Component from the <see cref="Game.Screens.Edit"/>
 /// </summary>
 public partial class BottomBar : CompositeDrawable
 {

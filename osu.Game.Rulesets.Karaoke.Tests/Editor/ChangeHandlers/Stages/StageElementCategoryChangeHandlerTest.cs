@@ -292,7 +292,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
 
         protected override Tuple<double?, double?> GetStartAndEndTime(Lyric lyric)
         {
-            if(!lyric.TimeValid)
+            if (!lyric.TimeValid)
                 return new Tuple<double?, double?>(null, null);
 
             return new Tuple<double?, double?>(lyric.StartTime, lyric.EndTime);

@@ -69,7 +69,7 @@ public partial class DrawableStage : Container
     {
         base.Add(drawable);
 
-        if(drawable is KaraokePlayfield karaokePlayfield)
+        if (drawable is KaraokePlayfield karaokePlayfield)
             stagePlayfieldRunner.UpdatePlayfieldTransforms(karaokePlayfield);
     }
 

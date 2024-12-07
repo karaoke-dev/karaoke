@@ -104,7 +104,7 @@ public class CheckStageInfoTest : BaseCheckTest<CheckStageInfoTest.CheckStageInf
         return new EditorBeatmap(karaokeBeatmap);
     }
 
-    private static StageInfo createTestingStageInfo( Action<ClassicLyricLayoutCategory>? editStageAction = null)
+    private static StageInfo createTestingStageInfo(Action<ClassicLyricLayoutCategory>? editStageAction = null)
     {
         var stageInfo = new ClassicStageInfo();
         editStageAction?.Invoke(stageInfo.LyricLayoutCategory);
