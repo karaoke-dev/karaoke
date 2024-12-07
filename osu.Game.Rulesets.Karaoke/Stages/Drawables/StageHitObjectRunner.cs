@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
@@ -18,10 +19,13 @@ public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
     public event Action? OnCommandUpdated;
 
     private IHitObjectCommandProvider commandProvider = null!;
+    private IList<IApplicableToStageHitObjectCommand> stageMods = null!;
 
     public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
         commandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>()!;
+        stageMods = mods.OfType<IApplicableToStageHitObjectCommand>().Where(x => x.CanApply(stageInfo)).ToList();
+
         OnCommandUpdated?.Invoke();
     }
 
@@ -48,6 +52,8 @@ public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
     public void UpdateInitialTransforms(DrawableHitObject drawableHitObject)
     {
         var commands = commandProvider.GetInitialCommands(drawableHitObject.HitObject);
+
+        commands = postProcessCommand(drawableHitObject.HitObject, commands, x => x.PostProcessInitialCommands);
         applyTransforms(drawableHitObject, commands);
     }
 
@@ -55,6 +61,8 @@ public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
     {
         var commands = commandProvider.GetStartTimeStateCommands(drawableHitObject.HitObject);
         double startTimeOffset = -commandProvider.GetStartTimeOffset(drawableHitObject.HitObject);
+
+        commands = postProcessCommand(drawableHitObject.HitObject, commands, x => x.PostProcessStartTimeStateCommands);
         applyTransforms(drawableHitObject, commands, startTimeOffset);
     }
 
@@ -64,7 +72,17 @@ public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
             return;
 
         var commands = commandProvider.GetHitStateCommands(drawableHitObject.HitObject, state);
+
+        commands = postProcessCommand(drawableHitObject.HitObject, commands, x => x.PostProcessHitStateCommands);
         applyTransforms(drawableHitObject, commands);
+    }
+
+    private IEnumerable<IStageCommand> postProcessCommand(
+        HitObject hitObject,
+        IEnumerable<IStageCommand> commands,
+        Func<IApplicableToStageHitObjectCommand, Func<HitObject, IEnumerable<IStageCommand>, IEnumerable<IStageCommand>>> postProcess)
+    {
+        return stageMods.Aggregate(commands, (current, mod) => postProcess(mod).Invoke(hitObject, current));
     }
 
     private static void applyTransforms<TDrawable>(TDrawable drawable, IEnumerable<IStageCommand> commands, double offset = 0)
