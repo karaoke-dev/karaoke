@@ -20,8 +20,10 @@ public class ImportLyricMenu : MenuItem
         if (screen == null)
             return;
 
-        var importer = new LyricImporter();
-        importer.OnImportFinished = importBeatmapChangeHandler.Import;
+        var importer = new LyricImporter
+        {
+            OnImportFinished = importBeatmapChangeHandler.Import,
+        };
         screen.Push(importer);
     }
 }

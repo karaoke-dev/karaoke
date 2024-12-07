@@ -20,26 +20,28 @@ public abstract partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSp
 
     protected DrawableKaraokeSpriteText(Lyric lyric)
     {
-        processor = new DisplayLyricProcessor(lyric);
-        processor.TopTextChanged = topTexts =>
+        processor = new DisplayLyricProcessor(lyric)
         {
-            TopTexts = topTexts;
-            OnPropertyChanged();
-        };
-        processor.CenterTextChanged = text =>
-        {
-            Text = text;
-            OnPropertyChanged();
-        };
-        processor.BottomTextChanged = bottomTexts =>
-        {
-            BottomTexts = bottomTexts;
-            OnPropertyChanged();
-        };
-        processor.TimeTagsChanged = timeTags =>
-        {
-            TimeTags = timeTags;
-            OnPropertyChanged();
+            TopTextChanged = topTexts =>
+            {
+                TopTexts = topTexts;
+                OnPropertyChanged();
+            },
+            CenterTextChanged = text =>
+            {
+                Text = text;
+                OnPropertyChanged();
+            },
+            BottomTextChanged = bottomTexts =>
+            {
+                BottomTexts = bottomTexts;
+                OnPropertyChanged();
+            },
+            TimeTagsChanged = timeTags =>
+            {
+                TimeTags = timeTags;
+                OnPropertyChanged();
+            },
         };
         processor.UpdateAll();
     }

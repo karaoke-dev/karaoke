@@ -12,18 +12,20 @@ public partial class DrawableLyricSpriteText : LyricSpriteText
 
     public DrawableLyricSpriteText(Lyric lyric)
     {
-        processor = new DisplayLyricProcessor(lyric);
-        processor.TopTextChanged = topTexts =>
+        processor = new DisplayLyricProcessor(lyric)
         {
-            TopTexts = topTexts;
-        };
-        processor.CenterTextChanged = text =>
-        {
-            Text = text;
-        };
-        processor.BottomTextChanged = bottomTexts =>
-        {
-            BottomTexts = bottomTexts;
+            TopTextChanged = topTexts =>
+            {
+                TopTexts = topTexts;
+            },
+            CenterTextChanged = text =>
+            {
+                Text = text;
+            },
+            BottomTextChanged = bottomTexts =>
+            {
+                BottomTexts = bottomTexts;
+            },
         };
         processor.UpdateAll();
     }
