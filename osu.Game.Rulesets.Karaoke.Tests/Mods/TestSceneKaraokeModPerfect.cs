@@ -23,7 +23,7 @@ public partial class TestSceneKaraokeModPerfect : ModFailConditionTestScene
     public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new Lyric
     {
         Text = "カラオケ!",
-        TimeTags = new []
+        TimeTags = new[]
         {
             new TimeTag(new TextIndex(), 1000),
             new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 2000),

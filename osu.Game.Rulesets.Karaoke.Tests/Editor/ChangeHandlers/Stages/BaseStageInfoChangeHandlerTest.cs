@@ -17,6 +17,6 @@ public abstract partial class BaseStageInfoChangeHandlerTest<TChangeHandler> : B
     public void AssertStageInfos(Action<IList<StageInfo>> assert)
         => throw new NotImplementedException();
 
-    public void AssertStageInfo<TStageInfo>(Action<TStageInfo> assert) where TStageInfo: StageInfo
+    public void AssertStageInfo<TStageInfo>(Action<TStageInfo> assert) where TStageInfo : StageInfo
         => throw new NotImplementedException();
 }

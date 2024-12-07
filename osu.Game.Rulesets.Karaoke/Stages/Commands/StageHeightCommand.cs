@@ -6,7 +6,7 @@ using osu.Framework.Graphics.Transforms;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Commands;
 
-public class StageHeightCommand: StageCommand<float>
+public class StageHeightCommand : StageCommand<float>
 {
     public StageHeightCommand(Easing easing, double startTime, double endTime, float startValue, float endValue)
         : base(easing, startTime, endTime, startValue, endValue)

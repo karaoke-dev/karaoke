@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 
 public partial class FormSingerList : CompositeDrawable
 {
-     public BindableList<Singer> Singers { get; } = new();
+    public BindableList<Singer> Singers { get; } = new();
 
     public LocalisableString Caption { get; init; }
 

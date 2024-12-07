@@ -72,10 +72,10 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
 
         static float getPreemptAlpha(PreviewStageDefinition definition, PreviewLyricLayout layout)
         {
-            if(isFirstLyricInView(layout))
+            if (isFirstLyricInView(layout))
                 return 1;
 
-            if(isLastLyricInView(layout))
+            if (isLastLyricInView(layout))
                 return 0;
 
             return definition.InactiveAlpha;
@@ -83,7 +83,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
 
         static float getTargetAlpha(PreviewStageDefinition definition, PreviewLyricLayout layout)
         {
-            if(isFirstLyricInView(layout))
+            if (isFirstLyricInView(layout))
                 return 1;
 
             return definition.InactiveAlpha;

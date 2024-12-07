@@ -9,7 +9,7 @@ public class StackTraceUtils
 {
     public static bool IsStackTraceContains(string text)
     {
-        string? stackTrace =  Environment.StackTrace;
+        string? stackTrace = Environment.StackTrace;
         return stackTrace.Contains(text);
     }
 }
