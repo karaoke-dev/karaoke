@@ -13,8 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
 public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
 {
-    public event Action? OnStageChanged;
-
     public event Action? OnCommandUpdated;
 
     private IHitObjectCommandProvider commandProvider = null!;
@@ -22,7 +20,7 @@ public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
     public void UpdateCommandGenerator(IHitObjectCommandProvider provider)
     {
         commandProvider = provider;
-        OnStageChanged?.Invoke();
+        OnCommandUpdated?.Invoke();
     }
 
     public void TriggerUpdateCommand()

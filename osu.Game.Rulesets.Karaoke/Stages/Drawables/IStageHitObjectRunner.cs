@@ -11,8 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
 public interface IStageHitObjectRunner
 {
-    event Action? OnStageChanged;
-
     event Action? OnCommandUpdated;
 
     /// <summary>

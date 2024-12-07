@@ -80,7 +80,6 @@ public partial class LyricPlayfield : Playfield
             // Manually set to reduce the number of future alive objects to a bare minimum.
             updateLifetime();
 
-            stageRunner.OnStageChanged += updateLifetime;
             stageRunner.OnCommandUpdated += updateLifetime;
         }
 
