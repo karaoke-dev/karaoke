@@ -116,7 +116,7 @@ public static class Extensions
 
     public static IEnumerable<MethodMember> GetMethodMembersContainsName(this IType type, string name)
     {
-        return type.GetMethodMembers().WhereNameContains<MethodMember>(name);
+        return type.GetMethodMembers().WhereNameContains(name);
     }
 
     public static IEnumerable<TType> WhereNameContains<TType>(this IEnumerable<TType> source, string name) where TType : IHasName

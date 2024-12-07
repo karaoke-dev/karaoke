@@ -64,7 +64,7 @@ public static class TestCaseTagHelper
             getStringPropertyRegex(':', "ruby"),
         });
 
-        return getMatchByStatement<RubyTag>(str, regex, result =>
+        return getMatchByStatement(str, regex, result =>
         {
             if (result == null)
                 return new RubyTag();
@@ -103,7 +103,7 @@ public static class TestCaseTagHelper
             getStringPropertyRegex('#', "text"),
         });
 
-        return getMatchByStatement<TimeTag>(str, regex, result =>
+        return getMatchByStatement(str, regex, result =>
         {
             if (result == null)
                 return new TimeTag(new TextIndex());
@@ -165,7 +165,7 @@ public static class TestCaseTagHelper
             getStringPropertyRegex(':', "lyric"),
         });
 
-        return getMatchByStatement<Lyric>(str, regex, result =>
+        return getMatchByStatement(str, regex, result =>
         {
             if (result == null)
                 return new Lyric();
@@ -218,7 +218,7 @@ public static class TestCaseTagHelper
     {
         string regex = generateRegex(id_str, Array.Empty<string>());
 
-        return getMatchByStatement<Singer>(str, regex, result =>
+        return getMatchByStatement(str, regex, result =>
         {
             if (result == null)
                 return new Singer().ChangeId(ElementId.Empty);
