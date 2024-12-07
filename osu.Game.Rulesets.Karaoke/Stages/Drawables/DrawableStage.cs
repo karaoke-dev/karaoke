@@ -5,13 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 using osu.Game.Rulesets.Karaoke.Stages.Infos.Types;
@@ -31,6 +29,7 @@ public partial class DrawableStage : Container
     [Cached(typeof(IStagePlayfieldRunner))]
     private readonly StagePlayfieldRunner stagePlayfieldRunner = new();
 
+    [Cached(typeof(IStageElementRunner))]
     private readonly StageElementRunner stageElementRunner = new();
 
     [BackgroundDependencyLoader]
@@ -59,18 +58,10 @@ public partial class DrawableStage : Container
             calculatedProperty.ValidateCalculatedProperty(karaokeBeatmap);
 
         bool scorable = karaokeBeatmap.IsScorable();
-        var playfieldCommandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
-        stagePlayfieldRunner.UpdateCommandGenerator(playfieldCommandProvider);
 
-        var stageElementProvider = stageInfo.CreateStageElementProvider(scorable);
-
-        if (stageElementProvider != null)
-            stageElementRunner.UpdateCommandGenerator(stageElementProvider);
-
-        // todo: should handle the note case.
-        var lyricCommandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>();
-        if (lyricCommandProvider != null)
-            stageRunner.UpdateCommandGenerator(lyricCommandProvider);
+        stageRunner.OnStageInfoChanged(stageInfo, scorable, mods);
+        stagePlayfieldRunner.OnStageInfoChanged(stageInfo, scorable, mods);
+        stageElementRunner.OnStageInfoChanged(stageInfo, scorable, mods);
     }
 
     public override void Add(Drawable drawable)

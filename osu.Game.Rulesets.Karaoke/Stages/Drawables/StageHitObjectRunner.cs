@@ -4,26 +4,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
+using osu.Game.Rulesets.Karaoke.Stages.Infos;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
-public partial class StageHitObjectRunner : Component, IStageHitObjectRunner
+public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
 {
     public event Action? OnCommandUpdated;
 
     private IHitObjectCommandProvider commandProvider = null!;
 
-    public void UpdateCommandGenerator(IHitObjectCommandProvider provider)
+    public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
-        commandProvider = provider;
+        commandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>()!;
         OnCommandUpdated?.Invoke();
     }
 
-    public void TriggerUpdateCommand()
+    public override void TriggerUpdateCommand()
     {
         OnCommandUpdated?.Invoke();
     }

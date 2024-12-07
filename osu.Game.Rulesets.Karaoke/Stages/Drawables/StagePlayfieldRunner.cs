@@ -4,19 +4,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
+using osu.Game.Rulesets.Karaoke.Stages.Infos;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Drawables;
 
-public class StagePlayfieldRunner : IStagePlayfieldRunner
+public class StagePlayfieldRunner : StageRunner, IStagePlayfieldRunner
 {
     private IPlayfieldCommandProvider? commandProvider;
     private KaraokePlayfield? karaokePlayfield;
 
-    public void UpdateCommandGenerator(IPlayfieldCommandProvider provider)
+    public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
-        commandProvider = provider;
+        commandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
+        applyTransforms();
+    }
+
+    public override void TriggerUpdateCommand()
+    {
         applyTransforms();
     }
 
