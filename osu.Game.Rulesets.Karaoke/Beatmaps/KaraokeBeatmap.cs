@@ -4,12 +4,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Newtonsoft.Json;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps;
 

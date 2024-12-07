@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using osu.Framework.Graphics;
 using osu.Framework.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
