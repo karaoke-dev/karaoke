@@ -12,15 +12,15 @@ public class ClassicStageInfo : StageInfo
     #region Category
 
     /// <summary>
-    /// Category to save the <see cref="Lyric"/>'s and <see cref="Note"/>'s style.
-    /// </summary>
-    public ClassicStyleCategory StyleCategory { get; set; } = new();
-
-    /// <summary>
     /// The definition for the <see cref="Lyric"/>.<br/>
     /// Like the line height or font size.
     /// </summary>
     public ClassicStageDefinition StageDefinition { get; set; } = new();
+
+    /// <summary>
+    /// Category to save the <see cref="Lyric"/>'s and <see cref="Note"/>'s style.
+    /// </summary>
+    public ClassicStyleCategory StyleCategory { get; set; } = new();
 
     /// <summary>
     /// Category to save the <see cref="Lyric"/>'s layout.

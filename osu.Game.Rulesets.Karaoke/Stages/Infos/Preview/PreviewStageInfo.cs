@@ -17,19 +17,21 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     #region Category
 
     /// <summary>
-    /// Category to save the <see cref="Lyric"/>'s and <see cref="Note"/>'s style.
-    /// </summary>
-    [JsonIgnore]
-    private PreviewStyleCategory styleCategory { get; set; } = new();
-
-    /// <summary>
     /// The definition for the <see cref="Lyric"/>.
     /// Like how many lyrics can in the playfield at the same time.
     /// </summary>
     public PreviewStageDefinition StageDefinition { get; set; } = new();
 
     /// <summary>
+    /// Category to save the <see cref="Lyric"/>'s and <see cref="Note"/>'s style.
+    /// This property will not be saved because it's real-time calculated.
+    /// </summary>
+    [JsonIgnore]
+    private PreviewStyleCategory styleCategory { get; set; } = new();
+
+    /// <summary>
     /// Category to save the <see cref="Lyric"/>'s layout.
+    /// This property will not be saved because it's real-time calculated.
     /// </summary>
     [JsonIgnore]
     private PreviewLyricLayoutCategory layoutCategory { get; set; } = new();
