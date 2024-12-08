@@ -18,8 +18,6 @@ public interface IStageElementCategoryChangeHandler<TStageElement>
 
     void AddToMapping(TStageElement element);
 
-    void OffsetMapping(int offset);
-
     void RemoveFromMapping();
 
     void ClearUnusedMapping();

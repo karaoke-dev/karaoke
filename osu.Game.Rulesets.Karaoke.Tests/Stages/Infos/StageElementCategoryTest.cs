@@ -226,20 +226,6 @@ public class StageElementCategoryTest
         Assert.IsEmpty(category.GetHitObjectIdsByElement(defaultElement));
     }
 
-    [Test]
-    public void TestGetElementOrder()
-    {
-        var category = new TestStageElementCategory();
-        var element = category.AddElement();
-
-        int? existElementOrder = category.GetElementOrder(element);
-        Assert.AreEqual(1, existElementOrder);
-
-        var notExistElement = new TestStageElement();
-        int? notExistElementOrder = category.GetElementOrder(notExistElement);
-        Assert.IsNull(notExistElementOrder);
-    }
-
     #endregion
 
     private class TestStageElement : StageElement, IComparable<TestStageElement>
