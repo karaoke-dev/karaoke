@@ -62,7 +62,7 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
         {
-            ClassicLyricLayout previewLyricLayout => updateInitialTransforms(previewLyricLayout),
+            ClassicLyricLayout layout => updateInitialTransforms(layout),
             ClassicStyle => Array.Empty<IStageCommand>(), // todo: implement.
             _ => throw new NotSupportedException(),
         }).SelectMany(x => x);

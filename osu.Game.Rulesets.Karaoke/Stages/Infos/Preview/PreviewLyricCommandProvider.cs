@@ -133,7 +133,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
         {
-            PreviewLyricLayout previewLyricLayout => updateHitStateTransforms(state, previewLyricLayout),
+            PreviewLyricLayout layout => updateHitStateTransforms(state, layout),
             PreviewStyle => Array.Empty<IStageCommand>(), // todo: implement.
             _ => throw new NotSupportedException(),
         }).SelectMany(x => x);
