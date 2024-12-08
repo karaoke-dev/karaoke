@@ -56,31 +56,6 @@ public partial class StageElementCategoryChangeHandler<TStageElement, THitObject
         });
     }
 
-    public void OffsetMapping(int offset)
-    {
-        if (offset == 0)
-            throw new InvalidOperationException("Offset number should not be zero.");
-
-        PerformOnSelection<THitObject>(hitObject =>
-        {
-            performStageInfoChanged(s =>
-            {
-                var element = s.GetElementByItem(hitObject);
-                int mappingIndex = s.SortedElements.IndexOf(element);
-                if (mappingIndex < 0)
-                    return;
-
-                int newMappingIndex = mappingIndex + offset;
-                var newElement = s.SortedElements.ElementAtOrDefault(newMappingIndex);
-                if (newElement == null)
-                    return;
-
-                s.RemoveHitObjectFromMapping(hitObject);
-                s.AddToMapping(newElement, hitObject);
-            });
-        });
-    }
-
     public void RemoveFromMapping()
     {
         PerformOnSelection<THitObject>(hitObject =>

@@ -120,49 +120,6 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
     }
 
     [Test]
-    public void TestOffsetMapping()
-    {
-        Lyric lyric = new Lyric();
-        Lyric unSelectedLyric = new Lyric();
-
-        SetUpStageInfo<TestStageInfo>(stageInfo =>
-        {
-            var category = stageInfo.Category;
-            var element = category.AddElement(x => x.Name = "Element 1");
-            category.AddElement(x => x.Name = "Element 2");
-
-            // Add to Mapping
-            category.AddToMapping(element, lyric);
-            category.AddToMapping(element, unSelectedLyric);
-        });
-
-        PrepareHitObject(() => lyric);
-        PrepareHitObject(() => unSelectedLyric, false);
-
-        TriggerHandlerChanged(c =>
-        {
-            c.OffsetMapping(1);
-        });
-
-        AssertStageInfo<TestStageInfo>(stageInfo =>
-        {
-            var category = stageInfo.Category;
-
-            Assert.AreEqual("Element 2", category.GetElementByItem(lyric).Name);
-            Assert.AreEqual("Element 1", category.GetElementByItem(unSelectedLyric).Name); // should not change the id if lyric is not selected.
-        });
-    }
-
-    [Test]
-    public void TestOffsetMappingWithZeroValue()
-    {
-        PrepareHitObject(() => new Lyric());
-
-        // offset value should not be zero.
-        TriggerHandlerChangedWithException<InvalidOperationException>(c => c.OffsetMapping(0));
-    }
-
-    [Test]
     public void TestRemoveFromMapping()
     {
         Lyric lyric = new Lyric();
