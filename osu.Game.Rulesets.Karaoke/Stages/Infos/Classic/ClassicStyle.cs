@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
-public class ClassicStyle : StageElement, IComparable<ClassicStyle>
+public class ClassicStyle : StageElement
 {
     [JsonIgnore]
     public readonly Bindable<int?> LyricStyleIndexBindable = new();
@@ -33,12 +33,5 @@ public class ClassicStyle : StageElement, IComparable<ClassicStyle>
     {
         get => NoteStyleIndexBindable.Value;
         set => NoteStyleIndexBindable.Value = value;
-    }
-
-    public int CompareTo(ClassicStyle? other)
-    {
-        return ComparableUtils.CompareByProperty(this, other,
-            x => x.Name,
-            x => x.ID);
     }
 }

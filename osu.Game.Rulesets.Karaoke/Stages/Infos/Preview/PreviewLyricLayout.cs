@@ -1,14 +1,12 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class PreviewLyricLayout : StageElement, IComparable<PreviewLyricLayout>
+public class PreviewLyricLayout : StageElement
 {
     /// <summary>
     /// <see cref="Lyric"/>'s timing with row index.
@@ -24,10 +22,4 @@ public class PreviewLyricLayout : StageElement, IComparable<PreviewLyricLayout>
     /// <see cref="Lyric"/>'s end time.
     /// </summary>
     public double EndTime { get; set; }
-
-    public int CompareTo(PreviewLyricLayout? other)
-    {
-        return ComparableUtils.CompareByProperty(this, other,
-            x => x.ID);
-    }
 }

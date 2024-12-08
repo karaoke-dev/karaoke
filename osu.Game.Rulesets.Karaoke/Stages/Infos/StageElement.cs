@@ -9,10 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 
 public abstract class StageElement : IHasPrimaryKey
 {
-    private readonly Bindable<int> orderVersion = new();
-
-    public IBindable<int> OrderVersion => orderVersion;
-
     /// <summary>
     /// Index of the element.
     /// </summary>
@@ -29,10 +25,5 @@ public abstract class StageElement : IHasPrimaryKey
     {
         get => NameBindable.Value;
         set => NameBindable.Value = value;
-    }
-
-    protected void TriggerOrderVersionChanged()
-    {
-        orderVersion.Value++;
     }
 }

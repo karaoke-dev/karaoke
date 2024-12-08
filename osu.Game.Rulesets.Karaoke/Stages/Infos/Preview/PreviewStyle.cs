@@ -1,13 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class PreviewStyle : StageElement, IComparable<PreviewStyle>
+public class PreviewStyle : StageElement
 {
     /// <summary>
     /// <see cref="Lyric"/>'s skin lookup index.
@@ -18,11 +16,4 @@ public class PreviewStyle : StageElement, IComparable<PreviewStyle>
     /// <see cref="Note"/>'s skin lookup index.
     /// </summary>
     public int? NoteStyleIndex { get; set; }
-
-    public int CompareTo(PreviewStyle? other)
-    {
-        return ComparableUtils.CompareByProperty(this, other,
-            x => x.Name,
-            x => x.ID);
-    }
 }

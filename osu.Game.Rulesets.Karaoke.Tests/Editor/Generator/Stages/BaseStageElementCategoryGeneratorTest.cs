@@ -15,14 +15,14 @@ public abstract class BaseLyricStageElementCategoryGeneratorTest<TGenerator, TOb
     : BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, Lyric, TConfig>
     where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, Lyric>
-    where TStageElement : StageElement, IComparable<TStageElement>, new()
+    where TStageElement : StageElement, new()
     where TConfig : GeneratorConfig, new();
 
 public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject, TStageElement, THitObject, TConfig>
     : BaseStageInfoPropertyGeneratorTest<TGenerator, TObject, TConfig>
     where TGenerator : StageInfoPropertyGenerator<TObject, TConfig>
     where TObject : StageElementCategory<TStageElement, THitObject>
-    where TStageElement : StageElement, IComparable<TStageElement>, new()
+    where TStageElement : StageElement, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
     where TConfig : GeneratorConfig, new()
 {
