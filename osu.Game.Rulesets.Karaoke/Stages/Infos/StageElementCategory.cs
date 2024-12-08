@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Linq;
-using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -17,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 /// It's a category to record the list of <typeparamref name="TStageElement"/> and handle the mapping by several rules.
 /// </summary>
 public abstract class StageElementCategory<TStageElement, THitObject>
-    where TStageElement : StageElement, IComparable<TStageElement>, new()
+    where TStageElement : StageElement, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     /// <summary>
@@ -26,18 +23,10 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     /// </summary>
     public TStageElement DefaultElement { get; protected set; }
 
-    [JsonIgnore]
-    public IBindable<int> ElementsVersion => elementsVersion;
-
-    private readonly Bindable<int> elementsVersion = new();
-
     /// <summary>
     /// All available elements.
     /// </summary>
     public BindableList<TStageElement> AvailableElements { get; protected set; } = new();
-
-    [JsonIgnore]
-    public List<TStageElement> SortedElements { get; private set; } = new();
 
     /// <summary>
     /// Mapping between <typeparamref name="THitObject.ID"/> and <typeparamref name="TStageElement.ID"/><br/>
@@ -48,37 +37,6 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     protected StageElementCategory()
     {
         DefaultElement = new TStageElement();
-
-        AvailableElements.CollectionChanged += (_, args) =>
-        {
-            switch (args.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    Debug.Assert(args.NewItems != null);
-
-                    foreach (var c in args.NewItems.Cast<TStageElement>())
-                        c.OrderVersion.ValueChanged += orderValueChanged;
-                    break;
-
-                case NotifyCollectionChangedAction.Reset:
-                case NotifyCollectionChangedAction.Remove:
-                    Debug.Assert(args.OldItems != null);
-
-                    foreach (var c in args.OldItems.Cast<TStageElement>())
-                        c.OrderVersion.ValueChanged -= orderValueChanged;
-                    break;
-            }
-
-            onElementOrderChanged();
-
-            void orderValueChanged(ValueChangedEvent<int> e) => onElementOrderChanged();
-        };
-
-        void onElementOrderChanged()
-        {
-            SortedElements = AvailableElements.OrderBy(x => x).ToList();
-            elementsVersion.Value++;
-        }
     }
 
     #region Edit
@@ -180,12 +138,6 @@ public abstract class StageElementCategory<TStageElement, THitObject>
     public IEnumerable<ElementId> GetHitObjectIdsByElement(TStageElement element)
     {
         return Mappings.Where(x => x.Value == element.ID).Select(x => x.Key);
-    }
-
-    public int? GetElementOrder(TStageElement element)
-    {
-        int index = SortedElements.IndexOf(element);
-        return index == -1 ? null : index + 1;
     }
 
     #endregion
