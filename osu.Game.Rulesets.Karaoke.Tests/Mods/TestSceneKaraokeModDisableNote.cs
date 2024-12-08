@@ -16,7 +16,7 @@ public partial class TestSceneKaraokeModDisableNote : KaraokeModTestScene
     {
         Mod = new KaraokeModDisableNote(),
         Autoplay = true,
-        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        CreateBeatmap = () => new TestKaraokeBeatmap(Ruleset.Value),
         PassCondition = () =>
         {
             var lyricPlayfield = Player.GetLyricPlayfield();

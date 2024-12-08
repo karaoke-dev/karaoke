@@ -17,7 +17,7 @@ public partial class TestSceneKaraokeModFlashlight : KaraokeModTestScene
     {
         Mod = new KaraokeModFlashlight(),
         Autoplay = true,
-        Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
+        CreateBeatmap = () => new TestKaraokeBeatmap(Ruleset.Value),
         PassCondition = () =>
         {
             var drawableRuleset = Player.GetDrawableRuleset();

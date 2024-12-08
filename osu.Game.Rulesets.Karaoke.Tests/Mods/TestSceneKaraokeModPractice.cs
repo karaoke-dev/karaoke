@@ -17,7 +17,7 @@ public partial class TestSceneKaraokeModPractice : KaraokeModTestScene
     {
         Mod = new KaraokeModPractice(),
         Autoplay = false,
-        Beatmap = new TestKaraokeBeatmap(new RulesetInfo()),
+        CreateBeatmap = () => new TestKaraokeBeatmap(new RulesetInfo()),
         PassCondition = () =>
         {
             // just need to check has setting button display area.

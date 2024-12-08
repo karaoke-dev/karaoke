@@ -19,7 +19,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
         var stageInfo = new ClassicStageInfo();
 
         const string expected =
-            "{\"$type\":\"classic\",\"style_category\":{},\"stage_definition\":{\"border_width\":25.0,\"border_height\":25.0,\"fade_in_time\":150.0,\"fade_out_time\":150.0,\"fade_in_easing\":22,\"fade_out_easing\":22,\"lyric_scale\":2.0,\"line_height\":72.0,\"first_lyric_start_time_offset\":1000.0,\"lyric_end_time_offset\":300.0,\"last_lyric_end_time_offset\":10000.0},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[],\"mappings\":{}}}";
+            "{\"$type\":\"classic\",\"stage_definition\":{\"border_width\":25.0,\"border_height\":25.0,\"fade_in_time\":150.0,\"fade_out_time\":150.0,\"fade_in_easing\":22,\"fade_out_easing\":22,\"lyric_scale\":2.0,\"line_height\":72.0,\"first_lyric_start_time_offset\":1000.0,\"lyric_end_time_offset\":300.0,\"last_lyric_end_time_offset\":10000.0},\"style_category\":{},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[],\"mappings\":{}}}";
         string actual = JsonConvert.SerializeObject(stageInfo, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -29,7 +29,7 @@ public class StageInfoConverterTest : BaseSingleConverterTest<StageInfoConverter
     public void TestClassicStageInfoDeserializer()
     {
         const string json =
-            "{\"$type\":\"classic\",\"style_category\":{},\"stage_definition\":{\"border_width\":25.0,\"border_height\":25.0,\"fade_in_time\":150.0,\"fade_out_time\":150.0,\"fade_in_easing\":22,\"fade_out_easing\":22,\"lyric_scale\":2.0,\"line_height\":72.0,\"first_lyric_start_time_offset\":1000.0,\"lyric_end_time_offset\":300.0,\"last_lyric_end_time_offset\":10000.0},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[],\"mappings\":{}}}";
+            "{\"$type\":\"classic\",\"stage_definition\":{\"border_width\":25.0,\"border_height\":25.0,\"fade_in_time\":150.0,\"fade_out_time\":150.0,\"fade_in_easing\":22,\"fade_out_easing\":22,\"lyric_scale\":2.0,\"line_height\":72.0,\"first_lyric_start_time_offset\":1000.0,\"lyric_end_time_offset\":300.0,\"last_lyric_end_time_offset\":10000.0},\"style_category\":{},\"lyric_layout_category\":{},\"lyric_timing_info\":{\"timings\":[],\"mappings\":{}}}";
 
         var expected = new ClassicStageInfo();
         var actual = (ClassicStageInfo)JsonConvert.DeserializeObject<StageInfo>(json, CreateSettings())!;

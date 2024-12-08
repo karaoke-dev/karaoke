@@ -12,7 +12,7 @@ public partial class LyricImporter : ScreenWithBeatmapBackground
 {
     private readonly ImportLyricOverlay importLyricOverlay;
 
-    public override bool AllowBackButton => false;
+    public override bool AllowUserExit => false;
 
     public override bool HideOverlaysOnEnter => true;
 
