@@ -14,7 +14,7 @@ public partial class TestSceneKaraokeModLyricConfiguration : KaraokeModTestScene
     {
         Mod = new KaraokeModLyricConfiguration(),
         Autoplay = false,
-        Beatmap = new TestKaraokeBeatmap(new RulesetInfo()),
+        CreateBeatmap = () => new TestKaraokeBeatmap(new RulesetInfo()),
         PassCondition = () => true,
     });
 }

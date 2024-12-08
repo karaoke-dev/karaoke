@@ -14,7 +14,7 @@ public partial class TestSceneKaraokeModTranslation : KaraokeModTestScene
     {
         Mod = new KaraokeModTranslation(),
         Autoplay = false,
-        Beatmap = new TestKaraokeBeatmap(new RulesetInfo()),
+        CreateBeatmap = () => new TestKaraokeBeatmap(new RulesetInfo()),
         PassCondition = () => true,
     });
 }

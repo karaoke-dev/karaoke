@@ -32,7 +32,7 @@ public partial class TestSceneKaraokeModSuddenDeath : ModFailConditionTestScene
         Mod = new KaraokeModSuddenDeath(),
         PassCondition = () => ((ModFailConditionTestPlayer)Player).CheckFailed(false),
         Autoplay = false,
-        Beatmap = new Beatmap
+        CreateBeatmap = () => new Beatmap
         {
             HitObjects = new List<HitObject>
             {
@@ -57,7 +57,7 @@ public partial class TestSceneKaraokeModSuddenDeath : ModFailConditionTestScene
         Mod = new KaraokeModSuddenDeath(),
         PassCondition = () => ((ModFailConditionTestPlayer)Player).CheckFailed(true) && Player.Results.Count == 2,
         Autoplay = false,
-        Beatmap = new Beatmap
+        CreateBeatmap = () => new Beatmap
         {
             HitObjects = new List<HitObject>
             {
