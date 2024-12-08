@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics.Shaders;
-using osu.Game.Rulesets.Karaoke.Skinning.Elements;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Tools;
 
