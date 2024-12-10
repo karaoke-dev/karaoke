@@ -19,7 +19,6 @@ public class KaraokeSkinElementConverter : GenericTypeConverter<IKaraokeSkinElem
         elementType switch
         {
             _ when elementType == typeof(LyricFontInfo) => ElementType.LyricFontInfo,
-            _ when elementType == typeof(LyricStyle) => ElementType.LyricStyle,
             _ when elementType == typeof(NoteStyle) => ElementType.NoteStyle,
             _ => throw new NotSupportedException(),
         };
@@ -28,7 +27,6 @@ public class KaraokeSkinElementConverter : GenericTypeConverter<IKaraokeSkinElem
         elementType switch
         {
             ElementType.LyricFontInfo => typeof(LyricFontInfo),
-            ElementType.LyricStyle => typeof(LyricStyle),
             ElementType.NoteStyle => typeof(NoteStyle),
             _ => throw new NotSupportedException(),
         };

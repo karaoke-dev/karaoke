@@ -44,27 +44,6 @@ public class LyricEditorSkin : KaraokeSkin
         : base(skin, resources)
     {
         DefaultElement[ElementType.LyricFontInfo] = LyricFontInfo.CreateDefault();
-        DefaultElement[ElementType.LyricStyle] = new LyricStyle
-        {
-            Name = "Default",
-            LeftLyricTextShaders = new List<ICustomizedShader>
-            {
-                new OutlineShader
-                {
-                    Radius = 2,
-                    Colour = Color4Extensions.FromHex("#3D2D6B"),
-                    OutlineColour = Color4Extensions.FromHex("#CCA532"),
-                },
-            },
-            RightLyricTextShaders = new List<ICustomizedShader>
-            {
-                new OutlineShader
-                {
-                    Radius = 2,
-                    OutlineColour = Color4Extensions.FromHex("#5932CC"),
-                },
-            },
-        };
         DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
 
         // todo: should use better way to handle overall size.

@@ -33,7 +33,6 @@ public class KaraokeSkin : Skin
     public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>
     {
         { ElementType.LyricFontInfo, LyricFontInfo.CreateDefault() },
-        { ElementType.LyricStyle, LyricStyle.CreateDefault() },
         { ElementType.NoteStyle, NoteStyle.CreateDefault() },
     };
 
@@ -64,7 +63,6 @@ public class KaraokeSkin : Skin
                     return;
 
                 DefaultElement[ElementType.LyricFontInfo] = deserializedContent.LyricFontInfo;
-                DefaultElement[ElementType.LyricStyle] = deserializedContent.LyricStyle;
                 DefaultElement[ElementType.NoteStyle] = deserializedContent.NoteStyle;
             }
             catch (Exception ex)
@@ -129,7 +127,7 @@ public class KaraokeSkin : Skin
 
                 return type switch
                 {
-                    ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => SkinUtils.As<TValue>(new Bindable<TValue>((TValue)DefaultElement[type])),
+                    ElementType.LyricFontInfo or ElementType.NoteStyle => SkinUtils.As<TValue>(new Bindable<TValue>((TValue)DefaultElement[type])),
                     _ => throw new InvalidEnumArgumentException(nameof(type)),
                 };
             }
@@ -162,15 +160,13 @@ public class KaraokeSkin : Skin
     private IKaraokeSkinElement? toElement(ElementType type)
         => type switch
         {
-            ElementType.LyricStyle or ElementType.LyricFontInfo or ElementType.NoteStyle => DefaultElement[type],
+            ElementType.LyricFontInfo or ElementType.NoteStyle => DefaultElement[type],
             _ => throw new InvalidEnumArgumentException(nameof(type)),
         };
 
     private class DefaultSkinFormat
     {
         public LyricFontInfo LyricFontInfo { get; set; } = null!;
-
-        public LyricStyle LyricStyle { get; set; } = null!;
 
         public NoteStyle NoteStyle { get; set; } = null!;
     }

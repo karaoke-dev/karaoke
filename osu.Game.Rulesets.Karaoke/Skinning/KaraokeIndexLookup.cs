@@ -10,7 +10,5 @@ public enum KaraokeIndexLookup
 {
     Layout,
 
-    Style,
-
     Note,
 }
