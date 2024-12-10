@@ -6,4 +6,8 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 // todo: get the note style by throwing reference lyric.
-public class ClassicStyleCategory : StageElementCategory<ClassicStyle, Lyric>;
+public class ClassicStyleCategory : StageElementCategory<ClassicStyle, Lyric>
+{
+    protected override ClassicStyle CreateDefaultElement()
+        => new();
+}

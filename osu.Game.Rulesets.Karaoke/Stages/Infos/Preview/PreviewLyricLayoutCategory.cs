@@ -5,4 +5,8 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Preview;
 
-public class PreviewLyricLayoutCategory : StageElementCategory<PreviewLyricLayout, Lyric>;
+public class PreviewLyricLayoutCategory : StageElementCategory<PreviewLyricLayout, Lyric>
+{
+    protected override PreviewLyricLayout CreateDefaultElement()
+        => new();
+}
