@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shaders;
@@ -13,10 +14,10 @@ using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Utils;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
+using LyricStyle = osu.Game.Rulesets.Karaoke.Graphics.Sprites.LyricStyle;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics;
 
@@ -38,6 +39,28 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
         // should display ruby and romanisation by default.
         DisplayType = LyricDisplayType.Lyric;
         DisplayProperty = LyricDisplayProperty.Both;
+
+        // give it a default style.
+        UpdateStyle(new LyricStyle
+        {
+            LeftLyricTextShaders = new List<ICustomizedShader>
+            {
+                new OutlineShader
+                {
+                    Radius = 2,
+                    Colour = Color4Extensions.FromHex("#3D2D6B"),
+                    OutlineColour = Color4Extensions.FromHex("#CCA532"),
+                },
+            },
+            RightLyricTextShaders = new List<ICustomizedShader>
+            {
+                new OutlineShader
+                {
+                    Radius = 2,
+                    OutlineColour = Color4Extensions.FromHex("#5932CC"),
+                },
+            },
+        });
 
         spriteText = getSpriteText();
 
@@ -217,18 +240,6 @@ public partial class PreviewKaraokeSpriteText : DrawableKaraokeSpriteText<Previe
     [BackgroundDependencyLoader]
     private void load(ISkinSource skin, ShaderManager? shaderManager)
     {
-        skin.GetConfig<Lyric, LyricStyle>(HitObject)?.BindValueChanged(lyricStyle =>
-        {
-            var newStyle = lyricStyle.NewValue;
-            if (newStyle == null)
-                return;
-
-            LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, newStyle);
-            RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, newStyle);
-
-            triggerSizeChangedEvent();
-        }, true);
-
         skin.GetConfig<Lyric, LyricFontInfo>(HitObject)?.BindValueChanged(e =>
         {
             var newConfig = e.NewValue;
