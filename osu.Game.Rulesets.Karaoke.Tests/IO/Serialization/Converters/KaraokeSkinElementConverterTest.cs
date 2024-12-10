@@ -44,33 +44,11 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
     }
 
     [Test]
-    public void TestLyricStyleSerializer()
-    {
-        var lyricStyle = LyricStyle.CreateDefault();
-
-        const string expected =
-            "{\"$type\":1,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#CCA532\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#5932CC\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
-        string actual = JsonConvert.SerializeObject(lyricStyle, CreateSettings());
-        Assert.AreEqual(expected, actual);
-    }
-
-    [Test]
-    public void TestLyricStyleDeserializer()
-    {
-        const string json =
-            "{\"$type\":1,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#CCA532\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"outline_colour\":\"#5932CC\",\"radius\":3.0},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
-
-        var expected = LyricStyle.CreateDefault();
-        var actual = (LyricStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
-        ObjectAssert.ArePropertyEqual(expected, actual);
-    }
-
-    [Test]
     public void TestNoteStyleSerializer()
     {
         var lyricConfig = NoteStyle.CreateDefault();
 
-        const string expected = "{\"$type\":2,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
+        const string expected = "{\"$type\":1,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
         string actual = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
         Assert.AreEqual(expected, actual);
     }
@@ -78,7 +56,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
     [Test]
     public void TestNoteStyleDeserializer()
     {
-        const string json = "{\"$type\":2,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
+        const string json = "{\"$type\":1,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
 
         var expected = NoteStyle.CreateDefault();
         var actual = (NoteStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
