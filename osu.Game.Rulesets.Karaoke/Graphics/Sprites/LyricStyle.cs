@@ -1,23 +1,18 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
 using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shaders;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Elements;
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
-public class LyricStyle : IKaraokeSkinElement
+public class LyricStyle
 {
     public static LyricStyle CreateDefault() => new()
     {
-        Name = "Default",
         LeftLyricTextShaders = new ICustomizedShader[]
         {
             new StepShader
@@ -60,25 +55,7 @@ public class LyricStyle : IKaraokeSkinElement
         },
     };
 
-    public int ID { get; set; }
-
-    public string Name { get; set; } = string.Empty;
-
     public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
 
     public IReadOnlyList<ICustomizedShader> RightLyricTextShaders = Array.Empty<ICustomizedShader>();
-
-    public void ApplyTo(Drawable d)
-    {
-        if (d is not DrawableLyric drawableLyric)
-            throw new InvalidDrawableTypeException(nameof(d));
-
-        var shaderManager = drawableLyric.Dependencies.Get<ShaderManager>();
-        drawableLyric.ApplyToLyricPieces(l =>
-        {
-            // Apply shader.
-            l.LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, this);
-            l.RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, this);
-        });
-    }
 }

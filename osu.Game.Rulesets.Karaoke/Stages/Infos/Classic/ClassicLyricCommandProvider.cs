@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Stages.Commands;
+using osu.Game.Rulesets.Karaoke.Stages.Commands.Lyrics;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
@@ -62,8 +63,8 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         var elements = StageInfo.GetStageElements(hitObject);
         return elements.Select(e => e switch
         {
-            ClassicLyricLayout previewLyricLayout => updateInitialTransforms(previewLyricLayout),
-            ClassicStyle => Array.Empty<IStageCommand>(), // todo: implement.
+            ClassicLyricLayout layout => updateInitialTransforms(layout),
+            ClassicStyle style => updateInitialTransforms(style),
             _ => throw new NotSupportedException(),
         }).SelectMany(x => x);
     }
@@ -113,6 +114,14 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+    }
+
+    private IEnumerable<IStageCommand> updateInitialTransforms(ClassicStyle style)
+    {
+        if (style.LyricStyle != null)
+        {
+            yield return new LyricStyleCommand(Easing.None, 0, 0, style.LyricStyle, style.LyricStyle);
         }
     }
 

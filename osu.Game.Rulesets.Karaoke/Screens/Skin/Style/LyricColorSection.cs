@@ -32,11 +32,6 @@ internal partial class LyricColorSection : StyleSection
             },
         };
     }
-
-    [BackgroundDependencyLoader]
-    private void load(StyleManager manager)
-    {
-    }
 }
 
 public enum ColorArea

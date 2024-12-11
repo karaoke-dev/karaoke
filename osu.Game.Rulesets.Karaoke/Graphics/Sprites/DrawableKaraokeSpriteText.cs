@@ -1,8 +1,11 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
+using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 
@@ -17,6 +20,9 @@ public partial class DrawableKaraokeSpriteText : DrawableKaraokeSpriteText<Lyric
 public abstract partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSpriteText<TSpriteText> where TSpriteText : LyricSpriteText, new()
 {
     private readonly DisplayLyricProcessor processor;
+
+    [Resolved]
+    private ShaderManager? shaderManager { get; set; }
 
     protected DrawableKaraokeSpriteText(Lyric lyric)
     {
@@ -67,5 +73,15 @@ public abstract partial class DrawableKaraokeSpriteText<TSpriteText> : KaraokeSp
     {
         base.Dispose(isDisposing);
         processor.Dispose();
+    }
+
+    public void UpdateStyle(LyricStyle style)
+    {
+        // for prevent issue Collection was modified; enumeration operation may not execute.
+        Schedule(() =>
+        {
+            LeftLyricTextShaders = SkinConverterTool.ConvertLeftSideShader(shaderManager, style);
+            RightLyricTextShaders = SkinConverterTool.ConvertRightSideShader(shaderManager, style);
+        });
     }
 }

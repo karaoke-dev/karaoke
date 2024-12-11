@@ -7,7 +7,5 @@ public enum ElementType
 {
     LyricFontInfo,
 
-    LyricStyle,
-
     NoteStyle,
 }

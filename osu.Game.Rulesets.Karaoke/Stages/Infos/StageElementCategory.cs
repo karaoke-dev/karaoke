@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos;
 /// Can add more customised role by inherit this class.<br/>
 /// </summary>
 public abstract class StageElementCategory<TStageElement, THitObject>
-    where TStageElement : StageElement, new()
+    where TStageElement : StageElement
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
     /// <summary>
@@ -37,14 +37,15 @@ public abstract class StageElementCategory<TStageElement, THitObject>
 
     protected StageElementCategory()
     {
-        DefaultElement = new TStageElement();
+        DefaultElement = CreateDefaultElement();
+        DefaultElement.Name = "Default";
     }
 
     #region Edit
 
     public TStageElement AddElement(Action<TStageElement>? action = null)
     {
-        var element = new TStageElement();
+        var element = CreateDefaultElement();
 
         action?.Invoke(element);
         AvailableElements.Add(element);
@@ -120,6 +121,8 @@ public abstract class StageElementCategory<TStageElement, THitObject>
             Mappings.Remove(hitObjectId);
         }
     }
+
+    protected abstract TStageElement CreateDefaultElement();
 
     #endregion
 

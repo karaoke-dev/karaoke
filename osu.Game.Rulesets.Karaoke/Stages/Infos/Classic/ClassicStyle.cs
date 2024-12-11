@@ -4,6 +4,7 @@
 using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -11,17 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Stages.Infos.Classic;
 
 public class ClassicStyle : StageElement
 {
-    [JsonIgnore]
-    public readonly Bindable<int?> LyricStyleIndexBindable = new();
-
     /// <summary>
-    /// <see cref="Lyric"/>'s skin lookup index.
+    /// <see cref="Lyric"/>'s text style.
     /// </summary>
-    public int? LyricStyleIndex
-    {
-        get => LyricStyleIndexBindable.Value;
-        set => LyricStyleIndexBindable.Value = value;
-    }
+    public LyricStyle? LyricStyle { get; set; }
 
     [JsonIgnore]
     public readonly Bindable<int?> NoteStyleIndexBindable = new();

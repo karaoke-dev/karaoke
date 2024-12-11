@@ -27,17 +27,14 @@ public class KaraokeSkinDecodingTest
 
         // try to get default value from the skin.
         var defaultLyricFontInfo = skin.GetConfig<Lyric, LyricFontInfo>(referencedLyric)!.Value;
-        var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(referencedLyric)!.Value;
         var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote)!.Value;
 
         // should be able to get the default value.
         Assert.IsNotNull(defaultLyricFontInfo);
-        Assert.IsNotNull(defaultLyricStyle);
         Assert.IsNotNull(defaultNoteStyle);
 
         // Check the content
         Assert.IsNotNull(defaultLyricFontInfo.Name, "Default lyric config");
-        Assert.IsNotNull(defaultLyricStyle.Name, "Default lyric style");
         Assert.IsNotNull(defaultNoteStyle.Name, "Default note style");
     }
 }

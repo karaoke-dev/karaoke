@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 internal partial class LyricStylePreview : CompositeDrawable
 {
     [BackgroundDependencyLoader]
-    private void load(OverlayColourProvider colourProvider, StyleManager manager)
+    private void load(OverlayColourProvider colourProvider)
     {
         Masking = true;
         CornerRadius = 15;

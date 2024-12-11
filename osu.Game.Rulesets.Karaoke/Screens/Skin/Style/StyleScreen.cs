@@ -11,13 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 public partial class StyleScreen : KaraokeSkinEditorScreen
 {
-    [Cached]
-    protected readonly StyleManager StyleManager;
-
     public StyleScreen(ISkin skin)
         : base(skin, KaraokeSkinEditorScreenMode.Style)
     {
-        AddInternal(StyleManager = new StyleManager());
     }
 
     protected override Section[] CreateSelectionContainer()

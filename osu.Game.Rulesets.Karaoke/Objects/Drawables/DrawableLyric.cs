@@ -35,7 +35,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     private readonly Bindable<int> romanisationMarginBindable = new();
     private readonly Bindable<FontUsage> translationFontUsageBindable = new();
 
-    private readonly IBindableDictionary<Singer, SingerState[]> singersBindable = new BindableDictionary<Singer, SingerState[]>();
     private readonly BindableDictionary<CultureInfo, string> translationTextBindable = new();
 
     public event Action<DrawableLyric>? OnLyricStart;
@@ -89,7 +88,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         translationFontUsageBindable.BindValueChanged(_ => updateLyricFontInfo());
 
         // property in hitobject.
-        singersBindable.BindCollectionChanged((_, _) => { updateFontStyle(); });
         translationTextBindable.BindCollectionChanged((_, _) => { applyTranslation(); });
     }
 
@@ -121,7 +119,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         lyricPieces.Add(new DrawableKaraokeSpriteText(HitObject));
         ApplySkin(CurrentSkin, false);
 
-        singersBindable.BindTo(HitObject.SingersBindable);
         translationTextBindable.BindTo(HitObject.TranslationsBindable);
     }
 
@@ -129,7 +126,6 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     {
         base.OnFree();
 
-        singersBindable.UnbindFrom(HitObject.SingersBindable);
         translationTextBindable.UnbindFrom(HitObject.TranslationsBindable);
     }
 
@@ -137,20 +133,7 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
     {
         base.ApplySkin(skin, allowFallback);
 
-        updateFontStyle();
         updateLyricFontInfo();
-    }
-
-    private void updateFontStyle()
-    {
-        if (CurrentSkin == null)
-            return;
-
-        if (HitObject.IsNull())
-            return;
-
-        var lyricStyle = CurrentSkin.GetConfig<Lyric, LyricStyle>(HitObject)?.Value;
-        lyricStyle?.ApplyTo(this);
     }
 
     private void updateLyricFontInfo()

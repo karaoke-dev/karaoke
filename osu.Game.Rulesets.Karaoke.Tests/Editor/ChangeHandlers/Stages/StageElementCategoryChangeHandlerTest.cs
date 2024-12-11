@@ -225,7 +225,11 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         #endregion
     }
 
-    private class TestCategory : StageElementCategory<TestStageElement, Lyric>;
+    private class TestCategory : StageElementCategory<TestStageElement, Lyric>
+    {
+        protected override TestStageElement CreateDefaultElement()
+            => new();
+    }
 
     public class TestStageElement : StageElement, IComparable<TestStageElement>
     {

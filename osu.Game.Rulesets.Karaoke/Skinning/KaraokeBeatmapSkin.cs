@@ -61,7 +61,6 @@ public class KaraokeBeatmapSkin : KaraokeSkin
                 => elementType switch
                 {
                     ElementType.LyricFontInfo => "lyric-font-infos",
-                    ElementType.LyricStyle => "lyric-styles",
                     ElementType.NoteStyle => "note-styles",
                     _ => throw new InvalidEnumArgumentException(nameof(elementType)),
                 };
@@ -97,7 +96,6 @@ public class KaraokeBeatmapSkin : KaraokeSkin
             case KaraokeIndexLookup indexLookup:
                 return indexLookup switch
                 {
-                    KaraokeIndexLookup.Style => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricStyle)),
                     KaraokeIndexLookup.Note => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.NoteStyle)),
                     _ => throw new InvalidEnumArgumentException(nameof(indexLookup)),
                 };

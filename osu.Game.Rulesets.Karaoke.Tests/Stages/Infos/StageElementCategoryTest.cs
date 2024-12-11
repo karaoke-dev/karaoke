@@ -238,5 +238,9 @@ public class StageElementCategoryTest
         }
     }
 
-    private class TestStageElementCategory : StageElementCategory<TestStageElement, Lyric>;
+    private class TestStageElementCategory : StageElementCategory<TestStageElement, Lyric>
+    {
+        protected override TestStageElement CreateDefaultElement()
+            => new();
+    }
 }

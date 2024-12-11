@@ -26,7 +26,7 @@ public readonly struct KaraokeSkinLookup
     public int Lookup { get; }
 
     /// <summary>
-    /// Ctor for <see cref="ElementType.LyricStyle"/> and <see cref="ElementType.NoteStyle"/>
+    /// Ctor for <see cref="ElementType.NoteStyle"/>
     /// </summary>
     /// <param name="type"></param>
     /// <param name="singers"></param>
@@ -35,7 +35,6 @@ public readonly struct KaraokeSkinLookup
     {
         switch (type)
         {
-            case ElementType.LyricStyle:
             case ElementType.LyricFontInfo:
             case ElementType.NoteStyle:
                 return;
