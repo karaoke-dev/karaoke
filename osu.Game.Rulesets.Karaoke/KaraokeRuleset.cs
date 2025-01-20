@@ -284,14 +284,14 @@ public partial class KaraokeRuleset : Ruleset
         return statistic.ToArray();
     }
 
-    public override IEnumerable<Drawable> CreateEditorSetupSections() =>
-    [
+    public override IEnumerable<Drawable> CreateEditorSetupSections() => new Drawable[]
+    {
         new MetadataSection(),
         new ResourcesSection(),
         new KaraokeSingerSection(),
         new KaraokeTranslationSection(),
         new KaraokeNoteSection(),
-    ];
+    };
 
     public KaraokeRuleset()
     {
