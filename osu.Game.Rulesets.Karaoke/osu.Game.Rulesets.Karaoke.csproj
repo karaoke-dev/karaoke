@@ -23,7 +23,7 @@
     <PackageReference Include="SixLabors.Fonts" Version="2.0.6" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.4" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
-    <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="9.0.1" />
     <PackageReference Include="WanaKanaSharp" Version="0.2.0" />
     <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
