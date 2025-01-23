@@ -11,13 +11,13 @@
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="LrcParser" Version="2024.728.2" />
     <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="osu.Framework.KaraokeFont" Version="2024.914.1" />
+    <PackageReference Include="osu.Framework.KaraokeFont" Version="2025.120.0" />
     <PackageReference Include="osu.Framework.Microphone" Version="2024.219.0" />
     <PackageReference Include="ppy.LocalisationAnalyser" Version="2024.802.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ppy.osu.Game" Version="2024.1205.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2025.122.0" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
     <PackageReference Include="SixLabors.Fonts" Version="2.0.9" />
