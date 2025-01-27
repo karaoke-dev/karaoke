@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
@@ -179,5 +180,5 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
 
     protected override IReadOnlyList<CompositionTool> CompositionTools => Array.Empty<CompositionTool>();
 
-    protected override IEnumerable<TernaryButton> CreateTernaryButtons() => Array.Empty<TernaryButton>();
+    protected override IEnumerable<Drawable> CreateTernaryButtons() => Array.Empty<Drawable>();
 }

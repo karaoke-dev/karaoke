@@ -108,7 +108,7 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     {
         base.UpdateAfterChildren();
         sidebarContainer.Height = DrawHeight;
-        sidebarContainer.Y = Math.Clamp(ScrollFlow.Current - Header.DrawHeight, 0, Math.Max(ScrollFlow.ScrollContent.DrawHeight - DrawHeight - Header.DrawHeight, 0));
+        sidebarContainer.Y = (float)Math.Clamp(ScrollFlow.Current - Header.DrawHeight, 0, Math.Max(ScrollFlow.ScrollContent.DrawHeight - DrawHeight - Header.DrawHeight, 0));
     }
 
     protected override ChangelogHeader CreateHeader() => new()
