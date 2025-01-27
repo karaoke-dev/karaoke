@@ -149,8 +149,8 @@ public partial class KaraokeSettingsPanel : SettingsPanel
                 if (x.NewValue == null)
                     return;
 
-                const int offset = 8;
-                float position = scrollContainer.GetChildPosInContent(x.NewValue);
+                const float offset = 8;
+                float position = (float)scrollContainer.GetChildPosInContent(x.NewValue);
                 hoverBackground.MoveToY(position + offset, 50);
                 hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
             });

@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
@@ -19,8 +18,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose
 
 public partial class PlaybackSwitchButton : CompositeDrawable
 {
-    private readonly IBindable<Track> track = new Bindable<Track>();
     private readonly BindableNumber<double> freqAdjust = new BindableDouble(1);
+
+    [Resolved]
+    private EditorClock editorClock { get; set; } = null!;
 
     public PlaybackSwitchButton()
     {
@@ -32,26 +33,18 @@ public partial class PlaybackSwitchButton : CompositeDrawable
             Origin = Anchor.Centre,
             Current = freqAdjust,
         };
-
-        track.BindValueChanged(tr =>
-        {
-            tr.OldValue?.RemoveAdjustment(AdjustableProperty.Frequency, freqAdjust);
-
-            // notice that it's not the same bindable as PlaybackControl because track can accept many bindable at the same time.
-            // should have the better way to get the overall playback speed in the editor but it's OK for now.
-            tr.NewValue?.AddAdjustment(AdjustableProperty.Frequency, freqAdjust);
-        });
     }
 
-    [BackgroundDependencyLoader]
-    private void load(EditorClock clock)
+    protected override void LoadComplete()
     {
-        track.BindTo(clock.Track);
+        base.LoadComplete();
+
+        editorClock.AudioAdjustments.AddAdjustment(AdjustableProperty.Frequency, freqAdjust);
     }
 
     protected override void Dispose(bool isDisposing)
     {
-        track.Value?.RemoveAdjustment(AdjustableProperty.Frequency, freqAdjust);
+        editorClock.AudioAdjustments.RemoveAdjustment(AdjustableProperty.Frequency, freqAdjust);
 
         base.Dispose(isDisposing);
     }

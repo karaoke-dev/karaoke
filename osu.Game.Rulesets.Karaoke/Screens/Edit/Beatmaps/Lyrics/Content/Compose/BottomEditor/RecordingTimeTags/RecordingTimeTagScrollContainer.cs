@@ -29,7 +29,7 @@ public partial class RecordingTimeTagScrollContainer : TimeTagScrollContainer
     /// <summary>
     /// The timeline's scroll position in the last frame.
     /// </summary>
-    private float lastScrollPosition;
+    private double lastScrollPosition;
 
     /// <summary>
     /// The track time in the last frame.

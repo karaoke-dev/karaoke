@@ -82,11 +82,11 @@ public abstract partial class BindableScrollContainer : ZoomableScrollContainer
         */
     }
 
-    protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
+    protected override void OnUserScroll(double value, bool animated = true, double? distanceDecay = null)
     {
         base.OnUserScroll(value, animated, distanceDecay);
 
         // update current value if user scroll to.
-        BindableCurrent.Value = value;
+        BindableCurrent.Value = (float)value;
     }
 }

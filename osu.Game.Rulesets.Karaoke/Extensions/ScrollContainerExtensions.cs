@@ -21,12 +21,12 @@ public static class ScrollContainerExtensions
     public static void ScrollIntoViewWithSpacing<T>(this ScrollContainer<T> container, Drawable d, MarginPadding p, bool animated = true)
         where T : Drawable
     {
-        float childPos0 = Math.Clamp(container.GetChildPosInContent(d, -new Vector2(p.Left, p.Top)), 0, container.AvailableContent);
-        float childPos1 = Math.Clamp(container.GetChildPosInContent(d, d.DrawSize + new Vector2(p.Right, p.Bottom)), 0, container.AvailableContent);
+        double childPos0 = Math.Clamp(container.GetChildPosInContent(d, -new Vector2(p.Left, p.Top)), 0, container.AvailableContent);
+        double childPos1 = Math.Clamp(container.GetChildPosInContent(d, d.DrawSize + new Vector2(p.Right, p.Bottom)), 0, container.AvailableContent);
 
         int scrollDim = container.ScrollDirection == Direction.Horizontal ? 0 : 1;
-        float minPos = Math.Min(childPos0, childPos1);
-        float maxPos = Math.Max(childPos0, childPos1);
+        double minPos = Math.Min(childPos0, childPos1);
+        double maxPos = Math.Max(childPos0, childPos1);
 
         if (minPos < container.Current || (minPos > container.Current && d.DrawSize[scrollDim] > container.DisplayableContent))
             container.ScrollTo(minPos, animated);

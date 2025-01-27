@@ -163,7 +163,7 @@ public abstract partial class TimeTagScrollContainer : BindableScrollContainer
         return index * preempt_time;
     }
 
-    public double TimeAtPosition(float x)
+    public double TimeAtPosition(double x)
     {
         return x / Content.DrawWidth * editorClock.TrackLength;
     }
