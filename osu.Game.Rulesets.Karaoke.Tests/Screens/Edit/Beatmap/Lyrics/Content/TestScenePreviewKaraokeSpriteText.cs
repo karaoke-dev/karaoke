@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.IO.Stores;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -41,8 +42,10 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
     }
 
     [BackgroundDependencyLoader]
-    private void load(OsuColour colour)
+    private void load(OsuGameBase game, OsuColour colour)
     {
+        game.Resources.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
+
         Child = new Container
         {
             Anchor = Anchor.Centre,
