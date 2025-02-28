@@ -15,7 +15,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
 [Cached]
-public partial class EditableTimeline : BindableScrollContainer, IPositionSnapProvider
+public partial class EditableTimeline : BindableScrollContainer
 {
     [Resolved]
     private EditorClock editorClock { get; set; } = null!;
@@ -63,7 +63,7 @@ public partial class EditableTimeline : BindableScrollContainer, IPositionSnapPr
         return (float)(time / editorClock.TrackLength * Content.DrawWidth);
     }
 
-    public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
+    public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition)
     {
         double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
         return new SnapResult(screenSpacePosition, time);

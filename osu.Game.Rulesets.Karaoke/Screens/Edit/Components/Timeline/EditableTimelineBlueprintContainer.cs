@@ -13,11 +13,15 @@ using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Timeline;
 
 public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContainer<TItem> where TItem : class
 {
+    [Resolved]
+    private EditableTimeline timeline { get; set; } = null!;
+
     protected readonly IBindableList<TItem> Items = new BindableList<TItem>();
 
     public EditableTimelineBlueprintContainer()
@@ -46,15 +50,14 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
         SelectedItems.AddRange(Items);
     }
 
-    protected sealed override bool ApplySnapResult(SelectionBlueprint<TItem>[] blueprints, SnapResult result)
+    protected override bool TryMoveBlueprints(DragEvent e, IList<(SelectionBlueprint<TItem> blueprint, Vector2[] originalSnapPositions)> blueprints)
     {
-        if (!base.ApplySnapResult(blueprints, result))
-            return false;
+        var result = timeline.FindSnappedPositionAndTime(e.ScreenSpaceMousePosition);
 
         if (result.Time == null)
             return false;
 
-        var items = blueprints.Select(x => x.Item).ToArray();
+        var items = blueprints.Select(x => x.blueprint.Item).ToArray();
         double time = result.Time.Value;
         return ApplyOffsetResult(items, time);
     }
