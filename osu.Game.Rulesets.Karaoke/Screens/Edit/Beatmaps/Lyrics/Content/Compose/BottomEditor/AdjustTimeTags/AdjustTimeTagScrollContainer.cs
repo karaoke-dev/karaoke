@@ -16,7 +16,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose.BottomEditor.AdjustTimeTags;
 
 [Cached]
-public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPositionSnapProvider
+public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer
 {
     public const float TIMELINE_HEIGHT = 38;
 
@@ -85,7 +85,7 @@ public partial class AdjustTimeTagScrollContainer : TimeTagScrollContainer, IPos
         currentTimeMarker?.MoveToX(position);
     }
 
-    public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
+    public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition)
     {
         double time = TimeAtPosition(Content.ToLocalSpace(screenSpacePosition).X);
         return new SnapResult(screenSpacePosition, time);
