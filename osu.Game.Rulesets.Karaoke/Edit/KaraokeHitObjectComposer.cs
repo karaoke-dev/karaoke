@@ -117,16 +117,6 @@ public partial class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObje
         return null;
     }
 
-    public override SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All)
-    {
-        var result = base.FindSnappedPositionAndTime(screenSpacePosition, snapType);
-
-        // should not affect x position and time if dragging object in note playfield.
-        return result.Playfield is EditorNotePlayfield
-            ? new SnapResult(screenSpacePosition, null, result.Playfield)
-            : result;
-    }
-
     protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
     {
         drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
