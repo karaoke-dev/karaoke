@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -37,6 +38,9 @@ public partial class RubyBlueprintContainer : LyricPropertyBlueprintContainer<Ru
 
     protected override IEnumerable<SelectionBlueprint<RubyTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<RubyTag>> blueprints)
         => blueprints.OrderBy(b => b.Item.StartIndex);
+
+    protected override bool TryMoveBlueprints(DragEvent e, IList<(SelectionBlueprint<RubyTag> blueprint, Vector2[] originalSnapPositions)> blueprints)
+        => false;
 
     protected partial class RubyTagSelectionHandler : LyricPropertySelectionHandler<IEditRubyModeState>
     {

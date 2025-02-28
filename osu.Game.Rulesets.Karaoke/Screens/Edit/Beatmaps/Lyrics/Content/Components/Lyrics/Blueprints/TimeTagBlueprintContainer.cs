@@ -4,11 +4,13 @@
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit.Compose.Components;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Components.Lyrics.Blueprints;
 
@@ -27,6 +29,9 @@ public partial class TimeTagBlueprintContainer : LyricPropertyBlueprintContainer
 
     protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
         => new TimeTagSelectionBlueprint(item);
+
+    protected override bool TryMoveBlueprints(DragEvent e, IList<(SelectionBlueprint<TimeTag> blueprint, Vector2[] originalSnapPositions)> blueprints)
+        => false;
 
     protected partial class TimeTagSelectionHandler : LyricPropertySelectionHandler<IEditTimeTagModeState>
     {
