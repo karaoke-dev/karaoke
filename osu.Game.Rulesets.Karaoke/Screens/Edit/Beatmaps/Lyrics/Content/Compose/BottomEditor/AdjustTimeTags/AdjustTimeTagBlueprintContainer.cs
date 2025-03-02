@@ -20,6 +20,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.States.Modes;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics.Content.Compose.BottomEditor.AdjustTimeTags;
 
@@ -44,15 +45,14 @@ public partial class AdjustTimeTagBlueprintContainer : BindableBlueprintContaine
     protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
         => blueprints.OrderBy(b => b.Item.Index);
 
-    protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
+    protected override bool TryMoveBlueprints(DragEvent e, IList<(SelectionBlueprint<TimeTag> blueprint, Vector2[] originalSnapPositions)> blueprints)
     {
-        if (!base.ApplySnapResult(blueprints, result))
-            return false;
+        var result = timeline.FindSnappedPositionAndTime(e.ScreenSpaceMousePosition);
 
         if (result.Time == null)
             return false;
 
-        var timeTags = blueprints.OfType<AdjustTimeTagSelectionBlueprint>().Select(x => x.Item).ToArray();
+        var timeTags = blueprints.Select(x => x.blueprint).OfType<AdjustTimeTagSelectionBlueprint>().Select(x => x.Item).ToArray();
         var firstTimeTag = timeTags.FirstOrDefault();
         if (firstTimeTag == null)
             return false;

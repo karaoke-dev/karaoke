@@ -30,10 +30,7 @@ public class KaraokeDifficultyAttributes : DifficultyAttributes
         foreach (var v in base.ToDatabaseAttributes())
             yield return v;
 
-        // Todo: osu!mania doesn't output MaxCombo attribute for some reason.
         yield return (ATTRIB_ID_DIFFICULTY, StarRating);
-        yield return (ATTRIB_ID_GREAT_HIT_WINDOW, GreatHitWindow);
-        yield return (ATTRIB_ID_SCORE_MULTIPLIER, ScoreMultiplier);
     }
 
     public override void FromDatabaseAttributes(IReadOnlyDictionary<int, double> values, IBeatmapOnlineInfo onlineInfo)
@@ -41,7 +38,5 @@ public class KaraokeDifficultyAttributes : DifficultyAttributes
         base.FromDatabaseAttributes(values, onlineInfo);
 
         StarRating = values[ATTRIB_ID_DIFFICULTY];
-        GreatHitWindow = values[ATTRIB_ID_GREAT_HIT_WINDOW];
-        ScoreMultiplier = values[ATTRIB_ID_SCORE_MULTIPLIER];
     }
 }
