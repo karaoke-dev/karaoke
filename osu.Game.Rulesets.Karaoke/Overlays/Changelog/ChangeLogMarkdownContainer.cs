@@ -103,7 +103,6 @@ public partial class ChangeLogMarkdownContainer : OsuMarkdownContainer
                 })
                 {
                     Scale = textScale,
-                    Anchor = Anchor.BottomLeft,
                 });
             }
         }
