@@ -90,7 +90,7 @@ public partial class ChangelogSection : CompositeDrawable
                 HoverColour = isCurrent ? Color4.White : overlayColours.Light1;
 
                 // update font.
-                text.OfType<SpriteText>().ForEach(f =>
+                text.Children.OfType<SpriteText>().ForEach(f =>
                 {
                     f.Font = OsuFont.GetFont(size: font_size, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
                 });
