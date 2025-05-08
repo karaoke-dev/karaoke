@@ -37,9 +37,8 @@ public class KaraokeLegacyBeatmapDecoderTest
 
         var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
-        Assert.AreEqual(1, working.BeatmapInfo.BeatmapVersion);
-        Assert.AreEqual(1, working.Beatmap.BeatmapInfo.BeatmapVersion);
-        Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
+        Assert.AreEqual(1, working.Beatmap.BeatmapVersion);
+        Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapVersion);
 
         // Test lyric part decode result
         var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
