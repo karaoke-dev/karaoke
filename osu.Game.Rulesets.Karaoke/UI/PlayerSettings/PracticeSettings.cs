@@ -1,30 +1,21 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 
 public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
 {
-    private readonly PlayerSliderBar<double> preemptTimeSliderBar;
-
     public PracticeSettings()
         : base("Practice")
     {
         Children = new Drawable[]
         {
-            new OsuSpriteText
-            {
-                Text = "Practice preempt time:",
-            },
-            preemptTimeSliderBar = new PlayerSliderBar<double>(),
             new OsuSpriteText
             {
                 Text = "Lyric:",
@@ -66,11 +57,5 @@ public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<
 
     public void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
     {
-    }
-
-    [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetConfigManager config)
-    {
-        preemptTimeSliderBar.Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime);
     }
 }

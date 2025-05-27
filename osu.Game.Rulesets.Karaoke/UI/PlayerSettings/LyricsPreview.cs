@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,7 +15,9 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Mods;
 using osuTK;
 using osuTK.Graphics;
 
@@ -80,9 +83,11 @@ public partial class LyricsPreview : CompositeDrawable
     }
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
+    private void load(IReadOnlyList<Mod> mods, KaraokeSessionStatics session)
     {
-        config.BindWith(KaraokeRulesetSetting.PracticePreemptTime, bindablePreemptTime);
+        var practiceMod = mods.OfType<KaraokeModPractice>().First();
+        bindablePreemptTime.BindTo(practiceMod.LyricPreemptTime);
+
         session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
     }
 

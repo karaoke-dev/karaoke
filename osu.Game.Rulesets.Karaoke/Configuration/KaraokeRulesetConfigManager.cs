@@ -44,9 +44,6 @@ public class KaraokeRulesetConfigManager : RulesetConfigManager<KaraokeRulesetSe
         SetDefault(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay, false);
         SetDefault(KaraokeRulesetSetting.PlaybackSpeed, 0, -10, 10);
 
-        // Practice
-        SetDefault(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
-
         // Device
         SetDefault(KaraokeRulesetSetting.MicrophoneDevice, string.Empty);
 
@@ -127,9 +124,6 @@ public enum KaraokeRulesetSetting
     // Playback
     OverridePlaybackSpeedAtGameplay,
     PlaybackSpeed,
-
-    // Practice
-    PracticePreemptTime,
 
     // Device
     MicrophoneDevice,
