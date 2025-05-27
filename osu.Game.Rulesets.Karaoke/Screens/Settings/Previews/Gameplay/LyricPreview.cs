@@ -26,7 +26,6 @@ public partial class LyricPreview : SettingsSubsectionPreview
     private readonly Bindable<FontUsage> rubyFont = new();
     private readonly Bindable<FontUsage> romanisationFont = new();
     private readonly Bindable<FontUsage> translationFont = new();
-    private readonly Bindable<CultureInfo> preferLanguage = new();
 
     [Resolved]
     private FontStore fontStore { get; set; } = null!;
@@ -68,10 +67,6 @@ public partial class LyricPreview : SettingsSubsectionPreview
         {
             addFont(e.NewValue);
         });
-        preferLanguage.BindValueChanged(e =>
-        {
-            lyric.Translations = createPreviewTranslation(e.NewValue);
-        });
 
         void addFont(FontUsage fontUsage)
             => localFontStore.AddFont(fontUsage);
@@ -96,7 +91,6 @@ public partial class LyricPreview : SettingsSubsectionPreview
         config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
         config.BindWith(KaraokeRulesetSetting.RomanisationFont, romanisationFont);
         config.BindWith(KaraokeRulesetSetting.TranslationFont, translationFont);
-        config.BindWith(KaraokeRulesetSetting.PreferTranslationLanguage, preferLanguage);
     }
 
     protected override void Dispose(bool isDisposing)

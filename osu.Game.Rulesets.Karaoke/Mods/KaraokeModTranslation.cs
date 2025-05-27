@@ -2,9 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
-using osu.Framework.Allocation;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Configuration;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods;
 
 public class KaraokeModTranslation : Mod, IApplicableToDrawableHitObject
 {
-    public override string Name => "Translation";
+    public override string Name => $"Translation to {CultureInfo.Value}";
 
     public override LocalisableString Description => "Display prefer translation by ruleset configuration.";
 
@@ -21,19 +21,14 @@ public class KaraokeModTranslation : Mod, IApplicableToDrawableHitObject
 
     public override string Acronym => "LT";
 
+    [SettingSource("Default language", "Select default language", 0, SettingControlType = typeof(LanguageSettingsControl))]
+    public BindableCultureInfo CultureInfo { get; } = new(new CultureInfo("en-US"));
+
     public void ApplyToDrawableHitObject(DrawableHitObject drawable)
     {
         if (drawable is not DrawableLyric drawableLyric)
             return;
 
-        var preferLanguage = getPreferLanguage(drawableLyric.Dependencies);
-        drawableLyric.ChangePreferTranslationLanguage(preferLanguage);
-        return;
-
-        static CultureInfo? getPreferLanguage(IReadOnlyDependencyContainer dependencyContainer)
-        {
-            var config = dependencyContainer.Get<KaraokeRulesetConfigManager>();
-            return config.Get<CultureInfo?>(KaraokeRulesetSetting.PreferTranslationLanguage);
-        }
+        drawableLyric.ChangePreferTranslationLanguage(CultureInfo.Value);
     }
 }
