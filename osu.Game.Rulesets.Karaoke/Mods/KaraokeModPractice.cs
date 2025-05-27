@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -23,6 +24,14 @@ public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<Kara
     public override double ScoreMultiplier => 0.0f;
     public override IconUsage? Icon => KaraokeIcon.ModPractice;
     public override ModType Type => ModType.Fun;
+
+    [SettingSource("Preempt time", "Preempt time the target wants to sing.")]
+    public BindableDouble LyricPreemptTime { get; } = new(3000)
+    {
+        MinValue = 0,
+        MaxValue = 5000.0,
+        Precision = 100.0
+    };
 
     public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
         => new(new KaraokeAutoGenerator(beatmap, mods).Generate(), new ModCreatedUser { Username = "practice master" });
