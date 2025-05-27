@@ -27,13 +27,6 @@ public partial class TestSceneLyric : KaraokeSkinnableTestScene
         AddStep("Default Lyric", () => SetContents(_ => testSingle()));
     }
 
-    [BackgroundDependencyLoader]
-    private void load()
-    {
-        var config = Dependencies.Get<KaraokeRulesetConfigManager>();
-        config.SetValue(KaraokeRulesetSetting.PreferTranslationLanguage, cultureInfo);
-    }
-
     private Drawable testSingle(double timeOffset = 0)
     {
         double startTime = Time.Current + 1000 + timeOffset;
