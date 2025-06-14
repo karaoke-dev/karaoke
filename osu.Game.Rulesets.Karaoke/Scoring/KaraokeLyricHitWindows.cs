@@ -16,6 +16,8 @@ public class KaraokeLyricHitWindows : KaraokeHitWindows
         result switch
         {
             HitResult.Perfect => true,
+            // todo: add this in order not to throw error in some test cases.
+            HitResult.Miss => true,
             _ => false,
         };
 
