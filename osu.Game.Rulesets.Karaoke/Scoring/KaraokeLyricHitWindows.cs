@@ -7,17 +7,17 @@ namespace osu.Game.Rulesets.Karaoke.Scoring;
 
 public class KaraokeLyricHitWindows : KaraokeHitWindows
 {
-    public const HitResult DEFAULT_HIT_RESULT = HitResult.Perfect;
-
     private static readonly DifficultyRange[] lyric_ranges =
     {
-        new(DEFAULT_HIT_RESULT, 40, 20, 10),
+        new(HitResult.Perfect, 40, 20, 10),
     };
 
     public override bool IsHitResultAllowed(HitResult result) =>
         result switch
         {
-            DEFAULT_HIT_RESULT => true,
+            HitResult.Perfect => true,
+            // todo: add this in order not to throw error in some test cases.
+            HitResult.Miss => true,
             _ => false,
         };
 
