@@ -180,10 +180,12 @@ public partial class DrawableLyric : DrawableKaraokeHitObject
         if (timeOffset >= 0 && HitObject.HitWindows.CanBeHit(timeOffset))
         {
             OnLyricEnd?.Invoke(this);
-
-            // Apply end hit result
-            ApplyResult(KaraokeLyricHitWindows.DEFAULT_HIT_RESULT);
         }
+
+        if (timeOffset < 0)
+            return;
+
+        ApplyMaxResult();
     }
 
     protected override void UpdateInitialTransforms()
