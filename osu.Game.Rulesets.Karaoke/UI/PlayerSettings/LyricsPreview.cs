@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -15,6 +16,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Mods;
 using osuTK;
 using osuTK.Graphics;
 
@@ -22,11 +24,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 
 public partial class LyricsPreview : CompositeDrawable
 {
-    private readonly Bindable<double> bindablePreemptTime = new();
     private readonly Bindable<Lyric[]> singingLyrics = new();
 
     [Resolved]
     private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
+
+    [Resolved]
+    private ILyricNavigator lyricNavigator { get; set; } = null!;
 
     public LyricsPreview()
     {
@@ -70,9 +74,7 @@ public partial class LyricsPreview : CompositeDrawable
 
     private void triggerLyric(Lyric lyric)
     {
-        double? time = lyric.StartTime - bindablePreemptTime.Value;
-        if (time != null)
-            beatmap.Value.Track.Seek(time.Value);
+        lyricNavigator.SeekTimeByLyric(lyric);
 
         // because playback might not clear singing lyrics, so we should re-assign the lyric here.
         // todo: find a better place.
@@ -80,9 +82,8 @@ public partial class LyricsPreview : CompositeDrawable
     }
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
+    private void load(IBindable<IReadOnlyList<Mod>> mods, KaraokeSessionStatics session)
     {
-        config.BindWith(KaraokeRulesetSetting.PracticePreemptTime, bindablePreemptTime);
         session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
     }
 

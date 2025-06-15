@@ -1,18 +1,28 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 
-public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
+[Cached(typeof(ILyricNavigator))]
+public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>, ILyricNavigator
 {
+    [Resolved]
+    private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
+
     private readonly PlayerSliderBar<double> preemptTimeSliderBar;
 
     public PracticeSettings()
@@ -69,8 +79,16 @@ public partial class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<
     }
 
     [BackgroundDependencyLoader]
-    private void load(KaraokeRulesetConfigManager config)
+    private void load(IBindable<IReadOnlyList<Mod>> mods)
     {
-        preemptTimeSliderBar.Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime);
+        var practiceMod = mods.Value.OfType<KaraokeModPractice>().First();
+        preemptTimeSliderBar.Current.Value = practiceMod.LyricPreemptTime.Value;
+    }
+
+    public void SeekTimeByLyric(Lyric target)
+    {
+        double? time = target.StartTime - preemptTimeSliderBar.Current.Value;
+        if (time != null)
+            beatmap.Value.Track.Seek(time.Value);
     }
 }
