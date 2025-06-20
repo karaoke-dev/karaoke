@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Stages.Classic;
@@ -15,6 +16,11 @@ public class KaraokeModClassicStage : ModStage<ClassicStageInfo>
     public override string Acronym => "CS";
 
     public override LocalisableString Description => "Karaoke mod like other karaoke game or software.";
+
+    public override Type[] IncompatibleMods => new Type[]
+    {
+        typeof(KaraokeModPreviewStage),
+    };
 
     protected override ClassicStageInfo CreateStageInfo(KaraokeBeatmap beatmap)
     {
