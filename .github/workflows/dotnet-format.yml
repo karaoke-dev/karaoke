@@ -15,6 +15,6 @@ jobs:
         uses: xt0rted/dotnet-tool-restore@v1
 
       - name: Run dotnet format
-        uses: xt0rted/dotnet-format@v1
+        uses: karaoke-dev/dotnet-format@2023.0722.0
         with:
           only-changed-files: true
