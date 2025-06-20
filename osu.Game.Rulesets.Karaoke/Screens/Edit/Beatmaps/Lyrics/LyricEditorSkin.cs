@@ -2,10 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using osu.Framework.Extensions.Color4Extensions;
-using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Extensions;
