@@ -29,11 +29,10 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
 
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
-            Assert.IsNotNull(stageInfo);
-
-            // assert definition.
+            Assert.That(stageInfo, Is.Not.Null);
+            // assert definition。
             var definition = stageInfo.StageDefinition;
-            Assert.AreEqual(12, definition.LineHeight);
+            Assert.That(definition.LineHeight, Is.EqualTo(12));
         });
     }
 
@@ -57,12 +56,11 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert timing.
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert timing。
             var timingPoint = timingInfo.Timings.FirstOrDefault();
-            Assert.IsNotNull(timingPoint);
-            Assert.AreEqual(1000, timingPoint!.Time);
+            Assert.That(timingPoint, Is.Not.Null);
+            Assert.That(timingPoint!.Time, Is.EqualTo(1000));
         });
     }
 
@@ -93,12 +91,11 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert timing.
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert timing。
             var timingPoint = timingInfo.Timings.FirstOrDefault();
-            Assert.IsNotNull(timingPoint);
-            Assert.AreEqual(1000, timingPoint!.Time);
+            Assert.That(timingPoint, Is.Not.Null);
+            Assert.That(timingPoint!.Time, Is.EqualTo(1000));
         });
     }
 
@@ -129,12 +126,11 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert timing.
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert timing。
             var timingPoint = timingInfo.Timings.FirstOrDefault();
-            Assert.IsNotNull(timingPoint);
-            Assert.AreEqual(1000, timingPoint!.Time);
+            Assert.That(timingPoint, Is.Not.Null);
+            Assert.That(timingPoint!.Time, Is.EqualTo(1000));
         });
     }
 
@@ -166,13 +162,12 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert timing.
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert timing。
             var timingPoint = timingInfo.Timings;
-            Assert.AreEqual(2, timingPoint.Count);
-            Assert.AreEqual(1100, timingPoint[0].Time);
-            Assert.AreEqual(2100, timingPoint[1].Time);
+            Assert.That(timingPoint.Count, Is.EqualTo(2));
+            Assert.That(timingPoint[0].Time, Is.EqualTo(1100));
+            Assert.That(timingPoint[1].Time, Is.EqualTo(2100));
         });
     }
 
@@ -204,11 +199,10 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert mapping status.
-            Assert.AreEqual(new[] { timingPoint }, timingInfo.GetLyricTimingPoints(lyric1));
-            Assert.IsEmpty(timingInfo.GetLyricTimingPoints(lyric2));
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert mapping status。
+            Assert.That(timingInfo.GetLyricTimingPoints(lyric1), Is.EqualTo(new[] { timingPoint }));
+            Assert.That(timingInfo.GetLyricTimingPoints(lyric2), Is.Empty);
         });
     }
 
@@ -242,11 +236,10 @@ public partial class ClassicStageChangeHandlerTest : BaseStageInfoChangeHandlerT
         AssertStageInfo<ClassicStageInfo>(stageInfo =>
         {
             var timingInfo = stageInfo.LyricTimingInfo;
-            Assert.IsNotNull(timingInfo);
-
-            // assert mapping status.
-            Assert.IsEmpty(timingInfo.GetLyricTimingPoints(lyric1)); // should clear the mapping in the lyric1 because it's being selected.
-            Assert.AreEqual(new[] { timingPoint }, timingInfo.GetLyricTimingPoints(lyric2));
+            Assert.That(timingInfo, Is.Not.Null);
+            // assert mapping status。
+            Assert.That(timingInfo.GetLyricTimingPoints(lyric1), Is.Empty); // should clear the mapping in the lyric1 because it's being selected。
+            Assert.That(timingInfo.GetLyricTimingPoints(lyric2), Is.EqualTo(new[] { timingPoint }));
         });
     }
 

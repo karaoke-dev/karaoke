@@ -44,48 +44,48 @@ public class LyricTest
 
         var clonedLyric = lyric.DeepClone();
 
-        Assert.AreNotSame(clonedLyric.ID, lyric.ID);
+        Assert.That(clonedLyric.ID, Is.Not.SameAs(lyric.ID));
 
-        Assert.AreNotSame(clonedLyric.TextBindable, lyric.TextBindable);
-        Assert.AreEqual(clonedLyric.Text, lyric.Text);
+        Assert.That(clonedLyric.TextBindable, Is.Not.SameAs(lyric.TextBindable));
+        Assert.That(clonedLyric.Text, Is.EqualTo(lyric.Text));
 
-        Assert.AreNotSame(clonedLyric.TimeTagsTimingVersion, lyric.TimeTagsTimingVersion);
-        Assert.AreNotSame(clonedLyric.TimeTagsBindable, lyric.TimeTagsBindable);
+        Assert.That(clonedLyric.TimeTagsTimingVersion, Is.Not.SameAs(lyric.TimeTagsTimingVersion));
+        Assert.That(clonedLyric.TimeTagsBindable, Is.Not.SameAs(lyric.TimeTagsBindable));
         TimeTagAssert.ArePropertyEqual(clonedLyric.TimeTags, lyric.TimeTags);
 
-        Assert.AreNotSame(clonedLyric.RubyTagsVersion, lyric.RubyTagsVersion);
-        Assert.AreNotSame(clonedLyric.RubyTagsBindable, lyric.RubyTagsBindable);
+        Assert.That(clonedLyric.RubyTagsVersion, Is.Not.SameAs(lyric.RubyTagsVersion));
+        Assert.That(clonedLyric.RubyTagsBindable, Is.Not.SameAs(lyric.RubyTagsBindable));
         RubyTagAssert.ArePropertyEqual(clonedLyric.RubyTags, lyric.RubyTags);
 
-        Assert.AreNotSame(clonedLyric.StartTimeBindable, lyric.StartTimeBindable);
-        Assert.AreEqual(clonedLyric.StartTime, lyric.StartTime);
+        Assert.That(clonedLyric.StartTimeBindable, Is.Not.SameAs(lyric.StartTimeBindable));
+        Assert.That(clonedLyric.StartTime, Is.EqualTo(lyric.StartTime));
 
-        Assert.AreEqual(clonedLyric.Duration, lyric.Duration);
+        Assert.That(clonedLyric.Duration, Is.EqualTo(lyric.Duration));
 
-        Assert.AreEqual(clonedLyric.EndTime, lyric.EndTime);
+        Assert.That(clonedLyric.EndTime, Is.EqualTo(lyric.EndTime));
 
-        Assert.AreNotSame(clonedLyric.SingerIdsBindable, lyric.SingerIdsBindable);
-        CollectionAssert.AreEquivalent(clonedLyric.SingerIds, lyric.SingerIds);
+        Assert.That(clonedLyric.SingerIdsBindable, Is.Not.SameAs(lyric.SingerIdsBindable));
+        Assert.That(clonedLyric.SingerIds, Is.EquivalentTo(lyric.SingerIds));
 
-        Assert.AreNotSame(clonedLyric.TranslationsBindable, lyric.TranslationsBindable);
-        CollectionAssert.AreEquivalent(clonedLyric.Translations, lyric.Translations);
+        Assert.That(clonedLyric.TranslationsBindable, Is.Not.SameAs(lyric.TranslationsBindable));
+        Assert.That(clonedLyric.Translations, Is.EquivalentTo(lyric.Translations));
 
-        Assert.AreNotSame(clonedLyric.LanguageBindable, lyric.LanguageBindable);
-        Assert.AreEqual(clonedLyric.Language, lyric.Language);
+        Assert.That(clonedLyric.LanguageBindable, Is.Not.SameAs(lyric.LanguageBindable));
+        Assert.That(clonedLyric.Language, Is.EqualTo(lyric.Language));
 
-        Assert.AreNotSame(clonedLyric.OrderBindable, lyric.OrderBindable);
-        Assert.AreEqual(clonedLyric.Order, lyric.Order);
+        Assert.That(clonedLyric.OrderBindable, Is.Not.SameAs(lyric.OrderBindable));
+        Assert.That(clonedLyric.Order, Is.EqualTo(lyric.Order));
 
-        Assert.AreNotSame(clonedLyric.LockBindable, lyric.LockBindable);
-        Assert.AreEqual(clonedLyric.Lock, lyric.Lock);
+        Assert.That(clonedLyric.LockBindable, Is.Not.SameAs(lyric.LockBindable));
+        Assert.That(clonedLyric.Lock, Is.EqualTo(lyric.Lock));
 
-        Assert.AreNotSame(clonedLyric.ReferenceLyricBindable, lyric.ReferenceLyricBindable);
-        Assert.AreSame(clonedLyric.ReferenceLyric, lyric.ReferenceLyric);
-        Assert.AreEqual(clonedLyric.ReferenceLyricId, lyric.ReferenceLyricId);
+        Assert.That(clonedLyric.ReferenceLyricBindable, Is.Not.SameAs(lyric.ReferenceLyricBindable));
+        Assert.That(clonedLyric.ReferenceLyric, Is.SameAs(lyric.ReferenceLyric));
+        Assert.That(clonedLyric.ReferenceLyricId, Is.EqualTo(lyric.ReferenceLyricId));
 
-        Assert.AreNotSame(clonedLyric.ReferenceLyricConfigBindable, lyric.ReferenceLyricConfigBindable);
-        Assert.AreNotSame(clonedLyric.ReferenceLyricConfig, lyric.ReferenceLyricConfig);
-        Assert.AreEqual(clonedLyric.ReferenceLyricConfig?.OffsetTime, lyric.ReferenceLyricConfig?.OffsetTime);
+        Assert.That(clonedLyric.ReferenceLyricConfigBindable, Is.Not.SameAs(lyric.ReferenceLyricConfigBindable));
+        Assert.That(clonedLyric.ReferenceLyricConfig, Is.Not.SameAs(lyric.ReferenceLyricConfig));
+        Assert.That(clonedLyric.ReferenceLyricConfig?.OffsetTime, Is.EqualTo(lyric.ReferenceLyricConfig?.OffsetTime));
     }
 
     #endregion
@@ -115,12 +115,12 @@ public class LyricTest
             ReferenceLyricConfig = new SyncLyricConfig(),
         };
 
-        Assert.AreEqual(referencedLyric.Text, lyric.Text);
+        Assert.That(referencedLyric.Text, Is.EqualTo(lyric.Text));
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
-        Assert.AreEqual(referencedLyric.Translations, lyric.Translations);
-        Assert.AreEqual(referencedLyric.Language, lyric.Language);
+        Assert.That(lyric.SingerIds, Is.EqualTo(referencedLyric.SingerIds));
+        Assert.That(lyric.Translations, Is.EqualTo(referencedLyric.Translations));
+        Assert.That(lyric.Language, Is.EqualTo(referencedLyric.Language));
     }
 
     [Test]
@@ -145,12 +145,12 @@ public class LyricTest
         };
         referencedLyric.Language = new CultureInfo(17);
 
-        Assert.AreEqual(referencedLyric.Text, lyric.Text);
+        Assert.That(lyric.Text, Is.EqualTo(referencedLyric.Text));
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
-        Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
-        Assert.AreEqual(referencedLyric.Translations, lyric.Translations);
-        Assert.AreEqual(referencedLyric.Language, lyric.Language);
+        Assert.That(lyric.SingerIds, Is.EqualTo(referencedLyric.SingerIds));
+        Assert.That(lyric.Translations, Is.EqualTo(referencedLyric.Translations));
+        Assert.That(lyric.Language, Is.EqualTo(referencedLyric.Language));
     }
 
     [Test]
@@ -186,9 +186,9 @@ public class LyricTest
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
 
         // and because there's no change inside the tag, so there's version change.
-        Assert.AreEqual(0, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(0, lyric.TimeTagsRomanisationVersion.Value);
-        Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
+        Assert.That(lyric.TimeTagsTimingVersion.Value, Is.EqualTo(0));
+        Assert.That(lyric.TimeTagsRomanisationVersion.Value, Is.EqualTo(0));
+        Assert.That(lyric.RubyTagsVersion.Value, Is.EqualTo(0));
 
         // it's time to change the property in the list.
         timeTag.Time = 2000;
@@ -200,9 +200,9 @@ public class LyricTest
         RubyTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
 
         // and note that because only one property is different, so version should change once.
-        Assert.AreEqual(1, lyric.TimeTagsTimingVersion.Value);
-        Assert.AreEqual(1, lyric.TimeTagsRomanisationVersion.Value);
-        Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
+        Assert.That(lyric.TimeTagsTimingVersion.Value, Is.EqualTo(1));
+        Assert.That(lyric.TimeTagsRomanisationVersion.Value, Is.EqualTo(1));
+        Assert.That(lyric.RubyTagsVersion.Value, Is.EqualTo(1));
     }
 
     [Test]
@@ -237,8 +237,8 @@ public class LyricTest
         };
 
         // the property should not same as the reference reference because those properties are not sync.
-        Assert.IsEmpty(lyric.TimeTags);
-        Assert.AreNotEqual(referencedLyric.SingerIds, lyric.SingerIds);
+        Assert.That(lyric.TimeTags, Is.Empty);
+        Assert.That(lyric.SingerIds, Is.Not.EqualTo(referencedLyric.SingerIds));
 
         // it's time to open the config.
         config.SyncSingerProperty = true;
@@ -246,7 +246,7 @@ public class LyricTest
 
         // after open the config, the property should sync from the reference lyric now.
         TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
-        Assert.AreEqual(referencedLyric.SingerIds, lyric.SingerIds);
+        Assert.That(lyric.SingerIds, Is.EqualTo(referencedLyric.SingerIds));
     }
 
     #endregion
@@ -257,26 +257,26 @@ public class LyricTest
     public void TestLyricPropertyWritableVersion()
     {
         var lyric = new Lyric();
-        Assert.AreEqual(0, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(0));
 
         lyric.Lock = LockState.Partial;
-        Assert.AreEqual(1, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(1));
 
         var referencedLyric = new Lyric();
         lyric.ReferenceLyricId = referencedLyric.ID;
         lyric.ReferenceLyric = referencedLyric;
-        Assert.AreEqual(2, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(2));
 
         lyric.ReferenceLyricConfig = new SyncLyricConfig();
-        Assert.AreEqual(3, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(3));
 
         (lyric.ReferenceLyricConfig as SyncLyricConfig)!.OffsetTime = 200;
-        Assert.AreEqual(4, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(4));
 
         // version number will not increase if change not related property or assign the same value.
         lyric.Lock = LockState.Partial;
         lyric.Text = "karaoke";
-        Assert.AreEqual(4, lyric.LyricPropertyWritableVersion.Value);
+        Assert.That(lyric.LyricPropertyWritableVersion.Value, Is.EqualTo(4));
     }
 
     #endregion

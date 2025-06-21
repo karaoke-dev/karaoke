@@ -21,7 +21,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(language, h.Language);
+            Assert.That(h.Language, Is.EqualTo(language));
         });
     }
 
@@ -37,7 +37,7 @@ public partial class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsNull(h.Language);
+            Assert.That(h.Language, Is.Null);
         });
     }
 

@@ -16,11 +16,11 @@ public class ElementIdTest
         var emptyElementId = ElementId.Empty;
 
         // Should get empty string if the element is empty.
-        Assert.IsEmpty(emptyElementId.ToString());
+        Assert.That(emptyElementId.ToString(), Is.Empty);
 
         // Should be equal to empty element id.
-        Assert.IsTrue(emptyElementId.Equals(ElementId.Empty));
-        Assert.IsFalse(emptyElementId.Equals(ElementId.NewElementId()));
+        Assert.That(emptyElementId, Is.EqualTo(ElementId.Empty));
+        Assert.That(emptyElementId, Is.Not.EqualTo(ElementId.NewElementId()));
     }
 
     [TestCase("1234567", true)] // number is OK
@@ -63,7 +63,7 @@ public class ElementIdTest
             idSet.Add(elementId);
         }
 
-        Assert.AreEqual(idSet.Count, create_amount);
+        Assert.That(idSet.Count, Is.EqualTo(create_amount));
     }
 
     [TestCase("1234567", "1234567", 0)]
@@ -75,7 +75,7 @@ public class ElementIdTest
         var elementIdB = new ElementId(b);
 
         int actual = elementIdA.CompareTo(elementIdB);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class ElementIdTest
     {
         var elementId = new ElementId("1234567");
 
-        Assert.AreEqual(elementId.CompareTo(null), 1);
+        Assert.That(elementId.CompareTo(null), Is.EqualTo(1));
         Assert.Throws<ArgumentException>(() =>
         {
             int _ = elementId.CompareTo(3);
@@ -108,7 +108,7 @@ public class ElementIdTest
         var elementIdB = new ElementId(b);
 
         bool actual = elementIdA.Equals(elementIdB);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("1234567", "1234567", true)]
@@ -119,7 +119,7 @@ public class ElementIdTest
         var elementIdB = new ElementId(b);
 
         bool actual = EqualityComparer<object>.Default.Equals(elementIdA, elementIdB);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("1234567", "1234567", true)]
@@ -130,7 +130,7 @@ public class ElementIdTest
         var elementIdB = new ElementId(b);
 
         bool actual = elementIdA == elementIdB;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("1234567", "1234567", false)]
@@ -141,7 +141,7 @@ public class ElementIdTest
         var elementIdB = new ElementId(b);
 
         bool actual = elementIdA != elementIdB;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("1234567", "1234567")]
@@ -150,6 +150,6 @@ public class ElementIdTest
     {
         var elementId = new ElementId(a);
 
-        Assert.AreEqual(expected, elementId.ToString());
+        Assert.That(expected, Is.EqualTo(elementId.ToString()));
     }
 }

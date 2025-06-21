@@ -24,7 +24,7 @@ public class ValueChangedEventUtilsTest
         var oldCaret = new ClickingCaretPosition(lyric1);
         var newCaret = new ClickingCaretPosition(lyric1);
 
-        Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+        Assert.That(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)), Is.False);
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class ValueChangedEventUtilsTest
         var oldCaret = new ClickingCaretPosition(lyric1);
         var newCaret = new ClickingCaretPosition(lyric2);
 
-        Assert.IsTrue(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+        Assert.That(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class ValueChangedEventUtilsTest
         var oldCaret = new ClickingCaretPosition(lyric1);
         var newCaret = new RecordingTimeTagCaretPosition(lyric1, new TimeTag(new TextIndex(1)));
 
-        Assert.IsFalse(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)));
+        Assert.That(ValueChangedEventUtils.LyricChanged(new ValueChangedEvent<ICaretPosition?>(oldCaret, newCaret)), Is.False);
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class ValueChangedEventUtilsTest
             Mode = LyricEditorMode.View,
         };
 
-        Assert.IsTrue(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)));
+        Assert.That(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)));
     }
 
     [Test]
@@ -84,6 +84,6 @@ public class ValueChangedEventUtilsTest
             Mode = LyricEditorMode.View,
         };
 
-        Assert.IsFalse(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)));
+        Assert.That(ValueChangedEventUtils.EditModeChanged(new ValueChangedEvent<EditorModeWithEditStep>(oldMode, newMode)), Is.False);
     }
 }

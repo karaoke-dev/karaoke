@@ -27,7 +27,7 @@ public class PageInfoTest
 
         var actualPage = pageInfo.GetPageAt(time);
 
-        Assert.AreEqual(expectedTime, actualPage?.Time);
+        Assert.That(actualPage?.Time, Is.EqualTo(expectedTime));
     }
 
     [TestCase(new double[] { 1000, 2000, 3000, 4000 }, 999, null)]
@@ -47,7 +47,7 @@ public class PageInfoTest
 
         int? actualPageIndex = pageInfo.GetPageIndexAt(time);
 
-        Assert.AreEqual(expectedIndex, actualPageIndex);
+        Assert.That(actualPageIndex, Is.EqualTo(expectedIndex));
     }
 
     [Test]
@@ -58,11 +58,11 @@ public class PageInfoTest
 
         var existPage = pageInfo.Pages.First();
         int? existPageOrder = pageInfo.GetPageOrder(existPage);
-        Assert.AreEqual(1, existPageOrder);
+        Assert.That(existPageOrder, Is.EqualTo(1));
 
         var notExistPage = new Page { Time = 1000 };
         int? notExistPageOrder = pageInfo.GetPageOrder(notExistPage);
-        Assert.IsNull(notExistPageOrder);
+        Assert.That(notExistPageOrder, Is.Null);
     }
 
     private static IEnumerable<Page> createPages(IEnumerable<double> times)

@@ -28,7 +28,7 @@ public class RubyTagConverterTest : BaseSingleConverterTest<RubyTagConverter>
 
         string expected = $"\"{json}\"";
         string actual = JsonConvert.SerializeObject(rubyTag, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0,1]:ルビ", 0, 1, "ルビ")]

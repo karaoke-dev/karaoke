@@ -11,7 +11,7 @@ public class RubyTagAssert : Assert
 {
     public static void ArePropertyEqual(IList<RubyTag> expected, IList<RubyTag> actual)
     {
-        AreEqual(expected.Count, actual.Count);
+        That(expected.Count, Is.EqualTo(actual.Count));
 
         for (int i = 0; i < expected.Count; i++)
         {
@@ -22,8 +22,8 @@ public class RubyTagAssert : Assert
 
     public static void ArePropertyEqual(RubyTag expected, RubyTag actual)
     {
-        AreEqual(expected.Text, actual.Text);
-        AreEqual(expected.StartIndex, actual.StartIndex);
-        AreEqual(expected.EndIndex, actual.EndIndex);
+        That(expected.Text, Is.EqualTo(actual.Text));
+        That(expected.StartIndex, Is.EqualTo(actual.StartIndex));
+        That(expected.EndIndex, Is.EqualTo(actual.EndIndex));
     }
 }

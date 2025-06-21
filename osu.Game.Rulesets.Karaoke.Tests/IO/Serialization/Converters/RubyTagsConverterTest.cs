@@ -39,7 +39,7 @@ public class RubyTagsConverterTest : BaseSingleConverterTest<RubyTagsConverter>
 
         const string expected = "[\"[0]:ル\",\"[1]:ビ\"]";
         string actual = JsonConvert.SerializeObject(timeTags, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]

@@ -28,7 +28,7 @@ public class NotePositionCalculatorTest
         };
 
         float actual = calculator.YPositionAt(note);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(0, 0)]
@@ -40,7 +40,7 @@ public class NotePositionCalculatorTest
         var tone = TestCaseToneHelper.NumberToTone(scale);
 
         float actual = calculator.YPositionAt(tone);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(0f, 0)]
@@ -55,7 +55,7 @@ public class NotePositionCalculatorTest
         };
 
         float actual = calculator.YPositionAt(action);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(0f, 0)]
@@ -67,7 +67,7 @@ public class NotePositionCalculatorTest
         var frame = new KaraokeReplayFrame(0, scale);
 
         float actual = calculator.YPositionAt(frame);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(0f, 0)]
@@ -80,7 +80,7 @@ public class NotePositionCalculatorTest
         var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
 
         float actual = calculator.YPositionAt(scale);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(1, 0)]
@@ -90,7 +90,7 @@ public class NotePositionCalculatorTest
         var calculator = new NotePositionCalculator(columns, default_column_height, default_spacing);
 
         var expected = calculator.MaxTone;
-        Assert.AreEqual(expected, TestCaseToneHelper.NumberToTone(actual));
+        Assert.That(TestCaseToneHelper.NumberToTone(actual), Is.EqualTo(expected));
     }
 
     [TestCase(1, 0)]
@@ -100,6 +100,6 @@ public class NotePositionCalculatorTest
         var calculator = new NotePositionCalculator(columns, default_column_height, default_spacing);
 
         var expected = calculator.MinTone;
-        Assert.AreEqual(expected, TestCaseToneHelper.NumberToTone(actual));
+        Assert.That(TestCaseToneHelper.NumberToTone(actual), Is.EqualTo(expected));
     }
 }

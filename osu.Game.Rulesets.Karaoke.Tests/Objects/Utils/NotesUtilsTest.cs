@@ -31,11 +31,11 @@ public class NotesUtilsTest
         if (firstTime != null && secondTime != null)
         {
             var (firstNote, secondNote) = NotesUtils.SplitNote(note, percentage);
-            Assert.AreEqual(firstTime[0], firstNote.StartTime);
-            Assert.AreEqual(firstTime[1], firstNote.Duration);
+            Assert.That(firstNote.StartTime, Is.EqualTo(firstTime[0]));
+            Assert.That(firstNote.Duration, Is.EqualTo(firstTime[1]));
 
-            Assert.AreEqual(secondTime[0], secondNote.StartTime);
-            Assert.AreEqual(secondTime[1], secondNote.Duration);
+            Assert.That(secondNote.StartTime, Is.EqualTo(secondTime[0]));
+            Assert.That(secondNote.Duration, Is.EqualTo(secondTime[1]));
         }
         else
         {
@@ -64,25 +64,25 @@ public class NotesUtilsTest
         // create other property and make sure other class is applied value.
         var (firstNote, secondNote) = NotesUtils.SplitNote(note, percentage);
 
-        Assert.AreEqual(1000, firstNote.StartTime);
-        Assert.AreEqual(1600, secondNote.StartTime);
+        Assert.That(firstNote.StartTime, Is.EqualTo(1000));
+        Assert.That(secondNote.StartTime, Is.EqualTo(1600));
 
-        Assert.AreEqual(600, firstNote.Duration);
-        Assert.AreEqual(1400, secondNote.Duration);
+        Assert.That(firstNote.Duration, Is.EqualTo(600));
+        Assert.That(secondNote.Duration, Is.EqualTo(1400));
 
         testRemainProperty(note, firstNote);
         testRemainProperty(note, firstNote);
 
         static void testRemainProperty(Note expect, Note actual)
         {
-            Assert.AreEqual(expect.Text, actual.Text);
-            Assert.AreEqual(expect.Display, actual.Display);
-            Assert.AreEqual(expect.Tone, actual.Tone);
+            Assert.That(actual.Text, Is.EqualTo(expect.Text));
+            Assert.That(actual.Display, Is.EqualTo(expect.Display));
+            Assert.That(actual.Tone, Is.EqualTo(expect.Tone));
 
-            Assert.AreEqual(expect.ReferenceLyric, actual.ReferenceLyric);
-            Assert.AreEqual(expect.ReferenceTimeTagIndex, actual.ReferenceTimeTagIndex);
+            Assert.That(actual.ReferenceLyric, Is.EqualTo(expect.ReferenceLyric));
+            Assert.That(actual.ReferenceTimeTagIndex, Is.EqualTo(expect.ReferenceTimeTagIndex));
 
-            Assert.AreEqual(expect.ReferenceLyric?.SingerIds, actual.ReferenceLyric?.SingerIds);
+            Assert.That(actual.ReferenceLyric?.SingerIds, Is.EqualTo(expect.ReferenceLyric?.SingerIds));
         }
     }
 
@@ -111,7 +111,7 @@ public class NotesUtilsTest
         };
 
         var combineNote = NotesUtils.CombineNote(firstNote, secondNote);
-        Assert.AreEqual(expectedOffset[0], combineNote.StartTimeOffset);
-        Assert.AreEqual(expectedOffset[1], combineNote.EndTimeOffset);
+        Assert.That(combineNote.StartTimeOffset, Is.EqualTo(expectedOffset[0]));
+        Assert.That(combineNote.EndTimeOffset, Is.EqualTo(expectedOffset[1]));
     }
 }

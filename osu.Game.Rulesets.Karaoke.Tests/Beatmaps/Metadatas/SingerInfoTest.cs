@@ -17,10 +17,10 @@ public class SingerInfoTest
         var singer = singerInfo.AddSinger();
         var singerState = singerInfo.AddSingerState(singer);
 
-        Assert.AreEqual(1, singerInfo.Singers.Count);
-        Assert.AreEqual(1, singerInfo.SingerState.Count);
-        Assert.AreEqual(singer, singerInfo.Singers[0]);
-        Assert.AreEqual(singerState, singerInfo.SingerState[0]);
+        Assert.That(singerInfo.Singers.Count, Is.EqualTo(1));
+        Assert.That(singerInfo.SingerState.Count, Is.EqualTo(1));
+        Assert.That(singerInfo.Singers[0], Is.EqualTo(singer));
+        Assert.That(singerInfo.SingerState[0], Is.EqualTo(singerState));
     }
 
     [Test]
@@ -31,8 +31,8 @@ public class SingerInfoTest
         singerInfo.AddSingerState(singer);
 
         var allSingers = singerInfo.GetAllSingers().ToArray();
-        Assert.AreEqual(1, allSingers.Length);
-        Assert.AreEqual(singer, allSingers[0]);
+        Assert.That(allSingers.Length, Is.EqualTo(1));
+        Assert.That(allSingers[0], Is.EqualTo(singer));
     }
 
     [Test]
@@ -43,8 +43,8 @@ public class SingerInfoTest
         var singerState = singerInfo.AddSingerState(singer);
 
         var singerStates = singerInfo.GetAllAvailableSingerStates(singer).ToArray();
-        Assert.AreEqual(1, singerStates.Length);
-        Assert.AreEqual(singerState, singerStates[0]);
+        Assert.That(singerStates.Length, Is.EqualTo(1));
+        Assert.That(singerStates[0], Is.EqualTo(singerState));
     }
 
     [Test]
@@ -56,20 +56,20 @@ public class SingerInfoTest
 
         // the case if contains singer and sub-singer
         var singerMapWithSingerAndStates = singerInfo.GetSingerByIds(new[] { singer.ID, singerState.ID });
-        Assert.AreEqual(1, singerMapWithSingerAndStates.Count);
-        Assert.AreEqual(singer, singerMapWithSingerAndStates.Keys.FirstOrDefault());
-        Assert.AreEqual(new[] { singerState }, singerMapWithSingerAndStates.Values.FirstOrDefault());
+        Assert.That(singerMapWithSingerAndStates.Count, Is.EqualTo(1));
+        Assert.That(singerMapWithSingerAndStates.Keys.FirstOrDefault(), Is.EqualTo(singer));
+        Assert.That(singerMapWithSingerAndStates.Values.FirstOrDefault(), Is.EqualTo(new[] { singerState }));
 
         // the case with main singer id.
         var singerMapWithSingerOnly = singerInfo.GetSingerByIds(new[] { singer.ID });
-        Assert.AreEqual(1, singerMapWithSingerOnly.Count);
-        Assert.AreEqual(singer, singerMapWithSingerOnly.Keys.FirstOrDefault());
-        Assert.AreEqual(Array.Empty<SingerState>(), singerMapWithSingerOnly.Values.FirstOrDefault());
+        Assert.That(singerMapWithSingerOnly.Count, Is.EqualTo(1));
+        Assert.That(singerMapWithSingerOnly.Keys.FirstOrDefault(), Is.EqualTo(singer));
+        Assert.That(singerMapWithSingerOnly.Values.FirstOrDefault(), Is.EqualTo(Array.Empty<SingerState>()));
 
         // the case with sub-singer only.
         // technically should not happened.
         var singerMap = singerInfo.GetSingerByIds(new[] { singerState.ID });
-        Assert.AreEqual(0, singerMap.Count);
+        Assert.That(singerMap.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -80,9 +80,9 @@ public class SingerInfoTest
         var singerState = singerInfo.AddSingerState(singer);
 
         var singerMap = singerInfo.GetSingerMap();
-        Assert.AreEqual(1, singerMap.Count);
-        Assert.AreEqual(singer, singerMap.Keys.FirstOrDefault());
-        Assert.AreEqual(new[] { singerState }, singerMap.Values.FirstOrDefault());
+        Assert.That(singerMap.Count, Is.EqualTo(1));
+        Assert.That(singerMap.Keys.FirstOrDefault(), Is.EqualTo(singer));
+        Assert.That(singerMap.Values.FirstOrDefault(), Is.EqualTo(new[] { singerState }));
     }
 
     [Test]
@@ -91,8 +91,8 @@ public class SingerInfoTest
         var singerInfo = new SingerInfo();
         var singer = singerInfo.AddSinger();
 
-        Assert.AreEqual(1, singerInfo.Singers.Count);
-        Assert.IsNotEmpty(singer.ID.ToString());
+        Assert.That(singerInfo.Singers.Count, Is.EqualTo(1));
+        Assert.That(singer.ID.ToString(), Is.Not.Empty);
     }
 
     [Test]
@@ -102,10 +102,10 @@ public class SingerInfoTest
         var singer = singerInfo.AddSinger();
         var singerState = singerInfo.AddSingerState(singer);
 
-        Assert.AreEqual(1, singerInfo.Singers.Count);
-        Assert.AreEqual(1, singerInfo.SingerState.Count);
-        Assert.IsNotEmpty(singerState.ID.ToString());
-        Assert.IsNotEmpty(singerState.MainSingerId.ToString());
+        Assert.That(singerInfo.Singers.Count, Is.EqualTo(1));
+        Assert.That(singerInfo.SingerState.Count, Is.EqualTo(1));
+        Assert.That(singerState.ID.ToString(), Is.Not.Empty);
+        Assert.That(singerState.MainSingerId.ToString(), Is.Not.Empty);
     }
 
     [Test]
@@ -117,10 +117,10 @@ public class SingerInfoTest
 
         // should remove all the related sub-singer
         singerInfo.RemoveSinger(singer);
-        Assert.AreEqual(0, singerInfo.Singers.Count);
+        Assert.That(singerInfo.Singers.Count, Is.EqualTo(0));
 
         // should ignore the sub-singer
         singerInfo.RemoveSinger(singerState);
-        Assert.AreEqual(0, singerInfo.Singers.Count);
+        Assert.That(singerInfo.Singers.Count, Is.EqualTo(0));
     }
 }

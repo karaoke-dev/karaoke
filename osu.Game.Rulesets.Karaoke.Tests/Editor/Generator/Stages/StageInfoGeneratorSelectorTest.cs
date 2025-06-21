@@ -41,7 +41,7 @@ public class StageInfoGeneratorSelectorTest<TStageInfo> : BaseGeneratorSelectorT
     {
         // There's no need to check the content in the stage info.
         // Just make sure that the type in the test case is supported.
-        Assert.AreEqual(expected.GetType(), actual.GetType());
+        Assert.That(actual.GetType(), Is.EqualTo(expected.GetType()));
     }
 
     private KaraokeBeatmap createBeatmap()

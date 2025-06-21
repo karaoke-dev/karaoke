@@ -25,7 +25,7 @@ public class RectangleFUtilsTest
 
         var expected = convertTestCaseToValue(expectedRectangle);
         var actual = RectangleFUtils.Union(objects);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     private RectangleF convertTestCaseToValue(string str)

@@ -20,7 +20,7 @@ public class KaraokeJsonSerializableExtensionsTest
             @$"{{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""id"":""{lyric.ID}"",""text"":"""",""time_tags"":[],""ruby_tags"":[],""singer_ids"":[],""translations"":[],""samples"":[],""auxiliary_samples"":[]}}";
 
         string actual = JsonConvert.SerializeObject(lyric, createSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class KaraokeJsonSerializableExtensionsTest
             @"{""time_preempt"":600.0,""time_fade_in"":400.0,""start_time_bindable"":0.0,""samples_bindable"":[],""samples"":[],""auxiliary_samples"":[]}";
 
         string actual = JsonConvert.SerializeObject(note, createSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]

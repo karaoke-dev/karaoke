@@ -31,6 +31,6 @@ public class KarEncoderTest
             },
         });
 
-        Assert.AreEqual(actual, expected);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

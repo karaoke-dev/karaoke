@@ -19,10 +19,10 @@ public class KarDecoderTest
         var lyrics = new KarDecoder().Decode(lyricText);
         var actual = lyrics.FirstOrDefault()!;
 
-        Assert.IsNotNull(actual);
-        Assert.AreEqual(expectedText, actual.Text);
-        Assert.AreEqual(expectedStartTime, actual.StartTime);
-        Assert.AreEqual(expectedEndTime, actual.EndTime);
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual.Text, Is.EqualTo(expectedText));
+        Assert.That(actual.StartTime, Is.EqualTo(expectedStartTime));
+        Assert.That(actual.EndTime, Is.EqualTo(expectedEndTime));
     }
 
     [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]

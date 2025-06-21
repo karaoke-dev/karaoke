@@ -24,6 +24,6 @@ public class LyricTextEncoderTest
         };
 
         string actual = encoder.Encode(beatmap);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

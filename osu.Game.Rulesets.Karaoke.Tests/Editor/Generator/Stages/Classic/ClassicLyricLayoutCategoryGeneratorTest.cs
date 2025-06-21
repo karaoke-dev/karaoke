@@ -135,6 +135,6 @@ public class ClassicLyricLayoutCategoryGeneratorTest
 
     protected override void AssertEqual(ClassicLyricLayout expected, ClassicLyricLayout actual)
     {
-        Assert.AreEqual(expected.Alignment, actual.Alignment);
+        Assert.That(actual.Alignment, Is.EqualTo(expected.Alignment));
     }
 }

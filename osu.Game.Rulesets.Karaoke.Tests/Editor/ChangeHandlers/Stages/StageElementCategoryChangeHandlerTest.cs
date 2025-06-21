@@ -37,7 +37,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
             var category = stageInfo.Category;
             var firstElement = category.AvailableElements.First();
 
-            Assert.AreEqual("Element 1", firstElement.Name);
+            Assert.That(firstElement.Name, Is.EqualTo("Element 1"));
         });
     }
 
@@ -65,7 +65,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
             var category = stageInfo.Category;
             var firstElement = category.AvailableElements.First();
 
-            Assert.AreEqual("Edit Element 1", firstElement.Name);
+            Assert.That(firstElement.Name, Is.EqualTo("Edit Element 1"));
         });
     }
 
@@ -89,7 +89,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         {
             var category = stageInfo.Category;
 
-            Assert.IsEmpty(category.AvailableElements);
+            Assert.That(category.AvailableElements, Is.Empty);
         });
     }
 
@@ -115,7 +115,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         {
             var category = stageInfo.Category;
 
-            Assert.IsNotEmpty(category.Mappings);
+            Assert.That(category.Mappings, Is.Not.Empty);
         });
     }
 
@@ -144,7 +144,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         {
             var category = stageInfo.Category;
 
-            Assert.IsEmpty(category.Mappings);
+            Assert.That(category.Mappings, Is.Empty);
         });
     }
 
@@ -169,7 +169,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         {
             var category = stageInfo.Category;
 
-            Assert.IsEmpty(category.Mappings);
+            Assert.That(category.Mappings, Is.Empty);
         });
     }
 

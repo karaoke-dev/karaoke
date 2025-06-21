@@ -16,7 +16,7 @@ public class SingerUtilsTest
     public void TestGetShiftingStyleIndex(int[] singerIndexes, int expected)
     {
         int actual = SingerUtils.GetShiftingStyleIndex(singerIndexes);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(-1, new int[] { })]
@@ -27,6 +27,6 @@ public class SingerUtilsTest
     public void TestGetSingersIndex(int styleIndex, int[] expected)
     {
         int[] actual = SingerUtils.GetSingersIndex(styleIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

@@ -127,9 +127,9 @@ public class ClassicLyricTimingInfoGeneratorTest
 
     protected override void AssertEqual(ClassicLyricTimingInfo expected, ClassicLyricTimingInfo actual)
     {
-        Assert.AreEqual(expected.Timings.Select(x => x.Time), actual.Timings.Select(x => x.Time));
+        Assert.That(actual.Timings.Select(x => x.Time), Is.EqualTo(expected.Timings.Select(x => x.Time)));
 
         // because we cannot check the id in the mapping value, so just check the key.
-        Assert.AreEqual(expected.Mappings.Keys, actual.Mappings.Keys);
+        Assert.That(actual.Mappings.Keys, Is.EqualTo(expected.Mappings.Keys));
     }
 }

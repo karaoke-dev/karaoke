@@ -24,10 +24,10 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         var caretPosition = createSmallerCaretPosition(lyric);
         var comparedCaretPosition = createBiggerCaretPosition(lyric);
 
-        Assert.IsTrue(caretPosition < comparedCaretPosition);
-        Assert.IsTrue(caretPosition <= comparedCaretPosition);
-        Assert.IsFalse(caretPosition >= comparedCaretPosition);
-        Assert.IsFalse(caretPosition > comparedCaretPosition);
+        Assert.That(caretPosition < comparedCaretPosition);
+        Assert.That(caretPosition <= comparedCaretPosition);
+        Assert.That(caretPosition >= comparedCaretPosition, Is.False);
+        Assert.That(caretPosition > comparedCaretPosition, Is.False);
     }
 
     [Test]
@@ -38,10 +38,10 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         var caretPosition = createSmallerCaretPosition(lyric);
         var comparedCaretPosition = createSmallerCaretPosition(lyric);
 
-        Assert.IsFalse(caretPosition < comparedCaretPosition);
-        Assert.IsTrue(caretPosition <= comparedCaretPosition);
-        Assert.IsTrue(caretPosition >= comparedCaretPosition);
-        Assert.IsFalse(caretPosition > comparedCaretPosition);
+        Assert.That(caretPosition < comparedCaretPosition, Is.False);
+        Assert.That(caretPosition <= comparedCaretPosition);
+        Assert.That(caretPosition >= comparedCaretPosition);
+        Assert.That(caretPosition > comparedCaretPosition, Is.False);
     }
 
     [Test]
@@ -52,10 +52,10 @@ public class IndexCaretPositionTest<TIndexCaretPosition> where TIndexCaretPositi
         var caretPosition = createBiggerCaretPosition(lyric);
         var comparedCaretPosition = createSmallerCaretPosition(lyric);
 
-        Assert.IsFalse(caretPosition < comparedCaretPosition);
-        Assert.IsFalse(caretPosition <= comparedCaretPosition);
-        Assert.IsTrue(caretPosition >= comparedCaretPosition);
-        Assert.IsTrue(caretPosition > comparedCaretPosition);
+        Assert.That(caretPosition < comparedCaretPosition, Is.False);
+        Assert.That(caretPosition <= comparedCaretPosition, Is.False);
+        Assert.That(caretPosition >= comparedCaretPosition);
+        Assert.That(caretPosition > comparedCaretPosition);
     }
 
     [Test]

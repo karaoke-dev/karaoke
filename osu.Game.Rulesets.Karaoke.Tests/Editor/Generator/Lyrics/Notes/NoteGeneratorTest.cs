@@ -80,7 +80,7 @@ public class NoteGeneratorTest : BaseLyricGeneratorTest<NoteGenerator, Note[], N
 
     protected override void AssertEqual(Note[] expected, Note[] actual)
     {
-        Assert.AreEqual(expected.Select(x => x.Text), actual.Select(x => x.Text));
-        Assert.AreEqual(expected.Select(x => x.RubyText), actual.Select(x => x.RubyText));
+        Assert.That(actual.Select(x => x.Text), Is.EqualTo(expected.Select(x => x.Text)));
+        Assert.That(actual.Select(x => x.RubyText), Is.EqualTo(expected.Select(x => x.RubyText)));
     }
 }

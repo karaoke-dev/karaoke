@@ -30,30 +30,30 @@ public class TestCheck : BaseTest
         Assertion(() =>
         {
             // issues.
-            Assert.NotZero(issues.Length, $"{nameof(Issue)} amount is weird.");
+            Assert.That(issues.Length, Is.Not.Zero, $"{nameof(Issue)} amount is weird.");
 
             foreach (var checkClass in issues)
             {
-                Assert.IsTrue(checkClass.InheritedClasses.Contains(baseIssue), $"Class inherit is invalid: {checkClass}");
-                Assert.IsTrue(checkClass.NameEndsWith("Issue"), $"Class name is invalid: {checkClass}");
+                Assert.That(checkClass.InheritedClasses.Contains(baseIssue), $"Class inherit is invalid: {checkClass}");
+                Assert.That(checkClass.NameEndsWith("Issue"), $"Class name is invalid: {checkClass}");
             }
 
             // checks
-            Assert.NotZero(checks.Length, $"{nameof(ICheck)} amount is weird.");
+            Assert.That(checks.Length, Is.Not.Zero, $"{nameof(ICheck)} amount is weird.");
 
             foreach (var check in checks)
             {
-                Assert.IsTrue(check.ImplementsInterface(baseCheck), $"Class inherit is invalid: {check}");
-                Assert.IsTrue(check.NameStartsWith("Check"), $"Class name is invalid: {check}");
+                Assert.That(check.ImplementsInterface(baseCheck), $"Class inherit is invalid: {check}");
+                Assert.That(check.NameStartsWith("Check"), $"Class name is invalid: {check}");
             }
 
             // issue templates.
-            Assert.NotZero(issueTemplates.Length, $"{nameof(IssueTemplate)} amount is weird");
+            Assert.That(issueTemplates.Length != 0, $"{nameof(IssueTemplate)} amount is weird");
 
             foreach (var checkClass in issueTemplates)
             {
-                Assert.IsTrue(checkClass.InheritedClasses.Contains(baseIssueTemplate), $"Class inherit is invalid: {checkClass}");
-                Assert.IsTrue(checkClass.NameStartsWith("IssueTemplate"), $"Class name is invalid: {checkClass}");
+                Assert.That(checkClass.InheritedClasses.Contains(baseIssueTemplate), $"Class inherit is invalid: {checkClass}");
+                Assert.That(checkClass.NameStartsWith("IssueTemplate"), $"Class name is invalid: {checkClass}");
             }
         });
     }

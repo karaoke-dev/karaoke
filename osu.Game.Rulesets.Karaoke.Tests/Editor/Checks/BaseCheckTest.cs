@@ -20,7 +20,7 @@ public abstract class BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
 
         // check template in the list should not be duplicated.
         var possibleTemplates = check.PossibleTemplates;
-        Assert.AreEqual(possibleTemplates.Count(), possibleTemplates.Select(x => x.GetType()).Distinct().Count());
+        Assert.That(possibleTemplates.Count(), Is.EqualTo(possibleTemplates.Select(x => x.GetType()).Distinct().Count()));
     }
 
     protected void AssertOk(BeatmapVerifierContext context)
@@ -41,11 +41,11 @@ public abstract class BaseCheckTest<TCheck> where TCheck : class, ICheck, new()
         var issues = Run(context).ToList();
 
         // should make sure that only has one issue.
-        Assert.AreEqual(typeof(TIssue), issues.Single().GetType());
-        Assert.AreEqual(typeof(TIssueTemplate), issues.Single().Template.GetType());
+        Assert.That(issues.Single().GetType(), Is.EqualTo(typeof(TIssue)));
+        Assert.That(issues.Single().Template.GetType(), Is.EqualTo(typeof(TIssueTemplate)));
 
-        // should make sure that issue template is in the list.
-        Assert.IsNotNull(check.PossibleTemplates.OfType<TIssueTemplate>().Single());
+        // should make sure that issue template is in the list。
+        Assert.That(check.PossibleTemplates.OfType<TIssueTemplate>().Single(), Is.Not.Null);
     }
 
     protected IEnumerable<Issue> Run(BeatmapVerifierContext context)

@@ -58,6 +58,6 @@ public class RomanisationGeneratorSelectorTest : BaseLyricGeneratorSelectorTest<
     protected override void AssertEqual(IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> expected, IReadOnlyDictionary<TimeTag, RomanisationGenerateResult> actual)
     {
         TimeTagAssert.ArePropertyEqual(expected.Select(x => x.Key).ToArray(), actual.Select(x => x.Key).ToArray());
-        Assert.AreEqual(expected.Select(x => x.Value), actual.Select(x => x.Value));
+        Assert.That(actual.Select(x => x.Value), Is.EqualTo(expected.Select(x => x.Value)));
     }
 }

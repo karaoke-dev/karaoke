@@ -20,13 +20,13 @@ public class RubyTagTest
 
         var clonedRubyTag = rubyTag.DeepClone();
 
-        Assert.AreNotSame(clonedRubyTag.TextBindable, rubyTag.TextBindable);
-        Assert.AreEqual(clonedRubyTag.Text, rubyTag.Text);
+        Assert.That(clonedRubyTag.TextBindable, Is.Not.SameAs(rubyTag.TextBindable));
+        Assert.That(rubyTag.Text, Is.EqualTo(clonedRubyTag.Text));
 
-        Assert.AreNotSame(clonedRubyTag.StartIndexBindable, rubyTag.StartIndexBindable);
-        Assert.AreEqual(clonedRubyTag.StartIndex, rubyTag.StartIndex);
+        Assert.That(clonedRubyTag.StartIndexBindable, Is.Not.SameAs(rubyTag.StartIndexBindable));
+        Assert.That(rubyTag.StartIndex, Is.EqualTo(clonedRubyTag.StartIndex));
 
-        Assert.AreNotSame(clonedRubyTag.EndIndexBindable, rubyTag.EndIndexBindable);
-        Assert.AreEqual(clonedRubyTag.EndIndex, rubyTag.EndIndex);
+        Assert.That(clonedRubyTag.EndIndexBindable, Is.Not.SameAs(rubyTag.EndIndexBindable));
+        Assert.That(rubyTag.EndIndex, Is.EqualTo(clonedRubyTag.EndIndex));
     }
 }

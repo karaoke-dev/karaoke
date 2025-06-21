@@ -25,7 +25,7 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
         if (result is not bool actual)
             throw new InvalidCastException();
 
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     protected static void TestMoveToPreviousLyric(Lyric[] lyrics, TCaret caret, TCaret? expected, Action<TAlgorithm>? invokeAlgorithm = null)
@@ -85,12 +85,12 @@ public abstract class BaseCaretPositionAlgorithmTest<TAlgorithm, TCaret> where T
     {
         if (expected == null || actual == null)
         {
-            Assert.IsNull(expected);
-            Assert.IsNull(actual);
+            Assert.That(expected, Is.Null);
+            Assert.That(actual, Is.Null);
         }
         else
         {
-            Assert.AreEqual(expected.Value, actual.Value);
+            Assert.That(actual.Value, Is.EqualTo(expected.Value));
         }
     }
 

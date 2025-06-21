@@ -15,6 +15,6 @@ public class FontUtilsTest
     public void TestGetText(float font, string expected)
     {
         string actual = FontUtils.GetText(font);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

@@ -27,8 +27,8 @@ public class LyricsUtilsTest
         if (expectedFirstText != null && expectedSecondText != null)
         {
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
-            Assert.AreEqual(expectedFirstText, firstLyric.Text);
-            Assert.AreEqual(expectedSecondText, secondLyric.Text);
+            Assert.That(firstLyric.Text, Is.EqualTo(expectedFirstText));
+            Assert.That(secondLyric.Text, Is.EqualTo(expectedSecondText));
         }
         else
         {
@@ -103,12 +103,12 @@ public class LyricsUtilsTest
         var expectedFirstSingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(expectedFirstSingerIndexes);
         var expectedSecondSingerIds = TestCaseElementIdHelper.CreateElementIdsByNumbers(expectedSecondSingerIndexes);
 
-        Assert.AreEqual(expectedFirstSingerIds, firstLyric.SingerIds);
-        Assert.AreEqual(expectedSecondSingerIds, secondLyric.SingerIds);
+        Assert.That(firstLyric.SingerIds, Is.EqualTo(expectedFirstSingerIds));
+        Assert.That(secondLyric.SingerIds, Is.EqualTo(expectedSecondSingerIds));
 
         // also should check is not same object as origin lyric for safety purpose.
-        Assert.AreNotSame(lyric.SingerIds, firstLyric.SingerIds);
-        Assert.AreNotSame(lyric.SingerIds, secondLyric.SingerIds);
+        Assert.That(lyric.SingerIds, Is.Not.SameAs(firstLyric.SingerIds));
+        Assert.That(lyric.SingerIds, Is.Not.SameAs(secondLyric.SingerIds));
     }
 
     [TestCase(1, 1, 1)]
@@ -129,8 +129,8 @@ public class LyricsUtilsTest
 
         var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
 
-        Assert.AreEqual(expectedFirstCultureInfo, firstLyric.Language);
-        Assert.AreEqual(expectedSecondCultureInfo, secondLyric.Language);
+        Assert.That(firstLyric.Language, Is.EqualTo(expectedFirstCultureInfo));
+        Assert.That(secondLyric.Language, Is.EqualTo(expectedSecondCultureInfo));
     }
 
     #endregion
@@ -146,7 +146,7 @@ public class LyricsUtilsTest
         var lyric2 = new Lyric { Text = secondText };
 
         var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
-        Assert.AreEqual(expected, combineLyric.Text);
+        Assert.That(combineLyric.Text, Is.EqualTo(expected));
     }
 
     [TestCase(new[] { "[0,start]" }, new[] { "[0,start]" }, new[] { "[0,start]", "[7,start]" })]
@@ -173,8 +173,8 @@ public class LyricsUtilsTest
         for (int i = 0; i < timeTags.Count; i++)
         {
             var expected = TestCaseTagHelper.ParseTimeTag(expectTimeTags[i]);
-            Assert.AreEqual(expected.Index, timeTags[i].Index);
-            Assert.AreEqual(expected.Time, timeTags[i].Time);
+            Assert.That(timeTags[i].Index, Is.EqualTo(expected.Index));
+            Assert.That(timeTags[i].Time, Is.EqualTo(expected.Time));
         }
     }
 
@@ -215,7 +215,7 @@ public class LyricsUtilsTest
 
         var expected = TestCaseElementIdHelper.CreateElementIdsByNumbers(combinedSingerIds);
         var actual = combineLyric.SingerIds;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(1, 1, 1)]
@@ -235,7 +235,7 @@ public class LyricsUtilsTest
 
         var expected = expectedLcid != null ? new CultureInfo(expectedLcid.Value) : null;
         var actual = combineLyric.Language;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #endregion

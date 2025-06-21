@@ -29,8 +29,8 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
-            Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
+            Assert.That(h.ReferenceLyric, Is.EqualTo(referencedLyric));
+            Assert.That(h.ReferenceLyricConfig, Is.InstanceOf<ReferenceLyricConfig>());
         });
     }
 
@@ -53,8 +53,8 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
-            Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
+            Assert.That(h.ReferenceLyric, Is.EqualTo(referencedLyric));
+            Assert.That(h.ReferenceLyricConfig, Is.InstanceOf<ReferenceLyricConfig>());
         });
     }
 
@@ -77,8 +77,8 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(referencedLyric, h.ReferenceLyric);
-            Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
+            Assert.That(h.ReferenceLyric, Is.EqualTo(referencedLyric));
+            Assert.That(h.ReferenceLyricConfig, Is.InstanceOf<SyncLyricConfig>());
         });
     }
 
@@ -107,8 +107,8 @@ public partial class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandle
         AssertSelectedHitObject(h =>
         {
             var config = (h.ReferenceLyricConfig as SyncLyricConfig)!;
-            Assert.AreEqual(100, config.OffsetTime);
-            Assert.AreEqual(false, config.SyncSingerProperty);
+            Assert.That(config.OffsetTime, Is.EqualTo(100));
+            Assert.That(config.SyncSingerProperty, Is.False);
         });
     }
 

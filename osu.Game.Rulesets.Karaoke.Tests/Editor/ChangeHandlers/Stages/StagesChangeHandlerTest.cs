@@ -27,8 +27,8 @@ public partial class StagesChangeHandlerTest : BaseStageInfoChangeHandlerTest<St
 
         AssertStageInfos(stageInfos =>
         {
-            Assert.AreEqual(1, stageInfos.Count);
-            Assert.AreEqual(typeof(ClassicStageInfo), stageInfos[0].GetType());
+            Assert.That(stageInfos.Count, Is.EqualTo(1));
+            Assert.That(stageInfos[0].GetType(), Is.EqualTo(typeof(ClassicStageInfo)));
         });
 
         // Should not add the same stage again.
@@ -50,7 +50,7 @@ public partial class StagesChangeHandlerTest : BaseStageInfoChangeHandlerTest<St
 
         AssertStageInfos(stageInfos =>
         {
-            Assert.AreEqual(0, stageInfos.Count);
+            Assert.That(stageInfos.Count, Is.EqualTo(0));
         });
 
         // Should not remove if there's no matched stage info type.

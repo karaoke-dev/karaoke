@@ -22,6 +22,6 @@ public class LockStateUtilsTest
         });
 
         int actual = LockStateUtils.FindUnlockObjects(lyrics).Length;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

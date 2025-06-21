@@ -14,11 +14,11 @@ public class VersionUtilsTest
     {
         var expected = new Version(1, 0, 0, 0);
         var actual = VersionUtils.GetVersion();
-        Assert.IsNotNull(actual);
-        Assert.AreEqual(expected.Major, actual.Major);
-        Assert.AreEqual(expected.Minor, actual.Minor);
-        Assert.AreEqual(expected.Build, actual.Build);
-        Assert.AreEqual(expected.Revision, actual.Revision);
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual.Major, Is.EqualTo(expected.Major));
+        Assert.That(actual.Minor, Is.EqualTo(expected.Minor));
+        Assert.That(actual.Build, Is.EqualTo(expected.Build));
+        Assert.That(actual.Revision, Is.EqualTo(expected.Revision));
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class VersionUtilsTest
     {
         const string expected = "UwU";
         string actual = VersionUtils.MajorVersionName;
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class VersionUtilsTest
         // should not be deploy build if not build by github action.
         const bool expected = false;
         bool actual = VersionUtils.IsDeployedBuild;
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [Test]
@@ -43,6 +43,6 @@ public class VersionUtilsTest
     {
         const string expected = "1.0.0-UwU";
         string actual = VersionUtils.DisplayVersion;
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

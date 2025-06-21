@@ -33,12 +33,12 @@ public class TimeTagsUtilsTest
             var expectedTimeTag = TestCaseTagHelper.ParseTimeTag(result);
             var actualTimeTag = TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index);
 
-            Assert.AreEqual(expectedTimeTag.Index, actualTimeTag.Index);
-            Assert.AreEqual(expectedTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Index, Is.EqualTo(expectedTimeTag.Index));
+            Assert.That(actualTimeTag.Time, Is.EqualTo(expectedTimeTag.Time));
         }
         else
         {
-            Assert.Catch(() => TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index));
+            Assert.That(() => TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index), Throws.Exception);
         }
     }
 
@@ -92,7 +92,7 @@ public class TimeTagsUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         bool actual = TimeTagsUtils.HasStartTimeTagInLyric(timeTags, text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:2000" }, true)]
@@ -106,7 +106,7 @@ public class TimeTagsUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         bool actual = TimeTagsUtils.HasEndTimeTagInLyric(timeTags, text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
@@ -128,7 +128,7 @@ public class TimeTagsUtilsTest
         var overlappingTimeTags = TimeTagsUtils.FindOverlapping(timeTags, other, self);
 
         int[] actual = overlappingTimeTags.Select(v => timeTags.IndexOf(v)).ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { "[0,start]:2000", "[0,end]:2000" })]
@@ -169,7 +169,7 @@ public class TimeTagsUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         var actual = TimeTagsUtils.ToTimeBasedDictionary(timeTags).Keys;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 1100)]
@@ -182,7 +182,7 @@ public class TimeTagsUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         double? actual = TimeTagsUtils.GetStartTime(timeTags);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 3000)]
@@ -195,6 +195,6 @@ public class TimeTagsUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         double? actual = TimeTagsUtils.GetEndTime(timeTags);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

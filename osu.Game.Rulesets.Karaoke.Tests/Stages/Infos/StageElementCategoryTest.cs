@@ -24,14 +24,14 @@ public class StageElementCategoryTest
             x.Name = "Element 1";
         });
 
-        Assert.AreEqual(1, category.AvailableElements.Count);
-        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[0].ID);
-        Assert.AreEqual("Element 1", category.AvailableElements[0].Name);
+        Assert.That(category.AvailableElements.Count, Is.EqualTo(1));
+        Assert.That(category.AvailableElements[0].ID, Is.Not.EqualTo(ElementId.Empty));
+        Assert.That(category.AvailableElements[0].Name, Is.EqualTo("Element 1"));
 
         category.AddElement();
 
-        Assert.AreEqual(2, category.AvailableElements.Count);
-        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[1].ID);
+        Assert.That(category.AvailableElements.Count, Is.EqualTo(2));
+        Assert.That(category.AvailableElements[1].ID, Is.Not.EqualTo(ElementId.Empty));
     }
 
     [Test]
@@ -46,9 +46,9 @@ public class StageElementCategoryTest
             x.Name = "Element 1";
         });
 
-        Assert.AreEqual(1, category.AvailableElements.Count);
-        Assert.AreNotEqual(ElementId.Empty, category.AvailableElements[0].ID);
-        Assert.AreEqual("Element 1", category.AvailableElements[0].Name);
+        Assert.That(category.AvailableElements.Count, Is.EqualTo(1));
+        Assert.That(category.AvailableElements[0].ID, Is.Not.EqualTo(ElementId.Empty));
+        Assert.That(category.AvailableElements[0].Name, Is.EqualTo("Element 1"));
     }
 
     [Test]
@@ -71,12 +71,12 @@ public class StageElementCategoryTest
 
         // Should have only one element.
         var defaultElement = category.DefaultElement;
-        Assert.AreEqual(1, category.AvailableElements.Count);
+        Assert.That(category.AvailableElements.Count, Is.EqualTo(1));
 
         // Should get the default element because mapping has been removed.
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric1));
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2));
-        Assert.AreEqual(element2, category.GetElementByItem(lyric3));
+        Assert.That(category.GetElementByItem(lyric1), Is.EqualTo(defaultElement));
+        Assert.That(category.GetElementByItem(lyric2), Is.EqualTo(defaultElement));
+        Assert.That(category.GetElementByItem(lyric3), Is.EqualTo(element2));
     }
 
     [Test]
@@ -98,12 +98,12 @@ public class StageElementCategoryTest
         category.ClearElements();
 
         // Should clear everything.
-        Assert.AreEqual(0, category.AvailableElements.Count);
-        Assert.AreEqual(0, category.Mappings.Count);
+        Assert.That(category.AvailableElements.Count, Is.EqualTo(0));
+        Assert.That(category.Mappings.Count, Is.EqualTo(0));
 
         // should get the default element.
         var defaultElement = category.DefaultElement;
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric1));
+        Assert.That(category.GetElementByItem(lyric1), Is.EqualTo(defaultElement));
     }
 
     [Test]
@@ -122,9 +122,9 @@ public class StageElementCategoryTest
         category.AddToMapping(element2, lyric3);
 
         // Should get the matched element.
-        Assert.AreEqual(element1, category.GetElementByItem(lyric1));
-        Assert.AreEqual(element1, category.GetElementByItem(lyric2));
-        Assert.AreEqual(element2, category.GetElementByItem(lyric3));
+        Assert.That(category.GetElementByItem(lyric1), Is.EqualTo(element1));
+        Assert.That(category.GetElementByItem(lyric2), Is.EqualTo(element1));
+        Assert.That(category.GetElementByItem(lyric3), Is.EqualTo(element2));
     }
 
     [Test]
@@ -140,7 +140,7 @@ public class StageElementCategoryTest
 
         // Should clear added mappings.
         var mappings = category.Mappings;
-        Assert.IsEmpty(mappings);
+        Assert.That(mappings, Is.Empty);
     }
 
     [Test]
@@ -156,7 +156,7 @@ public class StageElementCategoryTest
 
         // Should clear added mappings.
         var mappings = category.Mappings;
-        Assert.IsEmpty(mappings);
+        Assert.That(mappings, Is.Empty);
     }
 
     [Test]
@@ -177,12 +177,12 @@ public class StageElementCategoryTest
         category.ClearUnusedMapping(id => lyricsInTheBeatmap.Any(x => x.ID == id));
 
         // Should get the matched element.
-        Assert.AreEqual(element1, category.GetElementByItem(lyric1));
-        Assert.AreEqual(element1, category.GetElementByItem(lyric2));
+        Assert.That(category.GetElementByItem(lyric1), Is.EqualTo(element1));
+        Assert.That(category.GetElementByItem(lyric2), Is.EqualTo(element1));
 
         // should get the default element because lyric3 is clear in the mapping.
         var defaultElement = category.DefaultElement;
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric3));
+        Assert.That(category.GetElementByItem(lyric3), Is.EqualTo(defaultElement));
     }
 
     #endregion
@@ -201,11 +201,11 @@ public class StageElementCategoryTest
         category.AddToMapping(element1, lyric1);
 
         // Should get the matched element.
-        Assert.AreEqual(element1, category.GetElementByItem(lyric1));
+        Assert.That(category.GetElementByItem(lyric1), Is.EqualTo(element1));
 
         // Should get the default element because it's not in the mapping list.
         var defaultElement = category.DefaultElement;
-        Assert.AreEqual(defaultElement, category.GetElementByItem(lyric2));
+        Assert.That(category.GetElementByItem(lyric2), Is.EqualTo(defaultElement));
     }
 
     [Test]
@@ -219,11 +219,11 @@ public class StageElementCategoryTest
         category.AddToMapping(element1, lyric1);
 
         // Should get the matched element.
-        Assert.AreEqual(new[] { lyric1.ID }, category.GetHitObjectIdsByElement(element1));
+        Assert.That(category.GetHitObjectIdsByElement(element1), Is.EqualTo(new[] { lyric1.ID }));
 
         // Should get the default element because it's not in the mapping list.
         var defaultElement = category.DefaultElement;
-        Assert.IsEmpty(category.GetHitObjectIdsByElement(defaultElement));
+        Assert.That(category.GetHitObjectIdsByElement(defaultElement), Is.Empty);
     }
 
     #endregion

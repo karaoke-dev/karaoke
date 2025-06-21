@@ -23,7 +23,7 @@ public class TimeTagConverterTest : BaseSingleConverterTest<TimeTagConverter>
 
         string expected = $"\"{json}\"";
         string actual = JsonConvert.SerializeObject(timeTag, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[1,start]:1000", 1, TextIndex.IndexState.Start, 1000)]
@@ -40,7 +40,7 @@ public class TimeTagConverterTest : BaseSingleConverterTest<TimeTagConverter>
     {
         var expected = new TimeTag(new TextIndex(index, state), time);
         var actual = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings())!;
-        Assert.AreEqual(expected.Index, actual.Index);
-        Assert.AreEqual(expected.Time, actual.Time);
+        Assert.That(actual.Index, Is.EqualTo(expected.Index));
+        Assert.That(actual.Time, Is.EqualTo(expected.Time));
     }
 }

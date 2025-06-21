@@ -29,19 +29,19 @@ public partial class TestSceneAutoGenerationBySinger : OsuTestScene
         var actual = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
 
         // Check total frames.
-        Assert.AreEqual(expected.Count, actual.Count, $"Replay frame should have {expected.Count}.");
+        Assert.That(actual.Count, Is.EqualTo(expected.Count), $"Replay frame should have {expected.Count}.");
 
         // Compare generated frame with result;
         for (int i = 0; i < expected.Count; i++)
         {
-            Assert.AreEqual(expected[i].Time, actual[i].Time);
-            Assert.AreEqual(expected[i].Sound, actual[i].Sound);
+            Assert.That(actual[i].Time, Is.EqualTo(expected[i].Time));
+            Assert.That(actual[i].Sound, Is.EqualTo(expected[i].Sound));
 
             if (!expected[i].Sound)
                 continue;
 
             float convertedScale = beatmap.PitchToScale(expected[i].Pitch);
-            Assert.AreEqual(convertedScale, actual[i].Scale);
+            Assert.That(actual[i].Scale, Is.EqualTo(convertedScale));
         }
     }
 

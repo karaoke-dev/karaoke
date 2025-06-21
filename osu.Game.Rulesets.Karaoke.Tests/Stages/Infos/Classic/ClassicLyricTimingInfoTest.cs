@@ -24,9 +24,9 @@ public class ClassicLyricTimingInfoTest
             x.Time = 1000;
         });
 
-        Assert.AreEqual(1, timingInfo.Timings.Count);
-        Assert.IsNotEmpty(timingInfo.Timings[0].ID.ToString());
-        Assert.AreEqual(1000, timingInfo.Timings[0].Time);
+        Assert.That(timingInfo.Timings.Count, Is.EqualTo(1));
+        Assert.That(timingInfo.Timings[0].ID.ToString(), Is.Not.Empty);
+        Assert.That(timingInfo.Timings[0].Time, Is.EqualTo(1000));
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class ClassicLyricTimingInfoTest
         // Test remove timing point.
         timingInfo.RemoveTimingPoint(timingPoint);
 
-        Assert.IsEmpty(timingInfo.Timings);
+        Assert.That(timingInfo.Timings, Is.Empty);
     }
 
     [Test]
@@ -63,8 +63,8 @@ public class ClassicLyricTimingInfoTest
         timingInfo.AddToMapping(mappingTimingPoint, lyric);
 
         var mappings = timingInfo.GetLyricTimingPoints(lyric).ToArray();
-        Assert.AreEqual(1, mappings.Length);
-        Assert.AreEqual(mappingTimingPoint, mappings[0]);
+        Assert.That(mappings.Length, Is.EqualTo(1));
+        Assert.That(mappings[0], Is.EqualTo(mappingTimingPoint));
     }
 
     [Test]
@@ -89,8 +89,8 @@ public class ClassicLyricTimingInfoTest
 
         var mappingTimingPoints = timingInfo.GetLyricTimingPoints(lyric);
         var mappingsIds = timingInfo.GetMatchedLyricIds(mappingTimingPoint);
-        Assert.IsEmpty(mappingTimingPoints);
-        Assert.IsEmpty(mappingsIds);
+        Assert.That(mappingTimingPoints, Is.Empty);
+        Assert.That(mappingsIds, Is.Empty);
     }
 
     [Test]
@@ -115,8 +115,8 @@ public class ClassicLyricTimingInfoTest
 
         var mappingTimingPoints = timingInfo.GetLyricTimingPoints(lyric);
         var mappingsIds = timingInfo.GetMatchedLyricIds(mappingTimingPoint);
-        Assert.IsEmpty(mappingTimingPoints);
-        Assert.IsEmpty(mappingsIds);
+        Assert.That(mappingTimingPoints, Is.Empty);
+        Assert.That(mappingsIds, Is.Empty);
     }
 
     [Test]
@@ -141,8 +141,8 @@ public class ClassicLyricTimingInfoTest
 
         var mappingTimingPoints = timingInfo.GetLyricTimingPoints(lyric);
         var mappingsIds = timingInfo.GetMatchedLyricIds(mappingTimingPoint);
-        Assert.IsEmpty(mappingTimingPoints);
-        Assert.IsEmpty(mappingsIds);
+        Assert.That(mappingTimingPoints, Is.Empty);
+        Assert.That(mappingsIds, Is.Empty);
     }
 
     #endregion
@@ -157,11 +157,11 @@ public class ClassicLyricTimingInfoTest
 
         var existTimingPoint = timingInfo.Timings.First();
         int? existTimingPointOrder = timingInfo.GetTimingPointOrder(existTimingPoint);
-        Assert.AreEqual(1, existTimingPointOrder);
+        Assert.That(existTimingPointOrder, Is.EqualTo(1));
 
         var notExistTimingPoint = new ClassicLyricTimingPoint { Time = 1000 };
         int? notExistTimingPointOrder = timingInfo.GetTimingPointOrder(notExistTimingPoint);
-        Assert.IsNull(notExistTimingPointOrder);
+        Assert.That(notExistTimingPointOrder, Is.Null);
     }
 
     [Test]
@@ -179,8 +179,8 @@ public class ClassicLyricTimingInfoTest
 
         // Get the mapping points.
         var mappingTimingPoints = timingInfo.GetLyricTimingPoints(lyric).ToArray();
-        Assert.AreEqual(1, mappingTimingPoints.Length);
-        Assert.AreEqual(mappingTimingPoint.ID, mappingTimingPoints[0].ID);
+        Assert.That(mappingTimingPoints.Length, Is.EqualTo(1));
+        Assert.That(mappingTimingPoints[0].ID, Is.EqualTo(mappingTimingPoint.ID));
     }
 
     [TestCase("[2000,3000]:カラオケ", new double[] { 1000, 4000 }, 1000, 4000)]
@@ -203,8 +203,8 @@ public class ClassicLyricTimingInfoTest
 
         // Test get timing info.
         var result = timingInfo.GetStartAndEndTime(lyric);
-        Assert.AreEqual(expectedStartTime, result.Item1);
-        Assert.AreEqual(expectedEndTime, result.Item2);
+        Assert.That(result.Item1, Is.EqualTo(expectedStartTime));
+        Assert.That(result.Item2, Is.EqualTo(expectedEndTime));
     }
 
     [Test]
@@ -212,7 +212,7 @@ public class ClassicLyricTimingInfoTest
     {
         var timingInfo = new ClassicLyricTimingInfo();
 
-        Assert.AreEqual(null, timingInfo.GetStartTime());
+        Assert.That(timingInfo.GetStartTime(), Is.Null);
 
         // Test add timing point.
         timingInfo.AddTimingPoint(x =>
@@ -220,7 +220,7 @@ public class ClassicLyricTimingInfoTest
             x.Time = 1000;
         });
 
-        Assert.AreEqual(1000, timingInfo.GetStartTime());
+        Assert.That(timingInfo.GetStartTime(), Is.EqualTo(1000));
     }
 
     [Test]
@@ -228,7 +228,7 @@ public class ClassicLyricTimingInfoTest
     {
         var timingInfo = new ClassicLyricTimingInfo();
 
-        Assert.AreEqual(null, timingInfo.GetEndTime());
+        Assert.That(timingInfo.GetEndTime(), Is.Null);
 
         // Test add timing point.
         timingInfo.AddTimingPoint(x =>
@@ -236,7 +236,7 @@ public class ClassicLyricTimingInfoTest
             x.Time = 1000;
         });
 
-        Assert.AreEqual(1000, timingInfo.GetEndTime());
+        Assert.That(timingInfo.GetEndTime(), Is.EqualTo(1000));
     }
 
     [Test]
@@ -254,7 +254,7 @@ public class ClassicLyricTimingInfoTest
 
         // Get the mapping points.
         var mappingIds = timingInfo.GetMatchedLyricIds(mappingTimingPoint);
-        Assert.AreEqual(new[] { lyric.ID }, mappingIds);
+        Assert.That(mappingIds, Is.EqualTo(new[] { lyric.ID }));
     }
 
     #endregion

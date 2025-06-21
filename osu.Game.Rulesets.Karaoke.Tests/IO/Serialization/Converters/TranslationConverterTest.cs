@@ -28,7 +28,7 @@ public class TranslationConverterTest : BaseSingleConverterTest<TranslationConve
 
         const string expected = "[{\"key\":1033,\"value\":\"karaoke\"},{\"key\":1041,\"value\":\"カラオケ\"}]";
         string actual = JsonConvert.SerializeObject(translations, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -43,9 +43,9 @@ public class TranslationConverterTest : BaseSingleConverterTest<TranslationConve
         };
 
         var actual = JsonConvert.DeserializeObject<Dictionary<CultureInfo, string>>(json, CreateSettings()) ?? throw new InvalidCastException();
-        CollectionAssert.AreEquivalent(expected, actual);
+        Assert.That(actual, Is.EquivalentTo(expected));
 
         var actualWithInterface = JsonConvert.DeserializeObject<IDictionary<CultureInfo, string>>(json, CreateSettings()) ?? throw new InvalidCastException();
-        CollectionAssert.AreEquivalent(expected, actualWithInterface);
+        Assert.That(actualWithInterface, Is.EquivalentTo(expected));
     }
 }

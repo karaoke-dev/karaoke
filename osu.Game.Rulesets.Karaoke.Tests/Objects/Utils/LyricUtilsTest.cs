@@ -30,7 +30,7 @@ public class LyricUtilsTest
         if (expected != null)
         {
             LyricUtils.RemoveText(lyric, charGap, count);
-            Assert.AreEqual(expected, lyric.Text);
+            Assert.That(lyric.Text, Is.EqualTo(expected));
         }
         else
         {
@@ -86,7 +86,7 @@ public class LyricUtilsTest
         LyricUtils.AddText(lyric, charGap, addedText);
 
         string actual = lyric.Text;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0]:か", "[1]:ら", "[2]:お", "[3]:け" }, 0, "karaoke", new[] { "[7]:か", "[8]:ら", "[9]:お", "[10]:け" })]
@@ -141,7 +141,7 @@ public class LyricUtilsTest
         };
 
         bool actual = LyricUtils.HasTimedTimeTags(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
@@ -166,7 +166,7 @@ public class LyricUtilsTest
         var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
 
         string actual = LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
@@ -181,7 +181,7 @@ public class LyricUtilsTest
         var timeTag = lyric.TimeTags.First(x => x.Index == textIndex);
 
         string actual = LyricUtils.GetTimeTagDisplayText(lyric, timeTag);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(0, "(か)-")]
@@ -221,7 +221,7 @@ public class LyricUtilsTest
         var timeTag = lyric.TimeTags[indexOfTimeTag];
 
         string actual = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #endregion
@@ -238,7 +238,7 @@ public class LyricUtilsTest
         var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
 
         bool actual = LyricUtils.AbleToInsertRubyTagAtIndex(lyric, index);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #endregion
@@ -262,7 +262,7 @@ public class LyricUtilsTest
         };
 
         string actual = LyricUtils.LyricTimeFormattedString(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, "00:01:000 - 00:04:000")]
@@ -282,7 +282,7 @@ public class LyricUtilsTest
         };
 
         string actual = LyricUtils.TimeTagTimeFormattedString(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #endregion
@@ -301,7 +301,7 @@ public class LyricUtilsTest
         };
 
         bool actual = LyricUtils.ContainsSinger(lyric, singer);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1", "[1]name:Singer1" }, true)]
@@ -317,7 +317,7 @@ public class LyricUtilsTest
         };
 
         bool actual = LyricUtils.OnlyContainsSingers(lyric, singers);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #endregion

@@ -44,12 +44,12 @@ public class BitmapFontImageGeneratorTest
         var originPage = glyphStore.GetPageImage(0);
 
         // test should draw same image as origin resource in glyph store.
-        Assert.AreEqual(1, result.Length);
+        Assert.That(result.Length, Is.EqualTo(1));
 
         // test should draw same image as origin resource in glyph store.
         var expected = originPage.Data.ToArray();
         var actual = result.FirstOrDefault()?.Data.ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class BitmapFontImageGeneratorTest
         // test should draw same image as origin resource in glyph store.
         var expected = originPage.Data.ToArray();
         var actual = result.Data.ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     private class TestFntGlyphStore : FntGlyphStore

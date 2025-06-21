@@ -28,20 +28,16 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
         AssertHitObjects(notes =>
         {
             var actualNotes = notes.ToArray();
-            Assert.AreEqual(2, actualNotes.Length);
-
+            Assert.That(actualNotes.Length, Is.EqualTo(2));
             var firstNote = actualNotes[0];
             var secondNote = actualNotes[1];
-
-            Assert.AreSame(firstNote.ReferenceLyric, secondNote.ReferenceLyric);
-
-            Assert.AreEqual("カラオケ", firstNote.Text);
-            Assert.AreEqual(1000, firstNote.StartTime);
-            Assert.AreEqual(500, firstNote.Duration);
-
-            Assert.AreEqual("カラオケ", secondNote.Text);
-            Assert.AreEqual(1500, secondNote.StartTime);
-            Assert.AreEqual(500, secondNote.Duration);
+            Assert.That(firstNote.ReferenceLyric, Is.SameAs(secondNote.ReferenceLyric));
+            Assert.That(firstNote.Text, Is.EqualTo("カラオケ"));
+            Assert.That(firstNote.StartTime, Is.EqualTo(1000));
+            Assert.That(firstNote.Duration, Is.EqualTo(500));
+            Assert.That(secondNote.Text, Is.EqualTo("カラオケ"));
+            Assert.That(secondNote.StartTime, Is.EqualTo(1500));
+            Assert.That(secondNote.Duration, Is.EqualTo(500));
         });
     }
 
@@ -77,13 +73,12 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
         AssertHitObjects(notes =>
         {
             var actualNotes = notes.ToArray();
-            Assert.AreEqual(1, actualNotes.Length);
-
+            Assert.That(actualNotes.Length, Is.EqualTo(1));
             var combinedNote = actualNotes.First();
-            Assert.AreEqual("カラ", combinedNote.Text);
-            Assert.AreEqual("から", combinedNote.RubyText);
-            Assert.AreEqual(1000, combinedNote.StartTime);
-            Assert.AreEqual(1000, combinedNote.Duration);
+            Assert.That(combinedNote.Text, Is.EqualTo("カラ"));
+            Assert.That(combinedNote.RubyText, Is.EqualTo("から"));
+            Assert.That(combinedNote.StartTime, Is.EqualTo(1000));
+            Assert.That(combinedNote.Duration, Is.EqualTo(1000));
         });
     }
 
@@ -114,6 +109,6 @@ public partial class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<Not
 
         TriggerHandlerChanged(c => c.Clear());
 
-        AssertHitObjects(Assert.IsEmpty);
+        AssertHitObjects(x => Assert.That(x, Is.Empty));
     }
 }

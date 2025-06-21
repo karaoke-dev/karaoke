@@ -27,10 +27,9 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         {
             var pages = karaokeBeatmap.PageInfo.SortedPages;
 
-            Assert.AreEqual(2, pages.Count);
-
-            Assert.AreEqual(1000, pages[0].Time);
-            Assert.AreEqual(3000, pages[1].Time);
+            Assert.That(pages.Count, Is.EqualTo(2));
+            Assert.That(pages[0].Time, Is.EqualTo(1000));
+            Assert.That(pages[1].Time, Is.EqualTo(3000));
         });
     }
 
@@ -56,8 +55,8 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             var pages = karaokeBeatmap.PageInfo.Pages;
-            Assert.AreEqual(1, pages.Count);
-            Assert.AreEqual(page, pages[0]);
+            Assert.That(pages.Count, Is.EqualTo(1));
+            Assert.That(pages[0], Is.EqualTo(page));
         });
     }
 
@@ -82,9 +81,8 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             var pages = karaokeBeatmap.PageInfo.Pages;
-            Assert.AreEqual(1, pages.Count);
-
-            Assert.AreEqual(secondPage, pages[0]);
+            Assert.That(pages.Count, Is.EqualTo(1));
+            Assert.That(pages[0], Is.EqualTo(secondPage));
         });
     }
 
@@ -109,9 +107,8 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             var pages = karaokeBeatmap.PageInfo.Pages;
-            Assert.AreEqual(1, pages.Count);
-
-            Assert.AreEqual(secondPage, pages[0]);
+            Assert.That(pages.Count, Is.EqualTo(1));
+            Assert.That(pages[0], Is.EqualTo(secondPage));
         });
     }
 
@@ -135,8 +132,8 @@ public partial class BeatmapPagesChangeHandlerTest : BaseChangeHandlerTest<Beatm
 
         AssertKaraokeBeatmap(_ =>
         {
-            Assert.AreEqual(1000, firstPage.Time);
-            Assert.AreEqual(0, secondPage.Time);
+            Assert.That(firstPage.Time, Is.EqualTo(1000));
+            Assert.That(secondPage.Time, Is.EqualTo(0));
         });
     }
 

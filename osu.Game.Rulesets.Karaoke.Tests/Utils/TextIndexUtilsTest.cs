@@ -19,7 +19,7 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         int actual = TextIndexUtils.ToGapIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, TextIndex.IndexState.Start, 0)]
@@ -31,7 +31,7 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         int actual = TextIndexUtils.ToCharIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, false, 0, TextIndex.IndexState.Start)]
@@ -41,7 +41,7 @@ public class TextIndexUtilsTest
     {
         var expected = new TextIndex(expectedIndex, expectedState);
         var actual = TextIndexUtils.FromStringIndex(textIndex, end);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(TextIndex.IndexState.Start, TextIndex.IndexState.End)]
@@ -49,7 +49,7 @@ public class TextIndexUtilsTest
     public void TestReverseState(TextIndex.IndexState state, TextIndex.IndexState expected)
     {
         var actual = TextIndexUtils.ReverseState(state);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(1, TextIndex.IndexState.End, 1, TextIndex.IndexState.Start)]
@@ -62,7 +62,7 @@ public class TextIndexUtilsTest
 
         var expected = new TextIndex(expectedIndex, expectedState);
         var actual = TextIndexUtils.GetPreviousIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, TextIndex.IndexState.Start, 0, TextIndex.IndexState.End)]
@@ -75,7 +75,7 @@ public class TextIndexUtilsTest
 
         var expected = new TextIndex(expectedIndex, expectedState);
         var actual = TextIndexUtils.GetNextIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, TextIndex.IndexState.Start, 1, 1, TextIndex.IndexState.Start)]
@@ -88,7 +88,7 @@ public class TextIndexUtilsTest
 
         var expected = new TextIndex(expectedIndex, expectedState);
         var actual = TextIndexUtils.ShiftingIndex(textIndex, offset);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, TextIndex.IndexState.Start, "karaoke", false)]
@@ -102,7 +102,7 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         bool actual = TextIndexUtils.OutOfRange(textIndex, lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(TextIndex.IndexState.Start, 1, -1, 1)]
@@ -114,16 +114,16 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(0, state);
 
         object valueByTextIndex = TextIndexUtils.GetValueByState(textIndex, startValue, endValue);
-        Assert.AreEqual(expected, valueByTextIndex);
+        Assert.That(valueByTextIndex, Is.EqualTo(expected));
 
         object valueByState = TextIndexUtils.GetValueByState(state, startValue, endValue);
-        Assert.AreEqual(expected, valueByState);
+        Assert.That(valueByState, Is.EqualTo(expected));
 
         object valueByTextIndexWithFunction = TextIndexUtils.GetValueByState(textIndex, () => startValue, () => endValue);
-        Assert.AreEqual(expected, valueByTextIndexWithFunction);
+        Assert.That(valueByTextIndexWithFunction, Is.EqualTo(expected));
 
         object valueByStateWithFunction = TextIndexUtils.GetValueByState(state, () => startValue, () => endValue);
-        Assert.AreEqual(expected, valueByStateWithFunction);
+        Assert.That(valueByStateWithFunction, Is.EqualTo(expected));
     }
 
     [TestCase(0, TextIndex.IndexState.Start, "0")]
@@ -135,6 +135,6 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         string actual = TextIndexUtils.PositionFormattedString(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

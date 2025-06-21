@@ -18,13 +18,13 @@ public class FontUsageUtilsTest
     {
         var fontUsage = new FontUsage(expectedFontName);
         var fontInfo = FontUsageUtils.ToFontInfo(fontUsage, FontFormat.Internal);
-        Assert.AreEqual(expectedFontName, fontInfo.FontName);
-        Assert.AreEqual(expectedFamily, fontInfo.Family);
+        Assert.That(fontInfo.FontName, Is.EqualTo(expectedFontName));
+        Assert.That(fontInfo.Family, Is.EqualTo(expectedFamily));
 
         // note: font info should not follow rules as fontUsage.
         if (!italics)
         {
-            Assert.AreEqual(expectedWeight, fontInfo.Weight);
+            Assert.That(fontInfo.Weight, Is.EqualTo(expectedWeight));
         }
     }
 }

@@ -17,7 +17,7 @@ public class CultureInfoConverterTest : BaseSingleConverterTest<CultureInfoConve
     {
         var language = lcid != null ? new CultureInfo(lcid.Value) : default;
         string actual = JsonConvert.SerializeObject(language, CreateSettings());
-        Assert.AreEqual(json, actual);
+        Assert.That(actual, Is.EqualTo(json));
     }
 
     [TestCase("1", 1)]
@@ -25,6 +25,6 @@ public class CultureInfoConverterTest : BaseSingleConverterTest<CultureInfoConve
     public void TestDeserialize(string json, int? lcid)
     {
         var result = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
-        Assert.AreEqual(lcid, result?.LCID);
+        Assert.That(result?.LCID, Is.EqualTo(lcid));
     }
 }
