@@ -200,7 +200,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
     {
         AddStep("Transaction should be only triggered once.", () =>
         {
-            Assert.AreEqual(1, transactionCount);
+            Assert.That(transactionCount, Is.EqualTo(1));
         });
     }
 

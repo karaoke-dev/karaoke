@@ -19,7 +19,7 @@ public class ColourConverterTest : BaseSingleConverterTest<ColourConverter>
 
         string expected = $"\"{json}\"";
         string actual = JsonConvert.SerializeObject(colour, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("#aaaaaa", "#AAAAAA")]
@@ -33,7 +33,7 @@ public class ColourConverterTest : BaseSingleConverterTest<ColourConverter>
         {
             var expected = Color4Extensions.FromHex(hex);
             var actual = JsonConvert.DeserializeObject<Color4>($"\"{json}\"", CreateSettings());
-            Assert.AreEqual(expected, actual);
+            Assert.That(expected, Is.EqualTo(actual));
         }
         else
         {

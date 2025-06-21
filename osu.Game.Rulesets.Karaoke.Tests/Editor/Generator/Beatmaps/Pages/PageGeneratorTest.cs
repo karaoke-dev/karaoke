@@ -95,6 +95,6 @@ public class PageGeneratorTest : BaseBeatmapGeneratorTest<PageGenerator, Page[],
     {
         string expectedTimes = string.Join(",", expected.Select(x => x.Time));
         string actualTimes = string.Join(",", actual.Select(x => x.Time));
-        Assert.AreEqual(expectedTimes, actualTimes);
+        Assert.That(actualTimes, Is.EqualTo(expectedTimes));
     }
 }

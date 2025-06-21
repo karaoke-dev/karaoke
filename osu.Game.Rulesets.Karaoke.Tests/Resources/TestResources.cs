@@ -34,7 +34,7 @@ public static class TestResources
         using (var newFile = File.Create(tempPath))
             stream.CopyTo(newFile);
 
-        Assert.IsTrue(File.Exists(tempPath));
+        Assert.That(File.Exists(tempPath));
         return tempPath;
     }
 

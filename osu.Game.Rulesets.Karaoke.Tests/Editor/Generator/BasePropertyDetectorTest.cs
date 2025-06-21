@@ -51,7 +51,7 @@ public abstract class BasePropertyDetectorTest<TDetector, TItem, TProperty>
     protected static void CheckCanDetect(TItem item, bool canDetect, TDetector detector)
     {
         bool actual = detector.CanDetect(item);
-        Assert.AreEqual(canDetect, actual);
+        Assert.That(actual, Is.EqualTo(canDetect));
     }
 
     protected void CheckDetectResult(TItem item, TProperty expected, TDetector detector)

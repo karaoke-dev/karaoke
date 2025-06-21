@@ -20,11 +20,11 @@ public class TimeTagTest
 
         var clonedTimeTag = timeTag.DeepClone();
 
-        Assert.AreEqual(clonedTimeTag.Index, timeTag.Index);
+        Assert.That(timeTag.Index, Is.EqualTo(clonedTimeTag.Index));
 
-        Assert.AreNotSame(clonedTimeTag.TimeBindable, timeTag.TimeBindable);
-        Assert.AreEqual(clonedTimeTag.Time, timeTag.Time);
-        Assert.AreNotSame(clonedTimeTag.FirstSyllable, timeTag.FirstSyllable);
-        Assert.AreEqual(clonedTimeTag.RomanisedSyllable, timeTag.RomanisedSyllable);
+        Assert.That(clonedTimeTag.TimeBindable, Is.Not.SameAs(timeTag.TimeBindable));
+        Assert.That(timeTag.Time, Is.EqualTo(clonedTimeTag.Time));
+        Assert.That(clonedTimeTag.FirstSyllable, Is.Not.SameAs(timeTag.FirstSyllable));
+        Assert.That(timeTag.RomanisedSyllable, Is.EqualTo(clonedTimeTag.RomanisedSyllable));
     }
 }

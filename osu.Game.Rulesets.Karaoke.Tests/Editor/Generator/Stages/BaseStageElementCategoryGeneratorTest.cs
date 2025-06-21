@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Generator;
@@ -37,7 +36,7 @@ public abstract class BaseStageElementCategoryGeneratorTest<TGenerator, TObject,
 
             var expectedHitObjectIds = expected.GetHitObjectIdsByElement(expectedElement);
             var actualHitObjectIds = actual.GetHitObjectIdsByElement(actualElement);
-            Assert.AreEqual(expectedHitObjectIds, actualHitObjectIds);
+            Assert.That(actualHitObjectIds, Is.EqualTo(expectedHitObjectIds));
         }
     }
 

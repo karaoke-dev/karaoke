@@ -21,7 +21,7 @@ public class FontUsageConverterTest : BaseSingleConverterTest<FontUsageConverter
         var font = new FontUsage(family, size, weight, italics, fixedWidth);
 
         string actual = JsonConvert.SerializeObject(font, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("{}", null, 20, null, false, false)]
@@ -34,6 +34,6 @@ public class FontUsageConverterTest : BaseSingleConverterTest<FontUsageConverter
     {
         var expected = new FontUsage(family, size, weight, italics, fixedWidth);
         var actual = JsonConvert.DeserializeObject<FontUsage>(json, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

@@ -34,11 +34,10 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
-            Assert.AreEqual(1, firstSinger.ID);
-            Assert.AreEqual(2, firstSinger.Order);
-
-            Assert.AreEqual(2, secondSinger.ID);
-            Assert.AreEqual(1, secondSinger.Order);
+            Assert.That(firstSinger.ID, Is.EqualTo(1));
+            Assert.That(firstSinger.Order, Is.EqualTo(2));
+            Assert.That(secondSinger.ID, Is.EqualTo(2));
+            Assert.That(secondSinger.Order, Is.EqualTo(1));
         });
     }
 
@@ -66,11 +65,10 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             var singers = karaokeBeatmap.SingerInfo.Singers;
-            Assert.AreEqual(3, singers.Count);
-
+            Assert.That(singers.Count, Is.EqualTo(3));
             var lastSinger = singers.Last();
-            Assert.AreEqual(2, lastSinger.ID);
-            Assert.AreEqual(3, lastSinger.Order);
+            Assert.That(lastSinger.ID, Is.EqualTo(2));
+            Assert.That(lastSinger.Order, Is.EqualTo(3));
         });
     }
 
@@ -103,13 +101,11 @@ public partial class BeatmapSingersChangeHandlerTest : BaseChangeHandlerTest<Bea
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             var singers = karaokeBeatmap.SingerInfo.Singers;
-            Assert.AreEqual(1, singers.Count);
-
-            Assert.AreEqual(1, secondSinger.ID);
-            Assert.AreEqual(1, secondSinger.Order);
-
+            Assert.That(singers.Count, Is.EqualTo(1));
+            Assert.That(secondSinger.ID, Is.EqualTo(1));
+            Assert.That(secondSinger.Order, Is.EqualTo(1));
             var lyrics = karaokeBeatmap.HitObjects.OfType<Lyric>().Where(x => x.SingerIds.Contains(firstSinger.ID));
-            Assert.IsEmpty(lyrics);
+            Assert.That(lyrics, Is.Empty);
         });
     }
 

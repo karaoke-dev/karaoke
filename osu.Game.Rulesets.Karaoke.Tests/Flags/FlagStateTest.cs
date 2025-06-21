@@ -23,17 +23,17 @@ public class FlagStateTest
 
         // check the value.
         validator.Invalidate(invalidFlags);
-        Assert.AreEqual(expectedValue, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(expectedValue));
 
         // value should not changed if did the same action.
         validator.Invalidate(invalidFlags);
-        Assert.AreEqual(expectedValue, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(expectedValue));
 
         // should not be negative if remove the value from the validator.
         validator.InvalidateAll();
         validator.Invalidate(invalidFlags);
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
-        Assert.AreEqual(0, validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
+        Assert.That(validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)), Is.EqualTo(0));
     }
 
     [TestCase(TestEnum.Enum0)]
@@ -48,8 +48,8 @@ public class FlagStateTest
 
         // check the value.
         validator.InvalidateAll();
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
-        Assert.AreEqual(0, validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
+        Assert.That(validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)), Is.EqualTo(0));
     }
 
     [TestCase(default, new TestEnum[] { })]
@@ -65,17 +65,17 @@ public class FlagStateTest
 
         // check the value.
         validator.Validate(validateFlags);
-        Assert.AreEqual(expectedValue, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(expectedValue));
 
         // value should not changed if did the same action.
         validator.Validate(validateFlags);
-        Assert.AreEqual(expectedValue, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(expectedValue));
 
         // should not exceed sum values if remove the value from the validator.
         validator.ValidateAll();
         validator.Validate(validateFlags);
-        Assert.AreEqual(Enum.GetValues<TestEnum>(), validator.GetAllValidFlags());
-        Assert.AreEqual(Enum.GetValues<TestEnum>().Sum(x => Convert.ToInt32(x)), validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Enum.GetValues<TestEnum>()));
+        Assert.That(validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)), Is.EqualTo(Enum.GetValues<TestEnum>().Sum(x => Convert.ToInt32(x))));
     }
 
     [TestCase(TestEnum.Enum0)]
@@ -89,8 +89,8 @@ public class FlagStateTest
 
         // check the value.
         validator.ValidateAll();
-        Assert.AreEqual(Enum.GetValues<TestEnum>(), validator.GetAllValidFlags());
-        Assert.AreEqual(Enum.GetValues<TestEnum>().Sum(x => Convert.ToInt32(x)), validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Enum.GetValues<TestEnum>()));
+        Assert.That(validator.GetAllValidFlags().Sum(x => Convert.ToInt32(x)), Is.EqualTo(Enum.GetValues<TestEnum>().Sum(x => Convert.ToInt32(x))));
     }
 
     [TestCase(TestEnum.Enum0, TestEnum.Enum0, true)]
@@ -108,7 +108,7 @@ public class FlagStateTest
 
         // check the value.
         validator.Validate(validateFlags);
-        Assert.AreEqual(expectedValue, validator.IsValid(validFlag));
+        Assert.That(validator.IsValid(validFlag), Is.EqualTo(expectedValue));
     }
 
     [Test]
@@ -118,11 +118,11 @@ public class FlagStateTest
 
         // Should be possible to get all tags.
         validator.ValidateAll();
-        Assert.AreEqual(Enum.GetValues<TestEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Enum.GetValues<TestEnum>()));
 
         // Should not be possible to get any tags.
         validator.InvalidateAll();
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
     }
 
     [Test]
@@ -132,11 +132,11 @@ public class FlagStateTest
 
         // Should be possible to get all tags.
         validator.ValidateAll();
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllInvalidFlags());
+        Assert.That(validator.GetAllInvalidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
 
         // Should not be possible to get any tags.
         validator.InvalidateAll();
-        Assert.AreEqual(Enum.GetValues<TestEnum>(), validator.GetAllInvalidFlags());
+        Assert.That(validator.GetAllInvalidFlags(), Is.EqualTo(Enum.GetValues<TestEnum>()));
     }
 
     [Test]
@@ -145,15 +145,15 @@ public class FlagStateTest
         var validator = new FlagState<TestAndEnum>();
 
         validator.Validate(TestAndEnum.Enum0);
-        Assert.AreEqual(new[] { TestAndEnum.Enum0 }, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(new[] { TestAndEnum.Enum0 }));
 
         validator.Validate(TestAndEnum.Enum0 | TestAndEnum.Enum1);
-        Assert.AreEqual(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }, validator.GetAllValidFlags());
-        Assert.AreEqual(Enum.GetValues<TestAndEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Enum.GetValues<TestAndEnum>()));
 
         validator.ValidateAll();
-        Assert.AreEqual(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }, validator.GetAllValidFlags());
-        Assert.AreEqual(Enum.GetValues<TestAndEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(new[] { TestAndEnum.Enum0, TestAndEnum.Enum1, TestAndEnum.Enum0And1 }));
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Enum.GetValues<TestAndEnum>()));
     }
 
     [Test]
@@ -163,13 +163,13 @@ public class FlagStateTest
         validator.ValidateAll();
 
         validator.Invalidate(TestAndEnum.Enum0);
-        Assert.AreEqual(new[] { TestAndEnum.Enum1 }, validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(new[] { TestAndEnum.Enum1 }));
 
         validator.Invalidate(TestAndEnum.Enum1);
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
 
         validator.InvalidateAll();
-        Assert.AreEqual(Array.Empty<TestEnum>(), validator.GetAllValidFlags());
+        Assert.That(validator.GetAllValidFlags(), Is.EqualTo(Array.Empty<TestEnum>()));
     }
 
     [Flags]

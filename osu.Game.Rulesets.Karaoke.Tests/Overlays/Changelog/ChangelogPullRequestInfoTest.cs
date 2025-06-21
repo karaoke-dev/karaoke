@@ -21,8 +21,8 @@ public class ChangelogPullRequestInfoTest
     {
         var result = ChangelogPullRequestInfo.GetPullRequestInfoFromLink("karaoke", url)!;
 
-        Assert.AreEqual(expectedPrs, result.PullRequests.Select(x => x.Number));
-        Assert.AreEqual(expectedUserNames, result.Users.Select(x => x.UserName));
+        Assert.That(result.PullRequests.Select(x => x.Number), Is.EqualTo(expectedPrs));
+        Assert.That(result.Users.Select(x => x.UserName), Is.EqualTo(expectedUserNames));
     }
 
     [TestCase("unknown_repo", "#2152@andy840119")] // "unknown_repo" does not in the repo list.
@@ -32,6 +32,6 @@ public class ChangelogPullRequestInfoTest
     public void TestTestGetPullRequestInfoFromLinkWithNull(string link, string url)
     {
         var result = ChangelogPullRequestInfo.GetPullRequestInfoFromLink(link, url);
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 }

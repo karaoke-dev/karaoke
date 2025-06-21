@@ -30,7 +30,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("からおけ", h.Text);
+            Assert.That(h.Text, Is.EqualTo("からおけ"));
         });
     }
 
@@ -47,7 +47,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("カラオケ", h.RubyText);
+            Assert.That(h.RubyText, Is.EqualTo("カラオケ"));
         });
     }
 
@@ -63,7 +63,7 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsTrue(h.Display);
+            Assert.That(h.Display);
         });
     }
 
@@ -81,8 +81,8 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsFalse(h.Display);
-            Assert.AreEqual(new Tone(), h.Tone);
+            Assert.That(h.Display, Is.False);
+            Assert.That(h.Tone, Is.EqualTo(new Tone()));
         });
     }
 
@@ -117,8 +117,8 @@ public partial class NotePropertyChangeHandlerTest : BaseHitObjectPropertyChange
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(new Tone(), h.Tone);
-            Assert.IsTrue(h.Display);
+            Assert.That(h.Tone, Is.EqualTo(new Tone()));
+            Assert.That(h.Display);
         });
     }
 

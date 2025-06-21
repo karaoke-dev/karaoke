@@ -31,8 +31,8 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         AssertSelectedHitObject(h =>
         {
             var singers = h.SingerIds;
-            Assert.AreEqual(1, singers.Count);
-            Assert.AreEqual(singer.ID, singers.FirstOrDefault());
+            Assert.That(singers.Count, Is.EqualTo(1));
+            Assert.That(singers.FirstOrDefault(), Is.EqualTo(singer.ID));
         });
     }
 
@@ -54,8 +54,8 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
         AssertSelectedHitObject(h =>
         {
             var singers = h.SingerIds;
-            Assert.AreEqual(1, singers.Count);
-            Assert.AreEqual(singer.ID, singers.FirstOrDefault());
+            Assert.That(singers.Count, Is.EqualTo(1));
+            Assert.That(singers.FirstOrDefault(), Is.EqualTo(singer.ID));
         });
     }
 
@@ -92,11 +92,10 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
             var singers = h.SingerIds;
 
             // should not contains removed singer.
-            Assert.IsFalse(singers.Contains(singer.ID));
-
-            // should only contain remain singer.
-            Assert.AreEqual(1, singers.Count);
-            Assert.IsTrue(singers.Contains(anotherSinger.ID));
+            Assert.That(singers.Contains(singer.ID), Is.False);
+            // should only contain remain singer。
+            Assert.That(singers.Count, Is.EqualTo(1));
+            Assert.That(singers.Contains(anotherSinger.ID), Is.True);
         });
     }
 
@@ -133,11 +132,10 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
             var singers = h.SingerIds;
 
             // should not contains removed singer.
-            Assert.IsFalse(singers.Contains(singer.ID));
-
-            // should only contain remain singer.
-            Assert.AreEqual(1, singers.Count);
-            Assert.IsTrue(singers.Contains(anotherSinger.ID));
+            Assert.That(singers.Contains(singer.ID), Is.False);
+            // should only contain remain singer。
+            Assert.That(singers.Count, Is.EqualTo(1));
+            Assert.That(singers.Contains(anotherSinger.ID), Is.True);
         });
     }
 
@@ -164,7 +162,7 @@ public partial class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTe
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.SingerIds);
+            Assert.That(h.SingerIds, Is.Empty);
         });
     }
 

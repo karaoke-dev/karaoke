@@ -25,70 +25,70 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         var singerId3 = TestCaseElementIdHelper.CreateElementIdByNumber(3);
 
         // should be valid if singer is empty.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId>());
+        Assert.That(() => lyric.SingerIds = new List<ElementId>(), Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be invalid if assign the singer.
-        Assert.DoesNotThrow(() => lyric.SingerIds.Add(singerId1));
+        Assert.That(() => lyric.SingerIds.Add(singerId1), Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, false);
 
         // should be valid again if remove the singer
-        Assert.DoesNotThrow(() => lyric.SingerIds.Remove(singerId1));
+        Assert.That(() => lyric.SingerIds.Remove(singerId1), Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be matched if include all singers
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should be matched if include all singers
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId1), new[] { new SingerState(singerId1).ChangeId(singerId2), new SingerState(singerId1).ChangeId(singerId3) } },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works even id is not by order.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId2, singerId3 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works even id is not by order.
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId3, singerId2, singerId1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId3, singerId2, singerId1 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId2), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId3), Array.Empty<SingerState>() },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works if id is duplicated
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId1, singerId1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId1, singerId1, singerId1 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
 
         // should works if id is duplicated
-        Assert.DoesNotThrow(() => lyric.SingerIds = new List<ElementId> { singerId1 });
-        Assert.DoesNotThrow(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
+        Assert.That(() => lyric.SingerIds = new List<ElementId> { singerId1 }, Throws.Nothing);
+        Assert.That(() => lyric.Singers = new Dictionary<Singer, SingerState[]>
         {
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
             { new Singer().ChangeId(singerId1), Array.Empty<SingerState>() },
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Singers, true);
     }
 
@@ -98,7 +98,7 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         var lyric = new Lyric();
 
         // page state is valid because assign the property.
-        Assert.DoesNotThrow(() => lyric.PageIndex = 1);
+        Assert.That(() => lyric.PageIndex = 1, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.Page, true);
     }
 
@@ -108,48 +108,48 @@ public class LyricWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidat
         var lyric = new Lyric();
 
         // should be valid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             lyric.ReferenceLyricId = null;
             lyric.ReferenceLyric = null;
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             lyric.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(1);
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if change the id back.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             lyric.ReferenceLyricId = null;
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be valid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             var referencedLyric = new Lyric();
 
             lyric.ReferenceLyricId = referencedLyric.ID;
             lyric.ReferenceLyric = referencedLyric;
-        });
+        }, Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() => lyric.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2));
+        Assert.That(() => lyric.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2), Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if assign the reference lyric to the matched lyric.
-        Assert.DoesNotThrow(() => lyric.ReferenceLyric = new Lyric().ChangeId(2));
+        Assert.That(() => lyric.ReferenceLyric = new Lyric().ChangeId(2), Throws.Nothing);
         AssetIsValid(lyric, LyricWorkingProperty.ReferenceLyric, true);
 
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = new Lyric().ChangeId(3));
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => lyric.ReferenceLyric = null);
+        Assert.That(() => lyric.ReferenceLyric = new Lyric().ChangeId(3), Throws.TypeOf<InvalidWorkingPropertyAssignException>());
+        Assert.That(() => lyric.ReferenceLyric = null, Throws.TypeOf<InvalidWorkingPropertyAssignException>());
     }
 
     protected override bool IsInitialStateValid(LyricWorkingProperty flag)

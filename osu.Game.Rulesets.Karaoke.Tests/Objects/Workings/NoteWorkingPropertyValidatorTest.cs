@@ -17,7 +17,7 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         var note = new Note();
 
         // page state is valid because assign the property.
-        Assert.DoesNotThrow(() => note.PageIndex = 1);
+        Assert.That(() => note.PageIndex = 1, Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.Page, true);
     }
 
@@ -27,48 +27,48 @@ public class NoteWorkingPropertyValidatorTest : HitObjectWorkingPropertyValidato
         var note = new Note();
 
         // should be valid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             note.ReferenceLyricId = null;
             note.ReferenceLyric = null;
-        });
+        }, Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             note.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(1);
-        });
+        }, Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if change the id back.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             note.ReferenceLyricId = null;
-        });
+        }, Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should be valid if change the reference lyric id.
-        Assert.DoesNotThrow(() =>
+        Assert.That(() =>
         {
             var lyric = new Lyric();
 
             note.ReferenceLyricId = lyric.ID;
             note.ReferenceLyric = lyric;
-        });
+        }, Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should be invalid if change the reference lyric id.
-        Assert.DoesNotThrow(() => note.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2));
+        Assert.That(() => note.ReferenceLyricId = TestCaseElementIdHelper.CreateElementIdByNumber(2), Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, false);
 
         // should be valid again if assign the reference lyric to the matched lyric.
-        Assert.DoesNotThrow(() => note.ReferenceLyric = new Lyric().ChangeId(2));
+        Assert.That(() => note.ReferenceLyric = new Lyric().ChangeId(2), Throws.Nothing);
         AssetIsValid(note, NoteWorkingProperty.ReferenceLyric, true);
 
         // should throw the exception if assign the working reference lyric to the unmatched reference lyric id.
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = new Lyric().ChangeId(3));
-        Assert.Throws<InvalidWorkingPropertyAssignException>(() => note.ReferenceLyric = null);
+        Assert.That(() => note.ReferenceLyric = new Lyric().ChangeId(3), Throws.TypeOf<InvalidWorkingPropertyAssignException>());
+        Assert.That(() => note.ReferenceLyric = null, Throws.TypeOf<InvalidWorkingPropertyAssignException>());
     }
 
     protected override bool IsInitialStateValid(NoteWorkingProperty flag)

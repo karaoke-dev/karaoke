@@ -31,9 +31,9 @@ public partial class BeatmapTranslationsChangeHandlerTest : BaseChangeHandlerTes
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
-            Assert.AreEqual(2, karaokeBeatmap.AvailableTranslationLanguages.Count);
-            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslationLanguages[0]);
-            Assert.AreEqual(new CultureInfo("Ja-jp"), karaokeBeatmap.AvailableTranslationLanguages[1]);
+            Assert.That(karaokeBeatmap.AvailableTranslationLanguages.Count, Is.EqualTo(2));
+            Assert.That(karaokeBeatmap.AvailableTranslationLanguages[0], Is.EqualTo(new CultureInfo("zh-TW")));
+            Assert.That(karaokeBeatmap.AvailableTranslationLanguages[1], Is.EqualTo(new CultureInfo("Ja-jp")));
         });
     }
 
@@ -56,8 +56,8 @@ public partial class BeatmapTranslationsChangeHandlerTest : BaseChangeHandlerTes
 
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
-            Assert.AreEqual(1, karaokeBeatmap.AvailableTranslationLanguages.Count);
-            Assert.AreEqual(new CultureInfo("zh-TW"), karaokeBeatmap.AvailableTranslationLanguages[0]);
+            Assert.That(karaokeBeatmap.AvailableTranslationLanguages.Count, Is.EqualTo(1));
+            Assert.That(karaokeBeatmap.AvailableTranslationLanguages[0], Is.EqualTo(new CultureInfo("zh-TW")));
         });
     }
 
@@ -85,8 +85,8 @@ public partial class BeatmapTranslationsChangeHandlerTest : BaseChangeHandlerTes
 
         TriggerHandlerChanged(c =>
         {
-            Assert.AreEqual(false, c.IsLanguageContainsTranslation(new CultureInfo("Ja-jp")));
-            Assert.AreEqual(true, c.IsLanguageContainsTranslation(new CultureInfo("zh-TW")));
+            Assert.That(c.IsLanguageContainsTranslation(new CultureInfo("Ja-jp")), Is.False);
+            Assert.That(c.IsLanguageContainsTranslation(new CultureInfo("zh-TW")), Is.True);
         });
     }
 

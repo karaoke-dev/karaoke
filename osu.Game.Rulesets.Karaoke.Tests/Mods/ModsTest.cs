@@ -19,11 +19,11 @@ public class ModsTest
 
         // Name should not duplicated.
         bool hasDuplicatedName = mods.GroupBy(x => x.Name).Any(g => g.Count() > 1);
-        Assert.IsFalse(hasDuplicatedName);
+        Assert.That(hasDuplicatedName, Is.False);
 
         // Acronym should not duplicated.
         bool hasDuplicatedAcronym = mods.GroupBy(x => x.Acronym).Any(g => g.Count() > 1);
-        Assert.IsFalse(hasDuplicatedAcronym);
+        Assert.That(hasDuplicatedAcronym, Is.False);
     }
 
     /// <summary>

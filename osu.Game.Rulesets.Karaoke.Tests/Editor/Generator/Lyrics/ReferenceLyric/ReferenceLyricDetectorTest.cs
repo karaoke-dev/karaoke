@@ -87,7 +87,7 @@ public class ReferenceLyricDetectorTest : BaseLyricDetectorTest<ReferenceLyricDe
 
     protected override void AssertEqual(Lyric? expected, Lyric? actual)
     {
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     #region Utility function

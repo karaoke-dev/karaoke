@@ -28,36 +28,36 @@ public class NoteTest
 
         var clonedNote = note.DeepClone();
 
-        Assert.AreNotSame(clonedNote.TextBindable, note.TextBindable);
-        Assert.AreEqual(clonedNote.Text, note.Text);
+        Assert.That(clonedNote.TextBindable, Is.Not.SameAs(note.TextBindable));
+        Assert.That(clonedNote.Text, Is.EqualTo(note.Text));
 
-        Assert.AreNotSame(clonedNote.RubyTextBindable, note.RubyTextBindable);
-        Assert.AreEqual(clonedNote.RubyText, note.RubyText);
+        Assert.That(clonedNote.RubyTextBindable, Is.Not.SameAs(note.RubyTextBindable));
+        Assert.That(clonedNote.RubyText, Is.EqualTo(note.RubyText));
 
-        Assert.AreNotSame(clonedNote.DisplayBindable, note.DisplayBindable);
-        Assert.AreEqual(clonedNote.Display, note.Display);
+        Assert.That(clonedNote.DisplayBindable, Is.Not.SameAs(note.DisplayBindable));
+        Assert.That(clonedNote.Display, Is.EqualTo(note.Display));
 
-        Assert.AreNotSame(clonedNote.ToneBindable, note.ToneBindable);
-        Assert.AreEqual(clonedNote.Tone, note.Tone);
-
-        // note time will not being copied because the time is based on the time-tag in the lyric.
-        Assert.AreNotSame(clonedNote.StartTimeBindable, note.StartTimeBindable);
-        Assert.AreEqual(clonedNote.StartTime, clonedNote.StartTime);
+        Assert.That(clonedNote.ToneBindable, Is.Not.SameAs(note.ToneBindable));
+        Assert.That(clonedNote.Tone, Is.EqualTo(note.Tone));
 
         // note time will not being copied because the time is based on the time-tag in the lyric.
-        Assert.AreEqual(clonedNote.Duration, clonedNote.Duration);
+        Assert.That(clonedNote.StartTimeBindable, Is.Not.SameAs(note.StartTimeBindable));
+        Assert.That(clonedNote.StartTime, Is.EqualTo(clonedNote.StartTime));
 
         // note time will not being copied because the time is based on the time-tag in the lyric.
-        Assert.AreEqual(clonedNote.EndTime, clonedNote.EndTime);
+        Assert.That(clonedNote.Duration, Is.EqualTo(clonedNote.Duration));
 
-        Assert.AreEqual(clonedNote.StartTimeOffset, note.StartTimeOffset);
+        // note time will not being copied because the time is based on the time-tag in the lyric.
+        Assert.That(clonedNote.EndTime, Is.EqualTo(clonedNote.EndTime));
 
-        Assert.AreEqual(clonedNote.EndTimeOffset, note.EndTimeOffset);
+        Assert.That(clonedNote.StartTimeOffset, Is.EqualTo(note.StartTimeOffset));
 
-        Assert.AreSame(clonedNote.ReferenceLyric, note.ReferenceLyric);
+        Assert.That(clonedNote.EndTimeOffset, Is.EqualTo(note.EndTimeOffset));
 
-        Assert.AreNotSame(clonedNote.ReferenceTimeTagIndexBindable, note.ReferenceTimeTagIndexBindable);
-        Assert.AreEqual(clonedNote.ReferenceTimeTagIndex, note.ReferenceTimeTagIndex);
+        Assert.That(clonedNote.ReferenceLyric, Is.SameAs(note.ReferenceLyric));
+
+        Assert.That(clonedNote.ReferenceTimeTagIndexBindable, Is.Not.SameAs(note.ReferenceTimeTagIndexBindable));
+        Assert.That(clonedNote.ReferenceTimeTagIndex, Is.EqualTo(note.ReferenceTimeTagIndex));
     }
 
     [Test]
@@ -66,9 +66,9 @@ public class NoteTest
         var note = new Note();
 
         // Should not have the time.
-        Assert.AreEqual(0, note.StartTime);
-        Assert.AreEqual(0, note.Duration);
-        Assert.AreEqual(0, note.EndTime);
+        Assert.That(note.StartTime, Is.EqualTo(0));
+        Assert.That(note.Duration, Is.EqualTo(0));
+        Assert.That(note.EndTime, Is.EqualTo(0));
 
         const double first_time_tag_time = 1000;
         const double second_time_tag_time = 3000;
@@ -78,27 +78,27 @@ public class NoteTest
         note.ReferenceLyric = referencedLyric;
 
         // Should have calculated time.
-        Assert.AreEqual(first_time_tag_time, note.StartTime);
-        Assert.AreEqual(duration, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(first_time_tag_time));
+        Assert.That(note.Duration, Is.EqualTo(duration));
 
         const double time_tag_offset_time = 500;
         referencedLyric.TimeTags.ForEach(x => x.Time += time_tag_offset_time);
 
         // Should change the time if time-tag time has been changed.
-        Assert.AreEqual(first_time_tag_time + time_tag_offset_time, note.StartTime);
-        Assert.AreEqual(duration, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(first_time_tag_time + time_tag_offset_time));
+        Assert.That(note.Duration, Is.EqualTo(duration));
 
         note.ReferenceTimeTagIndex = 1;
 
         // Duration will be zero if there's no next time-tag.
-        Assert.AreEqual(second_time_tag_time + time_tag_offset_time, note.StartTime);
-        Assert.AreEqual(0, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(second_time_tag_time + time_tag_offset_time));
+        Assert.That(note.Duration, Is.EqualTo(0));
 
         note.ReferenceTimeTagIndex = 2;
 
         // Time will be zero if there's no matched time-tag.
-        Assert.AreEqual(0, note.StartTime);
-        Assert.AreEqual(0, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(0));
+        Assert.That(note.Duration, Is.EqualTo(0));
 
         const double note_start_offset_time = 500;
         const double note_end_offset_time = 500;
@@ -107,20 +107,20 @@ public class NoteTest
         note.EndTimeOffset = note_end_offset_time;
 
         // start time and end time will apply the offset time.
-        Assert.AreEqual(first_time_tag_time + time_tag_offset_time + note_start_offset_time, note.StartTime);
-        Assert.AreEqual(duration + time_tag_offset_time - note_end_offset_time, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(first_time_tag_time + time_tag_offset_time + note_start_offset_time));
+        Assert.That(note.Duration, Is.EqualTo(duration + time_tag_offset_time - note_end_offset_time));
 
         note.EndTimeOffset = -100000;
 
         // duration should not be empty.
-        Assert.AreEqual(first_time_tag_time + time_tag_offset_time + note_start_offset_time, note.StartTime);
-        Assert.AreEqual(0, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(first_time_tag_time + time_tag_offset_time + note_start_offset_time));
+        Assert.That(note.Duration, Is.EqualTo(0));
 
         note.ReferenceLyricId = null;
         note.ReferenceLyric = null;
 
         // time will be zero if lyric has been removed.
-        Assert.AreEqual(0, note.StartTime);
-        Assert.AreEqual(0, note.Duration);
+        Assert.That(note.StartTime, Is.EqualTo(0));
+        Assert.That(note.Duration, Is.EqualTo(0));
     }
 }

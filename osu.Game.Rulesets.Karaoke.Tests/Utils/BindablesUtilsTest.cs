@@ -29,8 +29,8 @@ public class BindablesUtilsTest
         if (secondNewValues != null)
             secondBindableList.AddRange(secondNewValues);
 
-        Assert.AreEqual(expectedFirstValues, firstBindableList.ToArray());
-        Assert.AreEqual(expectedSecondValues, secondBindableList.ToArray());
+        Assert.That(expectedFirstValues, Is.EqualTo(firstBindableList.ToArray()));
+        Assert.That(expectedSecondValues, Is.EqualTo(secondBindableList.ToArray()));
     }
 
     [TestCase(null, null, new[] { 1 }, null, new int[] { }, new int[] { })] // should not clear if has no values.
@@ -56,8 +56,8 @@ public class BindablesUtilsTest
         if (secondRemoveValues != null)
             secondBindableList.RemoveAll(secondRemoveValues.Contains);
 
-        Assert.AreEqual(expectedFirstValues, firstBindableList.ToArray());
-        Assert.AreEqual(expectedSecondValues, secondBindableList.ToArray());
+        Assert.That(expectedFirstValues, Is.EqualTo(firstBindableList.ToArray()));
+        Assert.That(expectedSecondValues, Is.EqualTo(secondBindableList.ToArray()));
     }
 
     [TestCase(new[] { 1 }, null, null, new[] { 1 })] // should sync default value also.
@@ -78,7 +78,7 @@ public class BindablesUtilsTest
         if (newValues != null)
             firstBindableList.AddRange(newValues);
 
-        Assert.AreEqual(expectedValuesInSecondBindable, secondBindableList.ToArray());
+        Assert.That(expectedValuesInSecondBindable, Is.EqualTo(secondBindableList.ToArray()));
     }
 
     [TestCase(new[] { 1, 2, 3 }, null, new[] { 1 }, new[] { 2, 3 })]
@@ -94,6 +94,6 @@ public class BindablesUtilsTest
 
         firstBindableList.RemoveAll(removeValues.Contains);
 
-        Assert.AreEqual(expectedValuesInSecondBindable, secondBindableList.ToArray());
+        Assert.That(expectedValuesInSecondBindable, Is.EqualTo(secondBindableList.ToArray()));
     }
 }

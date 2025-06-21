@@ -25,6 +25,6 @@ public class LrcParserUtilsTest
         var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
         double[] actual = LrcParserUtils.ToDictionary(timeTags).Values.ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

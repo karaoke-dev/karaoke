@@ -19,7 +19,7 @@ public class BindableCultureInfoTest
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(1, 1)]
@@ -32,7 +32,7 @@ public class BindableCultureInfoTest
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(1, 1)]
@@ -45,7 +45,7 @@ public class BindableCultureInfoTest
 
         var expected = new CultureInfo(expectedLcid);
         var actual = bindable.Value;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("中文（简体）")]

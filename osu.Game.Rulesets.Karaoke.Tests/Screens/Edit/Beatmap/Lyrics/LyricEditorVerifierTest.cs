@@ -165,7 +165,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         AddStep("Check hit-object issue amount.", () =>
         {
             var editModeIssues = verifier.GetBindable(karaokeHitObject);
-            Assert.AreEqual(issueCount, editModeIssues.Count);
+            Assert.That(editModeIssues.Count, Is.EqualTo(issueCount));
         });
     }
 
@@ -174,7 +174,7 @@ public partial class LyricEditorVerifierTest : EditorClockTestScene
         AddStep("Check edit mode issue amount.", () =>
         {
             var editModeIssues = verifier.GetIssueByType(editMode);
-            Assert.AreEqual(issueCount, editModeIssues.Count);
+            Assert.That(editModeIssues.Count, Is.EqualTo(issueCount));
         });
     }
 

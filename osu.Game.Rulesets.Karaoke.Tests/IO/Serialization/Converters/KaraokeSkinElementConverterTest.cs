@@ -29,7 +29,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
         const string expected =
             "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romanisation_interval\":2,\"ruby_alignment\":2,\"romanisation_alignment\":2,\"ruby_margin\":4,\"romanisation_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romanisation_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
         string actual = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class KaraokeSkinElementConverterTest : BaseSingleConverterTest<KaraokeSk
 
         const string expected = "{\"$type\":1,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
         string actual = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]

@@ -17,6 +17,6 @@ public class LyricEditorTest
     public void TestGetSuitableLayout(LyricEditorLayout supportedLayout, LyricEditorLayout preferLayout, LyricEditorLayout actualLayout)
     {
         var expectedLayout = LyricEditor.GetSuitableLayout(supportedLayout, preferLayout);
-        Assert.AreEqual(expectedLayout, actualLayout);
+        Assert.That(actualLayout, Is.EqualTo(expectedLayout));
     }
 }

@@ -24,8 +24,8 @@ public partial class LyricTranslationChangeHandlerTest : LyricPropertyChangeHand
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.Translations.Count);
-            Assert.AreEqual("からおけ", h.Translations[new CultureInfo(17)]);
+            Assert.That(h.Translations.Count, Is.EqualTo(1));
+            Assert.That(h.Translations[new CultureInfo(17)], Is.EqualTo("からおけ"));
         });
     }
 
@@ -45,8 +45,8 @@ public partial class LyricTranslationChangeHandlerTest : LyricPropertyChangeHand
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.Translations.Count);
-            Assert.AreEqual("karaoke", h.Translations[new CultureInfo(17)]);
+            Assert.That(h.Translations.Count, Is.EqualTo(1));
+            Assert.That(h.Translations[new CultureInfo(17)], Is.EqualTo("karaoke"));
         });
     }
 
@@ -66,7 +66,7 @@ public partial class LyricTranslationChangeHandlerTest : LyricPropertyChangeHand
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Translations);
+            Assert.That(h.Translations, Is.Empty);
         });
     }
 
@@ -86,7 +86,7 @@ public partial class LyricTranslationChangeHandlerTest : LyricPropertyChangeHand
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.Translations);
+            Assert.That(h.Translations, Is.Empty);
         });
     }
 

@@ -15,7 +15,7 @@ public class CharUtilsTest
     public void TestIsSpacing(char c, bool expected)
     {
         bool actual = CharUtils.IsSpacing(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase('ひ', true)]
@@ -31,7 +31,7 @@ public class CharUtilsTest
     public void TestIsKana(char c, bool expected)
     {
         bool actual = CharUtils.IsKana(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase('A', true)]
@@ -43,7 +43,7 @@ public class CharUtilsTest
     public void TestIsEnglish(char c, bool expected)
     {
         bool actual = CharUtils.IsEnglish(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(':', true)]
@@ -55,7 +55,7 @@ public class CharUtilsTest
     public void TestIsAsciiSymbol(char c, bool expected)
     {
         bool actual = CharUtils.IsAsciiSymbol(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase('你', true)]
@@ -74,7 +74,7 @@ public class CharUtilsTest
     public void TestIsChinese(char c, bool expected)
     {
         bool actual = CharUtils.IsChinese(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase('A', true)]
@@ -89,6 +89,6 @@ public class CharUtilsTest
     public void TestIsLatin(char c, bool expected)
     {
         bool actual = CharUtils.IsLatin(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

@@ -27,7 +27,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         string expected =
             $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
         string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -39,20 +39,20 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
             $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{expected.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"samples\":[],\"auxiliary_samples\":[]}}";
         var actual = JsonConvert.DeserializeObject<Lyric>(json, CreateSettings())!;
 
-        Assert.AreEqual(expected.ID, actual.ID);
-        Assert.AreEqual(expected.Text, actual.Text);
+        Assert.That(actual.ID, Is.EqualTo(expected.ID));
+        Assert.That(actual.Text, Is.EqualTo(expected.Text));
         TimeTagAssert.ArePropertyEqual(expected.TimeTags, actual.TimeTags);
         RubyTagAssert.ArePropertyEqual(expected.RubyTags, actual.RubyTags);
-        Assert.AreEqual(expected.StartTime, actual.StartTime);
-        Assert.AreEqual(expected.Duration, actual.Duration);
-        Assert.AreEqual(expected.EndTime, actual.EndTime);
-        Assert.AreEqual(expected.SingerIds, actual.SingerIds);
-        Assert.AreEqual(expected.Translations, actual.Translations);
-        Assert.AreEqual(expected.Language, actual.Language);
-        Assert.AreEqual(expected.Lock, actual.Lock);
-        Assert.AreEqual(expected.ReferenceLyric, actual.ReferenceLyric);
-        Assert.AreEqual(expected.ReferenceLyricId, actual.ReferenceLyricId);
-        Assert.AreEqual(expected.ReferenceLyricConfig, actual.ReferenceLyricConfig);
+        Assert.That(actual.StartTime, Is.EqualTo(expected.StartTime));
+        Assert.That(actual.Duration, Is.EqualTo(expected.Duration));
+        Assert.That(actual.EndTime, Is.EqualTo(expected.EndTime));
+        Assert.That(actual.SingerIds, Is.EqualTo(expected.SingerIds));
+        Assert.That(actual.Translations, Is.EqualTo(expected.Translations));
+        Assert.That(actual.Language, Is.EqualTo(expected.Language));
+        Assert.That(actual.Lock, Is.EqualTo(expected.Lock));
+        Assert.That(actual.ReferenceLyric, Is.EqualTo(expected.ReferenceLyric));
+        Assert.That(actual.ReferenceLyricId, Is.EqualTo(expected.ReferenceLyricId));
+        Assert.That(actual.ReferenceLyricConfig, Is.EqualTo(expected.ReferenceLyricConfig));
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         string expected =
             $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"reference_lyric_id\":\"{lyric.ReferenceLyricId}\",\"reference_lyric_config\":{{\"$type\":\"SyncLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
         string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -86,6 +86,6 @@ public class LyricConverterTest : BaseSingleConverterTest<LyricConverter>
         string expected =
             $"{{\"time_preempt\":600.0,\"time_fade_in\":400.0,\"start_time_bindable\":0.0,\"samples_bindable\":[],\"id\":\"{lyric.ID}\",\"text\":\"\",\"time_tags\":[],\"ruby_tags\":[],\"singer_ids\":[],\"translations\":{{}},\"reference_lyric_id\":\"{lyric.ReferenceLyricId}\",\"reference_lyric_config\":{{\"$type\":\"ReferenceLyricConfig\"}},\"samples\":[],\"auxiliary_samples\":[]}}";
         string actual = JsonConvert.SerializeObject(lyric, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

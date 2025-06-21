@@ -17,7 +17,7 @@ public class CultureInfoUtilsTest
         // seems there are 276 languages in the world.
         const int expected = 276;
         int actual = CultureInfoUtils.GetAvailableLanguages().Length;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -31,9 +31,9 @@ public class CultureInfoUtilsTest
         int uniqueThreeLetterIsoLanguageNameAmount = languages.Select(x => x.ThreeLetterISOLanguageName).Where(x => !string.IsNullOrEmpty(x)).Distinct().Count();
 
         // todo: we should make sure that all the language code is not duplicated.
-        Assert.AreEqual(160, uniqueLcidAmount);
-        Assert.AreEqual(244, uniqueTwoLetterIsoLanguageNameAmount);
-        Assert.AreEqual(244, uniqueThreeLetterIsoLanguageNameAmount);
+        Assert.That(uniqueLcidAmount, Is.EqualTo(160));
+        Assert.That(uniqueTwoLetterIsoLanguageNameAmount, Is.EqualTo(244));
+        Assert.That(uniqueThreeLetterIsoLanguageNameAmount, Is.EqualTo(244));
     }
 
     [TestCase("zh-Hans", true)] // 中文（简体）, 4
@@ -46,7 +46,7 @@ public class CultureInfoUtilsTest
     {
         var cultureInfo = new CultureInfo(name);
         bool actual = CultureInfoUtils.IsLanguage(cultureInfo);
-        Assert.AreEqual(isLanguage, actual);
+        Assert.That(actual, Is.EqualTo(isLanguage));
     }
 
     [TestCase(4, true)] // 中文（简体）
@@ -57,7 +57,7 @@ public class CultureInfoUtilsTest
     {
         var cultureInfo = new CultureInfo(lcid);
         bool actual = CultureInfoUtils.IsLanguage(cultureInfo);
-        Assert.AreEqual(isLanguage, actual);
+        Assert.That(actual, Is.EqualTo(isLanguage));
     }
 
     [TestCase(4, "中文（简体）")]
@@ -69,7 +69,7 @@ public class CultureInfoUtilsTest
     {
         var cultureInfo = new CultureInfo(lcid);
         string actual = CultureInfoUtils.GetLanguageDisplayText(cultureInfo);
-        Assert.AreEqual(displayText, actual);
+        Assert.That(actual, Is.EqualTo(displayText));
     }
 
     [Test]
@@ -86,7 +86,7 @@ public class CultureInfoUtilsTest
             // get the lcid and convert back to culture info again.
             int lcid = CultureInfoUtils.GetSaveCultureInfoId(cultureInfo);
             var actual = CultureInfoUtils.CreateLoadCultureInfoById(lcid);
-            Assert.AreEqual(cultureInfo, actual);
+            Assert.That(actual, Is.EqualTo(cultureInfo));
         }
     }
 
@@ -104,7 +104,7 @@ public class CultureInfoUtilsTest
             // get the code and convert back to culture info again.
             string lcid = CultureInfoUtils.GetSaveCultureInfoCode(cultureInfo);
             var actual = CultureInfoUtils.CreateLoadCultureInfoByCode(lcid);
-            Assert.AreEqual(cultureInfo, actual);
+            Assert.That(actual, Is.EqualTo(cultureInfo));
         }
     }
 }
