@@ -3,9 +3,27 @@
   "isRoot": true,
   "tools": {
     "ppy.localisationanalyser.tools": {
-      "version": "2023.1117.0",
+      "version": "2024.802.0",
       "commands": [
         "localisation"
+      ]
+    },
+    "jetbrains.resharper.globaltools": {
+      "version": "2025.1.3",
+      "commands": [
+        "jb"
+      ]
+    },
+    "nvika": {
+      "version": "4.0.0",
+      "commands": [
+        "nvika"
+      ]
+    },
+    "codefilesanity": {
+      "version": "0.0.37",
+      "commands": [
+        "CodeFileSanity"
       ]
     }
   }
