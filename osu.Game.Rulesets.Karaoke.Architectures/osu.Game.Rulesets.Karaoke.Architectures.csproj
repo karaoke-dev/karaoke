@@ -12,6 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="TngTech.ArchUnitNET" Version="0.11.0" />
+    <PackageReference Include="TngTech.ArchUnitNET" Version="0.11.4" />
   </ItemGroup>
 </Project>
