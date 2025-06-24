@@ -31,7 +31,7 @@ public class TimeTagsConverterTest : BaseSingleConverterTest<TimeTagsConverter>
 
         const string expected = "[\"[0,start]:0\",\"[0,end]:1000\"]";
         string actual = JsonConvert.SerializeObject(timeTags, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]

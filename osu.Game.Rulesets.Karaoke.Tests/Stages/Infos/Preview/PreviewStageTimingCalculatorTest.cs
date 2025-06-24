@@ -44,7 +44,7 @@ public class PreviewStageTimingCalculatorTest
 
         var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateStartTime(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(lyric_1_id, 2000)]
@@ -59,7 +59,7 @@ public class PreviewStageTimingCalculatorTest
 
         var calculator = createCalculator(beatmap);
         double actual = calculator.CalculateEndTime(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(lyric_1_id, new string[] { })]
@@ -75,7 +75,7 @@ public class PreviewStageTimingCalculatorTest
         var calculator = createCalculator(beatmap);
         var expected = convertKeyToDictionary(timing);
         var actual = calculator.CalculateTimings(lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     private static IDictionary<int, double> convertKeyToDictionary(IEnumerable<string> values)

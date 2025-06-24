@@ -24,7 +24,7 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
     public void TestAllInvalidateTest([Values] TFlag flag)
     {
         // run this test case just make sure that all working property are checked.
-        Assert.DoesNotThrow(() => new THitObject().InvalidateWorkingProperty(flag));
+        Assert.That(() => new THitObject().InvalidateWorkingProperty(flag), Throws.Nothing);
     }
 
     protected void AssetInitialStateIsValid(THitObject hitObject, TFlag flag)
@@ -35,7 +35,7 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
 
     protected void AssetIsValid(THitObject hitObject, TFlag flag, bool isValid)
     {
-        Assert.AreEqual(isValid, !hitObject.GetAllInvalidWorkingProperties().Contains(flag));
+        Assert.That(!hitObject.GetAllInvalidWorkingProperties().Contains(flag), Is.EqualTo(isValid));
     }
 
     protected abstract bool IsInitialStateValid(TFlag flag);

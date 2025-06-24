@@ -21,7 +21,7 @@ public class ObjectAssert : Assert
         string expectJsonString = JsonConvert.SerializeObject(expected, settings);
         string actualJsonString = JsonConvert.SerializeObject(actual, settings);
 
-        AreEqual(expectJsonString, actualJsonString);
+        That(expectJsonString, Is.EqualTo(actualJsonString));
     }
 
     private class WritablePropertiesOnlyResolver : DefaultContractResolver

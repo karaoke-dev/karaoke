@@ -24,6 +24,6 @@ public class NoteUtilsTest
         };
 
         string actual = NoteUtils.DisplayText(note, useRubyTextIfHave);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

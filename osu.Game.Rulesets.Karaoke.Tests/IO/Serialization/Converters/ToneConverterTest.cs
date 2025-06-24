@@ -26,7 +26,7 @@ public class ToneConverterTest : BaseSingleConverterTest<ToneConverter>
 
         string expected = $"{json}";
         string actual = JsonConvert.SerializeObject(tone, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("1.5", 1, true)]
@@ -43,6 +43,6 @@ public class ToneConverterTest : BaseSingleConverterTest<ToneConverter>
             Half = half,
         };
         var actual = JsonConvert.DeserializeObject<Tone>($"{json}", CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

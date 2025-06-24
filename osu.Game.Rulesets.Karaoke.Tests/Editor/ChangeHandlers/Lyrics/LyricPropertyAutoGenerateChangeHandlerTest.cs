@@ -46,8 +46,8 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsNotNull(h.ReferenceLyric);
-            Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
+            Assert.That(h.ReferenceLyric, Is.Not.Null);
+            Assert.That(h.ReferenceLyricConfig, Is.InstanceOf<SyncLyricConfig>());
         });
     }
 
@@ -83,7 +83,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(new CultureInfo("ja"), h.Language);
+            Assert.That(h.Language, Is.EqualTo(new CultureInfo("ja")));
         });
     }
 
@@ -99,7 +99,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsNull(h.Language);
+            Assert.That(h.Language, Is.Null);
         });
     }
 
@@ -121,8 +121,8 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
         AssertSelectedHitObject(h =>
         {
             var rubyTags = h.RubyTags;
-            Assert.AreEqual(1, rubyTags.Count);
-            Assert.AreEqual("かぜ", rubyTags[0].Text);
+            Assert.That(rubyTags.Count, Is.EqualTo(1));
+            Assert.That(rubyTags[0].Text, Is.EqualTo("かぜ"));
         });
     }
 
@@ -166,7 +166,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(5, h.TimeTags.Count);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(5));
         });
     }
 
@@ -211,7 +211,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("karaoke", h.TimeTags[0].RomanisedSyllable);
+            Assert.That(h.TimeTags[0].RomanisedSyllable, Is.EqualTo("karaoke"));
         });
     }
 
@@ -256,11 +256,11 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
         AssertSelectedHitObject(h =>
         {
             var actualNotes = getMatchedNotes(h);
-            Assert.AreEqual(4, actualNotes.Length);
-            Assert.AreEqual("カ", actualNotes[0].Text);
-            Assert.AreEqual("ラ", actualNotes[1].Text);
-            Assert.AreEqual("オ", actualNotes[2].Text);
-            Assert.AreEqual("ケ", actualNotes[3].Text);
+            Assert.That(actualNotes.Length, Is.EqualTo(4));
+            Assert.That(actualNotes[0].Text, Is.EqualTo("カ"));
+            Assert.That(actualNotes[1].Text, Is.EqualTo("ラ"));
+            Assert.That(actualNotes[2].Text, Is.EqualTo("オ"));
+            Assert.That(actualNotes[3].Text, Is.EqualTo("ケ"));
         });
     }
 
@@ -314,17 +314,17 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsTrue(c.CanGenerate(type));
+            Assert.That(c.CanGenerate(type), Is.True);
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsEmpty(c.GetGeneratorNotSupportedLyrics(type));
+            Assert.That(c.GetGeneratorNotSupportedLyrics(type), Is.Empty);
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.DoesNotThrow(() => c.AutoGenerate(type));
+            Assert.That(() => c.AutoGenerate(type), Throws.Nothing);
         });
     }
 
@@ -336,18 +336,18 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsFalse(c.CanGenerate(type));
+            Assert.That(c.CanGenerate(type), Is.False);
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics(type));
+            Assert.That(c.GetGeneratorNotSupportedLyrics(type), Is.Not.Empty);
         });
 
         TriggerHandlerChanged(c =>
         {
             var exception = Assert.Catch(() => c.AutoGenerate(type));
-            Assert.Contains(exception?.GetType(), new[] { typeof(GeneratorNotSupportedException), typeof(DetectorNotSupportedException) });
+            Assert.That(new[] { typeof(GeneratorNotSupportedException), typeof(DetectorNotSupportedException) }, Does.Contain(exception?.GetType()));
         });
     }
 
@@ -378,12 +378,12 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsFalse(c.CanGenerate(type));
+            Assert.That(c.CanGenerate(type), Is.False);
         });
 
         TriggerHandlerChanged(c =>
         {
-            Assert.IsNotEmpty(c.GetGeneratorNotSupportedLyrics(type));
+            Assert.That(c.GetGeneratorNotSupportedLyrics(type), Is.Not.Empty);
         });
 
         TriggerHandlerChangedWithException<ChangeForbiddenException>(c => c.AutoGenerate(type));

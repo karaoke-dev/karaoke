@@ -33,20 +33,20 @@ public class KaraokeLegacyBeatmapDecoderTest
         using var stream = new LineBufferedReader(resStream);
 
         var decoder = Decoder.GetDecoder<Beatmap>(stream);
-        Assert.AreEqual(typeof(KaraokeLegacyBeatmapDecoder), decoder.GetType());
+        Assert.That(decoder.GetType(), Is.EqualTo(typeof(KaraokeLegacyBeatmapDecoder)));
 
         var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
-        Assert.AreEqual(1, working.Beatmap.BeatmapVersion);
-        Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapVersion);
+        Assert.That(working.Beatmap.BeatmapVersion, Is.EqualTo(1));
+        Assert.That(working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapVersion, Is.EqualTo(1));
 
         // Test lyric part decode result
         var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
-        Assert.AreEqual(54, lyrics.Count());
+        Assert.That(lyrics.Count(), Is.EqualTo(54));
 
         // Test note decode part
         var notes = working.Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToList();
-        Assert.AreEqual(36, notes.Count);
+        Assert.That(notes.Count, Is.EqualTo(36));
 
         testNote("た", 0, actualNote: notes[0]);
         testNote("だ", 0, actualNote: notes[1]);
@@ -86,24 +86,24 @@ public class KaraokeLegacyBeatmapDecoderTest
         var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
         // Check is not null
-        Assert.IsNotNull(translations);
+        Assert.That(translations, Is.Not.Null);
 
         // Check translations count
-        Assert.AreEqual(2, translations.Count);
+        Assert.That(translations.Count, Is.EqualTo(2));
 
         // All lyric should have two translations
-        Assert.AreEqual(2, lyrics[0].Translations.Count);
-        Assert.AreEqual(2, lyrics[1].Translations.Count);
+        Assert.That(lyrics[0].Translations.Count, Is.EqualTo(2));
+        Assert.That(lyrics[1].Translations.Count, Is.EqualTo(2));
 
         // Check chinese translations
         var chineseLanguageId = translations[0];
-        Assert.AreEqual("卡拉OK", lyrics[0].Translations[chineseLanguageId]);
-        Assert.AreEqual("喜歡", lyrics[1].Translations[chineseLanguageId]);
+        Assert.That(lyrics[0].Translations[chineseLanguageId], Is.EqualTo("卡拉OK"));
+        Assert.That(lyrics[1].Translations[chineseLanguageId], Is.EqualTo("喜歡"));
 
         // Check english translations
         var englishLanguageId = translations[1];
-        Assert.AreEqual("karaoke", lyrics[0].Translations[englishLanguageId]);
-        Assert.AreEqual("like it", lyrics[1].Translations[englishLanguageId]);
+        Assert.That(lyrics[0].Translations[englishLanguageId], Is.EqualTo("karaoke"));
+        Assert.That(lyrics[1].Translations[englishLanguageId], Is.EqualTo("like it"));
     }
 
     private static KaraokeBeatmap decodeBeatmap(string fileName)
@@ -123,9 +123,9 @@ public class KaraokeLegacyBeatmapDecoderTest
 
     private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, Note actualNote = default!)
     {
-        Assert.AreEqual(expectedText, actualNote.Text);
-        Assert.AreEqual(expectedTone, actualNote.Tone.Scale);
-        Assert.AreEqual(expectedHalf, actualNote.Tone.Half);
+        Assert.That(actualNote.Text, Is.EqualTo(expectedText));
+        Assert.That(actualNote.Tone.Scale, Is.EqualTo(expectedTone));
+        Assert.That(actualNote.Tone.Half, Is.EqualTo(expectedHalf));
     }
 
     [TestCase(0, 1, new double[] { 1000, 3000 })]
@@ -150,13 +150,12 @@ public class KaraokeLegacyBeatmapDecoderTest
         if (expected != null)
         {
             var sliceNote = KaraokeLegacyBeatmapDecoder.SliceNote(note, startPercentage, durationPercentage);
-
-            Assert.AreEqual(expected[0], sliceNote.StartTime);
-            Assert.AreEqual(expected[1], sliceNote.Duration);
+            Assert.That(sliceNote.StartTime, Is.EqualTo(expected[0]));
+            Assert.That(sliceNote.Duration, Is.EqualTo(expected[1]));
         }
         else
         {
-            Assert.Catch(() => KaraokeLegacyBeatmapDecoder.SliceNote(note, startPercentage, durationPercentage));
+            Assert.That(() => KaraokeLegacyBeatmapDecoder.SliceNote(note, startPercentage, durationPercentage), Throws.Exception);
         }
     }
 }

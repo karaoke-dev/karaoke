@@ -51,7 +51,7 @@ public abstract class BasePropertyGeneratorTest<TGenerator, TItem, TProperty>
     protected static void CheckCanGenerate(TItem item, bool canGenerate, TGenerator generator)
     {
         bool actual = generator.CanGenerate(item);
-        Assert.AreEqual(canGenerate, actual);
+        Assert.That(actual, Is.EqualTo(canGenerate));
     }
 
     protected void CheckGenerateResult(TItem item, TProperty expected, TGenerator generator)

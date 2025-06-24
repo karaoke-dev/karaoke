@@ -31,6 +31,6 @@ public class LrcDecoderTest
             },
         });
 
-        Assert.AreEqual(actual, expected);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

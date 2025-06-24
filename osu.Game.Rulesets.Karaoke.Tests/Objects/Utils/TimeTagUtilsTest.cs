@@ -21,8 +21,8 @@ public class TimeTagUtilsTest
 
         var expected = TestCaseTagHelper.ParseTimeTag(expectedTimeTag);
         var actual = TimeTagUtils.ShiftingTimeTag(timeTag, offset);
-        Assert.AreEqual(expected.Index, actual.Index);
-        Assert.AreEqual(expected.Time, actual.Time);
+        Assert.That(actual.Index, Is.EqualTo(expected.Index));
+        Assert.That(actual.Time, Is.EqualTo(expected.Time));
     }
 
     [TestCase("[1,start]:1000", "00:01:000")]
@@ -35,6 +35,6 @@ public class TimeTagUtilsTest
         var timeTag = TestCaseTagHelper.ParseTimeTag(tag);
 
         string actual = TimeTagUtils.FormattedString(timeTag);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

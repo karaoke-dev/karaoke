@@ -22,7 +22,7 @@ public class OrderUtilsTest
         var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
 
         bool actual = OrderUtils.ContainDuplicatedId(objects);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, 1)]
@@ -33,7 +33,7 @@ public class OrderUtilsTest
         var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
 
         int actual = OrderUtils.GetMinOrderNumber(objects);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, 4)]
@@ -44,7 +44,7 @@ public class OrderUtilsTest
         var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
 
         int actual = OrderUtils.GetMaxOrderNumber(objects);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
@@ -57,7 +57,7 @@ public class OrderUtilsTest
         var orderedArray = OrderUtils.Sorted(objects);
 
         int[] actual = orderedArray.Select(x => x.Order).ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, 1, new[] { 2, 3, 4, 5 })]
@@ -71,7 +71,7 @@ public class OrderUtilsTest
 
         // convert order result.
         int[] actual = objects.Select(x => x.Order).ToArray();
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, 1, new int[] { }, new[] { 1, 2, 3, 4 })]
@@ -92,10 +92,10 @@ public class OrderUtilsTest
 
         // convert order result.
         int[] result = objects.Select(x => x.Order).ToArray();
-        Assert.AreEqual(expectedNewOrder, result);
+        Assert.That(result, Is.EqualTo(expectedNewOrder));
 
-        // should check moving order step also.
-        Assert.AreEqual(expectedMovingOrders, movingStepResult.ToArray());
+        // should check moving order step also。
+        Assert.That(movingStepResult.ToArray(), Is.EqualTo(expectedMovingOrders));
     }
 
     [TestCase(new[] { 1, 2, 3, 4 }, 1, 2, new[] { 1, 2, -1 }, new[] { 2, 1, 3, 4 })]
@@ -117,10 +117,10 @@ public class OrderUtilsTest
 
         // change order result.
         int[] result = objects.Select(x => x.Order).ToArray();
-        Assert.AreEqual(expectedNewOrder, result);
+        Assert.That(result, Is.EqualTo(expectedNewOrder));
 
         // should check moving order step also.
-        Assert.AreEqual(expectedMovingOrders, movingStepResult.ToArray());
+        Assert.That(movingStepResult.ToArray(), Is.EqualTo(expectedMovingOrders));
     }
 
     internal class TestOrderObject : IHasOrder

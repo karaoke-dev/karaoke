@@ -15,7 +15,7 @@ public class JpStringUtilsTest
     public void TestToHiragana(string text, string expected)
     {
         string actual = JpStringUtils.ToHiragana(text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("はなび", "ハナビ")]
@@ -24,7 +24,7 @@ public class JpStringUtilsTest
     public void TestToKatakana(string text, string expected)
     {
         string actual = JpStringUtils.ToKatakana(text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("はなび", "hanabi")]
@@ -38,6 +38,6 @@ public class JpStringUtilsTest
     public void TestToRomaji(string text, string expected)
     {
         string actual = JpStringUtils.ToRomaji(text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

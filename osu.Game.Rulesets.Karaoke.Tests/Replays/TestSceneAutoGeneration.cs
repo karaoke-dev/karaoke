@@ -35,11 +35,11 @@ public partial class TestSceneAutoGeneration : OsuTestScene
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
-        Assert.IsTrue(generated.Frames.Count == 2, "Replay must have 2 frames, start and end.");
-        Assert.AreEqual(1000, generated.Frames[0].Time, "Incorrect time");
-        Assert.AreEqual(1051, generated.Frames[1].Time, "Incorrect time");
-        Assert.IsTrue(checkMatching(generated.Frames[0], new Tone(0, true)), "Frame1 should sing.");
-        Assert.IsTrue(checkMatching(generated.Frames[1], null), "Frame2 should release sing.");
+        Assert.That(generated.Frames.Count == 2, "Replay must have 2 frames, start and end.");
+        Assert.That(generated.Frames[0].Time, Is.EqualTo(1000), "Incorrect time");
+        Assert.That(generated.Frames[1].Time, Is.EqualTo(1051), "Incorrect time");
+        Assert.That(checkMatching(generated.Frames[0], new Tone(0, true)), "Frame1 should sing.");
+        Assert.That(checkMatching(generated.Frames[1], null), "Frame2 should release sing.");
     }
 
     [Test]
@@ -63,11 +63,11 @@ public partial class TestSceneAutoGeneration : OsuTestScene
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
-        Assert.AreEqual(11, generated.Frames.Count, "Replay must have 11 frames,Start, duration(9 frames) and end.");
-        Assert.AreEqual(1000, generated.Frames[0].Time, "Incorrect hit time");
-        Assert.AreEqual(2001, generated.Frames[10].Time, "Incorrect time");
-        Assert.IsTrue(checkMatching(generated.Frames[0], new Tone(0, true)), "Fist frame should sing.");
-        Assert.IsTrue(checkMatching(generated.Frames[10], null), "Last frame should not sing.");
+        Assert.That(generated.Frames.Count, Is.EqualTo(11), "Replay must have 11 frames,Start, duration(9 frames) and end.");
+        Assert.That(generated.Frames[0].Time, Is.EqualTo(1000), "Incorrect hit time");
+        Assert.That(generated.Frames[10].Time, Is.EqualTo(2001), "Incorrect time");
+        Assert.That(checkMatching(generated.Frames[0], new Tone(0, true)), "Fist frame should sing.");
+        Assert.That(checkMatching(generated.Frames[10], null), "Last frame should not sing.");
     }
 
     [Test]
@@ -100,13 +100,13 @@ public partial class TestSceneAutoGeneration : OsuTestScene
 
         var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
-        Assert.AreEqual(3, generated.Frames.Count, "Replay must have 3 frames, note1's start, note2's start and note2's end.");
-        Assert.AreEqual(1000, generated.Frames[0].Time, "Incorrect time");
-        Assert.AreEqual(1050, generated.Frames[1].Time, "Incorrect time");
-        Assert.AreEqual(1101, generated.Frames[2].Time, "Incorrect time");
-        Assert.IsTrue(checkMatching(generated.Frames[0], new Tone(0, true)), "Frame1 should sing.");
-        Assert.IsTrue(checkMatching(generated.Frames[1], new Tone(1, true)), "Frame2 should sing.");
-        Assert.IsTrue(checkMatching(generated.Frames[2], null), "Frame3 should release sing.");
+        Assert.That(generated.Frames.Count, Is.EqualTo(3), "Replay must have 3 frames, note1's start, note2's start and note2's end.");
+        Assert.That(generated.Frames[0].Time, Is.EqualTo(1000), "Incorrect time");
+        Assert.That(generated.Frames[1].Time, Is.EqualTo(1050), "Incorrect time");
+        Assert.That(generated.Frames[2].Time, Is.EqualTo(1101), "Incorrect time");
+        Assert.That(checkMatching(generated.Frames[0], new Tone(0, true)), "Frame1 should sing.");
+        Assert.That(checkMatching(generated.Frames[1], new Tone(1, true)), "Frame2 should sing.");
+        Assert.That(checkMatching(generated.Frames[2], null), "Frame3 should release sing.");
     }
 
     private static bool checkMatching(ReplayFrame frame, Tone? tone)

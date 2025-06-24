@@ -14,6 +14,6 @@ public class SingleLyricEditorTest
     public void TestLockMessage()
     {
         var lyric = new Lyric();
-        Assert.IsNull(InteractableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View));
+        Assert.That(InteractableLyric.GetLyricPropertyLockedReason(lyric, LyricEditorMode.View), Is.Null);
     }
 }

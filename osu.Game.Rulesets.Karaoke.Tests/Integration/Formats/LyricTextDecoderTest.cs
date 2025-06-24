@@ -17,11 +17,11 @@ public class LyricTextDecoderTest
         var actual = decoder.Decode(expected);
 
         var expectedLyrics = TestCaseTagHelper.ParseLyrics(lyrics);
-        Assert.AreEqual(expectedLyrics.Length, actual.Length);
+        Assert.That(actual.Length, Is.EqualTo(expectedLyrics.Length));
 
         for (int i = 0; i < expectedLyrics.Length; i++)
         {
-            Assert.AreEqual(expectedLyrics[i].Text, actual[i].Text);
+            Assert.That(actual[i].Text, Is.EqualTo(expectedLyrics[i].Text));
         }
     }
 }

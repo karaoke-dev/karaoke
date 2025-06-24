@@ -17,7 +17,7 @@ public class ElementIdConverterTest : BaseSingleConverterTest<ElementIdConverter
     {
         var elementId = createElementId(id);
         string actual = JsonConvert.SerializeObject(elementId, CreateSettings());
-        Assert.AreEqual(json, actual);
+        Assert.That(actual, Is.EqualTo(json));
     }
 
     [TestCase("\"1234567\"", "1234567")]
@@ -27,7 +27,7 @@ public class ElementIdConverterTest : BaseSingleConverterTest<ElementIdConverter
     {
         var expected = createElementId(id);
         var result = JsonConvert.DeserializeObject<ElementId?>(json, CreateSettings());
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     private static ElementId? createElementId(string? str) =>

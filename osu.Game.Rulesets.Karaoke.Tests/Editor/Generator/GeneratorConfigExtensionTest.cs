@@ -20,8 +20,8 @@ public class GeneratorConfigExtensionTest
         var defaultCategory = new ConfigCategoryAttribute("Category 0");
         var result = config.GetOrderedConfigsSourceDictionary(defaultCategory);
 
-        Assert.AreEqual(result[defaultCategory].Length, 1);
-        Assert.AreEqual(result[new ConfigCategoryAttribute("Category 1")].Length, 2);
+        Assert.That(result[defaultCategory].Length, Is.EqualTo(1));
+        Assert.That(result[new ConfigCategoryAttribute("Category 1")].Length, Is.EqualTo(2));
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class GeneratorConfigExtensionTest
         checkSingleProperty(result[2], "Double"); // todo: this shit should be the first one.
 
         static void checkSingleProperty((ConfigSourceAttribute, ConfigCategoryAttribute?, PropertyInfo) property, string title) =>
-            Assert.AreEqual(property.Item1.Label.ToString(), title);
+            Assert.That(property.Item1.Label.ToString(), Is.EqualTo(title));
     }
 
     [Test]
@@ -50,9 +50,9 @@ public class GeneratorConfigExtensionTest
 
         static void checkSingleProperty((ConfigSourceAttribute, ConfigCategoryAttribute?, PropertyInfo) property, string title, string description, string? category = null)
         {
-            Assert.AreEqual(property.Item1.Label.ToString(), title);
-            Assert.AreEqual(property.Item1.Description.ToString(), description);
-            Assert.AreEqual(property.Item2?.Category.ToString(), category);
+            Assert.That(property.Item1.Label.ToString(), Is.EqualTo(title));
+            Assert.That(property.Item1.Description.ToString(), Is.EqualTo(description));
+            Assert.That(property.Item2?.Category.ToString(), Is.EqualTo(category));
         }
     }
 

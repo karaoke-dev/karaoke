@@ -27,20 +27,20 @@ public class TestCheckTest : BaseTest
 
         Assertion(() =>
         {
-            Assert.NotZero(allChecks.Length, "No check found");
+            Assert.That(allChecks.Length, Is.Not.Zero, "No check found");
 
             foreach (var check in allChecks)
             {
                 // need to make sure that all checks have a test class.
                 var matchedTest = allCheckTests.FirstOrDefault(x => x.NameContains(check.Name));
-                Assert.IsTrue(matchedTest != null, $"Check {check} should have a test class.");
+                Assert.That(matchedTest, Is.Not.Null, $"Check {check} should have a test class.");
 
                 // need to make sure that all issue template should be tested.
                 var innerIssueTemplates = check.GetInnerClasses();
 
                 foreach (var issueTemplate in innerIssueTemplates)
                 {
-                    Assert.IsTrue(check.GetTypeDependencies().Contains(issueTemplate), $"Seems {issueTemplate} is not tested.");
+                    Assert.That(check.GetTypeDependencies().Contains(issueTemplate), $"Seems {issueTemplate} is not tested.");
                 }
             }
         });
@@ -61,24 +61,24 @@ public class TestCheckTest : BaseTest
 
         Assertion(() =>
         {
-            Assert.NotNull(assertOkMethod, "AssertOk method not found");
-            Assert.NotNull(assertNotOkMethod, "AssertNotOk method not found");
+            Assert.That(assertOkMethod, Is.Not.Null, "AssertOk method not found");
+            Assert.That(assertNotOkMethod, Is.Not.Null, "AssertNotOk method not found");
 
-            Assert.NotZero(allCheckTests.Length, "No check test found");
+            Assert.That(allCheckTests.Length, Is.Not.Zero, "No check test found");
 
             foreach (var checkTest in allCheckTests)
             {
                 // check the class naming.
-                Assert.IsTrue(isTestClassValid(checkTest, baseCheck), $"Test class {checkTest} should have correct naming");
+                Assert.That(isTestClassValid(checkTest, baseCheck), $"Test class {checkTest} should have correct naming");
 
                 // check the test method naming in the test case.
                 var testMethods = checkTest.GetAllTestMembers(architecture).ToArray();
-                Assert.NotZero(testMethods.Length, $"No test method in the {checkTest}");
+                Assert.That(testMethods.Length, Is.Not.Zero, $"No test method in the {checkTest}");
 
                 foreach (var testMethod in testMethods)
                 {
-                    Assert.IsTrue(isTestNamingValid(testMethod), $"Test method {testMethod} should have correct naming");
-                    Assert.IsTrue(isTestMethod(testMethod), $"Test method {testMethod} should call {assertOkMethod} or {assertNotOkMethod} method.");
+                    Assert.That(isTestNamingValid(testMethod), $"Test method {testMethod} should have correct naming");
+                    Assert.That(isTestMethod(testMethod), $"Test method {testMethod} should call {assertOkMethod} or {assertNotOkMethod} method.");
                 }
             }
 

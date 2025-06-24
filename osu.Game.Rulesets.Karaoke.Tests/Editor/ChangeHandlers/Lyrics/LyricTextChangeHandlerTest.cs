@@ -22,7 +22,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("カラオケ", h.Text);
+            Assert.That(h.Text, Is.EqualTo("カラオケ"));
         });
     }
 
@@ -38,7 +38,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("カラオ", h.Text);
+            Assert.That(h.Text, Is.EqualTo("カラオ"));
         });
     }
 
@@ -52,7 +52,7 @@ public partial class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest
 
         TriggerHandlerChanged(c => c.DeleteLyricText(1));
 
-        AssertHitObjects(Assert.IsEmpty);
+        AssertHitObjects(x => Assert.That(x, Is.Empty));
     }
 
     [Test]

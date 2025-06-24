@@ -47,10 +47,10 @@ public class DisplayLyricProcessorTest
         testProcessor.UpdateAll();
 
         // check the changed count. should be updated.
-        Assert.AreEqual(topTextChangeCount, 1);
-        Assert.AreEqual(centerTextChangeCount, 1);
-        Assert.AreEqual(bottomTextChangeCount, 1);
-        Assert.AreEqual(timeTagsChangeCount, 1);
+        Assert.That(topTextChangeCount, Is.EqualTo(1));
+        Assert.That(centerTextChangeCount, Is.EqualTo(1));
+        Assert.That(bottomTextChangeCount, Is.EqualTo(1));
+        Assert.That(timeTagsChangeCount, Is.EqualTo(1));
 
         // reset the count to 0 for the remaining test.
         topTextChangeCount = 0;
@@ -66,10 +66,10 @@ public class DisplayLyricProcessorTest
         lyric!.Text = "karaoke";
 
         // check the changed count
-        Assert.AreEqual(topTextChangeCount, 1);
-        Assert.AreEqual(centerTextChangeCount, 1);
-        Assert.AreEqual(bottomTextChangeCount, 1);
-        Assert.AreEqual(timeTagsChangeCount, 1);
+        Assert.That(topTextChangeCount, Is.EqualTo(1));
+        Assert.That(centerTextChangeCount, Is.EqualTo(1));
+        Assert.That(bottomTextChangeCount, Is.EqualTo(1));
+        Assert.That(timeTagsChangeCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -79,10 +79,10 @@ public class DisplayLyricProcessorTest
         testProcessor!.DisplayType = LyricDisplayType.RomanisedSyllable;
 
         // check the changed count
-        Assert.AreEqual(topTextChangeCount, 1);
-        Assert.AreEqual(centerTextChangeCount, 1);
-        Assert.AreEqual(bottomTextChangeCount, 1);
-        Assert.AreEqual(timeTagsChangeCount, 1);
+        Assert.That(topTextChangeCount, Is.EqualTo(1));
+        Assert.That(centerTextChangeCount, Is.EqualTo(1));
+        Assert.That(bottomTextChangeCount, Is.EqualTo(1));
+        Assert.That(timeTagsChangeCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -92,10 +92,10 @@ public class DisplayLyricProcessorTest
         testProcessor!.DisplayProperty = LyricDisplayProperty.TopText;
 
         // check the changed count
-        Assert.AreEqual(topTextChangeCount, 1);
-        Assert.AreEqual(centerTextChangeCount, 1);
-        Assert.AreEqual(bottomTextChangeCount, 1);
-        Assert.AreEqual(timeTagsChangeCount, 1);
+        Assert.That(topTextChangeCount, Is.EqualTo(1));
+        Assert.That(centerTextChangeCount, Is.EqualTo(1));
+        Assert.That(bottomTextChangeCount, Is.EqualTo(1));
+        Assert.That(timeTagsChangeCount, Is.EqualTo(1));
     }
 
     [TearDown]

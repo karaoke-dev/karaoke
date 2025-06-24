@@ -33,7 +33,7 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
         AssertSelectedHitObject(h =>
         {
             if (h is IHasLock hasLock)
-                Assert.AreEqual(LockState.Full, hasLock.Lock);
+                Assert.That(hasLock.Lock, Is.EqualTo(LockState.Full));
         });
     }
 
@@ -59,7 +59,7 @@ public partial class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerT
         AssertSelectedHitObject(h =>
         {
             if (h is IHasLock hasLock)
-                Assert.AreEqual(LockState.None, hasLock.Lock);
+                Assert.That(hasLock.Lock, Is.EqualTo(LockState.None));
         });
     }
 

@@ -33,7 +33,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(2000, timeTag.Time);
+            Assert.That(timeTag.Time, Is.EqualTo(2000));
         });
     }
 
@@ -54,7 +54,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(true, timeTag.FirstSyllable);
+            Assert.That(timeTag.FirstSyllable, Is.True);
         });
     }
 
@@ -75,14 +75,14 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual("karaoke", timeTag.RomanisedSyllable);
+            Assert.That(timeTag.RomanisedSyllable, Is.EqualTo("karaoke"));
         });
 
         TriggerHandlerChanged(c => c.SetTimeTagRomanisedSyllable(timeTag, "  "));
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(string.Empty, timeTag.RomanisedSyllable);
+            Assert.That(timeTag.RomanisedSyllable, Is.EqualTo(string.Empty));
         });
     }
 
@@ -115,8 +115,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.AreEqual(null, timeTag.Time);
-            Assert.AreEqual(3000, timeTagWithTime.Time);
+            Assert.That(timeTag.Time, Is.Null);
+            Assert.That(timeTagWithTime.Time, Is.EqualTo(3000));
         });
     }
 
@@ -137,7 +137,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(_ =>
         {
-            Assert.IsNull(timeTag.Time);
+            Assert.That(timeTag.Time, Is.Null);
         });
     }
 
@@ -159,7 +159,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsTrue(h.TimeTags.All(x => x.Time == null));
+            Assert.That(h.TimeTags.All(x => x.Time == null));
         });
     }
 
@@ -175,8 +175,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.TimeTags.Count);
-            Assert.AreEqual(1000, h.TimeTags[0].Time);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(1));
+            Assert.That(h.TimeTags[0].Time, Is.EqualTo(1000));
         });
     }
 
@@ -192,8 +192,8 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.TimeTags.Count);
-            Assert.AreEqual(1000, h.TimeTags[0].Time);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(1));
+            Assert.That(h.TimeTags[0].Time, Is.EqualTo(1000));
         });
     }
 
@@ -215,7 +215,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.TimeTags);
+            Assert.That(h.TimeTags, Is.Empty);
         });
     }
 
@@ -237,7 +237,7 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.TimeTags);
+            Assert.That(h.TimeTags, Is.Empty);
         });
     }
 
@@ -253,11 +253,11 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.TimeTags.Count);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(1));
 
             var actualTimeTag = h.TimeTags[0];
-            Assert.AreEqual(new TextIndex(3, TextIndex.IndexState.End), actualTimeTag.Index);
-            Assert.IsNull(actualTimeTag.Time);
+            Assert.That(actualTimeTag.Index, Is.EqualTo(new TextIndex(3, TextIndex.IndexState.End)));
+            Assert.That(actualTimeTag.Time, Is.Null);
         });
     }
 
@@ -279,12 +279,12 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(2, h.TimeTags.Count);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(2));
 
             // should delete the min time of the time-tag
             var actualTimeTag = h.TimeTags[0];
-            Assert.AreEqual(new TextIndex(3, TextIndex.IndexState.End), actualTimeTag.Index);
-            Assert.AreEqual(4000, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Index, Is.EqualTo(new TextIndex(3, TextIndex.IndexState.End)));
+            Assert.That(actualTimeTag.Time, Is.EqualTo(4000));
         });
     }
 
@@ -305,12 +305,12 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.TimeTags.Count);
+            Assert.That(h.TimeTags.Count, Is.EqualTo(1));
 
             // should delete the min time of the time-tag
             var actualTimeTag = h.TimeTags[0];
-            Assert.AreEqual(new TextIndex(3, TextIndex.IndexState.End), actualTimeTag.Index);
-            Assert.AreEqual(5000, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Index, Is.EqualTo(new TextIndex(3, TextIndex.IndexState.End)));
+            Assert.That(actualTimeTag.Time, Is.EqualTo(5000));
         });
     }
 
@@ -339,10 +339,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[2];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 
@@ -368,10 +368,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[0];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 
@@ -397,10 +397,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[1];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 
@@ -427,10 +427,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[1];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 
@@ -455,10 +455,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[0];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 
@@ -486,10 +486,10 @@ public partial class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandler
             var targetTimeTag = lyric.TimeTags[1];
             var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
 
-            Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+            Assert.That(lyric.TimeTags.IndexOf(actualTimeTag), Is.EqualTo(expectedIndex));
 
             // the property should be the same
-            Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            Assert.That(actualTimeTag.Time, Is.EqualTo(targetTimeTag.Time));
         });
     }
 

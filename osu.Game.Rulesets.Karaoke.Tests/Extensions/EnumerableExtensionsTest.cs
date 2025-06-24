@@ -15,7 +15,7 @@ public class EnumerableExtensionsTest
     public void TestGetNextMatch(int[] values, int startFrom, int matchCondition, int expected)
     {
         int actual = values.GetNextMatch(startFrom, x => x == matchCondition);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 6, 3, 3)]
@@ -25,6 +25,6 @@ public class EnumerableExtensionsTest
     public void TestGetPreviousMatch(int[] values, int startFrom, int matchCondition, int expected)
     {
         int actual = values.GetPreviousMatch(startFrom, x => x == matchCondition);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

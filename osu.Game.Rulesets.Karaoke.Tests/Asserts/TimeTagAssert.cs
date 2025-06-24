@@ -11,7 +11,7 @@ public class TimeTagAssert : Assert
 {
     public static void ArePropertyEqual(IList<TimeTag> expected, IList<TimeTag> actual)
     {
-        AreEqual(expected.Count, actual.Count);
+        That(expected.Count, Is.EqualTo(actual.Count));
 
         for (int i = 0; i < expected.Count; i++)
         {
@@ -21,9 +21,9 @@ public class TimeTagAssert : Assert
 
     public static void ArePropertyEqual(TimeTag expect, TimeTag actually)
     {
-        AreEqual(expect.Index, actually.Index);
-        AreEqual(expect.Time, actually.Time);
-        AreEqual(expect.FirstSyllable, actually.FirstSyllable);
-        AreEqual(expect.RomanisedSyllable, actually.RomanisedSyllable);
+        That(expect.Index, Is.EqualTo(actually.Index));
+        That(expect.Time, Is.EqualTo(actually.Time));
+        That(expect.FirstSyllable, Is.EqualTo(actually.FirstSyllable));
+        That(expect.RomanisedSyllable, Is.EqualTo(actually.RomanisedSyllable));
     }
 }

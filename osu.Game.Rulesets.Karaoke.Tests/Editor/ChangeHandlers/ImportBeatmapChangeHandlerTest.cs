@@ -36,11 +36,11 @@ public partial class ImportBeatmapChangeHandlerTest : BaseChangeHandlerTest<Impo
         AssertKaraokeBeatmap(karaokeBeatmap =>
         {
             // should not change the property in the karaoke beatmap.
-            Assert.AreEqual(10, karaokeBeatmap.NoteInfo.Columns);
+            Assert.That(karaokeBeatmap.NoteInfo.Columns, Is.EqualTo(10));
 
             // check the hit objects.
             // and notice that we only import the lyric from other beatmap.
-            Assert.AreEqual(2, karaokeBeatmap.HitObjects.Count);
+            Assert.That(karaokeBeatmap.HitObjects.Count, Is.EqualTo(2));
         });
     }
 }

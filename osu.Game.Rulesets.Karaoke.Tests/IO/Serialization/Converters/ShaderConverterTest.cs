@@ -31,7 +31,7 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
 
         const string expected = "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}";
         string result = JsonConvert.SerializeObject(shader, CreateSettings());
-        Assert.AreEqual(expected, result);
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
@@ -45,8 +45,8 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
             ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
         };
         var actual = (ShadowShader)JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings())!;
-        Assert.AreEqual(expected.ShadowOffset, actual.ShadowOffset);
-        Assert.AreEqual(expected.ShadowColour.ToHex(), actual.ShadowColour.ToHex());
+        Assert.That(actual.ShadowOffset, Is.EqualTo(expected.ShadowOffset));
+        Assert.That(actual.ShadowColour.ToHex(), Is.EqualTo(expected.ShadowColour.ToHex()));
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
         const string expected =
             "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}";
         string actual = JsonConvert.SerializeObject(shader, CreateSettings());
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -92,12 +92,12 @@ public class ShaderConverterTest : BaseSingleConverterTest<ShaderConverter>
         var actual = (StepShader)JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings())!;
 
         // test step shader.
-        Assert.AreEqual(expected.StepShaders.Count, actual.StepShaders.Count);
+        Assert.That(actual.StepShaders.Count, Is.EqualTo(expected.StepShaders.Count));
 
         // test shadow shader inside.
         var expectedShadowShader = (ShadowShader)expected.StepShaders.First();
         var actualShadowShader = (ShadowShader)actual.StepShaders.First();
-        Assert.AreEqual(expectedShadowShader.ShadowOffset, actualShadowShader.ShadowOffset);
-        Assert.AreEqual(expectedShadowShader.ShadowColour.ToHex(), actualShadowShader.ShadowColour.ToHex());
+        Assert.That(actualShadowShader.ShadowOffset, Is.EqualTo(expectedShadowShader.ShadowOffset));
+        Assert.That(actualShadowShader.ShadowColour.ToHex(), Is.EqualTo(expectedShadowShader.ShadowColour.ToHex()));
     }
 }

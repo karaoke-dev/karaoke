@@ -42,7 +42,7 @@ public class TestClass : BaseTest
                 if (allChildClasses.Length == 0)
                     continue;
 
-                Assert.IsTrue(isAllowAbstractClassPosition(abstractClass, allChildClasses), $"Those child class: \n{string.Join('\n', allChildClasses.Select(x => x.ToString()))}\n\n is not in the child namespace of: \n{abstractClass}");
+                Assert.That(isAllowAbstractClassPosition(abstractClass, allChildClasses), $"Those child class: \n{string.Join('\n', allChildClasses.Select(x => x.ToString()))}\n\n is not in the child namespace of: \n{abstractClass}");
             }
         });
         return;

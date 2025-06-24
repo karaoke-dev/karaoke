@@ -53,8 +53,8 @@ public class RubyTagUtilsTest
 
         if (actualTag == null)
         {
-            Assert.Throws<InvalidOperationException>(() => generateShiftingTag(rubyTag, lyric, offset));
-            Assert.Throws<InvalidOperationException>(() => generateShiftingTag(rubyTag, lyric, offset));
+            Assert.That(() => generateShiftingTag(rubyTag, lyric, offset), Throws.TypeOf<InvalidOperationException>());
+            Assert.That(() => generateShiftingTag(rubyTag, lyric, offset), Throws.TypeOf<InvalidOperationException>());
             return;
         }
 
@@ -85,7 +85,7 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
 
         bool actual = RubyTagUtils.OutOfRange(rubyTag, lyric);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0,1]:ka", 0, true)]
@@ -99,7 +99,7 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
 
         bool actual = RubyTagUtils.ValidNewStartIndex(rubyTag, newStartIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0,1]:ka", 1, true)]
@@ -114,7 +114,7 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
 
         bool actual = RubyTagUtils.ValidNewEndIndex(rubyTag, newEndIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("karaoke", 0, false)]
@@ -127,7 +127,7 @@ public class RubyTagUtilsTest
     public void TestOutOfRange(string lyric, int index, bool expected)
     {
         bool actual = RubyTagUtils.OutOfRange(lyric, index);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0,1]:ka", false)]
@@ -137,7 +137,7 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
 
         bool actual = RubyTagUtils.EmptyText(rubyTag);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0,1]:ka", "ka(0 ~ 1)")]
@@ -151,7 +151,7 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
 
         string actual = RubyTagUtils.PositionFormattedString(rubyTag);
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("[0]:ka", "カラオケ", "カ")]
@@ -166,12 +166,12 @@ public class RubyTagUtilsTest
 
         if (expected == null)
         {
-            Assert.Throws<InvalidOperationException>(() => RubyTagUtils.GetTextFromLyric(rubyTag, lyric));
+            Assert.That(() => RubyTagUtils.GetTextFromLyric(rubyTag, lyric), Throws.TypeOf<InvalidOperationException>());
         }
         else
         {
             string actual = RubyTagUtils.GetTextFromLyric(rubyTag, lyric);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 
@@ -183,8 +183,8 @@ public class RubyTagUtilsTest
         var rubyTag = TestCaseTagHelper.ParseRubyTag(rubyTagStr);
         var actual = RubyTagUtils.ToPositionText(rubyTag);
 
-        Assert.AreEqual(rubyTag.Text, actual.Text);
-        Assert.AreEqual(rubyTag.StartIndex, actual.StartIndex);
-        Assert.AreEqual(rubyTag.EndIndex, actual.EndIndex);
+        Assert.That(actual.Text, Is.EqualTo(rubyTag.Text));
+        Assert.That(actual.StartIndex, Is.EqualTo(rubyTag.StartIndex));
+        Assert.That(actual.EndIndex, Is.EqualTo(rubyTag.EndIndex));
     }
 }

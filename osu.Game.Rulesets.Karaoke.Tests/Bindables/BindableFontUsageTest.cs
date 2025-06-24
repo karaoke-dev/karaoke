@@ -19,6 +19,6 @@ public class BindableFontUsageTest
 
         var expected = new FontUsage(family, size, weight, italics, fixedWidth);
         var actual = bindable.Value;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

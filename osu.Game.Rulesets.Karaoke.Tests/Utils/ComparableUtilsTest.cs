@@ -26,7 +26,7 @@ public class ComparableUtilsTest
             (left, right) => left.A.CompareTo(right.A),
             (left, right) => left.B.CompareTo(right.B),
             (left, right) => string.Compare(left.C, right.C, StringComparison.Ordinal)); // using different comparator might get different compare number.
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("{\"A\":0,\"B\":0,\"C\":\" \"}", "{\"A\":0,\"B\":0,\"C\":\" \"}", 0)] // should be the same if two values are the same.
@@ -45,7 +45,7 @@ public class ComparableUtilsTest
             t => t.A,
             t => t.B,
             t => t.C);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     private class TestObject

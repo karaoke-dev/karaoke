@@ -31,8 +31,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         AssertSelectedHitObject(h =>
         {
             var rubyTags = h.RubyTags;
-            Assert.AreEqual(1, rubyTags.Count);
-            Assert.AreEqual("かぜ", rubyTags[0].Text);
+            Assert.That(rubyTags.Count, Is.EqualTo(1));
+            Assert.That(rubyTags[0].Text, Is.EqualTo("かぜ"));
         });
     }
 
@@ -58,8 +58,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
         AssertSelectedHitObject(h =>
         {
             var rubyTags = h.RubyTags;
-            Assert.AreEqual(1, rubyTags.Count);
-            Assert.AreEqual("かぜ", rubyTags[0].Text);
+            Assert.That(rubyTags.Count, Is.EqualTo(1));
+            Assert.That(rubyTags[0].Text, Is.EqualTo("かぜ"));
         });
     }
 
@@ -87,7 +87,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.IsEmpty(h.RubyTags);
+            Assert.That(h.RubyTags, Is.Empty);
         });
     }
 
@@ -121,7 +121,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, h.RubyTags.Count);
+            Assert.That(h.RubyTags.Count, Is.EqualTo(1));
         });
     }
 
@@ -149,8 +149,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, targetTag.StartIndex);
-            Assert.AreEqual(2, targetTag.EndIndex);
+            Assert.That(targetTag.StartIndex, Is.EqualTo(1));
+            Assert.That(targetTag.EndIndex, Is.EqualTo(2));
         });
     }
 
@@ -178,8 +178,8 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual(1, targetTag.StartIndex);
-            Assert.AreEqual(1, targetTag.EndIndex);
+            Assert.That(targetTag.StartIndex, Is.EqualTo(1));
+            Assert.That(targetTag.EndIndex, Is.EqualTo(1));
         });
     }
 
@@ -207,7 +207,7 @@ public partial class LyricRubyTagsChangeHandlerTest : LyricPropertyChangeHandler
 
         AssertSelectedHitObject(h =>
         {
-            Assert.AreEqual("からおけ", targetTag.Text);
+            Assert.That(targetTag.Text, Is.EqualTo("からおけ"));
         });
     }
 

@@ -37,6 +37,6 @@ public class LanguageDetectorTest : BaseLyricDetectorTest<LanguageDetector, Cult
 
     protected override void AssertEqual(CultureInfo? expected, CultureInfo? actual)
     {
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }

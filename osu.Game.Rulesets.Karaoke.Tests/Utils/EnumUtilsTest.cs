@@ -16,7 +16,7 @@ public class EnumUtilsTest
     public void TestGetPreviousValue(TestEnum current, TestEnum expected)
     {
         var actual = EnumUtils.GetPreviousValue(current);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(TestEnum.Enum1, TestEnum.Enum2)]
@@ -25,7 +25,7 @@ public class EnumUtilsTest
     public void TestGetNextValue(TestEnum current, TestEnum expected)
     {
         var actual = EnumUtils.GetNextValue(current);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(TestEnum.Enum1, TestEnum.Enum1)]
@@ -35,7 +35,7 @@ public class EnumUtilsTest
     public void TestCasting(Enum current, TestEnum? expected)
     {
         var actual = EnumUtils.Casting<TestEnum>(current);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     public enum TestEnum

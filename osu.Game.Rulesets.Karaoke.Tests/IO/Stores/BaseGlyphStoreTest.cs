@@ -45,7 +45,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     {
         string expected = GlyphStore.FontName;
         string actual = CustomizeGlyphStore.FontName;
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase('a')]
@@ -56,7 +56,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     {
         bool expected = GlyphStore.HasGlyph(c);
         bool actual = CustomizeGlyphStore.HasGlyph(c);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [Test]
@@ -64,7 +64,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     {
         float? expected = GlyphStore.Baseline;
         float? actual = CustomizeGlyphStore.Baseline;
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase('a')]
@@ -79,14 +79,14 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
         var actual = CustomizeGlyphStore.Get(c)!;
 
         // because get character glyph should make sure that this glyph store contains char, so will not be null.
-        Assert.IsNotNull(expected);
-        Assert.IsNotNull(actual);
+        Assert.That(expected, Is.Not.Null);
+        Assert.That(actual, Is.Not.Null);
 
         // test all property should be matched.
-        Assert.AreEqual(expected.Character, actual.Character);
-        Assert.AreEqual(expected.XOffset, actual.XOffset);
-        Assert.AreEqual(expected.YOffset, actual.YOffset);
-        Assert.AreEqual(expected.XAdvance, actual.XAdvance);
+        Assert.That(actual.Character, Is.EqualTo(expected.Character));
+        Assert.That(actual.XOffset, Is.EqualTo(expected.XOffset));
+        Assert.That(actual.YOffset, Is.EqualTo(expected.YOffset));
+        Assert.That(actual.XAdvance, Is.EqualTo(expected.XAdvance));
     }
 
     [TestCase('a', 'a')]
@@ -98,7 +98,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
     {
         int expected = GlyphStore.GetKerning(left, right);
         int actual = CustomizeGlyphStore.GetKerning(left, right);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase('a')]
@@ -116,7 +116,7 @@ public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class,
             throw new ArgumentNullException();
 
         // todo : should test with pixel perfect, but it's ok to pass if size is almost the same.
-        Assert.AreEqual(expected.Width, actual.Width);
-        Assert.AreEqual(expected.Height, actual.Height);
+        Assert.That(actual.Width, Is.EqualTo(expected.Width));
+        Assert.That(actual.Height, Is.EqualTo(expected.Height));
     }
 }

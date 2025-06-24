@@ -47,23 +47,23 @@ public class BitmapFontGeneratorTest
         ObjectAssert.ArePropertyEqual(font.Common, result.Common);
 
         // should have page if have char.
-        Assert.IsNotNull(result.Pages);
+        Assert.That(result.Pages, Is.Not.Null);
 
         if (!string.IsNullOrEmpty(chars) && charAmount > 0)
         {
-            Assert.NotZero(result.Pages.Count);
+            Assert.That(result.Pages.Count, Is.Not.EqualTo(0));
         }
 
         // should have chars if have char.
-        Assert.IsNotNull(result.Characters);
+        Assert.That(result.Characters, Is.Not.Null);
 
         if (!string.IsNullOrEmpty(chars))
         {
-            Assert.AreEqual(result.Characters.Count, charAmount);
+        Assert.That(result.Characters.Count, Is.EqualTo(charAmount));
         }
 
         // kerning pairs amount might be zero but cannot be null.
-        Assert.IsNotNull(result.KerningPairs);
+        Assert.That(result.KerningPairs, Is.Not.Null);
     }
 
     [TestCase(new int[] { }, new string[] { })]
@@ -76,13 +76,13 @@ public class BitmapFontGeneratorTest
         try
         {
             string[] actual = BitmapFontCompressor.GeneratePages(font.Pages, characters).Values.ToArray();
-            Assert.AreEqual(expected, actual);
+            Assert.That(expected, Is.EqualTo(actual));
         }
         catch
         {
             int expectedPageSize = expected.Length;
             int storePage = font.Pages.Max(x => x.Key);
-            Assert.Greater(expectedPageSize, storePage);
+            Assert.That(expectedPageSize, Is.GreaterThan(storePage));
         }
     }
 
@@ -103,13 +103,13 @@ public class BitmapFontGeneratorTest
         {
             // check some property should be same as origin character.
             var expected = characters[c];
-            Assert.IsNotNull(expected);
-            Assert.AreEqual(expected.Width, character.Width);
-            Assert.AreEqual(expected.Height, character.Height);
-            Assert.AreEqual(expected.XOffset, character.XOffset);
-            Assert.AreEqual(expected.YOffset, character.YOffset);
-            Assert.AreEqual(expected.XAdvance, character.XAdvance);
-            Assert.AreEqual(expected.Channel, character.Channel);
+            Assert.That(expected, Is.Not.Null);
+            Assert.That(character.Width, Is.EqualTo(expected.Width));
+            Assert.That(character.Height, Is.EqualTo(expected.Height));
+            Assert.That(character.XOffset, Is.EqualTo(expected.XOffset));
+            Assert.That(character.YOffset, Is.EqualTo(expected.YOffset));
+            Assert.That(character.XAdvance, Is.EqualTo(expected.XAdvance));
+            Assert.That(character.Channel, Is.EqualTo(expected.Channel));
 
             // test previous position should smaller the current one.
             var previousChar = result.Values.GetPrevious(character);
@@ -117,9 +117,9 @@ public class BitmapFontGeneratorTest
                 return;
 
             // all the test case can be finished in single line.
-            Assert.AreEqual(character.X, previousChar.X + previousChar.Width + spacing);
-            Assert.AreEqual(topPadding, previousChar.Y);
-            Assert.AreEqual(0, previousChar.Page);
+            Assert.That(character.X, Is.EqualTo(previousChar.X + previousChar.Width + spacing));
+            Assert.That(previousChar.Y, Is.EqualTo(topPadding));
+            Assert.That(previousChar.Page, Is.EqualTo(0));
         }
     }
 
@@ -150,9 +150,9 @@ public class BitmapFontGeneratorTest
                 return;
 
             // all the test case can be finished in different line.
-            Assert.AreEqual(leftPadding, previousChar.X);
-            Assert.AreEqual(character.Y, previousChar.Y + previousChar.Height + spacing);
-            Assert.AreEqual(0, previousChar.Page);
+            Assert.That(previousChar.X, Is.EqualTo(leftPadding));
+            Assert.That(character.Y, Is.EqualTo(previousChar.Y + previousChar.Height + spacing));
+            Assert.That(previousChar.Page, Is.EqualTo(0));
         }
     }
 
@@ -184,9 +184,9 @@ public class BitmapFontGeneratorTest
                 return;
 
             // all the test case can be finished in single line, so just test x position.
-            Assert.AreEqual(leftPadding, previousChar.X);
-            Assert.AreEqual(topPadding, previousChar.Y);
-            Assert.AreEqual(page, previousChar.Page);
+            Assert.That(previousChar.X, Is.EqualTo(leftPadding));
+            Assert.That(previousChar.Y, Is.EqualTo(topPadding));
+            Assert.That(previousChar.Page, Is.EqualTo(page));
             page++;
         }
     }
@@ -201,7 +201,7 @@ public class BitmapFontGeneratorTest
 
         int expected = font.Characters.Count;
         int actual = result.Count;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("カラオケ", 0)]
@@ -212,7 +212,7 @@ public class BitmapFontGeneratorTest
         var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
 
         int actual = result.Count;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [TestCase("", 0)]
@@ -226,7 +226,7 @@ public class BitmapFontGeneratorTest
         var result = BitmapFontCompressor.GenerateKerningPairs(font.KerningPairs, chars.ToArray());
 
         int actual = result.Count;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 
     [Test]
@@ -239,6 +239,6 @@ public class BitmapFontGeneratorTest
 
         int expected = kerningPairs.Count;
         int actual = result.Count;
-        Assert.AreEqual(expected, actual);
+        Assert.That(expected, Is.EqualTo(actual));
     }
 }
