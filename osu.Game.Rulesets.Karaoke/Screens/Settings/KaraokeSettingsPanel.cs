@@ -56,6 +56,24 @@ public partial class KaraokeSettingsPanel : SettingsPanel
     // prevent let main content darker.
     protected override bool DimMainContent => false;
 
+    protected override void PopIn()
+    {
+        base.PopIn();
+
+        // We use our implementation of section display, thus not needed.
+        Sidebar.FinishTransforms();
+        Sidebar.Hide();
+        Sidebar.MoveToX(-PANEL_WIDTH);
+    }
+
+    protected override void UpdateAfterChildren()
+    {
+        base.UpdateAfterChildren();
+
+        // Reset margin
+        ContentContainer.Margin = new MarginPadding();
+    }
+
     // prevent hide the overlay.
     public override void Hide() { }
 
