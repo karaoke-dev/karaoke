@@ -105,8 +105,11 @@ public partial class KaraokeSettingsPanel : SettingsPanel
             SectionsContainer.SelectedSection.ValueChanged += section =>
             {
                 var newSection = section.NewValue;
+                hoverBackground.FadeTo(newSection != null ? 0.6f : 0, 200, Easing.OutQuint);
+
+                // Would happen when no result matches the search query.
                 if (newSection == null)
-                    throw new InvalidOperationException($"{nameof(newSection)} should not be possible to be null.");
+                    return;
 
                 selectedSection.Value = newSection;
             };
@@ -147,6 +150,7 @@ public partial class KaraokeSettingsPanel : SettingsPanel
             // create hove background.
             scrollContainer.Add(hoverBackground = new Box
             {
+                Name = "Hover highlight",
                 RelativeSizeAxes = Axes.X,
                 Depth = 1,
             });
@@ -167,10 +171,10 @@ public partial class KaraokeSettingsPanel : SettingsPanel
                 if (x.NewValue == null)
                     return;
 
-                const float offset = 8;
+                // Position adjustments
                 float position = (float)scrollContainer.GetChildPosInContent(x.NewValue);
-                hoverBackground.MoveToY(position + offset, 50);
-                hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
+                hoverBackground.MoveToY(position, 300, Easing.OutQuint);
+                hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight + 15, 300, Easing.OutQuint);
             });
         }
     }
