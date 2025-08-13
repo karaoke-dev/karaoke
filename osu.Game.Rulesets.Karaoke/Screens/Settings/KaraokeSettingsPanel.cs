@@ -147,6 +147,7 @@ public partial class KaraokeSettingsPanel : SettingsPanel
             // create hove background.
             scrollContainer.Add(hoverBackground = new Box
             {
+                Name = "Hover highlight",
                 RelativeSizeAxes = Axes.X,
                 Depth = 1,
             });
@@ -167,10 +168,10 @@ public partial class KaraokeSettingsPanel : SettingsPanel
                 if (x.NewValue == null)
                     return;
 
-                const float offset = 8;
+                // Position adjustments
                 float position = (float)scrollContainer.GetChildPosInContent(x.NewValue);
-                hoverBackground.MoveToY(position + offset, 50);
-                hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
+                hoverBackground.MoveToY(position, 300, Easing.OutQuint);
+                hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight + 15, 300, Easing.OutQuint);
             });
         }
     }
