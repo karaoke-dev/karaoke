@@ -54,15 +54,15 @@ public partial class KaraokeSettings : OsuScreen
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    settingsPanel = new KaraokeSettingsPanel(),
-                    header = new Header
-                    {
-                        Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
-                    },
                     previewArea = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH },
+                    },
+                    settingsPanel = new KaraokeSettingsPanel(),
+                    header = new Header
+                    {
+                        Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
                     },
                     new KaraokeVersionManager().With(x => x.Show()),
                 },
