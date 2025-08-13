@@ -105,8 +105,11 @@ public partial class KaraokeSettingsPanel : SettingsPanel
             SectionsContainer.SelectedSection.ValueChanged += section =>
             {
                 var newSection = section.NewValue;
+                hoverBackground.FadeTo(newSection != null ? 0.6f : 0, 200, Easing.OutQuint);
+
+                // Would happen when no result matches the search query.
                 if (newSection == null)
-                    throw new InvalidOperationException($"{nameof(newSection)} should not be possible to be null.");
+                    return;
 
                 selectedSection.Value = newSection;
             };
