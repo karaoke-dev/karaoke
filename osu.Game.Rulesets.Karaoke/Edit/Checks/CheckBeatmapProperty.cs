@@ -29,8 +29,10 @@ public abstract class CheckBeatmapProperty<TProperty, THitObject> : ICheck where
             return Array.Empty<Issue>();
 
         var issues = CheckProperty(property);
-        var hitObjectIssues = context.Beatmap.HitObjects.OfType<THitObject>().SelectMany(x => CheckHitObject(property, x));
-        var hitObjectsIssues = CheckHitObjects(property, context.Beatmap.HitObjects.OfType<THitObject>().ToList());
+        var hitObjects = context.CurrentDifficulty.Playable.HitObjects;
+
+        var hitObjectIssues = hitObjects.OfType<THitObject>().SelectMany(x => CheckHitObject(property, x));
+        var hitObjectsIssues = CheckHitObjects(property, hitObjects.OfType<THitObject>().ToList());
 
         return issues.Concat(hitObjectIssues).Concat(hitObjectsIssues);
     }
@@ -55,7 +57,7 @@ public abstract class CheckBeatmapProperty<TProperty, THitObject> : ICheck where
     private static KaraokeBeatmap getBeatmap(BeatmapVerifierContext context)
     {
         // follow the usage in the IssueList in osu.Game
-        if (context.Beatmap is EditorBeatmap editorBeatmap)
+        if (context.CurrentDifficulty.Playable is EditorBeatmap editorBeatmap)
             return EditorBeatmapUtils.GetPlayableBeatmap(editorBeatmap);
 
         throw new InvalidOperationException();

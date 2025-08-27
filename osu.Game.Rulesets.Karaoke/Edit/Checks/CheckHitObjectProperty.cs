@@ -19,7 +19,7 @@ public abstract class CheckHitObjectProperty<THitObject> : ICheck where THitObje
 
     public virtual IEnumerable<Issue> Run(BeatmapVerifierContext context)
     {
-        var hitObjects = context.Beatmap.HitObjects.OfType<THitObject>();
+        var hitObjects = context.CurrentDifficulty.Playable.HitObjects.OfType<THitObject>();
 
         return hitObjects.Select(Check).SelectMany(x => x);
     }
