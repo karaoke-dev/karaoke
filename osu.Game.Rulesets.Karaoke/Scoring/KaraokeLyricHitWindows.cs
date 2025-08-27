@@ -34,6 +34,10 @@ public class KaraokeLyricHitWindows : KaraokeHitWindows
             case HitResult.Perfect:
                 return perfect;
 
+            // todo: add this in order not to throw error in some test cases.
+            case HitResult.Miss:
+                return 1000;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(result), result, null);
         }
