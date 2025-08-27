@@ -172,7 +172,7 @@ public partial class LyricEditorVerifier : EditorVerifier<LyricEditorMode>, ILyr
     {
         return CreateIssues(context =>
         {
-            if (context.Beatmap is not Beatmap<HitObject> beatmap)
+            if (context.CurrentDifficulty.Playable is not Beatmap<HitObject> beatmap)
                 throw new InvalidCastException();
 
             beatmap.HitObjects.Add(karaokeHitObject);

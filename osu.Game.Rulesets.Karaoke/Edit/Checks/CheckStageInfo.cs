@@ -90,7 +90,7 @@ public abstract class CheckStageInfo<TStageInfo> : ICheck
         if (property == null)
             return Array.Empty<Issue>();
 
-        var hitObjects = context.Beatmap.HitObjects.OfType<KaraokeHitObject>().ToList();
+        var hitObjects = context.CurrentDifficulty.Playable.HitObjects.OfType<KaraokeHitObject>().ToList();
         var issues = CheckStageInfoWithHitObjects(property, hitObjects).ToList();
 
         foreach (var stageInfoCategoryAction in stageInfoCategoryActions)

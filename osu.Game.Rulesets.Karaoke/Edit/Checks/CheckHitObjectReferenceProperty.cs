@@ -15,8 +15,8 @@ public abstract class CheckHitObjectReferenceProperty<THitObject, TReferencedHit
 {
     public override IEnumerable<Issue> Run(BeatmapVerifierContext context)
     {
-        var hitObjects = context.Beatmap.HitObjects.OfType<THitObject>();
-        var allAvailableReferencedHitObjects = context.Beatmap.HitObjects.OfType<TReferencedHitObject>().ToArray();
+        var hitObjects = context.CurrentDifficulty.Playable.HitObjects.OfType<THitObject>();
+        var allAvailableReferencedHitObjects = context.CurrentDifficulty.Playable.HitObjects.OfType<TReferencedHitObject>().ToArray();
 
         var issues = base.Run(context);
         var referenceIssues = hitObjects.Select(x => CheckReferenceProperty(x, allAvailableReferencedHitObjects)).SelectMany(x => x);
