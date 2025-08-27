@@ -21,12 +21,12 @@ public static class OsuGameExtensions
     }
 
     private static Container? getBasePlacementContainer(this OsuGame game)
-        => game.Children[3] as Container;
+        => game.Children.OfType<Container>().FirstOrDefault(c => c.ChildrenOfType<WaveOverlayContainer>().Any());
 
     public static Container? GetChangelogPlacementContainer(this OsuGame game)
     {
-        // will place the container with same location like WikiOverlay.
-        return game.getBasePlacementContainer()?.Children[0] as Container;
+        // will place the container where components of an WaveOverlayContainer type exist
+        return game.getBasePlacementContainer()?.Children.OfType<Container>().FirstOrDefault(c => c.Children.OfType<WaveOverlayContainer>().Any());
     }
 
     public static SettingsOverlay? GetSettingsOverlay(this OsuGame game)
