@@ -310,7 +310,11 @@ public partial class KaraokeRuleset : Ruleset
         public KaraokeIcon(KaraokeRuleset ruleset)
         {
             this.ruleset = ruleset;
-            AutoSizeAxes = Axes.Both;
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
+
+            // Set a fixed size to make Song Select V2 happy
+            Size = new Vector2(32);
         }
 
         [BackgroundDependencyLoader]
@@ -322,6 +326,8 @@ public partial class KaraokeRuleset : Ruleset
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    FillMode = FillMode.Fit,
                     Scale = new Vector2(0.9f),
                     Texture = new TextureStore(renderer, new TextureLoaderStore(ruleset.CreateResourceStore()), false).Get("Textures/logo"),
                 },
@@ -329,7 +335,7 @@ public partial class KaraokeRuleset : Ruleset
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Scale = new Vector2(45f),
+                    RelativeSizeAxes = Axes.Both,
                     Icon = FontAwesome.Regular.Circle,
                 },
             };
