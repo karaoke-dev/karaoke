@@ -57,6 +57,7 @@ public abstract partial class SpecialActionSection<TAction> : EditorSection wher
     private partial class LabelledSpecialActionSelection : LabelledEnumDropdown<TAction>
     {
         public LabelledSpecialActionSelection()
+            : base(true)
         {
             // should change the component size because LabelledDropdown use 0.5 as drawable with scale.
             Component.Width = 1;

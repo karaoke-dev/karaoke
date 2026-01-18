@@ -18,7 +18,7 @@ public partial class NoteEditPropertyModeSection : EditorSection
     {
         Children = new Drawable[]
         {
-            new LabelledEnumDropdown<NoteEditPropertyMode>
+            new LabelledEnumDropdown<NoteEditPropertyMode>(true)
             {
                 Label = "Edit property",
                 Description = "Batch edit text, ruby(alternative) text or display from notes",
