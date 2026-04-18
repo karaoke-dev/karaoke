@@ -22,7 +22,7 @@ public partial class TimeTagRecordingConfigSection : EditorSection
     {
         Children = new Drawable[]
         {
-            new LabelledEnumDropdown<RecordingTimeTagCaretMoveMode>
+            new LabelledEnumDropdown<RecordingTimeTagCaretMoveMode>(true)
             {
                 Label = "Record tag mode",
                 Description = "Only record time with start/end time-tag while recording.",

@@ -24,12 +24,12 @@ internal partial class RubyAndRomanisationSection : LyricConfigSection
     {
         Children = new Drawable[]
         {
-            rubyAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
+            rubyAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>(true)
             {
                 Label = "Ruby alignment",
                 Description = "Ruby alignment section",
             },
-            romanisationAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
+            romanisationAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>(true)
             {
                 Label = "Romanisation alignment",
                 Description = "Romanisation alignment section",

@@ -24,7 +24,7 @@ internal partial class LyricFontSection : StyleSection
     {
         Children = new Drawable[]
         {
-            fontDropdown = new LabelledEnumDropdown<Font>
+            fontDropdown = new LabelledEnumDropdown<Font>(true)
             {
                 Label = "Font",
                 Description = "Select display font.",

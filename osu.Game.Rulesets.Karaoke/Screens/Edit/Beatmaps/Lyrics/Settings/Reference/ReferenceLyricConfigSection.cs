@@ -38,7 +38,7 @@ public partial class ReferenceLyricConfigSection : LyricPropertySection
     {
         Children = new Drawable[]
         {
-            labelledReferenceLyricConfig = new LabelledDropdown<string>
+            labelledReferenceLyricConfig = new LabelledDropdown<string>(true)
             {
                 Label = "Config",
                 Description = "Select the similar lyric that want to reference or sync the property.",

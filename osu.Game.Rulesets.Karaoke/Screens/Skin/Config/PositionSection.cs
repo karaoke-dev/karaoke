@@ -20,7 +20,7 @@ internal partial class PositionSection : LyricConfigSection
     {
         Children = new Drawable[]
         {
-            smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>
+            smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>(true)
             {
                 Label = "Smart horizon",
                 Description = "Smart horizon section",

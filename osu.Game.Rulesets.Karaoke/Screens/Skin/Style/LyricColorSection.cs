@@ -19,7 +19,7 @@ internal partial class LyricColorSection : StyleSection
     {
         Children = new Drawable[]
         {
-            colorAreaDropdown = new LabelledEnumDropdown<ColorArea>
+            colorAreaDropdown = new LabelledEnumDropdown<ColorArea>(true)
             {
                 Label = "Color area",
                 Description = "Select the area you wish to adjust.",

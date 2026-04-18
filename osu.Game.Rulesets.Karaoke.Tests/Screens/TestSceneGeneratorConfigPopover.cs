@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -14,12 +15,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens;
 public partial class TestSceneGeneratorConfigPopover : OsuTestScene
 {
     private KaraokeRulesetEditGeneratorConfigManager config = null!;
+    private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
 
     [BackgroundDependencyLoader]
     private void load()
     {
         config = new KaraokeRulesetEditGeneratorConfigManager();
         Dependencies.Cache(config);
+        Dependencies.Cache(colourProvider);
     }
 
     [Test]
