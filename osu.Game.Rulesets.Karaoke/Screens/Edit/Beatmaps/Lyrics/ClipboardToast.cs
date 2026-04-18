@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Beatmaps.Lyrics;
 public partial class ClipboardToast : Toast
 {
     public ClipboardToast(LyricEditorMode mode, ClipboardAction action)
-        : base(getDescription(), getValue(action), getShortcut(mode, action))
+        : base(getDescription(), getValue(action))
     {
     }
 
@@ -20,9 +20,6 @@ public partial class ClipboardToast : Toast
 
     private static LocalisableString getValue(ClipboardAction action)
         => action.GetDescription();
-
-    private static LocalisableString getShortcut(LyricEditorMode mode, ClipboardAction action)
-        => $"Lyric has been {action.GetDescription().ToLower()} in the {action.GetDescription().ToLower()} mode.";
 }
 
 public enum ClipboardAction

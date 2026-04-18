@@ -21,6 +21,8 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Utils;
 using SharpCompress.Archives.Zip;
+using SharpCompress.Common;
+using SharpCompress.Writers.Zip;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Debugging;
 
@@ -259,7 +261,7 @@ public partial class DebugBeatmapManager : Component
         public override void ExportToStream(BeatmapSetInfo model, Stream outputStream, ProgressNotification? notification, CancellationToken cancellationToken = new())
         {
             // base.ExportModelTo(model, outputStream);
-            using var zipArchive = ZipArchive.Create();
+            using var zipArchive = ZipArchive.CreateArchive();
 
             foreach (INamedFileUsage file in model.Files)
             {
@@ -267,13 +269,13 @@ public partial class DebugBeatmapManager : Component
                 if (file.Filename.EndsWith(".osu", StringComparison.Ordinal))
                     continue;
 
-                zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()));
+                zipArchive.AddEntry(file.Filename, UserFileStorage.GetStream(file.File.GetStoragePath()), true);
             }
 
             // add the json file.
             using var jsonBeatmapStream = getJsonBeatmapStream();
-            zipArchive.AddEntry(filename, jsonBeatmapStream);
-            zipArchive.SaveTo(outputStream);
+            zipArchive.AddEntry(filename, jsonBeatmapStream, true);
+            zipArchive.SaveTo(outputStream,  new ZipWriterOptions(CompressionType.Deflate));
         }
 
         private Stream getJsonBeatmapStream()
