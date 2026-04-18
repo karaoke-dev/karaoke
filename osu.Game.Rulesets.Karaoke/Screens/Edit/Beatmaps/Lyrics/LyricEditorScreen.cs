@@ -142,7 +142,7 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
     public partial class LyricEditorEditModeToast : Toast
     {
         public LyricEditorEditModeToast(LyricEditorMode mode)
-            : base(getDescription(), getValue(mode), getShortcut(mode))
+            : base(getDescription(), getValue(mode))
         {
         }
 
@@ -151,8 +151,5 @@ public partial class LyricEditorScreen : BeatmapEditorScreen
 
         private static LocalisableString getValue(LyricEditorMode mode)
             => $"{mode.GetDescription()} Mode";
-
-        private static LocalisableString getShortcut(LyricEditorMode mode)
-            => $"Switch to the {mode.GetDescription()} mode";
     }
 }
