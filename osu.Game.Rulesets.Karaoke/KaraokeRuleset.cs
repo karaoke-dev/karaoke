@@ -249,11 +249,6 @@ public partial class KaraokeRuleset : Ruleset
         // Always display song info
         var statistic = new List<StatisticItem>
         {
-            new("Info", () => new BeatmapInfoGraph(playableBeatmap)
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = info_height,
-            }),
             new("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
             {
                 RelativeSizeAxes = Axes.X,
