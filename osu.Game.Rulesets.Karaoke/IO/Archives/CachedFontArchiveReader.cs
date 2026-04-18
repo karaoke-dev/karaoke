@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using osu.Framework.IO.Stores;
 using osu.Game.IO.Archives;
+using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Archives;
@@ -18,13 +19,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Archives;
 public class CachedFontArchiveReader : ArchiveReader
 {
     private readonly Stream archiveStream;
-    private readonly ZipArchive archive;
+    private readonly IWritableArchive archive;
 
     public CachedFontArchiveReader(Stream archiveStream, string name)
         : base(name)
     {
         this.archiveStream = archiveStream;
-        archive = ZipArchive.Open(archiveStream);
+        archive = ZipArchive.OpenArchive(archiveStream);
     }
 
     public override Stream GetStream(string name)
