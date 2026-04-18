@@ -72,13 +72,22 @@ public static class Extensions
         return @class.GetInheritsBaseClassDependencies().SelectMany(x => x.TargetGenericArguments.Select(arg => arg.Type));
     }
 
+    private static readonly string[] ingored_namespace_list =
+    [
+        "Sentry.Generated",
+    ];
+
     public static bool RelativeNameStartsWith(
         this IHasName cls,
         Project.ProjectAttribute project,
         string pattern,
         StringComparison stringComparison = StringComparison.CurrentCulture)
     {
-        string relativeNamespace = getRelativeNamespace(project, cls.FullName);
+        string? fullNamespace = cls.FullName;
+        if (ingored_namespace_list.Contains(fullNamespace))
+            return false;
+
+        string relativeNamespace = getRelativeNamespace(project,fullNamespace);
         return relativeNamespace.StartsWith(pattern, stringComparison);
     }
 
@@ -87,7 +96,11 @@ public static class Extensions
                                            string pattern,
                                            bool useRegularExpressions = false)
     {
-        string relativeNamespace = getRelativeNamespace(project, cls.FullName);
+        string? fullNamespace = cls.FullName;
+        if (ingored_namespace_list.Contains(fullNamespace))
+            return false;
+
+        string relativeNamespace = getRelativeNamespace(project, fullNamespace);
 
         if (!useRegularExpressions)
             return string.Equals(relativeNamespace, pattern, StringComparison.OrdinalIgnoreCase);
