@@ -218,7 +218,7 @@ public partial class KaraokeRuleset : Ruleset
 
     public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
-    protected override IEnumerable<HitResult> GetValidHitResults()
+    public override IEnumerable<HitResult> GetValidHitResults()
     {
         return new[]
         {
