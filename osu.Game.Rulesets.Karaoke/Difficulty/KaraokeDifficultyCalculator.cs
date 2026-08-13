@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty;
 
@@ -32,10 +33,12 @@ public class KaraokeDifficultyCalculator : DifficultyCalculator
         originalOverallDifficulty = beatmap.BeatmapInfo.Difficulty.OverallDifficulty;
     }
 
-    protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills, double clockRate)
+    protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills)
     {
         if (beatmap.HitObjects.Count == 0)
             return new KaraokeDifficultyAttributes { Mods = mods };
+
+        double clockRate = ModUtils.CalculateRateWithMods(mods);
 
         return new KaraokeDifficultyAttributes
         {
@@ -47,9 +50,10 @@ public class KaraokeDifficultyCalculator : DifficultyCalculator
         };
     }
 
-    protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, double clockRate)
+    protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, Mod[] mods)
     {
         var sortedObjects = beatmap.HitObjects.OfType<Note>().ToArray();
+        double clockRate = ModUtils.CalculateRateWithMods(mods);
 
         // todo : might have a sort.
         // LegacySortHelper<HitObject>.Sort(sortedObjects, Comparer<HitObject>.Create((a, b) => (int)Math.Round(a.StartTime) - (int)Math.Round(b.StartTime)));
@@ -65,7 +69,7 @@ public class KaraokeDifficultyCalculator : DifficultyCalculator
     // Sorting is done in CreateDifficultyHitObjects, since the full list of hitobjects is required.
     protected override IEnumerable<DifficultyHitObject> SortObjects(IEnumerable<DifficultyHitObject> input) => input;
 
-    protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods, double clockRate) => new Skill[]
+    protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods) => new Skill[]
     {
         new Strain(mods, ((KaraokeBeatmap)beatmap).NoteInfo),
     };

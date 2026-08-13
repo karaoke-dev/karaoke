@@ -15,7 +15,6 @@ public class KaraokeModLyricConfiguration : Mod, IApplicableToDrawableHitObject
 {
     public override string Name => "Adjust Lyric Display";
     public override LocalisableString Description => "Determined display lyric or romanisation, show the ruby, translation or not.";
-    public override double ScoreMultiplier => 1.0f;
     public override string Acronym => "AL";
 
     [SettingSource("Display type", "Display the lyric or romanisation as main text.", 0)]

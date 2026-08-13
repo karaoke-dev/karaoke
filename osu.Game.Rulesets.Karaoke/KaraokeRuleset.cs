@@ -49,6 +49,7 @@ public partial class KaraokeRuleset : Ruleset
 {
     public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
     public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
+    public override ScoreMultiplierCalculator CreateScoreMultiplierCalculator(ScoreMultiplierContext context) => new KaraokeScoreMultiplierCalculator(context);
     public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
     public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
 
@@ -132,9 +133,10 @@ public partial class KaraokeRuleset : Ruleset
     public override LocalisableString GetVariantName(int variant)
         => variant switch
         {
+            0 => "Vocal",
             GAMEPLAY_INPUT_VARIANT => "Gameplay",
             EDIT_INPUT_VARIANT => "Composer",
-            _ => throw new ArgumentNullException(nameof(variant)),
+            _ => string.Empty,
         };
 
     public override IEnumerable<Mod> GetModsFor(ModType type) =>

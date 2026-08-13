@@ -17,7 +17,6 @@ public class KaraokeModTranslation : Mod, IApplicableToDrawableHitObject
 
     public override LocalisableString Description => "Display prefer translation by ruleset configuration.";
 
-    public override double ScoreMultiplier => 1.0f;
 
     public override string Acronym => "LT";
 

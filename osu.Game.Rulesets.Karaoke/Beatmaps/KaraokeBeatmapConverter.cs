@@ -18,7 +18,9 @@ public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
     {
     }
 
-    public override bool CanConvert() => Beatmap.HitObjects.All(h => h is KaraokeHitObject);
+    // Native karaoke objects are passed through by BeatmapConverter. Objects from other
+    // rulesets are ignored so that song select can safely preview incompatible beatmaps.
+    public override bool CanConvert() => true;
 
     protected override Beatmap<KaraokeHitObject> ConvertBeatmap(IBeatmap original, CancellationToken cancellationToken)
     {
@@ -40,7 +42,7 @@ public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
     }
 
     protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap, CancellationToken cancellationToken)
-        => throw new NotImplementedException();
+        => Array.Empty<KaraokeHitObject>();
 
     protected override Beatmap<KaraokeHitObject> CreateBeatmap() => new KaraokeBeatmap();
 }

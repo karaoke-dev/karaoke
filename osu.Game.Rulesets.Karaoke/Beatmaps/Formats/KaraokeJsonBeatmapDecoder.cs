@@ -24,7 +24,7 @@ public class KaraokeJsonBeatmapDecoder : JsonBeatmapDecoder
         SetFallbackDecoder<Beatmap>(() => new KaraokeJsonBeatmapDecoder());
     }
 
-    protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
+    protected override void ParseStreamInto(LineBufferedReader stream, bool isPrimaryStream, Beatmap output)
     {
         var globalSetting = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
         globalSetting.ContractResolver = new KaraokeBeatmapContractResolver();
