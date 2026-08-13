@@ -7,12 +7,16 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews;
+using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay;
 
 public partial class ScoringSettings : KaraokeSettingsSubsection
 {
     protected override LocalisableString Header => "Scoring";
+
+    public override SettingsSubsectionPreview CreatePreview() => new ScoringSettingsPreview();
 
     [BackgroundDependencyLoader]
     private void load()
