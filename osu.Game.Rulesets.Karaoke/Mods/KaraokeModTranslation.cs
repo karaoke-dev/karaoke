@@ -17,7 +17,6 @@ public class KaraokeModTranslation : Mod, IApplicableToDrawableHitObject
 
     public override LocalisableString Description => "Display prefer translation by ruleset configuration.";
 
-
     public override string Acronym => "LT";
 
     [SettingSource("Default language", "Select default language", 0, SettingControlType = typeof(LanguageSettingsControl))]
