@@ -40,6 +40,12 @@ public class KaraokeNoteHitWindows : KaraokeHitWindows
             case HitResult.Perfect:
                 return perfect;
 
+            // DifficultyHitObject always requests a Great window, even when Great is not
+            // an allowed timing result for this object type. Use the highest successful
+            // timing window so difficulty calculation can proceed.
+            case HitResult.Great:
+                return perfect;
+
             case HitResult.Meh:
                 return meh;
 
