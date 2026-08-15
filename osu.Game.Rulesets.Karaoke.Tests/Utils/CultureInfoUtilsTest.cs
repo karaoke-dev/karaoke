@@ -49,8 +49,12 @@ public class CultureInfoUtilsTest
         Assert.That(actual, Is.EqualTo(isLanguage));
     }
 
-    [TestCase(4, true)] // 中文（简体）
-    [TestCase(31748, true)] // 中文（繁體）
+    // note: lcid 4 and 31748 are the same "weird cultureInfo" that are already excluded in the save/load test cases below.
+    // constructing them by lcid gives a different culture depending on the platform: windows resolves them to the neutral
+    // "zh-Hans"/"zh-Hant", while linux (and therefore CI) resolves them to the deprecated specific "zh-CHS"/"zh-CHT".
+    // constructing by name is stable on both, and is covered by the string test cases above.
+    [TestCase(4, true, Ignore = "Resolves to the specific culture \"zh-CHS\" instead of the neutral \"zh-Hans\" on linux.")] // 中文（简体）
+    [TestCase(31748, true, Ignore = "Resolves to the specific culture \"zh-CHT\" instead of the neutral \"zh-Hant\" on linux.")] // 中文（繁體）
     [TestCase(30724, true)] // 中文
     [TestCase(1028, false)] // 中文（台灣）
     public void TestIsLanguage(int lcid, bool isLanguage)
