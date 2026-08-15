@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -38,7 +39,7 @@ public class TimeTagsUtilsTest
         }
         else
         {
-            Assert.That(() => TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index), Throws.Exception);
+            Assert.That((Action)(() => TimeTagsUtils.GenerateCenterTimeTag(startTimeTag, endTimeTag, index)), Throws.Exception);
         }
     }
 

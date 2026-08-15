@@ -119,7 +119,7 @@ public abstract partial class BaseChangeHandlerTest<TChangeHandler> : EditorCloc
     {
         TriggerHandlerChanged(ch =>
         {
-            Assert.Throws<T>(() => c(ch));
+            Assert.Throws<T>((Action)(() => c(ch)));
         });
     }
 

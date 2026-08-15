@@ -56,7 +56,7 @@ public abstract class BaseTest
 
             case Project.ExecuteType.Report:
             {
-                Assert.Multiple(() =>
+                Assert.Multiple((Action)(() =>
                 {
                     assert();
 
@@ -64,7 +64,7 @@ public abstract class BaseTest
                     int failedCount = TestContext.CurrentContext.Result.Assertions.Count();
                     Console.WriteLine("=================================");
                     Console.WriteLine($"There are {failedCount} failed in {totalCount} test step.");
-                });
+                }));
 
                 break;
             }

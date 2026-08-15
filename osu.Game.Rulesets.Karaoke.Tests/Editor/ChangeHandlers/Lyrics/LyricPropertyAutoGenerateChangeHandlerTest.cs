@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
@@ -324,7 +325,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         TriggerHandlerChanged(c =>
         {
-            Assert.That(() => c.AutoGenerate(type), Throws.Nothing);
+            Assert.That((Action)(() => c.AutoGenerate(type)), Throws.Nothing);
         });
     }
 
@@ -346,7 +347,7 @@ public partial class LyricPropertyAutoGenerateChangeHandlerTest : LyricPropertyC
 
         TriggerHandlerChanged(c =>
         {
-            var exception = Assert.Catch(() => c.AutoGenerate(type));
+            var exception = Assert.Catch((Action)(() => c.AutoGenerate(type)));
             Assert.That(new[] { typeof(GeneratorNotSupportedException), typeof(DetectorNotSupportedException) }, Does.Contain(exception?.GetType()));
         });
     }
