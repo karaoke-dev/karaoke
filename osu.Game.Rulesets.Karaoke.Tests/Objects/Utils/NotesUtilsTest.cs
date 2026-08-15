@@ -39,7 +39,7 @@ public class NotesUtilsTest
         }
         else
         {
-            Assert.Catch(() => NotesUtils.SplitNote(note, percentage));
+            Assert.Catch((Action)(() => NotesUtils.SplitNote(note, percentage)));
         }
     }
 

@@ -24,7 +24,7 @@ public abstract class HitObjectWorkingPropertyValidatorTest<THitObject, TFlag>
     public void TestAllInvalidateTest([Values] TFlag flag)
     {
         // run this test case just make sure that all working property are checked.
-        Assert.That(() => new THitObject().InvalidateWorkingProperty(flag), Throws.Nothing);
+        Assert.That((Action)(() => new THitObject().InvalidateWorkingProperty(flag)), Throws.Nothing);
     }
 
     protected void AssetInitialStateIsValid(THitObject hitObject, TFlag flag)

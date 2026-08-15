@@ -53,8 +53,8 @@ public class RubyTagUtilsTest
 
         if (actualTag == null)
         {
-            Assert.That(() => generateShiftingTag(rubyTag, lyric, offset), Throws.TypeOf<InvalidOperationException>());
-            Assert.That(() => generateShiftingTag(rubyTag, lyric, offset), Throws.TypeOf<InvalidOperationException>());
+            Assert.That((Action)(() => generateShiftingTag(rubyTag, lyric, offset)), Throws.TypeOf<InvalidOperationException>());
+            Assert.That((Action)(() => generateShiftingTag(rubyTag, lyric, offset)), Throws.TypeOf<InvalidOperationException>());
             return;
         }
 
@@ -166,7 +166,7 @@ public class RubyTagUtilsTest
 
         if (expected == null)
         {
-            Assert.That(() => RubyTagUtils.GetTextFromLyric(rubyTag, lyric), Throws.TypeOf<InvalidOperationException>());
+            Assert.That((Action)(() => RubyTagUtils.GetTextFromLyric(rubyTag, lyric)), Throws.TypeOf<InvalidOperationException>());
         }
         else
         {

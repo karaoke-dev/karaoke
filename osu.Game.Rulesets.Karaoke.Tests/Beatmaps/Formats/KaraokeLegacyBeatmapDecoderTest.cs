@@ -155,7 +155,7 @@ public class KaraokeLegacyBeatmapDecoderTest
         }
         else
         {
-            Assert.That(() => KaraokeLegacyBeatmapDecoder.SliceNote(note, startPercentage, durationPercentage), Throws.Exception);
+            Assert.That((Action)(() => KaraokeLegacyBeatmapDecoder.SliceNote(note, startPercentage, durationPercentage)), Throws.Exception);
         }
     }
 }

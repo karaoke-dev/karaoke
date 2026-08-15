@@ -42,13 +42,13 @@ public class LrcEncoderTest
     [TestCase("[00:04.00]<00:04.00>か<00:04.00>ら<00:05.00>お<00:06.00>け<00:07.00>")]
     public void TestDecodeLyricWithDuplicatedTimeTag(string text)
     {
-        Assert.Throws<FormatException>(() => new LrcDecoder().Decode(text));
+        Assert.Throws<FormatException>((Action)(() => new LrcDecoder().Decode(text)));
     }
 
     [Ignore("Waiting for lyric parser update.")]
     [TestCase("[00:04.00]<00:04.00>か<00:03.00>ら<00:02.00>お<00:01.00>け<00:00.00>")]
     public void TestDecodeLyricWithTimeTagNotOrder(string text)
     {
-        Assert.Throws<FormatException>(() => new LrcDecoder().Decode(text));
+        Assert.Throws<FormatException>((Action)(() => new LrcDecoder().Decode(text)));
     }
 }
