@@ -10,21 +10,18 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricColorSection : StyleSection
 {
-    private readonly LabelledEnumDropdown<ColorArea> colorAreaDropdown;
-    private readonly LabelledColourSelector colorPicker;
-
     protected override LocalisableString Title => "Color";
 
     public LyricColorSection()
     {
         Children = new Drawable[]
         {
-            colorAreaDropdown = new LabelledEnumDropdown<ColorArea>(true)
+            new LabelledEnumDropdown<ColorArea>(true)
             {
                 Label = "Color area",
                 Description = "Select the area you wish to adjust.",
             },
-            colorPicker = new LabelledColourSelector
+            new LabelledColourSelector
             {
                 Label = "Color",
                 Description = "Select color.",
@@ -35,15 +32,15 @@ internal partial class LyricColorSection : StyleSection
 
 public enum ColorArea
 {
-    Front_Text,
+    FrontText,
 
-    Front_Border,
+    FrontBorder,
 
-    Front_Shadow,
+    FrontShadow,
 
-    Back_Text,
+    BackText,
 
-    Back_Border,
+    BackBorder,
 
-    Back_Shadow,
+    BackShadow,
 }

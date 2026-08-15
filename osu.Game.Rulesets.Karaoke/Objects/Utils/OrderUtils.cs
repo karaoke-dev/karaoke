@@ -84,7 +84,6 @@ public static class OrderUtils
     public static void ResortOrder<T>(T[] objects, int startFrom = 1, Action<T, int, int>? changeOrderAction = null) where T : IHasOrder
     {
         int minOrderNumber = GetMinOrderNumber(objects.ToArray());
-        int maxOrderNumber = GetMaxOrderNumber(objects.ToArray());
 
         // todo : should deal with the case if new start order is between min and max order number
         bool orderByAsc = startFrom <= minOrderNumber;

@@ -256,8 +256,8 @@ public class LyricUtilsTest
         {
             TimeTags = new List<TimeTag>
             {
-                new (new TextIndex(), startTime),
-                new (new TextIndex(), endTime),
+                new(new TextIndex(), startTime),
+                new(new TextIndex(), endTime),
             },
         };
 

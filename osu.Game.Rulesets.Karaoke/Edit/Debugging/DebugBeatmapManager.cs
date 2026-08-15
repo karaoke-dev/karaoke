@@ -81,10 +81,10 @@ public partial class DebugBeatmapManager : Component
         // clear online properties.
         newBeatmapInfo.ResetOnlineInfo();
 
-        addDifficultyToSet(targetBeatmapSet, newBeatmap);
+        addDifficultyToSet();
         return;
 
-        void addDifficultyToSet(BeatmapSetInfo targetBeatmapSet, IBeatmap newBeatmap)
+        void addDifficultyToSet()
         {
             // populate circular beatmap set info <-> beatmap info references manually.
             // several places like `Save()` or `GetWorkingBeatmap()`
@@ -152,8 +152,6 @@ public partial class DebugBeatmapManager : Component
 
             if (existingFileInfo != null)
                 beatmapManager.DeleteFile(setInfo, existingFileInfo);
-
-            string oldMd5Hash = beatmapInfo.MD5Hash;
 
             beatmapInfo.MD5Hash = stream.ComputeMD5Hash();
             beatmapInfo.Hash = stream.ComputeSHA2Hash();
@@ -275,7 +273,7 @@ public partial class DebugBeatmapManager : Component
             // add the json file.
             using var jsonBeatmapStream = getJsonBeatmapStream();
             zipArchive.AddEntry(filename, jsonBeatmapStream, true);
-            zipArchive.SaveTo(outputStream,  new ZipWriterOptions(CompressionType.Deflate));
+            zipArchive.SaveTo(outputStream, new ZipWriterOptions(CompressionType.Deflate));
         }
 
         private Stream getJsonBeatmapStream()

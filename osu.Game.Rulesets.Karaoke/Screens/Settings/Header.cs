@@ -25,14 +25,14 @@ public partial class Header : Container
     [Resolved]
     private KaraokeSettingsColourProvider colourProvider { get; set; } = null!;
 
-    private readonly Box background;
-    private readonly KaraokeConfigHeaderTitle title;
     private readonly KaraokeConfigPageTabControl tabs;
 
     public Header()
     {
         RelativeSizeAxes = Axes.X;
         Height = HEIGHT;
+
+        Box background;
 
         Children = new Drawable[]
         {
@@ -49,7 +49,7 @@ public partial class Header : Container
                 Padding = new MarginPadding { Left = 10 },
                 Children = new Drawable[]
                 {
-                    title = new KaraokeConfigHeaderTitle
+                    new KaraokeConfigHeaderTitle
                     {
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.BottomLeft,
@@ -90,7 +90,6 @@ public partial class Header : Container
     {
         private const float spacing = 6;
 
-        private readonly OsuSpriteText dot;
         private readonly OsuSpriteText pageTitle;
 
         public KaraokeConfigHeaderTitle()
@@ -113,7 +112,7 @@ public partial class Header : Container
                             Font = OsuFont.GetFont(size: 24),
                             Text = "Karaoke",
                         },
-                        dot = new OsuSpriteText
+                        new OsuSpriteText
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,

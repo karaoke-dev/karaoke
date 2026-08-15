@@ -218,13 +218,13 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
         var availableTranslations = new List<CultureInfo>();
 
         var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-        var translations = translationLines.Select(translation => new
+        var groupedTranslations = translationLines.Select(translation => new
         {
             key = translation.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
             value = translation.Split('=').LastOrDefault() ?? string.Empty,
         }).GroupBy(x => x.key, y => y.value).ToList();
 
-        foreach (var translation in translations)
+        foreach (var translation in groupedTranslations)
         {
             // get culture and translation
             string? languageCode = translation.Key;

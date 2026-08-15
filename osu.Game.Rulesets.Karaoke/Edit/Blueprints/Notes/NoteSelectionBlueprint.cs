@@ -55,7 +55,7 @@ public partial class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>
         var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
         Anchor = Origin = anchor;
 
-        Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(HitObject.StartTime)) - AnchorPosition;
+        Position = Parent!.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(HitObject.StartTime)) - AnchorPosition;
         Y += notePositionInfo.Calculator.YPositionAt(HitObject.Tone);
 
         Width = HitObjectContainer.LengthAtTime(HitObject.StartTime, HitObject.EndTime);

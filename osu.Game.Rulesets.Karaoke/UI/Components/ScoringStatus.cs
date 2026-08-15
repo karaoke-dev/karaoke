@@ -80,8 +80,8 @@ public partial class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
             ScoringStatusMode.AndroidDoesNotSupported => "Android device haven't support scoring system yet :(",
             ScoringStatusMode.IOSMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
             ScoringStatusMode.IOSDoesNotSupported => "iOS device haven't support scoring system yet :(",
-            ScoringStatusMode.OSXMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
-            ScoringStatusMode.OSXDoesNotSupported => "Osx device haven't support scoring system yet :(",
+            ScoringStatusMode.OsxMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+            ScoringStatusMode.OsxDoesNotSupported => "Osx device haven't support scoring system yet :(",
             ScoringStatusMode.WindowsMicrophonePermissionDeclined => "Open lazer with admin permission to enable scoring system.",
             ScoringStatusMode.NotScoring => "This beatmap is not scorable.",
             ScoringStatusMode.AutoPlay => "Auto play mode.",
@@ -127,7 +127,7 @@ public enum ScoringStatusMode
     /// Due to osx device does not authorize microphone access.
     /// </summary>
     [Description("osx permission declined.")]
-    OSXMicrophonePermissionDeclined,
+    OsxMicrophonePermissionDeclined,
 
     /// <summary>
     /// Scoring system does not support osx device.
@@ -135,7 +135,7 @@ public enum ScoringStatusMode
     /// Or official client does not open this permission.
     /// </summary>
     [Description("osx target not supported.")]
-    OSXDoesNotSupported,
+    OsxDoesNotSupported,
 
     /// <summary>
     /// Due to windows device does not authorize microphone access.

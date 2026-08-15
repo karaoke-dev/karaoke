@@ -20,6 +20,7 @@ public class StageOriginCommand : StageCommand<Anchor>
         if (StartTime == EndTime)
             d.Origin = StartValue;
     }
+
     public override TransformSequence<TDrawable> ApplyTransforms<TDrawable>(TDrawable d)
         => d.TransformTo(nameof(Drawable.Origin), StartValue).Delay(Duration)
             .TransformTo(nameof(Drawable.Origin), EndValue);

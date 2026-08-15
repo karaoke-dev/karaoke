@@ -11,18 +11,16 @@ public class NotePositionCalculator
 {
     private readonly int columns;
     private readonly float columnSpacing;
-    private readonly Tone offset;
 
     public float ColumnHeight { get; }
 
-    public NotePositionCalculator(int columns, float columnHeight, float columnSpacing, Tone offset = new())
+    public NotePositionCalculator(int columns, float columnHeight, float columnSpacing)
     {
         ColumnHeight = columnHeight;
 
         // todo : not sure should column can be even.
         this.columns = columns;
         this.columnSpacing = columnSpacing;
-        this.offset = offset;
     }
 
     public float YPositionAt(Note note) => YPositionAt(note.Tone);

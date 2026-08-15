@@ -32,7 +32,6 @@ public partial class RecordingTapControl : CompositeDrawable, IKeyBindingHandler
     [Resolved]
     private EditorClock editorClock { get; set; } = null!;
 
-    private InlineButton undoButton = null!;
     private InlineButton resetButton = null!;
     private TapButton tapButton = null!;
 
@@ -55,7 +54,7 @@ public partial class RecordingTapControl : CompositeDrawable, IKeyBindingHandler
                 CornerRadius = 15,
                 Children = new Drawable[]
                 {
-                    undoButton = new InlineButton(FontAwesome.Solid.Trash, Anchor.TopLeft)
+                    new InlineButton(FontAwesome.Solid.Trash, Anchor.TopLeft)
                     {
                         BackgroundColour = colourProvider.Background1(state.Mode),
                         RelativeSizeAxes = Axes.Both,
@@ -113,6 +112,7 @@ public partial class RecordingTapControl : CompositeDrawable, IKeyBindingHandler
         lyricTimeTagsChangeHandler.ClearAllTimeTagTime();
 
         var lyric = timeTagCaretPosition.Lyric;
+
         if (lyric.TimeValid)
         {
             editorClock.Seek(lyric.StartTime - 1000);

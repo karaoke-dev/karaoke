@@ -13,28 +13,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricFontSection : StyleSection
 {
-    private readonly LabelledEnumDropdown<Font> fontDropdown;
-    private readonly LabelledSwitchButton boldSwitchButton;
-    private readonly LabelledRealTimeSliderBar<float> fontSizeSliderBar;
-    private readonly LabelledRealTimeSliderBar<int> borderSliderBar;
-
     protected override LocalisableString Title => "Font";
 
     public LyricFontSection()
     {
         Children = new Drawable[]
         {
-            fontDropdown = new LabelledEnumDropdown<Font>(true)
+            new LabelledEnumDropdown<Font>(true)
             {
                 Label = "Font",
                 Description = "Select display font.",
             },
-            boldSwitchButton = new LabelledSwitchButton
+            new LabelledSwitchButton
             {
                 Label = "Bold",
                 Description = "Select bold or not.",
             },
-            fontSizeSliderBar = new LabelledRealTimeSliderBar<float>
+            new LabelledRealTimeSliderBar<float>
             {
                 Label = "Font size",
                 Description = "Adjust font size.",
@@ -45,7 +40,7 @@ internal partial class LyricFontSection : StyleSection
                     MaxValue = 70,
                 },
             },
-            borderSliderBar = new LabelledRealTimeSliderBar<int>
+            new LabelledRealTimeSliderBar<int>
             {
                 Label = "Border size",
                 Description = "Adjust border size.",

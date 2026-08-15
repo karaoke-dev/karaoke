@@ -47,8 +47,8 @@ public abstract class DifficultyCalculatorTest
             {
                 BeatmapInfo =
                 {
-                    Ruleset = CreateRuleset().RulesetInfo
-                }
+                    Ruleset = CreateRuleset().RulesetInfo,
+                },
             };
         }
     }

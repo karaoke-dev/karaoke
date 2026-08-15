@@ -24,7 +24,7 @@ public class StageHitObjectRunner : StageRunner, IStageHitObjectRunner
     public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
         commandProvider = stageInfo.CreateHitObjectCommandProvider<Lyric>()!;
-        stageMods = mods.OfType<IApplicableToStageHitObjectCommand>().Where(x => x.CanApply(stageInfo)).ToList();
+        stageMods = mods.OfType<IApplicableToStage>().OfType<IApplicableToStageHitObjectCommand>().Where(x => x.CanApply(stageInfo)).ToList();
 
         OnCommandUpdated?.Invoke();
     }

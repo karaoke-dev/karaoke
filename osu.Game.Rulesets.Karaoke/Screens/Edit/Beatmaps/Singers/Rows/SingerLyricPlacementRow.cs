@@ -55,11 +55,11 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
         private readonly IBindable<string> bindableSingerName = new Bindable<string>();
         private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
 
-        private readonly Singer singer;
+        public Singer Singer { get; }
 
         public DrawableSingerInfo(Singer singer)
         {
-            this.singer = singer;
+            Singer = singer;
 
             bindableOrder.BindTo(singer.OrderBindable);
             bindableHue.BindTo(singer.HueBindable);
@@ -154,7 +154,7 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
 
         public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
-        public Singer TooltipContent => singer;
+        public Singer TooltipContent => Singer;
 
         public MenuItem[] ContextMenuItems => new MenuItem[]
         {
@@ -164,7 +164,7 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
                 dialogOverlay.Push(new DeleteSingerDialog(isOk =>
                 {
                     if (isOk)
-                        beatmapSingersChangeHandler.Remove(singer);
+                        beatmapSingersChangeHandler.Remove(Singer);
                 }));
             }),
         };
@@ -176,6 +176,6 @@ public partial class SingerLyricPlacementColumn : LyricPlacementColumn
         }
 
         public Popover GetPopover()
-            => new SingerEditPopover(singer);
+            => new SingerEditPopover(Singer);
     }
 }

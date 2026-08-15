@@ -54,12 +54,10 @@ public class CheckLyricTimeTag : CheckHitObjectProperty<Lyric>
         if (!TimeTagsUtils.HasEndTimeTagInLyric(lyric.TimeTags, lyric.Text))
             yield return new IssueTemplateMissingEnd(this).Create(lyric);
 
-        // todo: maybe config?
-        const GroupCheck group_check = GroupCheck.Asc;
-        const SelfCheck self_check = SelfCheck.BasedOnStart;
-
         var outOfRangeTags = TimeTagsUtils.FindOutOfRange(lyric.TimeTags, lyric.Text);
-        var overlappingTimeTags = TimeTagsUtils.FindOverlapping(lyric.TimeTags, group_check, self_check).ToArray();
+
+        // todo: the group and self check rule maybe config?
+        var overlappingTimeTags = TimeTagsUtils.FindOverlapping(lyric.TimeTags).ToArray();
         var noTimeTimeTags = TimeTagsUtils.FindNoneTime(lyric.TimeTags);
 
         foreach (var timeTag in outOfRangeTags)

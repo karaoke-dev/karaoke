@@ -260,7 +260,7 @@ public partial class TestScenePreviewKaraokeSpriteText : OsuTestScene
 
     private Vector2 getMousePosition()
     {
-        var position = GetContainingInputManager().CurrentState.Mouse.Position;
+        var position = GetContainingInputManager()!.CurrentState.Mouse.Position;
         return karaokeSpriteText.ToLocalSpace(position);
     }
 

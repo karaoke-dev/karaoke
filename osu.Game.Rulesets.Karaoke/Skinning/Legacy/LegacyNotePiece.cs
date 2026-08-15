@@ -47,7 +47,6 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
 
     private LayerContainer background = null!;
     private LayerContainer foreground = null!;
-    private LayerContainer border = null!;
 
     [BackgroundDependencyLoader]
     private void load(DrawableHitObject drawableObject, ISkinSource skin, IScrollingInfo scrollingInfo)
@@ -56,7 +55,7 @@ public partial class LegacyNotePiece : LegacyKaraokeColumnElement
         {
             background = createLayer("Background layer", skin, LegacyKaraokeSkinNoteLayer.Background),
             foreground = createLayer("Foreground layer", skin, LegacyKaraokeSkinNoteLayer.Foreground),
-            border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border),
+            createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border),
         };
 
         var note = (DrawableNote)drawableObject;

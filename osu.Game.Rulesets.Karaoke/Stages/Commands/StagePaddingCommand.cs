@@ -20,6 +20,7 @@ public class StagePaddingCommand : StageCommand<MarginPadding>
     {
         // todo: composite drawable can only change the padding by transform.
     }
+
     public override TransformSequence<TDrawable> ApplyTransforms<TDrawable>(TDrawable d)
         => d.TransformTo(nameof(CompositeDrawable.Padding), StartValue).Delay(Duration)
             .TransformTo(nameof(CompositeDrawable.Padding), EndValue);

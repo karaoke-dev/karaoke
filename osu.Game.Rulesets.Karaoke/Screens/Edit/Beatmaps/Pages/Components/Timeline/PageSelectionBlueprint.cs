@@ -19,9 +19,6 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
 
     private readonly IBindable<double> startTime;
 
-    private readonly PageInfoPiece pageInfoPiece;
-    private readonly PageBodyPiece pageBodyPiece;
-
     public PageSelectionBlueprint(Page item)
         : base(item)
     {
@@ -35,25 +32,30 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
 
         AddRangeInternal(new Drawable[]
         {
-            pageInfoPiece = new PageInfoPiece(item)
+            new PageInfoPiece(item)
             {
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.BottomCentre,
             },
-            pageBodyPiece = new PageBodyPiece(item)
+            new PageBodyPiece
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.Both,
             },
         });
-
-        startTime.BindValueChanged(_ => X = (float)Item.Time, true);
     }
 
     [BackgroundDependencyLoader]
     private void load(IPageEditorVerifier pageEditorVerifier)
     {
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
+
+        startTime.BindValueChanged(_ => X = (float)Item.Time, true);
     }
 
     private partial class PageInfoPiece : CompositeDrawable
@@ -109,13 +111,6 @@ public partial class PageSelectionBlueprint : EditableTimelineSelectionBlueprint
 
     private partial class PageBodyPiece : CompositeDrawable
     {
-        private readonly Page page;
-
-        public PageBodyPiece(Page page)
-        {
-            this.page = page;
-        }
-
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {

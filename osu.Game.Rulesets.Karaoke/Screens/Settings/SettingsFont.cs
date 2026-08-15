@@ -33,7 +33,6 @@ public partial class SettingsFont : SettingsItem<FontUsage>
         private BindableFontUsage? bindableFontUsage;
 
         private readonly GridContainer grid;
-        private readonly SettingsButton fontButton;
         private readonly SettingsButton decreaseFontSizeButton;
         private readonly SettingsButton increaseFontSizeButton;
 
@@ -70,6 +69,8 @@ public partial class SettingsFont : SettingsItem<FontUsage>
 
         public FontSelectionButton()
         {
+            SettingsButton fontButton;
+
             AutoSizeAxes = Axes.Y;
             InternalChild = grid = new GridContainer
             {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -72,5 +73,5 @@ public partial class StagesChangeHandler : StagePropertyChangeHandler, IStagesCh
         => throw new NotImplementedException();
 
     private TStageInfo? getStageInfo<TStageInfo>() where TStageInfo : StageInfo
-        => throw new NotImplementedException();
+        => getStageInfos().OfType<TStageInfo>().SingleOrDefault();
 }
