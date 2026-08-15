@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Bindables;
@@ -52,6 +53,6 @@ public class BindableCultureInfoTest
     public void TestParsingNotSupportedCultureInfo(string value)
     {
         var bindable = new BindableCultureInfo();
-        Assert.DoesNotThrow(() => bindable.Parse(value, CultureInfo.InvariantCulture));
+        Assert.DoesNotThrow((Action)(() => bindable.Parse(value, CultureInfo.InvariantCulture)));
     }
 }

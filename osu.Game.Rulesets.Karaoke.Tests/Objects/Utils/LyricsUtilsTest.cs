@@ -32,7 +32,7 @@ public class LyricsUtilsTest
         }
         else
         {
-            Assert.Catch(() => LyricsUtils.SplitLyric(lyric, splitIndex));
+            Assert.Catch((Action)(() => LyricsUtils.SplitLyric(lyric, splitIndex)));
         }
     }
 

@@ -35,17 +35,17 @@ public class ElementIdTest
     {
         if (created)
         {
-            Assert.DoesNotThrow(() =>
+            Assert.DoesNotThrow((Action)(() =>
             {
                 _ = new ElementId(id);
-            });
+            }));
         }
         else
         {
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>((Action)(() =>
             {
                 _ = new ElementId(id);
-            });
+            }));
         }
     }
 
@@ -84,20 +84,20 @@ public class ElementIdTest
         var elementId = new ElementId("1234567");
 
         Assert.That(elementId.CompareTo(null), Is.EqualTo(1));
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ArgumentException>((Action)(() =>
         {
             int _ = elementId.CompareTo(3);
-        });
-        Assert.Throws<ArgumentException>(() =>
+        }));
+        Assert.Throws<ArgumentException>((Action)(() =>
         {
             // should not compare to other type
             int _ = elementId.CompareTo("123");
-        });
-        Assert.DoesNotThrow(() =>
+        }));
+        Assert.DoesNotThrow((Action)(() =>
         {
             // should not compare to the string also.
             int _ = elementId.CompareTo(new ElementId("1234567"));
-        });
+        }));
     }
 
     [TestCase("1234567", "1234567", true)]
