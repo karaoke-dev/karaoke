@@ -8,7 +8,8 @@ Thank you for showing interest in the development of karaoke ruleset. We aim to 
 2. [Providing general feedback](#providing-general-feedback)
 3. [Issue or discussion?](#issue-or-discussion)
 4. [Submitting pull requests](#submitting-pull-requests)
-5. [Resources](#resources)
+5. [Development playbooks](#development-playbooks)
+6. [Resources](#resources)
 
 ## Reporting bugs
 
@@ -79,6 +80,14 @@ This means that contributions from less experienced community members can take m
 
 If you're uncertain about some part of the codebase or some inner workings of the karaoke ruleset, please reach out either by leaving a comment in the relevant issue, discussion, or PR thread, or by posting a message in the [development Discord server](https://discord.gg/ga2xZXk).
 We will try to help you as much as we can.
+
+## Development playbooks
+
+Step-by-step guides for the recurring maintenance tasks live under [`docs/`](docs/):
+
+- [docs/upgrading-dependencies.md](docs/upgrading-dependencies.md) — the "update the packages to the latest and fix what breaks" task: where every version lives, the one-commit-per-category convention, how to work out what changed in `ppy/osu`, and the hand-maintained `CopyCustomContent` list that can break a release while CI stays green.
+- [docs/opening-a-pull-request.md](docs/opening-a-pull-request.md) — push branches to your fork but always base the PR on `karaoke-dev/karaoke`, plus how to reproduce the format/inspection CI job locally before pushing.
+- [docs/tag-releases.md](docs/tag-releases.md) — the `YYYY.MMDD.PATCH` tag convention, why tags go to `karaoke-dev/karaoke` and not a fork, and what a tag actually produces (a downloadable GitHub release zip — this repo publishes nothing to nuget.org).
 
 ## Resources
 
