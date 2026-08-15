@@ -23,12 +23,12 @@ public partial class ScoringSettingsPreview : SettingsSubsectionPreview
     private readonly BindableBool overrideScoringPitch = new();
     private readonly BindableInt scoringPitch = new();
 
-    private readonly PitchPreviewRow songRow;
-    private readonly PitchPreviewRow vocalRow;
-    private readonly PitchPreviewRow scoringRow;
-
     public ScoringSettingsPreview()
     {
+        PitchPreviewRow songRow;
+        PitchPreviewRow vocalRow;
+        PitchPreviewRow scoringRow;
+
         Size = new Vector2(0.85f, 0.58f);
 
         Child = new FillFlowContainer
