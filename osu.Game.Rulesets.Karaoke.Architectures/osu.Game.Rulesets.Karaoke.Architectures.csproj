@@ -4,14 +4,14 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke.Architectures</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup>
-    <GenerateProgramFile>false</GenerateProgramFile>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\osu.Game.Rulesets.Karaoke.Tests\osu.Game.Rulesets.Karaoke.Tests.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <!--the test framework and its adapter have to be referenced directly, build assets do not flow through a project reference.-->
+    <PackageReference Include="NUnit" Version="4.5.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
     <PackageReference Include="TngTech.ArchUnitNET" Version="0.13.1" />
   </ItemGroup>
 </Project>
