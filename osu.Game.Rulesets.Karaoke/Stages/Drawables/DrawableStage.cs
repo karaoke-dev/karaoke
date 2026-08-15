@@ -94,6 +94,7 @@ public partial class DrawableStage : Container
             // Note that not every stage mod can create the default stage info.
             // If not possible to create, then use the default one and not override the value in the stage info.
             var newStageInfo = stageMod.CreateDefaultStageInfo(beatmap);
+
             if (newStageInfo == null)
             {
                 return createDefaultStageInfo(beatmap);

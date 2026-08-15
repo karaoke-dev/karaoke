@@ -15,8 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit;
 
 public partial class EditorNotePlayfield : ScrollingNotePlayfield
 {
-    private readonly SingerVoiceVisualization singerVoiceVisualization;
-
     public EditorNotePlayfield(int columns)
         : base(columns)
     {
@@ -32,7 +30,7 @@ public partial class EditorNotePlayfield : ScrollingNotePlayfield
             },
         });
 
-        HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization
+        HitObjectArea.Add(new SingerVoiceVisualization
         {
             Name = "Scoring Visualization",
             RelativeSizeAxes = Axes.Both,

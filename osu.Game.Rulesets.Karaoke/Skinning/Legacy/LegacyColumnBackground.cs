@@ -19,7 +19,6 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
     private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
     private Container lightContainer = null!;
-    private Sprite light = null!;
 
     public LegacyColumnBackground()
     {
@@ -37,9 +36,6 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
         float rightLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.DownLineWidth)
             ?.Value ?? 1;
 
-        bool hasLeftLine = false;
-        bool hasRightLine = false;
-
         float lightPosition = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.LightPosition)?.Value
                               ?? 0;
 
@@ -54,7 +50,8 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
             {
                 RelativeSizeAxes = Axes.X,
                 Height = leftLineWidth,
-                Alpha = hasLeftLine ? 1 : 0,
+                // todo: should be visible once the skin config supports the line visibility.
+                Alpha = 0,
             },
             new Box
             {
@@ -62,14 +59,15 @@ public partial class LegacyColumnBackground : LegacyKaraokeColumnElement
                 Origin = Anchor.BottomRight,
                 RelativeSizeAxes = Axes.X,
                 Height = rightLineWidth,
-                Alpha = hasRightLine ? 1 : 0,
+                // todo: should be visible once the skin config supports the line visibility.
+                Alpha = 0,
             },
             lightContainer = new Container
             {
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding { Left = lightPosition },
-                Child = light = new Sprite
+                Child = new Sprite
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,

@@ -193,7 +193,6 @@ public static class TimeTagsUtils
         var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index).ToArray();
 
         var overlappingTimeTags = FindOverlapping(timeTags, other, self);
-        var validTimeTags = sortedTimeTags.Except(overlappingTimeTags);
 
         foreach (var overlappingTimeTag in overlappingTimeTags)
         {

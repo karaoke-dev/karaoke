@@ -25,7 +25,6 @@ public partial class ApplySelectingArea : CompositeDrawable
     private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
     private readonly Box background;
-    private readonly GridContainer gridContainer;
     private readonly ActionButton applyButton;
     private readonly ActionButton cancelButton;
     private readonly ActionButton previewButton;
@@ -41,7 +40,7 @@ public partial class ApplySelectingArea : CompositeDrawable
             {
                 RelativeSizeAxes = Axes.Both,
             },
-            gridContainer = new GridContainer
+            new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 ColumnDimensions = new[]

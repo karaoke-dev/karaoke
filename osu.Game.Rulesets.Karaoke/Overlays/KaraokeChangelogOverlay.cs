@@ -38,15 +38,13 @@ public partial class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     private APIChangelogIndex? index;
 
     private readonly string organizationName;
-    private readonly string branchName;
 
     private string projectName => $"{organizationName}.github.io";
 
-    public KaraokeChangelogOverlay(string organization, string branch = "master")
+    public KaraokeChangelogOverlay(string organization)
         : base(OverlayColourScheme.Purple, false)
     {
         organizationName = organization;
-        branchName = branch;
 
         Child = new GridContainer
         {

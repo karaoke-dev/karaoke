@@ -1,11 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
-public readonly struct FontInfo
+public readonly struct FontInfo : IEquatable<FontInfo>
 {
     public string FontName { get; }
 
@@ -35,6 +36,16 @@ public readonly struct FontInfo
                 break;
         }
     }
+
+    // note: Family and Weight are both derived from FontName, so they are not part of the equality.
+    public bool Equals(FontInfo other)
+        => FontName == other.FontName && FontFormat == other.FontFormat;
+
+    public override bool Equals(object? obj)
+        => obj is FontInfo other && Equals(other);
+
+    public override int GetHashCode()
+        => HashCode.Combine(FontName, (int)FontFormat);
 }
 
 public enum FontFormat

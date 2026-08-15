@@ -59,7 +59,7 @@ public class BitmapFontGeneratorTest
 
         if (!string.IsNullOrEmpty(chars))
         {
-        Assert.That(result.Characters.Count, Is.EqualTo(charAmount));
+            Assert.That(result.Characters.Count, Is.EqualTo(charAmount));
         }
 
         // kerning pairs amount might be zero but cannot be null.

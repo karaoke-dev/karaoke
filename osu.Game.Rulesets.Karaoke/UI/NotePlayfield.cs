@@ -137,7 +137,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         bool left = direction == KaraokeScrollingDirection.Left;
 
         //TODO : will apply in skin
-        int judgementPadding = 10;
+        const int judgement_padding = 10;
 
         judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
         judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
@@ -147,7 +147,7 @@ public partial class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<
         scoringMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
 
         judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-        judgements.X = left ? -judgementPadding : judgementPadding;
+        judgements.X = left ? -judgement_padding : judgement_padding;
 
         realTimeScoringVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
         realTimeScoringVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;

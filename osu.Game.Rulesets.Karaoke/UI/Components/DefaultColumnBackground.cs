@@ -17,17 +17,5 @@ public partial class DefaultColumnBackground : Box
         Alpha = 0.15f;
     }
 
-    private bool isSpecial;
-
-    public bool IsSpecial
-    {
-        get => isSpecial;
-        set
-        {
-            if (isSpecial == value)
-                return;
-
-            isSpecial = value;
-        }
-    }
+    public bool IsSpecial { get; set; }
 }

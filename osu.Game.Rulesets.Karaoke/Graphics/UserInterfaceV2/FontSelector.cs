@@ -336,7 +336,6 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
     internal partial class FontPropertyList<T> : CompositeDrawable
     {
         private readonly CornerBackground background;
-        private readonly TextPropertySearchTextBox filter;
         private readonly RearrangeableTextFlowListContainer<T> propertyFlowList;
 
         private readonly BindableWithCurrent<T> current = new();
@@ -351,6 +350,8 @@ public partial class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsag
 
         public FontPropertyList()
         {
+            TextPropertySearchTextBox filter;
+
             InternalChild = new Container
             {
                 Padding = new MarginPadding(10),

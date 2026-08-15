@@ -51,7 +51,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
     /// </summary>
     /// <param name="store">The store to provide font resources.</param>
     /// <param name="assetName">The base name of the font.</param>
-    public TtfGlyphStore(ResourceStore<byte[]> store, string assetName = null)
+    public TtfGlyphStore(ResourceStore<byte[]> store, string assetName)
     {
         Store = new ResourceStore<byte[]>(store);
 
@@ -59,7 +59,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
 
         AssetName = assetName;
 
-        FontName = assetName?.Split('/').Last();
+        FontName = assetName.Split('/').Last();
     }
 
     private Task fontLoadTask;
@@ -98,6 +98,7 @@ public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
             return null;
 
         Debug.Assert(Baseline != null);
+        Debug.Assert(Font != null);
 
         var glyphMetrics = getGlyphMetrics(character);
         if (glyphMetrics == null)

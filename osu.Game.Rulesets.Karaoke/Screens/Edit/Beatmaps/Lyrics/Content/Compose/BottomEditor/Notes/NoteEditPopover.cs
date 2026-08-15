@@ -75,7 +75,7 @@ public partial class NoteEditPopover : OsuPopover
 
             ScheduleAfterChildren(() =>
             {
-                GetContainingFocusManager().ChangeFocus(text);
+                GetContainingFocusManager()!.ChangeFocus(text);
             });
 
             text.OnCommit += (sender, newText) =>
@@ -83,8 +83,8 @@ public partial class NoteEditPopover : OsuPopover
                 if (!newText)
                     return;
 
-                string text = sender.Text.Trim();
-                notePropertyChangeHandler.ChangeText(text);
+                string committedText = sender.Text.Trim();
+                notePropertyChangeHandler.ChangeText(committedText);
             };
 
             rubyText.OnCommit += (sender, newText) =>
@@ -92,8 +92,8 @@ public partial class NoteEditPopover : OsuPopover
                 if (!newText)
                     return;
 
-                string text = sender.Text.Trim();
-                notePropertyChangeHandler.ChangeRubyText(text);
+                string committedText = sender.Text.Trim();
+                notePropertyChangeHandler.ChangeRubyText(committedText);
             };
 
             display.Current.BindValueChanged(v =>

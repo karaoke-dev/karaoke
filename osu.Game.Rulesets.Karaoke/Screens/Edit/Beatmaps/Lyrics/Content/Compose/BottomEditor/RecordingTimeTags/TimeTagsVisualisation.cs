@@ -72,7 +72,6 @@ public partial class TimeTagsVisualisation : CompositeDrawable
 
     private partial class FocusedTimeTagArea : CompositeDrawable
     {
-        private readonly Box background;
         private readonly DrawableTimeTag drawableTimeTag;
         private readonly OsuSpriteText timeTagText;
 
@@ -87,7 +86,7 @@ public partial class TimeTagsVisualisation : CompositeDrawable
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Child = background = new Box
+                    Child = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
@@ -107,12 +106,8 @@ public partial class TimeTagsVisualisation : CompositeDrawable
             };
         }
 
-        private TimeTag? timeTag;
-
         public void UpdateDisplayTimeTag(Lyric lyric, TimeTag timeTag)
         {
-            this.timeTag = timeTag;
-
             drawableTimeTag.TimeTag = timeTag;
             timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag);
         }
@@ -123,9 +118,6 @@ public partial class TimeTagsVisualisation : CompositeDrawable
         private readonly Box background;
 
         private readonly FillFlowContainer<PendingTimeTag> drawableTimeTags;
-
-        [Resolved]
-        private OsuColour colours { get; set; } = null!;
 
         public PendingTimeTagsArea()
         {

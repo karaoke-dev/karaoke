@@ -62,7 +62,7 @@ public partial class SingerLyricEditorBlueprintContainer : EditableTimelineBluep
         protected override void DeleteItems(IEnumerable<Lyric> items)
         {
             // todo : remove all in the same time.
-            foreach (var item in items)
+            foreach (var _ in items)
             {
                 lyricSingerChangeHandler.Clear();
             }

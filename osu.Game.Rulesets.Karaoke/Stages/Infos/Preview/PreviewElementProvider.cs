@@ -30,7 +30,7 @@ public class PreviewElementProvider : StageElementProvider<PreviewStageInfo>
                 new StageOriginCommand(Easing.None, 0, 0, Anchor.Centre, Anchor.Centre),
                 new StageXCommand(Easing.None, 0, 0, x, x),
                 new StageYCommand(Easing.None, 0, 0, y, y),
-            }
+            },
         };
     }
 }

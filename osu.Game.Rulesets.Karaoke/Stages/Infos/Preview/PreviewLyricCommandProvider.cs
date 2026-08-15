@@ -53,6 +53,7 @@ public class PreviewLyricCommandProvider : HitObjectCommandProvider<PreviewStage
 
         yield return new StageYCommand(definition.MovingInEasing, 0, duration, preemptPosition, targetPosition);
         yield return new StageAlphaCommand(definition.FadeInEasing, 0, duration, preemptAlpha, targetAlpha);
+
         yield break;
 
         static double getFadeInDuration(PreviewStageDefinition definition, PreviewLyricLayout layout)

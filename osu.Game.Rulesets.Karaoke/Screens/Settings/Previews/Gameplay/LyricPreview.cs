@@ -32,12 +32,11 @@ public partial class LyricPreview : SettingsSubsectionPreview
 
     private KaraokeLocalFontStore localFontStore = null!;
 
-    private readonly LyricPlayfield lyricPlayfield;
-    private readonly Lyric lyric;
-
     public LyricPreview()
     {
         Size = new Vector2(0.7f, 0.5f);
+
+        LyricPlayfield lyricPlayfield;
 
         Child = new Container
         {
@@ -49,7 +48,7 @@ public partial class LyricPreview : SettingsSubsectionPreview
                 Origin = Anchor.Centre,
             },
         };
-        lyricPlayfield.Add(lyric = createPreviewLyric());
+        lyricPlayfield.Add(createPreviewLyric());
 
         mainFont.BindValueChanged(e =>
         {

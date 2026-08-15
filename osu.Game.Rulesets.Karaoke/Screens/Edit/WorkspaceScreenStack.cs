@@ -74,11 +74,15 @@ public abstract partial class WorkspaceScreenStack<TItem> : CompositeDrawable
                 return;
             }
 
-            currentScreen = CreateWorkspaceScreen(e.NewValue);
+            var newWorkspaceScreen = CreateWorkspaceScreen(e.NewValue);
+            currentScreen = newWorkspaceScreen;
 
-            LoadComponentAsync(currentScreen, newScreen =>
+            if (newWorkspaceScreen == null)
+                return;
+
+            LoadComponentAsync(newWorkspaceScreen, newScreen =>
             {
-                if (newScreen != currentScreen || newScreen == null)
+                if (newScreen != currentScreen)
                     return;
 
                 screenContainer.Add(newScreen);

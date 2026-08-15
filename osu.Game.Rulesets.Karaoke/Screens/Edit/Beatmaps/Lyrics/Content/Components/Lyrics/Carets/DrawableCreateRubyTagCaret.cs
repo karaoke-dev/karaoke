@@ -175,7 +175,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
             if (string.IsNullOrEmpty(rubyText))
             {
                 labelledRubyTextBox.Description = "Please enter the ruby text";
-                GetContainingFocusManager().ChangeFocus(labelledRubyTextBox);
+                GetContainingFocusManager()!.ChangeFocus(labelledRubyTextBox);
                 return;
             }
 
@@ -192,7 +192,7 @@ public partial class DrawableCreateRubyTagCaret : DrawableRangeCaret<CreateRubyT
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            ScheduleAfterChildren(() => GetContainingFocusManager().ChangeFocus(labelledRubyTextBox));
+            ScheduleAfterChildren(() => GetContainingFocusManager()!.ChangeFocus(labelledRubyTextBox));
         }
 
         private partial class CreateRubyLabelledTextBox : LabelledTextBox

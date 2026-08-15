@@ -14,11 +14,8 @@ public partial class StageElementCategoryChangeHandler<TStageElement, THitObject
     where TStageElement : StageElement, IComparable<TStageElement>, new()
     where THitObject : KaraokeHitObject, IHasPrimaryKey
 {
-    private readonly Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction;
-
     public StageElementCategoryChangeHandler(Func<IEnumerable<StageInfo>, StageElementCategory<TStageElement, THitObject>> stageCategoryAction)
     {
-        this.stageCategoryAction = stageCategoryAction;
     }
 
     public void AddElement(Action<TStageElement>? action = null)

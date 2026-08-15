@@ -282,7 +282,9 @@ public abstract partial class DisplayProcessorTestScene : OsuGridTestScene
     protected void AssertTimeTagsChanged(Dictionary<double, TextIndex> expectedValue)
     {
         AssertTimeTagsChanged();
-        AddAssert("Check time tags value", () => timeTags?.SequenceEqual(expectedValue) ?? false);
+        AddAssert("Check time tags value", () => timeTags != null
+                                                 && timeTags.Count == expectedValue.Count
+                                                 && timeTags.All(x => expectedValue.TryGetValue(x.Key, out var value) && value.Equals(x.Value)));
     }
 
     protected void AssertTimeTagsChanged()

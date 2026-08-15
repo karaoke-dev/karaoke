@@ -69,7 +69,7 @@ public abstract partial class ModeStateWithBlueprintContainer<TObject> : Compone
             SelectedItems.Add(firstItem);
     }
 
-    private bool isMousePressed() => GetContainingInputManager().CurrentState.Mouse.Buttons.HasAnyButtonPressed;
+    private bool isMousePressed() => GetContainingInputManager()!.CurrentState.Mouse.Buttons.HasAnyButtonPressed;
 
     protected abstract bool IsWriteLyricPropertyLocked(Lyric lyric);
 

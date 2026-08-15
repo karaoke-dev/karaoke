@@ -40,7 +40,6 @@ public abstract class HitObjectCommandProvider<TStageInfo, THitObject> : IHitObj
         if (startTime == null)
             return 0;
 
-
         return hitObject.StartTime - startTime.Value;
     }
 

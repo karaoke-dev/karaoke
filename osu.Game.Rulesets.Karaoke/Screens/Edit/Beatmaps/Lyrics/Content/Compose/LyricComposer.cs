@@ -41,7 +41,6 @@ public partial class LyricComposer : CompositeDrawable
     private readonly GridContainer gridContainer;
 
     private readonly Container centerEditArea;
-    private readonly Container mainEditorArea;
 
     private readonly Container<BaseBottomEditor> bottomEditorContainer;
 
@@ -68,7 +67,7 @@ public partial class LyricComposer : CompositeDrawable
                                 Name = "Background",
                                 RelativeSizeAxes = Axes.Both,
                             },
-                            mainEditorArea = new Container
+                            new Container
                             {
                                 RelativeSizeAxes = Axes.Both,
                                 Children = new Drawable[]

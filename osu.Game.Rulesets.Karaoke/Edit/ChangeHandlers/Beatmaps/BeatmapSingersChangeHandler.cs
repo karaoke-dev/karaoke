@@ -32,7 +32,7 @@ public partial class BeatmapSingersChangeHandler : BeatmapPropertyChangeHandler,
         {
             int oldOrder = s.Order;
             int newOrder = newIndex + 1; // order is start from 1
-            OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+            OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (_, _, _) =>
             {
                 // todo : not really sure should call update?
             });

@@ -22,7 +22,7 @@ public class StagePlayfieldRunner : StageRunner, IStagePlayfieldRunner
     public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
         commandProvider = stageInfo.CreatePlayfieldCommandProvider(scorable);
-        stageMods = mods.OfType<IApplicableToStagePlayfieldCommand>().Where(x => x.CanApply(stageInfo)).ToList();
+        stageMods = mods.OfType<IApplicableToStage>().OfType<IApplicableToStagePlayfieldCommand>().Where(x => x.CanApply(stageInfo)).ToList();
         applyTransforms();
     }
 

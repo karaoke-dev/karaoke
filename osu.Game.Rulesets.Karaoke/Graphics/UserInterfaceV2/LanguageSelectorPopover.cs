@@ -31,6 +31,6 @@ public partial class LanguageSelectorPopover : OsuPopover
     {
         base.LoadComplete();
 
-        GetContainingFocusManager().ChangeFocus(languageSelector);
+        GetContainingFocusManager()!.ChangeFocus(languageSelector);
     }
 }

@@ -87,7 +87,7 @@ public static class Extensions
         if (ingored_namespace_list.Contains(fullNamespace))
             return false;
 
-        string relativeNamespace = getRelativeNamespace(project,fullNamespace);
+        string relativeNamespace = getRelativeNamespace(project, fullNamespace);
         return relativeNamespace.StartsWith(pattern, stringComparison);
     }
 

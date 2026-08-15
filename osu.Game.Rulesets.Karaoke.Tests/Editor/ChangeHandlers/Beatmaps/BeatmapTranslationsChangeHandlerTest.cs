@@ -78,7 +78,7 @@ public partial class BeatmapTranslationsChangeHandlerTest : BaseChangeHandlerTes
             Translations = new Dictionary<CultureInfo, string>
             {
                 {
-                    new("zh-TW"), "卡拉 OK"
+                    new CultureInfo("zh-TW"), "卡拉 OK"
                 },
             },
         });

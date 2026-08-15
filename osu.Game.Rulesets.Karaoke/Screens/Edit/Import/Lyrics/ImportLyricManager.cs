@@ -5,9 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Beatmaps;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Integration.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -25,9 +23,6 @@ public partial class ImportLyricManager : Component
     [Resolved]
     private EditorBeatmap editorBeatmap { get; set; } = null!;
 
-    [Resolved]
-    private IBindable<WorkingBeatmap> beatmap { get; set; } = null!;
-
     public void ImportFile(FileInfo info)
     {
         if (!info.Exists)
@@ -36,9 +31,6 @@ public partial class ImportLyricManager : Component
         bool isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
         if (!isFormatMatch)
             throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
-
-        var set = beatmap.Value.BeatmapSetInfo;
-        var oldFile = set.Files.FirstOrDefault(f => f.Filename == backup_file_name);
 
         using var stream = info.OpenRead();
 
