@@ -22,7 +22,6 @@ public partial class KaraokeModSnow : Mod, IApplicableToHUD
 
     public override LocalisableString Description => "Display some snow";
     public override string Acronym => "SW";
-    public override double ScoreMultiplier => 1.0f;
     public override IconUsage? Icon => FontAwesome.Regular.Snowflake;
     public override ModType Type => ModType.Fun;
 

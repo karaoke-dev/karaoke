@@ -19,7 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Mods;
 
 public partial class KaraokeModFlashlight : ModFlashlight<KaraokeHitObject>
 {
-    public override double ScoreMultiplier => 1;
     public override Type[] IncompatibleMods => new[] { typeof(ModHidden) };
 
     [SettingSource("Flashlight size", "Multiplier applied to the default flashlight size.")]

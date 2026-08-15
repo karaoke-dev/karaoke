@@ -35,7 +35,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
     private readonly IList<string> noteLines = new List<string>();
     private readonly IList<string> translations = new List<string>();
 
-    protected override void ParseLine(Beatmap beatmap, Section section, string line)
+    protected override void ParseLine(Beatmap beatmap, Section section, string line, bool isPrimaryStream)
     {
         if (section != Section.HitObjects)
         {
@@ -46,7 +46,7 @@ public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
                 return;
             }
 
-            base.ParseLine(beatmap, section, line);
+            base.ParseLine(beatmap, section, line, isPrimaryStream);
             return;
         }
 

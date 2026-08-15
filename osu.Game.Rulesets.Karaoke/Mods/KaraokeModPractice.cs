@@ -21,7 +21,6 @@ public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<Kara
 {
     public override string Name => "Practice";
     public override string Acronym => "Practice";
-    public override double ScoreMultiplier => 0.0f;
     public override IconUsage? Icon => KaraokeIcon.ModPractice;
     public override ModType Type => ModType.Fun;
 

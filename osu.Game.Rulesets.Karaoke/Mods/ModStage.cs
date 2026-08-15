@@ -14,11 +14,6 @@ public abstract class ModStage<TStageInfo> : Mod, IApplicableToStageInfo
 {
     public sealed override ModType Type => ModType.Conversion;
 
-    /// <summary>
-    /// Change the stage type should not affect the score.
-    /// </summary>
-    public override double ScoreMultiplier => 1;
-
     public override Type[] IncompatibleMods => new[] { typeof(ModStage<TStageInfo>) }.Except(new[] { GetType() }).ToArray();
 
     public bool CanApply(StageInfo stageInfo)
