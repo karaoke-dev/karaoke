@@ -37,12 +37,13 @@ public partial class LyricEditor : CompositeDrawable
     private readonly IBindable<Lyric?> bindableFocusedLyric = new Bindable<Lyric?>();
     private readonly IBindable<float> bindableFontSize = new Bindable<float>();
 
-    private readonly LyricEditorSkin skin;
     private readonly DragContainer dragContainer;
 
     public LyricEditor()
     {
         RelativeSizeAxes = Axes.Both;
+
+        LyricEditorSkin skin;
 
         InternalChild = new SkinProvidingContainer(skin = new LyricEditorSkin(null))
         {
@@ -188,7 +189,6 @@ public partial class LyricEditor : CompositeDrawable
 
         private readonly Container content;
         private readonly Box background;
-        private readonly SpriteIcon spriteIcon;
 
         protected override HoverSounds CreateHoverSounds(HoverSampleSet sampleSet) => new();
 
@@ -213,7 +213,7 @@ public partial class LyricEditor : CompositeDrawable
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    spriteIcon = new SpriteIcon
+                    new SpriteIcon
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,

@@ -19,7 +19,7 @@ public class StageElementCategoryTest
     public void TestAddElement()
     {
         var category = new TestStageElementCategory();
-        var element = category.AddElement(x =>
+        category.AddElement(x =>
         {
             x.Name = "Element 1";
         });

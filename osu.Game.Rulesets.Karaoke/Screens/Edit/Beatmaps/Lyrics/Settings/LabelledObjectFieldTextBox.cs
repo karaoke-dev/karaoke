@@ -87,7 +87,7 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
     {
         Schedule(() =>
         {
-            var focusedDrawable = GetContainingInputManager().FocusedDrawable;
+            var focusedDrawable = GetContainingInputManager()!.FocusedDrawable;
             if (focusedDrawable == null)
                 return;
 
@@ -102,7 +102,7 @@ public abstract partial class LabelledObjectFieldTextBox<T> : LabelledTextBox wh
             if (IsFocused(focusedDrawable))
                 return;
 
-            GetContainingFocusManager().ChangeFocus(Component);
+            GetContainingFocusManager()!.ChangeFocus(Component);
         });
     }
 

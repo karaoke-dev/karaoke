@@ -28,7 +28,7 @@ public class KaraokeNoteHitWindows : KaraokeHitWindows
 
     public override void SetDifficulty(double difficulty)
     {
-        perfect = IBeatmapDifficultyInfo.DifficultyRange(difficulty, perfect_window_range) ;
+        perfect = IBeatmapDifficultyInfo.DifficultyRange(difficulty, perfect_window_range);
         meh = IBeatmapDifficultyInfo.DifficultyRange(difficulty, meh_window_range);
         miss = IBeatmapDifficultyInfo.DifficultyRange(difficulty, miss_window_range);
     }

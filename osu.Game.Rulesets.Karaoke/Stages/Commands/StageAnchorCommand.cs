@@ -20,6 +20,7 @@ public class StageAnchorCommand : StageCommand<Anchor>
         if (StartTime == EndTime)
             d.Anchor = StartValue;
     }
+
     public override TransformSequence<TDrawable> ApplyTransforms<TDrawable>(TDrawable d)
         => d.TransformTo(nameof(Drawable.Anchor), StartValue).Delay(Duration)
             .TransformTo(nameof(Drawable.Anchor), EndValue);

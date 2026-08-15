@@ -42,12 +42,11 @@ public partial class PageEditorVerifier : EditorVerifier, IPageEditorVerifier
 
         switch (issue)
         {
-            case LyricIssue lyricIssue:
+            case LyricIssue:
                 // todo: select the lyric.
-                var lyric = lyricIssue.Lyric;
                 break;
 
-            case BeatmapPageIssue beatmapPageIssue:
+            case BeatmapPageIssue:
                 // todo: select the pages.
                 break;
 

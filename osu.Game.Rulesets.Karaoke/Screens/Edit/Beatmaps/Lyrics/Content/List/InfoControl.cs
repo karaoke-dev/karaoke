@@ -32,7 +32,6 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
 
     private readonly Box background;
     private readonly Box headerBackground;
-    private readonly OsuSpriteText timeRange;
     private readonly Container subInfoContainer;
 
     private readonly IBindable<EditorModeWithEditStep> bindableModeWithEditStep = new Bindable<EditorModeWithEditStep>();
@@ -54,6 +53,8 @@ public partial class InfoControl : CompositeDrawable, IHasContextMenu
     public InfoControl(Lyric lyric)
     {
         Lyric = lyric;
+
+        OsuSpriteText timeRange;
 
         InternalChildren = new Drawable[]
         {

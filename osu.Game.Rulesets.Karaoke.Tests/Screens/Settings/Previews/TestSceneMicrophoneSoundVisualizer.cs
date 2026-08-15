@@ -12,14 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens.Settings.Previews;
 [TestFixture]
 public partial class TestSceneMicrophoneSoundVisualizer : OsuTestScene
 {
-    private MicrophoneSoundVisualizer preview = null!;
-
     [SetUp]
     public void SetUp() => Schedule(() =>
     {
         Child = new MicrophoneInputManager
         {
-            Child = preview = new MicrophoneSoundVisualizer
+            Child = new MicrophoneSoundVisualizer
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,

@@ -44,7 +44,7 @@ internal partial class EditNoteBlueprintContainer : BindableBlueprintContainer<N
         protected override void DeleteItems(IEnumerable<Note> items)
         {
             // todo : delete notes
-            foreach (var item in items)
+            foreach (var _ in items)
             {
             }
         }

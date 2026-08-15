@@ -116,7 +116,7 @@ public class KaraokeSkin : Skin
             {
                 var type = typeof(TValue);
                 var element = GetElementByHitObjectAndElementType(hitObject, type);
-                return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element!));
+                return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
             }
 
             // in some cases, we still need to get target of element by type and id.
@@ -151,13 +151,13 @@ public class KaraokeSkin : Skin
         }
     }
 
-    protected virtual IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
+    protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
     {
         var type = KaraokeSkinElementConverter.GetElementType(elementType);
         return toElement(type);
     }
 
-    private IKaraokeSkinElement? toElement(ElementType type)
+    private IKaraokeSkinElement toElement(ElementType type)
         => type switch
         {
             ElementType.LyricFontInfo or ElementType.NoteStyle => DefaultElement[type],

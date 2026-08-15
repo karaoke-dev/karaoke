@@ -77,6 +77,7 @@ public class ClassicLyricCommandProvider : HitObjectCommandProvider<ClassicStage
         yield return new StagePaddingCommand(Easing.None, 0, 0, getPosition(definition, layout), getPosition(definition, layout));
         yield return new StageScaleCommand(Easing.None, 0, 0, definition.LyricScale, definition.LyricScale);
         yield return new StageAlphaCommand(definition.FadeInEasing, 0, definition.FadeInTime, 1, 1);
+
         yield break;
 
         static Anchor getLyricAnchor(ClassicLyricLayoutAlignment alignment) =>

@@ -10,11 +10,11 @@ namespace osu.Game.Rulesets.Karaoke.Stages;
 
 public class StageSprite : IStageElementWithDuration
 {
-    public double StartTime { get; }
+    public double StartTime { get; init; }
 
-    public double EndTime { get; }
+    public double EndTime { get; init; }
 
-    public double EndTimeForDisplay { get; }
+    public double EndTimeForDisplay { get; init; }
 
     public IReadOnlyList<IStageCommand> Commands { get; init; } = new List<IStageCommand>();
 

@@ -11,21 +11,18 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class NoteColorSection : StyleSection
 {
-    private readonly LabelledColourSelector noteColorPicker;
-    private readonly LabelledColourSelector blinkColorPicker;
-
     protected override LocalisableString Title => "Color";
 
     public NoteColorSection()
     {
         Children = new Drawable[]
         {
-            noteColorPicker = new LabelledColourSelector
+            new LabelledColourSelector
             {
                 Label = "Note color",
                 Description = "Select color.",
             },
-            blinkColorPicker = new LabelledColourSelector
+            new LabelledColourSelector
             {
                 Label = "Blink color",
                 Description = "Select color.",

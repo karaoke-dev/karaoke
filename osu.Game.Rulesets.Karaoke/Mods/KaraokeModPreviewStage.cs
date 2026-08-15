@@ -17,7 +17,7 @@ public class KaraokeModPreviewStage : ModStage<PreviewStageInfo>
 
     public override LocalisableString Description => "Focus on preview the lyric text.";
 
-    public override Type[] IncompatibleMods => new Type[]
+    public override Type[] IncompatibleMods => new[]
     {
         typeof(KaraokeModClassicStage),
     };

@@ -181,7 +181,7 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         }
     }
 
-    private class TestStageInfo : StageInfo
+    public class TestStageInfo : StageInfo
     {
         #region Category
 
@@ -211,21 +211,20 @@ public partial class StageElementCategoryChangeHandlerTest : BaseStageInfoChange
         public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
             => throw new NotImplementedException();
 
-        public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+        public override IStageElementProvider CreateStageElementProvider(bool displayNotePlayfield)
             => throw new NotImplementedException();
 
         public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
             typeof(TObject) switch
             {
                 Type type when type == typeof(Lyric) => new TestCommandProvider(this),
-                Type type when type == typeof(Note) => null,
-                _ => null
+                _ => null,
             };
 
         #endregion
     }
 
-    private class TestCategory : StageElementCategory<TestStageElement, Lyric>
+    public class TestCategory : StageElementCategory<TestStageElement, Lyric>
     {
         protected override TestStageElement CreateDefaultElement()
             => new();

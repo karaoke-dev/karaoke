@@ -37,6 +37,11 @@ public sealed partial class InteractableLyric : CompositeDrawable, IHasTooltip, 
         {
             triggerWritableVersionChanged();
         });
+    }
+
+    protected override void LoadComplete()
+    {
+        base.LoadComplete();
 
         bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
         {

@@ -32,14 +32,15 @@ public partial class KaraokeSettings : OsuScreen
     private Bindable<SettingsSubsection?> selectedSubsection = new();
 
     private readonly KaraokeConfigWaveContainer waves;
-    private readonly Box background;
-    private readonly KaraokeSettingsPanel settingsPanel;
-    private readonly Header header;
-    private readonly Container previewArea;
 
     public KaraokeSettings()
     {
         var backgroundColour = Color4Extensions.FromHex("3e3a44");
+
+        Box background;
+        KaraokeSettingsPanel settingsPanel;
+        Header header;
+        Container previewArea;
 
         InternalChild = waves = new KaraokeConfigWaveContainer
         {

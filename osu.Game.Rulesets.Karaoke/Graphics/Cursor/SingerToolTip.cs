@@ -32,13 +32,14 @@ public partial class SingerToolTip : BackgroundToolTip<ISinger>
     private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
 
     private readonly DrawableSingerAvatar avatar;
-    private readonly OsuSpriteText name;
-    private readonly OsuSpriteText englishName;
-    private readonly OsuSpriteText romanisation;
-    private readonly OsuSpriteText description;
 
     public SingerToolTip()
     {
+        OsuSpriteText name;
+        OsuSpriteText englishName;
+        OsuSpriteText romanisation;
+        OsuSpriteText description;
+
         // we need to inject this provide in the tooltip because in will need in the drawable singer avatar.
         // and it's not able to get in the BDL due to tooltip container is in the osu.game level.
         AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());

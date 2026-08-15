@@ -84,12 +84,13 @@ public partial class LyricEditor : CompositeDrawable, ILyricEditorState, IKeyBin
     public IBindable<EditorModeWithEditStep> BindableModeWithEditStep => bindableModeWithEditStep;
 
     private readonly GridContainer gridContainer;
-    private readonly ContentWrapper content;
     private readonly Container leftSideSettings;
     private readonly Container rightSideSettings;
 
     public LyricEditor()
     {
+        ContentWrapper content;
+
         // global state
         AddInternal(lyricSelectionState = new LyricSelectionState());
         AddInternal(lyricCaretState = new LyricCaretState());

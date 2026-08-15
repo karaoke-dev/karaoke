@@ -17,7 +17,7 @@ public class KaraokeModClassicStage : ModStage<ClassicStageInfo>
 
     public override LocalisableString Description => "Karaoke mod like other karaoke game or software.";
 
-    public override Type[] IncompatibleMods => new Type[]
+    public override Type[] IncompatibleMods => new[]
     {
         typeof(KaraokeModPreviewStage),
     };

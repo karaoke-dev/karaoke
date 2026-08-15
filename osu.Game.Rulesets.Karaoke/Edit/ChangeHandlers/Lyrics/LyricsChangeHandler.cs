@@ -92,7 +92,7 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
             int order = lyric.Order;
 
             // Shifting order that order is larger than current lyric.
-            OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), newLyrics.Count());
+            OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order).ToArray(), newLyrics.Count());
 
             foreach (var newLyric in newLyrics)
             {
@@ -117,7 +117,7 @@ public partial class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyri
         PerformOnSelection(lyric =>
         {
             int oldOrder = lyric.Order;
-            OrderUtils.ChangeOrder(HitObjects.ToArray(), oldOrder, newOrder + 1, (switchSinger, oldOrder, newOrder) =>
+            OrderUtils.ChangeOrder(HitObjects.ToArray(), oldOrder, newOrder + 1, (_, _, _) =>
             {
                 // todo : not really sure should call update?
             });

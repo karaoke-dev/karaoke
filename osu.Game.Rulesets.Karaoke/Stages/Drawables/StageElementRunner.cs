@@ -20,7 +20,7 @@ public class StageElementRunner : StageRunner, IStageElementRunner
     public override void OnStageInfoChanged(StageInfo stageInfo, bool scorable, IReadOnlyList<Mod> mods)
     {
         elementProvider = stageInfo.CreateStageElementProvider(scorable);
-        stageMods = mods.OfType<IApplicableToStageElement>().Where(x => x.CanApply(stageInfo)).ToList();
+        stageMods = mods.OfType<IApplicableToStage>().OfType<IApplicableToStageElement>().Where(x => x.CanApply(stageInfo)).ToList();
         applyTransforms();
     }
 

@@ -151,7 +151,7 @@ public class ClassicLyricTimingInfo
     {
         var value = point.ID;
 
-        foreach ((var key, ElementId[]? values) in Mappings)
+        foreach ((var key, ElementId[] values) in Mappings)
         {
             if (values.All(x => x == point.ID))
             {

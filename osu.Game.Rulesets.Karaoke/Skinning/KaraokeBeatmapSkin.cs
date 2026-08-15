@@ -76,7 +76,7 @@ public class KaraokeBeatmapSkin : KaraokeSkin
             {
                 var type = typeof(TValue);
                 var element = GetElementByHitObjectAndElementType(hitObject, type);
-                return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element!));
+                return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
             }
 
             // in some cases, we still need to get target of element by type and id.

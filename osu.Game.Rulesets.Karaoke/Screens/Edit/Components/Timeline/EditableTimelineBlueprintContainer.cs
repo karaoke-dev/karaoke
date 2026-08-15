@@ -79,7 +79,7 @@ public partial class EditableTimelineBlueprintContainer<TItem> : BlueprintContai
             base.OnSelectionChanged();
 
             // should hide selection box if not dragging at current row.
-            bool dragging = Parent.IsDragged;
+            bool dragging = Parent!.IsDragged;
             SelectionBox.FadeTo(dragging ? 1f : 0.0f);
         }
 

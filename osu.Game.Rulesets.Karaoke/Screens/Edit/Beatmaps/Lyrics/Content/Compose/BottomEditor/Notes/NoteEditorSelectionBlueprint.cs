@@ -30,7 +30,7 @@ public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IH
     private readonly IBindable<double> timeRange = new BindableDouble();
     private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
-    private float scrollLength => Parent.DrawWidth;
+    private float scrollLength => Parent!.DrawWidth;
 
     private bool axisInverted => direction.Value == ScrollingDirection.Right;
 
@@ -78,7 +78,7 @@ public partial class NoteEditorSelectionBlueprint : SelectionBlueprint<Note>, IH
         var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
         Anchor = Origin = anchor;
 
-        Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
+        Position = Parent!.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(Item.StartTime)) - AnchorPosition;
         Y += notePositionInfo.Calculator.YPositionAt(Item.Tone);
 
         Width = HitObjectContainer.LengthAtTime(Item.StartTime, Item.EndTime);

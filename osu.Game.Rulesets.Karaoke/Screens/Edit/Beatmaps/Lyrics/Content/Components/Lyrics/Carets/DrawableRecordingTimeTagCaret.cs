@@ -113,9 +113,6 @@ public partial class DrawableRecordingTimeTagCaret : DrawableCaret<RecordingTime
         private DrawableTimeTag currentTimeTag = null!;
         private FillFlowContainer<DrawableTimeTag> pendingTimeTags = null!;
 
-        [Resolved]
-        private OsuColour colours { get; set; } = null!;
-
         public TextIndexInfo()
         {
             Masking = true;

@@ -13,22 +13,18 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
 
 internal partial class LyricShadowSection : StyleSection
 {
-    private readonly LabelledSwitchButton displayShaderSwitchButton;
-    private readonly LabelledRealTimeSliderBar<float> shadowXSliderBar;
-    private readonly LabelledRealTimeSliderBar<float> shadowYSliderBar;
-
     protected override LocalisableString Title => "Shadow";
 
     public LyricShadowSection()
     {
         Children = new Drawable[]
         {
-            displayShaderSwitchButton = new LabelledSwitchButton
+            new LabelledSwitchButton
             {
                 Label = "Shadow",
                 Description = "Display shadow or not.",
             },
-            shadowXSliderBar = new LabelledRealTimeSliderBar<float>
+            new LabelledRealTimeSliderBar<float>
             {
                 Label = "Shadow X",
                 Description = "Adjust shadow x position.",
@@ -39,7 +35,7 @@ internal partial class LyricShadowSection : StyleSection
                     MaxValue = 20,
                 },
             },
-            shadowYSliderBar = new LabelledRealTimeSliderBar<float>
+            new LabelledRealTimeSliderBar<float>
             {
                 Label = "Shadow Y",
                 Description = "Adjust shadow y position.",

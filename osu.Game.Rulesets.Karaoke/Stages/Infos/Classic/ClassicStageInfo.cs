@@ -62,8 +62,7 @@ public class ClassicStageInfo : StageInfo
         typeof(TObject) switch
         {
             Type type when type == typeof(Lyric) => new ClassicLyricCommandProvider(this),
-            Type type when type == typeof(Note) => null,
-            _ => null
+            _ => null,
         };
 
     #endregion

@@ -85,7 +85,7 @@ public partial class LanguageSelector : CompositeDrawable, IHasCurrentValue<Cult
     {
         base.OnFocus(e);
 
-        GetContainingFocusManager().ChangeFocus(filter);
+        GetContainingFocusManager()!.ChangeFocus(filter);
     }
 
     private bool enableEmptyOption;

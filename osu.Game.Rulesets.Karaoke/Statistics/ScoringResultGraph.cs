@@ -15,7 +15,6 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using osuTK;
 using osuTK.Graphics;
@@ -25,11 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Statistics;
 public partial class ScoringResultGraph : CompositeDrawable
 {
     private readonly Box background;
-    private readonly ScoringResultLyricPreview lyricGraph;
-    private readonly NoteGraph noteGraph;
 
     public ScoringResultGraph(ScoreInfo score, IBeatmap beatmap)
     {
+        ScoringResultLyricPreview lyricGraph;
+
         InternalChildren = new Drawable[]
         {
             new Container
@@ -51,7 +50,7 @@ public partial class ScoringResultGraph : CompositeDrawable
                         RelativeSizeAxes = Axes.Both,
                         Spacing = new Vector2(5),
                     },
-                    noteGraph = new NoteGraph(score),
+                    new NoteGraph(score),
                 },
             },
         };
@@ -239,20 +238,12 @@ public partial class ScoringResultGraph : CompositeDrawable
         {
             var noteEvents = score.HitEvents.Where(x => x.HitObject is Note { Display: true }).ToList();
 
-            foreach (var noteEvent in noteEvents)
+            foreach (var _ in noteEvents)
             {
-                // TODO : add note into here
+                // TODO : add note into here, as a box coloured by the hit result.
             }
 
             // todo : add list of note colors to present state.
-        }
-
-        internal partial class DrawableNote : Box
-        {
-            internal DrawableNote(HitResult result)
-            {
-                // TODO : assign color with different hit result.
-            }
         }
     }
 }

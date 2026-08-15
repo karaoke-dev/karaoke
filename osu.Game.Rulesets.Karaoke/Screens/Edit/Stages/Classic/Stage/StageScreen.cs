@@ -26,14 +26,8 @@ public partial class StageScreen : ClassicStageScreen, IStageEditorStateProvider
     [Cached(typeof(IStageEditorVerifier))]
     private readonly StageEditorVerifier stageEditorVerifier;
 
-    public ClassicStageInfo StageInfo
-    {
-        get
-        {
-            // todo: should be able to read the stage info from the beatmap.
-            throw new NotImplementedException();
-        }
-    }
+    // todo: should be able to read the stage info from the beatmap.
+    public ClassicStageInfo StageInfo => throw new NotImplementedException();
 
     public StageScreen()
         : base(ClassicStageEditorScreenMode.Stage)

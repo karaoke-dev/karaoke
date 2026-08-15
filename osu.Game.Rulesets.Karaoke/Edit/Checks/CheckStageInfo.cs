@@ -87,8 +87,6 @@ public abstract class CheckStageInfo<TStageInfo> : ICheck
     public IEnumerable<Issue> Run(BeatmapVerifierContext context)
     {
         var property = getStageInfo(context);
-        if (property == null)
-            return Array.Empty<Issue>();
 
         var hitObjects = context.CurrentDifficulty.Playable.HitObjects.OfType<KaraokeHitObject>().ToList();
         var issues = CheckStageInfoWithHitObjects(property, hitObjects).ToList();
@@ -101,7 +99,7 @@ public abstract class CheckStageInfo<TStageInfo> : ICheck
         return issues;
 
         // todo: get stage info from context.
-        static TStageInfo? getStageInfo(BeatmapVerifierContext context)
+        static TStageInfo getStageInfo(BeatmapVerifierContext context)
             => throw new NotImplementedException();
     }
 

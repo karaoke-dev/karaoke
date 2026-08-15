@@ -30,7 +30,7 @@ public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<Kara
     {
         MinValue = 0,
         MaxValue = 5000.0,
-        Precision = 100.0
+        Precision = 100.0,
     };
 
     public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)

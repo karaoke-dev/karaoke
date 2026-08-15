@@ -90,15 +90,14 @@ public class PreviewStageInfo : StageInfo, IHasCalculatedProperty
     public override IPlayfieldCommandProvider CreatePlayfieldCommandProvider(bool displayNotePlayfield)
         => new PreviewPlayfieldCommandProvider(this, displayNotePlayfield);
 
-    public override IStageElementProvider? CreateStageElementProvider(bool displayNotePlayfield)
+    public override IStageElementProvider CreateStageElementProvider(bool displayNotePlayfield)
         => new PreviewElementProvider(this, displayNotePlayfield);
 
     public override IHitObjectCommandProvider? CreateHitObjectCommandProvider<TObject>() =>
         typeof(TObject) switch
         {
             Type type when type == typeof(Lyric) => new PreviewLyricCommandProvider(this),
-            Type type when type == typeof(Note) => null,
-            _ => null
+            _ => null,
         };
 
     #endregion
