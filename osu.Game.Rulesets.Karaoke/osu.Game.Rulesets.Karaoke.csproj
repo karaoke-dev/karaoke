@@ -7,7 +7,6 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="osu.Game.Rulesets.Karaoke.Resources" Version="2022.611.0" />
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="LrcParser" Version="2025.623.0" />
     <PackageReference Include="Octokit" Version="14.0.0" />
@@ -44,8 +43,7 @@
   <Target Name="CopyCustomContent" Condition=" '$(Configuration)'=='Release' " AfterTargets="AfterBuild">
     <ItemGroup>
       <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.dll" />
-      <InputAssemblies Include="$(OutputPath)osu.Game.Rulesets.Karaoke.Resources.dll" />
-      <InputAssemblies Include="$(OutputPath)*/osu.Game.Rulesets.Karaoke.Resources.resources.dll" Exclude="$(OutputPath)/DLLs/" />
+      <InputAssemblies Include="$(OutputPath)*/osu.Game.Rulesets.Karaoke.resources.dll" Exclude="$(OutputPath)/DLLs/" />
       <InputAssemblies Include="$(OutputPath)LanguageDetection.dll" />
       <InputAssemblies Include="$(OutputPath)LrcParser.dll" />
       <InputAssemblies Include="$(OutputPath)Octokit.dll" />

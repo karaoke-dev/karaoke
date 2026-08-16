@@ -26,7 +26,6 @@ using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Setup;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Replays;
-using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Argon;
 using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
@@ -180,9 +179,6 @@ public partial class KaraokeRuleset : Ruleset
 
         // add resource in the current dll.
         store.AddStore(base.CreateResourceStore());
-
-        // add resource dll, it only works in the local because the resource will be packed into main dll in the resource build.
-        store.AddStore(new DllResourceStore(KaraokeResources.ResourceAssembly));
 
         // add shader resource from font package.
         store.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
